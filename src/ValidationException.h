@@ -1,0 +1,8 @@
+#ifndef VALIDATIONEXCEPTION_H
+#define VALIDATIONEXCEPTION_H
+
+#include "Exception.h"
+
+DECLARE_EXCEPTION(ValidationException)
+
+#endif // VALIDATIONEXCEPTION_H

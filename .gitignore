@@ -1,0 +1,7 @@
+build/
+*.pro.user
+*.autosave
+.qmake.stash
+Makefile
+Makefile.*
+.directory

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
-    <height>158</height>
+    <width>1013</width>
+    <height>443</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,44 +18,82 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QProgressBar" name="mp_progressbar">
-     <property name="value">
-      <number>0</number>
+    <widget class="QTableView" name="mp_table_tasks">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
      </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="mp_label_info">
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Overall progress</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QProgressBar" name="mp_progressbar_overall">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Current progress</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QProgressBar" name="mp_progressbar_current">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="mp_buttonbox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Abort</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="mp_btn_add">
+       <property name="text">
+        <string>&amp;Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_install">
+       <property name="text">
+        <string>&amp;Install</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="mp_buttonbox">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mp_btn_add</tabstop>
+  <tabstop>mp_btn_install</tabstop>
+  <tabstop>mp_table_tasks</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -90,5 +128,41 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_btn_install</sender>
+   <signal>clicked()</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>install()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_btn_add</sender>
+   <signal>clicked()</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>addTask()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>addTask()</slot>
+  <slot>install()</slot>
+ </slots>
 </ui>

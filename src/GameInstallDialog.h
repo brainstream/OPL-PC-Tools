@@ -19,31 +19,43 @@
 #define __QPCOPL_GAMEINSTALLDIALOG__
 
 #include <QThread>
-#include "GameInstaller.h"
 #include "ui_GameInstallDialog.h"
+#include "GameInstaller.h"
+#include "Iso9660GameInstallerSource.h"
 
 class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
 {
     Q_OBJECT
 
 public:
-    explicit GameInstallDialog(GameInstaller & _installer, QWidget * _parent = nullptr);
+    explicit GameInstallDialog(const QString & _installation_dirpath, QWidget * _parent = nullptr);
+    ~GameInstallDialog() override;
 
 public slots:
-    int exec() override;
     void reject() override;
 
 protected:
     void closeEvent(QCloseEvent * _event) override;
 
 private slots:
+    void addTask();
+    void install();
     void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
     void rollbackStarted();
+    void rollbackFinished();
+    void registrationStarted();
+    void registrationFinished();
     void threadFinished();
 
 private:
-    GameInstaller * mp_installer;
+    bool startTask();
+
+private:
     QThread * mp_work_thread;
+    GameInstaller * mp_installer;
+    Iso9660GameInstallerSource * mp_source;
+    QString m_installation_dirpath;
+    int m_processing_task_index;
 };
 
 #endif // __QPCOPL_GAMEINSTALLDIALOG__

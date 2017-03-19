@@ -23,6 +23,7 @@
 
 #define UL_MAX_GAME_NAME_LENGTH 32
 #define UL_MAX_IMAGE_NAME_LENGTH 15
+#define UL_CONFIG_FILENAME "ul.cfg"
 
 enum class MediaType
 {

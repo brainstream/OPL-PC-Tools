@@ -31,7 +31,6 @@ namespace {
 
 static const char * g_settings_key_wnd_geometry = "wndgeom";
 static const char * g_settings_key_ul_dir = "uldir";
-static const char * g_settings_key_iso_dir = "isodir";
 
 class GameListItem : public QListWidgetItem
 {
@@ -88,7 +87,7 @@ void MainWindow::loadUlConfig()
     if(dirpath.isEmpty()) return;
     settings.setValue(g_settings_key_ul_dir, dirpath);
     QDir dir(dirpath);
-    QString ul_file = dir.filePath("ul.cfg");
+    QString ul_file = dir.filePath(UL_CONFIG_FILENAME);
     loadUlConfig(ul_file);
 }
 
@@ -139,21 +138,9 @@ void MainWindow::addGame()
 {
     try
     {
-        QSettings settings;
-        QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
-        QString iso_file = QFileDialog::getOpenFileName(this, tr("Select the PS2 ISO file"), iso_dir, tr("ISO files (*.iso)"));
-        if(iso_file.isEmpty()) return;
-        settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_file).absolutePath());
-        QString game_name = "The GAME name"; // TODO: dialog
-        Iso9660GameInstallerSource source(iso_file);
-        GameInstaller installer(source, QFileInfo(mp_label_current_ul_file->text()).absolutePath());
-        installer.setGameName(game_name);
-        GameInstallDialog dlg(installer, this);
+        GameInstallDialog dlg(QFileInfo(mp_label_current_ul_file->text()).absolutePath(), this);
         if(dlg.exec() == QDialog::Accepted)
-        {
-            Ul::addConfigRecord(*installer.installedGameInfo(), mp_label_current_ul_file->text());
             reloadUlConfig();
-        }
     }
     catch(const Exception & exception)
     {

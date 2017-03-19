@@ -40,12 +40,15 @@ public:
 
 signals:
     void progress(quint64 _total_bytes, quint64 _done_bytes);
+    void registrationStarted();
+    void registrationFinished();
     void rollbackStarted();
     void rollbackFinished();
 
 private:
     quint32 crc32(const QString & _string);
     void rollback();
+    void registerGame();
 
 private:
     GameInstallerSource * mp_sourrce;

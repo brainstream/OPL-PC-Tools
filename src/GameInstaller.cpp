@@ -21,6 +21,7 @@
 #include "IOException.h"
 #include "ValidationException.h"
 #include "GameInstaller.h"
+#include "UlConfig.h"
 
 GameInstaller::GameInstaller(GameInstallerSource & _source, const QString _dest_dir_path, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
@@ -80,6 +81,7 @@ bool GameInstaller::install()
         }
     }
     m_written_parts.clear();
+    registerGame();
     return true;
 }
 
@@ -119,4 +121,12 @@ void GameInstaller::rollback()
     delete mp_installed_game_info;
     mp_installed_game_info = nullptr;
     emit rollbackFinished();
+}
+
+void GameInstaller::registerGame()
+{
+    emit registrationStarted();
+    QString config_filepath = QDir(m_dest_dir_path).absoluteFilePath(UL_CONFIG_FILENAME);
+    Ul::addConfigRecord(*mp_installed_game_info, config_filepath);
+    emit registrationFinished();
 }

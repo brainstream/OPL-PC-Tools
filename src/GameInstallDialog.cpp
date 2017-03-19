@@ -15,11 +15,175 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QDebug>
-#include <QCloseEvent>
+#include <QList>
+#include <QAbstractTableModel>
+#include <QStyledItemDelegate>
+#include <QFileInfo>
+#include <QSettings>
+#include <QFileDialog>
+#include "GameInstaller.h"
 #include "GameInstallDialog.h"
 
 namespace {
+
+static const char * g_settings_key_iso_dir = "isodir";
+
+enum class InstallationStatus
+{
+    queued,
+    installation,
+    registration,
+    done,
+    error,
+    rollingBack
+};
+
+struct GameInstallTask
+{
+    QString iso_path;
+    QString game_name;
+    InstallationStatus status;
+};
+
+class GameTasksTableModel : public QAbstractTableModel
+{
+public:
+    explicit inline GameTasksTableModel(QObject * _parent = nullptr);
+    int rowCount(const QModelIndex & _parent) const override;
+    inline int columnCount(const QModelIndex & _parent) const override;
+    QVariant data(const QModelIndex & _index, int _role) const override;
+    QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
+    void addTask(const QString & _iso_path);
+    const GameInstallTask * task(int _index) const;
+    void setTaskStatus(int _index, InstallationStatus _status);
+
+private:
+    QString statusToString(InstallationStatus _status) const;
+    QString truncateGameName(const QString & _name);
+
+private:
+    QList<GameInstallTask> m_tasks;
+};
+
+GameTasksTableModel::GameTasksTableModel(QObject * _parent /*= nullptr*/) :
+    QAbstractTableModel(_parent)
+{
+}
+
+int GameTasksTableModel::rowCount(const QModelIndex & _parent) const
+{
+    Q_UNUSED(_parent)
+    return m_tasks.size();
+}
+
+int GameTasksTableModel::columnCount(const QModelIndex & _parent) const
+{
+    Q_UNUSED(_parent)
+    return 2;
+}
+
+QVariant GameTasksTableModel::data(const QModelIndex & _index, int _role) const
+{
+    if(_role != Qt::DisplayRole)
+        return QVariant();
+    switch(_index.column())
+    {
+    case 0:
+        return m_tasks[_index.row()].game_name;
+    case 1:
+        return statusToString(m_tasks[_index.row()].status);
+    default:
+        return QVariant();
+    }
+}
+
+QVariant GameTasksTableModel::headerData(int _section, Qt::Orientation _orientation, int _role) const
+{
+    if(_orientation == Qt::Vertical || _role != Qt::DisplayRole)
+        return QAbstractTableModel::headerData(_section, _orientation, _role);
+    switch(_section)
+    {
+    case 0:
+        return tr("Title");
+    case 1:
+        return tr("Status");
+    default:
+        return QVariant();
+    }
+}
+
+QString GameTasksTableModel::statusToString(InstallationStatus _status) const
+{
+    switch(_status)
+    {
+    case InstallationStatus::done:
+        return tr("Done");
+    case InstallationStatus::error:
+        return tr("Error");
+    case InstallationStatus::installation:
+        return tr("Installation");
+    case InstallationStatus::queued:
+        return tr("Queued");
+    case InstallationStatus::registration:
+        return tr("Registration");
+    case InstallationStatus::rollingBack:
+        return tr("Rolling back");
+    default:
+        return QString();
+    }
+}
+
+void GameTasksTableModel::addTask(const QString & _iso_path)
+{
+    int row_count = m_tasks.size();
+    QModelIndex parent_index = index(row_count, 0);
+    beginInsertRows(parent_index, row_count, row_count);
+    GameInstallTask task;
+    task.iso_path = _iso_path;
+    task.game_name = truncateGameName(QFileInfo(_iso_path).completeBaseName());
+    task.status = InstallationStatus::queued;
+    m_tasks.append(task);
+    endInsertRows();
+    emit dataChanged(parent_index, index(m_tasks.size(), columnCount(QModelIndex())));
+}
+
+QString GameTasksTableModel::truncateGameName(const QString & _name)
+{
+    const QByteArray utf8 = _name.toUtf8();
+    if(utf8.size() <= UL_MAX_GAME_NAME_LENGTH)
+        return _name;
+    QString result = QString::fromUtf8(utf8.constData(), UL_MAX_GAME_NAME_LENGTH);
+    for(int i = result.size() - 1; result[i] != _name[i]; --i)
+        result.truncate(i);
+    return result;
+}
+
+const GameInstallTask * GameTasksTableModel::task(int _index) const
+{
+    return _index >= m_tasks.size() ? nullptr : &m_tasks[_index];
+}
+
+void GameTasksTableModel::setTaskStatus(int _index, InstallationStatus _status)
+{
+    if(_index < m_tasks.size())
+    {
+        m_tasks[_index].status = _status;
+        QModelIndex cell_index = index(_index, 1);
+        emit dataChanged(cell_index, cell_index);
+    }
+}
+
+class GameTaskTableItemDelegate : public QStyledItemDelegate
+{
+public:
+    void paint(QPainter * _painter, const QStyleOptionViewItem & _option, const QModelIndex & _index) const override;
+};
+
+void GameTaskTableItemDelegate::paint(QPainter * _painter, const QStyleOptionViewItem & _option, const QModelIndex & _index) const
+{
+    // TODO: draw a status icon
+    QStyledItemDelegate::paint(_painter, _option, _index);
+}
 
 class WorkThread : public QThread
 {
@@ -43,31 +207,33 @@ void WorkThread::run()
 
 } // namespace
 
-GameInstallDialog::GameInstallDialog(GameInstaller & _installer, QWidget * _parent /*= nullptr*/) :
+GameInstallDialog::GameInstallDialog(const QString & _installation_dirpath, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint),
-    mp_installer(&_installer)
+    mp_work_thread(nullptr),
+    mp_installer(nullptr),
+    mp_source(nullptr),
+    m_installation_dirpath(_installation_dirpath),
+    m_processing_task_index(0)
 {
     setupUi(this);
-    mp_progressbar->setMaximum(1000);
-    mp_work_thread = new WorkThread(_installer);
-    connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
-    connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
-    connect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
-    connect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
+    mp_progressbar_current->setMaximum(1000);
+    mp_progressbar_overall->setMaximum(1000);
+    mp_table_tasks->setModel(new GameTasksTableModel(this));
+    mp_table_tasks->setItemDelegate(new GameTaskTableItemDelegate);
+    mp_table_tasks->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    mp_table_tasks->setColumnWidth(1, 150);
+    mp_table_tasks->setColumnWidth(2, 150);
 }
 
-int GameInstallDialog::exec()
+GameInstallDialog::~GameInstallDialog()
 {
-    mp_label_info->setText(tr("Game installation..."));
-    mp_buttonbox->setDisabled(false);
-    mp_work_thread->start(QThread::HighestPriority);
-    return QDialog::exec();
+    delete mp_installer;
+    delete mp_source;
 }
 
 void GameInstallDialog::reject()
 {
     mp_buttonbox->setDisabled(true);
-    mp_label_info->setText(tr("Preparation to abort..."));
     mp_work_thread->quit();
     mp_work_thread->requestInterruption();
 }
@@ -79,28 +245,104 @@ void GameInstallDialog::closeEvent(QCloseEvent * _event)
 
 void GameInstallDialog::installProgress(quint64 _total_bytes, quint64 _processed_bytes)
 {
-    mp_progressbar->setValue((static_cast<double>(_processed_bytes) / _total_bytes) * 1000);
-    if(_total_bytes == _processed_bytes)
-    {
-        mp_work_thread->quit();
-        mp_label_info->setText(tr("Almost done. Wait a few seconds."));
-        mp_progressbar->setMaximum(0);
-    }
+    double current_progress = static_cast<double>(_processed_bytes) / _total_bytes;
+    double single_task_in_overal_progress = 1.0 / mp_table_tasks->model()->rowCount();
+    double overall_progress = single_task_in_overal_progress * m_processing_task_index +
+            single_task_in_overal_progress * current_progress;
+    mp_progressbar_current->setValue(current_progress * 1000);
+    mp_progressbar_overall->setValue(overall_progress * 1000);
 }
 
 void GameInstallDialog::rollbackStarted()
 {
     mp_buttonbox->setDisabled(true);
-    mp_label_info->setText(tr("Rolling back changes..."));
-    mp_progressbar->setMaximum(0);
+    mp_progressbar_current->setMaximum(0);
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->
+            setTaskStatus(m_processing_task_index, InstallationStatus::rollingBack);
+}
+
+void GameInstallDialog::rollbackFinished()
+{
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->
+            setTaskStatus(m_processing_task_index, InstallationStatus::error);
+    mp_progressbar_current->setMaximum(1000);
+    mp_progressbar_current->setValue(1000);
+    mp_work_thread->quit();
+}
+
+void GameInstallDialog::registrationStarted()
+{
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->
+            setTaskStatus(m_processing_task_index, InstallationStatus::registration);
+    mp_progressbar_current->setMaximum(0);
+}
+
+void GameInstallDialog::registrationFinished()
+{
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->
+            setTaskStatus(m_processing_task_index, InstallationStatus::done);
+    mp_progressbar_current->setMaximum(1000);
+    mp_progressbar_current->setValue(1000);
+    mp_work_thread->quit();
 }
 
 void GameInstallDialog::threadFinished()
 {
-    disconnect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
-    disconnect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
-    if(mp_installer->installedGameInfo() == nullptr)
-        QDialog::reject();
-    else
-        accept();
+    ++m_processing_task_index;
+    if(startTask()) {
+        return;
+    }
+    mp_progressbar_current->setMaximum(1000);
+    mp_progressbar_current->setValue(1000);
+    mp_btn_add->setDisabled(false);
+    mp_btn_install->setDisabled(false);
+    mp_buttonbox->button(QDialogButtonBox::Ok)->setDisabled(false);
+    mp_buttonbox->setDisabled(false);
+}
+
+bool GameInstallDialog::startTask()
+{
+    delete mp_installer;
+    delete mp_source;
+    mp_installer = nullptr;
+    mp_source = nullptr;
+    const GameInstallTask * task = static_cast<GameTasksTableModel *>(mp_table_tasks->model())->task(m_processing_task_index);
+    if(task == nullptr)
+        return false;
+    mp_progressbar_current->setMaximum(1000);
+    mp_progressbar_current->setValue(0);
+    mp_source = new Iso9660GameInstallerSource(task->iso_path);
+    mp_installer = new GameInstaller(*mp_source, m_installation_dirpath, this);
+    mp_installer->setGameName(task->game_name);
+    mp_work_thread = new WorkThread(*mp_installer);
+    connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
+    connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
+    connect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
+    connect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
+    connect(mp_installer, &GameInstaller::rollbackFinished, this, &GameInstallDialog::rollbackFinished);
+    connect(mp_installer, &GameInstaller::registrationStarted, this, &GameInstallDialog::registrationStarted);
+    connect(mp_installer, &GameInstaller::registrationFinished, this, &GameInstallDialog::registrationFinished);
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->
+            setTaskStatus(m_processing_task_index, InstallationStatus::installation);
+    mp_work_thread->start(QThread::HighestPriority);
+    return true;
+}
+
+void GameInstallDialog::addTask()
+{
+    QSettings settings;
+    QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
+    QString iso_file = QFileDialog::getOpenFileName(this, tr("Select the PS2 ISO file"), iso_dir, tr("ISO files (*.iso)"));
+    if(iso_file.isEmpty()) return;
+    settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_file).absolutePath());
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->addTask(iso_file);
+}
+
+void GameInstallDialog::install()
+{
+    mp_btn_add->setDisabled(true);
+    mp_btn_install->setDisabled(true);
+    mp_buttonbox->button(QDialogButtonBox::Ok)->setDisabled(true);
+    m_processing_task_index = 0;
+    startTask();
 }

@@ -40,7 +40,7 @@ bool GameInstaller::install()
     delete mp_installed_game_info;
     mp_installed_game_info = new Ul::ConfigRecord();
     if(m_game_name.toUtf8().size() > UL_MAX_GAME_NAME_LENGTH)
-        throw ValidationException(tr("Game name is too logn"));
+        throw ValidationException(tr("Game name is too long"));
     QString iso_id = mp_sourrce->gameId();
     mp_installed_game_info->image = QString("ul.") + iso_id;
     mp_installed_game_info->name = m_game_name.isEmpty() ? tr("Untitled Game") : m_game_name;
@@ -51,9 +51,9 @@ bool GameInstaller::install()
     QString crc = QString("%1").arg(crc32(mp_installed_game_info->name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
     size_t processed_bytes = 0;
     QDir dest_dir(m_dest_dir_path);
-    for(mp_installed_game_info->parts = 0; processed_bytes < iso_size; ++mp_installed_game_info->parts)
+    while(processed_bytes < iso_size)
     {
-        QString part_filename = QString("ul.%1.%2.%3").arg(crc).arg(iso_id).arg(mp_installed_game_info->parts, 2, 10, QChar('0'));
+        QString part_filename = QString("ul.%1.%2.%3").arg(crc).arg(iso_id).arg(mp_installed_game_info->parts++, 2, 10, QChar('0'));
         QFile part(dest_dir.absoluteFilePath(part_filename));
         if(!part.open(QIODevice::Truncate | QIODevice::WriteOnly))
         {
@@ -116,5 +116,7 @@ void GameInstaller::rollback()
     for(const QString & path : m_written_parts)
         QFile::remove(path);
     m_written_parts.clear();
+    delete mp_installed_game_info;
+    mp_installed_game_info = nullptr;
     emit rollbackFinished();
 }

@@ -50,6 +50,7 @@ GameInstallDialog::GameInstallDialog(GameInstaller & _installer, QWidget * _pare
     setupUi(this);
     mp_progressbar->setMaximum(1000);
     mp_work_thread = new WorkThread(_installer);
+    connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
     connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
     connectInstaller();
 }
@@ -77,12 +78,14 @@ int GameInstallDialog::exec()
 {
     mp_label_info->setText(tr("Game installation..."));
     mp_buttonbox->setDisabled(false);
-    mp_work_thread->start();
+    mp_work_thread->start(QThread::HighestPriority);
     return QDialog::exec();
 }
 
 void GameInstallDialog::reject()
 {
+    mp_buttonbox->setDisabled(true);
+    mp_label_info->setText(tr("Preparation to abort..."));
     mp_work_thread->quit();
     mp_work_thread->requestInterruption();
 }
@@ -99,7 +102,8 @@ void GameInstallDialog::installProgress(quint64 _total_bytes, quint64 _processed
     {
         disconnectInstaller();
         mp_work_thread->quit();
-        accept();
+        mp_label_info->setText(tr("Almost done. Wait a few seconds."));
+        mp_progressbar->setMaximum(0);
     }
 }
 
@@ -108,11 +112,17 @@ void GameInstallDialog::rollbackStarted()
     mp_buttonbox->setDisabled(true);
     mp_label_info->setText(tr("Rolling back changes..."));
     mp_progressbar->setMaximum(0);
-    mp_progressbar->setValue(0);
 }
 
 void GameInstallDialog::rollbackFinished()
 {
     disconnectInstaller();
-    QDialog::reject();
+}
+
+void GameInstallDialog::threadFinished()
+{
+    if(mp_installer->installedGameInfo() == nullptr)
+        QDialog::reject();
+    else
+        accept();
 }

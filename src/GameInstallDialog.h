@@ -41,6 +41,7 @@ private slots:
     void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
     void rollbackStarted();
     void rollbackFinished();
+    void threadFinished();
 
 private:
     void connectInstaller();

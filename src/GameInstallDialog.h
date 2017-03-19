@@ -28,7 +28,6 @@ class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
 
 public:
     explicit GameInstallDialog(GameInstaller & _installer, QWidget * _parent = nullptr);
-    ~GameInstallDialog() override;
 
 public slots:
     int exec() override;
@@ -40,12 +39,7 @@ protected:
 private slots:
     void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
     void rollbackStarted();
-    void rollbackFinished();
     void threadFinished();
-
-private:
-    void connectInstaller();
-    void disconnectInstaller();
 
 private:
     GameInstaller * mp_installer;

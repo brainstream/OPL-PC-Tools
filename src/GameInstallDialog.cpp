@@ -52,26 +52,8 @@ GameInstallDialog::GameInstallDialog(GameInstaller & _installer, QWidget * _pare
     mp_work_thread = new WorkThread(_installer);
     connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
     connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
-    connectInstaller();
-}
-
-GameInstallDialog::~GameInstallDialog()
-{
-    disconnectInstaller();
-}
-
-void GameInstallDialog::connectInstaller()
-{
     connect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
     connect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
-    connect(mp_installer, &GameInstaller::rollbackFinished, this, &GameInstallDialog::rollbackFinished);
-}
-
-void GameInstallDialog::disconnectInstaller()
-{
-    disconnect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
-    disconnect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
-    disconnect(mp_installer, &GameInstaller::rollbackFinished, this, &GameInstallDialog::rollbackFinished);
 }
 
 int GameInstallDialog::exec()
@@ -100,7 +82,6 @@ void GameInstallDialog::installProgress(quint64 _total_bytes, quint64 _processed
     mp_progressbar->setValue((static_cast<double>(_processed_bytes) / _total_bytes) * 1000);
     if(_total_bytes == _processed_bytes)
     {
-        disconnectInstaller();
         mp_work_thread->quit();
         mp_label_info->setText(tr("Almost done. Wait a few seconds."));
         mp_progressbar->setMaximum(0);
@@ -114,13 +95,10 @@ void GameInstallDialog::rollbackStarted()
     mp_progressbar->setMaximum(0);
 }
 
-void GameInstallDialog::rollbackFinished()
-{
-    disconnectInstaller();
-}
-
 void GameInstallDialog::threadFinished()
 {
+    disconnect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
+    disconnect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
     if(mp_installer->installedGameInfo() == nullptr)
         QDialog::reject();
     else

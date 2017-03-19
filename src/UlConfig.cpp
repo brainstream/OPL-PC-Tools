@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ *                                                                                             *
+ * This file is part of the qpcopl project, the graphical PC tools for Open PS2 Loader.        *
+ *                                                                                             *
+ * qpcopl is free software: you can redistribute it and/or modify it under the terms of        *
+ * the GNU General Public License as published by the Free Software Foundation,                *
+ * either version 3 of the License, or (at your option) any later version.                     *
+ *                                                                                             *
+ * qpcopl is distributed in the hope that it will be useful,  but WITHOUT ANY WARRANTY;        *
+ * without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  *
+ * See the GNU General Public License for more details.                                        *
+ *                                                                                             *
+ * You should have received a copy of the GNU General Public License along with MailUnit.      *
+ * If not, see <http://www.gnu.org/licenses/>.                                                 *
+ *                                                                                             *
+ ***********************************************************************************************/
+
 #include <QFile>
 #include "UlConfig.h"
 #include "IOException.h"
@@ -19,7 +36,7 @@ struct RawConfigRecord
     quint8 pad[15];
 };
 
-void openFile(QFile & _file, QIODevice::OpenModeFlag _flags)
+void openFile(QFile & _file, QIODevice::OpenMode _flags)
 {
     if(!_file.open(_flags))
         throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
@@ -90,7 +107,23 @@ QList<ConfigRecord> Ul::loadConfig(const QString & _filepath)
 
 void Ul::addConfigRecord(const ConfigRecord & _config, const QString & _filepath)
 {
-
+    QByteArray name_bytes = _config.name.toUtf8();
+    if(name_bytes.size() > UL_MAX_GAME_NAME_LENGTH)
+        throw ValidationException(QObject::tr("Maximum game name length is %1 bytes").arg(UL_MAX_GAME_NAME_LENGTH));
+    QByteArray image_bytes = _config.image.toLatin1();
+    if(image_bytes.size() > UL_MAX_IMAGE_NAME_LENGTH)
+        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(UL_MAX_IMAGE_NAME_LENGTH));
+    QFile file(_filepath);
+    openFile(file, QIODevice::WriteOnly | QIODevice::Append);
+    RawConfigRecord record = { };
+    memcpy(record.image, image_bytes.constData(), image_bytes.size());
+    memcpy(record.name , name_bytes.constData(), name_bytes.size());
+    record.media = _config.type == MediaType::dvd ? MT_DVD : MT_CD;
+    record.pad[4] = 0x08; // To be like USBA
+    record.parts = _config.parts;
+    const char * data = reinterpret_cast<const char *>(&record);
+    if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
+        throw IOException("An error occurred while writing data to file");
 }
 
 void Ul::deleteConfigRecord(const QString _image, const QString & _filepath)

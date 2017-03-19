@@ -15,41 +15,19 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_EXCEPTION__
-#define __QPCOPL_EXCEPTION__
+#ifndef __QPCOPL_GAMEINSTALLERSOURCE__
+#define __QPCOPL_GAMEINSTALLERSOURCE__
 
-#include <QException>
+#include <QString>
+#include <QByteArray>
 
-class Exception : public QException
+class GameInstallerSource
 {
 public:
-    explicit Exception(const QString & _message) :
-        m_message(_message)
-    {
-    }
-
-    const char * what() const noexcept override
-    {
-        return nullptr;
-    }
-
-    const QString & message() const noexcept
-    {
-        return m_message;
-    }
-
-private:
-    QString m_message;
+    virtual ~GameInstallerSource() { }
+    virtual QString gameId() = 0;
+    virtual QByteArray read(quint64 _length) = 0;
+    virtual quint64 size() = 0;
 };
 
-#define DECLARE_EXCEPTION(type_name)                    \
-    class type_name : public Exception                  \
-    {                                                   \
-    public:                                             \
-        explicit type_name(const QString & _message) :  \
-            Exception(_message)                         \
-        {                                               \
-        }                                               \
-    };
-
-#endif // __QPCOPL_EXCEPTION__
+#endif // __QPCOPL_GAMEINSTALLERSOURCE__

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameRenameDialog</class>
- <widget class="QDialog" name="GameRenameDialog">
+ <class>GameInstallDialog</class>
+ <widget class="QDialog" name="GameInstallDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>519</width>
-    <height>130</height>
+    <width>637</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Rename Game</string>
+   <string>Game Installiation</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLineEdit" name="mp_edit_name">
-     <property name="maxLength">
-      <number>32</number>
+    <widget class="QProgressBar" name="mp_progressbar">
+     <property name="value">
+      <number>0</number>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="mp_label_bytes">
+    <widget class="QLabel" name="mp_label_info">
      <property name="text">
-      <string/>
+      <string>TextLabel</string>
      </property>
     </widget>
    </item>
@@ -45,12 +45,12 @@
     </spacer>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="mp_button_box">
+    <widget class="QDialogButtonBox" name="mp_buttonbox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Abort</set>
      </property>
     </widget>
    </item>
@@ -59,9 +59,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>mp_button_box</sender>
+   <sender>mp_buttonbox</sender>
    <signal>accepted()</signal>
-   <receiver>GameRenameDialog</receiver>
+   <receiver>GameInstallDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -75,9 +75,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>mp_button_box</sender>
+   <sender>mp_buttonbox</sender>
    <signal>rejected()</signal>
-   <receiver>GameRenameDialog</receiver>
+   <receiver>GameInstallDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -90,24 +90,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>mp_edit_name</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>GameRenameDialog</receiver>
-   <slot>nameChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>259</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>259</x>
-     <y>50</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
- <slots>
-  <slot>nameChanged(QString)</slot>
- </slots>
 </ui>

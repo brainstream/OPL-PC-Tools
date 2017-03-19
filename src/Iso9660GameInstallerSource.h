@@ -15,41 +15,24 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_EXCEPTION__
-#define __QPCOPL_EXCEPTION__
+#ifndef __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__
+#define __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__
 
-#include <QException>
+#include <QFile>
+#include "GameInstallerSource.h"
 
-class Exception : public QException
+class Iso9660GameInstallerSource : public GameInstallerSource
 {
+    Q_DISABLE_COPY(Iso9660GameInstallerSource)
+
 public:
-    explicit Exception(const QString & _message) :
-        m_message(_message)
-    {
-    }
-
-    const char * what() const noexcept override
-    {
-        return nullptr;
-    }
-
-    const QString & message() const noexcept
-    {
-        return m_message;
-    }
+    explicit Iso9660GameInstallerSource(const QString & _iso_path);
+    QString gameId() override;
+    QByteArray read(quint64 _length) override;
+    virtual quint64 size() override;
 
 private:
-    QString m_message;
+    QFile m_file;
 };
 
-#define DECLARE_EXCEPTION(type_name)                    \
-    class type_name : public Exception                  \
-    {                                                   \
-    public:                                             \
-        explicit type_name(const QString & _message) :  \
-            Exception(_message)                         \
-        {                                               \
-        }                                               \
-    };
-
-#endif // __QPCOPL_EXCEPTION__
+#endif // __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__

@@ -15,41 +15,40 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_EXCEPTION__
-#define __QPCOPL_EXCEPTION__
+#ifndef __QPCOPL_GAMEINSTALLDIALOG__
+#define __QPCOPL_GAMEINSTALLDIALOG__
 
-#include <QException>
+#include <QThread>
+#include "GameInstaller.h"
+#include "ui_GameInstallDialog.h"
 
-class Exception : public QException
+class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
 {
+    Q_OBJECT
+
 public:
-    explicit Exception(const QString & _message) :
-        m_message(_message)
-    {
-    }
+    explicit GameInstallDialog(GameInstaller & _installer, QWidget * _parent = nullptr);
+    ~GameInstallDialog() override;
 
-    const char * what() const noexcept override
-    {
-        return nullptr;
-    }
+public slots:
+    int exec() override;
+    void reject() override;
 
-    const QString & message() const noexcept
-    {
-        return m_message;
-    }
+protected:
+    void closeEvent(QCloseEvent * _event) override;
+
+private slots:
+    void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
+    void rollbackStarted();
+    void rollbackFinished();
 
 private:
-    QString m_message;
+    void connectInstaller();
+    void disconnectInstaller();
+
+private:
+    GameInstaller * mp_installer;
+    QThread * mp_work_thread;
 };
 
-#define DECLARE_EXCEPTION(type_name)                    \
-    class type_name : public Exception                  \
-    {                                                   \
-    public:                                             \
-        explicit type_name(const QString & _message) :  \
-            Exception(_message)                         \
-        {                                               \
-        }                                               \
-    };
-
-#endif // __QPCOPL_EXCEPTION__
+#endif // __QPCOPL_GAMEINSTALLDIALOG__

@@ -1,18 +1,37 @@
+/***********************************************************************************************
+ *                                                                                             *
+ * This file is part of the qpcopl project, the graphical PC tools for Open PS2 Loader.        *
+ *                                                                                             *
+ * qpcopl is free software: you can redistribute it and/or modify it under the terms of        *
+ * the GNU General Public License as published by the Free Software Foundation,                *
+ * either version 3 of the License, or (at your option) any later version.                     *
+ *                                                                                             *
+ * qpcopl is distributed in the hope that it will be useful,  but WITHOUT ANY WARRANTY;        *
+ * without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  *
+ * See the GNU General Public License for more details.                                        *
+ *                                                                                             *
+ * You should have received a copy of the GNU General Public License along with MailUnit.      *
+ * If not, see <http://www.gnu.org/licenses/>.                                                 *
+ *                                                                                             *
+ ***********************************************************************************************/
+
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
 #include <QListWidgetItem>
-#include <cdio/cdio.h>
-#include <cdio/iso9660.h>
 #include "MainWindow.h"
 #include "UlConfig.h"
+#include "GameInstaller.h"
+#include "Iso9660GameInstallerSource.h"
+#include "GameInstallDialog.h"
 #include "GameRenameDialog.h"
 #include "Exception.h"
 
 namespace {
 
-static const char * g_settings_key_wnd_geometry = "window geometry";
+static const char * g_settings_key_wnd_geometry = "wndgeom";
 static const char * g_settings_key_ul_dir = "uldir";
+static const char * g_settings_key_iso_dir = "isodir";
 
 class GameListItem : public QListWidgetItem
 {
@@ -116,6 +135,32 @@ void MainWindow::activateGameActions(bool _activate)
     mp_action_rename_game->setEnabled(_activate);
 }
 
+void MainWindow::addGame()
+{
+    try
+    {
+        QSettings settings;
+        QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
+        QString iso_file = QFileDialog::getOpenFileName(this, tr("Select the PS2 ISO file"), iso_dir, tr("ISO files (*.iso)"));
+        if(iso_file.isEmpty()) return;
+        settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_file).absolutePath());
+        QString game_name = "The GAME name"; // TODO: dialog
+        Iso9660GameInstallerSource source(iso_file);
+        GameInstaller installer(source, QFileInfo(mp_label_current_ul_file->text()).absolutePath());
+        installer.setGameName(game_name);
+        GameInstallDialog dlg(installer, this);
+        if(dlg.exec() == QDialog::Accepted)
+        {
+            Ul::addConfigRecord(*installer.installedGameInfo(), mp_label_current_ul_file->text());
+            reloadUlConfig();
+        }
+    }
+    catch(const Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
 void MainWindow::gameSelected(QListWidgetItem * _item)
 {
     if(_item == nullptr)
@@ -167,34 +212,3 @@ void MainWindow::renameGame()
         QMessageBox::critical(this, QString(), exception.message());
     }
 }
-
-/*
-void testISO()
-{
-    cdio_init();
-    iso9660_t * iso = iso9660_open("/home/brainstream/downloads/kubuntu-16.10-desktop-amd64.iso");
-//    iso9660_t * iso = iso9660_open("/raid/games/PS2/SLES_544.90.GH [PS2 PAL MULTI5].iso");
-    iso9660_pvd_t pvd;
-    iso9660_ifs_read_pvd(iso, &pvd);
-//    mp_out->setPlainText(pvd.volume_id);
-    iso9660_close(iso);
-}
-
-void testCD()
-{
-    cdio_init();
-    CdIo_t * cdio = cdio_open_cd("/dev/sr0");
-    track_t first_track = cdio_get_first_track_num(cdio);
-    cdtext_t * text = cdio_get_cdtext(cdio, first_track);
-    QString out_text;
-    for(char i = 0; i <= 12; ++i)
-    {
-        char * title = cdtext_get((cdtext_field_t)i, text);
-        out_text += title;
-        out_text += '\n';
-        free(title);
-    }
-//    mp_out->setPlainText(out_text);
-    cdio_destroy(cdio);
-}
-*/

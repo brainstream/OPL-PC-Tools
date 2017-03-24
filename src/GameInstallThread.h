@@ -15,49 +15,45 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_GAMEINSTALLDIALOG__
-#define __QPCOPL_GAMEINSTALLDIALOG__
+#ifndef __QPCOPL_GAMEINSTALLTHREAD__
+#define __QPCOPL_GAMEINSTALLTHREAD__
 
-#include "ui_GameInstallDialog.h"
-#include "GameInstallThread.h"
+#include <QThread>
 #include "GameInstaller.h"
-#include "Iso9660GameInstallerSource.h"
+#include "Exception.h"
 
-class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
+class GameInstallThread : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit GameInstallDialog(const QString & _installation_dirpath, QWidget * _parent = nullptr);
-    ~GameInstallDialog() override;
+    explicit GameInstallThread(GameInstaller & _installer, QObject * _parent = nullptr) :
+        QThread(_parent),
+        mr_installer(_installer)
+    {
+    }
 
-public slots:
-    void reject() override;
+    void run() override
+    {
+        try
+        {
+            mr_installer.install();
+        }
+        catch(const Exception & ex)
+        {
+            emit exception(ex.message());
+        }
+        catch(...)
+        {
+            emit exception(tr("An unknown error has occurred"));
+        }
+    }
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void addTask();
-    void install();
-    void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void rollbackStarted();
-    void rollbackFinished();
-    void registrationStarted();
-    void registrationFinished();
-    void threadFinished();
-    void installerError(QString _message);
+signals:
+    void exception(QString _message);
 
 private:
-    bool startTask();
-    void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);
-
-private:
-    GameInstallThread * mp_work_thread;
-    GameInstaller * mp_installer;
-    Iso9660GameInstallerSource * mp_source;
-    QString m_installation_dirpath;
-    int m_processing_task_index;
+    GameInstaller & mr_installer;
 };
 
-#endif // __QPCOPL_GAMEINSTALLDIALOG__
+#endif // __QPCOPL_GAMEINSTALLTHREAD__

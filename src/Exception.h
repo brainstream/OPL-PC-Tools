@@ -19,6 +19,7 @@
 #define __QPCOPL_EXCEPTION__
 
 #include <QException>
+#include <QMetaType>
 
 class Exception : public QException
 {

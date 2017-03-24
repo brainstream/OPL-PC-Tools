@@ -39,7 +39,8 @@ HEADERS  += \
     src/GameInstaller.h \
     src/GameInstallerSource.h \
     src/GameInstallDialog.h \
-    src/Iso9660GameInstallerSource.h
+    src/Iso9660GameInstallerSource.h \
+    src/GameInstallThread.h
 
 FORMS += \
     src/MainWindow.ui \

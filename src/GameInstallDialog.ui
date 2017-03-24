@@ -76,12 +76,29 @@
       </widget>
      </item>
      <item>
-      <widget class="QDialogButtonBox" name="mp_buttonbox">
+      <widget class="QPushButton" name="mp_btn_cancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_ok">
+       <property name="text">
+        <string>Close</string>
        </property>
       </widget>
      </item>
@@ -92,42 +109,12 @@
  <tabstops>
   <tabstop>mp_btn_add</tabstop>
   <tabstop>mp_btn_install</tabstop>
+  <tabstop>mp_btn_cancel</tabstop>
+  <tabstop>mp_btn_ok</tabstop>
   <tabstop>mp_table_tasks</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>mp_buttonbox</sender>
-   <signal>accepted()</signal>
-   <receiver>GameInstallDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_buttonbox</sender>
-   <signal>rejected()</signal>
-   <receiver>GameInstallDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>mp_btn_install</sender>
    <signal>clicked()</signal>
@@ -152,6 +139,38 @@
    <hints>
     <hint type="sourcelabel">
      <x>49</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_btn_cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_btn_ok</sender>
+   <signal>clicked()</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>962</x>
      <y>419</y>
     </hint>
     <hint type="destinationlabel">

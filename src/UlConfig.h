@@ -18,25 +18,16 @@
 #ifndef __QPCOPL_ULCONFIG__
 #define __QPCOPL_ULCONFIG__
 
-#include <QString>
 #include <QList>
+#include <QDir>
+#include <QSharedPointer>
+#include "MediaType.h"
 
-#define UL_MAX_GAME_NAME_LENGTH 32
-#define UL_MAX_IMAGE_NAME_LENGTH 15
 #define UL_CONFIG_FILENAME "ul.cfg"
 
-enum class MediaType
+struct UlConfigRecord
 {
-    unknown,
-    cd,
-    dvd
-};
-
-namespace Ul {
-
-struct ConfigRecord
-{
-    ConfigRecord() :
+    UlConfigRecord() :
         type(MediaType::unknown),
         parts(0)
     {
@@ -48,11 +39,43 @@ struct ConfigRecord
     quint8 parts;
 };
 
-QList<ConfigRecord> loadConfig(const QString & _filepath);
-void addConfigRecord(const ConfigRecord & _config, const QString & _filepath);
-void deleteConfigRecord(const QString _image, const QString & _filepath);
-void renameConfigRecord(const QString _image, const QString & _new_name, const QString & _filepath);
+class UlConfig final
+{
+private:
+    explicit UlConfig(const QDir & _config_dir);
+    void load();
 
-} // namespace Ul
+public:
+    static QSharedPointer<UlConfig> load(const QDir & _config_dir);
+    inline const QString & directory() const;
+    inline const QString & file() const;
+    inline const QList<UlConfigRecord> records() const;
+    void addRecord(const UlConfigRecord & _config);
+    void deleteRecord(const QString _image);
+    void renameRecord(const QString _image, const QString & _new_name);
+
+private:
+    UlConfigRecord * findRecord(const QString & _image);
+
+private:
+    QString m_config_directory;
+    QString m_config_filepath;
+    QList<UlConfigRecord> m_records;
+};
+
+const QString & UlConfig::directory() const
+{
+    return m_config_directory;
+}
+
+const QString & UlConfig::file() const
+{
+    return m_config_filepath;
+}
+
+const QList<UlConfigRecord> UlConfig::records() const
+{
+    return m_records;
+}
 
 #endif // __QPCOPL_ULCONFIG__

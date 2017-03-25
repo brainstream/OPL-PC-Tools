@@ -15,64 +15,55 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_GAMEINSTALLER__
-#define __QPCOPL_GAMEINSTALLER__
+#include <QFile>
+#include <QList>
+#include "Game.h"
 
-#include <QObject>
-#include <QStringList>
-#include "UlConfig.h"
-#include "GameInstallerSource.h"
-
-class GameInstaller : public QObject
+Game::Game(UlConfigRecord & _config) :
+    mr_config(_config)
 {
-    Q_OBJECT
-
-public:
-    GameInstaller(GameInstallerSource & _source, UlConfig & _config, QObject * _parent = nullptr);
-    ~GameInstaller() override;
-    inline void setGameName(const QString & _name);
-    inline const QString & gameName() const;
-    inline const GameInstallerSource & source() const;
-    bool install();
-    inline const UlConfigRecord * installedGameInfo() const;
-
-signals:
-    void progress(quint64 _total_bytes, quint64 _done_bytes);
-    void registrationStarted();
-    void registrationFinished();
-    void rollbackStarted();
-    void rollbackFinished();
-
-private:
-    void rollback();
-    void registerGame();
-
-private:
-    GameInstallerSource * mp_sourrce;
-    UlConfig & mr_config;
-    QString m_game_name;
-    QStringList m_written_parts;
-    UlConfigRecord * mp_installed_game_info;
-};
-
-void GameInstaller::setGameName(const QString & _name)
-{
-    m_game_name = _name;
 }
 
-const QString & GameInstaller::gameName() const
+void Game::rename(const QString & _new_name)
 {
-    return m_game_name;
+//    QList<QFile> files;
+//    for(quint8 part = 0; part < m_config.parts; ++part)
+//    {
+//        QString part_name = makeGamePartName(m_config.image, m_config.name, part);
+
+//        files.append(QFile());
+//    }
 }
 
-const GameInstallerSource & GameInstaller::source() const
+QString Game::makeGamePartName(const QString & _id, const QString & _name, quint8 _part)
 {
-    return *mp_sourrce;
+    QString crc = QString("%1").arg(crc32(_name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
+    return QString("ul.%1.%2.%3").arg(crc).arg(_id).arg(_part, 2, 10, QChar('0'));
 }
 
-const UlConfigRecord * GameInstaller::installedGameInfo() const
+// This fucnction is taken form the original OPL project (iso2opl.c).
+quint32 Game::crc32(const QString & _string)
 {
-    return mp_installed_game_info;
+    const char * string = _string.toUtf8().constData();
+    quint32 * crctab = new quint32[0x400];
+    int crc, table, count, byte;
+    for(table = 0; table < 256; ++table)
+    {
+        crc = table << 24;
+        for (count = 8; count > 0; --count)
+        {
+            if (crc < 0)
+                crc = crc << 1;
+            else
+                crc = (crc << 1) ^ 0x04C11DB7;
+        }
+        crctab[255 - table] = crc;
+    }
+    do
+    {
+        byte = string[count++];
+        crc = crctab[byte ^ ((crc >> 24) & 0xFF)] ^ ((crc << 8) & 0xFFFFFF00);
+    } while (string[count - 1] != 0);
+    delete [] crctab;
+    return crc;
 }
-
-#endif // __QPCOPL_GAMEINSTALLER__

@@ -22,6 +22,7 @@
 #include <QSettings>
 #include <QFileDialog>
 #include "GameInstallDialog.h"
+#include "Game.h"
 
 namespace {
 
@@ -173,9 +174,9 @@ void GameTasksTableModel::addTask(const QString & _iso_path)
 QString GameTasksTableModel::truncateGameName(const QString & _name)
 {
     const QByteArray utf8 = _name.toUtf8();
-    if(utf8.size() <= UL_MAX_GAME_NAME_LENGTH)
+    if(utf8.size() <= Game::max_game_name_length)
         return _name;
-    QString result = QString::fromUtf8(utf8.constData(), UL_MAX_GAME_NAME_LENGTH);
+    QString result = QString::fromUtf8(utf8.constData(), Game::max_game_name_length);
     for(int i = result.size() - 1; result[i] != _name[i]; --i)
         result.truncate(i);
     return result;
@@ -212,12 +213,12 @@ const int g_progressbar_max_value = 1000;
 
 } // namespace
 
-GameInstallDialog::GameInstallDialog(const QString & _installation_dirpath, QWidget * _parent /*= nullptr*/) :
+GameInstallDialog::GameInstallDialog(UlConfig & _config, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint),
     mp_work_thread(nullptr),
     mp_installer(nullptr),
     mp_source(nullptr),
-    m_installation_dirpath(_installation_dirpath),
+    mr_config(_config),
     m_processing_task_index(0)
 {
     setupUi(this);
@@ -319,7 +320,7 @@ bool GameInstallDialog::startTask()
         return false;
     setCurrentProgressBarUnknownStatus(false);
     mp_source = new Iso9660GameInstallerSource(task->iso_path);
-    mp_installer = new GameInstaller(*mp_source, m_installation_dirpath, this);
+    mp_installer = new GameInstaller(*mp_source, mr_config, this);
     mp_installer->setGameName(task->game_name);
     mp_work_thread = new GameInstallThread(*mp_installer);
     connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);

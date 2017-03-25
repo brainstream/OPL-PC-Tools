@@ -15,64 +15,14 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_GAMEINSTALLER__
-#define __QPCOPL_GAMEINSTALLER__
+#ifndef __QPCOPL_MEDIATYPE__
+#define __QPCOPL_MEDIATYPE__
 
-#include <QObject>
-#include <QStringList>
-#include "UlConfig.h"
-#include "GameInstallerSource.h"
-
-class GameInstaller : public QObject
+enum class MediaType
 {
-    Q_OBJECT
-
-public:
-    GameInstaller(GameInstallerSource & _source, UlConfig & _config, QObject * _parent = nullptr);
-    ~GameInstaller() override;
-    inline void setGameName(const QString & _name);
-    inline const QString & gameName() const;
-    inline const GameInstallerSource & source() const;
-    bool install();
-    inline const UlConfigRecord * installedGameInfo() const;
-
-signals:
-    void progress(quint64 _total_bytes, quint64 _done_bytes);
-    void registrationStarted();
-    void registrationFinished();
-    void rollbackStarted();
-    void rollbackFinished();
-
-private:
-    void rollback();
-    void registerGame();
-
-private:
-    GameInstallerSource * mp_sourrce;
-    UlConfig & mr_config;
-    QString m_game_name;
-    QStringList m_written_parts;
-    UlConfigRecord * mp_installed_game_info;
+    unknown,
+    cd,
+    dvd
 };
 
-void GameInstaller::setGameName(const QString & _name)
-{
-    m_game_name = _name;
-}
-
-const QString & GameInstaller::gameName() const
-{
-    return m_game_name;
-}
-
-const GameInstallerSource & GameInstaller::source() const
-{
-    return *mp_sourrce;
-}
-
-const UlConfigRecord * GameInstaller::installedGameInfo() const
-{
-    return mp_installed_game_info;
-}
-
-#endif // __QPCOPL_GAMEINSTALLER__
+#endif // __QPCOPL_MEDIATYPE__

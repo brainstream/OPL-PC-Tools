@@ -35,20 +35,20 @@ static const char * g_settings_key_ul_dir = "uldir";
 class GameListItem : public QListWidgetItem
 {
 public:
-    explicit GameListItem(Ul::ConfigRecord _config_record) :
+    explicit GameListItem(UlConfigRecord _config_record) :
         m_config_record(_config_record)
     {
     }
 
     QVariant data(int _role) const;
 
-    Ul::ConfigRecord & configRecord()
+    UlConfigRecord & configRecord()
     {
         return m_config_record;
     }
 
 private:
-    Ul::ConfigRecord m_config_record;
+    UlConfigRecord m_config_record;
 };
 
 QVariant GameListItem::data(int _role) const
@@ -102,8 +102,8 @@ void MainWindow::loadUlConfig(const QString & _filename)
     }
     try
     {
-        QList<Ul::ConfigRecord> config = Ul::loadConfig(_filename);
-        for(const auto & record : config)
+        m_config_ptr = UlConfig::load(_filename);
+        for(const auto & record : m_config_ptr->records())
             mp_list_games->addItem(new GameListItem(record));
         mp_label_current_ul_file->setText(_filename);
         mp_list_games->setCurrentRow(0);
@@ -138,7 +138,7 @@ void MainWindow::addGame()
 {
     try
     {
-        GameInstallDialog dlg(QFileInfo(mp_label_current_ul_file->text()).absolutePath(), this);
+        GameInstallDialog dlg(*m_config_ptr, this);
         if(dlg.exec() == QDialog::Accepted)
             reloadUlConfig();
     }
@@ -157,7 +157,7 @@ void MainWindow::gameSelected(QListWidgetItem * _item)
         return;
     }
     GameListItem * item = static_cast<GameListItem *>(_item);
-    const Ul::ConfigRecord & record = item->configRecord();
+    const UlConfigRecord & record = item->configRecord();
     mp_label_game_id->setText(record.image);
     mp_label_game_title->setText(record.name);
     mp_label_game_parts->setText(QString("%1").arg(record.parts));
@@ -181,14 +181,14 @@ void MainWindow::renameGame()
 {
     GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
     if(item == nullptr) return;
-    Ul::ConfigRecord & config_record = item->configRecord();
+    UlConfigRecord & config_record = item->configRecord();
     try
     {
         GameRenameDialog dlg(config_record.name, this);
         if(dlg.exec() == QDialog::Accepted)
         {
             QString new_name = dlg.name();
-            Ul::renameConfigRecord(config_record.image, new_name, mp_label_current_ul_file->text());
+            m_config_ptr->renameRecord(config_record.image, new_name);
             config_record.name = new_name;
             mp_list_games->update(mp_list_games->currentIndex());
             gameSelected(item);

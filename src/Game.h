@@ -15,64 +15,44 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_GAMEINSTALLER__
-#define __QPCOPL_GAMEINSTALLER__
+#ifndef __QPCOPL_GAME__
+#define __QPCOPL_GAME__
 
 #include <QObject>
-#include <QStringList>
 #include "UlConfig.h"
-#include "GameInstallerSource.h"
+#include "ValidationException.h"
 
-class GameInstaller : public QObject
+class Game
 {
-    Q_OBJECT
+public:
+    const static int max_game_name_length = 32;
+    const static int max_image_name_length = 15;
 
 public:
-    GameInstaller(GameInstallerSource & _source, UlConfig & _config, QObject * _parent = nullptr);
-    ~GameInstaller() override;
-    inline void setGameName(const QString & _name);
-    inline const QString & gameName() const;
-    inline const GameInstallerSource & source() const;
-    bool install();
-    inline const UlConfigRecord * installedGameInfo() const;
-
-signals:
-    void progress(quint64 _total_bytes, quint64 _done_bytes);
-    void registrationStarted();
-    void registrationFinished();
-    void rollbackStarted();
-    void rollbackFinished();
+    explicit Game(UlConfigRecord & _config);
+    void rename(const QString & _new_name);
+    static QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
+    inline static void validateGameName(const QString & _name);
+    inline static void validateGameImageName(const QString & _name);
 
 private:
-    void rollback();
-    void registerGame();
+    static quint32 crc32(const QString & _string);
 
 private:
-    GameInstallerSource * mp_sourrce;
-    UlConfig & mr_config;
-    QString m_game_name;
-    QStringList m_written_parts;
-    UlConfigRecord * mp_installed_game_info;
+    UlConfigRecord & mr_config;
 };
 
-void GameInstaller::setGameName(const QString & _name)
+void Game::validateGameName(const QString & _name)
 {
-    m_game_name = _name;
+    if(_name.toUtf8().size() > max_game_name_length)
+        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(max_game_name_length));
 }
 
-const QString & GameInstaller::gameName() const
+void Game::validateGameImageName(const QString & _name)
 {
-    return m_game_name;
+    if(_name.toLatin1().size() > max_image_name_length)
+        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(max_image_name_length));
 }
 
-const GameInstallerSource & GameInstaller::source() const
-{
-    return *mp_sourrce;
-}
 
-const UlConfigRecord * GameInstaller::installedGameInfo() const
-{
-    return mp_installed_game_info;
-}
-
-#endif // __QPCOPL_GAMEINSTALLER__
+#endif // __QPCOPL_GAME__

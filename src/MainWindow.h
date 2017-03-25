@@ -20,6 +20,7 @@
 
 #include <QLabel>
 #include "ui_MainWindow.h"
+#include "UlConfig.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -46,6 +47,7 @@ private:
 
 private:
     QLabel * mp_label_current_ul_file;
+    QSharedPointer<UlConfig> m_config_ptr;
 };
 
 #endif // __QPCOPL_MAINWINDOW__

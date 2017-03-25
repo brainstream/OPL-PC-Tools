@@ -19,18 +19,17 @@
 #include "UlConfig.h"
 #include "IOException.h"
 #include "ValidationException.h"
+#include "Game.h"
 
 #define MT_CD  0x12
 #define MT_DVD 0x14
-
-using namespace Ul;
 
 namespace {
 
 struct RawConfigRecord
 {
-    char name[UL_MAX_GAME_NAME_LENGTH];
-    char image[15];
+    char name[Game::max_game_name_length];
+    char image[Game::max_image_name_length];
     quint8 parts;
     quint8 media;
     quint8 pad[15];
@@ -42,7 +41,7 @@ void openFile(QFile & _file, QIODevice::OpenMode _flags)
         throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
 }
 
-size_t findRecord(QFile & _file, const QString & _image, RawConfigRecord * _result = nullptr)
+size_t findRecordOffset(QFile & _file, const QString & _image, RawConfigRecord * _result = nullptr)
 {
     const QByteArray image_qbytes = _image.toLatin1();
     const char * image_bytes = image_qbytes.constData();
@@ -66,12 +65,32 @@ size_t findRecord(QFile & _file, const QString & _image, RawConfigRecord * _resu
 
 } // namespace
 
-
-QList<ConfigRecord> Ul::loadConfig(const QString & _filepath)
+UlConfig::UlConfig(const QDir & _config_dir) :
+    m_config_directory(_config_dir.path()),
+    m_config_filepath(_config_dir.absoluteFilePath(UL_CONFIG_FILENAME))
 {
-    QFile file(_filepath);
+}
+
+QSharedPointer<UlConfig> UlConfig::load(const QDir & _config_dir)
+{
+    UlConfig * config = new UlConfig(_config_dir);
+    try
+    {
+        config->load();
+    }
+    catch(...)
+    {
+        delete config;
+        throw;
+    }
+    return QSharedPointer<UlConfig>(config);
+}
+
+void UlConfig::load()
+{
+    QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadOnly);
-    QList<ConfigRecord> results;
+    QList<UlConfigRecord> records;
     const size_t record_size = sizeof(RawConfigRecord);
     char * buffer = new char[record_size];
     for(;;)
@@ -80,11 +99,11 @@ QList<ConfigRecord> Ul::loadConfig(const QString & _filepath)
         if(read_bytes < record_size)
             break;
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
-        ConfigRecord record = {};
-        if(raw_record->name[UL_MAX_GAME_NAME_LENGTH - 1] == '\0')
+        UlConfigRecord record = {};
+        if(raw_record->name[Game::max_game_name_length - 1] == '\0')
             record.name = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
         else
-            record.name = QString::fromUtf8(raw_record->name, UL_MAX_GAME_NAME_LENGTH);
+            record.name = QString::fromUtf8(raw_record->name, Game::max_game_name_length);
         record.image = QString::fromLatin1(raw_record->image, sizeof(RawConfigRecord::image));
         record.parts = raw_record->parts;
         switch(raw_record->media)
@@ -99,23 +118,20 @@ QList<ConfigRecord> Ul::loadConfig(const QString & _filepath)
             record.type = MediaType::unknown;
             break;
         }
-        results.append(record);
+        records.append(record);
     }
     delete [] buffer;
-    return results;
 }
 
-void Ul::addConfigRecord(const ConfigRecord & _config, const QString & _filepath)
+void UlConfig::addRecord(const UlConfigRecord & _config)
 {
-    QByteArray name_bytes = _config.name.toUtf8();
-    if(name_bytes.size() > UL_MAX_GAME_NAME_LENGTH)
-        throw ValidationException(QObject::tr("Maximum game name length is %1 bytes").arg(UL_MAX_GAME_NAME_LENGTH));
-    QByteArray image_bytes = _config.image.toLatin1();
-    if(image_bytes.size() > UL_MAX_IMAGE_NAME_LENGTH)
-        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(UL_MAX_IMAGE_NAME_LENGTH));
-    QFile file(_filepath);
+    Game::validateGameName(_config.name);
+    Game::validateGameImageName(_config.image);
+    QFile file(m_config_filepath);
     openFile(file, QIODevice::WriteOnly | QIODevice::Append);
     RawConfigRecord record = { };
+    QByteArray name_bytes = _config.name.toUtf8();
+    QByteArray image_bytes = _config.image.toLatin1();
     memcpy(record.image, image_bytes.constData(), image_bytes.size());
     memcpy(record.name , name_bytes.constData(), name_bytes.size());
     record.media = _config.type == MediaType::dvd ? MT_DVD : MT_CD;
@@ -124,27 +140,41 @@ void Ul::addConfigRecord(const ConfigRecord & _config, const QString & _filepath
     const char * data = reinterpret_cast<const char *>(&record);
     if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
         throw IOException("An error occurred while writing data to file");
+    m_records.append(_config);
 }
 
-void Ul::deleteConfigRecord(const QString _image, const QString & _filepath)
+void UlConfig::deleteRecord(const QString _image)
 {
 
 }
 
-void Ul::renameConfigRecord(const QString _image, const QString & _new_name, const QString & _filepath)
+void UlConfig::renameRecord(const QString _image, const QString & _new_name)
 {
-    QByteArray name_bytes = _new_name.toUtf8();
-    if(name_bytes.size() > UL_MAX_GAME_NAME_LENGTH)
-        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(UL_MAX_GAME_NAME_LENGTH));
-    QFile file(_filepath);
+    Game::validateGameName(_new_name);
+    UlConfigRecord * record = findRecord(_image);
+    if(!record)
+        throw ValidationException(QObject::tr("Config record is not loaded"));
+    QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
-    size_t offset = findRecord(file, _image);
+    size_t offset = findRecordOffset(file, _image);
     if(!~offset)
         throw ValidationException(QObject::tr("Config record was not found"));
     file.seek(offset);
     char data[sizeof(RawConfigRecord::name)];
     memset(&data, 0, sizeof(RawConfigRecord::name));
+    QByteArray name_bytes = _new_name.toUtf8();
     strncpy(data, name_bytes.constData(), name_bytes.size());
     if(file.write(data, sizeof(data)) != sizeof(data))
         throw IOException("An error occurred while writing data to file");
+    record->name = _new_name;
+}
+
+UlConfigRecord * UlConfig::findRecord(const QString & _image)
+{
+    for(UlConfigRecord & record : m_records)
+    {
+        if(record.image == _image)
+            return &record;
+    }
+    return nullptr;
 }

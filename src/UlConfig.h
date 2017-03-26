@@ -23,8 +23,6 @@
 #include <QSharedPointer>
 #include "MediaType.h"
 
-#define UL_CONFIG_FILENAME "ul.cfg"
-
 struct UlConfigRecord
 {
     UlConfigRecord() :
@@ -53,6 +51,7 @@ public:
     void addRecord(const UlConfigRecord & _config);
     void deleteRecord(const QString _image);
     void renameRecord(const QString _image, const QString & _new_name);
+
 
 private:
     UlConfigRecord * findRecord(const QString & _image);

@@ -40,7 +40,7 @@ private slots:
     void gameSelected(QListWidgetItem * _item);
 
 private:
-    void loadUlConfig(const QString & _filename);
+    void loadUlConfig(const QDir & _directory);
     void setCurrentFilePath(const QString & _path);
     void activateFileActions(bool _activate);
     void activateGameActions(bool _activate);

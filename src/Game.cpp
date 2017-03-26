@@ -15,24 +15,52 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <algorithm>
 #include <QFile>
 #include <QList>
 #include "Game.h"
 
-Game::Game(UlConfigRecord & _config) :
-    mr_config(_config)
+Game::Game(UlConfig & _config, const QString & _image) :
+    mr_config(_config),
+    m_image(_image)
 {
 }
 
 void Game::rename(const QString & _new_name)
 {
-//    QList<QFile> files;
-//    for(quint8 part = 0; part < m_config.parts; ++part)
-//    {
-//        QString part_name = makeGamePartName(m_config.image, m_config.name, part);
+    const UlConfigRecord & config_record = configRecord();
+    QList<QString> files;
+    QDir root_dir(mr_config.directory());
+    QString image_id = imageId();
+    for(quint8 part = 0; part < config_record.parts; ++part)
+    {
+        QString part_path = root_dir.absoluteFilePath(makeGamePartName(image_id, config_record.name, part));
+        if(!QFile::exists(part_path))
+            throw ValidationException(QObject::tr("File \"%1\" was not found").arg(part_path));
+        files.append(part_path);
+    }
+    for(int part = 0; part < config_record.parts; ++part)
+    {
+        QString new_path = root_dir.absoluteFilePath(makeGamePartName(image_id, _new_name, part));
+        QFile::rename(files[part], new_path);
+    }
+    mr_config.renameRecord(m_image, _new_name);
+}
 
-//        files.append(QFile());
-//    }
+QString Game::imageId() const
+{
+    return m_image.startsWith("ul.") ? m_image.mid(3) : m_image;
+}
+
+const UlConfigRecord & Game::configRecord() const
+{
+    const QList<UlConfigRecord> & records = mr_config.records();
+    auto it = std::find_if(records.cbegin(), records.cend(), [this](const UlConfigRecord & _record) {
+        return _record.image == m_image;
+    });
+    if(it == records.cend())
+        throw ValidationException(QObject::tr("Record \"%1\" was not found in the config file").arg(m_image));
+    return *it;
 }
 
 QString Game::makeGamePartName(const QString & _id, const QString & _name, quint8 _part)

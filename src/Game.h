@@ -29,7 +29,9 @@ public:
     const static int max_image_name_length = 15;
 
 public:
-    explicit Game(UlConfigRecord & _config);
+    Game(UlConfig & _config, const QString & _image);
+    Game(const Game &) = default;
+    Game & operator = (const Game &) = default;
     void rename(const QString & _new_name);
     static QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
     inline static void validateGameName(const QString & _name);
@@ -37,9 +39,12 @@ public:
 
 private:
     static quint32 crc32(const QString & _string);
+    QString imageId() const;
+    const UlConfigRecord & configRecord() const;
 
 private:
-    UlConfigRecord & mr_config;
+    UlConfig & mr_config;
+    QString m_image;
 };
 
 void Game::validateGameName(const QString & _name)

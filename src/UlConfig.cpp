@@ -23,6 +23,7 @@
 
 #define MT_CD  0x12
 #define MT_DVD 0x14
+#define UL_CONFIG_FILENAME "ul.cfg"
 
 namespace {
 
@@ -89,8 +90,10 @@ QSharedPointer<UlConfig> UlConfig::load(const QDir & _config_dir)
 void UlConfig::load()
 {
     QFile file(m_config_filepath);
-    openFile(file, QIODevice::ReadOnly);
-    QList<UlConfigRecord> records;
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        return;
+    }
     const size_t record_size = sizeof(RawConfigRecord);
     char * buffer = new char[record_size];
     for(;;)
@@ -104,7 +107,7 @@ void UlConfig::load()
             record.name = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
         else
             record.name = QString::fromUtf8(raw_record->name, Game::max_game_name_length);
-        record.image = QString::fromLatin1(raw_record->image, sizeof(RawConfigRecord::image));
+        record.image = QString::fromLatin1(raw_record->image, strlen(raw_record->image));
         record.parts = raw_record->parts;
         switch(raw_record->media)
         {
@@ -118,7 +121,7 @@ void UlConfig::load()
             record.type = MediaType::unknown;
             break;
         }
-        records.append(record);
+        m_records.append(record);
     }
     delete [] buffer;
 }

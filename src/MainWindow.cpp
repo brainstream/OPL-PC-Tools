@@ -21,6 +21,7 @@
 #include <QListWidgetItem>
 #include "MainWindow.h"
 #include "UlConfig.h"
+#include "Game.h"
 #include "GameInstaller.h"
 #include "Iso9660GameInstallerSource.h"
 #include "GameInstallDialog.h"
@@ -35,7 +36,7 @@ static const char * g_settings_key_ul_dir = "uldir";
 class GameListItem : public QListWidgetItem
 {
 public:
-    explicit GameListItem(UlConfigRecord _config_record) :
+    explicit GameListItem(const UlConfigRecord & _config_record) :
         m_config_record(_config_record)
     {
     }
@@ -75,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::closeEvent(QCloseEvent * _event)
 {
+    Q_UNUSED(_event)
     QSettings settings;
     settings.setValue(g_settings_key_wnd_geometry, saveGeometry());
 }
@@ -86,26 +88,18 @@ void MainWindow::loadUlConfig()
     dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root dir"), dirpath);
     if(dirpath.isEmpty()) return;
     settings.setValue(g_settings_key_ul_dir, dirpath);
-    QDir dir(dirpath);
-    QString ul_file = dir.filePath(UL_CONFIG_FILENAME);
-    loadUlConfig(ul_file);
+    loadUlConfig(dirpath);
 }
 
-void MainWindow::loadUlConfig(const QString & _filename)
+void MainWindow::loadUlConfig(const QDir & _directory)
 {
     mp_list_games->clear();
-    if(!QFile(_filename).exists())
-    {
-        mp_label_current_ul_file->setText(_filename);
-        activateFileActions(true);
-        return;
-    }
     try
     {
-        m_config_ptr = UlConfig::load(_filename);
+        m_config_ptr = UlConfig::load(_directory);
         for(const auto & record : m_config_ptr->records())
             mp_list_games->addItem(new GameListItem(record));
-        mp_label_current_ul_file->setText(_filename);
+        mp_label_current_ul_file->setText(m_config_ptr->file());
         mp_list_games->setCurrentRow(0);
         activateFileActions(true);
     }
@@ -119,7 +113,7 @@ void MainWindow::loadUlConfig(const QString & _filename)
 
 void MainWindow::reloadUlConfig()
 {
-    loadUlConfig(mp_label_current_ul_file->text());
+    loadUlConfig(m_config_ptr->directory());
 }
 
 void MainWindow::activateFileActions(bool _activate)
@@ -188,7 +182,7 @@ void MainWindow::renameGame()
         if(dlg.exec() == QDialog::Accepted)
         {
             QString new_name = dlg.name();
-            m_config_ptr->renameRecord(config_record.image, new_name);
+            Game(*m_config_ptr, config_record.image).rename(new_name);
             config_record.name = new_name;
             mp_list_games->update(mp_list_games->currentIndex());
             gameSelected(item);

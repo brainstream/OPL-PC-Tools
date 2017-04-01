@@ -23,10 +23,12 @@
 #include <QFileDialog>
 #include "GameInstallDialog.h"
 #include "Game.h"
+#include "GameRenameDialog.h"
 
 namespace {
 
 static const char * g_settings_key_iso_dir = "isodir";
+static const QString g_canceled_message = QObject::tr("Canceled by user");
 
 enum class InstallationStatus
 {
@@ -55,8 +57,10 @@ public:
     QVariant data(const QModelIndex & _index, int _role) const override;
     QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
     void addTask(const QString & _iso_path);
+    void deleteTask(int _index);
     const GameInstallTask * task(int _index) const;
     void setTaskStatus(int _index, InstallationStatus _status);
+    void setTaskGameName(int _index, const QString & _name);
     void setTaskError(int _index, const QString & _message);
 
 private:
@@ -168,7 +172,7 @@ void GameTasksTableModel::addTask(const QString & _iso_path)
     task.status = InstallationStatus::queued;
     m_tasks.append(task);
     endInsertRows();
-    emit dataChanged(parent_index, index(m_tasks.size(), columnCount(QModelIndex())));
+    emit dataChanged(index(m_tasks.size(), 0), index(m_tasks.size(), columnCount(QModelIndex())));
 }
 
 QString GameTasksTableModel::truncateGameName(const QString & _name)
@@ -182,6 +186,16 @@ QString GameTasksTableModel::truncateGameName(const QString & _name)
     return result;
 }
 
+void GameTasksTableModel::deleteTask(int _index)
+{
+    if(_index >= m_tasks.size()) return;
+    QModelIndex parent_index = index(0, 0);
+    beginRemoveRows(parent_index, _index, _index);
+    m_tasks.removeAt(_index);
+    endRemoveRows();
+    emit dataChanged(parent_index, index(m_tasks.size(), columnCount(QModelIndex())));
+}
+
 const GameInstallTask * GameTasksTableModel::task(int _index) const
 {
     return _index >= m_tasks.size() ? nullptr : &m_tasks[_index];
@@ -193,6 +207,16 @@ void GameTasksTableModel::setTaskStatus(int _index, InstallationStatus _status)
     {
         m_tasks[_index].status = _status;
         QModelIndex cell_index = index(_index, s_column_status);
+        emit dataChanged(cell_index, cell_index);
+    }
+}
+
+void GameTasksTableModel::setTaskGameName(int _index, const QString & _name)
+{
+    if(_index < m_tasks.size())
+    {
+        m_tasks[_index].game_name = _name;
+        QModelIndex cell_index = index(_index, s_column_name);
         emit dataChanged(cell_index, cell_index);
     }
 }
@@ -219,9 +243,11 @@ GameInstallDialog::GameInstallDialog(UlConfig & _config, QWidget * _parent /*= n
     mp_installer(nullptr),
     mp_source(nullptr),
     mr_config(_config),
-    m_processing_task_index(0)
+    m_processing_task_index(0),
+    m_is_canceled(false)
 {
     setupUi(this);
+    mp_widget_task_details->hide();
     mp_progressbar_current->setMaximum(g_progressbar_max_value);
     mp_progressbar_overall->setMaximum(g_progressbar_max_value);
     mp_table_tasks->setModel(new GameTasksTableModel(this));
@@ -230,6 +256,9 @@ GameInstallDialog::GameInstallDialog(UlConfig & _config, QWidget * _parent /*= n
     mp_table_tasks->setColumnWidth(2, 150);
     mp_btn_cancel->setDisabled(true);
     mp_btn_install->setDisabled(true);
+    mp_combo_type->addItem("CD");
+    mp_combo_type->addItem("DVD");
+    connect(mp_table_tasks->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &GameInstallDialog::taskSelected);
 }
 
 GameInstallDialog::~GameInstallDialog()
@@ -240,9 +269,21 @@ GameInstallDialog::~GameInstallDialog()
 
 void GameInstallDialog::reject()
 {
-    mp_btn_cancel->setDisabled(true);
-    mp_work_thread->quit();
-    mp_work_thread->requestInterruption();
+    if(mp_work_thread && !m_is_canceled)
+    {
+        m_is_canceled = true;
+        mp_btn_cancel->setDisabled(true);
+        mp_work_thread->quit();
+        mp_work_thread->requestInterruption();
+        GameTasksTableModel * model = static_cast<GameTasksTableModel *>(mp_table_tasks->model());
+        for(int i = m_processing_task_index + 1; ;++i)
+        {
+            if(model->task(i))
+                setTaskError(g_canceled_message, i);
+            else
+                break;
+        }
+    }
 }
 
 void GameInstallDialog::closeEvent(QCloseEvent * _event)
@@ -276,11 +317,17 @@ void GameInstallDialog::setCurrentProgressBarUnknownStatus(bool _unknown, int _v
 
 void GameInstallDialog::rollbackFinished()
 {
-    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->
-            setTaskError(m_processing_task_index, tr("Canceled by user"));
-    setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
+    setTaskError(g_canceled_message);
     mp_work_thread->quit();
+    setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
 }
+
+void GameInstallDialog::setTaskError(const QString & _message, int _index /*= -1*/)
+{
+    if(_index < 0) _index = m_processing_task_index;
+    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->setTaskError(_index, _message);
+    if(_index == mp_table_tasks->currentIndex().row())
+        mp_label_error_message->setText(_message);}
 
 void GameInstallDialog::registrationStarted()
 {
@@ -300,9 +347,9 @@ void GameInstallDialog::registrationFinished()
 void GameInstallDialog::threadFinished()
 {
     ++m_processing_task_index;
-    if(startTask()) {
+    mp_work_thread = nullptr;
+    if(startTask())
         return;
-    }
     mp_btn_ok->setDisabled(false);
     mp_btn_cancel->setDisabled(true);
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
@@ -315,6 +362,8 @@ bool GameInstallDialog::startTask()
     delete mp_source;
     mp_installer = nullptr;
     mp_source = nullptr;
+    if(m_is_canceled)
+        return false;
     const GameInstallTask * task = static_cast<GameTasksTableModel *>(mp_table_tasks->model())->task(m_processing_task_index);
     if(task == nullptr)
         return false;
@@ -348,10 +397,55 @@ void GameInstallDialog::addTask()
     mp_btn_install->setDisabled(false);
 }
 
+void GameInstallDialog:: taskSelected(const QModelIndex & _index, const QModelIndex & _prev_index)
+{
+    if(_index.row() < 0)
+    {
+        mp_widget_task_details->hide();
+        return;
+    }
+    else if(_prev_index.row() < 0)
+    {
+        mp_widget_task_details->show();
+    }
+    const GameTasksTableModel * model = static_cast<GameTasksTableModel *>(mp_table_tasks->model());
+    const GameInstallTask * task = model->task(_index.row());
+    if(task->status == InstallationStatus::error)
+        mp_label_error_message->setText(task->error_message);
+    else
+        mp_label_error_message->clear();
+    mp_label_title->setText(task->game_name);
+}
+
+void GameInstallDialog::renameGame()
+{
+    if(mp_work_thread) return;
+    int current_row = mp_table_tasks->currentIndex().row();
+    GameTasksTableModel * model = static_cast<GameTasksTableModel *>(mp_table_tasks->model());
+    const GameInstallTask * task = model->task(current_row);
+    if(!task || task->status != InstallationStatus::queued) return;
+    GameRenameDialog dlg(task->game_name, this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        model->setTaskGameName(current_row, dlg.name());
+        mp_label_title->setText(dlg.name());
+    }
+}
+
+void GameInstallDialog::removeGame()
+{
+    if(mp_work_thread) return;
+    int current_row = mp_table_tasks->currentIndex().row();
+    GameTasksTableModel * model = static_cast<GameTasksTableModel *>(mp_table_tasks->model());
+    const GameInstallTask * task = model->task(current_row);
+    if(!task || task->status != InstallationStatus::queued) return;
+    model->deleteTask(current_row);
+}
+
 void GameInstallDialog::installerError(QString _message)
 {
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
-    static_cast<GameTasksTableModel *>(mp_table_tasks->model())->setTaskError(m_processing_task_index, _message);
+    setTaskError(_message);
 }
 
 void GameInstallDialog::install()
@@ -360,6 +454,9 @@ void GameInstallDialog::install()
     mp_btn_install->setDisabled(true);
     mp_btn_cancel->setDisabled(false);
     mp_btn_ok->setDisabled(true);
+    mp_combo_type->setDisabled(true);
+    mp_btn_remove->hide();
+    mp_btn_rename->hide();
     m_processing_task_index = 0;
     startTask();
 }

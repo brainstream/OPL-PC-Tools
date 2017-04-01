@@ -18,6 +18,7 @@
 #ifndef __QPCOPL_GAMEINSTALLDIALOG__
 #define __QPCOPL_GAMEINSTALLDIALOG__
 
+#include <QAbstractTableModel>
 #include "ui_GameInstallDialog.h"
 #include "GameInstallThread.h"
 #include "GameInstaller.h"
@@ -47,10 +48,14 @@ private slots:
     void registrationFinished();
     void threadFinished();
     void installerError(QString _message);
+    void taskSelected(const QModelIndex & _index, const QModelIndex & _prev_index);
+    void renameGame();
+    void removeGame();
 
 private:
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);
+    void setTaskError(const QString & _message, int _index = -1);
 
 private:
     GameInstallThread * mp_work_thread;
@@ -58,6 +63,7 @@ private:
     Iso9660GameInstallerSource * mp_source;
     UlConfig & mr_config;
     int m_processing_task_index;
+    bool m_is_canceled;
 };
 
 #endif // __QPCOPL_GAMEINSTALLDIALOG__

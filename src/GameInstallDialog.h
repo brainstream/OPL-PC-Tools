@@ -18,7 +18,6 @@
 #ifndef __QPCOPL_GAMEINSTALLDIALOG__
 #define __QPCOPL_GAMEINSTALLDIALOG__
 
-#include <QAbstractTableModel>
 #include "ui_GameInstallDialog.h"
 #include "GameInstallThread.h"
 #include "GameInstaller.h"
@@ -48,7 +47,7 @@ private slots:
     void registrationFinished();
     void threadFinished();
     void installerError(QString _message);
-    void taskSelected(const QModelIndex & _index, const QModelIndex & _prev_index);
+    void taskSelectionChanged();
     void renameGame();
     void removeGame();
 

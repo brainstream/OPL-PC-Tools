@@ -21,6 +21,9 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 #include "GameInstallDialog.h"
 #include "Game.h"
 #include "GameRenameDialog.h"
@@ -29,6 +32,7 @@ namespace {
 
 const int g_progressbar_max_value = 1000;
 const char * g_settings_key_iso_dir = "isodir";
+const char * g_iso_ext = ".iso";
 static const QString g_canceled_message = QObject::tr("Canceled by user");
 
 enum class InstallationStatus
@@ -180,6 +184,28 @@ void GameInstallDialog::closeEvent(QCloseEvent * _event)
     Q_UNUSED(_event)
 }
 
+void GameInstallDialog::dragEnterEvent(QDragEnterEvent * _event)
+{
+    for(const QUrl & url : _event->mimeData()->urls())
+    {
+        if(url.path().endsWith(g_iso_ext))
+        {
+            _event->accept();
+            return;
+        }
+    }
+    _event->ignore();
+}
+
+void GameInstallDialog::dropEvent(QDropEvent * _event)
+{
+    for(const QUrl & url : _event->mimeData()->urls())
+    {
+        if(url.path().endsWith(g_iso_ext))
+            addTask(url.path());
+    }
+}
+
 void GameInstallDialog::installProgress(quint64 _total_bytes, quint64 _processed_bytes)
 {
     double current_progress = static_cast<double>(_processed_bytes) / _total_bytes;
@@ -298,10 +324,15 @@ void GameInstallDialog::addTask()
     settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_files[0]).absolutePath());
     for(const QString & file : iso_files)
     {
-        TaskListItem * item = new TaskListItem(file, mp_tree_tasks);
-        mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
-        mp_tree_tasks->setCurrentItem(item);
+        addTask(file);
     }
+}
+
+void GameInstallDialog::addTask(const QString & _iso_path)
+{
+    TaskListItem * item = new TaskListItem(_iso_path, mp_tree_tasks);
+    mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
+    mp_tree_tasks->setCurrentItem(item);
     mp_btn_install->setDisabled(false);
 }
 
@@ -345,6 +376,10 @@ void GameInstallDialog::removeGame()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(item->task().status != InstallationStatus::queued) return;
     delete item;
+    if(mp_tree_tasks->topLevelItemCount() == 0)
+    {
+        mp_btn_install->setDisabled(true);
+    }
 }
 
 void GameInstallDialog::installerError(QString _message)

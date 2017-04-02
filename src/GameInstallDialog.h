@@ -36,6 +36,8 @@ public slots:
 
 protected:
     void closeEvent(QCloseEvent * _event) override;
+    void dragEnterEvent(QDragEnterEvent * _event) override;
+    void dropEvent(QDropEvent * _event) override;
 
 private slots:
     void addTask();
@@ -52,6 +54,7 @@ private slots:
     void removeGame();
 
 private:
+    void addTask(const QString & _iso_path);
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);
     void setTaskError(const QString & _message, int _index = -1);

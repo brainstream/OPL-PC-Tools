@@ -319,7 +319,8 @@ void GameInstallDialog::addTask()
 {
     QSettings settings;
     QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
-    QStringList iso_files = QFileDialog::getOpenFileNames(this, tr("Select the PS2 ISO files"), iso_dir, tr("ISO files (*.iso)"));
+    QString filter = tr("PS2 Disc Images") + QString(" (*%1)").arg(g_iso_ext);
+    QStringList iso_files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(iso_files.isEmpty()) return;
     settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_files[0]).absolutePath());
     for(const QString & file : iso_files)

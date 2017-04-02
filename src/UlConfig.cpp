@@ -16,6 +16,7 @@
  ***********************************************************************************************/
 
 #include <QFile>
+#include <QTemporaryFile>
 #include "UlConfig.h"
 #include "IOException.h"
 #include "ValidationException.h"
@@ -29,6 +30,18 @@ namespace {
 
 struct RawConfigRecord
 {
+    explicit RawConfigRecord(const UlConfigRecord & _record)
+    {
+        memset(this, 0, sizeof(RawConfigRecord));
+        QByteArray name_bytes = _record.name.toUtf8();
+        QByteArray image_bytes = _record.image.toLatin1();
+        memcpy(this->image, image_bytes.constData(), image_bytes.size());
+        memcpy(this->name , name_bytes.constData(), name_bytes.size());
+        this->media = _record.type == MediaType::dvd ? MT_DVD : MT_CD;
+        this->parts = _record.parts;
+        this->pad[4] = 0x08; // To be like USBA
+    }
+
     char name[Game::max_game_name_length];
     char image[Game::max_image_name_length];
     quint8 parts;
@@ -132,14 +145,7 @@ void UlConfig::addRecord(const UlConfigRecord & _config)
     Game::validateGameImageName(_config.image);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::WriteOnly | QIODevice::Append);
-    RawConfigRecord record = { };
-    QByteArray name_bytes = _config.name.toUtf8();
-    QByteArray image_bytes = _config.image.toLatin1();
-    memcpy(record.image, image_bytes.constData(), image_bytes.size());
-    memcpy(record.name , name_bytes.constData(), name_bytes.size());
-    record.media = _config.type == MediaType::dvd ? MT_DVD : MT_CD;
-    record.pad[4] = 0x08; // To be like USBA
-    record.parts = _config.parts;
+    RawConfigRecord record(_config);
     const char * data = reinterpret_cast<const char *>(&record);
     if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
         throw IOException("An error occurred while writing data to file");
@@ -148,7 +154,31 @@ void UlConfig::addRecord(const UlConfigRecord & _config)
 
 void UlConfig::deleteRecord(const QString _image)
 {
-
+    QTemporaryFile temp_file;
+    temp_file.setAutoRemove(true);
+    temp_file.open();
+    int record_count = m_records.size();
+    int item_to_delete = -1;
+    for(int i = 0; i < record_count; ++i)
+    {
+        if(m_records[i].image == _image)
+        {
+            item_to_delete = i;
+            continue;
+        }
+        RawConfigRecord raw_record(m_records[i]);
+        const char * data = reinterpret_cast<const char *>(&raw_record);
+        temp_file.write(data, sizeof(RawConfigRecord));
+    }
+    temp_file.close();
+    if(item_to_delete >= 0)
+        m_records.removeAt(item_to_delete);
+    QString config_bk = m_config_filepath + "_bk";
+    if(!QFile::rename(m_config_filepath, config_bk))
+        throw IOException(QObject::tr("Unable to backup config file"));
+    temp_file.rename(m_config_filepath);
+    temp_file.setAutoRemove(false);
+    QFile::remove(config_bk);
 }
 
 void UlConfig::renameRecord(const QString _image, const QString & _new_name)

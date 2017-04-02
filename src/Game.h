@@ -33,6 +33,7 @@ public:
     Game(const Game &) = default;
     Game & operator = (const Game &) = default;
     void rename(const QString & _new_name);
+    void remove();
     static QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
     inline static void validateGameName(const QString & _name);
     inline static void validateGameImageName(const QString & _name);

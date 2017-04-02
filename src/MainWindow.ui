@@ -430,6 +430,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_action_delete_game</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadUlConfig()</slot>
@@ -437,5 +453,6 @@
   <slot>renameGame()</slot>
   <slot>reloadUlConfig()</slot>
   <slot>addGame()</slot>
+  <slot>deleteGame()</slot>
  </slots>
 </ui>

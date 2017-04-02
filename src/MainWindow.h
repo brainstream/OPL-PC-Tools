@@ -37,6 +37,7 @@ private slots:
     void reloadUlConfig();
     void renameGame();
     void addGame();
+    void deleteGame();
     void gameSelected(QListWidgetItem * _item);
 
 private:

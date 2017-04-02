@@ -27,6 +27,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
        <property name="rootIsDecorated">
         <bool>false</bool>
        </property>
@@ -91,6 +97,11 @@
                </item>
                <item row="1" column="1">
                 <widget class="QComboBox" name="mp_combo_type">
+                 <item>
+                  <property name="text">
+                   <string>Auto</string>
+                  </property>
+                 </item>
                  <item>
                   <property name="text">
                    <string notr="true">CD</string>

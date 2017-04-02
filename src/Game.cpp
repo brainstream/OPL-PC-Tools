@@ -47,6 +47,19 @@ void Game::rename(const QString & _new_name)
     mr_config.renameRecord(m_image, _new_name);
 }
 
+void Game::remove()
+{
+    UlConfigRecord config_record = configRecord();
+    mr_config.deleteRecord(m_image);
+    QString image_id = imageId();
+    QDir root_dir(mr_config.directory());
+    for(int part = 0; part < config_record.parts; ++part)
+    {
+        QString part_path = root_dir.absoluteFilePath(makeGamePartName(image_id, config_record.name, part));
+        QFile::remove(part_path);
+    }
+}
+
 QString Game::imageId() const
 {
     return m_image.startsWith("ul.") ? m_image.mid(3) : m_image;

@@ -142,6 +142,22 @@ void MainWindow::addGame()
     }
 }
 
+void MainWindow::deleteGame()
+{
+    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    if(item == nullptr) return;
+    UlConfigRecord & config_record = item->configRecord();
+    try
+    {
+        Game(*m_config_ptr, config_record.image).remove();
+        delete item;
+    }
+    catch(const Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
 void MainWindow::gameSelected(QListWidgetItem * _item)
 {
     if(_item == nullptr)

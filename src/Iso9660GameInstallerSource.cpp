@@ -45,11 +45,12 @@ void initLibCDIO()
 } // namespace
 
 Iso9660GameInstallerSource::Iso9660GameInstallerSource(const QString & _iso_path) :
-    m_file(_iso_path)
+    m_file(_iso_path),
+    m_type(MediaType::unknown)
 {
 }
 
-QString Iso9660GameInstallerSource::gameId()
+QString Iso9660GameInstallerSource::gameId() const
 {
     initLibCDIO();
     const QString config_filename = "SYSTEM.CNF;1";
@@ -103,7 +104,17 @@ QByteArray Iso9660GameInstallerSource::read(quint64 _length)
     return m_file.read(_length);
 }
 
-quint64 Iso9660GameInstallerSource::size()
+quint64 Iso9660GameInstallerSource::size() const
 {
     return m_file.size();
+}
+
+void Iso9660GameInstallerSource::setType(MediaType _type)
+{
+    m_type = _type;
+}
+
+MediaType Iso9660GameInstallerSource::type() const
+{
+    return m_type;
 }

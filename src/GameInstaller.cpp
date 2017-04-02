@@ -45,7 +45,9 @@ bool GameInstaller::install()
     mp_installed_game_info->image = QString("ul.") + iso_id;
     mp_installed_game_info->name = m_game_name.isEmpty() ? tr("Untitled Game") : m_game_name;
     const quint64 iso_size = mp_sourrce->size();
-    mp_installed_game_info->type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
+    mp_installed_game_info->type = mp_sourrce->type();
+    if(mp_installed_game_info->type == MediaType::unknown)
+        mp_installed_game_info->type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
     const size_t part_size = 1073741824;
     const size_t read_part_size = 32768;
     size_t processed_bytes = 0;

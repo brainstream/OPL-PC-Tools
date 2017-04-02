@@ -263,6 +263,15 @@ bool GameInstallDialog::startTask()
     const InstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
     mp_source = new Iso9660GameInstallerSource(task.iso_path);
+    switch(mp_combo_type->currentIndex())
+    {
+    case 1:
+        mp_source->setType(MediaType::cd);
+        break;
+    case 2:
+        mp_source->setType(MediaType::dvd);
+        break;
+    }
     mp_installer = new GameInstaller(*mp_source, mr_config, this);
     mp_installer->setGameName(task.game_name);
     mp_work_thread = new GameInstallThread(*mp_installer);
@@ -288,7 +297,11 @@ void GameInstallDialog::addTask()
     if(iso_files.isEmpty()) return;
     settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_files[0]).absolutePath());
     for(const QString & file : iso_files)
-        mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), new TaskListItem(file, mp_tree_tasks));
+    {
+        TaskListItem * item = new TaskListItem(file, mp_tree_tasks);
+        mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
+        mp_tree_tasks->setCurrentItem(item);
+    }
     mp_btn_install->setDisabled(false);
 }
 

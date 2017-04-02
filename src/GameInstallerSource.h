@@ -20,14 +20,16 @@
 
 #include <QString>
 #include <QByteArray>
+#include "MediaType.h"
 
 class GameInstallerSource
 {
 public:
     virtual ~GameInstallerSource() { }
-    virtual QString gameId() = 0;
+    virtual QString gameId() const = 0;
     virtual QByteArray read(quint64 _length) = 0;
-    virtual quint64 size() = 0;
+    virtual quint64 size() const = 0;
+    virtual MediaType type() const = 0;
 };
 
 #endif // __QPCOPL_GAMEINSTALLERSOURCE__

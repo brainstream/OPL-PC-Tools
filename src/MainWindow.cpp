@@ -134,7 +134,10 @@ void MainWindow::addGame()
     {
         GameInstallDialog dlg(*m_config_ptr, this);
         if(dlg.exec() == QDialog::Accepted)
+        {
             reloadUlConfig();
+            mp_list_games->setCurrentRow(mp_list_games->count() - 1);
+        }
     }
     catch(const Exception & exception)
     {

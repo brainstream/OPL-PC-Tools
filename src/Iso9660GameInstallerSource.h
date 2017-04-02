@@ -27,12 +27,15 @@ class Iso9660GameInstallerSource : public GameInstallerSource
 
 public:
     explicit Iso9660GameInstallerSource(const QString & _iso_path);
-    QString gameId() override;
+    QString gameId() const override;
     QByteArray read(quint64 _length) override;
-    virtual quint64 size() override;
+    quint64 size() const override;
+    void setType(MediaType _type);
+    MediaType type() const override;
 
 private:
     QFile m_file;
+    MediaType m_type;
 };
 
 #endif // __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__

@@ -54,7 +54,9 @@ RESOURCES += \
     src/Resources.qrc
 
 OTHER_FILES += \
+    .gitignore \
     LICENSE.txt
+
 
 TRANSLATIONS += \
     translations/qpcopl_ru.ts

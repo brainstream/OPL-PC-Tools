@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
     <name>GameInstallDialog</name>
     <message>
@@ -120,7 +120,7 @@
     <message>
         <location filename="../src/GameRenameDialog.cpp" line="45"/>
         <source>%1 byte(s) left</source>
-        <translation>%1 байт осталось</translation>
+        <translation>Осталось %1 байт</translation>
     </message>
 </context>
 <context>

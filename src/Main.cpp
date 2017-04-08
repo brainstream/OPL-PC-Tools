@@ -17,6 +17,7 @@
 
 #include "MainWindow.h"
 #include <QApplication>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +26,9 @@ int main(int argc, char *argv[])
     a.setApplicationVersion("0.0.1");
     a.setApplicationDisplayName("Open PlayStation 2 Loader PC Tools");
     a.setOrganizationName("brainstream");
+    QTranslator translator;
+    translator.load("qpcopl_ru");
+    a.installTranslator(&translator);
     MainWindow w;
     w.show();
 

@@ -58,6 +58,7 @@ private:
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);
     void setTaskError(const QString & _message, int _index = -1);
+    QString canceledErrorMessage() const;
 
 private:
     GameInstallThread * mp_work_thread;

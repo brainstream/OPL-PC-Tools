@@ -56,11 +56,14 @@ RESOURCES += \
 OTHER_FILES += \
     LICENSE.txt
 
+TRANSLATIONS += \
+    translations/qpcopl_ru.ts
+
 unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += libcdio libiso9660
 }
 
 win32 {
-    RC_FILE = src\Resources.rc
+    RC_FILE = src/Resources.rc
 }

@@ -33,7 +33,6 @@ namespace {
 const int g_progressbar_max_value = 1000;
 const char * g_settings_key_iso_dir = "isodir";
 const char * g_iso_ext = ".iso";
-static const QString g_canceled_message = QObject::tr("Canceled by user");
 
 enum class InstallationStatus
 {
@@ -174,9 +173,15 @@ void GameInstallDialog::reject()
         mp_work_thread->requestInterruption();
         for(int i = mp_tree_tasks->topLevelItemCount() - 1; i > m_processing_task_index; --i)
         {
-            static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i))->setError(g_canceled_message);
+            static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i))->setError(canceledErrorMessage());
         }
     }
+}
+
+QString GameInstallDialog::canceledErrorMessage() const
+{
+    static const QString message = tr("Canceled by user");
+    return message;
 }
 
 void GameInstallDialog::closeEvent(QCloseEvent * _event)
@@ -234,7 +239,7 @@ void GameInstallDialog::setCurrentProgressBarUnknownStatus(bool _unknown, int _v
 
 void GameInstallDialog::rollbackFinished()
 {
-    setTaskError(g_canceled_message);
+    setTaskError(canceledErrorMessage());
     mp_work_thread->quit();
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
     mp_progressbar_overall->setMaximum(g_progressbar_max_value);

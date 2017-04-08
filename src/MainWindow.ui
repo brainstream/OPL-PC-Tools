@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Open PlayStation 2 Loader PC Tools</string>
+   <string notr="true">Open PlayStation 2 Loader PC Tools</string>
   </property>
   <property name="windowIcon">
    <iconset resource="Resources.qrc">
@@ -212,7 +212,7 @@
   <widget class="QStatusBar" name="mp_statusbar"/>
   <widget class="QToolBar" name="mp_toolbar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string notr="true"/>
    </property>
    <property name="movable">
     <bool>false</bool>

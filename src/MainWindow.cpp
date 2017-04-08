@@ -24,6 +24,7 @@
 #include "Game.h"
 #include "GameInstaller.h"
 #include "Iso9660GameInstallerSource.h"
+#include "AboutDialog.h"
 #include "GameInstallDialog.h"
 #include "GameRenameDialog.h"
 #include "Exception.h"
@@ -79,6 +80,17 @@ void MainWindow::closeEvent(QCloseEvent * _event)
     Q_UNUSED(_event)
     QSettings settings;
     settings.setValue(g_settings_key_wnd_geometry, saveGeometry());
+}
+
+void MainWindow::about()
+{
+    AboutDialog dlg(this);
+    dlg.exec();
+}
+
+void MainWindow::aboutQt()
+{
+    QMessageBox::aboutQt(this);
 }
 
 void MainWindow::loadUlConfig()

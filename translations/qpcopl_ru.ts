@@ -2,6 +2,34 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../src/AboutDialog.ui" line="14"/>
+        <source>About program</source>
+        <translation>О программе</translation>
+    </message>
+    <message>
+        <location filename="../src/AboutDialog.ui" line="52"/>
+        <source>Tool for managing PS2 disk images used in OPL</source>
+        <translation>Инструмент для управления образами дисков PS2 для использования в OPL</translation>
+    </message>
+    <message>
+        <location filename="../src/AboutDialog.ui" line="62"/>
+        <source>Copyright © Sergey Smolyannikov &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;brainstream@yandex.ru&lt;/a&gt;</source>
+        <translation>Copyright © Сергей Смольянников &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;brainstream@yandex.ru&lt;/a</translation>
+    </message>
+    <message>
+        <location filename="../src/AboutDialog.ui" line="94"/>
+        <source>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;OPL page on GitHub&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Страница OPL на GitHub&lt;/a</translation>
+    </message>
+    <message>
+        <location filename="../src/AboutDialog.ui" line="107"/>
+        <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, верисия 3&lt;/a</translation>
+    </message>
+</context>
+<context>
     <name>GameInstallDialog</name>
     <message>
         <location filename="../src/GameInstallDialog.ui" line="17"/>
@@ -163,95 +191,104 @@
     <message>
         <location filename="../src/MainWindow.ui" line="204"/>
         <source>&amp;Help</source>
-        <translation>&amp;Помощь</translation>
+        <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="239"/>
+        <location filename="../src/MainWindow.ui" line="240"/>
         <source>&amp;Open...</source>
         <translation>&amp;Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="242"/>
+        <location filename="../src/MainWindow.ui" line="243"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="251"/>
+        <location filename="../src/MainWindow.ui" line="252"/>
         <source>&amp;Add...</source>
         <translation>&amp;Добавить...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="254"/>
+        <location filename="../src/MainWindow.ui" line="255"/>
         <source>Add Game</source>
         <translation>Добавить игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="257"/>
+        <location filename="../src/MainWindow.ui" line="258"/>
         <source>Ins</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="266"/>
+        <location filename="../src/MainWindow.ui" line="267"/>
         <source>&amp;Delete</source>
         <translation>&amp;Удалить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="269"/>
+        <location filename="../src/MainWindow.ui" line="270"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="272"/>
+        <location filename="../src/MainWindow.ui" line="273"/>
         <source>Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="281"/>
+        <location filename="../src/MainWindow.ui" line="282"/>
         <source>&amp;Rename...</source>
         <translation>&amp;Переименовать...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="284"/>
+        <location filename="../src/MainWindow.ui" line="285"/>
         <source>Rename Game</source>
         <translation>Переименовать игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="287"/>
+        <location filename="../src/MainWindow.ui" line="288"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="296"/>
+        <location filename="../src/MainWindow.ui" line="297"/>
         <source>&amp;Reload</source>
         <translation>Пере&amp;загрузить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="299"/>
+        <location filename="../src/MainWindow.ui" line="300"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="304"/>
+        <location filename="../src/MainWindow.ui" line="305"/>
         <source>&amp;About...</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="309"/>
+        <location filename="../src/MainWindow.ui" line="310"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="312"/>
+        <location filename="../src/MainWindow.ui" line="313"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="88"/>
+        <location filename="../src/MainWindow.ui" line="318"/>
+        <source>About &amp;Qt...</source>
+        <translation type="unfinished">О &amp;Qt...</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="vanished">О Qt...</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.cpp" line="100"/>
         <source>Choose the OPL root dir</source>
         <translation>Выбор корневого каталога OPL</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="186"/>
+        <location filename="../src/MainWindow.cpp" line="198"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>

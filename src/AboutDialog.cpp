@@ -15,42 +15,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#include "AboutDialog.h"
 
-#include <QLabel>
-#include "ui_MainWindow.h"
-#include "UlConfig.h"
-
-class MainWindow : public QMainWindow, private Ui::MainWindow
+AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    Q_OBJECT
-
-public:
-    explicit MainWindow(QWidget *parent = 0);
-
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void deleteGame();
-    void gameSelected(QListWidgetItem * _item);
-
-private:
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    QSharedPointer<UlConfig> m_config_ptr;
-};
-
-#endif // __QPCOPL_MAINWINDOW__
+    setupUi(this);
+    mp_label_app_name->setText(static_cast<QApplication *>(QApplication::instance())->applicationDisplayName());
+}

@@ -28,7 +28,8 @@ SOURCES +=\
     src/GameInstaller.cpp \
     src/GameInstallDialog.cpp \
     src/Iso9660GameInstallerSource.cpp \
-    src/Game.cpp
+    src/Game.cpp \
+    src/AboutDialog.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -43,12 +44,14 @@ HEADERS  += \
     src/Iso9660GameInstallerSource.h \
     src/GameInstallThread.h \
     src/Game.h \
-    src/MediaType.h
+    src/MediaType.h \
+    src/AboutDialog.h
 
 FORMS += \
     src/MainWindow.ui \
     src/GameRenameDialog.ui \
-    src/GameInstallDialog.ui
+    src/GameInstallDialog.ui \
+    src/AboutDialog.ui
 
 RESOURCES += \
     src/Resources.qrc

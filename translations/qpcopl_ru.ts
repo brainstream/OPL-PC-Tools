@@ -101,6 +101,11 @@
     </message>
     <message>
         <location filename="../src/GameInstaller.cpp" line="62"/>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation>Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/GameInstaller.cpp" line="67"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Не могу открыть файл для записи &quot;%1&quot;</translation>
     </message>
@@ -278,32 +283,32 @@
         <translation type="obsolete">Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="99"/>
+        <location filename="../src/GameInstallDialog.cpp" line="104"/>
         <source>Done</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="101"/>
+        <location filename="../src/GameInstallDialog.cpp" line="106"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="103"/>
+        <location filename="../src/GameInstallDialog.cpp" line="108"/>
         <source>Installation</source>
         <translation>Установка</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="105"/>
+        <location filename="../src/GameInstallDialog.cpp" line="110"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="107"/>
+        <location filename="../src/GameInstallDialog.cpp" line="112"/>
         <source>Registration</source>
         <translation>Регистрация</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="109"/>
+        <location filename="../src/GameInstallDialog.cpp" line="114"/>
         <source>Rolling back</source>
         <translation>Откат</translation>
     </message>
@@ -343,17 +348,27 @@
         <translation>Не могу открыть файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/UlConfig.cpp" line="178"/>
+        <location filename="../src/UlConfig.cpp" line="149"/>
+        <source>Game &quot;%1&quot; already registered</source>
+        <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
+    </message>
+    <message>
+        <location filename="../src/UlConfig.cpp" line="153"/>
+        <source>An error occurred while writing data to file</source>
+        <translation>Во время записи данных в файл произошла ошибка </translation>
+    </message>
+    <message>
+        <location filename="../src/UlConfig.cpp" line="180"/>
         <source>Unable to backup config file</source>
         <translation>Не могу сделать резервную копию конфигурационного файла</translation>
     </message>
     <message>
-        <location filename="../src/UlConfig.cpp" line="189"/>
+        <location filename="../src/UlConfig.cpp" line="191"/>
         <source>Config record is not loaded</source>
         <translation>Конфигурационная запись не была загружена</translation>
     </message>
     <message>
-        <location filename="../src/UlConfig.cpp" line="194"/>
+        <location filename="../src/UlConfig.cpp" line="196"/>
         <source>Config record was not found</source>
         <translation>Конфигурационная запись не найдена</translation>
     </message>

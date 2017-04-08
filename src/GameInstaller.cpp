@@ -56,7 +56,12 @@ bool GameInstaller::install()
     {
         QString part_filename = Game::makeGamePartName(iso_id, mp_installed_game_info->name, mp_installed_game_info->parts++);
         QFile part(dest_dir.absoluteFilePath(part_filename));
-        if(!part.open(QIODevice::Truncate | QIODevice::WriteOnly))
+        if(part.exists())
+        {
+            rollback();
+            throw IOException(tr("File already exists: \"%1\"").arg(part.fileName()));
+        }
+        if(!part.open(QIODevice::WriteOnly))
         {
             rollback();
             throw IOException(tr("Unable to open file to write: \"%1\"").arg(part.fileName()));
@@ -80,8 +85,16 @@ bool GameInstaller::install()
             }
         }
     }
+    try
+    {
+        registerGame();
+    }
+    catch(...)
+    {
+        rollback();
+        throw;
+    }
     m_written_parts.clear();
-    registerGame();
     return true;
 }
 

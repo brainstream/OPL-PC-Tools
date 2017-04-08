@@ -56,8 +56,8 @@ class TaskListItem : public QTreeWidgetItem
 {
 public:
     TaskListItem(const QString & _iso_path, QTreeWidget * _widget);
-    QVariant data(int _column, int _role) const;
     inline const InstallationTask & task() const;
+    QVariant data(int _column, int _role) const;
     void rename(const QString & _new_name);
     void setStatus(InstallationStatus _status);
     void setError(const QString & _message);
@@ -89,6 +89,11 @@ QString TaskListItem::truncateGameName(const QString & _name)
     return result;
 }
 
+const InstallationTask & TaskListItem::task() const
+{
+    return m_task;
+}
+
 QVariant TaskListItem::data(int _column, int _role) const
 {
     if(_role != Qt::DisplayRole) return QVariant();
@@ -110,11 +115,6 @@ QVariant TaskListItem::data(int _column, int _role) const
     default:
         return QString();
     }
-}
-
-const InstallationTask & TaskListItem::task() const
-{
-    return m_task;
 }
 
 void TaskListItem::rename(const QString & _new_name)
@@ -336,6 +336,15 @@ void GameInstallDialog::addTask()
 
 void GameInstallDialog::addTask(const QString & _iso_path)
 {
+    for(int i = mp_tree_tasks->topLevelItemCount() - 1; i >= 0; --i)
+    {
+        TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
+        if(item->task().iso_path == _iso_path)
+        {
+            mp_tree_tasks->setCurrentItem(item);
+            return;
+        }
+    }
     TaskListItem * item = new TaskListItem(_iso_path, mp_tree_tasks);
     mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
     mp_tree_tasks->setCurrentItem(item);

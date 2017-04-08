@@ -145,10 +145,12 @@ void UlConfig::addRecord(const UlConfigRecord & _config)
     Game::validateGameImageName(_config.image);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::WriteOnly | QIODevice::Append);
+    if(findRecord(_config.image))
+        throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_config.image));
     RawConfigRecord record(_config);
     const char * data = reinterpret_cast<const char *>(&record);
     if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
-        throw IOException("An error occurred while writing data to file");
+        throw IOException(QObject::tr("An error occurred while writing data to file"));
     m_records.append(_config);
 }
 

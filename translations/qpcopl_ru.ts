@@ -276,7 +276,7 @@
     <message>
         <location filename="../src/MainWindow.ui" line="318"/>
         <source>About &amp;Qt...</source>
-        <translation type="unfinished">О &amp;Qt...</translation>
+        <translation>О &amp;Qt...</translation>
     </message>
     <message>
         <source>About Qt...</source>

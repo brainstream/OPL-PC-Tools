@@ -15,106 +15,110 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QRegExp>
-#include <atomic>
-#include <cstring>
-#include <cmath>
 #include <cdio/cdio.h>
 #include <cdio/iso9660.h>
+#include <QFile>
 #include "IOException.h"
 #include "ValidationException.h"
 #include "Iso9660GameInstallerSource.h"
 
-namespace {
-
-void initLibCDIO()
+struct Iso9660GameInstallerSource::Data
 {
-    static std::atomic_bool cdio_initialized(false);
-    static bool initialization_error = false;
-    if(initialization_error)
-        throw Exception(QObject::tr("libcdio library failed initialization"));
-    if(cdio_initialized.exchange(true))
-        return;
-    if(!cdio_init())
+    Data(const QString & _iso_path) :
+        is_initialized(false),
+        iso_file(_iso_path),
+        iso(nullptr),
+        type(MediaType::unknown)
     {
-        initialization_error = false;
-        initLibCDIO();
     }
-}
 
-} // namespace
+    bool is_initialized;
+    QFile iso_file;
+    iso9660_t * iso;
+    MediaType type;
+    QString game_id;
+};
 
 Iso9660GameInstallerSource::Iso9660GameInstallerSource(const QString & _iso_path) :
-    m_file(_iso_path),
-    m_type(MediaType::unknown)
+    mp_data(new Data(_iso_path))
 {
+}
+
+Iso9660GameInstallerSource::~Iso9660GameInstallerSource()
+{
+    iso9660_close(mp_data->iso);
+    delete mp_data;
+}
+
+void Iso9660GameInstallerSource::init() const
+{
+    if(mp_data->is_initialized)
+    {
+        if(mp_data->iso == nullptr)
+            throw IOException(QObject::tr("ISO file was not opened successfully"));
+        return;
+    }
+    mp_data->is_initialized = true;
+    initLibCDIO();
+    mp_data->iso = iso9660_open(mp_data->iso_file.fileName().toUtf8().constData());
+    initGameId();
+}
+
+void Iso9660GameInstallerSource::initGameId() const
+{
+    if(mp_data->iso == nullptr)
+        return;
+    CdioList_t * dirlist = iso9660_ifs_readdir(mp_data->iso, "/");
+    if(!dirlist)
+        return;
+    try
+    {
+        mp_data->game_id = readGameId(dirlist);
+    }
+    catch(...)
+    {
+        _cdio_list_free(dirlist, true);
+        throw;
+    }
+    _cdio_list_free(dirlist, true);
 }
 
 QString Iso9660GameInstallerSource::gameId() const
 {
-    initLibCDIO();
-    const QString config_filename = "SYSTEM.CNF;1";
-    iso9660_t * iso = iso9660_open(m_file.fileName().toUtf8().constData());
-    if(iso == nullptr)
-        throw IOException(QObject::tr("Unable to open ISO file \"%1\"").arg(m_file.fileName()));
-    CdioList_t * dirlist = iso9660_ifs_readdir(iso, "/");
-    if(!dirlist)
-    {
-        iso9660_close(iso);
-        throw IOException(QObject::tr("Unable to read ISO file \"%1\"").arg(m_file.fileName()));
-    }
-    CdioListNode_t * node;
-    QString result;
-    _CDIO_LIST_FOREACH(node, dirlist)
-    {
-        iso9660_stat_t * statbuf = static_cast<iso9660_stat_t *>(_cdio_list_node_data(node));
-        if(config_filename.compare(statbuf->filename, Qt::CaseInsensitive) != 0)
-            continue;
-        if(statbuf->size > 10000)
-        {
-            _cdio_list_free(dirlist, true);
-            iso9660_close(iso);
-            throw IOException(QObject::tr("%1 file is too long: %2 bytes").arg(config_filename).arg(statbuf->size));
-        }
-        long int blocks = static_cast<long int>(ceil(static_cast<double>(statbuf->size) / ISO_BLOCKSIZE));
-        size_t buffer_size = blocks * ISO_BLOCKSIZE + 1;
-        char * buffer = new char[buffer_size];
-        memset(buffer, 0, buffer_size);
-        iso9660_iso_seek_read(iso, buffer, statbuf->lsn, blocks);
-        QRegExp regexp("BOOT\\d*\\s*=\\s*cdrom0:\\\\(.*);1", Qt::CaseInsensitive);
-        if(regexp.indexIn(buffer) >= 0)
-            result = regexp.cap(1);
-        delete [] buffer;
-        break;
-    }
-    _cdio_list_free(dirlist, true);
-    iso9660_close(iso);
-    if(result.isEmpty())
-        throw ValidationException(QObject::tr("%1 file has invalid format").arg(config_filename));
-    return result;
+    init();
+    return mp_data->game_id;
 }
 
 QByteArray Iso9660GameInstallerSource::read(quint64 _length)
 {
-    if(!m_file.isOpen())
+    if(!mp_data->iso_file.isOpen())
     {
-        if(!m_file.open(QIODevice::ReadOnly))
-            throw IOException(QObject::tr("Unable to reade file \"%1\"").arg(m_file.fileName()));
+        if(!mp_data->iso_file.open(QIODevice::ReadOnly))
+            throw IOException(QObject::tr("Unable to reade file \"%1\"").arg(mp_data->iso_file.fileName()));
     }
-    return m_file.read(_length);
+    return mp_data->iso_file.read(_length);
+}
+
+QByteArray Iso9660GameInstallerSource::read(lsn_t _lsn, quint32 _blocks) const
+{
+    init();
+    size_t buffer_size = _blocks * ISO_BLOCKSIZE + 1;
+    QByteArray buffer(buffer_size, Qt::Initialization::Uninitialized);
+    iso9660_iso_seek_read(mp_data->iso, buffer.data(), _lsn, _blocks);
+    return buffer;
 }
 
 quint64 Iso9660GameInstallerSource::size() const
 {
-    return m_file.size();
+    return mp_data->iso_file.size();
 }
 
 void Iso9660GameInstallerSource::setType(MediaType _type)
 {
-    m_type = _type;
+    mp_data->type = _type;
 }
 
 MediaType Iso9660GameInstallerSource::type() const
 {
-    return m_type;
+    return mp_data->type;
 }

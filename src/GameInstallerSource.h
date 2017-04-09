@@ -18,6 +18,7 @@
 #ifndef __QPCOPL_GAMEINSTALLERSOURCE__
 #define __QPCOPL_GAMEINSTALLERSOURCE__
 
+#include <cdio/iso9660.h>
 #include <QString>
 #include <QByteArray>
 #include "MediaType.h"
@@ -25,11 +26,17 @@
 class GameInstallerSource
 {
 public:
+    GameInstallerSource() { }
     virtual ~GameInstallerSource() { }
     virtual QString gameId() const = 0;
     virtual QByteArray read(quint64 _length) = 0;
     virtual quint64 size() const = 0;
     virtual MediaType type() const = 0;
+
+protected:
+    void initLibCDIO() const;
+    QString readGameId(CdioList_t * _root_dir) const;
+    virtual QByteArray read(lsn_t _lsn, quint32 _blocks) const = 0;
 };
 
 #endif // __QPCOPL_GAMEINSTALLERSOURCE__

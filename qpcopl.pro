@@ -29,7 +29,9 @@ SOURCES +=\
     src/GameInstallDialog.cpp \
     src/Iso9660GameInstallerSource.cpp \
     src/Game.cpp \
-    src/AboutDialog.cpp
+    src/AboutDialog.cpp \
+    src/OpticalDiscGameInstallerSource.cpp \
+    src/GameInstallerSource.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -45,7 +47,8 @@ HEADERS  += \
     src/GameInstallThread.h \
     src/Game.h \
     src/MediaType.h \
-    src/AboutDialog.h
+    src/AboutDialog.h \
+    src/OpticalDiscGameInstallerSource.h
 
 FORMS += \
     src/MainWindow.ui \

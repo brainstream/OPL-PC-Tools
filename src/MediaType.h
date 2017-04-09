@@ -15,6 +15,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+
+// TODO: Delete this file! Use LibCDIO::MediaType instead.
+
+
 #ifndef __QPCOPL_MEDIATYPE__
 #define __QPCOPL_MEDIATYPE__
 

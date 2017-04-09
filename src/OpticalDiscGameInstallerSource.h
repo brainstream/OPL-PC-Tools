@@ -15,25 +15,24 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__
-#define __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__
+#ifndef __QPCOPL_OPTICALDISCGAMEINSTALLERSOURCE__
+#define __QPCOPL_OPTICALDISCGAMEINSTALLERSOURCE__
 
 #include "GameInstallerSource.h"
 
-class Iso9660GameInstallerSource : public GameInstallerSource
+class OpticalDiscGameInstallerSource  : public GameInstallerSource
 {
-    Q_DISABLE_COPY(Iso9660GameInstallerSource)
+    Q_DISABLE_COPY(OpticalDiscGameInstallerSource)
 
 private:
     struct Data;
 
 public:
-    explicit Iso9660GameInstallerSource(const QString & _iso_path);
-    ~Iso9660GameInstallerSource() override;
+    explicit OpticalDiscGameInstallerSource(const char * _device);
+    ~OpticalDiscGameInstallerSource() override;
     QString gameId() const override;
     QByteArray read(quint64 _length) override;
     quint64 size() const override;
-    void setType(MediaType _type);
     MediaType type() const override;
 
 protected:
@@ -42,9 +41,11 @@ protected:
 private:
     void init() const;
     void initGameId() const;
+    void initLabel() const;
+    void initMediaType() const;
 
 private:
     Data * mp_data;
 };
 
-#endif // __QPCOPL_ISO9660GAMGEINSTALLERSOURCE__
+#endif // __QPCOPL_OPTICALDISCGAMEINSTALLERSOURCE__

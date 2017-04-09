@@ -21,7 +21,6 @@
 #include "ui_GameInstallDialog.h"
 #include "GameInstallThread.h"
 #include "GameInstaller.h"
-#include "Iso9660GameInstallerSource.h"
 
 class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
 {
@@ -63,7 +62,7 @@ private:
 private:
     GameInstallThread * mp_work_thread;
     GameInstaller * mp_installer;
-    Iso9660GameInstallerSource * mp_source;
+    GameInstallerSource * mp_source;
     UlConfig & mr_config;
     int m_processing_task_index;
     bool m_is_canceled;

@@ -29,6 +29,7 @@ struct OpticalDiscGameInstallerSource::Data
         is_initialized(false),
         device(nullptr),
         device_name(_device_name),
+        size(0),
         media_type(MediaType::unknown)
     {
     }
@@ -38,6 +39,7 @@ struct OpticalDiscGameInstallerSource::Data
     std::string device_name;
     QString game_id;
     QString label;
+    size_t size;
     MediaType media_type;
 };
 
@@ -65,6 +67,8 @@ void OpticalDiscGameInstallerSource::init() const
     mp_data->device = cdio_open_cd(mp_data->device_name.c_str());
     cdio_close_tray(mp_data->device_name.c_str(), nullptr);
     cdio_get_media_changed(mp_data->device);
+    cdio_set_speed(mp_data->device, 128);
+    initGameId();
     initLabel();
     initMediaType();
 }
@@ -101,6 +105,7 @@ void OpticalDiscGameInstallerSource::initLabel() const
     cdio_iso_analysis_t analysis = {};
     cdio_guess_cd_type(mp_data->device, session, track, &analysis);
     mp_data->label = analysis.iso_label;
+    mp_data->size = analysis.isofs_size * ISO_BLOCKSIZE;
     if(mp_data->label.isEmpty())
         mp_data->label = QString::fromStdString(mp_data->device_name);
 }
@@ -121,15 +126,13 @@ QString OpticalDiscGameInstallerSource::gameId() const
     return mp_data->game_id;
 }
 
-QByteArray OpticalDiscGameInstallerSource::read(quint64 _length)
+size_t OpticalDiscGameInstallerSource::read(QByteArray & _buffer)
 {
     init();
     if(cdio_get_media_changed(mp_data->device))
         throw IOException(QObject::tr("Optical disc has changed since source was initialized"));
-
-    // TODO: read
-
-    return QByteArray();
+    ssize_t result = cdio_read(mp_data->device, _buffer.data(), _buffer.size());
+    return result == static_cast<ssize_t>(-1) ? 0 : result;
 }
 
 QByteArray OpticalDiscGameInstallerSource::read(lsn_t _lsn, quint32 _blocks) const
@@ -137,15 +140,14 @@ QByteArray OpticalDiscGameInstallerSource::read(lsn_t _lsn, quint32 _blocks) con
     init();
     size_t buffer_size = _blocks * ISO_BLOCKSIZE + 1;
     QByteArray buffer(buffer_size, Qt::Initialization::Uninitialized);
-    cdio_read_mode2_sectors(mp_data->device, buffer.data(), _lsn, true, _blocks);
+    cdio_read_data_sectors(mp_data->device, buffer.data(), _lsn, ISO_BLOCKSIZE, _blocks);
     return buffer;
 }
 
 quint64 OpticalDiscGameInstallerSource::size() const
 {
-    // TODO: size
-
-    return 100;
+    init();
+    return mp_data->size;
 }
 
 MediaType OpticalDiscGameInstallerSource::type() const

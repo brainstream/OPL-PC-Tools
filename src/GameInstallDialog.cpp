@@ -27,6 +27,8 @@
 #include "GameInstallDialog.h"
 #include "Game.h"
 #include "GameRenameDialog.h"
+#include "Iso9660GameInstallerSource.h"
+#include "OpticalDiscGameInstallerSource.h"
 
 namespace {
 
@@ -293,6 +295,7 @@ bool GameInstallDialog::startTask()
     if(!item) return false;
     const InstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
+    //mp_source = new OpticalDiscGameInstallerSource("/dev/cdrom");
     mp_source = new Iso9660GameInstallerSource(task.iso_path);
     switch(mp_combo_type->currentIndex())
     {

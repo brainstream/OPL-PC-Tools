@@ -49,9 +49,10 @@ bool GameInstaller::install()
     if(mp_installed_game_info->type == MediaType::unknown)
         mp_installed_game_info->type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
     const size_t part_size = 1073741824;
-    const size_t read_part_size = 32768;
+    const size_t read_part_size = 4194304;
     size_t processed_bytes = 0;
     QDir dest_dir(mr_config.directory());
+    QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
     while(processed_bytes < iso_size)
     {
         QString part_filename = Game::makeGamePartName(iso_id, mp_installed_game_info->name, mp_installed_game_info->parts++);
@@ -67,16 +68,16 @@ bool GameInstaller::install()
             throw IOException(tr("Unable to open file to write: \"%1\"").arg(part.fileName()));
         }
         m_written_parts.append(part.fileName());
-        for(quint64 read_bytes = 0; read_bytes < part_size;)
+        for(size_t total_read_bytes = 0; total_read_bytes < part_size;)
         {
-            QByteArray bytes = mp_sourrce->read(read_part_size);
-            if(bytes.isEmpty())
+            size_t read_bytes = mp_sourrce->read(bytes);
+            if(read_bytes == 0)
                 break;
-            part.write(bytes);
-            read_bytes += bytes.size();
-            processed_bytes += bytes.size();
+            part.write(bytes.constData(), read_bytes);
+            total_read_bytes += read_bytes;
+            processed_bytes += read_bytes;
             emit progress(iso_size, processed_bytes);
-            if(static_cast<size_t>(bytes.size()) < read_part_size)
+            if(read_bytes < read_part_size)
                 break;
             if(QThread::currentThread()->isInterruptionRequested())
             {

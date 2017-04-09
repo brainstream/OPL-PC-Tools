@@ -31,7 +31,7 @@ public:
     explicit Iso9660GameInstallerSource(const QString & _iso_path);
     ~Iso9660GameInstallerSource() override;
     QString gameId() const override;
-    QByteArray read(quint64 _length) override;
+    size_t read(QByteArray & _buffer) override;
     quint64 size() const override;
     void setType(MediaType _type);
     MediaType type() const override;

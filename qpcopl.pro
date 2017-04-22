@@ -32,7 +32,8 @@ SOURCES +=\
     src/AboutDialog.cpp \
     src/OpticalDiscGameInstallerSource.cpp \
     src/GameInstallerSource.cpp \
-    src/ChooseOpticalDiscDialog.cpp
+    src/ChooseOpticalDiscDialog.cpp \
+    src/LibCDIO.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -51,7 +52,8 @@ HEADERS  += \
     src/AboutDialog.h \
     src/OpticalDiscGameInstallerSource.h \
     src/GameInstallationTask.h \
-    src/ChooseOpticalDiscDialog.h
+    src/ChooseOpticalDiscDialog.h \
+    src/LibCDIO.h
 
 FORMS += \
     src/MainWindow.ui \

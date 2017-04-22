@@ -15,12 +15,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <cdio/cdio.h>
-#include <cdio/iso9660.h>
+#include "LibCDIO.h"
 #include <QFile>
 #include "IOException.h"
 #include "ValidationException.h"
 #include "Iso9660GameInstallerSource.h"
+#include "LibCDIO.h"
 
 struct Iso9660GameInstallerSource::Data
 {

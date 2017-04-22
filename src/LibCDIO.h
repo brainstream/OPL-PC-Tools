@@ -15,42 +15,13 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <cmath>
-#include <QRegExp>
-#include "GameInstallerSource.h"
-#include "Exception.h"
-#include "IOException.h"
+#ifndef __QPCOPL_LIBCDIO__
+#define __QPCOPL_LIBCDIO__
 
-namespace {
+#include <cdio/cdio.h>
+#include <cdio/cd_types.h>
+#include <cdio/iso9660.h>
 
-const QString g_system_config_filename("SYSTEM.CNF;1");
+void initLibCDIO();
 
-} // namespace
-
-QString GameInstallerSource::readGameId(CdioList_t * _root_dir) const
-{
-    CdioListNode_t * node;
-    _CDIO_LIST_FOREACH(node, _root_dir)
-    {
-        iso9660_stat_t * statbuf = static_cast<iso9660_stat_t *>(_cdio_list_node_data(node));
-        if(g_system_config_filename.compare(statbuf->filename, Qt::CaseInsensitive) != 0)
-            continue;
-        if(statbuf->size > 10000)
-        {
-            throw IOException(QObject::tr("%1 file is too long: %2 bytes").arg(g_system_config_filename).arg(statbuf->size));
-        }
-        long int blocks = static_cast<long int>(ceil(static_cast<double>(statbuf->size) / ISO_BLOCKSIZE));
-        QByteArray buffer = read(statbuf->lsn, blocks);
-        QRegExp regexp("BOOT\\d*\\s*=\\s*cdrom0:\\\\(.*);1", Qt::CaseInsensitive);
-        QString data_string = QString::fromUtf8(buffer);
-        if(regexp.indexIn(data_string) >= 0)
-        {
-            QString result = regexp.cap(1);
-            if(result.isEmpty())
-                break;
-            return result;
-        }
-        break;
-    }
-    throw Exception(QObject::tr("Unable to read the game id"));
-}
+#endif // __QPCOPL_LIBCDIO__

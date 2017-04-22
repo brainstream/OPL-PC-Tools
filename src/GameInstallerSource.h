@@ -38,7 +38,6 @@ public:
     virtual MediaType type() const = 0;
 
 protected:
-    void initLibCDIO() const;
     QString readGameId(CdioList_t * _root_dir) const;
     virtual QByteArray read(lsn_t _lsn, quint32 _blocks) const = 0;
 

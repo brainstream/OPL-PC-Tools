@@ -149,8 +149,7 @@ void GameInstallDialog::reject()
         mp_work_thread->requestInterruption();
         for(int i = mp_tree_tasks->topLevelItemCount() - 1; i > m_processing_task_index; --i)
         {
-            static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i))->setError(canceledErrorMessage());
-        }
+            setTaskError(canceledErrorMessage(), i);        }
     }
 }
 
@@ -225,7 +224,7 @@ void GameInstallDialog::rollbackFinished()
 void GameInstallDialog::setTaskError(const QString & _message, int _index /*= -1*/)
 {
     if(_index < 0) _index = m_processing_task_index;
-    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->setError(_message);
+    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(_index))->setError(_message);
     if(_index == mp_tree_tasks->currentIndex().row())
         mp_label_error_message->setText(_message);
 }
@@ -341,19 +340,27 @@ void GameInstallDialog::addDisc()
     ChooseOpticalDiscDialog dlg(this);
     if(dlg.exec() != QDialog::Accepted)
         return;
-    QString device = dlg.device();
-    for(int i = mp_tree_tasks->topLevelItemCount() - 1; i >= 0; --i)
+    QList<ChooseOpticalDiscDialog::DeviceInfo> device_info_list = dlg.devices();
+    for(const ChooseOpticalDiscDialog::DeviceInfo & device_info : device_info_list)
     {
-        TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
-        const OpticalDiscGameInstallationTask * task = dynamic_cast<const OpticalDiscGameInstallationTask *>(&item->task());
-        if(task != nullptr && task->device() == device)
+        for(int i = mp_tree_tasks->topLevelItemCount() - 1; i >= 0; --i)
         {
-            mp_tree_tasks->setCurrentItem(item);
-            return;
+            TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
+            const OpticalDiscGameInstallationTask * task = dynamic_cast<const OpticalDiscGameInstallationTask *>(&item->task());
+            if(task != nullptr && task->device() == device_info.device)
+            {
+                mp_tree_tasks->setCurrentItem(item);
+                return;
+            }
         }
+        addDisc(device_info.device, device_info.title);
     }
-    QSharedPointer<GameInstallationTask> task(new OpticalDiscGameInstallationTask(device));
-    task->setGameName("TODO TITLE");
+}
+
+void GameInstallDialog::addDisc(const QString & _device, const QString & _title)
+{
+    QSharedPointer<GameInstallationTask> task(new OpticalDiscGameInstallationTask(_device));
+    task->setGameName(_title);
     task->setStatus(GameInstallationStatus::queued);
     TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
     mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);

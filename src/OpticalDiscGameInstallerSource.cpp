@@ -16,12 +16,10 @@
  ***********************************************************************************************/
 
 #include <string>
-#include <cdio/cdio.h>
-#include <cdio/iso9660.h>
-#include <cdio/cd_types.h>
 #include <QObject>
 #include "OpticalDiscGameInstallerSource.h"
 #include "IOException.h"
+#include "LibCDIO.h"
 
 struct OpticalDiscGameInstallerSource::Data
 {

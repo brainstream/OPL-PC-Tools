@@ -25,8 +25,21 @@ class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDia
     Q_OBJECT
 
 public:
+    struct DeviceInfo
+    {
+        QString device;
+        QString title;
+    };
+
+public:
     explicit ChooseOpticalDiscDialog(QWidget * _parent = nullptr);
-    QString device() const;
+    QList<DeviceInfo> devices() const;
+
+private slots:
+    void deviceSelectionChanged();
+
+private:
+    QString m_error_message;
 };
 
 #endif // __QPCOPL_CHOOSEOPTICALDISCDIALOG__

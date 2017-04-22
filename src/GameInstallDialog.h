@@ -56,6 +56,7 @@ private slots:
 
 private:
     void addIso(const QString & _iso_path);
+    void addDisc(const QString & _device, const QString & _title);
     QString truncateGameName(const QString & _name) const;
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);

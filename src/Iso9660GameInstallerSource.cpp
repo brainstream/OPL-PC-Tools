@@ -91,7 +91,8 @@ QString Iso9660GameInstallerSource::gameId() const
 
 void Iso9660GameInstallerSource::seek(quint64 _offset)
 {
-    mp_data->iso_file.seek(_offset);
+    if(mp_data->iso_file.isOpen())
+        mp_data->iso_file.seek(_offset);
 }
 
 ssize_t Iso9660GameInstallerSource::read(QByteArray & _buffer)

@@ -30,8 +30,6 @@ class GameInstaller : public QObject
 public:
     GameInstaller(GameInstallerSource & _source, UlConfig & _config, QObject * _parent = nullptr);
     ~GameInstaller() override;
-    inline void setGameName(const QString & _name);
-    inline const QString & gameName() const;
     inline const GameInstallerSource & source() const;
     bool install();
     inline const UlConfigRecord * installedGameInfo() const;
@@ -50,20 +48,9 @@ private:
 private:
     GameInstallerSource * mp_sourrce;
     UlConfig & mr_config;
-    QString m_game_name;
     QStringList m_written_parts;
     UlConfigRecord * mp_installed_game_info;
 };
-
-void GameInstaller::setGameName(const QString & _name)
-{
-    m_game_name = _name;
-}
-
-const QString & GameInstaller::gameName() const
-{
-    return m_game_name;
-}
 
 const GameInstallerSource & GameInstaller::source() const
 {

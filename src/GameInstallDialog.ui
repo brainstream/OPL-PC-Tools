@@ -259,9 +259,16 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="mp_btn_add">
+      <widget class="QPushButton" name="mp_btn_add_iso">
        <property name="text">
-        <string>&amp;Add</string>
+        <string>&amp;Add ISO</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_add_disc">
+       <property name="text">
+        <string>Add &amp;Disc</string>
        </property>
       </widget>
      </item>
@@ -304,7 +311,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>mp_btn_add</tabstop>
+  <tabstop>mp_btn_add_iso</tabstop>
   <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_btn_cancel</tabstop>
   <tabstop>mp_btn_ok</tabstop>
@@ -330,10 +337,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>mp_btn_add</sender>
+   <sender>mp_btn_add_iso</sender>
    <signal>clicked()</signal>
    <receiver>GameInstallDialog</receiver>
-   <slot>addTask()</slot>
+   <slot>addIso()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>49</x>
@@ -441,12 +448,46 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_btn_add_disc</sender>
+   <signal>clicked()</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>addDisc()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>491</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_combo_type</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>mediaTypeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>651</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>addTask()</slot>
+  <slot>addIso()</slot>
   <slot>install()</slot>
   <slot>renameGame()</slot>
   <slot>removeGame()</slot>
   <slot>taskSelectionChanged()</slot>
+  <slot>addDisc()</slot>
+  <slot>mediaTypeChanged(int)</slot>
  </slots>
 </ui>

@@ -40,10 +40,10 @@ bool GameInstaller::install()
 {
     delete mp_installed_game_info;
     mp_installed_game_info = new UlConfigRecord();
-    Game::validateGameName(m_game_name);
     QString iso_id = mp_sourrce->gameId();
     mp_installed_game_info->image = QString("ul.") + iso_id;
-    mp_installed_game_info->name = m_game_name.isEmpty() ? tr("Untitled Game") : m_game_name;
+    mp_installed_game_info->name = mp_sourrce->gameName();
+    Game::validateGameName(mp_installed_game_info->name);
     const quint64 iso_size = mp_sourrce->size();
     mp_installed_game_info->type = mp_sourrce->type();
     if(mp_installed_game_info->type == MediaType::unknown)

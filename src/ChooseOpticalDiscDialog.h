@@ -15,50 +15,18 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_GAMEINSTALLERSOURCE__
-#define __QPCOPL_GAMEINSTALLERSOURCE__
+#ifndef __QPCOPL_CHOOSEOPTICALDISCDIALOG__
+#define __QPCOPL_CHOOSEOPTICALDISCDIALOG__
 
-#include <cdio/iso9660.h>
-#include <QString>
-#include <QByteArray>
-#include <QObject>
-#include "MediaType.h"
+#include "ui_ChooseOpticalDiscDialog.h"
 
-class GameInstallerSource
+class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDialog
 {
+    Q_OBJECT
+
 public:
-    inline GameInstallerSource();
-    virtual ~GameInstallerSource() { }
-    virtual QString gameId() const = 0;
-    inline const QString & gameName() const;
-    inline void setGameName(const QString & _name);
-    virtual void seek(quint64 _offset) = 0;
-    virtual ssize_t read(QByteArray & _buffer) = 0;
-    virtual quint64 size() const = 0;
-    virtual MediaType type() const = 0;
-
-protected:
-    void initLibCDIO() const;
-    QString readGameId(CdioList_t * _root_dir) const;
-    virtual QByteArray read(lsn_t _lsn, quint32 _blocks) const = 0;
-
-private:
-    QString m_game_name;
+    explicit ChooseOpticalDiscDialog(QWidget * _parent = nullptr);
+    QString device() const;
 };
 
-GameInstallerSource::GameInstallerSource() :
-    m_game_name(QObject::tr("Untitled Game"))
-{
-}
-
-const QString & GameInstallerSource::gameName() const
-{
-    return m_game_name;
-}
-
-void GameInstallerSource::setGameName(const QString & _name)
-{
-    m_game_name = _name;
-}
-
-#endif // __QPCOPL_GAMEINSTALLERSOURCE__
+#endif // __QPCOPL_CHOOSEOPTICALDISCDIALOG__

@@ -39,7 +39,8 @@ protected:
     void dropEvent(QDropEvent * _event) override;
 
 private slots:
-    void addTask();
+    void addIso();
+    void addDisc();
     void install();
     void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
     void rollbackStarted();
@@ -49,11 +50,13 @@ private slots:
     void threadFinished();
     void installerError(QString _message);
     void taskSelectionChanged();
+    void mediaTypeChanged(int _index);
     void renameGame();
     void removeGame();
 
 private:
-    void addTask(const QString & _iso_path);
+    void addIso(const QString & _iso_path);
+    QString truncateGameName(const QString & _name) const;
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);
     void setTaskError(const QString & _message, int _index = -1);

@@ -295,17 +295,17 @@ bool GameInstallDialog::startTask()
     if(!item) return false;
     const InstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
-    //mp_source = new OpticalDiscGameInstallerSource("/dev/cdrom");
+//    mp_source = new OpticalDiscGameInstallerSource("/dev/cdrom");
     mp_source = new Iso9660GameInstallerSource(task.iso_path);
-    switch(mp_combo_type->currentIndex())
-    {
-    case 1:
-        mp_source->setType(MediaType::cd);
-        break;
-    case 2:
-        mp_source->setType(MediaType::dvd);
-        break;
-    }
+//    switch(mp_combo_type->currentIndex())
+//    {
+//    case 1:
+//        mp_source->setType(MediaType::cd);
+//        break;
+//    case 2:
+//        mp_source->setType(MediaType::dvd);
+//        break;
+//    }
     mp_installer = new GameInstaller(*mp_source, mr_config, this);
     mp_installer->setGameName(task.game_name);
     mp_work_thread = new GameInstallThread(*mp_installer);

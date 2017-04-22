@@ -126,13 +126,17 @@ QString OpticalDiscGameInstallerSource::gameId() const
     return mp_data->game_id;
 }
 
-size_t OpticalDiscGameInstallerSource::read(QByteArray & _buffer)
+void OpticalDiscGameInstallerSource::seek(quint64 _offset)
+{
+    cdio_lseek(mp_data->device, _offset, SEEK_SET);
+}
+
+ssize_t OpticalDiscGameInstallerSource::read(QByteArray & _buffer)
 {
     init();
     if(cdio_get_media_changed(mp_data->device))
         throw IOException(QObject::tr("Optical disc has changed since source was initialized"));
-    ssize_t result = cdio_read(mp_data->device, _buffer.data(), _buffer.size());
-    return result == static_cast<ssize_t>(-1) ? 0 : result;
+    return cdio_read(mp_data->device, _buffer.data(), _buffer.size());
 }
 
 QByteArray OpticalDiscGameInstallerSource::read(lsn_t _lsn, quint32 _blocks) const

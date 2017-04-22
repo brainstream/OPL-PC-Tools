@@ -48,12 +48,13 @@ bool GameInstaller::install()
     mp_installed_game_info->type = mp_sourrce->type();
     if(mp_installed_game_info->type == MediaType::unknown)
         mp_installed_game_info->type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
-    const size_t part_size = 1073741824;
-    const size_t read_part_size = 4194304;
+    const ssize_t part_size = 1073741824;
+    const ssize_t read_part_size = 4194304;
     size_t processed_bytes = 0;
     QDir dest_dir(mr_config.directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
-    while(processed_bytes < iso_size)
+    mp_sourrce->seek(0);
+    for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size;)
     {
         QString part_filename = Game::makeGamePartName(iso_id, mp_installed_game_info->name, mp_installed_game_info->parts++);
         QFile part(dest_dir.absoluteFilePath(part_filename));
@@ -70,15 +71,29 @@ bool GameInstaller::install()
         m_written_parts.append(part.fileName());
         for(size_t total_read_bytes = 0; total_read_bytes < part_size;)
         {
-            size_t read_bytes = mp_sourrce->read(bytes);
-            if(read_bytes == 0)
-                break;
-            part.write(bytes.constData(), read_bytes);
+            ssize_t read_bytes = mp_sourrce->read(bytes);
+            if(read_bytes < 0)
+            {
+                part.close();
+                rollback();
+                throw IOException(tr("An error occurred during reading the source medium"));
+            }
+            if(part.write(bytes.constData(), read_bytes) != read_bytes)
+            {
+                part.close();
+                rollback();
+                throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(part.fileName()));
+            }
             total_read_bytes += read_bytes;
             processed_bytes += read_bytes;
-            emit progress(iso_size, processed_bytes);
             if(read_bytes < read_part_size)
+            {
+                // Yes. It is a real scenario. The "Final Fantasy XII" declares the ISO FS size longer than it is.
+                unexpected_finish = true;
+                emit progress(processed_bytes, processed_bytes);
                 break;
+            }
+            emit progress(iso_size, processed_bytes);
             if(QThread::currentThread()->isInterruptionRequested())
             {
                 rollback();

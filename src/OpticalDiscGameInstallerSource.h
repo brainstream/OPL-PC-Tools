@@ -31,7 +31,8 @@ public:
     explicit OpticalDiscGameInstallerSource(const char * _device);
     ~OpticalDiscGameInstallerSource() override;
     QString gameId() const override;
-    size_t read(QByteArray & _buffer) override;
+    void seek(quint64 _offset) override;
+    ssize_t read(QByteArray & _buffer) override;
     quint64 size() const override;
     MediaType type() const override;
 

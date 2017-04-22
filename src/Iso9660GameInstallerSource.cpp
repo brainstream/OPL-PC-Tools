@@ -89,14 +89,19 @@ QString Iso9660GameInstallerSource::gameId() const
     return mp_data->game_id;
 }
 
-size_t Iso9660GameInstallerSource::read(QByteArray & _buffer)
+void Iso9660GameInstallerSource::seek(quint64 _offset)
+{
+    mp_data->iso_file.seek(_offset);
+}
+
+ssize_t Iso9660GameInstallerSource::read(QByteArray & _buffer)
 {
     if(!mp_data->iso_file.isOpen())
     {
         if(!mp_data->iso_file.open(QIODevice::ReadOnly))
             throw IOException(QObject::tr("Unable to reade file \"%1\"").arg(mp_data->iso_file.fileName()));
     }
-    return mp_data->iso_file.read(_buffer.data(), _buffer.size());
+    return static_cast<ssize_t>(mp_data->iso_file.read(_buffer.data(), _buffer.size()));
 }
 
 QByteArray Iso9660GameInstallerSource::read(lsn_t _lsn, quint32 _blocks) const

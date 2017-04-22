@@ -29,7 +29,8 @@ public:
     GameInstallerSource() { }
     virtual ~GameInstallerSource() { }
     virtual QString gameId() const = 0;
-    virtual size_t read(QByteArray & _buffer) = 0;
+    virtual void seek(quint64 _offset) = 0;
+    virtual ssize_t read(QByteArray & _buffer) = 0;
     virtual quint64 size() const = 0;
     virtual MediaType type() const = 0;
 

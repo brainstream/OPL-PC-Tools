@@ -72,9 +72,10 @@ protected:
     void run() override;
 
 private:
-    QString readDeviceLabel(CdIo_t * _device);
+    QString readDeviceLabel(CdIo_t * _device, quint8 _attempt = 0);
 
 private:
+    static const quint8 s_max_read_label_attempts = 3;
     QString m_error_message;
     QList<ChooseOpticalDiscDialog::DeviceInfo> m_devices;
 };
@@ -94,17 +95,39 @@ void InitializationThread::run()
         {
             CdIo * cdio = cdio_open_cd(devices[i]);
             if(!cdio) continue;
+            cdio_close_tray(devices[i], nullptr);
+            if(cdio_get_discmode(cdio) == CDIO_DISC_MODE_ERROR)
+                continue;
             ChooseOpticalDiscDialog::DeviceInfo device_info;
             device_info.device = devices[i];
             device_info.title = readDeviceLabel(cdio);
             m_devices.append(device_info);
             cdio_destroy(cdio);
         }
+        cdio_free_device_list(devices);
     }
     catch(const Exception & exception)
     {
         m_error_message = exception.message();
     }
+}
+
+QString InitializationThread::readDeviceLabel(CdIo_t * _device, quint8 _attempt /*= 0*/)
+{
+    /// If a drive tray was opened and we have close it, the cdio_guess_cd_type function
+    /// returns an empty label value. Second attempt is usually successful.
+
+    cdio_iso_analysis_t analysis = {};
+    lsn_t session = 0;
+    track_t first_track = cdio_get_first_track_num(_device);
+    if(first_track == CDIO_INVALID_TRACK || cdio_get_last_session(_device, &session) != DRIVER_OP_SUCCESS)
+        return QString();
+    cdio_guess_cd_type(_device, session, first_track, &analysis);
+    if((!analysis.iso_label || !analysis.iso_label[0]) && _attempt < s_max_read_label_attempts)
+    {
+        return readDeviceLabel(_device, _attempt + 1);
+    }
+    return QString(analysis.iso_label).trimmed();
 }
 
 const QString & InitializationThread::errorMessage() const
@@ -115,17 +138,6 @@ const QString & InitializationThread::errorMessage() const
 const QList<ChooseOpticalDiscDialog::DeviceInfo> & InitializationThread::devices() const
 {
     return m_devices;
-}
-
-QString InitializationThread::readDeviceLabel(CdIo_t * _device)
-{
-    cdio_iso_analysis_t analysis = {};
-    lsn_t session = 0;
-    track_t first_track = cdio_get_first_track_num(_device);
-    if(first_track == CDIO_INVALID_TRACK || cdio_get_last_session(_device, &session) != DRIVER_OP_SUCCESS)
-        return QString();
-    cdio_guess_cd_type(_device, session, first_track, &analysis);
-    return QString(analysis.iso_label).trimmed();
 }
 
 } // namespace

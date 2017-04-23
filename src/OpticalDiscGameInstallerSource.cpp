@@ -63,8 +63,6 @@ void OpticalDiscGameInstallerSource::init() const
     mp_data->is_initialized = true;
     initLibCDIO();
     mp_data->device = cdio_open_cd(mp_data->device_name.c_str());
-    cdio_close_tray(mp_data->device_name.c_str(), nullptr);
-    cdio_get_media_changed(mp_data->device);
     cdio_set_speed(mp_data->device, 128);
     initGameId();
     initLabel();
@@ -132,8 +130,6 @@ void OpticalDiscGameInstallerSource::seek(quint64 _offset)
 ssize_t OpticalDiscGameInstallerSource::read(QByteArray & _buffer)
 {
     init();
-    if(cdio_get_media_changed(mp_data->device))
-        throw IOException(QObject::tr("Optical disc has changed since source was initialized"));
     return cdio_read(mp_data->device, _buffer.data(), _buffer.size());
 }
 

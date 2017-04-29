@@ -28,6 +28,8 @@
 
 namespace {
 
+const QString g_image_prefix("ul.");
+
 struct RawConfigRecord
 {
     explicit RawConfigRecord(const UlConfigRecord & _record)
@@ -35,7 +37,8 @@ struct RawConfigRecord
         memset(this, 0, sizeof(RawConfigRecord));
         QByteArray name_bytes = _record.name.toUtf8();
         QByteArray image_bytes = _record.image.toLatin1();
-        memcpy(this->image, image_bytes.constData(), image_bytes.size());
+        memcpy(this->image, g_image_prefix.toLatin1().constData(), g_image_prefix.size());
+        memcpy(&this->image[g_image_prefix.size()], image_bytes.constData(), image_bytes.size());
         memcpy(this->name , name_bytes.constData(), name_bytes.size());
         this->media = _record.type == MediaType::dvd ? MT_DVD : MT_CD;
         this->parts = _record.parts;
@@ -57,7 +60,7 @@ void openFile(QFile & _file, QIODevice::OpenMode _flags)
 
 size_t findRecordOffset(QFile & _file, const QString & _image, RawConfigRecord * _result = nullptr)
 {
-    const QByteArray image_qbytes = _image.toLatin1();
+    const QByteArray image_qbytes = (g_image_prefix + _image).toLatin1();
     const char * image_bytes = image_qbytes.constData();
     char record_bytes[sizeof(RawConfigRecord)];
     for(size_t offset = 0; ;)
@@ -120,7 +123,7 @@ void UlConfig::load()
             record.name = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
         else
             record.name = QString::fromUtf8(raw_record->name, Game::max_game_name_length);
-        record.image = QString::fromLatin1(raw_record->image, strlen(raw_record->image));
+        record.image = QString::fromLatin1(&raw_record->image[g_image_prefix.size()], strlen(raw_record->image) - g_image_prefix.size());
         record.parts = raw_record->parts;
         switch(raw_record->media)
         {
@@ -142,7 +145,7 @@ void UlConfig::load()
 void UlConfig::addRecord(const UlConfigRecord & _config)
 {
     Game::validateGameName(_config.name);
-    Game::validateGameImageName(_config.image);
+    Game::validateGameImageName(g_image_prefix + _config.image);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::WriteOnly | QIODevice::Append);
     if(findRecord(_config.image))

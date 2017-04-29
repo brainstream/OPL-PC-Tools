@@ -31,17 +31,16 @@ void Game::rename(const QString & _new_name)
     const UlConfigRecord & config_record = configRecord();
     QList<QString> files;
     QDir root_dir(mr_config.directory());
-    QString image_id = imageId();
     for(quint8 part = 0; part < config_record.parts; ++part)
     {
-        QString part_path = root_dir.absoluteFilePath(makeGamePartName(image_id, config_record.name, part));
+        QString part_path = root_dir.absoluteFilePath(makeGamePartName(m_image, config_record.name, part));
         if(!QFile::exists(part_path))
             throw ValidationException(QObject::tr("File \"%1\" was not found").arg(part_path));
         files.append(part_path);
     }
     for(int part = 0; part < config_record.parts; ++part)
     {
-        QString new_path = root_dir.absoluteFilePath(makeGamePartName(image_id, _new_name, part));
+        QString new_path = root_dir.absoluteFilePath(makeGamePartName(m_image, _new_name, part));
         QFile::rename(files[part], new_path);
     }
     mr_config.renameRecord(m_image, _new_name);
@@ -51,18 +50,12 @@ void Game::remove()
 {
     UlConfigRecord config_record = configRecord();
     mr_config.deleteRecord(m_image);
-    QString image_id = imageId();
     QDir root_dir(mr_config.directory());
     for(int part = 0; part < config_record.parts; ++part)
     {
-        QString part_path = root_dir.absoluteFilePath(makeGamePartName(image_id, config_record.name, part));
+        QString part_path = root_dir.absoluteFilePath(makeGamePartName(m_image, config_record.name, part));
         QFile::remove(part_path);
     }
-}
-
-QString Game::imageId() const
-{
-    return m_image.startsWith("ul.") ? m_image.mid(3) : m_image;
 }
 
 const UlConfigRecord & Game::configRecord() const

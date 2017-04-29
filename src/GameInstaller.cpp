@@ -41,7 +41,7 @@ bool GameInstaller::install()
     delete mp_installed_game_info;
     mp_installed_game_info = new UlConfigRecord();
     QString iso_id = mp_sourrce->gameId();
-    mp_installed_game_info->image = QString("ul.") + iso_id;
+    mp_installed_game_info->image = iso_id;
     mp_installed_game_info->name = mp_sourrce->gameName();
     Game::validateGameName(mp_installed_game_info->name);
     const quint64 iso_size = mp_sourrce->size();

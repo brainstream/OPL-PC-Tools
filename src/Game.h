@@ -40,7 +40,6 @@ public:
 
 private:
     static quint32 crc32(const QString & _string);
-    QString imageId() const;
     const UlConfigRecord & configRecord() const;
 
 private:

@@ -175,8 +175,14 @@ void GameRepository::loadCovers()
          });
          if(it == files.end())
              continue;
-         game.cover.load(it->absoluteFilePath());
-         game.cover_filepath = it->absoluteFilePath();
+         try
+         {
+             game.cover.load(it->absoluteFilePath());
+             game.cover_filepath = it->absoluteFilePath();
+         }
+         catch(...)
+         {
+         }
     }
 }
 

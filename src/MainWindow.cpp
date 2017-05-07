@@ -202,7 +202,6 @@ void MainWindow::setCover()
 {
     GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
     if(item == nullptr) return;
-
     QSettings settings;
     QString dirpath = settings.value(g_settings_key_cover_dir).toString();
     if(dirpath.isEmpty())
@@ -211,16 +210,30 @@ void MainWindow::setCover()
         tr("Image Files") + " (*.png *.jpg *.jpeg *.bmp)");
     if(filename.isEmpty()) return;
     settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
-    m_game_repository.setGameCover(item->game().id, filename);
-    gameSelected(item);
+    try
+    {
+        m_game_repository.setGameCover(item->game().id, filename);
+        gameSelected(item);
+    }
+    catch(const Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
 }
 
 void MainWindow::removeCover()
 {
-    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
-    if(item == nullptr) return;
-    m_game_repository.removeGameCover(item->game().id);
-    gameSelected(item);
+    try
+    {
+        GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+        if(item == nullptr) return;
+        m_game_repository.removeGameCover(item->game().id);
+        gameSelected(item);
+    }
+    catch(const Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
 }
 
 void MainWindow::gameSelected(QListWidgetItem * _item)

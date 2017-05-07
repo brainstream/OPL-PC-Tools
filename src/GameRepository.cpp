@@ -292,7 +292,15 @@ void GameRepository::setGameCover(const QString _id, QString & _filepath)
     const int cover_width = 140;
     const int cover_height = 200;
     Game & game = findGame(_id);
-    QPixmap pixmap(_filepath);
+    QPixmap pixmap;
+    try
+    {
+        pixmap.load(_filepath);
+    }
+    catch(...)
+    {
+        throw IOException(tr("Unable to load the cover image file \"%1\"").arg(_filepath));
+    }
     if(pixmap.isNull())
         throw IOException(tr("Unabel to load the picture from file \"%1\"").arg(_filepath));
     pixmap = pixmap.scaled(cover_width, cover_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);

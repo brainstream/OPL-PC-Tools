@@ -29,9 +29,9 @@
 
 namespace {
 
-static const char * g_settings_key_wnd_geometry = "wndgeom";
-static const char * g_settings_key_ul_dir = "uldir";
-static const char * g_settings_key_cover_dir = "coverdir";
+static const char * g_settings_key_wnd_geometry = "Window Geometry";
+static const char * g_settings_key_ul_dir = "UL Directory";
+static const char * g_settings_key_cover_dir = "Pixmap Directory";
 
 class GameListItem : public QListWidgetItem
 {
@@ -84,6 +84,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&m_game_repository, &GameRepository::gameAdded, this, &MainWindow::gameAdded);
     connect(&m_game_repository, &GameRepository::gameRenamed, this, &MainWindow::gameRenamed);
     connect(&m_game_repository, &GameRepository::gameDeleted, this, &MainWindow::gameDeleted);
+    QString ul_dir = settings.value(g_settings_key_ul_dir).toString();
+    if(!ul_dir.isEmpty())
+        loadUlConfig(QDir(ul_dir));
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -202,14 +205,8 @@ void MainWindow::setCover()
 {
     GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
     if(item == nullptr) return;
-    QSettings settings;
-    QString dirpath = settings.value(g_settings_key_cover_dir).toString();
-    if(dirpath.isEmpty())
-        dirpath = settings.value(g_settings_key_ul_dir).toString();
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose the game cover"), dirpath,
-        tr("Image Files") + " (*.png *.jpg *.jpeg *.bmp)");
+    QString filename = getOpenPicturePath(tr("Choose the game cover"));
     if(filename.isEmpty()) return;
-    settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
     try
     {
         m_game_repository.setGameCover(item->game().id, filename);
@@ -221,6 +218,18 @@ void MainWindow::setCover()
     }
 }
 
+QString MainWindow::getOpenPicturePath(const QString & _title)
+{
+    QSettings settings;
+    QString dirpath = settings.value(g_settings_key_cover_dir).toString();
+    if(dirpath.isEmpty())
+        dirpath = settings.value(g_settings_key_ul_dir).toString();
+    QString filename = QFileDialog::getOpenFileName(this, _title, dirpath, tr("Image Files") + " (*.png *.jpg *.jpeg *.bmp)");
+    if(filename.isEmpty()) return filename;
+    settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
+    return filename;
+}
+
 void MainWindow::removeCover()
 {
     try
@@ -228,6 +237,38 @@ void MainWindow::removeCover()
         GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
         if(item == nullptr) return;
         m_game_repository.removeGameCover(item->game().id);
+        gameSelected(item);
+    }
+    catch(const Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
+void MainWindow::setIcon()
+{
+    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    if(item == nullptr) return;
+    QString filename = getOpenPicturePath(tr("Choose the game icon"));
+    if(filename.isEmpty()) return;
+    try
+    {
+        m_game_repository.setGameIcon(item->game().id, filename);
+        gameSelected(item);
+    }
+    catch(const Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
+void MainWindow::removeIcon()
+{
+    try
+    {
+        GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+        if(item == nullptr) return;
+        m_game_repository.removeGameIcon(item->game().id);
         gameSelected(item);
     }
     catch(const Exception & exception)
@@ -262,6 +303,7 @@ void MainWindow::gameSelected(QListWidgetItem * _item)
         break;
     }
     mp_label_cover->setPixmap(game.cover);
+    mp_label_icon->setPixmap(game.icon);
     mp_widget_game_details->setVisible(true);
     activateGameActions(true);
 }

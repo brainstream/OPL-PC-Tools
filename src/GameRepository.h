@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QDir>
 #include <QLinkedList>
+#include <QBitmap>
 
 #include "Game.h"
 #include "ValidationException.h"
@@ -42,6 +43,8 @@ public:
     void renameGame(const QString & _id, const QString & _new_name);
     void setGameCover(const QString _id, QString & _filepath);
     void removeGameCover(const QString _id);
+    void setGameIcon(const QString _id, QString & _filepath);
+    void removeGameIcon(const QString _id);
     const Game * game(const QString & _id) const;
 
 signals:
@@ -50,7 +53,9 @@ signals:
     void gameDeleted(const QString & _id);
 
 private:
-    void loadCovers();
+    void loadPixmaps();
+    void loadPixmap(QPixmap & _pixmap, const QString & _filepath);
+    QString savePixmap(QPixmap & _pixmap, const QString & _filename);
     void renameGameConfig(Game & _game, const QString & _new_name);
     void renameGameFiles(Game & _game, const QString & _new_name);
     void deleteGameConfig(const QString _id);
@@ -61,6 +66,7 @@ private:
     QString m_config_directory;
     QString m_config_filepath;
     QLinkedList<Game> m_games;
+    QBitmap m_icon_mask;
 };
 
 const QString & GameRepository::directory() const

@@ -34,6 +34,8 @@ struct Game
     quint8 part_count;
     QPixmap cover;
     QString cover_filepath;
+    QPixmap icon;
+    QString icon_filepath;
 };
 
 #endif // __QPCOPL_GAME__

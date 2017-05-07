@@ -35,7 +35,7 @@
 namespace {
 
 const int g_progressbar_max_value = 1000;
-const char * g_settings_key_iso_dir = "isodir";
+const char * g_settings_key_iso_dir = "ISO Directory";
 const char * g_iso_ext = ".iso";
 
 class TaskListItem : public QTreeWidgetItem

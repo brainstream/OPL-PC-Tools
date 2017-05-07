@@ -120,6 +120,7 @@ QString makeGamePartName(const QString & _id, const QString & _name, quint8 _par
 GameRepository::GameRepository(QObject * _parent /*= nullptr*/) :
     QObject(_parent)
 {
+    m_icon_mask.load(":/misc/icon-mask", "xbm");
 }
 
 void GameRepository::reloadFromUlConfig(const QDir & _config_dir)
@@ -159,10 +160,10 @@ void GameRepository::reloadFromUlConfig(const QDir & _config_dir)
         m_games.append(game);
     }
     delete [] buffer;
-    loadCovers();
+    loadPixmaps();
 }
 
-void GameRepository::loadCovers()
+void GameRepository::loadPixmaps()
 {
     QDir art_dir(m_config_directory);
     if(!art_dir.cd(g_art_dir)) return;
@@ -170,18 +171,30 @@ void GameRepository::loadCovers()
     for(Game & game : m_games)
     {
          QString cover_filename = game.id + "_COV";
-         auto it = std::find_if(files.begin(), files.end(), [cover_filename](const QFileInfo & file_info) {
-             return file_info.completeBaseName() == cover_filename;
-         });
-         if(it == files.end())
-             continue;
-         try
+         QString ico_filename = game.id + "_ICO";
+         for(const QFileInfo & file : files)
          {
-             game.cover.load(it->absoluteFilePath());
-             game.cover_filepath = it->absoluteFilePath();
-         }
-         catch(...)
-         {
+             const QString filename = file.completeBaseName();
+             try
+             {
+                 if(filename == cover_filename)
+                 {
+                     game.cover.load(file.absoluteFilePath());
+                     game.cover_filepath = file.absoluteFilePath();
+                 }
+                 else if(filename == ico_filename)
+                 {
+                     game.icon.load(file.absoluteFilePath());
+                     game.icon_filepath = file.absoluteFilePath();
+                 }
+
+             }
+             catch(...)
+             {
+                 continue;
+             }
+             if(!game.cover_filepath.isEmpty() && !game.icon_filepath.isNull())
+                 break;
          }
     }
 }
@@ -299,26 +312,38 @@ void GameRepository::setGameCover(const QString _id, QString & _filepath)
     const int cover_height = 200;
     Game & game = findGame(_id);
     QPixmap pixmap;
+    loadPixmap(pixmap, _filepath);
+    pixmap = pixmap.scaled(cover_width, cover_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    game.cover_filepath = savePixmap(pixmap, QString("%1_COV.png").arg(game.id));
+    game.cover = pixmap;
+}
+
+void GameRepository::loadPixmap(QPixmap & _pixmap, const QString & _filepath)
+{
     try
     {
-        pixmap.load(_filepath);
+        _pixmap.load(_filepath);
     }
     catch(...)
     {
         throw IOException(tr("Unable to load the cover image file \"%1\"").arg(_filepath));
     }
-    if(pixmap.isNull())
+    if(_pixmap.isNull())
+    {
         throw IOException(tr("Unabel to load the picture from file \"%1\"").arg(_filepath));
-    pixmap = pixmap.scaled(cover_width, cover_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    QDir work_dir(m_config_directory);
-    work_dir.mkdir(g_art_dir);
-    if(!work_dir.cd(g_art_dir))
-        throw IOException(tr("Unabel to create or open the directory \"%1\"").arg(work_dir.absolutePath()));
-    QString filename = work_dir.absoluteFilePath(QString("%1_COV.png").arg(game.id));
-    if(!pixmap.save(filename, "png"))
+    }
+}
+
+QString GameRepository::savePixmap(QPixmap & _pixmap, const QString & _filename)
+{
+    QDir art_dir(m_config_directory);
+    art_dir.mkdir(g_art_dir);
+    if(!art_dir.cd(g_art_dir))
+        throw IOException(tr("Unabel to create or open the directory \"%1\"").arg(art_dir.absolutePath()));
+    QString filename = art_dir.absoluteFilePath(_filename);
+    if(!_pixmap.save(filename, "png"))
        throw IOException(tr("Unabel to write image to file \"%1\"").arg(filename));
-    game.cover_filepath = filename;
-    game.cover = pixmap;
+    return filename;
 }
 
 void GameRepository::removeGameCover(const QString _id)
@@ -327,6 +352,27 @@ void GameRepository::removeGameCover(const QString _id)
     if(game.cover.isNull()) return;
     game.cover = QPixmap();
     QFile::remove(game.cover_filepath);
+}
+
+void GameRepository::setGameIcon(const QString _id, QString & _filepath)
+{
+    const int icon_width = 64;
+    const int icon_height = 64;
+    Game & game = findGame(_id);
+    QPixmap pixmap;
+    loadPixmap(pixmap, _filepath);
+    pixmap = pixmap.scaled(icon_width, icon_height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    pixmap.setMask(m_icon_mask);
+    game.icon_filepath = savePixmap(pixmap, QString("%1_ICO.png").arg(game.id));
+    game.icon = pixmap;
+}
+
+void GameRepository::removeGameIcon(const QString _id)
+{
+    Game & game = findGame(_id);
+    if(game.icon.isNull()) return;
+    game.icon = QPixmap();
+    QFile::remove(game.icon_filepath);
 }
 
 const Game * GameRepository::game(const QString & _id) const

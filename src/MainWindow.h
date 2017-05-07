@@ -43,12 +43,15 @@ private slots:
     void deleteGame();
     void setCover();
     void removeCover();
+    void setIcon();
+    void removeIcon();
     void gameSelected(QListWidgetItem * _item);
     void gameAdded(const QString & _id);
     void gameRenamed(const QString & _id);
     void gameDeleted(const QString & _id);
 
 private:
+    QString getOpenPicturePath(const QString & _title);
     void loadUlConfig(const QDir & _directory);
     void setCurrentFilePath(const QString & _path);
     void activateFileActions(bool _activate);

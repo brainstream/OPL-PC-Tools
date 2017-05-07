@@ -20,8 +20,6 @@
 #include <QSettings>
 #include <QListWidgetItem>
 #include "MainWindow.h"
-#include "UlConfig.h"
-#include "Game.h"
 #include "GameInstaller.h"
 #include "Iso9660GameInstallerSource.h"
 #include "AboutDialog.h"
@@ -37,26 +35,35 @@ static const char * g_settings_key_ul_dir = "uldir";
 class GameListItem : public QListWidgetItem
 {
 public:
-    explicit GameListItem(const UlConfigRecord & _config_record) :
-        m_config_record(_config_record)
+    explicit GameListItem(const GameRepository & _repository, const QString & _game_id) :
+        mr_repository(_repository),
+        m_game_id(_game_id)
     {
+        mp_game = _repository.game(_game_id);
     }
 
-    QVariant data(int _role) const;
+    QVariant data(int _role) const override;
 
-    UlConfigRecord & configRecord()
+    void reload()
     {
-        return m_config_record;
+        mp_game = mr_repository.game(m_game_id);
+    }
+
+    const Game & game() const
+    {
+        return *mp_game;
     }
 
 private:
-    UlConfigRecord m_config_record;
+    const GameRepository & mr_repository;
+    const QString m_game_id;
+    const Game * mp_game;
 };
 
 QVariant GameListItem::data(int _role) const
 {
     if(_role == Qt::DisplayRole)
-        return m_config_record.name;
+        return mp_game->name;
     return QListWidgetItem::data(_role);
 }
 
@@ -73,6 +80,9 @@ MainWindow::MainWindow(QWidget *parent) :
     activateGameActions(false);
     QSettings settings;
     restoreGeometry(settings.value(g_settings_key_wnd_geometry).toByteArray());
+    connect(&m_game_repository, &GameRepository::gameAdded, this, &MainWindow::gameAdded);
+    connect(&m_game_repository, &GameRepository::gameRenamed, this, &MainWindow::gameRenamed);
+    connect(&m_game_repository, &GameRepository::gameDeleted, this, &MainWindow::gameDeleted);
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -108,10 +118,10 @@ void MainWindow::loadUlConfig(const QDir & _directory)
     mp_list_games->clear();
     try
     {
-        m_config_ptr = UlConfig::load(_directory);
-        for(const auto & record : m_config_ptr->records())
-            mp_list_games->addItem(new GameListItem(record));
-        mp_label_current_ul_file->setText(m_config_ptr->file());
+        m_game_repository.reloadFromUlConfig(_directory);
+        for(const Game & game : m_game_repository.games())
+            mp_list_games->addItem(new GameListItem(m_game_repository, game.id));
+        mp_label_current_ul_file->setText(m_game_repository.file());
         mp_list_games->setCurrentRow(0);
         activateFileActions(true);
     }
@@ -125,7 +135,7 @@ void MainWindow::loadUlConfig(const QDir & _directory)
 
 void MainWindow::reloadUlConfig()
 {
-    loadUlConfig(m_config_ptr->directory());
+    loadUlConfig(m_game_repository.directory());
 }
 
 void MainWindow::activateFileActions(bool _activate)
@@ -144,12 +154,7 @@ void MainWindow::addGame()
 {
     try
     {
-        GameInstallDialog dlg(*m_config_ptr, this);
-        if(dlg.exec() == QDialog::Accepted)
-        {
-            reloadUlConfig();
-            mp_list_games->setCurrentRow(mp_list_games->count() - 1);
-        }
+        GameInstallDialog(m_game_repository, this).exec();
     }
     catch(const Exception & exception)
     {
@@ -157,19 +162,38 @@ void MainWindow::addGame()
     }
 }
 
+void MainWindow::gameAdded(const QString & _id)
+{
+    GameListItem * item = new GameListItem(m_game_repository, _id);
+    mp_list_games->addItem(item);
+    mp_list_games->setCurrentItem(item);
+}
+
 void MainWindow::deleteGame()
 {
     GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
     if(item == nullptr) return;
-    UlConfigRecord & config_record = item->configRecord();
     try
     {
-        Game(*m_config_ptr, config_record.image).remove();
-        delete item;
+        m_game_repository.deleteGame(item->game().id);
     }
     catch(const Exception & exception)
     {
         QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
+void MainWindow::gameDeleted(const QString & _id)
+{
+    int item_count = mp_list_games->count();
+    for(int i = 0; i < item_count; ++i)
+    {
+        GameListItem * item = static_cast<GameListItem *>(mp_list_games->item(i));
+        if(item->game().id == _id)
+        {
+            delete item;
+            return;
+        }
     }
 }
 
@@ -182,11 +206,11 @@ void MainWindow::gameSelected(QListWidgetItem * _item)
         return;
     }
     GameListItem * item = static_cast<GameListItem *>(_item);
-    const UlConfigRecord & record = item->configRecord();
-    mp_label_game_id->setText(record.image);
-    mp_label_game_title->setText(record.name);
-    mp_label_game_parts->setText(QString("%1").arg(record.parts));
-    switch(record.type)
+    const Game & game = item->game();
+    mp_label_game_id->setText(game.id);
+    mp_label_game_title->setText(game.name);
+    mp_label_game_parts->setText(QString("%1").arg(game.part_count));
+    switch(game.media_type)
     {
     case MediaType::cd:
         mp_label_game_type->setText("CD");
@@ -206,21 +230,34 @@ void MainWindow::renameGame()
 {
     GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
     if(item == nullptr) return;
-    UlConfigRecord & config_record = item->configRecord();
+    const Game & game = item->game();
     try
     {
-        GameRenameDialog dlg(config_record.name, this);
+        GameRenameDialog dlg(game.name, this);
         if(dlg.exec() == QDialog::Accepted)
         {
             QString new_name = dlg.name();
-            Game(*m_config_ptr, config_record.image).rename(new_name);
-            config_record.name = new_name;
-            mp_list_games->update(mp_list_games->currentIndex());
-            gameSelected(item);
+            m_game_repository.renameGame(game.id, new_name);
         }
     }
     catch(const Exception & exception)
     {
         QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
+void MainWindow::gameRenamed(const QString & _id)
+{
+    int item_count = mp_list_games->count();
+    for(int i = 0; i < item_count; ++i)
+    {
+        GameListItem * item = static_cast<GameListItem *>(mp_list_games->item(i));
+        if(item->game().id == _id)
+        {
+            item->reload();
+            mp_list_games->update(mp_list_games->model()->index(i, 0));
+            gameSelected(item);
+            return;
+        }
     }
 }

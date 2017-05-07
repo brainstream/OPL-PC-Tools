@@ -23,40 +23,48 @@
 #include "GameInstaller.h"
 #include "Game.h"
 
-GameInstaller::GameInstaller(GameInstallerSource & _source, UlConfig & _config, QObject * _parent /*= nullptr*/) :
+GameInstaller::GameInstaller(GameInstallerSource & _source, GameRepository & _repository, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     mp_sourrce(&_source),
-    mr_config(_config),
-    mp_installed_game_info(nullptr)
+    mr_repository(_repository),
+    mp_installed_game(nullptr)
 {
 }
 
 GameInstaller::~GameInstaller()
 {
-    delete mp_installed_game_info;
+    delete mp_installed_game;
 }
 
 bool GameInstaller::install()
 {
-    delete mp_installed_game_info;
-    mp_installed_game_info = new UlConfigRecord();
-    QString iso_id = mp_sourrce->gameId();
-    mp_installed_game_info->image = iso_id;
-    mp_installed_game_info->name = mp_sourrce->gameName();
-    Game::validateGameName(mp_installed_game_info->name);
+    delete mp_installed_game;
+    mp_installed_game = new Game { };
+    mp_installed_game->id = mp_sourrce->gameId();
+    mp_installed_game->name = mp_sourrce->gameName();
+    try
+    {
+        validateGameId(mp_installed_game->id);
+        validateGameName(mp_installed_game->name);
+    }
+    catch(...)
+    {
+        delete mp_installed_game;
+        mp_installed_game = nullptr;
+    }
     const quint64 iso_size = mp_sourrce->size();
-    mp_installed_game_info->type = mp_sourrce->type();
-    if(mp_installed_game_info->type == MediaType::unknown)
-        mp_installed_game_info->type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
+    mp_installed_game->media_type = mp_sourrce->type();
+    if(mp_installed_game->media_type == MediaType::unknown)
+        mp_installed_game->media_type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
     const ssize_t part_size = 1073741824;
     const ssize_t read_part_size = 4194304;
     size_t processed_bytes = 0;
-    QDir dest_dir(mr_config.directory());
+    QDir dest_dir(mr_repository.directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
     mp_sourrce->seek(0);
-    for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size;)
+    for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size; ++mp_installed_game->part_count)
     {
-        QString part_filename = Game::makeGamePartName(iso_id, mp_installed_game_info->name, mp_installed_game_info->parts++);
+        QString part_filename = makeGamePartName(mp_installed_game->id, mp_installed_game->name, mp_installed_game->part_count);
         QFile part(dest_dir.absoluteFilePath(part_filename));
         if(part.exists())
         {
@@ -121,14 +129,14 @@ void GameInstaller::rollback()
     for(const QString & path : m_written_parts)
         QFile::remove(path);
     m_written_parts.clear();
-    delete mp_installed_game_info;
-    mp_installed_game_info = nullptr;
+    delete mp_installed_game;
+    mp_installed_game = nullptr;
     emit rollbackFinished();
 }
 
 void GameInstaller::registerGame()
 {
     emit registrationStarted();
-    mr_config.addRecord(*mp_installed_game_info);
+    mr_repository.addGame(*mp_installed_game);
     emit registrationFinished();
 }

@@ -27,7 +27,7 @@ class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
     Q_OBJECT
 
 public:
-    explicit GameInstallDialog(UlConfig & _config, QWidget * _parent = nullptr);
+    explicit GameInstallDialog(GameRepository & _repository, QWidget * _parent = nullptr);
     ~GameInstallDialog() override;
 
 public slots:
@@ -67,7 +67,7 @@ private:
     GameInstallThread * mp_work_thread;
     GameInstaller * mp_installer;
     GameInstallerSource * mp_source;
-    UlConfig & mr_config;
+    GameRepository & mr_repository;
     int m_processing_task_index;
     bool m_is_canceled;
 };

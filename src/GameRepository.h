@@ -15,66 +15,79 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_ULCONFIG__
-#define __QPCOPL_ULCONFIG__
 
-#include <QList>
+#ifndef __QPCOPL_GAMEREPOSITORY__
+#define __QPCOPL_GAMEREPOSITORY__
+
+#include <functional>
+#include <QObject>
 #include <QDir>
-#include <QSharedPointer>
-#include "MediaType.h"
+#include <QLinkedList>
 
-struct UlConfigRecord
+#include "Game.h"
+#include "ValidationException.h"
+
+class GameRepository : public QObject
 {
-    UlConfigRecord() :
-        type(MediaType::unknown),
-        parts(0)
-    {
-    }
-
-    QString name;
-    QString image;
-    MediaType type;
-    quint8 parts;
-};
-
-class UlConfig final
-{
-private:
-    explicit UlConfig(const QDir & _config_dir);
-    void load();
+    Q_OBJECT
 
 public:
-    static QSharedPointer<UlConfig> load(const QDir & _config_dir);
+    explicit GameRepository(QObject * _parent = nullptr);
+    void reloadFromUlConfig(const QDir & _config_dir);
     inline const QString & directory() const;
     inline const QString & file() const;
-    inline const QList<UlConfigRecord> records() const;
-    void addRecord(const UlConfigRecord & _config);
-    void deleteRecord(const QString _image);
-    void renameRecord(const QString _image, const QString & _new_name);
+    inline const QLinkedList<Game> & games() const;
+    void addGame(const Game & _game);
+    void deleteGame(const QString _id);
+    void renameGame(const QString _id, const QString & _new_name);
+    const Game * game(const QString & _id) const;
 
+signals:
+    void gameAdded(const QString & _id);
+    void gameRenamed(const QString & _id);
+    void gameDeleted(const QString & _id);
 
 private:
-    UlConfigRecord * findRecord(const QString & _image);
+    void renameGameConfig(Game & _game, const QString & _new_name);
+    void renameGameFiles(Game & _game, const QString & _new_name);
+    void deleteGameConfig(const QString _id);
+    void deleteGameFiles(Game & _game);
+    Game * findGame(const QString & _id);
 
 private:
     QString m_config_directory;
     QString m_config_filepath;
-    QList<UlConfigRecord> m_records;
+    QLinkedList<Game> m_games;
 };
 
-const QString & UlConfig::directory() const
+const QString & GameRepository::directory() const
 {
     return m_config_directory;
 }
 
-const QString & UlConfig::file() const
+const QString & GameRepository::file() const
 {
     return m_config_filepath;
 }
 
-const QList<UlConfigRecord> UlConfig::records() const
+const QLinkedList<Game> & GameRepository::games() const
 {
-    return m_records;
+    return m_games;
 }
 
-#endif // __QPCOPL_ULCONFIG__
+
+inline void validateGameName(const QString & _name)
+{
+    if(_name.toUtf8().size() > MAX_GAME_NAME_LENGTH)
+        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(MAX_GAME_NAME_LENGTH));
+}
+
+inline void validateGameId(const QString & _id)
+{
+    if(_id.toLatin1().size() > MAX_GAME_ID_LENGTH)
+        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(MAX_GAME_ID_LENGTH));
+}
+
+QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
+
+#endif // __QPCOPL_GAMEREPOSITORY__

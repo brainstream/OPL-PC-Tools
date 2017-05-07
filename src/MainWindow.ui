@@ -36,17 +36,17 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QFrame" name="frame">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>5</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="title">
-       <string>Game Info</string>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QWidget" name="mp_widget_game_details" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -81,7 +81,7 @@
              </font>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true">The Game Title</string>
             </property>
             <property name="textFormat">
              <enum>Qt::PlainText</enum>
@@ -98,72 +98,175 @@
            </widget>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>ID:</string>
-              </property>
-             </widget>
+           <layout class="QHBoxLayout" name="mp_layout_game_details">
+            <item>
+             <layout class="QFormLayout" name="mp_layout_proprties">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>ID:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="mp_label_game_id">
+                <property name="text">
+                 <string notr="true">GAME_ID</string>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::TextSelectableByMouse</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Type:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="mp_label_game_type">
+                <property name="text">
+                 <string notr="true">GAME_TITLE</string>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::TextSelectableByMouse</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Parts:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="mp_label_game_parts">
+                <property name="text">
+                 <string notr="true">PARTS_COUNT</string>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::TextSelectableByMouse</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="mp_label_game_id">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::TextSelectableByMouse</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Type:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="mp_label_game_type">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::TextSelectableByMouse</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Parts:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="mp_label_game_parts">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::TextSelectableByMouse</set>
-              </property>
-             </widget>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QLabel" name="mp_label_cover">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>140</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel {
+	background-color: white;
+}</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Panel</enum>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="mp_layout_cover_buttons">
+                <item>
+                 <widget class="QPushButton" name="pushButton_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Remove Cover</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Set Cover</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>

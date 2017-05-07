@@ -34,7 +34,7 @@ QString GameRenameDialog::name() const
 
 void GameRenameDialog::nameChanged(const QString & _name)
 {
-    int bytes_left = Game::max_game_name_length - _name.toUtf8().length();
+    int bytes_left = MAX_GAME_NAME_LENGTH - _name.toUtf8().length();
     if(bytes_left < 0)
     {
         mp_label_bytes->setText(tr("Length exceeded by %1 byte(s)").arg(-bytes_left));

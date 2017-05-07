@@ -115,12 +115,12 @@ bool TaskListItem::setMediaType(MediaType _media_type)
 
 } // namespace
 
-GameInstallDialog::GameInstallDialog(UlConfig & _config, QWidget * _parent /*= nullptr*/) :
+GameInstallDialog::GameInstallDialog(GameRepository & _repository, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint),
     mp_work_thread(nullptr),
     mp_installer(nullptr),
     mp_source(nullptr),
-    mr_config(_config),
+    mr_repository(_repository),
     m_processing_task_index(0),
     m_is_canceled(false)
 {
@@ -282,7 +282,7 @@ bool GameInstallDialog::startTask()
     setCurrentProgressBarUnknownStatus(false);
 //    mp_source = new OpticalDiscGameInstallerSource("/dev/cdrom");
     mp_source = task.createSource();
-    mp_installer = new GameInstaller(*mp_source, mr_config, this);
+    mp_installer = new GameInstaller(*mp_source, mr_repository, this);
     mp_work_thread = new GameInstallThread(*mp_installer);
     connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
     connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
@@ -371,9 +371,9 @@ void GameInstallDialog::addDisc(const QString & _device, const QString & _title)
 QString GameInstallDialog::truncateGameName(const QString & _name) const
 {
     const QByteArray utf8 = _name.toUtf8();
-    if(utf8.size() <= Game::max_game_name_length)
+    if(utf8.size() <= MAX_GAME_NAME_LENGTH)
         return _name;
-    QString result = QString::fromUtf8(utf8.constData(), Game::max_game_name_length);
+    QString result = QString::fromUtf8(utf8.constData(), MAX_GAME_NAME_LENGTH);
     for(int i = result.size() - 1; result[i] != _name[i]; --i)
         result.truncate(i);
     return result;

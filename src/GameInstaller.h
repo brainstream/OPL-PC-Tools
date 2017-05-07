@@ -20,7 +20,7 @@
 
 #include <QObject>
 #include <QStringList>
-#include "UlConfig.h"
+#include "GameRepository.h"
 #include "GameInstallerSource.h"
 
 class GameInstaller : public QObject
@@ -28,11 +28,11 @@ class GameInstaller : public QObject
     Q_OBJECT
 
 public:
-    GameInstaller(GameInstallerSource & _source, UlConfig & _config, QObject * _parent = nullptr);
+    GameInstaller(GameInstallerSource & _source, GameRepository & _repository, QObject * _parent = nullptr);
     ~GameInstaller() override;
     inline const GameInstallerSource & source() const;
     bool install();
-    inline const UlConfigRecord * installedGameInfo() const;
+    inline const Game * installedGame() const;
 
 signals:
     void progress(quint64 _total_bytes, quint64 _done_bytes);
@@ -47,9 +47,9 @@ private:
 
 private:
     GameInstallerSource * mp_sourrce;
-    UlConfig & mr_config;
+    GameRepository & mr_repository;
     QStringList m_written_parts;
-    UlConfigRecord * mp_installed_game_info;
+    Game * mp_installed_game;
 };
 
 const GameInstallerSource & GameInstaller::source() const
@@ -57,9 +57,9 @@ const GameInstallerSource & GameInstaller::source() const
     return *mp_sourrce;
 }
 
-const UlConfigRecord * GameInstaller::installedGameInfo() const
+const Game * GameInstaller::installedGame() const
 {
-    return mp_installed_game_info;
+    return mp_installed_game;
 }
 
 #endif // __QPCOPL_GAMEINSTALLER__

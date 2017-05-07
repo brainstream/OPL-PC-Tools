@@ -19,8 +19,9 @@
 #define __QPCOPL_MAINWINDOW__
 
 #include <QLabel>
+#include "Game.h"
 #include "ui_MainWindow.h"
-#include "UlConfig.h"
+#include "GameRepository.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -41,6 +42,9 @@ private slots:
     void addGame();
     void deleteGame();
     void gameSelected(QListWidgetItem * _item);
+    void gameAdded(const QString & _id);
+    void gameRenamed(const QString & _id);
+    void gameDeleted(const QString & _id);
 
 private:
     void loadUlConfig(const QDir & _directory);
@@ -50,7 +54,7 @@ private:
 
 private:
     QLabel * mp_label_current_ul_file;
-    QSharedPointer<UlConfig> m_config_ptr;
+    GameRepository m_game_repository;
 };
 
 #endif // __QPCOPL_MAINWINDOW__

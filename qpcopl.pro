@@ -23,21 +23,19 @@ TEMPLATE = app
 SOURCES +=\
     src/MainWindow.cpp \
     src/Main.cpp \
-    src/UlConfig.cpp \
     src/GameRenameDialog.cpp \
     src/GameInstaller.cpp \
     src/GameInstallDialog.cpp \
     src/Iso9660GameInstallerSource.cpp \
-    src/Game.cpp \
     src/AboutDialog.cpp \
     src/OpticalDiscGameInstallerSource.cpp \
     src/GameInstallerSource.cpp \
     src/ChooseOpticalDiscDialog.cpp \
-    src/LibCDIO.cpp
+    src/LibCDIO.cpp \
+    src/GameRepository.cpp
 
 HEADERS  += \
     src/MainWindow.h \
-    src/UlConfig.h \
     src/IOException.h \
     src/Exception.h \
     src/GameRenameDialog.h \
@@ -53,7 +51,8 @@ HEADERS  += \
     src/OpticalDiscGameInstallerSource.h \
     src/GameInstallationTask.h \
     src/ChooseOpticalDiscDialog.h \
-    src/LibCDIO.h
+    src/LibCDIO.h \
+    src/GameRepository.h
 
 FORMS += \
     src/MainWindow.ui \

@@ -7,5 +7,6 @@
         <file alias="view-refresh">Resources/icons/view-refresh.svg</file>
         <file alias="application">Resources/icons/application.png</file>
         <file alias="media-optical">Resources/icons/media-optical.svg</file>
+        <file alias="edit-delete">Resources/icons/edit-delete.svg</file>
     </qresource>
 </RCC>

@@ -18,46 +18,19 @@
 #ifndef __QPCOPL_GAME__
 #define __QPCOPL_GAME__
 
-#include <QObject>
-#include "UlConfig.h"
-#include "ValidationException.h"
+#include <QString>
+#include <QMetaType>
+#include "MediaType.h"
 
-class Game
+#define MAX_GAME_ID_LENGTH   15
+#define MAX_GAME_NAME_LENGTH 32
+
+struct Game
 {
-public:
-    const static int max_game_name_length = 32;
-    const static int max_image_name_length = 15;
-
-public:
-    Game(UlConfig & _config, const QString & _image);
-    Game(const Game &) = default;
-    Game & operator = (const Game &) = default;
-    void rename(const QString & _new_name);
-    void remove();
-    static QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
-    inline static void validateGameName(const QString & _name);
-    inline static void validateGameImageName(const QString & _name);
-
-private:
-    static quint32 crc32(const QString & _string);
-    const UlConfigRecord & configRecord() const;
-
-private:
-    UlConfig & mr_config;
-    QString m_image;
+    QString id;
+    QString name;
+    MediaType media_type;
+    quint8 part_count;
 };
-
-void Game::validateGameName(const QString & _name)
-{
-    if(_name.toUtf8().size() > max_game_name_length)
-        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(max_game_name_length));
-}
-
-void Game::validateGameImageName(const QString & _name)
-{
-    if(_name.toLatin1().size() > max_image_name_length)
-        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(max_image_name_length));
-}
-
 
 #endif // __QPCOPL_GAME__

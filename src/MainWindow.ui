@@ -170,13 +170,8 @@
                   <height>200</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">QLabel {
-	background-color: white;
-}</string>
-                </property>
                 <property name="frameShape">
-                 <enum>QFrame::Panel</enum>
+                 <enum>QFrame::StyledPanel</enum>
                 </property>
                 <property name="text">
                  <string notr="true"/>
@@ -186,7 +181,7 @@
               <item>
                <layout class="QHBoxLayout" name="mp_layout_cover_buttons">
                 <item>
-                 <widget class="QPushButton" name="pushButton_2">
+                 <widget class="QPushButton" name="mp_btn_remove_cover">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -218,7 +213,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="mp_btn_set_cover">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -587,6 +582,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_btn_remove_cover</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>removeCover()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>755</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_btn_set_cover</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setCover()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>828</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadUlConfig()</slot>
@@ -597,5 +624,7 @@
   <slot>deleteGame()</slot>
   <slot>about()</slot>
   <slot>aboutQt()</slot>
+  <slot>setCover()</slot>
+  <slot>removeCover()</slot>
  </slots>
 </ui>

@@ -31,6 +31,7 @@ namespace {
 
 static const char * g_settings_key_wnd_geometry = "wndgeom";
 static const char * g_settings_key_ul_dir = "uldir";
+static const char * g_settings_key_cover_dir = "coverdir";
 
 class GameListItem : public QListWidgetItem
 {
@@ -197,6 +198,31 @@ void MainWindow::gameDeleted(const QString & _id)
     }
 }
 
+void MainWindow::setCover()
+{
+    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    if(item == nullptr) return;
+
+    QSettings settings;
+    QString dirpath = settings.value(g_settings_key_cover_dir).toString();
+    if(dirpath.isEmpty())
+        dirpath = settings.value(g_settings_key_ul_dir).toString();
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose the game cover"), dirpath,
+        tr("Image Files") + " (*.png *.jpg *.jpeg *.bmp)");
+    if(filename.isEmpty()) return;
+    settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
+    m_game_repository.setGameCover(item->game().id, filename);
+    gameSelected(item);
+}
+
+void MainWindow::removeCover()
+{
+    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    if(item == nullptr) return;
+    m_game_repository.removeGameCover(item->game().id);
+    gameSelected(item);
+}
+
 void MainWindow::gameSelected(QListWidgetItem * _item)
 {
     if(_item == nullptr)
@@ -222,6 +248,7 @@ void MainWindow::gameSelected(QListWidgetItem * _item)
         mp_label_game_type->setText(tr("Unknown"));
         break;
     }
+    mp_label_cover->setPixmap(game.cover);
     mp_widget_game_details->setVisible(true);
     activateGameActions(true);
 }

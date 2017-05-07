@@ -20,6 +20,7 @@
 
 #include <QString>
 #include <QMetaType>
+#include <QPixmap>
 #include "MediaType.h"
 
 #define MAX_GAME_ID_LENGTH   15
@@ -31,6 +32,8 @@ struct Game
     QString name;
     MediaType media_type;
     quint8 part_count;
+    QPixmap cover;
+    QString cover_filepath;
 };
 
 #endif // __QPCOPL_GAME__

@@ -41,6 +41,8 @@ private slots:
     void renameGame();
     void addGame();
     void deleteGame();
+    void setCover();
+    void removeCover();
     void gameSelected(QListWidgetItem * _item);
     void gameAdded(const QString & _id);
     void gameRenamed(const QString & _id);

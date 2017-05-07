@@ -38,8 +38,10 @@ public:
     inline const QString & file() const;
     inline const QLinkedList<Game> & games() const;
     void addGame(const Game & _game);
-    void deleteGame(const QString _id);
-    void renameGame(const QString _id, const QString & _new_name);
+    void deleteGame(const QString & _id);
+    void renameGame(const QString & _id, const QString & _new_name);
+    void setGameCover(const QString _id, QString & _filepath);
+    void removeGameCover(const QString _id);
     const Game * game(const QString & _id) const;
 
 signals:
@@ -48,11 +50,12 @@ signals:
     void gameDeleted(const QString & _id);
 
 private:
+    void loadCovers();
     void renameGameConfig(Game & _game, const QString & _new_name);
     void renameGameFiles(Game & _game, const QString & _new_name);
     void deleteGameConfig(const QString _id);
     void deleteGameFiles(Game & _game);
-    Game * findGame(const QString & _id);
+    Game & findGame(const QString & _id);
 
 private:
     QString m_config_directory;

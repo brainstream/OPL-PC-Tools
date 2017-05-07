@@ -29,6 +29,8 @@
 namespace {
 
 const QString g_image_prefix("ul.");
+const QString g_art_dir("ART");
+const QString g_cover_suffix("_COV");
 
 struct RawConfigRecord
 {
@@ -157,6 +159,25 @@ void GameRepository::reloadFromUlConfig(const QDir & _config_dir)
         m_games.append(game);
     }
     delete [] buffer;
+    loadCovers();
+}
+
+void GameRepository::loadCovers()
+{
+    QDir art_dir(m_config_directory);
+    if(!art_dir.cd(g_art_dir)) return;
+    QFileInfoList files = art_dir.entryInfoList(QStringList { "*.png", "*.jpeg", "*.jpg", "*.bmp" });
+    for(Game & game : m_games)
+    {
+         QString cover_filename = game.id + "_COV";
+         auto it = std::find_if(files.begin(), files.end(), [cover_filename](const QFileInfo & file_info) {
+             return file_info.completeBaseName() == cover_filename;
+         });
+         if(it == files.end())
+             continue;
+         game.cover.load(it->absoluteFilePath());
+         game.cover_filepath = it->absoluteFilePath();
+    }
 }
 
 void GameRepository::addGame(const Game & _game)
@@ -165,7 +186,7 @@ void GameRepository::addGame(const Game & _game)
     validateGameId(g_image_prefix + _game.id);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::WriteOnly | QIODevice::Append);
-    if(findGame(_game.id))
+    if(game(_game.id))
         throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id));
     RawConfigRecord record(_game);
     const char * data = reinterpret_cast<const char *>(&record);
@@ -175,7 +196,7 @@ void GameRepository::addGame(const Game & _game)
     emit gameAdded(_game.id);
 }
 
-void GameRepository::deleteGame(const QString _id)
+void GameRepository::deleteGame(const QString & _id)
 {
     auto iterator = std::find_if(m_games.begin(), m_games.end(), [_id](const Game & game) {
         return game.id == _id;
@@ -222,16 +243,14 @@ void GameRepository::deleteGameFiles(Game & _game)
     }
 }
 
-void GameRepository::renameGame(const QString _id, const QString & _new_name)
+void GameRepository::renameGame(const QString & _id, const QString & _new_name)
 {
     validateGameName(_new_name);
-    Game * game = findGame(_id);
-    if(!game)
-        throw ValidationException(QObject::tr("Config record is not loaded"));
-    renameGameConfig(*game, _new_name);
-    renameGameFiles(*game, _new_name);
-    game->name = _new_name;
-    emit gameRenamed(game->id);
+    Game & game = findGame(_id);
+    renameGameConfig(game, _new_name);
+    renameGameFiles(game, _new_name);
+    game.name = _new_name;
+    emit gameRenamed(game.id);
 }
 
 void GameRepository::renameGameConfig(Game & _game, const QString & _new_name)
@@ -247,7 +266,7 @@ void GameRepository::renameGameConfig(Game & _game, const QString & _new_name)
     QByteArray name_bytes = _new_name.toUtf8();
     strncpy(data, name_bytes.constData(), name_bytes.size());
     if(file.write(data, sizeof(data)) != sizeof(data))
-        throw IOException("An error occurred while writing data to file");
+        throw IOException(QObject::tr("An error occurred while writing data to file"));
 }
 
 void GameRepository::renameGameFiles(Game & _game, const QString & _new_name)
@@ -268,6 +287,34 @@ void GameRepository::renameGameFiles(Game & _game, const QString & _new_name)
     }
 }
 
+void GameRepository::setGameCover(const QString _id, QString & _filepath)
+{
+    const int cover_width = 140;
+    const int cover_height = 200;
+    Game & game = findGame(_id);
+    QPixmap pixmap(_filepath);
+    if(pixmap.isNull())
+        throw IOException(tr("Unabel to load the picture from file \"%1\"").arg(_filepath));
+    pixmap = pixmap.scaled(cover_width, cover_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QDir work_dir(m_config_directory);
+    work_dir.mkdir(g_art_dir);
+    if(!work_dir.cd(g_art_dir))
+        throw IOException(tr("Unabel to create or open the directory \"%1\"").arg(work_dir.absolutePath()));
+    QString filename = work_dir.absoluteFilePath(QString("%1_COV.png").arg(game.id));
+    if(!pixmap.save(filename, "png"))
+       throw IOException(tr("Unabel to write image to file \"%1\"").arg(filename));
+    game.cover_filepath = filename;
+    game.cover = pixmap;
+}
+
+void GameRepository::removeGameCover(const QString _id)
+{
+    Game & game = findGame(_id);
+    if(game.cover.isNull()) return;
+    game.cover = QPixmap();
+    QFile::remove(game.cover_filepath);
+}
+
 const Game * GameRepository::game(const QString & _id) const
 {
     for(const Game & game : m_games)
@@ -278,12 +325,12 @@ const Game * GameRepository::game(const QString & _id) const
     return nullptr;
 }
 
-Game * GameRepository::findGame(const QString & _id)
+Game & GameRepository::findGame(const QString & _id)
 {
     for(Game & game : m_games)
     {
         if(game.id == _id)
-            return &game;
+            return game;
     }
-    return nullptr;
+    throw ValidationException(QObject::tr("Config record is not loaded"));
 }

@@ -46,9 +46,7 @@ private slots:
     void setIcon();
     void removeIcon();
     void gameSelected(QListWidgetItem * _item);
-    void gameAdded(const QString & _id);
-    void gameRenamed(const QString & _id);
-    void gameDeleted(const QString & _id);
+    void gameInstalled(const QString & _id);
 
 private:
     QString getOpenPicturePath(const QString & _title);

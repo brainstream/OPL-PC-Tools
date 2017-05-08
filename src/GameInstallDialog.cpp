@@ -241,6 +241,7 @@ void GameInstallDialog::registrationFinished()
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
             setStatus(GameInstallationStatus::done);
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
+    emit gameInstalled(mp_installer->installedGame()->id);
     mp_work_thread->quit();
 }
 

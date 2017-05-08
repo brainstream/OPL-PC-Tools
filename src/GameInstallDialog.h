@@ -54,6 +54,9 @@ private slots:
     void renameGame();
     void removeGame();
 
+signals:
+    void gameInstalled(const QString & _id);
+
 private:
     void addIso(const QString & _iso_path);
     void addDisc(const QString & _device, const QString & _title);

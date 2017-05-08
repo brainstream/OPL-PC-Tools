@@ -19,12 +19,8 @@
 #ifndef __QPCOPL_GAMEREPOSITORY__
 #define __QPCOPL_GAMEREPOSITORY__
 
-#include <functional>
-#include <QObject>
 #include <QDir>
 #include <QLinkedList>
-#include <QBitmap>
-
 #include "Game.h"
 #include "ValidationException.h"
 
@@ -46,11 +42,6 @@ public:
     void setGameIcon(const QString _id, QString & _filepath);
     void removeGameIcon(const QString _id);
     const Game * game(const QString & _id) const;
-
-signals:
-    void gameAdded(const QString & _id);
-    void gameRenamed(const QString & _id);
-    void gameDeleted(const QString & _id);
 
 private:
     void loadPixmaps();

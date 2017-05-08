@@ -211,7 +211,6 @@ void GameRepository::addGame(const Game & _game)
     if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
         throw IOException(QObject::tr("An error occurred while writing data to file"));
     m_games.append(_game);
-    emit gameAdded(_game.id);
 }
 
 void GameRepository::deleteGame(const QString & _id)
@@ -223,7 +222,6 @@ void GameRepository::deleteGame(const QString & _id)
         throw ValidationException(tr("Game \"%1\" is not loaded").arg(_id));
     deleteGameConfig(_id);
     deleteGameFiles(*iterator);
-    emit gameDeleted(iterator->id);
     m_games.erase(iterator);
 }
 
@@ -268,7 +266,6 @@ void GameRepository::renameGame(const QString & _id, const QString & _new_name)
     renameGameConfig(game, _new_name);
     renameGameFiles(game, _new_name);
     game.name = _new_name;
-    emit gameRenamed(game.id);
 }
 
 void GameRepository::renameGameConfig(Game & _game, const QString & _new_name)

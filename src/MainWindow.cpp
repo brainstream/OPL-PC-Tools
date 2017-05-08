@@ -81,12 +81,6 @@ MainWindow::MainWindow(QWidget *parent) :
     activateGameActions(false);
     QSettings settings;
     restoreGeometry(settings.value(g_settings_key_wnd_geometry).toByteArray());
-    connect(&m_game_repository, &GameRepository::gameAdded, this, &MainWindow::gameAdded);
-    connect(&m_game_repository, &GameRepository::gameRenamed, this, &MainWindow::gameRenamed);
-    connect(&m_game_repository, &GameRepository::gameDeleted, this, &MainWindow::gameDeleted);
-    QString ul_dir = settings.value(g_settings_key_ul_dir).toString();
-    if(!ul_dir.isEmpty())
-        loadUlConfig(QDir(ul_dir));
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -158,7 +152,9 @@ void MainWindow::addGame()
 {
     try
     {
-        GameInstallDialog(m_game_repository, this).exec();
+        GameInstallDialog dlg(m_game_repository, this);
+        connect(&dlg, &GameInstallDialog::gameInstalled, this, &MainWindow::gameInstalled);
+        dlg.exec();
     }
     catch(const Exception & exception)
     {
@@ -166,7 +162,7 @@ void MainWindow::addGame()
     }
 }
 
-void MainWindow::gameAdded(const QString & _id)
+void MainWindow::gameInstalled(const QString & _id)
 {
     GameListItem * item = new GameListItem(m_game_repository, _id);
     mp_list_games->addItem(item);
@@ -180,24 +176,11 @@ void MainWindow::deleteGame()
     try
     {
         m_game_repository.deleteGame(item->game().id);
+        delete item;
     }
     catch(const Exception & exception)
     {
         QMessageBox::critical(this, QString(), exception.message());
-    }
-}
-
-void MainWindow::gameDeleted(const QString & _id)
-{
-    int item_count = mp_list_games->count();
-    for(int i = 0; i < item_count; ++i)
-    {
-        GameListItem * item = static_cast<GameListItem *>(mp_list_games->item(i));
-        if(item->game().id == _id)
-        {
-            delete item;
-            return;
-        }
     }
 }
 
@@ -320,26 +303,13 @@ void MainWindow::renameGame()
         {
             QString new_name = dlg.name();
             m_game_repository.renameGame(game.id, new_name);
+            item->reload();
+            mp_list_games->update(mp_list_games->currentIndex());
+            gameSelected(item);
         }
     }
     catch(const Exception & exception)
     {
         QMessageBox::critical(this, QString(), exception.message());
-    }
-}
-
-void MainWindow::gameRenamed(const QString & _id)
-{
-    int item_count = mp_list_games->count();
-    for(int i = 0; i < item_count; ++i)
-    {
-        GameListItem * item = static_cast<GameListItem *>(mp_list_games->item(i));
-        if(item->game().id == _id)
-        {
-            item->reload();
-            mp_list_games->update(mp_list_games->model()->index(i, 0));
-            gameSelected(item);
-            return;
-        }
     }
 }

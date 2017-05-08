@@ -15,50 +15,24 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#include "Settings.h"
+#include "SettingsDialog.h"
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameRepository.h"
-
-class MainWindow : public QMainWindow, private Ui::MainWindow
+SettingsDialog::SettingsDialog(QWidget * _parent) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    Q_OBJECT
+    setupUi(this);
+    Settings & settings = Settings::instance();
+    mp_checkbox_reopen_last_session->setChecked(settings.reopenLastSestion());
+    mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
+    mp_checkbox_confirm_pixmap_deletion->setChecked(settings.confirmPixmapDeletion());
+}
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
-
-private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    GameRepository m_game_repository;
-};
-
-#endif // __QPCOPL_MAINWINDOW__
+void SettingsDialog::accept()
+{
+    Settings & settings = Settings::instance();
+    settings.setReopenLastSestion(mp_checkbox_reopen_last_session->isChecked());
+    settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
+    settings.setConfirmPixmapDeletion(mp_checkbox_confirm_pixmap_deletion->isChecked());
+    QDialog::accept();
+}

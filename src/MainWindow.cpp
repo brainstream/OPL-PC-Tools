@@ -20,6 +20,8 @@
 #include <QSettings>
 #include <QListWidgetItem>
 #include "MainWindow.h"
+#include "Settings.h"
+#include "SettingsDialog.h"
 #include "GameInstaller.h"
 #include "Iso9660GameInstallerSource.h"
 #include "AboutDialog.h"
@@ -29,9 +31,9 @@
 
 namespace {
 
-static const char * g_settings_key_wnd_geometry = "Window Geometry";
-static const char * g_settings_key_ul_dir = "UL Directory";
-static const char * g_settings_key_cover_dir = "Pixmap Directory";
+static const char * g_settings_key_wnd_geometry = "WindowGeometry";
+static const char * g_settings_key_ul_dir = "ULDirectory";
+static const char * g_settings_key_cover_dir = "PixmapDirectory";
 
 class GameListItem : public QListWidgetItem
 {
@@ -81,6 +83,12 @@ MainWindow::MainWindow(QWidget *parent) :
     activateGameActions(false);
     QSettings settings;
     restoreGeometry(settings.value(g_settings_key_wnd_geometry).toByteArray());
+    if(Settings::instance().reopenLastSestion())
+    {
+        QDir directory(settings.value(g_settings_key_ul_dir).toString());
+        if(directory.exists())
+            loadUlConfig(directory);
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -99,6 +107,12 @@ void MainWindow::about()
 void MainWindow::aboutQt()
 {
     QMessageBox::aboutQt(this);
+}
+
+void MainWindow::showSettings()
+{
+    SettingsDialog dlg(this);
+    dlg.exec();
 }
 
 void MainWindow::loadUlConfig()
@@ -173,6 +187,12 @@ void MainWindow::deleteGame()
 {
     GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
     if(item == nullptr) return;
+    if(Settings::instance().confirmGameDeletion() &&
+       QMessageBox::question(this, QString(),
+       tr("Are you sure you want to delete the game?") + "\r\n" + item->game().name) != QMessageBox::Yes)
+    {
+        return;
+    }
     try
     {
         m_game_repository.deleteGame(item->game().id);
@@ -219,6 +239,11 @@ void MainWindow::removeCover()
     {
         GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
         if(item == nullptr) return;
+        if(Settings::instance().confirmPixmapDeletion() &&
+           QMessageBox::question(this, QString(), tr("Are you sure you want to delete the game cover?")) != QMessageBox::Yes)
+        {
+            return;
+        }
         m_game_repository.removeGameCover(item->game().id);
         gameSelected(item);
     }
@@ -251,6 +276,11 @@ void MainWindow::removeIcon()
     {
         GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
         if(item == nullptr) return;
+        if(Settings::instance().confirmPixmapDeletion() &&
+           QMessageBox::question(this, QString(), tr("Are you sure you want to delete the game icon?")) != QMessageBox::Yes)
+        {
+            return;
+        }
         m_game_repository.removeGameIcon(item->game().id);
         gameSelected(item);
     }

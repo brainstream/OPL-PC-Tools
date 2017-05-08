@@ -32,7 +32,9 @@ SOURCES +=\
     src/GameInstallerSource.cpp \
     src/ChooseOpticalDiscDialog.cpp \
     src/LibCDIO.cpp \
-    src/GameRepository.cpp
+    src/GameRepository.cpp \
+    src/SettingsDialog.cpp \
+    src/Settings.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -52,14 +54,17 @@ HEADERS  += \
     src/GameInstallationTask.h \
     src/ChooseOpticalDiscDialog.h \
     src/LibCDIO.h \
-    src/GameRepository.h
+    src/GameRepository.h \
+    src/SettingsDialog.h \
+    src/Settings.h
 
 FORMS += \
     src/MainWindow.ui \
     src/GameRenameDialog.ui \
     src/GameInstallDialog.ui \
     src/AboutDialog.ui \
-    src/ChooseOpticalDiscDialog.ui
+    src/ChooseOpticalDiscDialog.ui \
+    src/SettingsDialog.ui
 
 RESOURCES += \
     src/Resources.qrc

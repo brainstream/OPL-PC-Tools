@@ -15,50 +15,20 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#ifndef __QPCOPL_SETTINGSDIALOG__
+#define __QPCOPL_SETTINGSDIALOG__
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameRepository.h"
+#include "ui_SettingsDialog.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class SettingsDialog : public QDialog, private Ui::SettingsDialog
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit SettingsDialog(QWidget * _parent = 0);
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
-
-private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    GameRepository m_game_repository;
+public slots:
+    void accept() override;
 };
 
-#endif // __QPCOPL_MAINWINDOW__
+#endif // __QPCOPL_SETTINGSDIALOG__

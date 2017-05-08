@@ -15,50 +15,66 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#ifndef __QPCOPL_SETTINGS__
+#define __QPCOPL_SETTINGS__
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameRepository.h"
+#include <QString>
+#include <QSettings>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class Settings final
 {
-    Q_OBJECT
+private:
+    Settings();
+    Settings(const Settings &) = delete;
+    Settings & operator = (const Settings &) = delete;
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    static Settings & instance();
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
+    bool reopenLastSestion() const
+    {
+        return m_reopen_last_session;
+    }
 
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
+    void setReopenLastSestion(bool _value)
+    {
+        m_settins.setValue(s_key_reopen_last_session, _value);
+        m_reopen_last_session = _value;
+    }
+
+    bool confirmGameDeletion() const
+    {
+        return m_confirm_game_deletion;
+    }
+
+    void setConfirmGameDeletion(bool _value)
+    {
+        m_settins.setValue(s_key_confirm_game_deletion, _value);
+        m_confirm_game_deletion = _value;
+    }
+
+    bool confirmPixmapDeletion() const
+    {
+        return m_confirm_pixmap_deletion;
+    }
+
+    void setConfirmPixmapDeletion(bool _value)
+    {
+        m_settins.setValue(s_key_confirm_pixmap_deletion, _value);
+        m_confirm_pixmap_deletion = _value;
+    }
 
 private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
+    bool loadBoolean(const QString & _key, bool _default_value);
 
 private:
-    QLabel * mp_label_current_ul_file;
-    GameRepository m_game_repository;
+    static const QString s_key_reopen_last_session;
+    static const QString s_key_confirm_game_deletion;
+    static const QString s_key_confirm_pixmap_deletion;
+    QSettings m_settins;
+    bool m_reopen_last_session;
+    bool m_confirm_game_deletion;
+    bool m_confirm_pixmap_deletion;
 };
 
-#endif // __QPCOPL_MAINWINDOW__
+#endif // __QPCOPL_SETTINGS__

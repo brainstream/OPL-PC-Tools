@@ -15,50 +15,29 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#include "Settings.h"
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameRepository.h"
+const QString Settings::s_key_reopen_last_session("Settings/ReopenLastSession");
+const QString Settings::s_key_confirm_game_deletion("Settings/ConfirmGameDeletion");
+const QString Settings::s_key_confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+Settings::Settings()
 {
-    Q_OBJECT
+    m_reopen_last_session = loadBoolean(s_key_reopen_last_session, false);
+    m_confirm_game_deletion = loadBoolean(s_key_confirm_game_deletion, true);
+    m_confirm_pixmap_deletion = loadBoolean(s_key_confirm_pixmap_deletion, true);
+}
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
+bool Settings::loadBoolean(const QString & _key, bool _default_value)
+{
+    QVariant value = m_settins.value(_key);
+    if(value.isNull() || !value.isValid())
+        return _default_value;
+    return value.toBool();
+}
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
-
-private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    GameRepository m_game_repository;
-};
-
-#endif // __QPCOPL_MAINWINDOW__
+Settings & Settings::instance()
+{
+    static Settings * settings = new Settings();
+    return *settings;
+}

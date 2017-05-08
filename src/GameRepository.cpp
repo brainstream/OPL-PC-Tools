@@ -257,6 +257,10 @@ void GameRepository::deleteGameFiles(Game & _game)
         QString path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.name, part));
         QFile::remove(path);
     }
+    if(!_game.cover_filepath.isEmpty())
+        QFile::remove(_game.cover_filepath);
+    if(!_game.icon_filepath.isEmpty())
+        QFile::remove(_game.icon_filepath);
 }
 
 void GameRepository::renameGame(const QString & _id, const QString & _new_name)

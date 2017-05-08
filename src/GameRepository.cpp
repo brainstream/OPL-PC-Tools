@@ -120,7 +120,6 @@ QString makeGamePartName(const QString & _id, const QString & _name, quint8 _par
 GameRepository::GameRepository(QObject * _parent /*= nullptr*/) :
     QObject(_parent)
 {
-    m_icon_mask.load(":/misc/icon-mask", "xbm");
 }
 
 void GameRepository::reloadFromUlConfig(const QDir & _config_dir)
@@ -362,7 +361,6 @@ void GameRepository::setGameIcon(const QString _id, QString & _filepath)
     QPixmap pixmap;
     loadPixmap(pixmap, _filepath);
     pixmap = pixmap.scaled(icon_width, icon_height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    pixmap.setMask(m_icon_mask);
     game.icon_filepath = savePixmap(pixmap, QString("%1_ICO.png").arg(game.id));
     game.icon = pixmap;
 }

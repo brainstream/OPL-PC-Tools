@@ -66,7 +66,6 @@ private:
     QString m_config_directory;
     QString m_config_filepath;
     QLinkedList<Game> m_games;
-    QBitmap m_icon_mask;
 };
 
 const QString & GameRepository::directory() const

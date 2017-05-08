@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>884</width>
-    <height>573</height>
+    <height>592</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -296,7 +296,6 @@
                      <property name="styleSheet">
                       <string notr="true">QLabel {
 	border: 1px solid gray;
-	border-radius: 32px;
 	background-color: #d1d1d1;
 }</string>
                      </property>

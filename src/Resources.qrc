@@ -9,7 +9,4 @@
         <file alias="media-optical">Resources/icons/media-optical.svg</file>
         <file alias="edit-delete">Resources/icons/edit-delete.svg</file>
     </qresource>
-    <qresource prefix="/misc">
-        <file alias="icon-mask">Resources/misc/icon-mask.xbm</file>
-    </qresource>
 </RCC>

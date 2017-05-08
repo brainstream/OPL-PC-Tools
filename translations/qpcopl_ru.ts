@@ -317,6 +317,11 @@
         <translation>&amp;Установить игру...</translation>
     </message>
     <message>
+        <location filename="../src/MainWindow.ui" line="490"/>
+        <source>Install Game</source>
+        <translation>Установить игру</translation>
+    </message>
+    <message>
         <location filename="../src/MainWindow.ui" line="558"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
@@ -326,9 +331,8 @@
         <translation type="vanished">&amp;Добавить...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="490"/>
         <source>Add Game</source>
-        <translation>Добавить игру</translation>
+        <translation type="vanished">Добавить игру</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="493"/>

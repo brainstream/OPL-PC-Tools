@@ -18,6 +18,9 @@
 #include "MainWindow.h"
 #include <QApplication>
 #include <QTranslator>
+#include <QStandardPaths>
+
+QTranslator * setupTranslator();
 
 int main(int argc, char *argv[])
 {
@@ -26,11 +29,32 @@ int main(int argc, char *argv[])
     a.setApplicationVersion("0.0.1");
     a.setApplicationDisplayName("Open PlayStation 2 Loader PC Tools");
     a.setOrganizationName("brainstream");
-    QTranslator translator;
-    translator.load("qpcopl_ru");
-    a.installTranslator(&translator);
+    QTranslator * translator = setupTranslator();
     MainWindow w;
     w.show();
+    int result = a.exec();
+    delete translator;
+    return result;
+}
 
-    return a.exec();
+QTranslator * setupTranslator()
+{
+    QString locale = QLocale::system().name();
+    locale.truncate(locale.lastIndexOf('_'));
+    QCoreApplication * app = QApplication::instance();
+    QString filename = QString("%1_%2.qm").arg(app->applicationName()).arg(locale);
+    filename = QStandardPaths::locate(QStandardPaths::AppDataLocation, filename);
+    if(filename.isEmpty())
+        return nullptr;
+    QTranslator * translator = new QTranslator();
+    if(translator->load(filename))
+    {
+        app->installTranslator(translator);
+        return translator;
+    }
+    else
+    {
+        delete translator;
+    }
+    return nullptr;
 }

@@ -20,6 +20,8 @@ QT += core gui widgets
 TARGET = qpcopl
 TEMPLATE = app
 
+CONFIG += c++14
+
 SOURCES +=\
     src/MainWindow.cpp \
     src/Main.cpp \
@@ -34,7 +36,8 @@ SOURCES +=\
     src/LibCDIO.cpp \
     src/GameRepository.cpp \
     src/SettingsDialog.cpp \
-    src/Settings.cpp
+    src/Settings.cpp \
+    src/Win32CdIoHack.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -56,7 +59,8 @@ HEADERS  += \
     src/LibCDIO.h \
     src/GameRepository.h \
     src/SettingsDialog.h \
-    src/Settings.h
+    src/Settings.h \
+    src/Win32CdIoHack.h
 
 FORMS += \
     src/MainWindow.ui \
@@ -84,4 +88,6 @@ unix {
 
 win32 {
     RC_FILE = src/Resources.rc
+    INCLUDEPATH += depends/include
+    LIBS += -L$$_PRO_FILE_PWD_/depends/bin -lcdio.lib -liconv.lib -liso9660.lib
 }

@@ -20,6 +20,7 @@
 #include "OpticalDiscGameInstallerSource.h"
 #include "IOException.h"
 #include "LibCDIO.h"
+#include "Win32CdIoHack.h"
 
 struct OpticalDiscGameInstallerSource::Data
 {
@@ -63,6 +64,9 @@ void OpticalDiscGameInstallerSource::init() const
     mp_data->is_initialized = true;
     initLibCDIO();
     mp_data->device = cdio_open_cd(mp_data->device_name.c_str());
+#ifdef _WIN32
+    hackCdIo(mp_data->device);
+#endif
     cdio_set_speed(mp_data->device, 128);
     initGameId();
     initLabel();
@@ -130,7 +134,8 @@ void OpticalDiscGameInstallerSource::seek(quint64 _offset)
 ssize_t OpticalDiscGameInstallerSource::read(QByteArray & _buffer)
 {
     init();
-    return cdio_read(mp_data->device, _buffer.data(), _buffer.size());
+    ssize_t size = cdio_read(mp_data->device, _buffer.data(), _buffer.size());
+    return size;
 }
 
 QByteArray OpticalDiscGameInstallerSource::read(lsn_t _lsn, quint32 _blocks) const

@@ -99,6 +99,9 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="mp_layout_game_details">
+            <property name="topMargin">
+             <number>8</number>
+            </property>
             <item>
              <layout class="QFormLayout" name="mp_layout_proprties">
               <item row="1" column="0">
@@ -411,7 +414,7 @@
      <x>0</x>
      <y>0</y>
      <width>884</width>
-     <height>23</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="mp_menu_file">

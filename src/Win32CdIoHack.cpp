@@ -15,11 +15,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#ifdef _WIN32
+
 #include <windows.h>
 #include <cdio/iso9660.h>
 #include "Win32CdIoHack.h"
 
-#ifdef _WIN32
 
 namespace {
 

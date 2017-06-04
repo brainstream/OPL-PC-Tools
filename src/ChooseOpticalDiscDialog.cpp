@@ -18,7 +18,6 @@
 #include <QPushButton>
 #include <QThread>
 #include "LibCDIO.h"
-#include "CDIO/Device.h"
 #include "Exception.h"
 #include "ChooseOpticalDiscDialog.h"
 
@@ -49,7 +48,7 @@ QVariant DeviceListItem::data(int _column, int _role) const
         switch(_column)
         {
         case 0:
-            return m_device_info.device;
+            return m_device_info.device.name;
         case 1:
             return m_device_info.title;
         }
@@ -91,12 +90,12 @@ void InitializationThread::run()
     try
     {
         initLibCDIO();
-        QStringList devices = loadDriveList();
-        for(const QString & device : devices)
+        QList<DeviceName> devices = loadDriveList();
+        for(const DeviceName & device : devices)
         {
-            CdIo * cdio = cdio_open_cd(device.toLatin1()); // FIXME: rewrite
+            CdIo * cdio = cdio_open_cd(device.filename.toLatin1()); // FIXME: rewrite
             if(!cdio) continue;
-            cdio_close_tray(device.toLatin1(), nullptr); // FIXME: rewrite
+            cdio_close_tray(device.filename.toLatin1(), nullptr); // FIXME: rewrite
             if(cdio_get_discmode(cdio) == CDIO_DISC_MODE_ERROR)
                 continue;
             ChooseOpticalDiscDialog::DeviceInfo device_info;

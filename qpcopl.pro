@@ -38,8 +38,8 @@ SOURCES +=\
     src/SettingsDialog.cpp \
     src/Settings.cpp \
     src/Win32CdIoHack.cpp \
-    src/CDIO/Device.cpp \
-    src/CDIO/Device_Linux.cpp
+    src/Device.cpp \
+    src/Device_Linux.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -63,7 +63,7 @@ HEADERS  += \
     src/SettingsDialog.h \
     src/Settings.h \
     src/Win32CdIoHack.h \
-    src/CDIO/Device.h
+    src/Device.h
 
 FORMS += \
     src/MainWindow.ui \

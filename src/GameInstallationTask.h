@@ -20,6 +20,7 @@
 
 #include "Iso9660GameInstallerSource.h"
 #include "OpticalDiscGameInstallerSource.h"
+#include "Device.h"
 
 enum class GameInstallationStatus
 {
@@ -161,25 +162,25 @@ const QString & Iso9660GameInstallationTask::isoPath() const
 class OpticalDiscGameInstallationTask : public GameInstallationTask
 {
 public:
-    explicit inline OpticalDiscGameInstallationTask(const QString & _device);
+    explicit inline OpticalDiscGameInstallationTask(const DeviceName & _device);
     OpticalDiscGameInstallationTask(const OpticalDiscGameInstallationTask &) = default;
     OpticalDiscGameInstallationTask & operator = (const OpticalDiscGameInstallationTask &) = default;
     inline GameInstallerSource * createSource() const override;
     inline bool canChangeMediaType() const override;
-    inline const QString & device() const;
+    inline const DeviceName & deviceName() const;
 
 private:
-    QString m_device;
+    DeviceName m_device;
 };
 
-OpticalDiscGameInstallationTask::OpticalDiscGameInstallationTask(const QString & _device) :
+OpticalDiscGameInstallationTask::OpticalDiscGameInstallationTask(const DeviceName & _device) :
     m_device(_device)
 {
 }
 
 GameInstallerSource * OpticalDiscGameInstallationTask::createSource() const
 {
-    OpticalDiscGameInstallerSource * source = new OpticalDiscGameInstallerSource(m_device.toUtf8());
+    OpticalDiscGameInstallerSource * source = new OpticalDiscGameInstallerSource(m_device.filename.toUtf8());
     completeSource(*source);
     return source;
 }
@@ -189,7 +190,7 @@ bool OpticalDiscGameInstallationTask::canChangeMediaType() const
     return false;
 }
 
-const QString & OpticalDiscGameInstallationTask::device() const
+const DeviceName & OpticalDiscGameInstallationTask::deviceName() const
 {
     return m_device;
 }

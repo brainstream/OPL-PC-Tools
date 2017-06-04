@@ -348,7 +348,7 @@ void GameInstallDialog::addDisc()
         {
             TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
             const OpticalDiscGameInstallationTask * task = dynamic_cast<const OpticalDiscGameInstallationTask *>(&item->task());
-            if(task != nullptr && task->device() == device_info.device)
+            if(task != nullptr && task->deviceName().filename == device_info.device.filename)
             {
                 mp_tree_tasks->setCurrentItem(item);
                 return;
@@ -358,7 +358,7 @@ void GameInstallDialog::addDisc()
     }
 }
 
-void GameInstallDialog::addDisc(const QString & _device, const QString & _title)
+void GameInstallDialog::addDisc(const DeviceName & _device, const QString & _title)
 {
     QSharedPointer<GameInstallationTask> task(new OpticalDiscGameInstallationTask(_device));
     task->setGameName(_title);

@@ -15,13 +15,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QFile>
 #include <QScopedPointer>
 #include <QRegExp>
+#include <QFileInfo>
 #include "Device.h"
 
 #define ISO9660_OFFSET 0x8000
-#define CD_ID "CD001"
 
 namespace {
 
@@ -160,6 +159,9 @@ public:
     ~Iso9660Data();
     inline bool isInitialized() const;
     inline qint16 blockSize() const;
+    inline qint32 blockCount() const;
+    inline bool isPlayStationDisc() const;
+    inline QString title() const;
     inline const QString & gameId() const;
 
 private:
@@ -203,7 +205,7 @@ bool Device::Iso9660Data::readPrimaryVolumeDescriptor(QFile & _file)
         return false;
     if(descriptor_ptr->type != VolumeDescriptorType::PrimaryVolumeDescriptor)
         return false;
-    if(strcmp(CD_ID, descriptor_ptr->id))
+    if(strncmp("CD001", descriptor_ptr->id, 5))
         return false;
     mp_descriptor = reinterpret_cast<PrimaryVolumeDescriptor *>(descriptor_ptr.take());
     return true;
@@ -284,23 +286,62 @@ qint16 Device::Iso9660Data::blockSize() const
     return m_is_initialized ? mp_descriptor->block_size : -1;
 }
 
+qint32 Device::Iso9660Data::blockCount() const
+{
+    return m_is_initialized ? mp_descriptor->block_count : -1;
+}
+
+bool Device::Iso9660Data::isPlayStationDisc() const
+{
+    if(!m_is_initialized)
+        return false;
+    const char psid[] = "PLAYSTATION";
+    return strncmp(psid, mp_descriptor->system_id, sizeof(psid)) == 0;
+}
+
 const QString & Device::Iso9660Data::gameId() const
 {
     return m_game_id;
 }
 
+QString Device::Iso9660Data::title() const
+{
+    return m_is_initialized ?
+        QString::fromLatin1(mp_descriptor->volume_id, sizeof(PrimaryVolumeDescriptor::volume_id)).trimmed() :
+        QString();
+}
+
 Device::Device(const QString & _filepath) :
+    m_is_initialized(false),
     m_filepath(_filepath),
-    mp_iso9660(nullptr)
+    mp_iso9660(nullptr),
+    mp_read_file(nullptr)
 {
 }
 
 Device::~Device()
 {
     delete mp_iso9660;
+    delete mp_read_file;
+}
+
+const QString & Device::filepath() const
+{
+    return m_filepath;
+}
+
+const Device::Iso9660Data * Device::iso9660() const
+{
+    return mp_iso9660;
 }
 
 bool Device::init()
+{
+    m_is_initialized = initialize();
+    return m_is_initialized;
+}
+
+bool Device::initialize()
 {
     if(mp_iso9660 == nullptr)
         mp_iso9660 = new Iso9660Data(m_filepath);
@@ -309,10 +350,109 @@ bool Device::init()
 
 bool Device::isInitialized() const
 {
-    return mp_iso9660 != nullptr && mp_iso9660->isInitialized();
+    return m_is_initialized;
 }
 
-const QString & Device::gameId() const
+bool Device::isPlayStationDisc() const
 {
-    return mp_iso9660->gameId();
+    return mp_iso9660->isPlayStationDisc();
+}
+
+QString Device::title() const
+{
+    return m_is_initialized ? mp_iso9660->title() : QString();
+}
+
+const QString Device::gameId() const
+{
+    return m_is_initialized ? mp_iso9660->gameId() : QString();
+}
+
+bool Device::open()
+{
+    close();
+    mp_read_file = new QFile(m_filepath);
+    if(mp_read_file->open(QFile::ReadOnly))
+        return true;
+    close();
+    return false;
+}
+
+void Device::close()
+{
+    delete mp_read_file;
+    mp_read_file = nullptr;
+}
+
+bool Device::isOpen() const
+{
+    return mp_read_file && mp_read_file->isOpen();
+}
+
+bool Device::seek(quint64 _offset)
+{
+    return mp_read_file && mp_read_file->seek(_offset);
+}
+
+quint64 Device::read(char * _buffer, quint64 _max_length)
+{
+    if(mp_read_file == nullptr)
+        return 0;
+    return mp_read_file->read(_buffer, _max_length);
+}
+
+OpticalDrive::OpticalDrive(const QString & _filepath) :
+    Device(_filepath)
+{
+}
+
+bool OpticalDrive::initialize()
+{
+    bool result = Device::initialize();
+    if(result)
+        m_media_type = getMediaType(filepath());
+    return result;
+}
+
+size_t OpticalDrive::size() const
+{
+    const Iso9660Data * iso = iso9660();
+    return iso == nullptr ? 0 : iso->blockCount() * iso->blockSize();
+}
+
+MediaType OpticalDrive::mediaType() const
+{
+    return m_media_type;
+}
+
+Iso9660Image::Iso9660Image(const QString & _filepath) :
+    Device(_filepath),
+    m_media_type(MediaType::unknown)
+{
+}
+
+bool Iso9660Image::initialize()
+{
+    if(!Device::initialize())
+        return false;
+    QFileInfo info(filepath());
+    if(!info.exists())
+        return false;
+    m_size = info.size();
+    return true;
+}
+
+size_t Iso9660Image::size() const
+{
+    return m_size;
+}
+
+MediaType Iso9660Image::mediaType() const
+{
+    return m_media_type;
+}
+
+void Iso9660Image::setMediaType(MediaType _media_type)
+{
+    m_media_type = _media_type;
 }

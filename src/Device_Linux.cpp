@@ -46,9 +46,9 @@ bool isOpticalDevice(const char * _file)
 
 } // namespace
 
-QStringList loadDriveList()
+QList<DeviceName> loadDriveList()
 {
-    QStringList result;
+    QList<DeviceName> result;
     std::string dev_dir_path("/dev/");
     DIR * dev_dir = opendir(dev_dir_path.c_str());
     if(!dev_dir) return result;
@@ -56,11 +56,26 @@ QStringList loadDriveList()
     {
         std::string filename = dev_dir_path + entry->d_name;
         if(isOpticalDevice(filename.c_str()))
-            result.append(QString::fromStdString(filename));
+        {
+            DeviceName device_name;
+            device_name.name = entry->d_name;
+            device_name.filename = QString::fromStdString(filename);
+            result.append(device_name);
+        }
     }
     closedir(dev_dir);
-    result.sort();
     return result;
+}
+
+MediaType getMediaType(const QString & _device_filename)
+{
+    int fd = open(_device_filename.toLatin1(), O_RDONLY | O_NONBLOCK);
+    if(fd < 0)
+        return MediaType::unknown;
+    dvd_struct dvd = { DVD_STRUCT_MANUFACT };
+    int result = ioctl(fd, DVD_READ_STRUCT, &dvd);
+    close(fd);
+    return result < 0 ? MediaType::cd : MediaType::dvd;
 }
 
 #endif // __linux__

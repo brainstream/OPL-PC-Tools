@@ -21,6 +21,7 @@
 #include "ui_GameInstallDialog.h"
 #include "GameInstallThread.h"
 #include "GameInstaller.h"
+#include "Device.h"
 
 class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
 {
@@ -59,7 +60,7 @@ signals:
 
 private:
     void addIso(const QString & _iso_path);
-    void addDisc(const QString & _device, const QString & _title);
+    void addDisc(const DeviceName & _device, const QString & _title);
     QString truncateGameName(const QString & _name) const;
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);

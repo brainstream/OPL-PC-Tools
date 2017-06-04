@@ -18,27 +18,84 @@
 #ifndef __QPCOPL_CDIO_DEVICE__
 #define __QPCOPL_CDIO_DEVICE__
 
-#include <QStringList>
+#include <QString>
+#include <QList>
+#include <QFile>
+#include "MediaType.h"
 
-QStringList loadDriveList();
+struct DeviceName
+{
+    QString name;
+    QString filename;
+};
+
+QList<DeviceName> loadDriveList();
+
+MediaType getMediaType(const QString & _device_filename);
 
 class Device
 {   
     Q_DISABLE_COPY(Device)
 
-private:
+protected:
     class Iso9660Data;
 
 public:
     explicit Device(const QString & _filepath);
     virtual ~Device();
-    virtual bool init();
+    const QString & filepath() const;
+    bool init();
     bool isInitialized() const;
-    const QString & gameId() const;
+    bool isPlayStationDisc() const;
+    QString title() const;
+    virtual size_t size() const = 0;
+    virtual MediaType mediaType() const = 0;
+    const QString gameId() const;
+    bool open();
+    void close();
+    bool isOpen() const;
+    bool seek(quint64 _offset);
+    quint64 read(char * _buffer, quint64 _max_length);
+
+protected:
+    const Iso9660Data * iso9660() const;
+    virtual bool initialize();
 
 private:
+    bool m_is_initialized;
     const QString m_filepath;
     Iso9660Data * mp_iso9660;
+    QFile * mp_read_file;
+};
+
+class OpticalDrive : public Device
+{
+public:
+    OpticalDrive(const QString & _filepath);
+    size_t size() const override;
+    MediaType mediaType() const override;
+
+protected:
+    bool initialize() override;
+
+private:
+    MediaType m_media_type;
+};
+
+class Iso9660Image : public Device
+{
+public:
+    Iso9660Image(const QString & _filepath);
+    size_t size() const override;
+    MediaType mediaType() const override;
+    void setMediaType(MediaType _media_type);
+
+protected:
+    bool initialize() override;
+
+private:
+    size_t m_size;
+    MediaType m_media_type;
 };
 
 #endif // __QPCOPL_CDIO_DEVICE__

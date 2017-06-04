@@ -18,6 +18,7 @@
 #ifndef __QPCOPL_CHOOSEOPTICALDISCDIALOG__
 #define __QPCOPL_CHOOSEOPTICALDISCDIALOG__
 
+#include "Device.h"
 #include "ui_ChooseOpticalDiscDialog.h"
 
 class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDialog
@@ -27,7 +28,7 @@ class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDia
 public:
     struct DeviceInfo
     {
-        QString device;
+        DeviceName device;
         QString title;
     };
 

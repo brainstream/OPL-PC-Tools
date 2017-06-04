@@ -45,8 +45,7 @@ __cdecl off_t lseekHack(void * _user_data, off_t _offset, int _whence)
         method = FILE_CURRENT;
         break;
     }
-    DWORD result = SetFilePointer(handle(_user_data), _offset, nullptr, method);
-    return result;
+    return SetFilePointer(handle(_user_data), _offset, nullptr, method);
 }
 
 __cdecl ssize_t readHack(void * _user_data, void * _buff, size_t _size)
@@ -61,7 +60,7 @@ __cdecl ssize_t readHack(void * _user_data, void * _buff, size_t _size)
 
 void hackCdIo(CdIo_t * _cdio)
 {
-    // cdio_private.h. Get the op field is the second field in the _CdIo struct.
+    // cdio_private.h. Get the op field, the second field in the _CdIo struct.
     unsigned char * funcs = &reinterpret_cast<unsigned char *>(_cdio)[sizeof(driver_id_t)];
     // Installation the missing functions.
     // For some reason, the libcdio sets NULL in the lseek and the read fiels.

@@ -18,6 +18,7 @@
 #include <QPushButton>
 #include <QThread>
 #include "LibCDIO.h"
+#include "CDIO/Device.h"
 #include "Exception.h"
 #include "ChooseOpticalDiscDialog.h"
 
@@ -90,21 +91,20 @@ void InitializationThread::run()
     try
     {
         initLibCDIO();
-        char ** devices = cdio_get_devices(DRIVER_DEVICE);
-        for(size_t i = 0; devices[i]; ++i)
+        QStringList devices = loadDriveList();
+        for(const QString & device : devices)
         {
-            CdIo * cdio = cdio_open_cd(devices[i]);
+            CdIo * cdio = cdio_open_cd(device.toLatin1()); // FIXME: rewrite
             if(!cdio) continue;
-            cdio_close_tray(devices[i], nullptr);
+            cdio_close_tray(device.toLatin1(), nullptr); // FIXME: rewrite
             if(cdio_get_discmode(cdio) == CDIO_DISC_MODE_ERROR)
                 continue;
             ChooseOpticalDiscDialog::DeviceInfo device_info;
-            device_info.device = devices[i];
+            device_info.device = device;
             device_info.title = readDeviceLabel(cdio);
             m_devices.append(device_info);
             cdio_destroy(cdio);
         }
-        cdio_free_device_list(devices);
     }
     catch(const Exception & exception)
     {

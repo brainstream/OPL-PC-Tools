@@ -32,6 +32,9 @@ public:
 
 private slots:
     void deviceSelectionChanged();
+
+private:
+    void fixDeviceTitle(Device & _device) const;
 };
 
 #endif // __QPCOPL_CHOOSEOPTICALDISCDIALOG__

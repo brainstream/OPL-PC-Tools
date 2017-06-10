@@ -131,7 +131,10 @@ ChooseOpticalDiscDialog::ChooseOpticalDiscDialog(QWidget * _parent /*= nullptr*/
         mp_widget_loading->setVisible(false);
         QList<DeviceDisplayData> & devices = thread->devices();
         for(const DeviceDisplayData & display_data : devices)
+        {
+            fixDeviceTitle(*display_data.device);
             mp_tree_devices->addTopLevelItem(new DeviceListItem(mp_tree_devices, display_data));
+        }
         mp_tree_devices->sortItems(0, Qt::AscendingOrder);
         QString error_message = thread->errorMessage();
         if(error_message.isEmpty() && devices.isEmpty())
@@ -148,6 +151,32 @@ ChooseOpticalDiscDialog::ChooseOpticalDiscDialog(QWidget * _parent /*= nullptr*/
     });
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     thread->start();
+}
+
+void ChooseOpticalDiscDialog::fixDeviceTitle(Device & _device) const
+{
+    QString title = _device.title();
+    if(title.isEmpty())
+        title = _device.gameId();
+    bool first_letter = true;
+    for(int i = 0; i < title.size(); ++i)
+    {
+        QChar symbol = title[i];
+        if(symbol == '_')
+        {
+            title[i] = ' ';
+            first_letter = true;
+        }
+        else if(!first_letter && symbol.isUpper())
+        {
+            title[i] = symbol.toLower();
+        }
+        else
+        {
+            first_letter = false;
+        }
+    }
+    _device.setTitle(title.trimmed());
 }
 
 void ChooseOpticalDiscDialog::deviceSelectionChanged()

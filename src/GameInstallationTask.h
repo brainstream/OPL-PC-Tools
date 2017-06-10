@@ -18,8 +18,7 @@
 #ifndef __QPCOPL_GAMEINSTALLATIONTASK__
 #define __QPCOPL_GAMEINSTALLATIONTASK__
 
-#include "Iso9660GameInstallerSource.h"
-#include "OpticalDiscGameInstallerSource.h"
+#include <QSharedPointer>
 #include "Device.h"
 
 enum class GameInstallationStatus
@@ -35,45 +34,38 @@ enum class GameInstallationStatus
 class GameInstallationTask
 {
 public:
-    GameInstallationTask();
+    explicit GameInstallationTask(QSharedPointer<Device> & _device);
     GameInstallationTask(const GameInstallationTask &) = default;
     virtual ~GameInstallationTask() { }
     GameInstallationTask & operator = (const GameInstallationTask &) = default;
-    virtual GameInstallerSource * createSource() const = 0;
-    virtual bool canChangeMediaType() const = 0;
-    inline const QString & gameName() const;
-    inline void setGameName(const QString & _name);
+    inline Device & device();
+    inline const Device & device() const;
     inline GameInstallationStatus status() const;
     inline void setStatus(GameInstallationStatus _status);
     inline const QString & errorMessage() const;
     inline void setErrorMessage(const QString & _message);
     inline void setErrorStatus(const QString & _message);
-    inline MediaType mediaType() const;
-    inline bool setMediaType(MediaType & _media_type);
-
-protected:
-    inline void completeSource(GameInstallerSource & _source) const;
 
 private:
-    QString m_game_name;
+    QSharedPointer<Device> m_device_ptr;
     GameInstallationStatus m_status;
     QString m_error_message;
-    MediaType m_media_type;
 };
 
-GameInstallationTask::GameInstallationTask() :
-    m_media_type(MediaType::unknown)
+GameInstallationTask::GameInstallationTask(QSharedPointer<Device> & _device) :
+    m_device_ptr(_device),
+    m_status(GameInstallationStatus::queued)
 {
 }
 
-const QString & GameInstallationTask::gameName() const
+Device & GameInstallationTask::device()
 {
-    return m_game_name;
+    return *m_device_ptr;
 }
 
-void GameInstallationTask::setGameName(const QString & _name)
+const Device & GameInstallationTask::device() const
 {
-    m_game_name = _name;
+    return *m_device_ptr;
 }
 
 GameInstallationStatus GameInstallationTask::status() const
@@ -100,99 +92,6 @@ void GameInstallationTask::setErrorStatus(const QString & _message)
 {
     m_status = GameInstallationStatus::error;
     m_error_message = _message;
-}
-
-MediaType GameInstallationTask::mediaType() const
-{
-    return m_media_type;
-}
-
-bool GameInstallationTask::setMediaType(MediaType & _media_type)
-{
-    if(canChangeMediaType())
-    {
-        m_media_type = _media_type;
-        return true;
-    }
-    return false;
-}
-
-void GameInstallationTask::completeSource(GameInstallerSource & _source) const
-{
-    _source.setGameName(m_game_name);
-}
-
-class Iso9660GameInstallationTask : public GameInstallationTask
-{
-public:
-    explicit inline Iso9660GameInstallationTask(const QString & _iso_path);
-    Iso9660GameInstallationTask(const Iso9660GameInstallationTask &) = default;
-    Iso9660GameInstallationTask & operator = (const Iso9660GameInstallationTask &) = default;
-    inline GameInstallerSource * createSource() const override;
-    inline bool canChangeMediaType() const override;
-    inline const QString & isoPath() const;
-
-private:
-    QString m_iso_path;
-};
-
-Iso9660GameInstallationTask::Iso9660GameInstallationTask(const QString & _iso_path) :
-    m_iso_path(_iso_path)
-{
-}
-
-GameInstallerSource * Iso9660GameInstallationTask::createSource() const
-{
-    Iso9660GameInstallerSource * source = new Iso9660GameInstallerSource(m_iso_path);
-    source->setType(mediaType());
-    completeSource(*source);
-    return source;
-}
-
-bool Iso9660GameInstallationTask::canChangeMediaType() const
-{
-    return true;
-}
-
-const QString & Iso9660GameInstallationTask::isoPath() const
-{
-    return m_iso_path;
-}
-
-class OpticalDiscGameInstallationTask : public GameInstallationTask
-{
-public:
-    explicit inline OpticalDiscGameInstallationTask(const DeviceName & _device);
-    OpticalDiscGameInstallationTask(const OpticalDiscGameInstallationTask &) = default;
-    OpticalDiscGameInstallationTask & operator = (const OpticalDiscGameInstallationTask &) = default;
-    inline GameInstallerSource * createSource() const override;
-    inline bool canChangeMediaType() const override;
-    inline const DeviceName & deviceName() const;
-
-private:
-    DeviceName m_device;
-};
-
-OpticalDiscGameInstallationTask::OpticalDiscGameInstallationTask(const DeviceName & _device) :
-    m_device(_device)
-{
-}
-
-GameInstallerSource * OpticalDiscGameInstallationTask::createSource() const
-{
-    OpticalDiscGameInstallerSource * source = new OpticalDiscGameInstallerSource(m_device.filename.toUtf8());
-    completeSource(*source);
-    return source;
-}
-
-bool OpticalDiscGameInstallationTask::canChangeMediaType() const
-{
-    return false;
-}
-
-const DeviceName & OpticalDiscGameInstallationTask::deviceName() const
-{
-    return m_device;
 }
 
 #endif // __QPCOPL_GAMEINSTALLATIONTASK__

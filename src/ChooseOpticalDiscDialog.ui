@@ -18,6 +18,19 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
+    <widget class="QLabel" name="mp_label_error">
+     <property name="text">
+      <string notr="true">ERROR MESSAGE</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="mp_widget_content" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="leftMargin">
@@ -49,6 +62,9 @@
         <property name="itemsExpandable">
          <bool>false</bool>
         </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
         <property name="columnCount">
          <number>2</number>
         </property>
@@ -62,19 +78,6 @@
           <string>Title</string>
          </property>
         </column>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="mp_label_error">
-        <property name="text">
-         <string notr="true">ERROR MESSAGE</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
        </widget>
       </item>
      </layout>

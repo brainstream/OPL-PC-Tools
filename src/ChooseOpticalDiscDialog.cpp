@@ -17,26 +17,31 @@
 
 #include <QPushButton>
 #include <QThread>
-#include "LibCDIO.h"
 #include "Exception.h"
 #include "ChooseOpticalDiscDialog.h"
 
 namespace {
 
+struct DeviceDisplayData
+{
+    QString name;
+    QSharedPointer<Device> device;
+};
+
 class DeviceListItem : public QTreeWidgetItem
 {
 public:
-    DeviceListItem(QTreeWidget * _view, const ChooseOpticalDiscDialog::DeviceInfo & _device);
+    DeviceListItem(QTreeWidget * _view, const DeviceDisplayData & _data);
     QVariant data(int _column, int _role) const;
-    inline const ChooseOpticalDiscDialog::DeviceInfo & device() const;
+    inline QSharedPointer<Device> device() const;
 
 private:
-    ChooseOpticalDiscDialog::DeviceInfo m_device_info;
+    DeviceDisplayData m_data;
 };
 
-DeviceListItem::DeviceListItem(QTreeWidget * _view, const ChooseOpticalDiscDialog::DeviceInfo & _device) :
+DeviceListItem::DeviceListItem(QTreeWidget * _view, const DeviceDisplayData & _data) :
     QTreeWidgetItem(_view, QTreeWidgetItem::UserType),
-    m_device_info(_device)
+    m_data(_data)
 {
     setIcon(0, QIcon(":/icons/media-optical"));
 }
@@ -48,17 +53,17 @@ QVariant DeviceListItem::data(int _column, int _role) const
         switch(_column)
         {
         case 0:
-            return m_device_info.device.name;
+            return m_data.name;
         case 1:
-            return m_device_info.title;
+            return m_data.device->title();
         }
     }
     return QTreeWidgetItem::data(_column, _role);
 }
 
-const ChooseOpticalDiscDialog::DeviceInfo & DeviceListItem::device() const
+QSharedPointer<Device> DeviceListItem::device() const
 {
-    return m_device_info;
+    return m_data.device;
 }
 
 class InitializationThread : public QThread
@@ -66,18 +71,14 @@ class InitializationThread : public QThread
 public:
     explicit InitializationThread(QObject * _parent = nullptr);
     inline const QString & errorMessage() const;
-    inline const QList<ChooseOpticalDiscDialog::DeviceInfo> & devices() const;
+    inline QList<DeviceDisplayData> & devices();
 
 protected:
     void run() override;
 
 private:
-    QString readDeviceLabel(CdIo_t * _device, quint8 _attempt = 0);
-
-private:
-    static const quint8 s_max_read_label_attempts = 3;
     QString m_error_message;
-    QList<ChooseOpticalDiscDialog::DeviceInfo> m_devices;
+    QList<DeviceDisplayData> m_devices;
 };
 
 InitializationThread::InitializationThread(QObject * _parent /*= nullptr*/) :
@@ -89,20 +90,14 @@ void InitializationThread::run()
 {
     try
     {
-        initLibCDIO();
         QList<DeviceName> devices = loadDriveList();
-        for(const DeviceName & device : devices)
+        for(const DeviceName & device_name : devices)
         {
-            CdIo * cdio = cdio_open_cd(device.filename.toLatin1()); // FIXME: rewrite
-            if(!cdio) continue;
-            cdio_close_tray(device.filename.toLatin1(), nullptr); // FIXME: rewrite
-            if(cdio_get_discmode(cdio) == CDIO_DISC_MODE_ERROR)
-                continue;
-            ChooseOpticalDiscDialog::DeviceInfo device_info;
-            device_info.device = device;
-            device_info.title = readDeviceLabel(cdio);
-            m_devices.append(device_info);
-            cdio_destroy(cdio);
+            DeviceDisplayData display_data;
+            display_data.device = QSharedPointer<Device>(new OpticalDrive(device_name.filename));
+            display_data.name = device_name.name;
+            if(display_data.device->init())
+                m_devices.append(display_data);
         }
     }
     catch(const Exception & exception)
@@ -111,30 +106,12 @@ void InitializationThread::run()
     }
 }
 
-QString InitializationThread::readDeviceLabel(CdIo_t * _device, quint8 _attempt /*= 0*/)
-{
-    /// If a drive tray was opened and we have close it, the cdio_guess_cd_type function
-    /// returns an empty label value. Second attempt is usually successful.
-
-    cdio_iso_analysis_t analysis = {};
-    lsn_t session = 0;
-    track_t first_track = cdio_get_first_track_num(_device);
-    if(first_track == CDIO_INVALID_TRACK || cdio_get_last_session(_device, &session) != DRIVER_OP_SUCCESS)
-        return QString();
-    cdio_guess_cd_type(_device, session, first_track, &analysis);
-    if((!analysis.iso_label || !analysis.iso_label[0]) && _attempt < s_max_read_label_attempts)
-    {
-        return readDeviceLabel(_device, _attempt + 1);
-    }
-    return QString(analysis.iso_label).trimmed();
-}
-
 const QString & InitializationThread::errorMessage() const
 {
     return m_error_message;
 }
 
-const QList<ChooseOpticalDiscDialog::DeviceInfo> & InitializationThread::devices() const
+QList<DeviceDisplayData> & InitializationThread::devices()
 {
     return m_devices;
 }
@@ -152,19 +129,21 @@ ChooseOpticalDiscDialog::ChooseOpticalDiscDialog(QWidget * _parent /*= nullptr*/
     InitializationThread * thread = new InitializationThread(this);
     connect(thread, &QThread::finished, thread, [this, thread]() {
         mp_widget_loading->setVisible(false);
-        mp_widget_content->setVisible(true);
-        for(const DeviceInfo & device_info : thread->devices())
-        {
-            mp_tree_devices->addTopLevelItem(new DeviceListItem(mp_tree_devices, device_info));
-        }
+        QList<DeviceDisplayData> & devices = thread->devices();
+        for(const DeviceDisplayData & display_data : devices)
+            mp_tree_devices->addTopLevelItem(new DeviceListItem(mp_tree_devices, display_data));
+        mp_tree_devices->sortItems(0, Qt::AscendingOrder);
         QString error_message = thread->errorMessage();
-        if(error_message.isEmpty() && mp_tree_devices->topLevelItemCount() == 0)
+        if(error_message.isEmpty() && devices.isEmpty())
             error_message = tr("There are no available CD/DVD drives");
-        if(!error_message.isEmpty())
+        if(error_message.isEmpty())
         {
-            mp_label_error->setText(m_error_message);
+            mp_widget_content->setVisible(true);
+        }
+        else
+        {
+            mp_label_error->setText(error_message);
             mp_label_error->setVisible(true);
-            mp_tree_devices->setVisible(false);
         }
     });
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);
@@ -176,9 +155,9 @@ void ChooseOpticalDiscDialog::deviceSelectionChanged()
     mp_button_box->button(QDialogButtonBox::Open)->setDisabled(mp_tree_devices->selectedItems().isEmpty());
 }
 
-QList<ChooseOpticalDiscDialog::DeviceInfo> ChooseOpticalDiscDialog::devices() const
+QList<QSharedPointer<Device> > ChooseOpticalDiscDialog::devices() const
 {
-    QList<ChooseOpticalDiscDialog::DeviceInfo> result;
+    QList<QSharedPointer<Device>> result;
     QModelIndexList indexes = mp_tree_devices->selectionModel()->selectedRows();
     for(const QModelIndex & index : indexes)
     {

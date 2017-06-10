@@ -60,7 +60,8 @@ signals:
 
 private:
     void addIso(const QString & _iso_path);
-    void addDisc(const DeviceName & _device, const QString & _title);
+    void addDevice(QSharedPointer<Device> & _device);
+    QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
     QString truncateGameName(const QString & _name) const;
     bool startTask();
     void setCurrentProgressBarUnknownStatus(bool _unknown, int _value = 0);
@@ -70,7 +71,6 @@ private:
 private:
     GameInstallThread * mp_work_thread;
     GameInstaller * mp_installer;
-    GameInstallerSource * mp_source;
     GameRepository & mr_repository;
     int m_processing_task_index;
     bool m_is_canceled;

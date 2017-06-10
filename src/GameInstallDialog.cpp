@@ -21,14 +21,13 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QMimeData>
 #include "GameInstallDialog.h"
 #include "Game.h"
 #include "GameRenameDialog.h"
-#include "Iso9660GameInstallerSource.h"
-#include "OpticalDiscGameInstallerSource.h"
 #include "GameInstallationTask.h"
 #include "ChooseOpticalDiscDialog.h"
 
@@ -42,12 +41,12 @@ class TaskListItem : public QTreeWidgetItem
 {
 public:
     TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidget * _widget);
-    inline const GameInstallationTask & task() const;
+    inline GameInstallationTask & task();
     QVariant data(int _column, int _role) const;
     void rename(const QString & _new_name);
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
-    inline bool setMediaType(MediaType _media_type);
+    inline void setMediaType(MediaType _media_type);
 
 private:
     QSharedPointer<GameInstallationTask> m_task_ptr;
@@ -59,7 +58,7 @@ TaskListItem::TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidg
 {
 }
 
-const GameInstallationTask & TaskListItem::task() const
+GameInstallationTask & TaskListItem::task()
 {
     return *m_task_ptr;
 }
@@ -69,7 +68,7 @@ QVariant TaskListItem::data(int _column, int _role) const
     if(_role != Qt::DisplayRole)
         return QVariant();
     if(_column == 0)
-        return m_task_ptr->gameName();
+        return m_task_ptr->device().title();
     switch(m_task_ptr->status())
     {
     case GameInstallationStatus::done:
@@ -91,7 +90,7 @@ QVariant TaskListItem::data(int _column, int _role) const
 
 void TaskListItem::rename(const QString & _new_name)
 {
-    m_task_ptr->setGameName(_new_name);
+    m_task_ptr->device().setTitle(_new_name);
     emitDataChanged();
 }
 
@@ -108,9 +107,9 @@ void TaskListItem::setError(const QString & _message)
     emitDataChanged();
 }
 
-bool TaskListItem::setMediaType(MediaType _media_type)
+void TaskListItem::setMediaType(MediaType _media_type)
 {
-    return m_task_ptr->setMediaType(_media_type);
+    m_task_ptr->device().setMediaType(_media_type);
 }
 
 } // namespace
@@ -119,7 +118,6 @@ GameInstallDialog::GameInstallDialog(GameRepository & _repository, QWidget * _pa
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint),
     mp_work_thread(nullptr),
     mp_installer(nullptr),
-    mp_source(nullptr),
     mr_repository(_repository),
     m_processing_task_index(0),
     m_is_canceled(false)
@@ -136,7 +134,6 @@ GameInstallDialog::GameInstallDialog(GameRepository & _repository, QWidget * _pa
 GameInstallDialog::~GameInstallDialog()
 {
     delete mp_installer;
-    delete mp_source;
 }
 
 void GameInstallDialog::reject()
@@ -255,14 +252,13 @@ void GameInstallDialog::threadFinished()
     mp_btn_cancel->setDisabled(true);
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
     mp_progressbar_overall->setValue(g_progressbar_max_value);
+    QMessageBox::information(this, QString(), tr("Done!"));
 }
 
 bool GameInstallDialog::startTask()
 {
     delete mp_installer;
-    delete mp_source;
     mp_installer = nullptr;
-    mp_source = nullptr;
     if(m_is_canceled)
         return false;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index));
@@ -279,11 +275,9 @@ bool GameInstallDialog::startTask()
         item->setMediaType(MediaType::unknown);
         break;
     }
-    const GameInstallationTask & task = item->task();
+    GameInstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
-//    mp_source = new OpticalDiscGameInstallerSource("/dev/cdrom");
-    mp_source = task.createSource();
-    mp_installer = new GameInstaller(*mp_source, mr_repository, this);
+    mp_installer = new GameInstaller(task.device(), mr_repository, this);
     mp_work_thread = new GameInstallThread(*mp_installer);
     connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
     connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
@@ -317,23 +311,38 @@ void GameInstallDialog::addIso(const QString & _iso_path)
 {
     QFileInfo iso_info(_iso_path);
     QString absolute_iso_path = iso_info.absoluteFilePath();
+    QTreeWidgetItem * existingTask = findTaskInList(absolute_iso_path);
+    if(existingTask)
+    {
+        mp_tree_tasks->setCurrentItem(existingTask);
+        return;
+    }
+    QSharedPointer<Device> device(new Iso9660Image(_iso_path));
+    if(device->init())
+    {
+        device->setTitle(truncateGameName(iso_info.completeBaseName()));
+        QSharedPointer<GameInstallationTask> task(new GameInstallationTask(device));
+        TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
+        mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
+        mp_tree_tasks->setCurrentItem(item);
+        mp_btn_install->setDisabled(false);
+    }
+    else
+    {
+        QMessageBox::critical(this, QString(), tr("Invalid ISO file"));
+    }
+}
+
+QTreeWidgetItem * GameInstallDialog::findTaskInList(const QString & _device_filepath) const
+{
     for(int i = mp_tree_tasks->topLevelItemCount() - 1; i >= 0; --i)
     {
         TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
-        const Iso9660GameInstallationTask * task = dynamic_cast<const Iso9660GameInstallationTask *>(&item->task());
-        if(task != nullptr && task->isoPath() == absolute_iso_path)
-        {
-            mp_tree_tasks->setCurrentItem(item);
-            return;
-        }
+        const GameInstallationTask * task = dynamic_cast<const GameInstallationTask *>(&item->task());
+        if(task != nullptr && task->device().filepath() == _device_filepath)
+            return item;
     }
-    QSharedPointer<GameInstallationTask> task(new Iso9660GameInstallationTask(_iso_path));
-    task->setGameName(truncateGameName(iso_info.completeBaseName()));
-    task->setStatus(GameInstallationStatus::queued);
-    TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
-    mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
-    mp_tree_tasks->setCurrentItem(item);
-    mp_btn_install->setDisabled(false);
+    return nullptr;
 }
 
 void GameInstallDialog::addDisc()
@@ -341,32 +350,21 @@ void GameInstallDialog::addDisc()
     ChooseOpticalDiscDialog dlg(this);
     if(dlg.exec() != QDialog::Accepted)
         return;
-    QList<ChooseOpticalDiscDialog::DeviceInfo> device_info_list = dlg.devices();
-    for(const ChooseOpticalDiscDialog::DeviceInfo & device_info : device_info_list)
+    QList<QSharedPointer<Device>> device_list = dlg.devices();
+    for(QSharedPointer<Device> & device : device_list)
     {
-        for(int i = mp_tree_tasks->topLevelItemCount() - 1; i >= 0; --i)
+        QTreeWidgetItem * existingTask = findTaskInList(device->filepath());
+        if(existingTask)
         {
-            TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
-            const OpticalDiscGameInstallationTask * task = dynamic_cast<const OpticalDiscGameInstallationTask *>(&item->task());
-            if(task != nullptr && task->deviceName().filename == device_info.device.filename)
-            {
-                mp_tree_tasks->setCurrentItem(item);
-                return;
-            }
+            mp_tree_tasks->setCurrentItem(existingTask);
+            return;
         }
-        addDisc(device_info.device, device_info.title);
+        QSharedPointer<GameInstallationTask> task(new GameInstallationTask(device));
+        TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
+        mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
+        mp_tree_tasks->setCurrentItem(item);
+        mp_btn_install->setDisabled(false);
     }
-}
-
-void GameInstallDialog::addDisc(const DeviceName & _device, const QString & _title)
-{
-    QSharedPointer<GameInstallationTask> task(new OpticalDiscGameInstallationTask(_device));
-    task->setGameName(_title);
-    task->setStatus(GameInstallationStatus::queued);
-    TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
-    mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
-    mp_tree_tasks->setCurrentItem(item);
-    mp_btn_install->setDisabled(false);
 }
 
 QString GameInstallDialog::truncateGameName(const QString & _name) const
@@ -397,9 +395,8 @@ void GameInstallDialog::taskSelectionChanged()
         mp_label_error_message->setText(task.errorMessage());
     else
         mp_label_error_message->clear();
-    mp_label_title->setText(task.gameName());
-    mp_combo_type->setEnabled(task.canChangeMediaType());
-    mp_combo_type->setCurrentIndex(static_cast<int>(task.mediaType()));
+    mp_label_title->setText(task.device().title());
+    mp_combo_type->setCurrentIndex(static_cast<int>(task.device().mediaType()));
 }
 
 void GameInstallDialog::mediaTypeChanged(int _index)
@@ -415,7 +412,7 @@ void GameInstallDialog::renameGame()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item || item->task().status() != GameInstallationStatus::queued)
         return;
-    GameRenameDialog dlg(item->task().gameName(), this);
+    GameRenameDialog dlg(item->task().device().title(), this);
     if(dlg.exec() == QDialog::Accepted)
     {
         item->rename(dlg.name());
@@ -448,7 +445,6 @@ void GameInstallDialog::install()
     mp_btn_install->setDisabled(true);
     mp_btn_cancel->setDisabled(false);
     mp_btn_ok->setDisabled(true);
-    mp_combo_type->setDisabled(true);
     mp_btn_remove->hide();
     mp_btn_rename->hide();
     m_processing_task_index = 0;

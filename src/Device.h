@@ -37,65 +37,90 @@ class Device
 {   
     Q_DISABLE_COPY(Device)
 
-protected:
-    class Iso9660Data;
-
 public:
     explicit Device(const QString & _filepath);
     virtual ~Device();
     const QString & filepath() const;
     bool init();
     bool isInitialized() const;
-    bool isPlayStationDisc() const;
-    QString title() const;
-    virtual size_t size() const = 0;
-    virtual MediaType mediaType() const = 0;
-    const QString gameId() const;
+    inline QString title() const;
+    inline void setTitle(const QString _title);
+    virtual quint64 size() const = 0;
+    inline MediaType mediaType() const;
+    inline void setMediaType(MediaType _media_type);
+    inline const QString gameId() const;
     bool open();
     void close();
     bool isOpen() const;
     bool seek(quint64 _offset);
-    quint64 read(char * _buffer, quint64 _max_length);
+    quint64 read(QByteArray & _buffer);
 
 protected:
-    const Iso9660Data * iso9660() const;
-    virtual bool initialize();
+    class Iso9660;
+    virtual bool initialize(Iso9660 & _iso);
 
 private:
     bool m_is_initialized;
     const QString m_filepath;
-    Iso9660Data * mp_iso9660;
     QFile * mp_read_file;
-};
-
-class OpticalDrive : public Device
-{
-public:
-    OpticalDrive(const QString & _filepath);
-    size_t size() const override;
-    MediaType mediaType() const override;
-
-protected:
-    bool initialize() override;
-
-private:
     MediaType m_media_type;
+    QString m_id;
+    QString m_title;
 };
+
+QString Device::title() const
+{
+    return m_title;
+}
+
+void Device::setTitle(const QString _title)
+{
+    m_title = _title;
+}
+
+const QString Device::gameId() const
+{
+    return m_id;
+}
+
+MediaType Device::mediaType() const
+{
+    return m_media_type;
+}
+
+void Device::setMediaType(MediaType _media_type)
+{
+    m_media_type = _media_type;
+}
+
+
 
 class Iso9660Image : public Device
 {
 public:
     Iso9660Image(const QString & _filepath);
-    size_t size() const override;
-    MediaType mediaType() const override;
-    void setMediaType(MediaType _media_type);
+    quint64 size() const override;
 
 protected:
-    bool initialize() override;
+    bool initialize(Iso9660 & _iso) override;
 
 private:
-    size_t m_size;
-    MediaType m_media_type;
+    quint64 m_size;
+};
+
+
+
+class OpticalDrive : public Device
+{
+public:
+    OpticalDrive(const QString & _filepath);
+    quint64 size() const override;
+
+protected:
+    bool initialize(Iso9660 & _iso) override;
+
+private:
+    quint64 m_size;
 };
 
 #endif // __QPCOPL_CDIO_DEVICE__

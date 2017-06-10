@@ -18,6 +18,7 @@
 #ifndef __QPCOPL_CHOOSEOPTICALDISCDIALOG__
 #define __QPCOPL_CHOOSEOPTICALDISCDIALOG__
 
+#include <QSharedPointer>
 #include "Device.h"
 #include "ui_ChooseOpticalDiscDialog.h"
 
@@ -26,21 +27,11 @@ class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDia
     Q_OBJECT
 
 public:
-    struct DeviceInfo
-    {
-        DeviceName device;
-        QString title;
-    };
-
-public:
     explicit ChooseOpticalDiscDialog(QWidget * _parent = nullptr);
-    QList<DeviceInfo> devices() const;
+    QList<QSharedPointer<Device>> devices() const;
 
 private slots:
     void deviceSelectionChanged();
-
-private:
-    QString m_error_message;
 };
 
 #endif // __QPCOPL_CHOOSEOPTICALDISCDIALOG__

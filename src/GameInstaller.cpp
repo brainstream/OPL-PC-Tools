@@ -23,9 +23,9 @@
 #include "GameInstaller.h"
 #include "Game.h"
 
-GameInstaller::GameInstaller(GameInstallerSource & _source, GameRepository & _repository, QObject * _parent /*= nullptr*/) :
+GameInstaller::GameInstaller(Device & _device, GameRepository & _repository, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    mp_sourrce(&_source),
+    mp_device(&_device),
     mr_repository(_repository),
     mp_installed_game(nullptr)
 {
@@ -40,8 +40,12 @@ bool GameInstaller::install()
 {
     delete mp_installed_game;
     mp_installed_game = new Game { };
-    mp_installed_game->id = mp_sourrce->gameId();
-    mp_installed_game->name = mp_sourrce->gameName();
+    if(!mp_device->open())
+    {
+        throw IOException(tr("Unable to open device file to read: \"%1\"").arg(mp_device->filepath()));
+    }
+    mp_installed_game->id = mp_device->gameId();
+    mp_installed_game->name = mp_device->title();
     try
     {
         validateGameId(mp_installed_game->id);
@@ -52,16 +56,17 @@ bool GameInstaller::install()
         delete mp_installed_game;
         mp_installed_game = nullptr;
     }
-    const quint64 iso_size = mp_sourrce->size();
-    mp_installed_game->media_type = mp_sourrce->type();
+    const quint64 iso_size = mp_device->size();
+    mp_installed_game->media_type = mp_device->mediaType();
     if(mp_installed_game->media_type == MediaType::unknown)
         mp_installed_game->media_type = iso_size > 681984000 ? MediaType::dvd : MediaType::cd;
     const ssize_t part_size = 1073741824;
     const ssize_t read_part_size = 4194304;
     size_t processed_bytes = 0;
+    unsigned int write_operation = 0;
     QDir dest_dir(mr_repository.directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
-    mp_sourrce->seek(0);
+    mp_device->seek(0);
     for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size; ++mp_installed_game->part_count)
     {
         QString part_filename = makeGamePartName(mp_installed_game->id, mp_installed_game->name, mp_installed_game->part_count);
@@ -79,7 +84,7 @@ bool GameInstaller::install()
         m_written_parts.append(part.fileName());
         for(size_t total_read_bytes = 0; total_read_bytes < part_size;)
         {
-            ssize_t read_bytes = mp_sourrce->read(bytes);
+            ssize_t read_bytes = mp_device->read(bytes);
             if(read_bytes < 0)
             {
                 part.close();
@@ -92,6 +97,8 @@ bool GameInstaller::install()
                 rollback();
                 throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(part.fileName()));
             }
+            if(++write_operation % 5 == 0)
+                part.flush();
             total_read_bytes += read_bytes;
             processed_bytes += read_bytes;
             if(read_bytes < read_part_size)
@@ -118,6 +125,7 @@ bool GameInstaller::install()
         rollback();
         throw;
     }
+    mp_device->close();
     m_written_parts.clear();
     return true;
 }
@@ -125,6 +133,8 @@ bool GameInstaller::install()
 
 void GameInstaller::rollback()
 {
+    if(mp_device->isOpen())
+        mp_device->close();
     emit rollbackStarted();
     for(const QString & path : m_written_parts)
         QFile::remove(path);

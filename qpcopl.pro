@@ -28,16 +28,11 @@ SOURCES +=\
     src/GameRenameDialog.cpp \
     src/GameInstaller.cpp \
     src/GameInstallDialog.cpp \
-    src/Iso9660GameInstallerSource.cpp \
     src/AboutDialog.cpp \
-    src/OpticalDiscGameInstallerSource.cpp \
-    src/GameInstallerSource.cpp \
     src/ChooseOpticalDiscDialog.cpp \
-    src/LibCDIO.cpp \
     src/GameRepository.cpp \
     src/SettingsDialog.cpp \
     src/Settings.cpp \
-    src/Win32CdIoHack.cpp \
     src/Device.cpp \
     src/Device_Linux.cpp
 
@@ -48,21 +43,16 @@ HEADERS  += \
     src/GameRenameDialog.h \
     src/ValidationException.h \
     src/GameInstaller.h \
-    src/GameInstallerSource.h \
     src/GameInstallDialog.h \
-    src/Iso9660GameInstallerSource.h \
     src/GameInstallThread.h \
     src/Game.h \
     src/MediaType.h \
     src/AboutDialog.h \
-    src/OpticalDiscGameInstallerSource.h \
     src/GameInstallationTask.h \
     src/ChooseOpticalDiscDialog.h \
-    src/LibCDIO.h \
     src/GameRepository.h \
     src/SettingsDialog.h \
     src/Settings.h \
-    src/Win32CdIoHack.h \
     src/Device.h
 
 FORMS += \
@@ -84,13 +74,6 @@ OTHER_FILES += \
 TRANSLATIONS += \
     translations/qpcopl_ru.ts
 
-unix {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += libcdio libiso9660
-}
-
 win32 {
     RC_FILE = src/Resources.rc
-    INCLUDEPATH += depends/include
-    LIBS += -L$$_PRO_FILE_PWD_/depends/bin -lcdio.lib -liconv.lib -liso9660.lib
 }

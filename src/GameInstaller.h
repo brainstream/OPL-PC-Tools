@@ -21,16 +21,15 @@
 #include <QObject>
 #include <QStringList>
 #include "GameRepository.h"
-#include "GameInstallerSource.h"
+#include "Device.h"
 
 class GameInstaller : public QObject
 {
     Q_OBJECT
 
 public:
-    GameInstaller(GameInstallerSource & _source, GameRepository & _repository, QObject * _parent = nullptr);
+    GameInstaller(Device & _device, GameRepository & _repository, QObject * _parent = nullptr);
     ~GameInstaller() override;
-    inline const GameInstallerSource & source() const;
     bool install();
     inline const Game * installedGame() const;
 
@@ -46,16 +45,11 @@ private:
     void registerGame();
 
 private:
-    GameInstallerSource * mp_sourrce;
+    Device * mp_device;
     GameRepository & mr_repository;
     QStringList m_written_parts;
     Game * mp_installed_game;
 };
-
-const GameInstallerSource & GameInstaller::source() const
-{
-    return *mp_sourrce;
-}
 
 const Game * GameInstaller::installedGame() const
 {

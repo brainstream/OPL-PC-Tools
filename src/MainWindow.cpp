@@ -23,7 +23,6 @@
 #include "Settings.h"
 #include "SettingsDialog.h"
 #include "GameInstaller.h"
-#include "Iso9660GameInstallerSource.h"
 #include "AboutDialog.h"
 #include "GameInstallDialog.h"
 #include "GameRenameDialog.h"

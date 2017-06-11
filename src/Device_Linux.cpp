@@ -67,15 +67,4 @@ QList<DeviceName> loadDriveList()
     return result;
 }
 
-MediaType getMediaType(const QString & _device_filename)
-{
-    int fd = open(_device_filename.toLatin1(), O_RDONLY | O_NONBLOCK);
-    if(fd < 0)
-        return MediaType::unknown;
-    dvd_struct dvd = { DVD_STRUCT_MANUFACT };
-    int result = ioctl(fd, DVD_READ_STRUCT, &dvd);
-    close(fd);
-    return result < 0 ? MediaType::cd : MediaType::dvd;
-}
-
 #endif // __linux__

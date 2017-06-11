@@ -34,7 +34,8 @@ SOURCES +=\
     src/SettingsDialog.cpp \
     src/Settings.cpp \
     src/Device.cpp \
-    src/Device_Linux.cpp
+    src/Device_Linux.cpp \
+    src/Device_Windows.cpp
 
 HEADERS  += \
     src/MainWindow.h \

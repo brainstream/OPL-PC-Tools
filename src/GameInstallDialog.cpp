@@ -445,6 +445,7 @@ void GameInstallDialog::install()
     mp_btn_install->setDisabled(true);
     mp_btn_cancel->setDisabled(false);
     mp_btn_ok->setDisabled(true);
+    mp_combo_type->setDisabled(true);
     mp_btn_remove->hide();
     mp_btn_rename->hide();
     m_processing_task_index = 0;

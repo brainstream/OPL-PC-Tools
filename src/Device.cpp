@@ -15,6 +15,9 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#ifdef _WIN32
+#   include <windows.h>
+#endif
 #include <QScopedPointer>
 #include <QRegExp>
 #include <QFileInfo>
@@ -365,11 +368,16 @@ bool Device::seek(quint64 _offset)
     return mp_read_file && mp_read_file->seek(_offset);
 }
 
-quint64 Device::read(QByteArray & _buffer)
+qint64 Device::read(QByteArray & _buffer)
 {
     if(mp_read_file == nullptr)
         return 0;
-    return mp_read_file->read(_buffer.data(), _buffer.size());
+    qint64 result = mp_read_file->read(_buffer.data(), _buffer.size());
+#ifdef _WIN32
+    if(result < 0 && GetLastError() == ERROR_SECTOR_NOT_FOUND)
+        return 0;
+#endif
+    return result;
 }
 
 OpticalDrive::OpticalDrive(const QString & _filepath) :
@@ -381,10 +389,7 @@ bool OpticalDrive::initialize(Iso9660 & _iso)
 {
     bool result = Device::initialize(_iso);
     if(result)
-    {
-        setMediaType(getMediaType(filepath()));
         m_size = static_cast<quint64>(_iso.blockCount()) * _iso.blockSize();
-    }
     return result;
 }
 

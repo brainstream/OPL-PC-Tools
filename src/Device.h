@@ -31,8 +31,6 @@ struct DeviceName
 
 QList<DeviceName> loadDriveList();
 
-MediaType getMediaType(const QString & _device_filename);
-
 class Device
 {   
     Q_DISABLE_COPY(Device)
@@ -53,7 +51,7 @@ public:
     void close();
     bool isOpen() const;
     bool seek(quint64 _offset);
-    quint64 read(QByteArray & _buffer);
+    qint64 read(QByteArray & _buffer);
 
 protected:
     class Iso9660;

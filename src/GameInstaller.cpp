@@ -84,23 +84,26 @@ bool GameInstaller::install()
         m_written_parts.append(part.fileName());
         for(size_t total_read_bytes = 0; total_read_bytes < part_size;)
         {
-            ssize_t read_bytes = mp_device->read(bytes);
+            qint64 read_bytes = mp_device->read(bytes);
             if(read_bytes < 0)
             {
                 part.close();
                 rollback();
                 throw IOException(tr("An error occurred during reading the source medium"));
             }
-            if(part.write(bytes.constData(), read_bytes) != read_bytes)
+            else if(read_bytes > 0)
             {
-                part.close();
-                rollback();
-                throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(part.fileName()));
+                if(part.write(bytes.constData(), read_bytes) != read_bytes)
+                {
+                    part.close();
+                    rollback();
+                    throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(part.fileName()));
+                }
+                if(++write_operation % 5 == 0)
+                    part.flush();
+                total_read_bytes += read_bytes;
+                processed_bytes += read_bytes;
             }
-            if(++write_operation % 5 == 0)
-                part.flush();
-            total_read_bytes += read_bytes;
-            processed_bytes += read_bytes;
             if(read_bytes < read_part_size)
             {
                 // Yes. It is a real scenario. The "Final Fantasy XII" declares the ISO FS size longer than it is.

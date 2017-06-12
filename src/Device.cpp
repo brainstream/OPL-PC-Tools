@@ -35,10 +35,10 @@ struct LBInt
 
     operator IntType() const
     {
-#if defined(__x86_64) || defined(__i386) || defined(_M_I86) || defined(_M_X64)
+#if BYTE_ORDER == LITTLE_ENDIAN
         return le;
 #else
-#   error "Only Little Endian CPUs are supported"
+        return be;
 #endif
 
     }

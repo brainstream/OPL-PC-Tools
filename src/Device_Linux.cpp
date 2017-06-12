@@ -34,7 +34,7 @@ bool isBlockDevice(const char * _file)
     return S_ISBLK(file_stat.st_mode);
 }
 
-bool isOpticalDevice(const char * _file)
+bool isOpticalDrive(const char * _file)
 {
     if(!isBlockDevice(_file)) return false;
     int fd = open(_file, O_RDONLY | O_NONBLOCK);
@@ -55,7 +55,7 @@ QList<DeviceName> loadDriveList()
     for(struct dirent * entry = readdir(dev_dir); entry != nullptr; entry = readdir(dev_dir))
     {
         std::string filename = dev_dir_path + entry->d_name;
-        if(isOpticalDevice(filename.c_str()))
+        if(isOpticalDrive(filename.c_str()))
         {
             DeviceName device_name;
             device_name.name = entry->d_name;

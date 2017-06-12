@@ -22,7 +22,7 @@
 
 namespace {
 
-bool isCDROM(char letter)
+bool isOpticalDrive(char letter)
 {
     char root_dir[] = "?:\\";
     root_dir[0] = letter;
@@ -40,7 +40,7 @@ QList<DeviceName> loadDriveList()
         if(drives & (1 << i))
         {
             char letter = 'A' + i;
-            if(isCDROM(letter))
+            if(isOpticalDrive(letter))
             {
                 DeviceName name;
                 name.filename = QString("\\\\.\\%1:").arg(letter);

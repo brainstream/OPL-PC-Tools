@@ -35,7 +35,8 @@ SOURCES +=\
     src/Settings.cpp \
     src/Device.cpp \
     src/Device_Linux.cpp \
-    src/Device_Windows.cpp
+    src/Device_Windows.cpp \
+    src/Device_FreeBSD.cpp
 
 HEADERS  += \
     src/MainWindow.h \

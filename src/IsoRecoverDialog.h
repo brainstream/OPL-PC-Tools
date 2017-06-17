@@ -15,51 +15,39 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#ifndef __QPCOPL_ISORECOVERDIALOG__
+#define __QPCOPL_ISORECOVERDIALOG__
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameCollection.h"
+#include "IsoRecoverer.h"
+#include "LambdaThread.h"
+#include "ui_IsoRecoverDialog.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class IsoRecoverDialog : public QDialog, private Ui::IsoRecoverDialog
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    IsoRecoverDialog(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QWidget * _parent);
+    ~IsoRecoverDialog() override;
+
+public slots:
+    void reject() override;
 
 protected:
-    void closeEvent(QCloseEvent * _event) override;
+    void showEvent(QShowEvent * _event) override;
 
 private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
+    void recoveryProgress(quint64 _total_bytes, quint64 _processed_bytes);
+    void rollbackStarted();
+    void threadFinished();
+    void recoveryError(QString _message);
 
 private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    GameCollection m_game_collection;
+    QWidget * mp_parent;
+    DialogCode m_return_code;
+    static const quint32 s_progress_max = 1000;
+    LambdaThread * mp_work_thread;
+    IsoRecoverer * mp_recoverer;
 };
 
-#endif // __QPCOPL_MAINWINDOW__
+#endif // __QPCOPL_ISORECOVERDIALOG__

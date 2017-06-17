@@ -414,7 +414,7 @@
      <x>0</x>
      <y>0</y>
      <width>884</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="mp_menu_file">
@@ -433,6 +433,7 @@
      <string>&amp;Game</string>
     </property>
     <addaction name="mp_action_add_game"/>
+    <addaction name="mp_action_to_iso"/>
     <addaction name="separator"/>
     <addaction name="mp_action_rename_game"/>
     <addaction name="mp_action_delete_game"/>
@@ -559,6 +560,11 @@
   <action name="mp_action_settings">
    <property name="text">
     <string>&amp;Settings...</string>
+   </property>
+  </action>
+  <action name="mp_action_to_iso">
+   <property name="text">
+    <string>R&amp;ecover ISO Image</string>
    </property>
   </action>
  </widget>
@@ -807,6 +813,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_action_to_iso</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>gameToIso()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>295</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadUlConfig()</slot>
@@ -822,5 +844,6 @@
   <slot>setIcon()</slot>
   <slot>removeIcon()</slot>
   <slot>showSettings()</slot>
+  <slot>gameToIso()</slot>
  </slots>
 </ui>

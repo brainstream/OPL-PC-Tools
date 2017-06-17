@@ -16,20 +16,19 @@
  ***********************************************************************************************/
 
 
-#ifndef __QPCOPL_GAMEREPOSITORY__
-#define __QPCOPL_GAMEREPOSITORY__
+#ifndef __QPCOPL_GAMECOLLECTION__
+#define __QPCOPL_GAMECOLLECTION__
 
 #include <QDir>
 #include <QLinkedList>
 #include "Game.h"
-#include "ValidationException.h"
 
-class GameRepository : public QObject
+class GameCollection : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit GameRepository(QObject * _parent = nullptr);
+    explicit GameCollection(QObject * _parent = nullptr);
     void reloadFromUlConfig(const QDir & _config_dir);
     inline const QString & directory() const;
     inline const QString & file() const;
@@ -59,34 +58,19 @@ private:
     QLinkedList<Game> m_games;
 };
 
-const QString & GameRepository::directory() const
+const QString & GameCollection::directory() const
 {
     return m_config_directory;
 }
 
-const QString & GameRepository::file() const
+const QString & GameCollection::file() const
 {
     return m_config_filepath;
 }
 
-const QLinkedList<Game> & GameRepository::games() const
+const QLinkedList<Game> & GameCollection::games() const
 {
     return m_games;
 }
 
-
-inline void validateGameName(const QString & _name)
-{
-    if(_name.toUtf8().size() > MAX_GAME_NAME_LENGTH)
-        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(MAX_GAME_NAME_LENGTH));
-}
-
-inline void validateGameId(const QString & _id)
-{
-    if(_id.toLatin1().size() > MAX_GAME_ID_LENGTH)
-        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(MAX_GAME_ID_LENGTH));
-}
-
-QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
-
-#endif // __QPCOPL_GAMEREPOSITORY__
+#endif // __QPCOPL_GAMECOLLECTION__

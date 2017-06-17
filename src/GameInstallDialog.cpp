@@ -114,11 +114,11 @@ void TaskListItem::setMediaType(MediaType _media_type)
 
 } // namespace
 
-GameInstallDialog::GameInstallDialog(GameRepository & _repository, QWidget * _parent /*= nullptr*/) :
+GameInstallDialog::GameInstallDialog(GameCollection & _collcection, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint),
     mp_work_thread(nullptr),
     mp_installer(nullptr),
-    mr_repository(_repository),
+    mr_collection(_collcection),
     m_processing_task_index(0),
     m_is_canceled(false)
 {
@@ -142,7 +142,6 @@ void GameInstallDialog::reject()
     {
         m_is_canceled = true;
         mp_btn_cancel->setDisabled(true);
-        mp_work_thread->quit();
         mp_work_thread->requestInterruption();
         for(int i = mp_tree_tasks->topLevelItemCount() - 1; i > m_processing_task_index; --i)
         {
@@ -212,7 +211,6 @@ void GameInstallDialog::setCurrentProgressBarUnknownStatus(bool _unknown, int _v
 void GameInstallDialog::rollbackFinished()
 {
     setTaskError(canceledErrorMessage());
-    mp_work_thread->quit();
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
     mp_progressbar_overall->setMaximum(g_progressbar_max_value);
     mp_progressbar_overall->setValue(g_progressbar_max_value);
@@ -239,7 +237,6 @@ void GameInstallDialog::registrationFinished()
             setStatus(GameInstallationStatus::done);
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
     emit gameInstalled(mp_installer->installedGame()->id);
-    mp_work_thread->quit();
 }
 
 void GameInstallDialog::threadFinished()
@@ -277,11 +274,13 @@ bool GameInstallDialog::startTask()
     }
     GameInstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
-    mp_installer = new GameInstaller(task.device(), mr_repository, this);
-    mp_work_thread = new GameInstallThread(*mp_installer);
+    mp_installer = new GameInstaller(task.device(), mr_collection, this);
+    mp_work_thread = new LambdaThread([this]() {
+        mp_installer->install();
+    }, this);
     connect(mp_work_thread, &QThread::finished, this, &GameInstallDialog::threadFinished);
     connect(mp_work_thread, &QThread::finished, mp_work_thread, &QThread::deleteLater);
-    connect(mp_work_thread, &GameInstallThread::exception, this, &GameInstallDialog::installerError);
+    connect(mp_work_thread, &LambdaThread::exception, this, &GameInstallDialog::installerError);
     connect(mp_installer, &GameInstaller::progress, this, &GameInstallDialog::installProgress);
     connect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallDialog::rollbackStarted);
     connect(mp_installer, &GameInstaller::rollbackFinished, this, &GameInstallDialog::rollbackFinished);

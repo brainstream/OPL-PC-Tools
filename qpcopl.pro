@@ -30,13 +30,16 @@ SOURCES +=\
     src/GameInstallDialog.cpp \
     src/AboutDialog.cpp \
     src/ChooseOpticalDiscDialog.cpp \
-    src/GameRepository.cpp \
     src/SettingsDialog.cpp \
     src/Settings.cpp \
     src/Device.cpp \
     src/Device_Linux.cpp \
     src/Device_Windows.cpp \
-    src/Device_FreeBSD.cpp
+    src/Device_FreeBSD.cpp \
+    src/IsoRecoverer.cpp \
+    src/GameCollection.cpp \
+    src/Game.cpp \
+    src/IsoRecoverDialog.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -52,10 +55,13 @@ HEADERS  += \
     src/AboutDialog.h \
     src/GameInstallationTask.h \
     src/ChooseOpticalDiscDialog.h \
-    src/GameRepository.h \
     src/SettingsDialog.h \
     src/Settings.h \
-    src/Device.h
+    src/Device.h \
+    src/LambdaThread.h \
+    src/IsoRecoverer.h \
+    src/GameCollection.h \
+    src/IsoRecoverDialog.h
 
 FORMS += \
     src/MainWindow.ui \
@@ -63,7 +69,8 @@ FORMS += \
     src/GameInstallDialog.ui \
     src/AboutDialog.ui \
     src/ChooseOpticalDiscDialog.ui \
-    src/SettingsDialog.ui
+    src/SettingsDialog.ui \
+    src/IsoRecoverDialog.ui
 
 RESOURCES += \
     src/Resources.qrc

@@ -15,51 +15,51 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#ifndef __QPCOPL_LAMBDATHREAD__
+#define __QPCOPL_LAMBDATHREAD__
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameCollection.h"
+#include <functional>
+#include <QThread>
+#include "Exception.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class LambdaThread : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
+        QThread(_parent),
+        m_lambda(_lambda)
+    {
+    }
+
 
 protected:
-    void closeEvent(QCloseEvent * _event) override;
+    void run() override
+    {
+        try
+        {
+            m_lambda();
+        }
+        catch(const Exception & ex)
+        {
+            emit exception(ex.message());
+        }
+        catch(const std::exception & err)
+        {
+            emit exception(QString::fromStdString(err.what()));
+        }
+        catch(...)
+        {
+            emit exception(tr("An unknown error has occurred"));
+        }
+    }
 
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
-
-private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
+signals:
+    void exception(QString _message);
 
 private:
-    QLabel * mp_label_current_ul_file;
-    GameCollection m_game_collection;
+    std::function<void()> m_lambda;
 };
 
-#endif // __QPCOPL_MAINWINDOW__
+#endif // __QPCOPL_LAMBDATHREAD__

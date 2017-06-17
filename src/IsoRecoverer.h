@@ -15,51 +15,32 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
+#ifndef __QPCOPL_ISORECOVERER__
+#define __QPCOPL_ISORECOVERER__
 
-#include <QLabel>
+#include <QObject>
 #include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameCollection.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class IsoRecoverer final : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    IsoRecoverer(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QObject * _parent = nullptr);
+    bool recover();
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
+signals:
+    void progress(quint64 _total_bytes, quint64 _done_bytes);
+    void rollbackStarted();
+    void rollbackFinished();
 
 private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
+    void rollback();
 
 private:
-    QLabel * mp_label_current_ul_file;
-    GameCollection m_game_collection;
+    const Game & mr_game;
+    const QString m_game_dirpath;
+    const QString m_iso_filepath;
 };
 
-#endif // __QPCOPL_MAINWINDOW__
+#endif // __QPCOPL_ISORECOVERER__

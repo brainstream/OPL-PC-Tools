@@ -20,7 +20,7 @@
 
 #include <QObject>
 #include <QStringList>
-#include "GameRepository.h"
+#include "GameCollection.h"
 #include "Device.h"
 
 class GameInstaller : public QObject
@@ -28,7 +28,7 @@ class GameInstaller : public QObject
     Q_OBJECT
 
 public:
-    GameInstaller(Device & _device, GameRepository & _repository, QObject * _parent = nullptr);
+    GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
     ~GameInstaller() override;
     bool install();
     inline const Game * installedGame() const;
@@ -46,7 +46,7 @@ private:
 
 private:
     Device * mp_device;
-    GameRepository & mr_repository;
+    GameCollection & mr_collection;
     QStringList m_written_parts;
     Game * mp_installed_game;
 };

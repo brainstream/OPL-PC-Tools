@@ -20,7 +20,7 @@
 #include <QTemporaryFile>
 #include "IOException.h"
 #include "ValidationException.h"
-#include "GameRepository.h"
+#include "GameCollection.h"
 
 #define MT_CD  0x12
 #define MT_DVD 0x14
@@ -82,47 +82,15 @@ size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _r
     return ~0;
 }
 
-// This fucnction is taken form the original OPL project (iso2opl.c).
-quint32 crc32(const QString & _string)
-{
-    const char * string = _string.toUtf8().constData();
-    quint32 * crctab = new quint32[0x400];
-    int crc, table, count, byte;
-    for(table = 0; table < 256; ++table)
-    {
-        crc = table << 24;
-        for (count = 8; count > 0; --count)
-        {
-            if (crc < 0)
-                crc = crc << 1;
-            else
-                crc = (crc << 1) ^ 0x04C11DB7;
-        }
-        crctab[255 - table] = crc;
-    }
-    do
-    {
-        byte = string[count++];
-        crc = crctab[byte ^ ((crc >> 24) & 0xFF)] ^ ((crc << 8) & 0xFFFFFF00);
-    } while (string[count - 1] != 0);
-    delete [] crctab;
-    return crc;
-}
-
 } // namespace
 
-QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part)
-{
-    QString crc = QString("%1").arg(crc32(_name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
-    return QString("ul.%1.%2.%3").arg(crc).arg(_id).arg(_part, 2, 10, QChar('0'));
-}
 
-GameRepository::GameRepository(QObject * _parent /*= nullptr*/) :
+GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
     QObject(_parent)
 {
 }
 
-void GameRepository::reloadFromUlConfig(const QDir & _config_dir)
+void GameCollection::reloadFromUlConfig(const QDir & _config_dir)
 {
     m_config_directory = _config_dir.path();
     m_config_filepath = _config_dir.absoluteFilePath(UL_CONFIG_FILENAME);
@@ -162,7 +130,7 @@ void GameRepository::reloadFromUlConfig(const QDir & _config_dir)
     loadPixmaps();
 }
 
-void GameRepository::loadPixmaps()
+void GameCollection::loadPixmaps()
 {
     QDir art_dir(m_config_directory);
     if(!art_dir.cd(g_art_dir)) return;
@@ -198,7 +166,7 @@ void GameRepository::loadPixmaps()
     }
 }
 
-void GameRepository::addGame(const Game & _game)
+void GameCollection::addGame(const Game & _game)
 {
     validateGameName(_game.name);
     validateGameId(g_image_prefix + _game.id);
@@ -213,7 +181,7 @@ void GameRepository::addGame(const Game & _game)
     m_games.append(_game);
 }
 
-void GameRepository::deleteGame(const QString & _id)
+void GameCollection::deleteGame(const QString & _id)
 {
     auto iterator = std::find_if(m_games.begin(), m_games.end(), [_id](const Game & game) {
         return game.id == _id;
@@ -225,7 +193,7 @@ void GameRepository::deleteGame(const QString & _id)
     m_games.erase(iterator);
 }
 
-void GameRepository::deleteGameConfig(const QString _id)
+void GameCollection::deleteGameConfig(const QString _id)
 {
     QFile config(m_config_filepath);
     openFile(config, QIODevice::ReadOnly);
@@ -249,7 +217,7 @@ void GameRepository::deleteGameConfig(const QString _id)
     QFile::remove(config_bk);
 }
 
-void GameRepository::deleteGameFiles(Game & _game)
+void GameCollection::deleteGameFiles(Game & _game)
 {
     QDir root_dir(m_config_directory);
     for(int part = 0; part < _game.part_count; ++part)
@@ -263,7 +231,7 @@ void GameRepository::deleteGameFiles(Game & _game)
         QFile::remove(_game.icon_filepath);
 }
 
-void GameRepository::renameGame(const QString & _id, const QString & _new_name)
+void GameCollection::renameGame(const QString & _id, const QString & _new_name)
 {
     validateGameName(_new_name);
     Game & game = findGame(_id);
@@ -272,7 +240,7 @@ void GameRepository::renameGame(const QString & _id, const QString & _new_name)
     game.name = _new_name;
 }
 
-void GameRepository::renameGameConfig(Game & _game, const QString & _new_name)
+void GameCollection::renameGameConfig(Game & _game, const QString & _new_name)
 {
     QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
@@ -288,7 +256,7 @@ void GameRepository::renameGameConfig(Game & _game, const QString & _new_name)
         throw IOException(QObject::tr("An error occurred while writing data to file"));
 }
 
-void GameRepository::renameGameFiles(Game & _game, const QString & _new_name)
+void GameCollection::renameGameFiles(Game & _game, const QString & _new_name)
 {
     QList<QString> files;
     QDir root_dir(m_config_directory);
@@ -306,7 +274,7 @@ void GameRepository::renameGameFiles(Game & _game, const QString & _new_name)
     }
 }
 
-void GameRepository::setGameCover(const QString _id, QString & _filepath)
+void GameCollection::setGameCover(const QString _id, QString & _filepath)
 {
     const int cover_width = 140;
     const int cover_height = 200;
@@ -318,7 +286,7 @@ void GameRepository::setGameCover(const QString _id, QString & _filepath)
     game.cover = pixmap;
 }
 
-void GameRepository::loadPixmap(QPixmap & _pixmap, const QString & _filepath)
+void GameCollection::loadPixmap(QPixmap & _pixmap, const QString & _filepath)
 {
     try
     {
@@ -334,7 +302,7 @@ void GameRepository::loadPixmap(QPixmap & _pixmap, const QString & _filepath)
     }
 }
 
-QString GameRepository::savePixmap(QPixmap & _pixmap, const QString & _filename)
+QString GameCollection::savePixmap(QPixmap & _pixmap, const QString & _filename)
 {
     QDir art_dir(m_config_directory);
     art_dir.mkdir(g_art_dir);
@@ -346,7 +314,7 @@ QString GameRepository::savePixmap(QPixmap & _pixmap, const QString & _filename)
     return filename;
 }
 
-void GameRepository::removeGameCover(const QString _id)
+void GameCollection::removeGameCover(const QString _id)
 {
     Game & game = findGame(_id);
     if(game.cover.isNull()) return;
@@ -354,7 +322,7 @@ void GameRepository::removeGameCover(const QString _id)
     QFile::remove(game.cover_filepath);
 }
 
-void GameRepository::setGameIcon(const QString _id, QString & _filepath)
+void GameCollection::setGameIcon(const QString _id, QString & _filepath)
 {
     const int icon_width = 64;
     const int icon_height = 64;
@@ -366,7 +334,7 @@ void GameRepository::setGameIcon(const QString _id, QString & _filepath)
     game.icon = pixmap;
 }
 
-void GameRepository::removeGameIcon(const QString _id)
+void GameCollection::removeGameIcon(const QString _id)
 {
     Game & game = findGame(_id);
     if(game.icon.isNull()) return;
@@ -374,7 +342,7 @@ void GameRepository::removeGameIcon(const QString _id)
     QFile::remove(game.icon_filepath);
 }
 
-const Game * GameRepository::game(const QString & _id) const
+const Game * GameCollection::game(const QString & _id) const
 {
     for(const Game & game : m_games)
     {
@@ -384,7 +352,7 @@ const Game * GameRepository::game(const QString & _id) const
     return nullptr;
 }
 
-Game & GameRepository::findGame(const QString & _id)
+Game & GameCollection::findGame(const QString & _id)
 {
     for(Game & game : m_games)
     {

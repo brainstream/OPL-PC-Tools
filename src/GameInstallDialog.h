@@ -19,7 +19,7 @@
 #define __QPCOPL_GAMEINSTALLDIALOG__
 
 #include "ui_GameInstallDialog.h"
-#include "GameInstallThread.h"
+#include "LambdaThread.h"
 #include "GameInstaller.h"
 #include "Device.h"
 
@@ -28,7 +28,7 @@ class GameInstallDialog : public QDialog, private Ui::GameInstallDialog
     Q_OBJECT
 
 public:
-    explicit GameInstallDialog(GameRepository & _repository, QWidget * _parent = nullptr);
+    explicit GameInstallDialog(GameCollection & _collcection, QWidget * _parent = nullptr);
     ~GameInstallDialog() override;
 
 public slots:
@@ -69,9 +69,9 @@ private:
     QString canceledErrorMessage() const;
 
 private:
-    GameInstallThread * mp_work_thread;
+    LambdaThread * mp_work_thread;
     GameInstaller * mp_installer;
-    GameRepository & mr_repository;
+    GameCollection & mr_collection;
     int m_processing_task_index;
     bool m_is_canceled;
 };

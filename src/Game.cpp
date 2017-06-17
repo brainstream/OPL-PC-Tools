@@ -15,51 +15,44 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __QPCOPL_MAINWINDOW__
-#define __QPCOPL_MAINWINDOW__
-
-#include <QLabel>
 #include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameCollection.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+namespace {
+
+// This fucnction is taken form the original OPL project (iso2opl.c).
+quint32 crc32(const QString & _string)
 {
-    Q_OBJECT
+    //char * string = _string.toUtf8().data();
+    std::string string = _string.toStdString();
+    quint32 * crctab = new quint32[0x400];
+    int crc = 0;
+    int count = 0;
+    for(int table = 0; table < 256; ++table)
+    {
+        crc = table << 24;
+        for(count = 8; count > 0; --count)
+        {
+            if (crc < 0)
+                crc = crc << 1;
+            else
+                crc = (crc << 1) ^ 0x04C11DB7;
+        }
+        crctab[255 - table] = crc;
+    }
+    do
+    {
+        int byte = string[count++];
+        crc = crctab[byte ^ ((crc >> 24) & 0xFF)] ^ ((crc << 8) & 0xFFFFFF00);
+    } while (string[count - 1] != 0);
+    delete [] crctab;
+    return crc;
+}
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
+} // namespace
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
+QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part)
+{
+    QString crc = QString("%1").arg(crc32(_name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
+    return QString("ul.%1.%2.%3").arg(crc).arg(_id).arg(_part, 2, 10, QChar('0'));
+}
 
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
-    void gameInstalled(const QString & _id);
-
-private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(bool _activate);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    GameCollection m_game_collection;
-};
-
-#endif // __QPCOPL_MAINWINDOW__

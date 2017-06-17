@@ -23,10 +23,10 @@
 #include "GameInstaller.h"
 #include "Game.h"
 
-GameInstaller::GameInstaller(Device & _device, GameRepository & _repository, QObject * _parent /*= nullptr*/) :
+GameInstaller::GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     mp_device(&_device),
-    mr_repository(_repository),
+    mr_collection(_collection),
     mp_installed_game(nullptr)
 {
 }
@@ -64,7 +64,7 @@ bool GameInstaller::install()
     const ssize_t read_part_size = 4194304;
     size_t processed_bytes = 0;
     unsigned int write_operation = 0;
-    QDir dest_dir(mr_repository.directory());
+    QDir dest_dir(mr_collection.directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
     mp_device->seek(0);
     for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size; ++mp_installed_game->part_count)
@@ -150,6 +150,6 @@ void GameInstaller::rollback()
 void GameInstaller::registerGame()
 {
     emit registrationStarted();
-    mr_repository.addGame(*mp_installed_game);
+    mr_collection.addGame(*mp_installed_game);
     emit registrationFinished();
 }

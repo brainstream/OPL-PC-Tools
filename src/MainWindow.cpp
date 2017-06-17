@@ -26,29 +26,31 @@
 #include "AboutDialog.h"
 #include "GameInstallDialog.h"
 #include "GameRenameDialog.h"
+#include "IsoRecoverDialog.h"
 #include "Exception.h"
 
 namespace {
 
 static const char * g_settings_key_wnd_geometry = "WindowGeometry";
 static const char * g_settings_key_ul_dir = "ULDirectory";
+static const char * g_settings_key_iso_recover_dir = "ISORecoverDirectory";
 static const char * g_settings_key_cover_dir = "PixmapDirectory";
 
 class GameListItem : public QListWidgetItem
 {
 public:
-    explicit GameListItem(const GameRepository & _repository, const QString & _game_id) :
-        mr_repository(_repository),
+    explicit GameListItem(const GameCollection & _collection, const QString & _game_id) :
+        mr_collection(_collection),
         m_game_id(_game_id)
     {
-        mp_game = _repository.game(_game_id);
+        mp_game = _collection.game(_game_id);
     }
 
     QVariant data(int _role) const override;
 
     void reload()
     {
-        mp_game = mr_repository.game(m_game_id);
+        mp_game = mr_collection.game(m_game_id);
     }
 
     const Game & game() const
@@ -57,7 +59,7 @@ public:
     }
 
 private:
-    const GameRepository & mr_repository;
+    const GameCollection & mr_collection;
     const QString m_game_id;
     const Game * mp_game;
 };
@@ -129,10 +131,10 @@ void MainWindow::loadUlConfig(const QDir & _directory)
     mp_list_games->clear();
     try
     {
-        m_game_repository.reloadFromUlConfig(_directory);
-        for(const Game & game : m_game_repository.games())
-            mp_list_games->addItem(new GameListItem(m_game_repository, game.id));
-        mp_label_current_ul_file->setText(m_game_repository.file());
+        m_game_collection.reloadFromUlConfig(_directory);
+        for(const Game & game : m_game_collection.games())
+            mp_list_games->addItem(new GameListItem(m_game_collection, game.id));
+        mp_label_current_ul_file->setText(m_game_collection.file());
         mp_list_games->setCurrentRow(0);
         activateFileActions(true);
     }
@@ -146,7 +148,7 @@ void MainWindow::loadUlConfig(const QDir & _directory)
 
 void MainWindow::reloadUlConfig()
 {
-    loadUlConfig(m_game_repository.directory());
+    loadUlConfig(m_game_collection.directory());
 }
 
 void MainWindow::activateFileActions(bool _activate)
@@ -159,13 +161,14 @@ void MainWindow::activateGameActions(bool _activate)
 {
     mp_action_delete_game->setEnabled(_activate);
     mp_action_rename_game->setEnabled(_activate);
+    mp_action_to_iso->setEnabled(_activate);
 }
 
 void MainWindow::addGame()
 {
     try
     {
-        GameInstallDialog dlg(m_game_repository, this);
+        GameInstallDialog dlg(m_game_collection, this);
         connect(&dlg, &GameInstallDialog::gameInstalled, this, &MainWindow::gameInstalled);
         dlg.exec();
     }
@@ -177,9 +180,30 @@ void MainWindow::addGame()
 
 void MainWindow::gameInstalled(const QString & _id)
 {
-    GameListItem * item = new GameListItem(m_game_repository, _id);
+    GameListItem * item = new GameListItem(m_game_collection, _id);
     mp_list_games->addItem(item);
     mp_list_games->setCurrentItem(item);
+}
+
+void MainWindow::gameToIso()
+{
+    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    if(item == nullptr) return;
+    const Game & game = item->game();
+    QSettings settings;
+    QString iso_dir = settings.value(g_settings_key_iso_recover_dir).toString();
+    QString iso_filename;
+    if(iso_dir.isEmpty())
+        iso_filename = game.name + ".iso";
+    else
+        iso_filename = QDir(iso_dir).absoluteFilePath(game.name + ".iso");
+    iso_filename = QFileDialog::getSaveFileName(this, tr("Choose an ISO image filename to save"),
+        iso_filename, tr("ISO Image") + " (*.iso)");
+    if(iso_filename.isEmpty())
+        return;
+    settings.setValue(g_settings_key_iso_recover_dir, QFileInfo(iso_filename).absoluteDir().absolutePath());
+    IsoRecoverDialog dlg(game, settings.value(g_settings_key_ul_dir).toString(), iso_filename, this);
+    dlg.exec();
 }
 
 void MainWindow::deleteGame()
@@ -194,7 +218,7 @@ void MainWindow::deleteGame()
     }
     try
     {
-        m_game_repository.deleteGame(item->game().id);
+        m_game_collection.deleteGame(item->game().id);
         delete item;
     }
     catch(const Exception & exception)
@@ -211,7 +235,7 @@ void MainWindow::setCover()
     if(filename.isEmpty()) return;
     try
     {
-        m_game_repository.setGameCover(item->game().id, filename);
+        m_game_collection.setGameCover(item->game().id, filename);
         gameSelected(item);
     }
     catch(const Exception & exception)
@@ -243,7 +267,7 @@ void MainWindow::removeCover()
         {
             return;
         }
-        m_game_repository.removeGameCover(item->game().id);
+        m_game_collection.removeGameCover(item->game().id);
         gameSelected(item);
     }
     catch(const Exception & exception)
@@ -260,7 +284,7 @@ void MainWindow::setIcon()
     if(filename.isEmpty()) return;
     try
     {
-        m_game_repository.setGameIcon(item->game().id, filename);
+        m_game_collection.setGameIcon(item->game().id, filename);
         gameSelected(item);
     }
     catch(const Exception & exception)
@@ -280,7 +304,7 @@ void MainWindow::removeIcon()
         {
             return;
         }
-        m_game_repository.removeGameIcon(item->game().id);
+        m_game_collection.removeGameIcon(item->game().id);
         gameSelected(item);
     }
     catch(const Exception & exception)
@@ -331,7 +355,7 @@ void MainWindow::renameGame()
         if(dlg.exec() == QDialog::Accepted)
         {
             QString new_name = dlg.name();
-            m_game_repository.renameGame(game.id, new_name);
+            m_game_collection.renameGame(game.id, new_name);
             item->reload();
             mp_list_games->update(mp_list_games->currentIndex());
             gameSelected(item);

@@ -19,10 +19,10 @@
 
 namespace {
 
-// This fucnction is taken form the original OPL project (iso2opl.c).
+// This function originally was taken from the OPL project (iso2opl.c).
+// https://github.com/ifcaro/Open-PS2-Loader
 quint32 crc32(const QString & _string)
 {
-    //char * string = _string.toUtf8().data();
     std::string string = _string.toStdString();
     quint32 * crctab = new quint32[0x400];
     int crc = 0;

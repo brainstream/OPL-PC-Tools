@@ -21,5 +21,7 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
     setupUi(this);
-    mp_label_app_name->setText(static_cast<QApplication *>(QApplication::instance())->applicationDisplayName());
+    QApplication * app = static_cast<QApplication *>(QApplication::instance());
+    mp_label_app_name->setText(app->applicationDisplayName());
+    mp_label_version->setText(tr("Version %1").arg(app->applicationVersion()));
 }

@@ -62,19 +62,26 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Tool for managing PS2 disk images used in OPL</string>
+        <widget class="QLabel" name="mp_label_version">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	margin-bottom: 1em;
+}</string>
          </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+         <property name="text">
+          <string notr="true">Version</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	margin-bottom: 1em;
+}</string>
+         </property>
          <property name="text">
-          <string>Copyright © Sergey Smolyannikov &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;brainstream@yandex.ru&lt;/a&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tool for managing PS2 disk images used in OPL&lt;br/&gt;Copyright © Sergey Smolyannikov &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -86,22 +93,6 @@
           <bool>true</bool>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>15</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
@@ -137,7 +128,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>5</height>
           </size>
          </property>
         </spacer>

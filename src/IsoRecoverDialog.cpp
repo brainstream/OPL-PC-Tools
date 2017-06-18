@@ -106,7 +106,6 @@ void IsoRecoverDialog::recoveryError(QString _message)
 {
     m_return_code = QDialog::Rejected;
     QMessageBox::critical(mp_parent, QString(), _message);
-    QDialog::done(m_return_code);
 }
 
 void IsoRecoverDialog::reject()

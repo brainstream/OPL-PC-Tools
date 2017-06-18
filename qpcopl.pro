@@ -39,7 +39,8 @@ SOURCES +=\
     src/IsoRecoverer.cpp \
     src/GameCollection.cpp \
     src/Game.cpp \
-    src/IsoRecoverDialog.cpp
+    src/IsoRecoverDialog.cpp \
+    src/Device_MacOSX.cpp
 
 HEADERS  += \
     src/MainWindow.h \

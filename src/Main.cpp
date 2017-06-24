@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QStandardPaths>
+#include <QDebug>
 
 QTranslator * setupTranslator();
 
@@ -42,12 +43,23 @@ QTranslator * setupTranslator()
     QString locale = QLocale::system().name();
     locale.truncate(locale.lastIndexOf('_'));
     QCoreApplication * app = QApplication::instance();
-    QString filename = QString("%1_%2.qm").arg(app->applicationName()).arg(locale);
-    filename = QStandardPaths::locate(QStandardPaths::AppDataLocation, filename);
-    if(filename.isEmpty())
-        return nullptr;
+    const QString filename = QString("%1_%2.qm").arg(app->applicationName()).arg(locale);
+    QString filepath = QDir(app->applicationDirPath()).absoluteFilePath(filename);
+    if(!QFile::exists(filepath))
+    {
+        filepath = QStandardPaths::locate(QStandardPaths::AppDataLocation, filename);
+        if(filepath.isEmpty())
+            return nullptr;
+    }
+
+
+
+    qDebug() << "Locale: " << locale;
+    qDebug() << "Translation: " << filepath;
+
+
     QTranslator * translator = new QTranslator();
-    if(translator->load(filename))
+    if(translator->load(filepath))
     {
         app->installTranslator(translator);
         return translator;

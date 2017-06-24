@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/AboutDialog.ui" line="84"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tool for managing PS2 disk images used in OPL&lt;br/&gt;Copyright © Sergey Smolyannikov &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Инструмент для управления образами дисков PS2 для использования в OPL&lt;br/&gt;Copyright © Сергей Смольянников&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Инструмент для управления образами дисков PS2 для использования в OPL&lt;br/&gt;Copyright © Сергей Смольянников &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/AboutDialog.ui" line="100"/>
@@ -98,67 +98,67 @@
         <translation>Установка игры</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="53"/>
+        <location filename="../src/GameInstallDialog.ui" line="56"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="58"/>
+        <location filename="../src/GameInstallDialog.ui" line="61"/>
         <source>Status</source>
         <translation>Статус</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="97"/>
+        <location filename="../src/GameInstallDialog.ui" line="100"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="105"/>
+        <location filename="../src/GameInstallDialog.ui" line="108"/>
         <source>Auto</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="196"/>
+        <location filename="../src/GameInstallDialog.ui" line="199"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="207"/>
+        <location filename="../src/GameInstallDialog.ui" line="210"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="232"/>
+        <location filename="../src/GameInstallDialog.ui" line="235"/>
         <source>Overall progress</source>
         <translation>Общий прогресс</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="246"/>
+        <location filename="../src/GameInstallDialog.ui" line="249"/>
         <source>Current progress</source>
         <translation>Текущий прогресс</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="264"/>
+        <location filename="../src/GameInstallDialog.ui" line="267"/>
         <source>&amp;Add ISO</source>
         <translation>&amp;Добавить ISO</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="271"/>
+        <location filename="../src/GameInstallDialog.ui" line="274"/>
         <source>Add &amp;Disc</source>
         <translation>Д&amp;обавить диск</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="278"/>
+        <location filename="../src/GameInstallDialog.ui" line="281"/>
         <source>&amp;Install</source>
         <translation>&amp;Установить</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="285"/>
+        <location filename="../src/GameInstallDialog.ui" line="288"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="305"/>
+        <location filename="../src/GameInstallDialog.ui" line="308"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -296,209 +296,201 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.ui" line="110"/>
-        <source>ID:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="127"/>
-        <source>Type:</source>
-        <translation>Тип:</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="144"/>
-        <source>Parts:</source>
-        <translation>Частей:</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="178"/>
+        <location filename="../src/MainWindow.ui" line="117"/>
         <source>Cover</source>
         <translation>Обложка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="223"/>
-        <source>Remove Cover</source>
-        <translation>Удалить обложку</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="255"/>
-        <source>Set Cover</source>
-        <translation>Установить обложку</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="280"/>
+        <location filename="../src/MainWindow.ui" line="227"/>
         <source>Icon</source>
         <translation>Иконка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="332"/>
-        <source>Remove Icon</source>
-        <translation>Удалить иконку</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="364"/>
-        <source>Set Icon</source>
-        <translation>Установить иконку</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.ui" line="422"/>
+        <location filename="../src/MainWindow.ui" line="363"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="433"/>
+        <location filename="../src/MainWindow.ui" line="374"/>
         <source>&amp;Game</source>
         <translation>&amp;Игра</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="443"/>
+        <location filename="../src/MainWindow.ui" line="384"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="479"/>
+        <location filename="../src/MainWindow.ui" line="420"/>
         <source>&amp;Open...</source>
         <translation>&amp;Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="482"/>
+        <location filename="../src/MainWindow.ui" line="423"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="491"/>
+        <location filename="../src/MainWindow.ui" line="432"/>
         <source>&amp;Install Game...</source>
         <translation>&amp;Установить игру...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="494"/>
+        <location filename="../src/MainWindow.ui" line="435"/>
         <source>Install Game</source>
         <translation>Установить игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="562"/>
+        <location filename="../src/MainWindow.ui" line="503"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="567"/>
+        <location filename="../src/MainWindow.ui" line="508"/>
         <source>R&amp;ecover ISO Image</source>
         <translation>&amp;Восстановление образа ISO</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="497"/>
+        <location filename="../src/MainWindow.ui" line="438"/>
         <source>Ins</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="506"/>
+        <location filename="../src/MainWindow.ui" line="41"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="46"/>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="51"/>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="56"/>
+        <source>Parts</source>
+        <translation>Частей</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="172"/>
+        <location filename="../src/MainWindow.ui" line="283"/>
+        <source>Change</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="201"/>
+        <location filename="../src/MainWindow.ui" line="312"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="447"/>
         <source>&amp;Delete</source>
         <translation>&amp;Удалить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="509"/>
+        <location filename="../src/MainWindow.ui" line="450"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="512"/>
+        <location filename="../src/MainWindow.ui" line="453"/>
         <source>Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="521"/>
+        <location filename="../src/MainWindow.ui" line="462"/>
         <source>&amp;Rename...</source>
         <translation>&amp;Переименовать...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="524"/>
+        <location filename="../src/MainWindow.ui" line="465"/>
         <source>Rename Game</source>
         <translation>Переименовать игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="527"/>
+        <location filename="../src/MainWindow.ui" line="468"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="536"/>
+        <location filename="../src/MainWindow.ui" line="477"/>
         <source>&amp;Reload</source>
         <translation>Пере&amp;загрузить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="539"/>
+        <location filename="../src/MainWindow.ui" line="480"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="544"/>
+        <location filename="../src/MainWindow.ui" line="485"/>
         <source>&amp;About...</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="549"/>
+        <location filename="../src/MainWindow.ui" line="490"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="552"/>
+        <location filename="../src/MainWindow.ui" line="493"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="557"/>
+        <location filename="../src/MainWindow.ui" line="498"/>
         <source>About &amp;Qt...</source>
         <translation>О &amp;Qt...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="123"/>
+        <location filename="../src/MainWindow.cpp" line="147"/>
         <source>Choose the OPL root dir</source>
         <translation>Выбор корневого каталога OPL</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="200"/>
+        <location filename="../src/MainWindow.cpp" line="224"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Выберите файл для сохранения образа ISO</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="201"/>
+        <location filename="../src/MainWindow.cpp" line="225"/>
         <source>ISO Image</source>
         <translation>Образ ISO</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="215"/>
+        <location filename="../src/MainWindow.cpp" line="239"/>
         <source>Are you sure you want to delete the game?</source>
         <translation>Вы уверены, что хотите удалить игру?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="234"/>
+        <location filename="../src/MainWindow.cpp" line="258"/>
         <source>Choose the game cover</source>
         <translation>Выберите обложку для игры</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="253"/>
+        <location filename="../src/MainWindow.cpp" line="277"/>
         <source>Image Files</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="266"/>
+        <location filename="../src/MainWindow.cpp" line="290"/>
         <source>Are you sure you want to delete the game cover?</source>
         <translation>Вы уверены, что хотите удалить обложку игры?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="283"/>
+        <location filename="../src/MainWindow.cpp" line="307"/>
         <source>Choose the game icon</source>
         <translation>Выберите иконку для игры</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="303"/>
+        <location filename="../src/MainWindow.cpp" line="327"/>
         <source>Are you sure you want to delete the game icon?</source>
         <translation>Вы уверены, что хотите удалить иконку игры?</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.cpp" line="338"/>
-        <source>Unknown</source>
-        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>
@@ -598,6 +590,11 @@
         <location filename="../src/IsoRecoverDialog.cpp" line="29"/>
         <source>bytes</source>
         <translation>байт</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.cpp" line="85"/>
+        <source>Unknown</source>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>

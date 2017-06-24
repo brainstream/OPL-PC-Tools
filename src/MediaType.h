@@ -16,17 +16,14 @@
  ***********************************************************************************************/
 
 
-// TODO: Delete this file! Use LibCDIO::MediaType instead.
-
-
 #ifndef __QPCOPL_MEDIATYPE__
 #define __QPCOPL_MEDIATYPE__
 
 enum class MediaType
 {
-    unknown,
-    cd,
-    dvd
+    Unknown,
+    CD,
+    DVD
 };
 
 #endif // __QPCOPL_MEDIATYPE__

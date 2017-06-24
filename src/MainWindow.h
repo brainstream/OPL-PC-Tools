@@ -47,7 +47,7 @@ private slots:
     void removeCover();
     void setIcon();
     void removeIcon();
-    void gameSelected(QListWidgetItem * _item);
+    void gameSelectionChanged();
     void gameInstalled(const QString & _id);
 
 private:

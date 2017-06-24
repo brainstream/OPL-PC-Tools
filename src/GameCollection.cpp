@@ -37,12 +37,12 @@ struct RawConfigRecord
     explicit RawConfigRecord(const Game & _game)
     {
         memset(this, 0, sizeof(RawConfigRecord));
-        QByteArray name_bytes = _game.name.toUtf8();
+        QByteArray name_bytes = _game.title.toUtf8();
         QByteArray image_bytes = _game.id.toLatin1();
         memcpy(this->image, g_image_prefix.toLatin1().constData(), g_image_prefix.size());
         memcpy(&this->image[g_image_prefix.size()], image_bytes.constData(), image_bytes.size());
         memcpy(this->name , name_bytes.constData(), name_bytes.size());
-        this->media = _game.media_type == MediaType::dvd ? MT_DVD : MT_CD;
+        this->media = _game.media_type == MediaType::DVD ? MT_DVD : MT_CD;
         this->parts = _game.part_count;
         this->pad[4] = 0x08; // To be like USBA
     }
@@ -107,21 +107,21 @@ void GameCollection::reloadFromUlConfig(const QDir & _config_dir)
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
         Game game = { };
         if(raw_record->name[MAX_GAME_NAME_LENGTH - 1] == '\0')
-            game.name = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
+            game.title = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
         else
-            game.name = QString::fromUtf8(raw_record->name, MAX_GAME_NAME_LENGTH);
+            game.title = QString::fromUtf8(raw_record->name, MAX_GAME_NAME_LENGTH);
         game.id = QString::fromLatin1(&raw_record->image[g_image_prefix.size()], strlen(raw_record->image) - g_image_prefix.size());
         game.part_count = raw_record->parts;
         switch(raw_record->media)
         {
         case MT_CD:
-            game.media_type = MediaType::cd;
+            game.media_type = MediaType::CD;
             break;
         case MT_DVD:
-            game.media_type = MediaType::dvd;
+            game.media_type = MediaType::DVD;
             break;
         default:
-            game.media_type = MediaType::unknown;
+            game.media_type = MediaType::Unknown;
             break;
         }
         m_games.append(game);
@@ -168,7 +168,7 @@ void GameCollection::loadPixmaps()
 
 void GameCollection::addGame(const Game & _game)
 {
-    validateGameName(_game.name);
+    validateGameName(_game.title);
     validateGameId(g_image_prefix + _game.id);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::WriteOnly | QIODevice::Append);
@@ -222,7 +222,7 @@ void GameCollection::deleteGameFiles(Game & _game)
     QDir root_dir(m_config_directory);
     for(int part = 0; part < _game.part_count; ++part)
     {
-        QString path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.name, part));
+        QString path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.title, part));
         QFile::remove(path);
     }
     if(!_game.cover_filepath.isEmpty())
@@ -237,7 +237,7 @@ void GameCollection::renameGame(const QString & _id, const QString & _new_name)
     Game & game = findGame(_id);
     renameGameConfig(game, _new_name);
     renameGameFiles(game, _new_name);
-    game.name = _new_name;
+    game.title = _new_name;
 }
 
 void GameCollection::renameGameConfig(Game & _game, const QString & _new_name)
@@ -262,7 +262,7 @@ void GameCollection::renameGameFiles(Game & _game, const QString & _new_name)
     QDir root_dir(m_config_directory);
     for(quint8 part = 0; part < _game.part_count; ++part)
     {
-        QString part_path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.name, part));
+        QString part_path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.title, part));
         if(!QFile::exists(part_path))
             throw ValidationException(QObject::tr("File \"%1\" was not found").arg(part_path));
         files.append(part_path);

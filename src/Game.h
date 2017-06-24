@@ -30,7 +30,7 @@
 struct Game
 {
     QString id;
-    QString name;
+    QString title;
     MediaType media_type;
     quint8 part_count;
     QPixmap cover;

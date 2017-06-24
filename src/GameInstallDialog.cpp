@@ -71,17 +71,17 @@ QVariant TaskListItem::data(int _column, int _role) const
         return m_task_ptr->device().title();
     switch(m_task_ptr->status())
     {
-    case GameInstallationStatus::done:
+    case GameInstallationStatus::Done:
         return QObject::tr("Done");
-    case GameInstallationStatus::error:
+    case GameInstallationStatus::Error:
         return QObject::tr("Error");
-    case GameInstallationStatus::installation:
+    case GameInstallationStatus::Installation:
         return QObject::tr("Installation");
-    case GameInstallationStatus::queued:
+    case GameInstallationStatus::Queued:
         return QObject::tr("Queued");
-    case GameInstallationStatus::registration:
+    case GameInstallationStatus::Registration:
         return QObject::tr("Registration");
-    case GameInstallationStatus::rollingBack:
+    case GameInstallationStatus::RollingBack:
         return QObject::tr("Rolling back");
     default:
         return QString();
@@ -199,7 +199,7 @@ void GameInstallDialog::rollbackStarted()
     mp_progressbar_overall->setValue(0);
     mp_progressbar_overall->setMaximum(0);
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
-            setStatus(GameInstallationStatus::rollingBack);
+            setStatus(GameInstallationStatus::RollingBack);
 }
 
 void GameInstallDialog::setCurrentProgressBarUnknownStatus(bool _unknown, int _value /*= 0*/)
@@ -227,14 +227,14 @@ void GameInstallDialog::setTaskError(const QString & _message, int _index /*= -1
 void GameInstallDialog::registrationStarted()
 {
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
-            setStatus(GameInstallationStatus::registration);
+            setStatus(GameInstallationStatus::Registration);
     setCurrentProgressBarUnknownStatus(true);
 }
 
 void GameInstallDialog::registrationFinished()
 {
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
-            setStatus(GameInstallationStatus::done);
+            setStatus(GameInstallationStatus::Done);
     setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
     emit gameInstalled(mp_installer->installedGame()->id);
 }
@@ -263,13 +263,13 @@ bool GameInstallDialog::startTask()
     switch(mp_combo_type->currentIndex())
     {
     case 1:
-        item->setMediaType(MediaType::cd);
+        item->setMediaType(MediaType::CD);
         break;
     case 2:
-        item->setMediaType(MediaType::dvd);
+        item->setMediaType(MediaType::DVD);
         break;
     default:
-        item->setMediaType(MediaType::unknown);
+        item->setMediaType(MediaType::Unknown);
         break;
     }
     GameInstallationTask & task = item->task();
@@ -287,7 +287,7 @@ bool GameInstallDialog::startTask()
     connect(mp_installer, &GameInstaller::registrationStarted, this, &GameInstallDialog::registrationStarted);
     connect(mp_installer, &GameInstaller::registrationFinished, this, &GameInstallDialog::registrationFinished);
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
-            setStatus(GameInstallationStatus::installation);
+            setStatus(GameInstallationStatus::Installation);
     mp_work_thread->start(QThread::HighestPriority);
     return true;
 }
@@ -390,7 +390,7 @@ void GameInstallDialog::taskSelectionChanged()
         mp_widget_task_details->show();
     }
     const GameInstallationTask & task = item->task();
-    if(task.status() == GameInstallationStatus::error)
+    if(task.status() == GameInstallationStatus::Error)
         mp_label_error_message->setText(task.errorMessage());
     else
         mp_label_error_message->clear();
@@ -409,7 +409,7 @@ void GameInstallDialog::renameGame()
 {
     if(mp_work_thread) return;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
-    if(!item || item->task().status() != GameInstallationStatus::queued)
+    if(!item || item->task().status() != GameInstallationStatus::Queued)
         return;
     GameRenameDialog dlg(item->task().device().title(), this);
     if(dlg.exec() == QDialog::Accepted)
@@ -423,7 +423,7 @@ void GameInstallDialog::removeGame()
 {
     if(mp_work_thread) return;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
-    if(item->task().status() != GameInstallationStatus::queued) return;
+    if(item->task().status() != GameInstallationStatus::Queued) return;
     delete item;
     if(mp_tree_tasks->topLevelItemCount() == 0)
     {

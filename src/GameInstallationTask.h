@@ -23,12 +23,12 @@
 
 enum class GameInstallationStatus
 {
-    queued,
-    installation,
-    registration,
-    done,
-    error,
-    rollingBack
+    Queued,
+    Installation,
+    Registration,
+    Done,
+    Error,
+    RollingBack
 };
 
 class GameInstallationTask
@@ -54,7 +54,7 @@ private:
 
 GameInstallationTask::GameInstallationTask(QSharedPointer<Device> & _device) :
     m_device_ptr(_device),
-    m_status(GameInstallationStatus::queued)
+    m_status(GameInstallationStatus::Queued)
 {
 }
 
@@ -90,7 +90,7 @@ void GameInstallationTask::setErrorMessage(const QString & _message)
 
 void GameInstallationTask::setErrorStatus(const QString & _message)
 {
-    m_status = GameInstallationStatus::error;
+    m_status = GameInstallationStatus::Error;
     m_error_message = _message;
 }
 

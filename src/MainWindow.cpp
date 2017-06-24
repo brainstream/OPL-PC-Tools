@@ -18,7 +18,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
-#include <QListWidgetItem>
+#include <QTreeWidgetItem>
 #include "MainWindow.h"
 #include "Settings.h"
 #include "SettingsDialog.h"
@@ -36,17 +36,17 @@ static const char * g_settings_key_ul_dir = "ULDirectory";
 static const char * g_settings_key_iso_recover_dir = "ISORecoverDirectory";
 static const char * g_settings_key_cover_dir = "PixmapDirectory";
 
-class GameListItem : public QListWidgetItem
+class GameTreeItem : public QTreeWidgetItem
 {
 public:
-    explicit GameListItem(const GameCollection & _collection, const QString & _game_id) :
+    GameTreeItem(const GameCollection & _collection, const QString & _game_id) :
         mr_collection(_collection),
         m_game_id(_game_id)
     {
         mp_game = _collection.game(_game_id);
     }
 
-    QVariant data(int _role) const override;
+    QVariant data(int _column, int _role) const override;
 
     void reload()
     {
@@ -64,11 +64,33 @@ private:
     const Game * mp_game;
 };
 
-QVariant GameListItem::data(int _role) const
+QVariant GameTreeItem::data(int _column, int _role) const
 {
     if(_role == Qt::DisplayRole)
-        return mp_game->name;
-    return QListWidgetItem::data(_role);
+    {
+        switch(_column)
+        {
+        case 0:
+            return mp_game->title;
+        case 1:
+            return mp_game->id;
+        case 2:
+            switch(mp_game->media_type)
+            {
+            case MediaType::CD:
+                return "CD";
+            case MediaType::DVD:
+                return "DVD";
+            default:
+                return QObject::tr("Unknown");
+            }
+        case 3:
+            return mp_game->part_count;
+        default:
+            break;
+        }
+    }
+    return QTreeWidgetItem::data(_column, _role);
 }
 
 } // namespace
@@ -77,6 +99,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     setupUi(this);
+    mp_tree_games->header()->setStretchLastSection(false);
+    mp_tree_games->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_widget_game_details->setVisible(false);
     mp_label_current_ul_file = new QLabel(mp_statusbar);
     mp_statusbar->addWidget(mp_label_current_ul_file);
@@ -128,14 +152,14 @@ void MainWindow::loadUlConfig()
 
 void MainWindow::loadUlConfig(const QDir & _directory)
 {
-    mp_list_games->clear();
+    mp_tree_games->clear();
     try
     {
         m_game_collection.reloadFromUlConfig(_directory);
         for(const Game & game : m_game_collection.games())
-            mp_list_games->addItem(new GameListItem(m_game_collection, game.id));
+            mp_tree_games->addTopLevelItem(new GameTreeItem(m_game_collection, game.id));
         mp_label_current_ul_file->setText(m_game_collection.file());
-        mp_list_games->setCurrentRow(0);
+        mp_tree_games->setCurrentItem(mp_tree_games->topLevelItem(0));
         activateFileActions(true);
     }
     catch(const Exception & exception)
@@ -180,23 +204,23 @@ void MainWindow::addGame()
 
 void MainWindow::gameInstalled(const QString & _id)
 {
-    GameListItem * item = new GameListItem(m_game_collection, _id);
-    mp_list_games->addItem(item);
-    mp_list_games->setCurrentItem(item);
+    GameTreeItem * item = new GameTreeItem(m_game_collection, _id);
+    mp_tree_games->addTopLevelItem(item);
+    mp_tree_games->setCurrentItem(item);
 }
 
 void MainWindow::gameToIso()
 {
-    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
     if(item == nullptr) return;
     const Game & game = item->game();
     QSettings settings;
     QString iso_dir = settings.value(g_settings_key_iso_recover_dir).toString();
     QString iso_filename;
     if(iso_dir.isEmpty())
-        iso_filename = game.name + ".iso";
+        iso_filename = game.title + ".iso";
     else
-        iso_filename = QDir(iso_dir).absoluteFilePath(game.name + ".iso");
+        iso_filename = QDir(iso_dir).absoluteFilePath(game.title + ".iso");
     iso_filename = QFileDialog::getSaveFileName(this, tr("Choose an ISO image filename to save"),
         iso_filename, tr("ISO Image") + " (*.iso)");
     if(iso_filename.isEmpty())
@@ -208,11 +232,11 @@ void MainWindow::gameToIso()
 
 void MainWindow::deleteGame()
 {
-    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
     if(item == nullptr) return;
     if(Settings::instance().confirmGameDeletion() &&
        QMessageBox::question(this, QString(),
-       tr("Are you sure you want to delete the game?") + "\r\n" + item->game().name) != QMessageBox::Yes)
+       tr("Are you sure you want to delete the game?") + "\r\n" + item->game().title) != QMessageBox::Yes)
     {
         return;
     }
@@ -229,14 +253,14 @@ void MainWindow::deleteGame()
 
 void MainWindow::setCover()
 {
-    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
     if(item == nullptr) return;
     QString filename = getOpenPicturePath(tr("Choose the game cover"));
     if(filename.isEmpty()) return;
     try
     {
         m_game_collection.setGameCover(item->game().id, filename);
-        gameSelected(item);
+        gameSelectionChanged();
     }
     catch(const Exception & exception)
     {
@@ -260,7 +284,7 @@ void MainWindow::removeCover()
 {
     try
     {
-        GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+        GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
         if(item == nullptr) return;
         if(Settings::instance().confirmPixmapDeletion() &&
            QMessageBox::question(this, QString(), tr("Are you sure you want to delete the game cover?")) != QMessageBox::Yes)
@@ -268,7 +292,7 @@ void MainWindow::removeCover()
             return;
         }
         m_game_collection.removeGameCover(item->game().id);
-        gameSelected(item);
+        gameSelectionChanged();
     }
     catch(const Exception & exception)
     {
@@ -278,14 +302,14 @@ void MainWindow::removeCover()
 
 void MainWindow::setIcon()
 {
-    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
     if(item == nullptr) return;
     QString filename = getOpenPicturePath(tr("Choose the game icon"));
     if(filename.isEmpty()) return;
     try
     {
         m_game_collection.setGameIcon(item->game().id, filename);
-        gameSelected(item);
+        gameSelectionChanged();
     }
     catch(const Exception & exception)
     {
@@ -297,7 +321,7 @@ void MainWindow::removeIcon()
 {
     try
     {
-        GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+        GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
         if(item == nullptr) return;
         if(Settings::instance().confirmPixmapDeletion() &&
            QMessageBox::question(this, QString(), tr("Are you sure you want to delete the game icon?")) != QMessageBox::Yes)
@@ -305,7 +329,7 @@ void MainWindow::removeIcon()
             return;
         }
         m_game_collection.removeGameIcon(item->game().id);
-        gameSelected(item);
+        gameSelectionChanged();
     }
     catch(const Exception & exception)
     {
@@ -313,31 +337,16 @@ void MainWindow::removeIcon()
     }
 }
 
-void MainWindow::gameSelected(QListWidgetItem * _item)
+void MainWindow::gameSelectionChanged()
 {
-    if(_item == nullptr)
+    GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
+    if(item == nullptr)
     {
         mp_widget_game_details->setVisible(false);
         activateGameActions(false);
         return;
     }
-    GameListItem * item = static_cast<GameListItem *>(_item);
     const Game & game = item->game();
-    mp_label_game_id->setText(game.id);
-    mp_label_game_title->setText(game.name);
-    mp_label_game_parts->setText(QString("%1").arg(game.part_count));
-    switch(game.media_type)
-    {
-    case MediaType::cd:
-        mp_label_game_type->setText("CD");
-        break;
-    case MediaType::dvd:
-        mp_label_game_type->setText("DVD");
-        break;
-    default:
-        mp_label_game_type->setText(tr("Unknown"));
-        break;
-    }
     mp_label_cover->setPixmap(game.cover);
     mp_label_icon->setPixmap(game.icon);
     mp_widget_game_details->setVisible(true);
@@ -346,19 +355,19 @@ void MainWindow::gameSelected(QListWidgetItem * _item)
 
 void MainWindow::renameGame()
 {
-    GameListItem * item = static_cast<GameListItem *>(mp_list_games->currentItem());
+    GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
     if(item == nullptr) return;
     const Game & game = item->game();
     try
     {
-        GameRenameDialog dlg(game.name, this);
+        GameRenameDialog dlg(game.title, this);
         if(dlg.exec() == QDialog::Accepted)
         {
             QString new_name = dlg.name();
             m_game_collection.renameGame(game.id, new_name);
             item->reload();
-            mp_list_games->update(mp_list_games->currentIndex());
-            gameSelected(item);
+            mp_tree_games->update(mp_tree_games->currentIndex());
+            gameSelectionChanged();
         }
     }
     catch(const Exception & exception)

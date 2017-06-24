@@ -99,10 +99,10 @@ struct DateTimePVD
 
 enum class VolumeDescriptorType : qint8
 {
-    bootRecord = 0,
-    primaryVolumeDescriptor = 1,
-    supplementaryVolumeDescriptor  = 2,
-    volumePartitionDescriptor  = 3
+    BootRecord = 0,
+    PrimaryVolumeDescriptor = 1,
+    SupplementaryVolumeDescriptor  = 2,
+    VolumePartitionDescriptor  = 3
 };
 
 struct BasicVolumeDescriptor
@@ -206,7 +206,7 @@ bool Device::Iso9660::readPrimaryVolumeDescriptor(QFile & _file)
     QScopedPointer<VolumeDescriptor> descriptor_ptr(new VolumeDescriptor());
     if(_file.read(reinterpret_cast<char *>(descriptor_ptr.data()), sizeof(VolumeDescriptor)) != sizeof(VolumeDescriptor))
         return false;
-    if(descriptor_ptr->type != VolumeDescriptorType::primaryVolumeDescriptor)
+    if(descriptor_ptr->type != VolumeDescriptorType::PrimaryVolumeDescriptor)
         return false;
     if(strncmp("CD001", descriptor_ptr->id, 5))
         return false;
@@ -305,7 +305,7 @@ Device::Device(const QString & _filepath) :
     m_is_initialized(false),
     m_filepath(_filepath),
     mp_read_file(nullptr),
-    m_media_type(MediaType::unknown)
+    m_media_type(MediaType::Unknown)
 {
 }
 

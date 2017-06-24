@@ -40,7 +40,7 @@ bool IsoRecoverer::recover()
     quint64 all_files_total_size = 0;
     for(quint8 part = 0; part < mr_game.part_count; ++part)
     {
-        QString filename = games_dir.absoluteFilePath(makeGamePartName(mr_game.id, mr_game.name, part));
+        QString filename = games_dir.absoluteFilePath(makeGamePartName(mr_game.id, mr_game.title, part));
         filenames.append(filename);
         QFileInfo file_info(filename);
         if(!file_info.exists())

@@ -23,5 +23,10 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
     setupUi(this);
     QApplication * app = static_cast<QApplication *>(QApplication::instance());
     mp_label_app_name->setText(app->applicationDisplayName());
-    mp_label_version->setText(tr("Version %1").arg(app->applicationVersion()));
+    static const int start_development_year = 2017;
+    QString years = (start_development_year < _QPCOPL_BUIDL_YEAR) ?
+        QString("%1 - %2").arg(start_development_year).arg(_QPCOPL_BUIDL_YEAR) :
+        QString::number(_QPCOPL_BUIDL_YEAR);
+    mp_label_version->setText(mp_label_version->text().arg(QT_STRINGIFY(_QPCOPL_VERSION)));
+    mp_label_description->setText(mp_label_description->text().arg(years));
 }

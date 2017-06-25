@@ -22,6 +22,15 @@ TEMPLATE = app
 
 CONFIG += c++14
 
+VERSION = "0.1"
+
+DEFINES += "_QPCOPL_VERSION=$$VERSION"
+win32 {
+    DEFINES +="_QPCOPL_BUIDL_YEAR=$$system(echo %date:~10,4%)"
+} else {
+    DEFINES += "_QPCOPL_BUIDL_YEAR=$$system(date +%Y)"
+}
+
 SOURCES +=\
     src/MainWindow.cpp \
     src/Main.cpp \

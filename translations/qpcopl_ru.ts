@@ -9,24 +9,24 @@
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../src/AboutDialog.ui" line="84"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tool for managing PS2 disk images used in OPL&lt;br/&gt;Copyright © Sergey Smolyannikov &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Инструмент для управления образами дисков PS2 для использования в OPL&lt;br/&gt;Copyright © Сергей Смольянников &lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <location filename="../src/AboutDialog.ui" line="78"/>
+        <source>Version %1</source>
+        <translation>Версия %1</translation>
     </message>
     <message>
-        <location filename="../src/AboutDialog.ui" line="100"/>
+        <location filename="../src/AboutDialog.ui" line="90"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tool for managing PS2 disk images used in OPL&lt;br/&gt;Copyright %1 © Sergey Smolyannikov&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;&lt;br/&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Инструмент для управления образами дисков PS2 для использования в OPL&lt;br/&gt;Copyright %1 © Сергей Смольянников&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;&lt;br/&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/AboutDialog.ui" line="106"/>
         <source>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;OPL page on GitHub&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Страница OPL на GitHub&lt;/a</translation>
     </message>
     <message>
-        <location filename="../src/AboutDialog.ui" line="113"/>
+        <location filename="../src/AboutDialog.ui" line="119"/>
         <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, верисия 3&lt;/a</translation>
-    </message>
-    <message>
-        <location filename="../src/AboutDialog.cpp" line="26"/>
-        <source>Version %1</source>
-        <translation>Версия %1</translation>
     </message>
 </context>
 <context>

@@ -19,7 +19,6 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QStandardPaths>
-#include <QDebug>
 
 QTranslator * setupTranslator();
 
@@ -51,13 +50,6 @@ QTranslator * setupTranslator()
         if(filepath.isEmpty())
             return nullptr;
     }
-
-
-
-    qDebug() << "Locale: " << locale;
-    qDebug() << "Translation: " << filepath;
-
-
     QTranslator * translator = new QTranslator();
     if(translator->load(filepath))
     {

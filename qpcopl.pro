@@ -31,6 +31,18 @@ win32 {
     DEFINES += "_QPCOPL_BUIDL_YEAR=$$system(date +%Y)"
 }
 
+linux {
+    contains(QMAKE_HOST.arch, x86_64):{
+        arch = "amd64"
+    } else {
+        arch = "i386"
+    }
+    debian.target = debian
+    debian.commands = /bin/bash $$_PRO_FILE_PWD_/packages/make-deb.sh "$$OUT_PWD/$$TARGET" "$$VERSION" $$arch
+    QMAKE_EXTRA_TARGETS += debian
+}
+
+
 SOURCES +=\
     src/MainWindow.cpp \
     src/Main.cpp \

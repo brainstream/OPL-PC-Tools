@@ -12,20 +12,20 @@ OUTDIR=`pwd`
 
 pushd . > /dev/null
 cd `dirname $0`
-rm -r qpcopl 2>/dev/null
-mkdir qpcopl
-cp -r debian/* qpcopl
-mkdir -p qpcopl/usr/games/
-cp ${EXEPATH} qpcopl/usr/games/
-strip qpcopl/usr/games/`basename ${EXEPATH}`
-mkdir -p qpcopl/usr/share/brainstream/qpcopl
-cp ../translations/*.qm qpcopl/usr/share/brainstream/qpcopl/
-cp ../src/Resources/icons/application.png qpcopl/usr/share/brainstream/qpcopl/icon.png
-sed -i "s/#version#/${VERSION}/g" qpcopl/DEBIAN/control
-sed -i "s/#arch#/${ARCH}/g" qpcopl/DEBIAN/control
-gzip --best -n qpcopl/usr/share/doc/qpcopl/changelog.Debian
-fakeroot dpkg --build qpcopl
-mv qpcopl.deb ${OUTDIR}/qpcopl_${VERSION}-1_${ARCH}.deb
-lintian ${OUTDIR}/qpcopl_${VERSION}-1_${ARCH}.deb
-rm -r qpcopl
+rm -r oplpctools 2>/dev/null
+mkdir oplpctools
+cp -r debian/* oplpctools
+mkdir -p oplpctools/usr/games/
+cp ${EXEPATH} oplpctools/usr/games/
+strip oplpctools/usr/games/`basename ${EXEPATH}`
+mkdir -p oplpctools/usr/share/brainstream/oplpctools
+cp ../translations/*.qm oplpctools/usr/share/brainstream/oplpctools/
+cp ../src/Resources/icons/application.png oplpctools/usr/share/brainstream/oplpctools/icon.png
+sed -i "s/#version#/${VERSION}/g" oplpctools/DEBIAN/control
+sed -i "s/#arch#/${ARCH}/g" oplpctools/DEBIAN/control
+gzip --best -n oplpctools/usr/share/doc/oplpctools/changelog.Debian
+fakeroot dpkg --build oplpctools
+mv oplpctools.deb ${OUTDIR}/oplpctools_${VERSION}-1_${ARCH}.deb
+lintian ${OUTDIR}/oplpctools_${VERSION}-1_${ARCH}.deb
+rm -r oplpctools
 popd > /dev/null

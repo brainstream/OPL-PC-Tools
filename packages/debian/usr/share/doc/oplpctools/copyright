@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: qpcopl
+Upstream-Name: oplpctools
 Upstream-Contact: Smolyannikov Sergey <brainstream@yandex.ru> 
-Source: https://github.com/brainstream/qpcopl
+Source: https://github.com/brainstream/oplpctools
 
 Files: *
 Copyright: 2017 Smolyannikov Sergey <brainstream@yandex.ru> 

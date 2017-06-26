@@ -1,12 +1,12 @@
 ################################################################################################
 #                                                                                              #
-# This file is part of the qpcopl project, the graphical PC tools for Open PS2 Loader.         #
+# This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.   #
 #                                                                                              #
-# qpcopl is free software: you can redistribute it and/or modify it under the terms of         #
+# OPL PC Tools is free software: you can redistribute it and/or modify it under the terms of   #
 # the GNU General Public License as published by the Free Software Foundation,                 #
 # either version 3 of the License, or (at your option) any later version.                      #
 #                                                                                              #
-# qpcopl is distributed in the hope that it will be useful,  but WITHOUT ANY WARRANTY;         #
+# OPL PC Tools is distributed in the hope that it will be useful,  but WITHOUT ANY WARRANTY;   #
 # without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   #
 # See the GNU General Public License for more details.                                         #
 #                                                                                              #
@@ -17,31 +17,30 @@
 
 QT += core gui widgets
 
-TARGET = qpcopl
+TARGET = oplpctools
 TEMPLATE = app
 
 CONFIG += c++14
 
-VERSION = "0.1"
+VERSION = "1.0"
 
-DEFINES += "_QPCOPL_VERSION=$$VERSION"
+DEFINES += "_OPLPCTOOLS_VERSION=$$VERSION"
 win32 {
-    DEFINES +="_QPCOPL_BUIDL_YEAR=$$system(echo %date:~10,4%)"
+    DEFINES +="_OPLPCTOOLSL_BUIDL_YEAR=$$system(echo %date:~10,4%)"
 } else {
-    DEFINES += "_QPCOPL_BUIDL_YEAR=$$system(date +%Y)"
+    DEFINES += "_OPLPCTOOLS_BUIDL_YEAR=$$system(date +%Y)"
 }
 
 linux {
-    contains(QMAKE_HOST.arch, x86_64):{
+    contains(QMAKE_HOST.arch, x86_64): {
         arch = "amd64"
     } else {
         arch = "i386"
     }
-    debian.target = debian
-    debian.commands = /bin/bash $$_PRO_FILE_PWD_/packages/make-deb.sh "$$OUT_PWD/$$TARGET" "$$VERSION" $$arch
-    QMAKE_EXTRA_TARGETS += debian
+    deb.target = deb
+    deb.commands = /bin/bash $$_PRO_FILE_PWD_/packages/make-deb.sh "$$OUT_PWD/$$TARGET" "$$VERSION" $$arch
+    QMAKE_EXTRA_TARGETS += deb
 }
-
 
 SOURCES +=\
     src/MainWindow.cpp \
@@ -99,7 +98,11 @@ RESOURCES += \
 
 OTHER_FILES += \
     .gitignore \
-    LICENSE.txt
+    packages/debian/usr/share/applications/oplpctools.desktop \
+    packages/make-deb.sh \
+    packages/debian/DEBIAN/control \
+    packages/debian/usr/share/doc/oplpctools/changelog.Debian \
+    packages/debian/usr/share/doc/oplpctools/copyright
 
 
 TRANSLATIONS += \
@@ -108,3 +111,6 @@ TRANSLATIONS += \
 win32 {
     RC_FILE = src/Resources.rc
 }
+
+DISTFILES += \
+    LICENSE.txt

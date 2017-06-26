@@ -1,6 +1,6 @@
 [Desktop Entry]
-Exec=/usr/games/qpcopl
-Icon=/usr/share/brainstream/qpcopl/icon.png
+Exec=/usr/games/oplpctools
+Icon=/usr/share/brainstream/oplpctools/icon.png
 Name=Open PlayStation 2 Loader PC Tools
 StartupNotify=true
 Terminal=false

@@ -1,11 +1,11 @@
-Package: qpcopl
+Package: oplpctools
 Version: #version#-1
 Section: games
 Architecture: #arch#
 Priority: extra
 Depends: libc6 (>= 2.15), libqt5widgets5 (>= 5.6.0), libqt5gui5 (>= 5.6.0)
 Maintainer: Sergey Smolyannikov <brainstream@yandex.ru>
-Description: Tool for managing PS2 disk images used in OPL
+Description: Tools for managing PS2 disk images used in OPL
  Abilities:
      - Create OPL games from ISO files
      - Create OPL games from CD/DVD discs

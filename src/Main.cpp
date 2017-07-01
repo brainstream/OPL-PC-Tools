@@ -25,9 +25,9 @@ QTranslator * setupTranslator();
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setApplicationName("qpcopl");
-    a.setApplicationVersion("0.1");
-    a.setApplicationDisplayName("Open PlayStation 2 Loader PC Tools");
+    a.setApplicationName("oplpctools");
+    a.setApplicationVersion(QT_STRINGIFY(_OPLPCTOOLS_VERSION));
+    a.setApplicationDisplayName("OPL PC Tools");
     a.setOrganizationName("brainstream");
     QTranslator * translator = setupTranslator();
     MainWindow w;

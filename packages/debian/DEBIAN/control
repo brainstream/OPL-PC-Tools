@@ -5,7 +5,7 @@ Architecture: #arch#
 Priority: extra
 Depends: libc6 (>= 2.15), libqt5widgets5 (>= 5.6.0), libqt5gui5 (>= 5.6.0)
 Maintainer: Sergey Smolyannikov <brainstream@yandex.ru>
-Description: Tools for managing PS2 disk images used in OPL
+Description: Tools for managing PS2 disk images used in Open PlayStation 2 Loader
  Abilities:
      - Create OPL games from ISO files
      - Create OPL games from CD/DVD discs

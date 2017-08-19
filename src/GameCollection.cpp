@@ -105,7 +105,7 @@ void GameCollection::reloadFromUlConfig(const QDir & _config_dir)
         if(read_bytes < record_size)
             break;
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
-        Game game = { };
+        Game game;
         if(raw_record->name[MAX_GAME_NAME_LENGTH - 1] == '\0')
             game.title = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
         else

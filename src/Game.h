@@ -29,6 +29,12 @@
 
 struct Game
 {
+    Game() :
+        media_type(MediaType::Unknown),
+        part_count(0)
+    {
+    }
+
     QString id;
     QString title;
     MediaType media_type;

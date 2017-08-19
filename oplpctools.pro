@@ -26,7 +26,7 @@ VERSION = "1.0"
 
 DEFINES += "_OPLPCTOOLS_VERSION=$$VERSION"
 win32 {
-    DEFINES +="_OPLPCTOOLSL_BUIDL_YEAR=$$system(echo %date:~10,4%)"
+    DEFINES +="_OPLPCTOOLS_BUIDL_YEAR=$$system(echo "%date:~10,4%")"
 } else {
     DEFINES += "_OPLPCTOOLS_BUIDL_YEAR=$$system(date +%Y)"
 }
@@ -60,7 +60,8 @@ SOURCES +=\
     src/GameCollection.cpp \
     src/Game.cpp \
     src/IsoRecoverDialog.cpp \
-    src/Device_MacOSX.cpp
+    src/Device_MacOSX.cpp \
+    src/BinaryFile.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -82,7 +83,8 @@ HEADERS  += \
     src/LambdaThread.h \
     src/IsoRecoverer.h \
     src/GameCollection.h \
-    src/IsoRecoverDialog.h
+    src/IsoRecoverDialog.h \
+    src/BinaryFile.h
 
 FORMS += \
     src/MainWindow.ui \

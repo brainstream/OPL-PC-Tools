@@ -184,7 +184,7 @@ Device::Iso9660::Iso9660(const QString _filepath) :
     m_is_initialized(false),
     mp_descriptor(nullptr)
 {
-    QFile file(_filepath);
+    BinaryFile file(_filepath);
     if(!file.open(QFile::ReadOnly))
         return;
     if(!readPrimaryVolumeDescriptor(file))
@@ -345,7 +345,7 @@ bool Device::isInitialized() const
 bool Device::open()
 {
     close();
-    mp_read_file = new QFile(m_filepath);
+    mp_read_file = new BinaryFile(m_filepath);
     if(mp_read_file->open(QFile::ReadOnly))
         return true;
     close();

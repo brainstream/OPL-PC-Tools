@@ -20,7 +20,7 @@
 
 #include <QString>
 #include <QList>
-#include <QFile>
+#include "BinaryFile.h"
 #include "MediaType.h"
 
 struct DeviceName
@@ -60,7 +60,7 @@ protected:
 private:
     bool m_is_initialized;
     const QString m_filepath;
-    QFile * mp_read_file;
+    BinaryFile * mp_read_file;
     MediaType m_media_type;
     QString m_id;
     QString m_title;

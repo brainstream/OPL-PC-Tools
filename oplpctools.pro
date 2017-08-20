@@ -108,7 +108,7 @@ OTHER_FILES += \
 
 
 TRANSLATIONS += \
-    translations/qpcopl_ru.ts
+    translations/oplpctools_ru.ts
 
 win32 {
     RC_FILE = src/Resources.rc

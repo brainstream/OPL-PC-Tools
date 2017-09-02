@@ -23,9 +23,10 @@
 #include <QPixmap>
 #include "ValidationException.h"
 #include "MediaType.h"
+#include "GameInstallationType.h"
 
-#define MAX_GAME_ID_LENGTH   15
-#define MAX_GAME_NAME_LENGTH 32
+const quint16 g_max_game_id_length = 15;
+const quint16 g_max_game_name_length = 32;
 
 struct Game
 {
@@ -38,6 +39,7 @@ struct Game
     QString id;
     QString title;
     MediaType media_type;
+    GameInstallationType installation_type;
     quint8 part_count;
     QPixmap cover;
     QString cover_filepath;
@@ -45,17 +47,9 @@ struct Game
     QString icon_filepath;
 };
 
-inline void validateGameName(const QString & _name)
-{
-    if(_name.toUtf8().size() > MAX_GAME_NAME_LENGTH)
-        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(MAX_GAME_NAME_LENGTH));
-}
+void validateGameName(const QString & _name, GameInstallationType _installation_type);
 
-inline void validateGameId(const QString & _id)
-{
-    if(_id.toLatin1().size() > MAX_GAME_ID_LENGTH)
-        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(MAX_GAME_ID_LENGTH));
-}
+void validateGameId(const QString & _id);
 
 QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
 

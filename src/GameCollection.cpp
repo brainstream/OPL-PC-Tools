@@ -18,9 +18,11 @@
 #include <algorithm>
 #include <QFile>
 #include <QTemporaryFile>
+#include <QStorageInfo>
 #include "IOException.h"
 #include "ValidationException.h"
 #include "GameCollection.h"
+#include "Device.h"
 
 #define MT_CD  0x12
 #define MT_DVD 0x14
@@ -29,6 +31,8 @@
 namespace {
 
 const QString g_image_prefix("ul.");
+const QString g_cd_dir("CD");
+const QString g_dvd_dir("DVD");
 const QString g_art_dir("ART");
 const QString g_cover_suffix("_COV");
 
@@ -47,8 +51,8 @@ struct RawConfigRecord
         this->pad[4] = 0x08; // To be like USBA
     }
 
-    char name[MAX_GAME_NAME_LENGTH];
-    char image[MAX_GAME_ID_LENGTH];
+    char name[g_max_game_name_length];
+    char image[g_max_game_id_length];
     quint8 parts;
     quint8 media;
     quint8 pad[15];
@@ -58,6 +62,12 @@ void openFile(QFile & _file, QIODevice::OpenMode _flags)
 {
     if(!_file.open(_flags))
         throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
+}
+
+void renameFile(const QString & _old_filename, const QString & _new_filename)
+{
+    if(!QFile::rename(_old_filename, _new_filename))
+        throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename).arg(_new_filename));
 }
 
 size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _result = nullptr)
@@ -82,6 +92,17 @@ size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _r
     return ~0;
 }
 
+bool isDirecotySupportedBigFiles(const QDir & _dir)
+{
+    QString fs = QString::fromLatin1(QStorageInfo(_dir).fileSystemType());
+#ifdef _WIN32
+    return QString::compare(fs, "FAT32", Qt::CaseInsensitive) != 0;
+#else
+    return QString::compare(fs, "vfat", Qt::CaseInsensitive) != 0;
+#endif
+    return false;
+}
+
 } // namespace
 
 
@@ -90,11 +111,19 @@ GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
 {
 }
 
-void GameCollection::reloadFromUlConfig(const QDir & _config_dir)
+void GameCollection::reload(const QDir & _directory)
 {
-    m_config_directory = _config_dir.path();
-    m_config_filepath = _config_dir.absoluteFilePath(UL_CONFIG_FILENAME);
+    m_directory = _directory.path();
+    m_is_directory_supported_big_files = isDirecotySupportedBigFiles(_directory);
+    m_config_filepath = _directory.absoluteFilePath(UL_CONFIG_FILENAME);
     m_games.clear();
+    loadUlConfig();
+    loadDirs();
+    loadPixmaps();
+}
+
+void GameCollection::loadUlConfig()
+{
     QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
     const size_t record_size = sizeof(RawConfigRecord);
@@ -106,12 +135,13 @@ void GameCollection::reloadFromUlConfig(const QDir & _config_dir)
             break;
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
         Game game;
-        if(raw_record->name[MAX_GAME_NAME_LENGTH - 1] == '\0')
+        if(raw_record->name[g_max_game_name_length - 1] == '\0')
             game.title = QString::fromUtf8(raw_record->name, strlen(raw_record->name));
         else
-            game.title = QString::fromUtf8(raw_record->name, MAX_GAME_NAME_LENGTH);
+            game.title = QString::fromUtf8(raw_record->name, g_max_game_name_length);
         game.id = QString::fromLatin1(&raw_record->image[g_image_prefix.size()], strlen(raw_record->image) - g_image_prefix.size());
         game.part_count = raw_record->parts;
+        game.installation_type = GameInstallationType::UlConfig;
         switch(raw_record->media)
         {
         case MT_CD:
@@ -127,12 +157,37 @@ void GameCollection::reloadFromUlConfig(const QDir & _config_dir)
         m_games.append(game);
     }
     delete [] buffer;
-    loadPixmaps();
+}
+
+void GameCollection::loadDirs()
+{
+    loadDir(MediaType::CD, g_cd_dir);
+    loadDir(MediaType::DVD, g_dvd_dir);
+}
+
+void GameCollection::loadDir(MediaType _media_type, const QString & _dir)
+{
+    QDir dir(m_directory);
+    if(!dir.cd(_dir))
+        return;
+    for(const QString & iso : dir.entryList({ "*.iso" }))
+    {
+        Iso9660Image image(dir.absoluteFilePath(iso));
+        if(!image.init())
+            break;
+        Game game;
+        game.id = image.gameId();
+        game.title = QFileInfo(image.filepath()).baseName();
+        game.media_type = _media_type;
+        game.installation_type = GameInstallationType::Directory;
+        game.part_count = 1;
+        m_games.append(game);
+    }
 }
 
 void GameCollection::loadPixmaps()
 {
-    QDir art_dir(m_config_directory);
+    QDir art_dir(m_directory);
     if(!art_dir.cd(g_art_dir)) return;
     QFileInfoList files = art_dir.entryInfoList(QStringList { "*.png", "*.jpeg", "*.jpg", "*.bmp" });
     for(Game & game : m_games)
@@ -168,16 +223,19 @@ void GameCollection::loadPixmaps()
 
 void GameCollection::addGame(const Game & _game)
 {
-    validateGameName(_game.title);
-    validateGameId(g_image_prefix + _game.id);
-    QFile file(m_config_filepath);
-    openFile(file, QIODevice::WriteOnly | QIODevice::Append);
-    if(game(_game.id))
-        throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id));
-    RawConfigRecord record(_game);
-    const char * data = reinterpret_cast<const char *>(&record);
-    if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
-        throw IOException(QObject::tr("An error occurred while writing data to file"));
+    if(_game.installation_type == GameInstallationType::UlConfig)
+    {
+        validateGameName(_game.title, GameInstallationType::UlConfig);
+        validateGameId(g_image_prefix + _game.id);
+        QFile file(m_config_filepath);
+        openFile(file, QIODevice::WriteOnly | QIODevice::Append);
+        if(game(_game.id))
+            throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id));
+        RawConfigRecord record(_game);
+        const char * data = reinterpret_cast<const char *>(&record);
+        if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
+            throw IOException(QObject::tr("An error occurred while writing data to file"));
+    }
     m_games.append(_game);
 }
 
@@ -188,8 +246,16 @@ void GameCollection::deleteGame(const QString & _id)
     });
     if(iterator == m_games.end())
         throw ValidationException(tr("Game \"%1\" is not loaded").arg(_id));
-    deleteGameConfig(_id);
-    deleteGameFiles(*iterator);
+    if(iterator->installation_type == GameInstallationType::UlConfig)
+    {
+        deleteGameConfig(_id);
+        deletePartFiles(*iterator);
+    }
+    else
+    {
+        deleteIsoFile(*iterator);
+    }
+    deletePixmaps(*iterator);
     m_games.erase(iterator);
 }
 
@@ -217,14 +283,26 @@ void GameCollection::deleteGameConfig(const QString _id)
     QFile::remove(config_bk);
 }
 
-void GameCollection::deleteGameFiles(Game & _game)
+void GameCollection::deletePartFiles(Game & _game)
 {
-    QDir root_dir(m_config_directory);
+    QDir root_dir(m_directory);
     for(int part = 0; part < _game.part_count; ++part)
     {
         QString path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.title, part));
         QFile::remove(path);
     }
+}
+
+void GameCollection::deleteIsoFile(Game & _game)
+{
+    QDir dir(m_directory);
+    dir.cd(_game.media_type == MediaType::CD ? g_cd_dir : g_dvd_dir);
+    QString path = dir.absoluteFilePath(_game.title) + ".iso";
+    QFile::remove(path);
+}
+
+void GameCollection::deletePixmaps(Game & _game)
+{
     if(!_game.cover_filepath.isEmpty())
         QFile::remove(_game.cover_filepath);
     if(!_game.icon_filepath.isEmpty())
@@ -233,10 +311,17 @@ void GameCollection::deleteGameFiles(Game & _game)
 
 void GameCollection::renameGame(const QString & _id, const QString & _new_name)
 {
-    validateGameName(_new_name);
     Game & game = findGame(_id);
-    renameGameConfig(game, _new_name);
-    renameGameFiles(game, _new_name);
+    validateGameName(_new_name, game.installation_type);
+    if(game.installation_type == GameInstallationType::UlConfig)
+    {
+        renameGameConfig(game, _new_name);
+        renamePartFiles(game, _new_name);
+    }
+    else
+    {
+        renameIsoFile(game, _new_name);
+    }
     game.title = _new_name;
 }
 
@@ -256,10 +341,10 @@ void GameCollection::renameGameConfig(Game & _game, const QString & _new_name)
         throw IOException(QObject::tr("An error occurred while writing data to file"));
 }
 
-void GameCollection::renameGameFiles(Game & _game, const QString & _new_name)
+void GameCollection::renamePartFiles(Game & _game, const QString & _new_name)
 {
     QList<QString> files;
-    QDir root_dir(m_config_directory);
+    QDir root_dir(m_directory);
     for(quint8 part = 0; part < _game.part_count; ++part)
     {
         QString part_path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _game.title, part));
@@ -270,8 +355,17 @@ void GameCollection::renameGameFiles(Game & _game, const QString & _new_name)
     for(int part = 0; part < _game.part_count; ++part)
     {
         QString new_path = root_dir.absoluteFilePath(makeGamePartName(_game.id, _new_name, part));
-        QFile::rename(files[part], new_path);
+        renameFile(files[part], new_path);
     }
+}
+
+void GameCollection::renameIsoFile(Game & _game, const QString & _new_name)
+{
+    QDir dir(m_directory);
+    dir.cd(_game.media_type == MediaType::CD ? g_cd_dir : g_dvd_dir);
+    QString old_filename = dir.absoluteFilePath(_game.title + ".iso");
+    QString new_filename = dir.absoluteFilePath(_new_name + ".iso");
+    renameFile(old_filename, new_filename);
 }
 
 void GameCollection::setGameCover(const QString _id, QString & _filepath)
@@ -304,7 +398,7 @@ void GameCollection::loadPixmap(QPixmap & _pixmap, const QString & _filepath)
 
 QString GameCollection::savePixmap(QPixmap & _pixmap, const QString & _filename)
 {
-    QDir art_dir(m_config_directory);
+    QDir art_dir(m_directory);
     art_dir.mkdir(g_art_dir);
     if(!art_dir.cd(g_art_dir))
         throw IOException(tr("Unabel to create or open the directory \"%1\"").arg(art_dir.absolutePath()));

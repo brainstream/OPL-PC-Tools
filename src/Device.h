@@ -15,8 +15,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_CDIO_DEVICE__
-#define __OPLPCTOOLS_CDIO_DEVICE__
+#ifndef __OPLPCTOOLS_DEVICE__
+#define __OPLPCTOOLS_DEVICE__
 
 #include <QString>
 #include <QList>
@@ -121,4 +121,4 @@ private:
     quint64 m_size;
 };
 
-#endif // __OPLPCTOOLS_CDIO_DEVICE__
+#endif // __OPLPCTOOLS_DEVICE__

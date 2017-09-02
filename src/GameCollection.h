@@ -29,7 +29,7 @@ class GameCollection : public QObject
 
 public:
     explicit GameCollection(QObject * _parent = nullptr);
-    void reloadFromUlConfig(const QDir & _config_dir);
+    void reload(const QDir & _directory);
     inline const QString & directory() const;
     inline const QString & file() const;
     inline const QLinkedList<Game> & games() const;
@@ -43,24 +43,31 @@ public:
     const Game * game(const QString & _id) const;
 
 private:
+    void loadUlConfig();
+    void loadDirs();
+    void loadDir(MediaType _media_type, const QString & _dir);
     void loadPixmaps();
     void loadPixmap(QPixmap & _pixmap, const QString & _filepath);
     QString savePixmap(QPixmap & _pixmap, const QString & _filename);
     void renameGameConfig(Game & _game, const QString & _new_name);
-    void renameGameFiles(Game & _game, const QString & _new_name);
+    void renamePartFiles(Game & _game, const QString & _new_name);
+    void renameIsoFile(Game & _game, const QString & _new_name);
     void deleteGameConfig(const QString _id);
-    void deleteGameFiles(Game & _game);
+    void deletePartFiles(Game & _game);
+    void deleteIsoFile(Game & _game);
+    void deletePixmaps(Game & _game);
     Game & findGame(const QString & _id);
 
 private:
-    QString m_config_directory;
+    QString m_directory;
     QString m_config_filepath;
+    bool m_is_directory_supported_big_files;
     QLinkedList<Game> m_games;
 };
 
 const QString & GameCollection::directory() const
 {
-    return m_config_directory;
+    return m_directory;
 }
 
 const QString & GameCollection::file() const

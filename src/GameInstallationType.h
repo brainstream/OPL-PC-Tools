@@ -15,57 +15,13 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMERENAMEDIALOG__
-#define __OPLPCTOOLS_GAMERENAMEDIALOG__
+#ifndef __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
+#define __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 
-#include "ui_GameRenameDialog.h"
-#include "GameInstallationType.h"
-
-class GameRenameDialog : public QDialog, private Ui::GameRenameDialog
+enum class GameInstallationType
 {
-    Q_OBJECT
-
-private:
-    class Validator
-    {
-    public:
-        virtual ~Validator() { }
-        virtual bool validate(const QString & _name) = 0;
-        virtual const QString message() const = 0;
-    };
-
-    class UlConfigNameValidator : public GameRenameDialog::Validator
-    {
-    public:
-        bool validate(const QString & _name) override;
-        const QString message() const override;
-
-    private:
-        QString m_message;
-    };
-
-    class FilenameValidator : public GameRenameDialog::Validator
-    {
-    public:
-        FilenameValidator();
-        bool validate(const QString & _name) override;
-        const QString message() const override;
-
-    private:
-        bool m_is_invalid;
-        QString m_message;
-    };
-
-public:
-    explicit GameRenameDialog(const QString & _initial_name, GameInstallationType _installation_type, QWidget *_parent = nullptr);
-    ~GameRenameDialog() override;
-    QString name() const;
-
-private slots:
-    void nameChanged(const QString & _name);
-
-private:
-    Validator * mp_validator;
+    UlConfig,
+    Directory
 };
 
-#endif // __OPLPCTOOLS_GAMERENAMEDIALOG__
+#endif // __OPLPCTOOLS_GAMEINSTALLATIONTYPE__

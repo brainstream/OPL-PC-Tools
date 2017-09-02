@@ -15,9 +15,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QVector>
 #include "Game.h"
 
 namespace {
+
+const QVector<QChar> g_disallowed_filename_characters = QVector<QChar> { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
 
 // This function originally was taken from the OPL project (iso2opl.c).
 // https://github.com/ifcaro/Open-PS2-Loader
@@ -49,6 +52,35 @@ quint32 crc32(const QString & _string)
 }
 
 } // namespace
+
+void validateGameId(const QString & _id)
+{
+    if(_id.toLatin1().size() > g_max_game_id_length)
+        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(g_max_game_id_length));
+}
+
+
+void validateGameName(const QString & _name, GameInstallationType _installation_type)
+{
+    switch(_installation_type)
+    {
+    case GameInstallationType::UlConfig:
+        if(_name.toUtf8().size() > g_max_game_name_length)
+            throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(g_max_game_name_length));
+        break;
+    case GameInstallationType::Directory:
+        for(const QChar & ch : g_disallowed_filename_characters)
+        {
+           if(_name.contains(ch))
+           {
+               throw ValidationException(QObject::tr("Name must not contain following symbols: ") +
+                    QString::fromRawData(g_disallowed_filename_characters.data(), g_disallowed_filename_characters.size()));
+           }
+        }
+        break;
+    }
+
+}
 
 QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part)
 {

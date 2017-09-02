@@ -30,6 +30,7 @@
 #include "GameRenameDialog.h"
 #include "GameInstallationTask.h"
 #include "ChooseOpticalDiscDialog.h"
+#include "UlConfigGameInstaller.h"
 
 namespace {
 
@@ -274,7 +275,7 @@ bool GameInstallDialog::startTask()
     }
     GameInstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
-    mp_installer = new GameInstaller(task.device(), mr_collection, this);
+    mp_installer = new UlConfigGameInstaller(task.device(), mr_collection, this);
     mp_work_thread = new LambdaThread([this]() {
         mp_installer->install();
     }, this);
@@ -369,9 +370,9 @@ void GameInstallDialog::addDisc()
 QString GameInstallDialog::truncateGameName(const QString & _name) const
 {
     const QByteArray utf8 = _name.toUtf8();
-    if(utf8.size() <= MAX_GAME_NAME_LENGTH)
+    if(utf8.size() <= g_max_game_name_length)
         return _name;
-    QString result = QString::fromUtf8(utf8.constData(), MAX_GAME_NAME_LENGTH);
+    QString result = QString::fromUtf8(utf8.constData(), g_max_game_name_length);
     for(int i = result.size() - 1; result[i] != _name[i]; --i)
         result.truncate(i);
     return result;
@@ -411,7 +412,7 @@ void GameInstallDialog::renameGame()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item || item->task().status() != GameInstallationStatus::Queued)
         return;
-    GameRenameDialog dlg(item->task().device().title(), this);
+    GameRenameDialog dlg(item->task().device().title(), GameInstallationType::UlConfig, this); // TODO: Installation type
     if(dlg.exec() == QDialog::Accepted)
     {
         item->rename(dlg.name());

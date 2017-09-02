@@ -19,12 +19,66 @@
 #include "GameRenameDialog.h"
 #include "Game.h"
 
-GameRenameDialog::GameRenameDialog(const QString & _initial_name, QWidget * _parent /*= nullptr*/) :
+bool GameRenameDialog::UlConfigNameValidator::validate(const QString & _name)
+{
+    int bytes_left = g_max_game_name_length - _name.toUtf8().length();
+    if(bytes_left < 0)
+    {
+        m_message = QObject::tr("Length exceeded by %1 byte(s)").arg(-bytes_left);
+        return false;
+    }
+    else
+    {
+        m_message = QObject::tr("%1 byte(s) left").arg(bytes_left);
+        return true;
+    }
+}
+
+const QString GameRenameDialog::UlConfigNameValidator::message() const
+{
+    return m_message;
+}
+
+GameRenameDialog::FilenameValidator::FilenameValidator() :
+    m_is_invalid(false)
+{
+}
+
+bool GameRenameDialog::FilenameValidator::validate(const QString & _name)
+{
+    m_is_invalid = false;
+    try
+    {
+        validateGameName(_name, GameInstallationType::Directory);
+    }
+    catch(const ValidationException & _exception)
+    {
+        m_is_invalid = true;
+        m_message = _exception.message();
+    }
+    return !m_is_invalid;
+}
+
+const QString GameRenameDialog::FilenameValidator::message() const
+{
+    return m_is_invalid ? m_message : QString();
+}
+
+GameRenameDialog::GameRenameDialog(const QString & _initial_name, GameInstallationType _installation_type, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
+    if(_installation_type == GameInstallationType::Directory)
+        mp_validator = new FilenameValidator();
+    else
+        mp_validator = new UlConfigNameValidator();
     setupUi(this);
     mp_edit_name->setText(_initial_name);
     mp_edit_name->selectAll();
+}
+
+GameRenameDialog::~GameRenameDialog()
+{
+    delete mp_validator;
 }
 
 QString GameRenameDialog::name() const
@@ -34,15 +88,6 @@ QString GameRenameDialog::name() const
 
 void GameRenameDialog::nameChanged(const QString & _name)
 {
-    int bytes_left = MAX_GAME_NAME_LENGTH - _name.toUtf8().length();
-    if(bytes_left < 0)
-    {
-        mp_label_bytes->setText(tr("Length exceeded by %1 byte(s)").arg(-bytes_left));
-        mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(true);
-    }
-    else
-    {
-        mp_label_bytes->setText(tr("%1 byte(s) left").arg(bytes_left));
-        mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(_name.isEmpty());
-    }
+    mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(!mp_validator->validate(_name));
+    mp_label_message->setText(mp_validator->message());
 }

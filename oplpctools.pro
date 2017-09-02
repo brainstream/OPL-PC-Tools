@@ -61,7 +61,8 @@ SOURCES +=\
     src/Game.cpp \
     src/IsoRecoverDialog.cpp \
     src/Device_MacOSX.cpp \
-    src/BinaryFile.cpp
+    src/BinaryFile.cpp \
+    src/UlConfigGameInstaller.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -84,7 +85,9 @@ HEADERS  += \
     src/IsoRecoverer.h \
     src/GameCollection.h \
     src/IsoRecoverDialog.h \
-    src/BinaryFile.h
+    src/BinaryFile.h \
+    src/GameInstallationType.h \
+    src/UlConfigGameInstaller.h
 
 FORMS += \
     src/MainWindow.ui \

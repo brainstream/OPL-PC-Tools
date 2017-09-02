@@ -20,12 +20,12 @@
    <item>
     <widget class="QLineEdit" name="mp_edit_name">
      <property name="maxLength">
-      <number>32</number>
+      <number>250</number>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="mp_label_bytes">
+    <widget class="QLabel" name="mp_label_message">
      <property name="text">
       <string/>
      </property>

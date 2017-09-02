@@ -155,7 +155,7 @@ void MainWindow::loadUlConfig(const QDir & _directory)
     mp_tree_games->clear();
     try
     {
-        m_game_collection.reloadFromUlConfig(_directory);
+        m_game_collection.reload(_directory);
         for(const Game & game : m_game_collection.games())
             mp_tree_games->addTopLevelItem(new GameTreeItem(m_game_collection, game.id));
         mp_label_current_ul_file->setText(m_game_collection.file());
@@ -360,7 +360,7 @@ void MainWindow::renameGame()
     const Game & game = item->game();
     try
     {
-        GameRenameDialog dlg(game.title, this);
+        GameRenameDialog dlg(game.title, game.installation_type, this);
         if(dlg.exec() == QDialog::Accepted)
         {
             QString new_name = dlg.name();

@@ -7,3 +7,9 @@ Makefile
 Makefile.*
 .directory
 translations/*.qm
+packages/*.deb
+packages/*.rpm
+packages/*.zip
+packages/*.exe
+packages/*.msi
+packages/*.pkg

@@ -40,16 +40,15 @@ signals:
     void rollbackStarted();
     void rollbackFinished();
 
-private:
-    void rollback();
-    void registerGame();
+protected:
+    virtual bool performInstallation() = 0;
 
-private:
-    Device * mp_device;
+protected:
+    Device & mr_device;
     GameCollection & mr_collection;
-    QStringList m_written_parts;
     Game * mp_installed_game;
 };
+
 
 const Game * GameInstaller::installedGame() const
 {

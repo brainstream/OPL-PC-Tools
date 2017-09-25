@@ -237,19 +237,22 @@ void GameCollection::loadPixmaps()
 void GameCollection::addGame(const Game & _game)
 {
     if(_game.installation_type == GameInstallationType::UlConfig)
-    {
-        validateGameName(_game.title, GameInstallationType::UlConfig);
-        validateGameId(g_image_prefix + _game.id);
-        QFile file(m_config_filepath);
-        openFile(file, QIODevice::WriteOnly | QIODevice::Append);
-        if(game(_game.id))
-            throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id));
-        RawConfigRecord record(_game);
-        const char * data = reinterpret_cast<const char *>(&record);
-        if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
-            throw IOException(QObject::tr("An error occurred while writing data to file"));
-    }
+        registerGame(_game);
     m_games.append(_game);
+}
+
+void GameCollection::registerGame(const Game & _game)
+{
+    validateGameName(_game.title, GameInstallationType::UlConfig);
+    validateGameId(g_image_prefix + _game.id);
+    QFile file(m_config_filepath);
+    openFile(file, QIODevice::WriteOnly | QIODevice::Append);
+    if(game(_game.id))
+        throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id));
+    RawConfigRecord record(_game);
+    const char * data = reinterpret_cast<const char *>(&record);
+    if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
+        throw IOException(QObject::tr("An error occurred while writing data to file"));
 }
 
 void GameCollection::deleteGame(const QString & _id)

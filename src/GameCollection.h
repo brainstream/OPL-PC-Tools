@@ -51,6 +51,7 @@ private:
     void loadPixmaps();
     void loadPixmap(QPixmap & _pixmap, const QString & _filepath);
     QString savePixmap(QPixmap & _pixmap, const QString & _filename);
+    void registerGame(const Game & _game);
     void renameGameConfig(Game & _game, const QString & _new_name);
     void renamePartFiles(Game & _game, const QString & _new_name);
     void renameIsoFile(Game & _game, const QString & _new_name);

@@ -530,7 +530,7 @@
    <sender>mp_radiobtn_split_up</sender>
    <signal>toggled(bool)</signal>
    <receiver>GameInstallDialog</receiver>
-   <slot>taskOptionsChanged()</slot>
+   <slot>splitUpOptionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>632</x>
@@ -546,7 +546,7 @@
    <sender>mp_checkbox_move</sender>
    <signal>stateChanged(int)</signal>
    <receiver>GameInstallDialog</receiver>
-   <slot>taskOptionsChanged()</slot>
+   <slot>moveOptionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>632</x>
@@ -562,7 +562,7 @@
    <sender>mp_checkbox_rename</sender>
    <signal>stateChanged(int)</signal>
    <receiver>GameInstallDialog</receiver>
-   <slot>taskOptionsChanged()</slot>
+   <slot>renameOptionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>632</x>
@@ -583,6 +583,8 @@
   <slot>taskSelectionChanged()</slot>
   <slot>addDisc()</slot>
   <slot>mediaTypeChanged(int)</slot>
-  <slot>taskOptionsChanged()</slot>
+  <slot>splitUpOptionChanged()</slot>
+  <slot>renameOptionChanged()</slot>
+  <slot>moveOptionChanged()</slot>
  </slots>
 </ui>

@@ -42,7 +42,9 @@ protected:
 private slots:
     void addIso();
     void addDisc();
-    void taskOptionsChanged();
+    void splitUpOptionChanged();
+    void renameOptionChanged();
+    void moveOptionChanged();
     void install();
     void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
     void rollbackStarted();

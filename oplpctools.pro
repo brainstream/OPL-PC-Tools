@@ -89,8 +89,7 @@ HEADERS  += \
     src/BinaryFile.h \
     src/GameInstallationType.h \
     src/UlConfigGameInstaller.h \
-    src/DirectoryGameInstaller.h \
-    src/Flags.h
+    src/DirectoryGameInstaller.h
 
 FORMS += \
     src/MainWindow.ui \

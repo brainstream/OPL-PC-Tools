@@ -33,7 +33,6 @@
 #include "UlConfigGameInstaller.h"
 #include "DirectoryGameInstaller.h"
 #include "Settings.h"
-#include "Flags.h"
 
 namespace {
 
@@ -59,11 +58,18 @@ public:
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
     inline void setMediaType(MediaType _media_type);
-    inline Flags<Option> & options();
+    inline bool isSplittingUpEnabled() const;
+    inline void enabelSplittingUp(bool _enable);
+    inline bool isRenamingEnabled() const;
+    inline void enabelRenaming(bool _enable);
+    inline bool isMovingEnabled() const;
+    inline void enabelMoving(bool _enable);
 
 private:
     QSharedPointer<GameInstallationTask> m_task_ptr;
-    Flags<Option> m_options;
+    bool m_is_splitting_up_enabled;
+    bool m_is_renaming_enabled;
+    bool m_is_moving_enabled;
 };
 
 TaskListItem::TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidget * _widget) :
@@ -71,9 +77,9 @@ TaskListItem::TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidg
     m_task_ptr(_task)
 {
     Settings & settings = Settings::instance();
-    m_options[Option::SplitUpISO] = settings.splitUpIso();
-    m_options[Option::MoveISO] = settings.moveIso();
-    m_options[Option::RenameISO] = settings.renameIso();
+    m_is_splitting_up_enabled = settings.splitUpIso();
+    m_is_moving_enabled = settings.moveIso();
+    m_is_renaming_enabled = settings.renameIso();
 }
 
 GameInstallationTask & TaskListItem::task()
@@ -130,10 +136,36 @@ void TaskListItem::setMediaType(MediaType _media_type)
     m_task_ptr->device().setMediaType(_media_type);
 }
 
-Flags<TaskListItem::Option> & TaskListItem::options()
+bool TaskListItem::isSplittingUpEnabled() const
 {
-    return m_options;
+    return m_is_splitting_up_enabled;
 }
+
+void TaskListItem::enabelSplittingUp(bool _enable)
+{
+    m_is_splitting_up_enabled = _enable;
+}
+
+bool TaskListItem::isRenamingEnabled() const
+{
+    return m_is_renaming_enabled;
+}
+
+void TaskListItem::enabelRenaming(bool _enable)
+{
+    m_is_renaming_enabled = _enable;
+}
+
+bool TaskListItem::isMovingEnabled() const
+{
+    return m_is_moving_enabled;
+}
+
+void TaskListItem::enabelMoving(bool _enable)
+{
+    m_is_moving_enabled = _enable;
+}
+
 
 } // namespace
 
@@ -297,16 +329,15 @@ bool GameInstallDialog::startTask()
     }
     GameInstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
-    Flags<TaskListItem::Option> & options = item->options();
-    if(options[TaskListItem::Option::SplitUpISO])
+    if(item->isSplittingUpEnabled())
     {
         mp_installer = new UlConfigGameInstaller(task.device(), mr_collection, this);
     }
     else
     {
         DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(task.device(), mr_collection, this);
-        dir_installer->setOptionMoveFile(options[TaskListItem::Option::MoveISO]);
-        dir_installer->setOptionRenameFile(options[TaskListItem::Option::RenameISO]);
+        dir_installer->setOptionMoveFile(item->isMovingEnabled());
+        dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;
     }
     mp_work_thread = new LambdaThread([this]() {
@@ -411,16 +442,28 @@ QString GameInstallDialog::truncateGameName(const QString & _name) const
     return result;
 }
 
-void GameInstallDialog::taskOptionsChanged()
+void GameInstallDialog::splitUpOptionChanged()
 {
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item) return;
     bool split_up = mp_radiobtn_split_up->isChecked();
-    mp_checkbox_move->setDisabled(split_up);
+    mp_checkbox_move->setDisabled(split_up || item->task().device().isReadOnly());
     mp_checkbox_rename->setDisabled(split_up);
-    item->options()[TaskListItem::Option::SplitUpISO] = split_up;
-    item->options()[TaskListItem::Option::MoveISO] = mp_checkbox_move->isChecked();
-    item->options()[TaskListItem::Option::RenameISO] = mp_checkbox_rename->isChecked();
+    item->enabelSplittingUp(split_up);
+}
+
+void GameInstallDialog::renameOptionChanged()
+{
+    TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
+    if(!item) return;
+    item->enabelRenaming(mp_checkbox_rename->isChecked());
+}
+
+void GameInstallDialog::moveOptionChanged()
+{
+    TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
+    if(!item) return;
+    item->enabelMoving(mp_checkbox_move->isChecked());
 }
 
 void GameInstallDialog::taskSelectionChanged()
@@ -439,11 +482,20 @@ void GameInstallDialog::taskSelectionChanged()
         mp_label_error_message->clear();
     mp_label_title->setText(task.device().title());
     mp_combo_type->setCurrentIndex(static_cast<int>(task.device().mediaType()));
-    bool split_up = item->options()[TaskListItem::Option::SplitUpISO];
+    bool split_up = item->isSplittingUpEnabled();
     mp_radiobtn_split_up->setChecked(split_up);
     mp_radiobtn_dnot_split_up->setChecked(!split_up);
-    mp_checkbox_move->setChecked(!split_up && item->options()[TaskListItem::Option::MoveISO]);
-    mp_checkbox_rename->setChecked(!split_up && item->options()[TaskListItem::Option::RenameISO]);
+    if(task.device().isReadOnly())
+    {
+        mp_checkbox_move->setDisabled(true);
+        mp_checkbox_move->setChecked(false);
+    }
+    else
+    {
+        mp_checkbox_move->setDisabled(false);
+        mp_checkbox_move->setChecked(!split_up && item->isMovingEnabled());
+    }
+    mp_checkbox_rename->setChecked(!split_up && item->isRenamingEnabled());
 }
 
 void GameInstallDialog::mediaTypeChanged(int _index)
@@ -459,7 +511,8 @@ void GameInstallDialog::renameGame()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item || item->task().status() != GameInstallationStatus::Queued)
         return;
-    GameRenameDialog dlg(item->task().device().title(), GameInstallationType::UlConfig, this); // TODO: Installation type
+    GameRenameDialog dlg(item->task().device().title(),
+            item->isSplittingUpEnabled() ? GameInstallationType::UlConfig : GameInstallationType::Directory, this);
     if(dlg.exec() == QDialog::Accepted)
     {
         item->rename(dlg.name());

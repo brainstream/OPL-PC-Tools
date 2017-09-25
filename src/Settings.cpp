@@ -20,12 +20,18 @@
 const QString Settings::s_key_reopen_last_session("Settings/ReopenLastSession");
 const QString Settings::s_key_confirm_game_deletion("Settings/ConfirmGameDeletion");
 const QString Settings::s_key_confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
+const QString Settings::s_key_split_up_iso("Settings/SplitUpISO");
+const QString Settings::s_key_move_iso("Settings/MoveISO");
+const QString Settings::s_key_rename_iso("Settings/RenameISO");
 
 Settings::Settings()
 {
     m_reopen_last_session = loadBoolean(s_key_reopen_last_session, false);
     m_confirm_game_deletion = loadBoolean(s_key_confirm_game_deletion, true);
     m_confirm_pixmap_deletion = loadBoolean(s_key_confirm_pixmap_deletion, true);
+    m_split_up_iso = loadBoolean(s_key_split_up_iso, true);
+    m_move_iso = loadBoolean(s_key_move_iso, false);
+    m_rename_iso = loadBoolean(s_key_rename_iso, false);
 }
 
 bool Settings::loadBoolean(const QString & _key, bool _default_value)

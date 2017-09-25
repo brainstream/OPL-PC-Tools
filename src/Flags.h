@@ -15,51 +15,72 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_MAINWINDOW__
-#define __OPLPCTOOLS_MAINWINDOW__
+#ifndef __OPLPCTOOLS_FLAGS__
+#define __OPLPCTOOLS_FLAGS__
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameCollection.h"
+#include <QMap>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class Flag final
 {
-    Q_OBJECT
-
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    Flag() :
+        m_value(false)
+    {
+    }
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
+    Flag(bool _value) :
+        m_value(_value)
+    {
+    }
 
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelectionChanged();
-    void gameInstalled(const QString & _id);
+    operator bool () const
+    {
+        return m_value;
+    }
+
+    Flag & operator = (const Flag & _flag)
+    {
+        if(this != &_flag)
+            m_value = _flag.m_value;
+        return *this;
+    }
+
+    Flag & operator = (bool _value)
+    {
+        m_value = _value;
+        return *this;
+    }
+
+    bool operator == (bool _value) const
+    {
+        return _value == m_value;
+    }
+
+    bool operator != (const bool _value) const
+    {
+        return _value != m_value;
+    }
 
 private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(const Game * _selected_game);
-
-private:
-    QLabel * mp_label_current_ul_file;
-    GameCollection m_game_collection;
+    bool m_value;
 };
 
-#endif // __OPLPCTOOLS_MAINWINDOW__
+template<typename Key>
+class Flags final
+{
+public:
+    bool operator [](const Key & _key) const
+    {
+        return m_map[_key];
+    }
+
+    Flag & operator [](const Key & _key)
+    {
+        return m_map[_key];
+    }
+
+private:
+    QMap<Key, Flag> m_map;
+};
+
+#endif // __OPLPCTOOLS_FLAGS__

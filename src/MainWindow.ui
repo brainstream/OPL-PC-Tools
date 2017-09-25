@@ -361,7 +361,7 @@
      <x>0</x>
      <y>0</y>
      <width>884</width>
-     <height>23</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="mp_menu_file">
@@ -430,6 +430,9 @@
    </property>
   </action>
   <action name="mp_action_add_game">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="Resources.qrc">
      <normaloff>:/icons/archive-insert</normaloff>:/icons/archive-insert</iconset>
@@ -510,6 +513,9 @@
    </property>
   </action>
   <action name="mp_action_to_iso">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>R&amp;ecover ISO Image</string>
    </property>

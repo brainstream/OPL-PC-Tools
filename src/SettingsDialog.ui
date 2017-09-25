@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>376</width>
-    <height>180</height>
+    <width>557</width>
+    <height>345</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <item>
     <widget class="QCheckBox" name="mp_checkbox_reopen_last_session">
      <property name="text">
-      <string>Reopen last file on startup</string>
+      <string>Reopen a last file on startup</string>
      </property>
     </widget>
    </item>
@@ -36,6 +36,55 @@
      <property name="text">
       <string>Confirm a game picture deletion</string>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Default installation type</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="mp_radiobtn_donot_split_up">
+        <property name="text">
+         <string>Do not split up</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="mp_radiobtn_split_up">
+        <property name="text">
+         <string>Split up</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Default settings for non-split up installations</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QCheckBox" name="mp_checkbox_move_iso">
+        <property name="text">
+         <string>Move ISO files instead of copy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mp_checkbox_rename_iso">
+        <property name="text">
+         <string>Add a game ID to a game filename</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>

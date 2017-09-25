@@ -30,6 +30,15 @@ GameInstaller::~GameInstaller()
     delete mp_installed_game;
 }
 
+MediaType GameInstaller::deviceMediaType() const
+{
+    const quint64 iso_size = mr_device.size();
+    MediaType type = mr_device.mediaType();
+    if(type == MediaType::Unknown)
+        type = iso_size > 681984000 ? MediaType::DVD : MediaType::CD;
+    return type;
+}
+
 bool GameInstaller::install()
 {
     delete mp_installed_game;

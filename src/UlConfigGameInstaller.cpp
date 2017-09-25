@@ -35,12 +35,10 @@ bool UlConfigGameInstaller::performInstallation()
     }
     mp_installed_game->id = mr_device.gameId();
     mp_installed_game->title = mr_device.title();
+    mp_installed_game->media_type = deviceMediaType();
     validateGameId(mp_installed_game->id);
     validateGameName(mp_installed_game->title, GameInstallationType::UlConfig);
     const quint64 iso_size = mr_device.size();
-    mp_installed_game->media_type = mr_device.mediaType();
-    if(mp_installed_game->media_type == MediaType::Unknown)
-        mp_installed_game->media_type = iso_size > 681984000 ? MediaType::DVD : MediaType::CD;
     const ssize_t part_size = 1073741824;
     const ssize_t read_part_size = 4194304;
     size_t processed_bytes = 0;
@@ -87,7 +85,7 @@ bool UlConfigGameInstaller::performInstallation()
             }
             if(read_bytes < read_part_size)
             {
-                // Yes. It is a real scenario. The "Final Fantasy XII" declares the ISO FS size longer than it is.
+                // Yes. It is a real scenario. The "Final Fantasy XII" declares the ISO FS size larger than it is.
                 unexpected_finish = true;
                 emit progress(processed_bytes, processed_bytes);
                 break;

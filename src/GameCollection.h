@@ -41,6 +41,8 @@ public:
     void setGameIcon(const QString _id, QString & _filepath);
     void removeGameIcon(const QString _id);
     const Game * game(const QString & _id) const;
+    static const QString & cdDirectory();
+    static const QString & dvdDirectory();
 
 private:
     void loadUlConfig();

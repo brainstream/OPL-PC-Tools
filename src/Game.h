@@ -53,4 +53,6 @@ void validateGameId(const QString & _id);
 
 QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
 
+QString makeGameIsoFilename(const QString & _title, const QString & _id);
+
 #endif // __OPLPCTOOLS_GAME__

@@ -31,6 +31,9 @@
 #include "GameInstallationTask.h"
 #include "ChooseOpticalDiscDialog.h"
 #include "UlConfigGameInstaller.h"
+#include "DirectoryGameInstaller.h"
+#include "Settings.h"
+#include "Flags.h"
 
 namespace {
 
@@ -41,6 +44,14 @@ const char * g_iso_ext = ".iso";
 class TaskListItem : public QTreeWidgetItem
 {
 public:
+    enum class Option
+    {
+        SplitUpISO,
+        RenameISO,
+        MoveISO
+    };
+
+public:
     TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidget * _widget);
     inline GameInstallationTask & task();
     QVariant data(int _column, int _role) const;
@@ -48,15 +59,21 @@ public:
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
     inline void setMediaType(MediaType _media_type);
+    inline Flags<Option> & options();
 
 private:
     QSharedPointer<GameInstallationTask> m_task_ptr;
+    Flags<Option> m_options;
 };
 
 TaskListItem::TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidget * _widget) :
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
     m_task_ptr(_task)
 {
+    Settings & settings = Settings::instance();
+    m_options[Option::SplitUpISO] = settings.splitUpIso();
+    m_options[Option::MoveISO] = settings.moveIso();
+    m_options[Option::RenameISO] = settings.renameIso();
 }
 
 GameInstallationTask & TaskListItem::task()
@@ -111,6 +128,11 @@ void TaskListItem::setError(const QString & _message)
 void TaskListItem::setMediaType(MediaType _media_type)
 {
     m_task_ptr->device().setMediaType(_media_type);
+}
+
+Flags<TaskListItem::Option> & TaskListItem::options()
+{
+    return m_options;
 }
 
 } // namespace
@@ -275,7 +297,18 @@ bool GameInstallDialog::startTask()
     }
     GameInstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
-    mp_installer = new UlConfigGameInstaller(task.device(), mr_collection, this);
+    Flags<TaskListItem::Option> & options = item->options();
+    if(options[TaskListItem::Option::SplitUpISO])
+    {
+        mp_installer = new UlConfigGameInstaller(task.device(), mr_collection, this);
+    }
+    else
+    {
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(task.device(), mr_collection, this);
+        dir_installer->setOptionMoveFile(options[TaskListItem::Option::MoveISO]);
+        dir_installer->setOptionRenameFile(options[TaskListItem::Option::RenameISO]);
+        mp_installer = dir_installer;
+    }
     mp_work_thread = new LambdaThread([this]() {
         mp_installer->install();
     }, this);
@@ -378,6 +411,18 @@ QString GameInstallDialog::truncateGameName(const QString & _name) const
     return result;
 }
 
+void GameInstallDialog::taskOptionsChanged()
+{
+    TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
+    if(!item) return;
+    bool split_up = mp_radiobtn_split_up->isChecked();
+    mp_checkbox_move->setDisabled(split_up);
+    mp_checkbox_rename->setDisabled(split_up);
+    item->options()[TaskListItem::Option::SplitUpISO] = split_up;
+    item->options()[TaskListItem::Option::MoveISO] = mp_checkbox_move->isChecked();
+    item->options()[TaskListItem::Option::RenameISO] = mp_checkbox_rename->isChecked();
+}
+
 void GameInstallDialog::taskSelectionChanged()
 {
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
@@ -386,10 +431,7 @@ void GameInstallDialog::taskSelectionChanged()
         mp_widget_task_details->hide();
         return;
     }
-    else
-    {
-        mp_widget_task_details->show();
-    }
+    mp_widget_task_details->show();
     const GameInstallationTask & task = item->task();
     if(task.status() == GameInstallationStatus::Error)
         mp_label_error_message->setText(task.errorMessage());
@@ -397,6 +439,11 @@ void GameInstallDialog::taskSelectionChanged()
         mp_label_error_message->clear();
     mp_label_title->setText(task.device().title());
     mp_combo_type->setCurrentIndex(static_cast<int>(task.device().mediaType()));
+    bool split_up = item->options()[TaskListItem::Option::SplitUpISO];
+    mp_radiobtn_split_up->setChecked(split_up);
+    mp_radiobtn_dnot_split_up->setChecked(!split_up);
+    mp_checkbox_move->setChecked(!split_up && item->options()[TaskListItem::Option::MoveISO]);
+    mp_checkbox_rename->setChecked(!split_up && item->options()[TaskListItem::Option::RenameISO]);
 }
 
 void GameInstallDialog::mediaTypeChanged(int _index)

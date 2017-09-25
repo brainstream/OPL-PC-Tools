@@ -418,3 +418,8 @@ quint64 Iso9660Image::size() const
 {
     return m_size;
 }
+
+bool Iso9660Image::isReadOnly() const
+{
+    return !QFileInfo(filepath()).isWritable();
+}

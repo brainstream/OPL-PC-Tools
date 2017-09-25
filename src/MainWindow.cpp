@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mp_label_current_ul_file = new QLabel(mp_statusbar);
     mp_statusbar->addWidget(mp_label_current_ul_file);
     activateFileActions(false);
-    activateGameActions(false);
+    activateGameActions(nullptr);
     QSettings settings;
     restoreGeometry(settings.value(g_settings_key_wnd_geometry).toByteArray());
     if(Settings::instance().reopenLastSestion())
@@ -181,11 +181,12 @@ void MainWindow::activateFileActions(bool _activate)
     mp_action_reload_file->setEnabled(_activate);
 }
 
-void MainWindow::activateGameActions(bool _activate)
+void MainWindow::activateGameActions(const Game * _selected_game)
 {
-    mp_action_delete_game->setEnabled(_activate);
-    mp_action_rename_game->setEnabled(_activate);
-    mp_action_to_iso->setEnabled(_activate);
+    mp_action_delete_game->setEnabled(_selected_game != nullptr);
+    mp_action_rename_game->setEnabled(_selected_game != nullptr);
+    mp_action_to_iso->setEnabled(_selected_game != nullptr &&
+        _selected_game->installation_type != GameInstallationType::Directory);
 }
 
 void MainWindow::addGame()
@@ -343,14 +344,14 @@ void MainWindow::gameSelectionChanged()
     if(item == nullptr)
     {
         mp_widget_game_details->setVisible(false);
-        activateGameActions(false);
+        activateGameActions(nullptr);
         return;
     }
     const Game & game = item->game();
     mp_label_cover->setPixmap(game.cover);
     mp_label_icon->setPixmap(game.icon);
     mp_widget_game_details->setVisible(true);
-    activateGameActions(true);
+    activateGameActions(&game);
 }
 
 void MainWindow::renameGame()

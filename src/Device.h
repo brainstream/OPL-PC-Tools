@@ -50,6 +50,7 @@ public:
     bool open();
     void close();
     bool isOpen() const;
+    virtual bool isReadOnly() const = 0;
     bool seek(quint64 _offset);
     qint64 read(QByteArray & _buffer);
 
@@ -98,6 +99,7 @@ class Iso9660Image : public Device
 public:
     Iso9660Image(const QString & _filepath);
     quint64 size() const override;
+    bool isReadOnly() const override;
 
 protected:
     bool initialize(Iso9660 & _iso) override;
@@ -113,6 +115,7 @@ class OpticalDrive : public Device
 public:
     OpticalDrive(const QString & _filepath);
     quint64 size() const override;
+    inline bool isReadOnly() const override;
 
 protected:
     bool initialize(Iso9660 & _iso) override;
@@ -120,5 +123,10 @@ protected:
 private:
     quint64 m_size;
 };
+
+bool OpticalDrive::isReadOnly() const
+{
+    return true;
+}
 
 #endif // __OPLPCTOOLS_DEVICE__

@@ -60,32 +60,32 @@
 <context>
     <name>GameCollection</name>
     <message>
-        <location filename="../src/GameCollection.cpp" line="190"/>
+        <location filename="../src/GameCollection.cpp" line="248"/>
         <source>Game &quot;%1&quot; is not loaded</source>
         <translation>Игра &quot;%1&quot; не загружена</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="202"/>
+        <location filename="../src/GameCollection.cpp" line="268"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Не могу найти игру &quot;%1&quot; в конфигурационном файле</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="297"/>
+        <location filename="../src/GameCollection.cpp" line="391"/>
         <source>Unable to load the cover image file &quot;%1&quot;</source>
         <translation>Не могу загрузить обложку из файла &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="301"/>
+        <location filename="../src/GameCollection.cpp" line="395"/>
         <source>Unabel to load the picture from file &quot;%1&quot;</source>
         <translation>Не могу загрузить изображение из файла &quot;%1</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="310"/>
+        <location filename="../src/GameCollection.cpp" line="404"/>
         <source>Unabel to create or open the directory &quot;%1&quot;</source>
         <translation>Не могу открыть или создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="313"/>
+        <location filename="../src/GameCollection.cpp" line="407"/>
         <source>Unabel to write image to file &quot;%1&quot;</source>
         <translation>Не могу записать изображение в файл &quot;%1&quot;</translation>
     </message>
@@ -163,57 +163,29 @@
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="154"/>
+        <location filename="../src/GameInstallDialog.cpp" line="155"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="252"/>
+        <location filename="../src/GameInstallDialog.cpp" line="253"/>
         <source>Done!</source>
         <translation>Готово!</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="299"/>
+        <location filename="../src/GameInstallDialog.cpp" line="300"/>
         <source>PS2 Disc Images</source>
         <translation>Образы дисков PS2</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="300"/>
+        <location filename="../src/GameInstallDialog.cpp" line="301"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="331"/>
+        <location filename="../src/GameInstallDialog.cpp" line="332"/>
         <source>Invalid ISO file</source>
         <translation>Невалидный файл ISO</translation>
-    </message>
-</context>
-<context>
-    <name>GameInstaller</name>
-    <message>
-        <location filename="../src/GameInstaller.cpp" line="45"/>
-        <source>Unable to open device file to read: &quot;%1&quot;</source>
-        <translation>Не могу открыть файл устройства для чтения: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/GameInstaller.cpp" line="77"/>
-        <source>File already exists: &quot;%1&quot;</source>
-        <translation>Файл уже существует: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../src/GameInstaller.cpp" line="82"/>
-        <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation>Не могу открыть файл для записи &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../src/GameInstaller.cpp" line="92"/>
-        <source>An error occurred during reading the source medium</source>
-        <translation>При чтении данных возникла ошибка</translation>
-    </message>
-    <message>
-        <location filename="../src/GameInstaller.cpp" line="100"/>
-        <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -222,16 +194,6 @@
         <location filename="../src/GameRenameDialog.ui" line="14"/>
         <source>Rename Game</source>
         <translation>Переименовать игру</translation>
-    </message>
-    <message>
-        <location filename="../src/GameRenameDialog.cpp" line="40"/>
-        <source>Length exceeded by %1 byte(s)</source>
-        <translation>Длина превышена на %1 байт</translation>
-    </message>
-    <message>
-        <location filename="../src/GameRenameDialog.cpp" line="45"/>
-        <source>%1 byte(s) left</source>
-        <translation>Осталось %1 байт</translation>
     </message>
 </context>
 <context>
@@ -296,154 +258,154 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.ui" line="117"/>
+        <location filename="../src/MainWindow.ui" line="123"/>
         <source>Cover</source>
         <translation>Обложка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="227"/>
+        <location filename="../src/MainWindow.ui" line="233"/>
         <source>Icon</source>
         <translation>Иконка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="363"/>
+        <location filename="../src/MainWindow.ui" line="369"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="374"/>
+        <location filename="../src/MainWindow.ui" line="380"/>
         <source>&amp;Game</source>
         <translation>&amp;Игра</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="384"/>
+        <location filename="../src/MainWindow.ui" line="390"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="420"/>
+        <location filename="../src/MainWindow.ui" line="426"/>
         <source>&amp;Open...</source>
         <translation>&amp;Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="423"/>
+        <location filename="../src/MainWindow.ui" line="429"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="432"/>
+        <location filename="../src/MainWindow.ui" line="438"/>
         <source>&amp;Install Game...</source>
         <translation>&amp;Установить игру...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="435"/>
+        <location filename="../src/MainWindow.ui" line="441"/>
         <source>Install Game</source>
         <translation>Установить игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="503"/>
+        <location filename="../src/MainWindow.ui" line="509"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="508"/>
+        <location filename="../src/MainWindow.ui" line="514"/>
         <source>R&amp;ecover ISO Image</source>
         <translation>&amp;Восстановление образа ISO</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="438"/>
+        <location filename="../src/MainWindow.ui" line="444"/>
         <source>Ins</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="41"/>
+        <location filename="../src/MainWindow.ui" line="47"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="46"/>
+        <location filename="../src/MainWindow.ui" line="52"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="51"/>
+        <location filename="../src/MainWindow.ui" line="57"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="56"/>
+        <location filename="../src/MainWindow.ui" line="62"/>
         <source>Parts</source>
         <translation>Частей</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="172"/>
-        <location filename="../src/MainWindow.ui" line="283"/>
+        <location filename="../src/MainWindow.ui" line="178"/>
+        <location filename="../src/MainWindow.ui" line="289"/>
         <source>Change</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="201"/>
-        <location filename="../src/MainWindow.ui" line="312"/>
+        <location filename="../src/MainWindow.ui" line="207"/>
+        <location filename="../src/MainWindow.ui" line="318"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="447"/>
+        <location filename="../src/MainWindow.ui" line="453"/>
         <source>&amp;Delete</source>
         <translation>&amp;Удалить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="450"/>
+        <location filename="../src/MainWindow.ui" line="456"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="453"/>
+        <location filename="../src/MainWindow.ui" line="459"/>
         <source>Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="462"/>
+        <location filename="../src/MainWindow.ui" line="468"/>
         <source>&amp;Rename...</source>
         <translation>&amp;Переименовать...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="465"/>
+        <location filename="../src/MainWindow.ui" line="471"/>
         <source>Rename Game</source>
         <translation>Переименовать игру</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="468"/>
+        <location filename="../src/MainWindow.ui" line="474"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="477"/>
+        <location filename="../src/MainWindow.ui" line="483"/>
         <source>&amp;Reload</source>
         <translation>Пере&amp;загрузить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="480"/>
+        <location filename="../src/MainWindow.ui" line="486"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="485"/>
+        <location filename="../src/MainWindow.ui" line="491"/>
         <source>&amp;About...</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="490"/>
+        <location filename="../src/MainWindow.ui" line="496"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="493"/>
+        <location filename="../src/MainWindow.ui" line="499"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="498"/>
+        <location filename="../src/MainWindow.ui" line="504"/>
         <source>About &amp;Qt...</source>
         <translation>О &amp;Qt...</translation>
     </message>
@@ -496,78 +458,88 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/GameCollection.cpp" line="267"/>
+        <location filename="../src/GameCollection.cpp" line="352"/>
         <source>File &quot;%1&quot; was not found</source>
         <translation>Файл &quot;%1&quot; не найден</translation>
     </message>
     <message>
-        <location filename="../src/Game.h" line="45"/>
+        <location filename="../src/Game.cpp" line="69"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>Максимальная длина имени – %1 байт </translation>
     </message>
     <message>
-        <location filename="../src/Game.h" line="51"/>
+        <location filename="../src/Game.cpp" line="76"/>
+        <source>Name must not contain following symbols: </source>
+        <translation>Имя не может содержать следующие символы: </translation>
+    </message>
+    <message>
+        <location filename="../src/Game.cpp" line="59"/>
         <source>Maximum image name length is %1 bytes</source>
         <translation>Максимальная длина имени образа – %1 байт</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="75"/>
+        <location filename="../src/GameInstallDialog.cpp" line="76"/>
         <source>Done</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="77"/>
+        <location filename="../src/GameInstallDialog.cpp" line="78"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="79"/>
+        <location filename="../src/GameInstallDialog.cpp" line="80"/>
         <source>Installation</source>
         <translation>Установка</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="81"/>
+        <location filename="../src/GameInstallDialog.cpp" line="82"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="83"/>
+        <location filename="../src/GameInstallDialog.cpp" line="84"/>
         <source>Registration</source>
         <translation>Регистрация</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="85"/>
+        <location filename="../src/GameInstallDialog.cpp" line="86"/>
         <source>Rolling back</source>
         <translation>Откат</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="60"/>
+        <location filename="../src/GameCollection.cpp" line="64"/>
         <source>Unable to open file &quot;%1&quot;</source>
         <translation>Не могу открыть файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="176"/>
+        <location filename="../src/GameCollection.cpp" line="70"/>
+        <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
+        <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/GameCollection.cpp" line="233"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="180"/>
-        <location filename="../src/GameCollection.cpp" line="256"/>
+        <location filename="../src/GameCollection.cpp" line="237"/>
+        <location filename="../src/GameCollection.cpp" line="341"/>
         <source>An error occurred while writing data to file</source>
         <translation>Во время записи данных в файл произошла ошибка </translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="214"/>
+        <location filename="../src/GameCollection.cpp" line="280"/>
         <source>Unable to backup config file</source>
         <translation>Не могу сделать резервную копию конфигурационного файла</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="362"/>
+        <location filename="../src/GameCollection.cpp" line="456"/>
         <source>Config record is not loaded</source>
         <translation>Конфигурационная запись не была загружена</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="249"/>
+        <location filename="../src/GameCollection.cpp" line="334"/>
         <source>Config record was not found</source>
         <translation>Конфигурационная запись не найдена</translation>
     </message>
@@ -596,6 +568,16 @@
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
+    <message>
+        <location filename="../src/GameRenameDialog.cpp" line="27"/>
+        <source>Length exceeded by %1 byte(s)</source>
+        <translation>Длина превышена на %1 байт</translation>
+    </message>
+    <message>
+        <location filename="../src/GameRenameDialog.cpp" line="32"/>
+        <source>%1 byte(s) left</source>
+        <translation>Осталось %1 байт</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -618,6 +600,34 @@
         <location filename="../src/SettingsDialog.ui" line="37"/>
         <source>Confirm a game picture deletion</source>
         <translation>Подтверждать удаление изображений</translation>
+    </message>
+</context>
+<context>
+    <name>UlConfigGameInstaller</name>
+    <message>
+        <location filename="../src/UlConfigGameInstaller.cpp" line="34"/>
+        <source>Unable to open device file to read: &quot;%1&quot;</source>
+        <translation>Не могу открыть файл устройства для чтения: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/UlConfigGameInstaller.cpp" line="58"/>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation>Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/UlConfigGameInstaller.cpp" line="63"/>
+        <source>Unable to open file to write: &quot;%1&quot;</source>
+        <translation>Не могу открыть файл для записи &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/UlConfigGameInstaller.cpp" line="73"/>
+        <source>An error occurred during reading the source medium</source>
+        <translation>При чтении данных возникла ошибка</translation>
+    </message>
+    <message>
+        <location filename="../src/UlConfigGameInstaller.cpp" line="81"/>
+        <source>Unable to write a data into the file: &quot;%1&quot;</source>
+        <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
 </context>
 </TS>

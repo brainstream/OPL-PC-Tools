@@ -88,3 +88,7 @@ QString makeGamePartName(const QString & _id, const QString & _name, quint8 _par
     return QString("ul.%1.%2.%3").arg(crc).arg(_id).arg(_part, 2, 10, QChar('0'));
 }
 
+QString makeGameIsoFilename(const QString & _title, const QString & _id)
+{
+    return QString("%1.%2.iso").arg(_id).arg(_title);
+}

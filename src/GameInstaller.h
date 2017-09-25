@@ -41,6 +41,7 @@ signals:
     void rollbackFinished();
 
 protected:
+    MediaType deviceMediaType() const;
     virtual bool performInstallation() = 0;
 
 protected:

@@ -111,6 +111,16 @@ GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
 {
 }
 
+const QString & GameCollection::cdDirectory()
+{
+    return g_cd_dir;
+}
+
+const QString & GameCollection::dvdDirectory()
+{
+    return g_dvd_dir;
+}
+
 void GameCollection::reload(const QDir & _directory)
 {
     m_directory = _directory.path();
@@ -177,10 +187,13 @@ void GameCollection::loadDir(MediaType _media_type, const QString & _dir)
             break;
         Game game;
         game.id = image.gameId();
-        game.title = QFileInfo(image.filepath()).baseName();
         game.media_type = _media_type;
         game.installation_type = GameInstallationType::Directory;
         game.part_count = 1;
+        game.title = QFileInfo(image.filepath()).fileName();
+        game.title = game.title.left(game.title.lastIndexOf('.'));
+        if(game.title.startsWith(game.id))
+            game.title = game.title.right(game.title.size() - game.id.size() - 1);
         m_games.append(game);
     }
 }
@@ -364,6 +377,8 @@ void GameCollection::renameIsoFile(Game & _game, const QString & _new_name)
     QDir dir(m_directory);
     dir.cd(_game.media_type == MediaType::CD ? g_cd_dir : g_dvd_dir);
     QString old_filename = dir.absoluteFilePath(_game.title + ".iso");
+    if(!QFileInfo::exists(old_filename))
+        old_filename = dir.absoluteFilePath(QString("%1.%2.iso").arg(_game.id).arg(_game.title));
     QString new_filename = dir.absoluteFilePath(_new_name + ".iso");
     renameFile(old_filename, new_filename);
 }

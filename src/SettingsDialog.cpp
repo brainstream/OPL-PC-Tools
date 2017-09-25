@@ -26,6 +26,9 @@ SettingsDialog::SettingsDialog(QWidget * _parent) :
     mp_checkbox_reopen_last_session->setChecked(settings.reopenLastSestion());
     mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
     mp_checkbox_confirm_pixmap_deletion->setChecked(settings.confirmPixmapDeletion());
+    mp_radiobtn_split_up->setChecked(settings.splitUpIso());
+    mp_checkbox_rename_iso->setChecked(settings.renameIso());
+    mp_checkbox_move_iso->setChecked(settings.moveIso());
 }
 
 void SettingsDialog::accept()
@@ -34,5 +37,8 @@ void SettingsDialog::accept()
     settings.setReopenLastSestion(mp_checkbox_reopen_last_session->isChecked());
     settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
     settings.setConfirmPixmapDeletion(mp_checkbox_confirm_pixmap_deletion->isChecked());
+    settings.setSplitUpIso(mp_radiobtn_split_up->isChecked());
+    settings.setMoveIso(mp_checkbox_move_iso->isChecked());
+    settings.setRenameIso(mp_checkbox_rename_iso->isChecked());
     QDialog::accept();
 }

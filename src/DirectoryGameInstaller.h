@@ -15,51 +15,54 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_MAINWINDOW__
-#define __OPLPCTOOLS_MAINWINDOW__
+#ifndef __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__
+#define __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__
 
-#include <QLabel>
-#include "Game.h"
-#include "ui_MainWindow.h"
-#include "GameCollection.h"
+#include "GameInstaller.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class DirectoryGameInstaller : public GameInstaller
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    DirectoryGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    inline quint8 options() const;
+    inline void setOptionMoveFile(bool _value);
+    inline bool isOptionMoveFileSet() const;
+    inline void setOptionRenameFile(bool _value);
+    inline bool isOptionRenameFileSet() const;
 
 protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadUlConfig();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void gameSelectionChanged();
-    void gameInstalled(const QString & _id);
+    bool performInstallation() override;
 
 private:
-    QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(const Game * _selected_game);
+    bool copyDeviceTo(const QString & _dest);
+    void rollback(const QString & _dest);
+    void registerGame();
 
 private:
-    QLabel * mp_label_current_ul_file;
-    GameCollection m_game_collection;
+    bool m_move_file;
+    bool m_rename_file;
 };
 
-#endif // __OPLPCTOOLS_MAINWINDOW__
+void DirectoryGameInstaller::setOptionMoveFile(bool _value)
+{
+    m_move_file = _value;
+}
+
+bool DirectoryGameInstaller::isOptionMoveFileSet() const
+{
+    return m_move_file;
+}
+
+void DirectoryGameInstaller::setOptionRenameFile(bool _value)
+{
+    m_rename_file = _value;
+}
+
+bool DirectoryGameInstaller::isOptionRenameFileSet() const
+{
+    return m_rename_file;
+}
+
+#endif // __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__

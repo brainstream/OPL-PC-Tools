@@ -142,6 +142,40 @@
               </layout>
              </item>
              <item>
+              <widget class="QRadioButton" name="mp_radiobtn_split_up">
+               <property name="text">
+                <string>Split up</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="mp_radiobtn_dnot_split_up">
+               <property name="text">
+                <string>Do not split up</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="mp_checkbox_move">
+               <property name="styleSheet">
+                <string notr="true">margin-left: 20px;</string>
+               </property>
+               <property name="text">
+                <string>Move file instead of copy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="mp_checkbox_rename">
+               <property name="styleSheet">
+                <string notr="true">margin-left: 20px;</string>
+               </property>
+               <property name="text">
+                <string>Add a game ID to filename</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="mp_label_error_message">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -314,10 +348,19 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mp_tree_tasks</tabstop>
   <tabstop>mp_btn_add_iso</tabstop>
+  <tabstop>mp_btn_add_disc</tabstop>
   <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_btn_cancel</tabstop>
   <tabstop>mp_btn_ok</tabstop>
+  <tabstop>mp_combo_type</tabstop>
+  <tabstop>mp_radiobtn_split_up</tabstop>
+  <tabstop>mp_radiobtn_dnot_split_up</tabstop>
+  <tabstop>mp_checkbox_move</tabstop>
+  <tabstop>mp_checkbox_rename</tabstop>
+  <tabstop>mp_btn_remove</tabstop>
+  <tabstop>mp_btn_rename</tabstop>
  </tabstops>
  <resources>
   <include location="Resources.qrc"/>
@@ -330,8 +373,8 @@
    <slot>install()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>135</x>
-     <y>419</y>
+     <x>261</x>
+     <y>504</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
@@ -346,8 +389,8 @@
    <slot>addIso()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>49</x>
-     <y>419</y>
+     <x>59</x>
+     <y>504</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
@@ -362,8 +405,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>419</y>
+     <x>347</x>
+     <y>504</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
@@ -378,8 +421,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>419</y>
+     <x>774</x>
+     <y>504</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
@@ -394,8 +437,8 @@
    <slot>renameGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>950</x>
-     <y>307</y>
+     <x>762</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
@@ -410,8 +453,8 @@
    <slot>removeGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>864</x>
-     <y>307</y>
+     <x>675</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
@@ -483,6 +526,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_radiobtn_split_up</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>taskOptionsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_checkbox_move</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>taskOptionsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_checkbox_rename</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>GameInstallDialog</receiver>
+   <slot>taskOptionsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addIso()</slot>
@@ -492,5 +583,6 @@
   <slot>taskSelectionChanged()</slot>
   <slot>addDisc()</slot>
   <slot>mediaTypeChanged(int)</slot>
+  <slot>taskOptionsChanged()</slot>
  </slots>
 </ui>

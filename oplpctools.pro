@@ -22,7 +22,7 @@ TEMPLATE = app
 
 CONFIG += c++14
 
-VERSION = "1.0"
+VERSION = "1.1"
 
 DEFINES += "_OPLPCTOOLS_VERSION=$$VERSION"
 win32 {
@@ -62,7 +62,8 @@ SOURCES +=\
     src/IsoRecoverDialog.cpp \
     src/Device_MacOSX.cpp \
     src/BinaryFile.cpp \
-    src/UlConfigGameInstaller.cpp
+    src/UlConfigGameInstaller.cpp \
+    src/DirectoryGameInstaller.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -87,7 +88,9 @@ HEADERS  += \
     src/IsoRecoverDialog.h \
     src/BinaryFile.h \
     src/GameInstallationType.h \
-    src/UlConfigGameInstaller.h
+    src/UlConfigGameInstaller.h \
+    src/DirectoryGameInstaller.h \
+    src/Flags.h
 
 FORMS += \
     src/MainWindow.ui \

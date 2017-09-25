@@ -88,7 +88,7 @@ bool DirectoryGameInstaller::copyDeviceTo(const QString & _dest)
     if(!dest.open(QIODevice::WriteOnly))
         throw IOException(tr("Unable to open file to write: \"%1\"").arg(dest.fileName()));
     const quint64 iso_size = mr_device.size();
-    for(size_t total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)
+    for(quint64 total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)
     {
         qint64 read_bytes = mr_device.read(bytes);
         if(read_bytes < 0)

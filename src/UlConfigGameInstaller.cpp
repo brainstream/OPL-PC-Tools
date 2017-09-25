@@ -42,7 +42,7 @@ bool UlConfigGameInstaller::performInstallation()
     const quint64 iso_size = mr_device.size();
     const ssize_t part_size = 1073741824;
     const ssize_t read_part_size = 4194304;
-    size_t processed_bytes = 0;
+    quint64 processed_bytes = 0;
     unsigned int write_operation = 0;
     QDir dest_dir(mr_collection.directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
@@ -62,7 +62,7 @@ bool UlConfigGameInstaller::performInstallation()
             throw IOException(tr("Unable to open file to write: \"%1\"").arg(part.fileName()));
         }
         m_written_parts.append(part.fileName());
-        for(size_t total_read_bytes = 0; total_read_bytes < part_size;)
+        for(quint64 total_read_bytes = 0; total_read_bytes < part_size;)
         {
             qint64 read_bytes = mr_device.read(bytes);
             if(read_bytes < 0)

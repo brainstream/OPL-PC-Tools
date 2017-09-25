@@ -73,7 +73,6 @@ HEADERS  += \
     src/ValidationException.h \
     src/GameInstaller.h \
     src/GameInstallDialog.h \
-    src/GameInstallThread.h \
     src/Game.h \
     src/MediaType.h \
     src/AboutDialog.h \

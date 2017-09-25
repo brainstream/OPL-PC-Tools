@@ -36,6 +36,7 @@ bool UlConfigGameInstaller::performInstallation()
     mp_installed_game->id = mr_device.gameId();
     mp_installed_game->title = mr_device.title();
     mp_installed_game->media_type = deviceMediaType();
+    mp_installed_game->installation_type = GameInstallationType::UlConfig;
     validateGameId(mp_installed_game->id);
     validateGameName(mp_installed_game->title, GameInstallationType::UlConfig);
     const quint64 iso_size = mr_device.size();

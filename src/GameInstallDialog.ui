@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>785</width>
-    <height>515</height>
+    <width>941</width>
+    <height>593</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -26,7 +32,7 @@
       <widget class="QTreeWidget" name="mp_tree_tasks">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>5</horstretch>
+         <horstretch>10</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -67,7 +73,7 @@
       <widget class="QFrame" name="frame">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>3</horstretch>
+         <horstretch>9</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -142,37 +148,87 @@
               </layout>
              </item>
              <item>
-              <widget class="QRadioButton" name="mp_radiobtn_split_up">
-               <property name="text">
-                <string>Split up</string>
+              <widget class="QFrame" name="frame_2">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
                </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QRadioButton" name="mp_radiobtn_split_up">
+                  <property name="text">
+                   <string>Split up ISO file into parts</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>It is the only way to run games from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up files into parts in 1 GiB.</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="mp_radiobtn_dnot_split_up">
-               <property name="text">
-                <string>Do not split up</string>
+              <widget class="QFrame" name="frame_3">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="mp_checkbox_move">
-               <property name="styleSheet">
-                <string notr="true">margin-left: 20px;</string>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
-               <property name="text">
-                <string>Move file instead of copy</string>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="mp_checkbox_rename">
-               <property name="styleSheet">
-                <string notr="true">margin-left: 20px;</string>
-               </property>
-               <property name="text">
-                <string>Add a game ID to filename</string>
-               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <widget class="QRadioButton" name="mp_radiobtn_dnot_split_up">
+                  <property name="text">
+                   <string>Do not split up ISO file</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_5">
+                  <property name="text">
+                   <string>It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="mp_checkbox_move">
+                  <property name="text">
+                   <string>Move ISO file instead of copy</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="mp_checkbox_rename">
+                  <property name="text">
+                   <string>Add a game ID to filename</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
@@ -355,10 +411,6 @@
   <tabstop>mp_btn_cancel</tabstop>
   <tabstop>mp_btn_ok</tabstop>
   <tabstop>mp_combo_type</tabstop>
-  <tabstop>mp_radiobtn_split_up</tabstop>
-  <tabstop>mp_radiobtn_dnot_split_up</tabstop>
-  <tabstop>mp_checkbox_move</tabstop>
-  <tabstop>mp_checkbox_rename</tabstop>
   <tabstop>mp_btn_remove</tabstop>
   <tabstop>mp_btn_rename</tabstop>
  </tabstops>

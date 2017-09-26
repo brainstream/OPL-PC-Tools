@@ -423,7 +423,7 @@
      <normaloff>:/icons/document-open</normaloff>:/icons/document-open</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open...</string>
+    <string>&amp;Open OPL Catalog...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>

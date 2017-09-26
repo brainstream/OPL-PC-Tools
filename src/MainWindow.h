@@ -58,7 +58,7 @@ private:
     void activateGameActions(const Game * _selected_game);
 
 private:
-    QLabel * mp_label_current_ul_file;
+    QLabel * mp_label_current_root;
     GameCollection m_game_collection;
 };
 

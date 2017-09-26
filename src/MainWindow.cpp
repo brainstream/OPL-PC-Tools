@@ -102,8 +102,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mp_tree_games->header()->setStretchLastSection(false);
     mp_tree_games->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_widget_game_details->setVisible(false);
-    mp_label_current_ul_file = new QLabel(mp_statusbar);
-    mp_statusbar->addWidget(mp_label_current_ul_file);
+    mp_label_current_root = new QLabel(mp_statusbar);
+    mp_statusbar->addWidget(mp_label_current_root);
     activateFileActions(false);
     activateGameActions(nullptr);
     QSettings settings;
@@ -158,13 +158,13 @@ void MainWindow::loadUlConfig(const QDir & _directory)
         m_game_collection.reload(_directory);
         for(const Game & game : m_game_collection.games())
             mp_tree_games->addTopLevelItem(new GameTreeItem(m_game_collection, game.id));
-        mp_label_current_ul_file->setText(m_game_collection.file());
+        mp_label_current_root->setText(m_game_collection.directory());
         mp_tree_games->setCurrentItem(mp_tree_games->topLevelItem(0));
         activateFileActions(true);
     }
     catch(const Exception & exception)
     {
-        mp_label_current_ul_file->clear();
+        mp_label_current_root->clear();
         activateFileActions(false);
         QMessageBox::critical(this, QString(), exception.message());
     }

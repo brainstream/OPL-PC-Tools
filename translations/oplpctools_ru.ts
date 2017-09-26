@@ -126,117 +126,127 @@
 <context>
     <name>GameInstallDialog</name>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="17"/>
+        <location filename="../src/GameInstallDialog.ui" line="23"/>
         <source>Game Installiation</source>
         <translation>Установка игры</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="56"/>
+        <location filename="../src/GameInstallDialog.ui" line="62"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="61"/>
+        <location filename="../src/GameInstallDialog.ui" line="67"/>
         <source>Status</source>
         <translation>Статус</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="100"/>
+        <location filename="../src/GameInstallDialog.ui" line="106"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="108"/>
+        <location filename="../src/GameInstallDialog.ui" line="114"/>
         <source>Auto</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="147"/>
-        <source>Split up</source>
-        <translation>Разбивать</translation>
+        <location filename="../src/GameInstallDialog.ui" line="168"/>
+        <source>Split up ISO file into parts</source>
+        <translation>Разделять файлы ISO на части</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="154"/>
-        <source>Do not split up</source>
-        <translation>Не разбивать</translation>
+        <location filename="../src/GameInstallDialog.ui" line="175"/>
+        <source>It is the only way to run games from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up files into parts in 1GiB.</source>
+        <translation>Единственный способ запустать игры с USB накопителя. Так как OPL поддерживает только файловую систему FAT32, вы должны разбивать файлы по частям в 1 ГиБ.</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="164"/>
-        <source>Move file instead of copy</source>
-        <translation>Переместить файл, а не копировать</translation>
+        <location filename="../src/GameInstallDialog.ui" line="203"/>
+        <source>Do not split up ISO file</source>
+        <translation>Не разделять файлы ISO</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="174"/>
+        <location filename="../src/GameInstallDialog.ui" line="210"/>
+        <source>It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.</source>
+        <translation>Рекомендованный способ, если вы планируете запускать игры через локальную сеть. Файлы ISO будут помещены в каталог DVD или CS.</translation>
+    </message>
+    <message>
+        <location filename="../src/GameInstallDialog.ui" line="220"/>
+        <source>Move ISO file instead of copy</source>
+        <translation>Перенести файлы ISO вместо копирования</translation>
+    </message>
+    <message>
+        <location filename="../src/GameInstallDialog.ui" line="227"/>
         <source>Add a game ID to filename</source>
         <translation>Добавить ID игры к имени файла</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="233"/>
+        <location filename="../src/GameInstallDialog.ui" line="289"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="244"/>
+        <location filename="../src/GameInstallDialog.ui" line="300"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="269"/>
+        <location filename="../src/GameInstallDialog.ui" line="325"/>
         <source>Overall progress</source>
         <translation>Общий прогресс</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="283"/>
+        <location filename="../src/GameInstallDialog.ui" line="339"/>
         <source>Current progress</source>
         <translation>Текущий прогресс</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="301"/>
+        <location filename="../src/GameInstallDialog.ui" line="357"/>
         <source>&amp;Add ISO</source>
         <translation>&amp;Добавить ISO</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="308"/>
+        <location filename="../src/GameInstallDialog.ui" line="364"/>
         <source>Add &amp;Disc</source>
         <translation>Д&amp;обавить диск</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="315"/>
+        <location filename="../src/GameInstallDialog.ui" line="371"/>
         <source>&amp;Install</source>
         <translation>&amp;Установить</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="322"/>
+        <location filename="../src/GameInstallDialog.ui" line="378"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.ui" line="342"/>
+        <location filename="../src/GameInstallDialog.ui" line="398"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="209"/>
+        <location filename="../src/GameInstallDialog.cpp" line="212"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="307"/>
+        <location filename="../src/GameInstallDialog.cpp" line="310"/>
         <source>Done!</source>
         <translation>Готово!</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="364"/>
+        <location filename="../src/GameInstallDialog.cpp" line="367"/>
         <source>PS2 Disc Images</source>
         <translation>Образы дисков PS2</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="365"/>
+        <location filename="../src/GameInstallDialog.cpp" line="368"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="396"/>
+        <location filename="../src/GameInstallDialog.cpp" line="399"/>
         <source>Invalid ISO file</source>
         <translation>Невалидный файл ISO</translation>
     </message>
@@ -336,11 +346,6 @@
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="426"/>
-        <source>&amp;Open...</source>
-        <translation>&amp;Открыть...</translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow.ui" line="429"/>
         <source>Ctrl+O</source>
         <translation></translation>
@@ -401,6 +406,11 @@
         <location filename="../src/MainWindow.ui" line="318"/>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="426"/>
+        <source>&amp;Open OPL Catalog...</source>
+        <translation>&amp;Открыть каталог OPL...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="456"/>
@@ -641,8 +651,8 @@
     </message>
     <message>
         <location filename="../src/SettingsDialog.ui" line="23"/>
-        <source>Reopen a last file on startup</source>
-        <translation>Открывать последний файл на старте программы</translation>
+        <source>Reopen a last OPL catalog on startup</source>
+        <translation>Открывать последний OPL каталог на старте программы</translation>
     </message>
     <message>
         <location filename="../src/SettingsDialog.ui" line="30"/>
@@ -661,13 +671,13 @@
     </message>
     <message>
         <location filename="../src/SettingsDialog.ui" line="50"/>
-        <source>Do not split up</source>
-        <translation>Не разбивать</translation>
+        <source>Split up ISO files into parts</source>
+        <translation>Разделять файлы ISO на части</translation>
     </message>
     <message>
-        <location filename="../src/SettingsDialog.ui" line="60"/>
-        <source>Split up</source>
-        <translation>Разделять</translation>
+        <location filename="../src/SettingsDialog.ui" line="57"/>
+        <source>Do not split up ISO files</source>
+        <translation>Не разделять файлы ISO на части</translation>
     </message>
     <message>
         <location filename="../src/SettingsDialog.ui" line="70"/>

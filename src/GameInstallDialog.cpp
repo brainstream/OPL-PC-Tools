@@ -178,6 +178,9 @@ GameInstallDialog::GameInstallDialog(GameCollection & _collcection, QWidget * _p
     m_is_canceled(false)
 {
     setupUi(this);
+    QButtonGroup * radiobutton_group = new QButtonGroup(this);
+    radiobutton_group->addButton(mp_radiobtn_split_up);
+    radiobutton_group->addButton(mp_radiobtn_dnot_split_up);
     mp_widget_task_details->hide();
     mp_progressbar_current->setMaximum(g_progressbar_max_value);
     mp_progressbar_overall->setMaximum(g_progressbar_max_value);

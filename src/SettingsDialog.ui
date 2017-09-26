@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>557</width>
+    <width>609</width>
     <height>345</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
    <item>
     <widget class="QCheckBox" name="mp_checkbox_reopen_last_session">
      <property name="text">
-      <string>Reopen a last file on startup</string>
+      <string>Reopen a last OPL catalog on startup</string>
      </property>
     </widget>
    </item>
@@ -45,19 +45,19 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QRadioButton" name="mp_radiobtn_donot_split_up">
+       <widget class="QRadioButton" name="mp_radiobtn_split_up">
         <property name="text">
-         <string>Do not split up</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>Split up ISO files into parts</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="mp_radiobtn_split_up">
+       <widget class="QRadioButton" name="mp_radiobtn_donot_split_up">
         <property name="text">
-         <string>Split up</string>
+         <string>Do not split up ISO files</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

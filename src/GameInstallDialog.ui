@@ -172,7 +172,7 @@
                 <item>
                  <widget class="QLabel" name="label_4">
                   <property name="text">
-                   <string>It is the only way to run games from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up files into parts in 1 GiB.</string>
+                   <string>It is the only way to run games from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up large files into parts.</string>
                   </property>
                   <property name="wordWrap">
                    <bool>true</bool>
@@ -245,7 +245,7 @@
 }</string>
                </property>
                <property name="text">
-                <string notr="true">Error message Error message Error message Error message</string>
+                <string notr="true">Error message</string>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>

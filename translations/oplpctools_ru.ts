@@ -157,8 +157,8 @@
     </message>
     <message>
         <location filename="../src/GameInstallDialog.ui" line="175"/>
-        <source>It is the only way to run games from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up files into parts in 1GiB.</source>
-        <translation>Единственный способ запустать игры с USB накопителя. Так как OPL поддерживает только файловую систему FAT32, вы должны разбивать файлы по частям в 1 ГиБ.</translation>
+        <source>It is the only way to run games from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up large files into parts.</source>
+        <translation>Единственный способ запустать игры с USB накопителя. Так как OPL поддерживает только файловую систему FAT32, вы должны разбивать большие файлы на части.</translation>
     </message>
     <message>
         <location filename="../src/GameInstallDialog.ui" line="203"/>

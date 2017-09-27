@@ -37,7 +37,7 @@ private slots:
     void about();
     void aboutQt();
     void showSettings();
-    void loadUlConfig();
+    void loadGameCollection();
     void reloadUlConfig();
     void renameGame();
     void addGame();
@@ -52,7 +52,7 @@ private slots:
 
 private:
     QString getOpenPicturePath(const QString & _title);
-    void loadUlConfig(const QDir & _directory);
+    void loadGameCollection(const QDir & _directory);
     void setCurrentFilePath(const QString & _path);
     void activateFileActions(bool _activate);
     void activateGameActions(const Game * _selected_game);

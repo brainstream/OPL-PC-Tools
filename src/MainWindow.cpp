@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         QDir directory(settings.value(g_settings_key_ul_dir).toString());
         if(directory.exists())
-            loadUlConfig(directory);
+            loadGameCollection(directory);
     }
 }
 
@@ -140,19 +140,21 @@ void MainWindow::showSettings()
     dlg.exec();
 }
 
-void MainWindow::loadUlConfig()
+void MainWindow::loadGameCollection()
 {
     QSettings settings;
     QString dirpath = settings.value(g_settings_key_ul_dir).toString();
     dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root dir"), dirpath);
     if(dirpath.isEmpty()) return;
     settings.setValue(g_settings_key_ul_dir, dirpath);
-    loadUlConfig(dirpath);
+    loadGameCollection(dirpath);
 }
 
-void MainWindow::loadUlConfig(const QDir & _directory)
+void MainWindow::loadGameCollection(const QDir & _directory)
 {
     mp_tree_games->clear();
+    mp_label_cover->clear();
+    mp_label_icon->clear();
     try
     {
         m_game_collection.reload(_directory);
@@ -172,7 +174,7 @@ void MainWindow::loadUlConfig(const QDir & _directory)
 
 void MainWindow::reloadUlConfig()
 {
-    loadUlConfig(m_game_collection.directory());
+    loadGameCollection(m_game_collection.directory());
 }
 
 void MainWindow::activateFileActions(bool _activate)

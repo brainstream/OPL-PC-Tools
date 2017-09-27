@@ -530,7 +530,7 @@
    <sender>mp_action_open_file</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>loadUlConfig()</slot>
+   <slot>loadGameCollection()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -784,7 +784,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>loadUlConfig()</slot>
+  <slot>loadGameCollection()</slot>
   <slot>gameSelectionChanged()</slot>
   <slot>renameGame()</slot>
   <slot>reloadUlConfig()</slot>

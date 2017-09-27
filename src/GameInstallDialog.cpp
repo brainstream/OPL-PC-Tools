@@ -79,7 +79,8 @@ private:
 
 TaskListItem::TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget) :
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
-    m_device_ptr(_device)
+    m_device_ptr(_device),
+    m_status(GameInstallationStatus::Queued)
 {
     const Settings & settings = Settings::instance();
     m_is_splitting_up_enabled = settings.splitUpIso();

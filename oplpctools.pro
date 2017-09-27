@@ -25,11 +25,6 @@ CONFIG += c++14
 VERSION = "1.1"
 
 DEFINES += "_OPLPCTOOLS_VERSION=$$VERSION"
-win32 {
-    DEFINES +="_OPLPCTOOLS_BUIDL_YEAR=$$system(echo "%date:~10,4%")"
-} else {
-    DEFINES += "_OPLPCTOOLS_BUIDL_YEAR=$$system(date +%Y)"
-}
 
 linux {
     contains(QMAKE_HOST.arch, x86_64): {

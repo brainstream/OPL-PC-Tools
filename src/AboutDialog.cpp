@@ -15,6 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QtGlobal>
 #include "AboutDialog.h"
 
 AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
@@ -24,9 +25,10 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
     QApplication * app = static_cast<QApplication *>(QApplication::instance());
     mp_label_app_name->setText(app->applicationDisplayName());
     static const int start_development_year = 2017;
-    QString years = (start_development_year < _OPLPCTOOLS_BUIDL_YEAR) ?
-        QString("%1 - %2").arg(start_development_year).arg(_OPLPCTOOLS_BUIDL_YEAR) :
-        QString::number(_OPLPCTOOLS_BUIDL_YEAR);
+    int build_year = QString(__DATE__).right(4).toInt();
+    QString years = (start_development_year < build_year) ?
+        QString("%1 - %2").arg(start_development_year).arg(build_year) :
+        QString::number(build_year);
     mp_label_version->setText(mp_label_version->text().arg(QT_STRINGIFY(_OPLPCTOOLS_VERSION)));
     mp_label_description->setText(mp_label_description->text().arg(years));
 }

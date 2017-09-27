@@ -245,7 +245,7 @@ bool Device::Iso9660::readConfig(QFile & _file)
 
 bool Device::Iso9660::parseConfig(QFile & _file, FileRecord * _file_record)
 {
-    int32_t file_location = _file_record->extent_location * mp_descriptor->block_size;
+    quint32 file_location = _file_record->extent_location * mp_descriptor->block_size;
     if(!_file.seek(file_location))
         return false;
     QByteArray config = _file.read(_file_record->data_length);

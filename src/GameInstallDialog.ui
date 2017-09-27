@@ -158,9 +158,6 @@
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
                 <item>
                  <widget class="QRadioButton" name="mp_radiobtn_split_up">
@@ -192,9 +189,6 @@
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
                 <item>

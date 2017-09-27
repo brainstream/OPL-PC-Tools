@@ -65,27 +65,27 @@
         <translation>Невозможно переместить файл &quot;%1&quot;. Он доступен только для чтения.</translation>
     </message>
     <message>
-        <location filename="../src/DirectoryGameInstaller.cpp" line="54"/>
+        <location filename="../src/DirectoryGameInstaller.cpp" line="57"/>
         <source>Unable to open device to read: &quot;%1&quot;</source>
         <translation>Не могу открыть устройство для чтения: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/DirectoryGameInstaller.cpp" line="87"/>
+        <location filename="../src/DirectoryGameInstaller.cpp" line="90"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/DirectoryGameInstaller.cpp" line="89"/>
+        <location filename="../src/DirectoryGameInstaller.cpp" line="92"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Не могу открыть файл для записи &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/DirectoryGameInstaller.cpp" line="98"/>
+        <location filename="../src/DirectoryGameInstaller.cpp" line="101"/>
         <source>An error occurred during reading the source medium</source>
         <translation>При чтении данных возникла ошибка</translation>
     </message>
     <message>
-        <location filename="../src/DirectoryGameInstaller.cpp" line="106"/>
+        <location filename="../src/DirectoryGameInstaller.cpp" line="109"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
@@ -93,32 +93,32 @@
 <context>
     <name>GameCollection</name>
     <message>
-        <location filename="../src/GameCollection.cpp" line="264"/>
+        <location filename="../src/GameCollection.cpp" line="252"/>
         <source>Game &quot;%1&quot; is not loaded</source>
         <translation>Игра &quot;%1&quot; не загружена</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="284"/>
+        <location filename="../src/GameCollection.cpp" line="272"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Не могу найти игру &quot;%1&quot; в конфигурационном файле</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="409"/>
+        <location filename="../src/GameCollection.cpp" line="404"/>
         <source>Unable to load the cover image file &quot;%1&quot;</source>
         <translation>Не могу загрузить обложку из файла &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="413"/>
+        <location filename="../src/GameCollection.cpp" line="408"/>
         <source>Unabel to load the picture from file &quot;%1&quot;</source>
         <translation>Не могу загрузить изображение из файла &quot;%1</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="422"/>
+        <location filename="../src/GameCollection.cpp" line="417"/>
         <source>Unabel to create or open the directory &quot;%1&quot;</source>
         <translation>Не могу открыть или создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="425"/>
+        <location filename="../src/GameCollection.cpp" line="420"/>
         <source>Unabel to write image to file &quot;%1&quot;</source>
         <translation>Не могу записать изображение в файл &quot;%1&quot;</translation>
     </message>
@@ -157,7 +157,7 @@
     </message>
     <message>
         <location filename="../src/GameInstallDialog.ui" line="175"/>
-        <source>It is the only way to run large games (&gt;4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up large files into parts.</source>
+        <source>It is the only way to run large games (larger than 4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should to split up large files into parts.</source>
         <translation>Единственный способ запустать большие (более 4 ГиБ) игры с USB накопителя. Поскольку OPL поддерживает только файловую систему FAT32, вы должны разбивать большие файлы на части.</translation>
     </message>
     <message>
@@ -226,27 +226,27 @@
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="212"/>
+        <location filename="../src/GameInstallDialog.cpp" line="230"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="310"/>
+        <location filename="../src/GameInstallDialog.cpp" line="328"/>
         <source>Done!</source>
         <translation>Готово!</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="367"/>
+        <location filename="../src/GameInstallDialog.cpp" line="385"/>
         <source>PS2 Disc Images</source>
         <translation>Образы дисков PS2</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="368"/>
+        <location filename="../src/GameInstallDialog.cpp" line="386"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="399"/>
+        <location filename="../src/GameInstallDialog.cpp" line="416"/>
         <source>Invalid ISO file</source>
         <translation>Невалидный файл ISO</translation>
     </message>
@@ -478,42 +478,42 @@
         <translation>Выбор корневого каталога OPL</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="225"/>
+        <location filename="../src/MainWindow.cpp" line="227"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Выберите файл для сохранения образа ISO</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="226"/>
+        <location filename="../src/MainWindow.cpp" line="228"/>
         <source>ISO Image</source>
         <translation>Образ ISO</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="240"/>
+        <location filename="../src/MainWindow.cpp" line="242"/>
         <source>Are you sure you want to delete the game?</source>
         <translation>Вы уверены, что хотите удалить игру?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="259"/>
+        <location filename="../src/MainWindow.cpp" line="261"/>
         <source>Choose the game cover</source>
         <translation>Выберите обложку для игры</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="278"/>
+        <location filename="../src/MainWindow.cpp" line="280"/>
         <source>Image Files</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="291"/>
+        <location filename="../src/MainWindow.cpp" line="293"/>
         <source>Are you sure you want to delete the game cover?</source>
         <translation>Вы уверены, что хотите удалить обложку игры?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="308"/>
+        <location filename="../src/MainWindow.cpp" line="310"/>
         <source>Choose the game icon</source>
         <translation>Выберите иконку для игры</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="328"/>
+        <location filename="../src/MainWindow.cpp" line="330"/>
         <source>Are you sure you want to delete the game icon?</source>
         <translation>Вы уверены, что хотите удалить иконку игры?</translation>
     </message>
@@ -521,7 +521,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/GameCollection.cpp" line="368"/>
+        <location filename="../src/GameCollection.cpp" line="356"/>
         <source>File &quot;%1&quot; was not found</source>
         <translation>Файл &quot;%1&quot; не найден</translation>
     </message>
@@ -541,32 +541,32 @@
         <translation>Максимальная длина имени образа – %1 байт</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="99"/>
+        <location filename="../src/GameInstallDialog.cpp" line="100"/>
         <source>Done</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="101"/>
+        <location filename="../src/GameInstallDialog.cpp" line="102"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="103"/>
+        <location filename="../src/GameInstallDialog.cpp" line="104"/>
         <source>Installation</source>
         <translation>Установка</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="105"/>
+        <location filename="../src/GameInstallDialog.cpp" line="106"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="107"/>
+        <location filename="../src/GameInstallDialog.cpp" line="108"/>
         <source>Registration</source>
         <translation>Регистрация</translation>
     </message>
     <message>
-        <location filename="../src/GameInstallDialog.cpp" line="109"/>
+        <location filename="../src/GameInstallDialog.cpp" line="110"/>
         <source>Rolling back</source>
         <translation>Откат</translation>
     </message>
@@ -581,28 +581,28 @@
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="251"/>
+        <location filename="../src/GameCollection.cpp" line="239"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="255"/>
-        <location filename="../src/GameCollection.cpp" line="357"/>
+        <location filename="../src/GameCollection.cpp" line="243"/>
+        <location filename="../src/GameCollection.cpp" line="345"/>
         <source>An error occurred while writing data to file</source>
         <translation>Во время записи данных в файл произошла ошибка </translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="296"/>
+        <location filename="../src/GameCollection.cpp" line="284"/>
         <source>Unable to backup config file</source>
         <translation>Не могу сделать резервную копию конфигурационного файла</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="474"/>
+        <location filename="../src/GameCollection.cpp" line="469"/>
         <source>Config record is not loaded</source>
         <translation>Конфигурационная запись не была загружена</translation>
     </message>
     <message>
-        <location filename="../src/GameCollection.cpp" line="350"/>
+        <location filename="../src/GameCollection.cpp" line="338"/>
         <source>Config record was not found</source>
         <translation>Конфигурационная запись не найдена</translation>
     </message>

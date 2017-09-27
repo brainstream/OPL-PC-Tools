@@ -401,6 +401,7 @@ quint64 OpticalDrive::size() const
 Iso9660Image::Iso9660Image(const QString & _filepath) :
     Device(_filepath)
 {
+    m_is_readonly = !QFileInfo(filepath()).isWritable();
 }
 
 bool Iso9660Image::initialize(Iso9660 & _iso)
@@ -421,5 +422,5 @@ quint64 Iso9660Image::size() const
 
 bool Iso9660Image::isReadOnly() const
 {
-    return !QFileInfo(filepath()).isWritable();
+    return m_is_readonly;
 }

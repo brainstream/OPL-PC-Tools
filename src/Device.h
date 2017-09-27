@@ -106,6 +106,7 @@ protected:
 
 private:
     quint64 m_size;
+    bool m_is_readonly;
 };
 
 

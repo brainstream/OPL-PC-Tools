@@ -76,7 +76,6 @@ HEADERS  += \
     src/Game.h \
     src/MediaType.h \
     src/AboutDialog.h \
-    src/GameInstallationTask.h \
     src/ChooseOpticalDiscDialog.h \
     src/SettingsDialog.h \
     src/Settings.h \

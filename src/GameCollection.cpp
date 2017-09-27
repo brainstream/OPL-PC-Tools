@@ -18,7 +18,6 @@
 #include <algorithm>
 #include <QFile>
 #include <QTemporaryFile>
-#include <QStorageInfo>
 #include "IOException.h"
 #include "ValidationException.h"
 #include "GameCollection.h"
@@ -38,25 +37,26 @@ const QString g_cover_suffix("_COV");
 
 struct RawConfigRecord
 {
-    explicit RawConfigRecord(const Game & _game)
-    {
-        memset(this, 0, sizeof(RawConfigRecord));
-        QByteArray name_bytes = _game.title.toUtf8();
-        QByteArray image_bytes = _game.id.toLatin1();
-        memcpy(this->image, g_image_prefix.toLatin1().constData(), g_image_prefix.size());
-        memcpy(&this->image[g_image_prefix.size()], image_bytes.constData(), image_bytes.size());
-        memcpy(this->name , name_bytes.constData(), name_bytes.size());
-        this->media = _game.media_type == MediaType::DVD ? MT_DVD : MT_CD;
-        this->parts = _game.part_count;
-        this->pad[4] = 0x08; // To be like USBA
-    }
-
+    explicit RawConfigRecord(const Game & _game);
     char name[g_max_game_name_length];
     char image[g_max_game_id_length];
     quint8 parts;
     quint8 media;
     quint8 pad[15];
 };
+
+RawConfigRecord::RawConfigRecord(const Game & _game)
+{
+    memset(this, 0, sizeof(RawConfigRecord));
+    QByteArray name_bytes = _game.title.toUtf8();
+    QByteArray image_bytes = _game.id.toLatin1();
+    memcpy(this->image, g_image_prefix.toLatin1().constData(), g_image_prefix.size());
+    memcpy(&this->image[g_image_prefix.size()], image_bytes.constData(), image_bytes.size());
+    memcpy(this->name , name_bytes.constData(), name_bytes.size());
+    this->media = _game.media_type == MediaType::DVD ? MT_DVD : MT_CD;
+    this->parts = _game.part_count;
+    this->pad[4] = 0x08; // To be like USBA
+}
 
 void openFile(QFile & _file, QIODevice::OpenMode _flags)
 {
@@ -92,17 +92,6 @@ size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _r
     return ~0;
 }
 
-bool isDirecotySupportedBigFiles(const QDir & _dir)
-{
-    QString fs = QString::fromLatin1(QStorageInfo(_dir).fileSystemType());
-#ifdef _WIN32
-    return QString::compare(fs, "FAT32", Qt::CaseInsensitive) != 0;
-#else
-    return QString::compare(fs, "vfat", Qt::CaseInsensitive) != 0;
-#endif
-    return false;
-}
-
 } // namespace
 
 
@@ -124,7 +113,6 @@ const QString & GameCollection::dvdDirectory()
 void GameCollection::reload(const QDir & _directory)
 {
     m_directory = _directory.path();
-    m_is_directory_supported_big_files = isDirecotySupportedBigFiles(_directory);
     m_config_filepath = _directory.absoluteFilePath(UL_CONFIG_FILENAME);
     m_games.clear();
     loadUlConfig();
@@ -380,9 +368,16 @@ void GameCollection::renameIsoFile(Game & _game, const QString & _new_name)
     QDir dir(m_directory);
     dir.cd(_game.media_type == MediaType::CD ? g_cd_dir : g_dvd_dir);
     QString old_filename = dir.absoluteFilePath(_game.title + ".iso");
-    if(!QFileInfo::exists(old_filename))
-        old_filename = dir.absoluteFilePath(QString("%1.%2.iso").arg(_game.id).arg(_game.title));
-    QString new_filename = dir.absoluteFilePath(_new_name + ".iso");
+    QString new_filename;
+    if(QFileInfo::exists(old_filename))
+    {
+        new_filename = dir.absoluteFilePath(_new_name + ".iso");
+    }
+    else
+    {
+        old_filename = dir.absoluteFilePath(makeGameIsoFilename(_game.title, _game.id));
+        new_filename = dir.absoluteFilePath(makeGameIsoFilename(_new_name, _game.id));
+    }
     renameFile(old_filename, new_filename);
 }
 

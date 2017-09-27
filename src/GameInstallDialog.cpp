@@ -28,7 +28,6 @@
 #include "GameInstallDialog.h"
 #include "Game.h"
 #include "GameRenameDialog.h"
-#include "GameInstallationTask.h"
 #include "ChooseOpticalDiscDialog.h"
 #include "UlConfigGameInstaller.h"
 #include "DirectoryGameInstaller.h"
@@ -40,23 +39,27 @@ const int g_progressbar_max_value = 1000;
 const char * g_settings_key_iso_dir = "ISODirectory";
 const char * g_iso_ext = ".iso";
 
+enum class GameInstallationStatus
+{
+    Queued,
+    Installation,
+    Registration,
+    Done,
+    Error,
+    RollingBack
+};
+
 class TaskListItem : public QTreeWidgetItem
 {
 public:
-    enum class Option
-    {
-        SplitUpISO,
-        RenameISO,
-        MoveISO
-    };
-
-public:
-    TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidget * _widget);
-    inline GameInstallationTask & task();
+    TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget);
     QVariant data(int _column, int _role) const;
+    inline Device & device();
     void rename(const QString & _new_name);
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
+    inline GameInstallationStatus status() const;
+    inline const QString & errorMessage() const;
     inline void setMediaType(MediaType _media_type);
     inline bool isSplittingUpEnabled() const;
     inline void enabelSplittingUp(bool _enable);
@@ -66,25 +69,22 @@ public:
     inline void enabelMoving(bool _enable);
 
 private:
-    QSharedPointer<GameInstallationTask> m_task_ptr;
+    QSharedPointer<Device> m_device_ptr;
+    GameInstallationStatus m_status;
+    QString m_error_message;
     bool m_is_splitting_up_enabled;
     bool m_is_renaming_enabled;
     bool m_is_moving_enabled;
 };
 
-TaskListItem::TaskListItem(QSharedPointer<GameInstallationTask> _task, QTreeWidget * _widget) :
+TaskListItem::TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget) :
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
-    m_task_ptr(_task)
+    m_device_ptr(_device)
 {
-    Settings & settings = Settings::instance();
+    const Settings & settings = Settings::instance();
     m_is_splitting_up_enabled = settings.splitUpIso();
-    m_is_moving_enabled = settings.moveIso();
     m_is_renaming_enabled = settings.renameIso();
-}
-
-GameInstallationTask & TaskListItem::task()
-{
-    return *m_task_ptr;
+    m_is_moving_enabled = settings.moveIso() && !_device->isReadOnly();
 }
 
 QVariant TaskListItem::data(int _column, int _role) const
@@ -92,8 +92,8 @@ QVariant TaskListItem::data(int _column, int _role) const
     if(_role != Qt::DisplayRole)
         return QVariant();
     if(_column == 0)
-        return m_task_ptr->device().title();
-    switch(m_task_ptr->status())
+        return m_device_ptr->title();
+    switch(m_status)
     {
     case GameInstallationStatus::Done:
         return QObject::tr("Done");
@@ -112,28 +112,44 @@ QVariant TaskListItem::data(int _column, int _role) const
     }
 }
 
+Device & TaskListItem::device()
+{
+    return *m_device_ptr;
+}
+
 void TaskListItem::rename(const QString & _new_name)
 {
-    m_task_ptr->device().setTitle(_new_name);
+    m_device_ptr->setTitle(_new_name);
     emitDataChanged();
 }
 
 void TaskListItem::setStatus(GameInstallationStatus _status)
 {
-    m_task_ptr->setStatus(_status);
-    m_task_ptr->setErrorMessage(QString());
+    m_status = _status;
+    m_error_message = QString();
     emitDataChanged();
 }
 
 void TaskListItem::setError(const QString & _message)
 {
-    m_task_ptr->setErrorStatus(_message);
+    m_status = GameInstallationStatus::Error;
+    m_error_message = _message;
     emitDataChanged();
+}
+
+GameInstallationStatus TaskListItem::status() const
+{
+    return m_status;
+}
+
+const QString & TaskListItem::errorMessage() const
+{
+    return m_error_message;
 }
 
 void TaskListItem::setMediaType(MediaType _media_type)
 {
-    m_task_ptr->device().setMediaType(_media_type);
+    m_device_ptr->setMediaType(_media_type);
 }
 
 bool TaskListItem::isSplittingUpEnabled() const
@@ -203,7 +219,8 @@ void GameInstallDialog::reject()
         mp_work_thread->requestInterruption();
         for(int i = mp_tree_tasks->topLevelItemCount() - 1; i > m_processing_task_index; --i)
         {
-            setTaskError(canceledErrorMessage(), i);        }
+            setTaskError(canceledErrorMessage(), i);
+        }
     }
 }
 
@@ -317,7 +334,8 @@ bool GameInstallDialog::startTask()
     if(m_is_canceled)
         return false;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index));
-    if(!item) return false;
+    if(!item)
+        return false;
     switch(mp_combo_type->currentIndex())
     {
     case 1:
@@ -330,15 +348,14 @@ bool GameInstallDialog::startTask()
         item->setMediaType(MediaType::Unknown);
         break;
     }
-    GameInstallationTask & task = item->task();
     setCurrentProgressBarUnknownStatus(false);
     if(item->isSplittingUpEnabled())
     {
-        mp_installer = new UlConfigGameInstaller(task.device(), mr_collection, this);
+        mp_installer = new UlConfigGameInstaller(item->device(), mr_collection, this);
     }
     else
     {
-        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(task.device(), mr_collection, this);
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), mr_collection, this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;
@@ -388,8 +405,7 @@ void GameInstallDialog::addIso(const QString & _iso_path)
     if(device->init())
     {
         device->setTitle(truncateGameName(iso_info.completeBaseName()));
-        QSharedPointer<GameInstallationTask> task(new GameInstallationTask(device));
-        TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
+        TaskListItem * item = new TaskListItem(device, mp_tree_tasks);
         mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
         mp_tree_tasks->setCurrentItem(item);
         mp_btn_install->setDisabled(false);
@@ -405,8 +421,7 @@ QTreeWidgetItem * GameInstallDialog::findTaskInList(const QString & _device_file
     for(int i = mp_tree_tasks->topLevelItemCount() - 1; i >= 0; --i)
     {
         TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(i));
-        const GameInstallationTask * task = dynamic_cast<const GameInstallationTask *>(&item->task());
-        if(task != nullptr && task->device().filepath() == _device_filepath)
+        if(item != nullptr && item->device().filepath() == _device_filepath)
             return item;
     }
     return nullptr;
@@ -426,8 +441,7 @@ void GameInstallDialog::addDisc()
             mp_tree_tasks->setCurrentItem(existingTask);
             return;
         }
-        QSharedPointer<GameInstallationTask> task(new GameInstallationTask(device));
-        TaskListItem * item = new TaskListItem(task, mp_tree_tasks);
+        TaskListItem * item = new TaskListItem(device, mp_tree_tasks);
         mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
         mp_tree_tasks->setCurrentItem(item);
         mp_btn_install->setDisabled(false);
@@ -450,7 +464,7 @@ void GameInstallDialog::splitUpOptionChanged()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item) return;
     bool split_up = mp_radiobtn_split_up->isChecked();
-    mp_checkbox_move->setDisabled(split_up || item->task().device().isReadOnly());
+    mp_checkbox_move->setDisabled(split_up || item->device().isReadOnly());
     mp_checkbox_rename->setDisabled(split_up);
     item->enabelSplittingUp(split_up);
 }
@@ -478,27 +492,18 @@ void GameInstallDialog::taskSelectionChanged()
         return;
     }
     mp_widget_task_details->show();
-    const GameInstallationTask & task = item->task();
-    if(task.status() == GameInstallationStatus::Error)
-        mp_label_error_message->setText(task.errorMessage());
+    if(item->status() == GameInstallationStatus::Error)
+        mp_label_error_message->setText(item->errorMessage());
     else
         mp_label_error_message->clear();
-    mp_label_title->setText(task.device().title());
-    mp_combo_type->setCurrentIndex(static_cast<int>(task.device().mediaType()));
+    mp_label_title->setText(item->device().title());
+    mp_combo_type->setCurrentIndex(static_cast<int>(item->device().mediaType()));
     bool split_up = item->isSplittingUpEnabled();
     mp_radiobtn_split_up->setChecked(split_up);
-    mp_radiobtn_dnot_split_up->setChecked(!split_up);
-    if(task.device().isReadOnly())
-    {
-        mp_checkbox_move->setDisabled(true);
-        mp_checkbox_move->setChecked(false);
-    }
-    else
-    {
-        mp_checkbox_move->setDisabled(false);
-        mp_checkbox_move->setChecked(!split_up && item->isMovingEnabled());
-    }
-    mp_checkbox_rename->setChecked(!split_up && item->isRenamingEnabled());
+    mp_checkbox_move->setChecked(item->isMovingEnabled());
+    mp_checkbox_rename->setChecked(item->isRenamingEnabled());
+    mp_checkbox_move->setDisabled(split_up || item->device().isReadOnly());
+    mp_checkbox_rename->setDisabled(split_up);
 }
 
 void GameInstallDialog::mediaTypeChanged(int _index)
@@ -512,9 +517,9 @@ void GameInstallDialog::renameGame()
 {
     if(mp_work_thread) return;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
-    if(!item || item->task().status() != GameInstallationStatus::Queued)
+    if(!item || item->status() != GameInstallationStatus::Queued)
         return;
-    GameRenameDialog dlg(item->task().device().title(),
+    GameRenameDialog dlg(item->device().title(),
             item->isSplittingUpEnabled() ? GameInstallationType::UlConfig : GameInstallationType::Directory, this);
     if(dlg.exec() == QDialog::Accepted)
     {
@@ -527,7 +532,7 @@ void GameInstallDialog::removeGame()
 {
     if(mp_work_thread) return;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
-    if(item->task().status() != GameInstallationStatus::Queued) return;
+    if(item->status() != GameInstallationStatus::Queued) return;
     delete item;
     if(mp_tree_tasks->topLevelItemCount() == 0)
     {

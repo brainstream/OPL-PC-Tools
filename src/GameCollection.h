@@ -64,7 +64,6 @@ private:
 private:
     QString m_directory;
     QString m_config_filepath;
-    bool m_is_directory_supported_big_files;
     QLinkedList<Game> m_games;
 };
 

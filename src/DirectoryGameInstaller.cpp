@@ -33,12 +33,15 @@ bool DirectoryGameInstaller::performInstallation()
     if(m_move_file && mr_device.isReadOnly())
         throw IOException(tr("It is impossible to move file \"%1\". It is read only.").arg(mr_device.filepath()));
     QDir dest_dir(mr_collection.directory());
+    QString dest_subdir = mp_installed_game->media_type == MediaType::CD ? GameCollection::cdDirectory() : GameCollection::dvdDirectory();
+    if(!dest_dir.cd(dest_subdir))
+        dest_dir.mkdir(dest_subdir);
+    dest_dir.cd(dest_subdir);
     mp_installed_game->id = mr_device.gameId();
     mp_installed_game->media_type = deviceMediaType();
     mp_installed_game->title = mr_device.title();
     mp_installed_game->installation_type = GameInstallationType::Directory;
     mp_installed_game->part_count = 1;
-    dest_dir.cd(mp_installed_game->media_type == MediaType::CD ? GameCollection::cdDirectory() : GameCollection::dvdDirectory());
     QString dest_filepath = m_rename_file ?
         dest_dir.absoluteFilePath(makeGameIsoFilename(mp_installed_game->title, mp_installed_game->id)) :
         dest_dir.absoluteFilePath(mp_installed_game->title + ".iso");

@@ -32,6 +32,8 @@
 #include "UlConfigGameInstaller.h"
 #include "DirectoryGameInstaller.h"
 #include "Settings.h"
+#include "OpticalDriveSource.h"
+#include "Iso9660ImageSource.h"
 
 namespace {
 
@@ -402,7 +404,7 @@ void GameInstallDialog::addIso(const QString & _iso_path)
         mp_tree_tasks->setCurrentItem(existingTask);
         return;
     }
-    QSharedPointer<Device> device(new Iso9660Image(_iso_path));
+    QSharedPointer<Device> device(new Device(QSharedPointer<DeviceSource>(new Iso9660ImageSource(_iso_path))));
     if(device->init())
     {
         device->setTitle(truncateGameName(iso_info.completeBaseName()));

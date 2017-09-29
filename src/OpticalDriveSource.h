@@ -15,87 +15,27 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DEVICE__
-#define __OPLPCTOOLS_DEVICE__
+#ifndef __OPLPCTOOLS_OPTICALDRIVESOURCE__
+#define __OPLPCTOOLS_OPTICALDRIVESOURCE__
 
-#include <QString>
-#include <QList>
-#include <QSharedPointer>
-#include "MediaType.h"
+#include <QFile>
 #include "DeviceSource.h"
 
-struct DeviceName
+class OpticalDriveSource : public DeviceSource
 {
-    QString name;
-    QString filename;
-};
-
-QList<DeviceName> loadDriveList();
-
-class Device final
-{   
-    Q_DISABLE_COPY(Device)
-
 public:
-    explicit Device(QSharedPointer<DeviceSource> _source);
-    const QString filepath() const;
-    bool init();
-    bool isInitialized() const;
-    inline QString title() const;
-    inline void setTitle(const QString _title);
-    inline quint64 size() const;
-    inline MediaType mediaType() const;
-    inline void setMediaType(MediaType _media_type);
-    inline const QString gameId() const;
-    bool open();
-    void close();
-    bool isOpen() const;
-    inline bool isReadOnly() const;
-    bool seek(quint64 _offset);
-    qint64 read(QByteArray & _buffer);
+    explicit OpticalDriveSource(const QString & _filepath);
+    ~OpticalDriveSource() override;
+    QString filepath() const override;
+    bool isReadOnly() const override;
+    bool open() override;
+    bool isOpen() const override;
+    void close() override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
 
 private:
-    bool m_is_initialized;
-    QSharedPointer<DeviceSource> m_source_ptr;
-    MediaType m_media_type;
-    QString m_id;
-    QString m_title;
-    quint64 m_size;
+    QFile * mp_file;
 };
 
-QString Device::title() const
-{
-    return m_title;
-}
-
-void Device::setTitle(const QString _title)
-{
-    m_title = _title;
-}
-
-quint64 Device::size() const
-{
-    return m_size;
-}
-
-const QString Device::gameId() const
-{
-    return m_id;
-}
-
-MediaType Device::mediaType() const
-{
-    return m_media_type;
-}
-
-void Device::setMediaType(MediaType _media_type)
-{
-    m_media_type = _media_type;
-}
-
-bool Device::isReadOnly() const
-{
-    return m_source_ptr->isReadOnly();
-}
-
-#endif // __OPLPCTOOLS_DEVICE__
+#endif // __OPLPCTOOLS_OPTICALDRIVESOURCE__

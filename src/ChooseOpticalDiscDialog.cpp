@@ -19,6 +19,7 @@
 #include <QThread>
 #include "Exception.h"
 #include "ChooseOpticalDiscDialog.h"
+#include "OpticalDriveSource.h"
 
 namespace {
 
@@ -94,7 +95,7 @@ void InitializationThread::run()
         for(const DeviceName & device_name : devices)
         {
             DeviceDisplayData display_data;
-            display_data.device = QSharedPointer<Device>(new OpticalDrive(device_name.filename));
+            display_data.device = QSharedPointer<Device>(new Device(QSharedPointer<DeviceSource>(new OpticalDriveSource(device_name.filename))));
             display_data.name = device_name.name;
             if(display_data.device->init())
                 m_devices.append(display_data);

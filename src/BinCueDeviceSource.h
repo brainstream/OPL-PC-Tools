@@ -24,7 +24,7 @@
 class BinCueDeviceSource : public DeviceSource
 {
 public:
-    explicit BinCueDeviceSource(const QString & _cue_filepath);
+    explicit BinCueDeviceSource(const QString & _bin_filepath);
     QString filepath() const override;
     bool isReadOnly() const override;
     bool open() override;
@@ -34,10 +34,7 @@ public:
     qint64 read(QByteArray & _buffer) override;
 
 private:
-    QString m_cue_filepath;
     QFile m_bin_file;
-    quint16 m_sector_size;
-    quint16 m_sector_offset;
 };
 
 #endif // __OPLPCTOOLS_BINCUEDEVICESOURCE__

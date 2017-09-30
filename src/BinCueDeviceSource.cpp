@@ -19,17 +19,19 @@
 #include <QDir>
 #include "BinCueDeviceSource.h"
 
-#define BIN_HEADER_SIZE 24
-#define ISO_SECTOR_SIZE 2048
+#define BIN_HEADER_SIZE    24
+#define BIN_SECTOR_SIZE    2352
+#define BIN_SECTOR_OFFSET  0
+#define ISO_SECTOR_SIZE    2048
 
-BinCueDeviceSource::BinCueDeviceSource(const QString & _cue_filepath) :
-    m_cue_filepath(_cue_filepath)
+BinCueDeviceSource::BinCueDeviceSource(const QString & _bin_filepath) :
+    m_bin_file(_bin_filepath)
 {
 }
 
 QString BinCueDeviceSource::filepath() const
 {
-    return m_cue_filepath;
+    return m_bin_file.fileName();
 }
 
 bool BinCueDeviceSource::isReadOnly() const
@@ -39,18 +41,6 @@ bool BinCueDeviceSource::isReadOnly() const
 
 bool BinCueDeviceSource::open()
 {
-    // TODO: find the .bin file!
-
-    // TODO: BEGIN_TEST__TEST__TEST__TEST__TEST__TEST__TEST__TEST__TEST__TEST_
-
-    QFileInfo cue_info(m_cue_filepath);
-    QString bin_filepath = cue_info.dir().absoluteFilePath(cue_info.baseName() + ".bin");
-    m_bin_file.setFileName(bin_filepath);
-    m_sector_offset = 0;
-    m_sector_size = 2352;
-
-    // TODO: END_TEST__TEST__TEST__TEST__TEST__TEST__TEST__TEST__TEST__TEST_
-
     return m_bin_file.open(QIODevice::ReadOnly);
 }
 
@@ -68,7 +58,7 @@ bool BinCueDeviceSource::seek(qint64 _offset)
 {
     quint32 sector = _offset / ISO_SECTOR_SIZE;
     quint32 bytes = _offset % ISO_SECTOR_SIZE;
-    qint64 real_offset = (m_sector_size * sector) + bytes + m_sector_offset + BIN_HEADER_SIZE;
+    qint64 real_offset = (BIN_SECTOR_SIZE * sector) + bytes + BIN_SECTOR_OFFSET + BIN_HEADER_SIZE;
     return m_bin_file.seek(real_offset);
 }
 
@@ -78,8 +68,8 @@ qint64 BinCueDeviceSource::read(QByteArray & _buffer)
     for(qint64 need_to_read_bytes = _buffer.size(); read_bytes != need_to_read_bytes;)
     {
         quint64 bin_pos = m_bin_file.pos();
-        quint32 sector = (bin_pos - BIN_HEADER_SIZE) / m_sector_size;
-        quint64 iso_sector_begin = (m_sector_size * sector) + m_sector_offset + BIN_HEADER_SIZE;
+        quint32 sector = (bin_pos - BIN_HEADER_SIZE) / BIN_SECTOR_SIZE;
+        quint64 iso_sector_begin = (BIN_SECTOR_SIZE * sector) + BIN_SECTOR_OFFSET + BIN_HEADER_SIZE;
         quint64 iso_sector_end = iso_sector_begin + ISO_SECTOR_SIZE;
         quint32 available_to_read = iso_sector_end - bin_pos;
         quint32 to_read = need_to_read_bytes < available_to_read ? need_to_read_bytes : available_to_read;
@@ -92,7 +82,7 @@ qint64 BinCueDeviceSource::read(QByteArray & _buffer)
             if(current_read < to_read)
                 return read_bytes;
         }
-        m_bin_file.seek((sector + 1) * m_sector_size + BIN_HEADER_SIZE + m_sector_offset);
+        m_bin_file.seek((sector + 1) * BIN_SECTOR_SIZE + BIN_HEADER_SIZE + BIN_SECTOR_OFFSET);
     }
     return read_bytes;
 }

@@ -41,7 +41,7 @@ namespace {
 const int g_progressbar_max_value = 1000;
 const char * g_settings_key_iso_dir = "ISODirectory";
 const char * g_iso_ext = ".iso";
-const char * g_cue_ext = ".cue";
+const char * g_bin_ext = ".bin";
 
 enum class GameInstallationStatus
 {
@@ -245,7 +245,7 @@ void GameInstallDialog::dragEnterEvent(QDragEnterEvent * _event)
     for(const QUrl & url : _event->mimeData()->urls())
     {
         QString path = url.path();
-        if(path.endsWith(g_iso_ext) || path.endsWith(g_cue_ext))
+        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext))
         {
             _event->accept();
             return;
@@ -259,7 +259,7 @@ void GameInstallDialog::dropEvent(QDropEvent * _event)
     for(const QUrl & url : _event->mimeData()->urls())
     {
         QString path = url.path();
-        if(path.endsWith(g_iso_ext) || path.endsWith(g_cue_ext))
+        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext))
             addIso(url.path());
     }
 }
@@ -388,7 +388,7 @@ void GameInstallDialog::addIso() // TODO: rename to addDiscImage
 {
     QSettings settings;
     QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
-    QString filter = tr("All Supported Images (*%1 *%2);;ISO Images (*%1);;CUE Sheets (*%2)").arg(g_iso_ext).arg(g_cue_ext);
+    QString filter = tr("All Supported Images (*%1 *%2);;ISO Images (*%1);;Bin Files(*%2)").arg(g_iso_ext).arg(g_bin_ext);
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(files.isEmpty()) return;
     settings.setValue(g_settings_key_iso_dir, QFileInfo(files[0]).absolutePath());

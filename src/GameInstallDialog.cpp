@@ -512,6 +512,7 @@ void GameInstallDialog::taskSelectionChanged()
     mp_combo_type->setCurrentIndex(static_cast<int>(item->device().mediaType()));
     bool split_up = item->isSplittingUpEnabled();
     mp_radiobtn_split_up->setChecked(split_up);
+    mp_radiobtn_dnot_split_up->setChecked(!split_up);
     mp_checkbox_move->setChecked(item->isMovingEnabled());
     mp_checkbox_rename->setChecked(item->isRenamingEnabled());
     mp_checkbox_move->setDisabled(split_up || item->device().isReadOnly());

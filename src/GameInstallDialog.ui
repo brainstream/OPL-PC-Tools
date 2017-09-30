@@ -346,9 +346,9 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="mp_btn_add_iso">
+      <widget class="QPushButton" name="mp_btn_add_image">
        <property name="text">
-        <string>&amp;Add ISO</string>
+        <string>&amp;Add Image</string>
        </property>
       </widget>
      </item>
@@ -399,7 +399,7 @@
  </widget>
  <tabstops>
   <tabstop>mp_tree_tasks</tabstop>
-  <tabstop>mp_btn_add_iso</tabstop>
+  <tabstop>mp_btn_add_image</tabstop>
   <tabstop>mp_btn_add_disc</tabstop>
   <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_btn_cancel</tabstop>
@@ -429,10 +429,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>mp_btn_add_iso</sender>
+   <sender>mp_btn_add_image</sender>
    <signal>clicked()</signal>
    <receiver>GameInstallDialog</receiver>
-   <slot>addIso()</slot>
+   <slot>addDiscImage()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>59</x>
@@ -622,7 +622,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>addIso()</slot>
+  <slot>addDiscImage()</slot>
   <slot>install()</slot>
   <slot>renameGame()</slot>
   <slot>removeGame()</slot>

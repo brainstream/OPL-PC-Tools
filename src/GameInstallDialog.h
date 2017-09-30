@@ -40,7 +40,7 @@ protected:
     void dropEvent(QDropEvent * _event) override;
 
 private slots:
-    void addIso();
+    void addDiscImage();
     void addDisc();
     void splitUpOptionChanged();
     void renameOptionChanged();
@@ -62,7 +62,7 @@ signals:
     void gameInstalled(const QString & _id);
 
 private:
-    void addIso(const QString & _file_path);
+    void addDiscImage(const QString & _file_path);
     void addDevice(QSharedPointer<Device> & _device);
     QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
     QString truncateGameName(const QString & _name) const;

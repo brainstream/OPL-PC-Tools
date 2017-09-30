@@ -260,7 +260,7 @@ void GameInstallDialog::dropEvent(QDropEvent * _event)
     {
         QString path = url.path();
         if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext))
-            addIso(url.path());
+            addDiscImage(url.path());
     }
 }
 
@@ -384,7 +384,7 @@ bool GameInstallDialog::startTask()
     return true;
 }
 
-void GameInstallDialog::addIso() // TODO: rename to addDiscImage
+void GameInstallDialog::addDiscImage()
 {
     QSettings settings;
     QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
@@ -394,15 +394,15 @@ void GameInstallDialog::addIso() // TODO: rename to addDiscImage
     settings.setValue(g_settings_key_iso_dir, QFileInfo(files[0]).absolutePath());
     for(const QString & file : files)
     {
-        addIso(file);
+        addDiscImage(file);
     }
 }
 
-void GameInstallDialog::addIso(const QString & _file_path) // TODO: rename to addDiscImage
+void GameInstallDialog::addDiscImage(const QString & _file_path)
 {
     QFileInfo file_info(_file_path);
-    QString absolute_iso_path = file_info.absoluteFilePath();
-    QTreeWidgetItem * existingTask = findTaskInList(absolute_iso_path); // TODO: need to be rewritten :'(
+    QString absolute_image_path = file_info.absoluteFilePath();
+    QTreeWidgetItem * existingTask = findTaskInList(absolute_image_path);
     if(existingTask)
     {
         mp_tree_tasks->setCurrentItem(existingTask);
@@ -424,7 +424,7 @@ void GameInstallDialog::addIso(const QString & _file_path) // TODO: rename to ad
     }
     else
     {
-        QMessageBox::critical(this, QString(), tr("Invalid ISO file"));
+        QMessageBox::critical(this, QString(), tr("Invalid file format"));
     }
 }
 
@@ -560,7 +560,7 @@ void GameInstallDialog::installerError(QString _message)
 
 void GameInstallDialog::install()
 {
-    mp_btn_add_iso->setDisabled(true);
+    mp_btn_add_image->setDisabled(true);
     mp_btn_add_disc->setDisabled(true);
     mp_btn_install->setDisabled(true);
     mp_btn_cancel->setDisabled(false);

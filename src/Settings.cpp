@@ -31,7 +31,7 @@ Settings::Settings()
     m_confirm_pixmap_deletion = loadBoolean(s_key_confirm_pixmap_deletion, true);
     m_split_up_iso = loadBoolean(s_key_split_up_iso, true);
     m_move_iso = loadBoolean(s_key_move_iso, false);
-    m_rename_iso = loadBoolean(s_key_rename_iso, false);
+    m_rename_iso = loadBoolean(s_key_rename_iso, true);
 }
 
 bool Settings::loadBoolean(const QString & _key, bool _default_value)

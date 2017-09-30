@@ -18,7 +18,7 @@
 #ifdef _WIN32
 #   include <windows.h>
 #endif
-#include "OpticalDriveSource.h"
+#include "OpticalDriveDeviceSource.h"
 
 namespace {
 
@@ -95,47 +95,47 @@ using BinaryFile = QFile;
 } // namespace
 
 
-OpticalDriveSource::OpticalDriveSource(const QString & _filepath) :
+OpticalDriveDeviceSource::OpticalDriveDeviceSource(const QString & _filepath) :
     mp_file(new BinaryFile(_filepath))
 {
 }
 
-OpticalDriveSource::~OpticalDriveSource()
+OpticalDriveDeviceSource::~OpticalDriveDeviceSource()
 {
     delete mp_file;
 }
 
-QString OpticalDriveSource::filepath() const
+QString OpticalDriveDeviceSource::filepath() const
 {
     return mp_file->fileName();
 }
 
-bool OpticalDriveSource::isReadOnly() const
+bool OpticalDriveDeviceSource::isReadOnly() const
 {
     return true;
 }
 
-bool OpticalDriveSource::open()
+bool OpticalDriveDeviceSource::open()
 {
     return mp_file->open(QIODevice::ReadOnly);
 }
 
-bool OpticalDriveSource::isOpen() const
+bool OpticalDriveDeviceSource::isOpen() const
 {
     return mp_file->isOpen();
 }
 
-void OpticalDriveSource::close()
+void OpticalDriveDeviceSource::close()
 {
     mp_file->close();
 }
 
-bool OpticalDriveSource::seek(qint64 _offset)
+bool OpticalDriveDeviceSource::seek(qint64 _offset)
 {
     return mp_file->seek(_offset);
 }
 
-qint64 OpticalDriveSource::read(QByteArray & _buffer)
+qint64 OpticalDriveDeviceSource::read(QByteArray & _buffer)
 {
     qint64 result = mp_file->read(_buffer.data(), _buffer.size());
 #ifdef _WIN32

@@ -15,17 +15,17 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISO9660IMAGESOURCE__
-#define __OPLPCTOOLS_ISO9660IMAGESOURCE__
+#ifndef __OPLPCTOOLS_ISO9660DEVICESOURCE__
+#define __OPLPCTOOLS_ISO9660DEVICESOURCE__
 
 #include <QFileInfo>
-#include "OpticalDriveSource.h"
+#include "OpticalDriveDeviceSource.h"
 
-class Iso9660ImageSource : public OpticalDriveSource
+class Iso9660DeviceSource : public OpticalDriveDeviceSource
 {
 public:
-    explicit Iso9660ImageSource(const QString & _filepath) :
-        OpticalDriveSource(_filepath)
+    explicit Iso9660DeviceSource(const QString & _filepath) :
+        OpticalDriveDeviceSource(_filepath)
     {
         m_is_readonly = !QFileInfo(_filepath).isWritable();
     }
@@ -39,4 +39,4 @@ private:
     bool m_is_readonly;
 };
 
-#endif // __OPLPCTOOLS_ISO9660IMAGESOURCE__
+#endif // __OPLPCTOOLS_ISO9660DEVICESOURCE__

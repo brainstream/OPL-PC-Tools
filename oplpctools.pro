@@ -59,7 +59,7 @@ SOURCES +=\
     src/UlConfigGameInstaller.cpp \
     src/DirectoryGameInstaller.cpp \
     src/BinCueDeviceSource.cpp \
-    src/OpticalDriveSource.cpp
+    src/OpticalDriveDeviceSource.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -83,10 +83,10 @@ HEADERS  += \
     src/GameInstallationType.h \
     src/UlConfigGameInstaller.h \
     src/DirectoryGameInstaller.h \
-    src/Iso9660ImageSource.h \
-    src/OpticalDriveSource.h \
     src/DeviceSource.h \
-    src/BinCueDeviceSource.h
+    src/BinCueDeviceSource.h \
+    src/OpticalDriveDeviceSource.h \
+    src/Iso9660DeviceSource.h
 
 FORMS += \
     src/MainWindow.ui \

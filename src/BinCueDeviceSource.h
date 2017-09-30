@@ -18,17 +18,26 @@
 #ifndef __OPLPCTOOLS_BINCUEDEVICESOURCE__
 #define __OPLPCTOOLS_BINCUEDEVICESOURCE__
 
+#include <QFile>
 #include "DeviceSource.h"
 
 class BinCueDeviceSource : public DeviceSource
 {
 public:
+    explicit BinCueDeviceSource(const QString & _cue_filepath);
     QString filepath() const override;
+    bool isReadOnly() const override;
     bool open() override;
     bool isOpen() const override;
     void close() override;
     bool seek(qint64 _offset) override;
     qint64 read(QByteArray & _buffer) override;
+
+private:
+    QString m_cue_filepath;
+    QFile m_bin_file;
+    quint16 m_sector_size;
+    quint16 m_sector_offset;
 };
 
 #endif // __OPLPCTOOLS_BINCUEDEVICESOURCE__

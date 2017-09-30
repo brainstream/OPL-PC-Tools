@@ -22,7 +22,7 @@
 #include "ValidationException.h"
 #include "GameCollection.h"
 #include "Device.h"
-#include "Iso9660ImageSource.h"
+#include "Iso9660DeviceSource.h"
 
 #define MT_CD  0x12
 #define MT_DVD 0x14
@@ -171,7 +171,7 @@ void GameCollection::loadDir(MediaType _media_type, const QString & _dir)
         return;
     for(const QString & iso : dir.entryList({ "*.iso" }))
     {
-        Device image(QSharedPointer<DeviceSource>(new Iso9660ImageSource(dir.absoluteFilePath(iso))));
+        Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(dir.absoluteFilePath(iso))));
         if(!image.init())
             break;
         Game game;

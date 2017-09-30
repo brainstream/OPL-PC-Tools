@@ -15,17 +15,17 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_OPTICALDRIVESOURCE__
-#define __OPLPCTOOLS_OPTICALDRIVESOURCE__
+#ifndef __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__
+#define __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__
 
 #include <QFile>
 #include "DeviceSource.h"
 
-class OpticalDriveSource : public DeviceSource
+class OpticalDriveDeviceSource : public DeviceSource
 {
 public:
-    explicit OpticalDriveSource(const QString & _filepath);
-    ~OpticalDriveSource() override;
+    explicit OpticalDriveDeviceSource(const QString & _filepath);
+    ~OpticalDriveDeviceSource() override;
     QString filepath() const override;
     bool isReadOnly() const override;
     bool open() override;
@@ -38,4 +38,4 @@ private:
     QFile * mp_file;
 };
 
-#endif // __OPLPCTOOLS_OPTICALDRIVESOURCE__
+#endif // __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__

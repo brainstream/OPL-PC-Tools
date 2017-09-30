@@ -32,14 +32,16 @@
 #include "UlConfigGameInstaller.h"
 #include "DirectoryGameInstaller.h"
 #include "Settings.h"
-#include "OpticalDriveSource.h"
-#include "Iso9660ImageSource.h"
+#include "OpticalDriveDeviceSource.h"
+#include "Iso9660DeviceSource.h"
+#include "BinCueDeviceSource.h"
 
 namespace {
 
 const int g_progressbar_max_value = 1000;
 const char * g_settings_key_iso_dir = "ISODirectory";
 const char * g_iso_ext = ".iso";
+const char * g_cue_ext = ".cue";
 
 enum class GameInstallationStatus
 {
@@ -242,7 +244,8 @@ void GameInstallDialog::dragEnterEvent(QDragEnterEvent * _event)
 {
     for(const QUrl & url : _event->mimeData()->urls())
     {
-        if(url.path().endsWith(g_iso_ext))
+        QString path = url.path();
+        if(path.endsWith(g_iso_ext) || path.endsWith(g_cue_ext))
         {
             _event->accept();
             return;
@@ -255,7 +258,8 @@ void GameInstallDialog::dropEvent(QDropEvent * _event)
 {
     for(const QUrl & url : _event->mimeData()->urls())
     {
-        if(url.path().endsWith(g_iso_ext))
+        QString path = url.path();
+        if(path.endsWith(g_iso_ext) || path.endsWith(g_cue_ext))
             addIso(url.path());
     }
 }
@@ -380,34 +384,39 @@ bool GameInstallDialog::startTask()
     return true;
 }
 
-void GameInstallDialog::addIso()
+void GameInstallDialog::addIso() // TODO: rename to addDiscImage
 {
     QSettings settings;
     QString iso_dir = settings.value(g_settings_key_iso_dir).toString();
-    QString filter = tr("PS2 Disc Images") + QString(" (*%1)").arg(g_iso_ext);
-    QStringList iso_files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
-    if(iso_files.isEmpty()) return;
-    settings.setValue(g_settings_key_iso_dir, QFileInfo(iso_files[0]).absolutePath());
-    for(const QString & file : iso_files)
+    QString filter = tr("All Supported Images (*%1 *%2);;ISO Images (*%1);;CUE Sheets (*%2)").arg(g_iso_ext).arg(g_cue_ext);
+    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
+    if(files.isEmpty()) return;
+    settings.setValue(g_settings_key_iso_dir, QFileInfo(files[0]).absolutePath());
+    for(const QString & file : files)
     {
         addIso(file);
     }
 }
 
-void GameInstallDialog::addIso(const QString & _iso_path)
+void GameInstallDialog::addIso(const QString & _file_path) // TODO: rename to addDiscImage
 {
-    QFileInfo iso_info(_iso_path);
-    QString absolute_iso_path = iso_info.absoluteFilePath();
-    QTreeWidgetItem * existingTask = findTaskInList(absolute_iso_path);
+    QFileInfo file_info(_file_path);
+    QString absolute_iso_path = file_info.absoluteFilePath();
+    QTreeWidgetItem * existingTask = findTaskInList(absolute_iso_path); // TODO: need to be rewritten :'(
     if(existingTask)
     {
         mp_tree_tasks->setCurrentItem(existingTask);
         return;
     }
-    QSharedPointer<Device> device(new Device(QSharedPointer<DeviceSource>(new Iso9660ImageSource(_iso_path))));
+    DeviceSource * source = nullptr;
+    if(_file_path.endsWith(g_iso_ext))
+        source = new Iso9660DeviceSource(_file_path);
+    else
+        source = new BinCueDeviceSource(_file_path);
+    QSharedPointer<Device> device(new Device(QSharedPointer<DeviceSource>(source)));
     if(device->init())
     {
-        device->setTitle(truncateGameName(iso_info.completeBaseName()));
+        device->setTitle(truncateGameName(file_info.completeBaseName()));
         TaskListItem * item = new TaskListItem(device, mp_tree_tasks);
         mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
         mp_tree_tasks->setCurrentItem(item);

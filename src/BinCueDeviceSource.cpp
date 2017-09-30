@@ -65,14 +65,14 @@ bool BinCueDeviceSource::seek(qint64 _offset)
 qint64 BinCueDeviceSource::read(QByteArray & _buffer)
 {
     qint64 read_bytes = 0;
-    for(qint64 need_to_read_bytes = _buffer.size(); read_bytes != need_to_read_bytes;)
+    for(qint64 remains_to_read = _buffer.size(); remains_to_read > 0; remains_to_read = _buffer.size() - read_bytes)
     {
         quint64 bin_pos = m_bin_file.pos();
         quint32 sector = (bin_pos - BIN_HEADER_SIZE) / BIN_SECTOR_SIZE;
         quint64 iso_sector_begin = (BIN_SECTOR_SIZE * sector) + BIN_SECTOR_OFFSET + BIN_HEADER_SIZE;
         quint64 iso_sector_end = iso_sector_begin + ISO_SECTOR_SIZE;
         quint32 available_to_read = iso_sector_end - bin_pos;
-        quint32 to_read = need_to_read_bytes < available_to_read ? need_to_read_bytes : available_to_read;
+        quint32 to_read = remains_to_read < available_to_read ? remains_to_read : available_to_read;
         if(to_read > 0)
         {
             qint64 current_read = m_bin_file.read(&_buffer.data()[read_bytes], to_read);

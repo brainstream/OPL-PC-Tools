@@ -303,7 +303,10 @@ void GameCollection::deleteIsoFile(Game & _game)
     QDir dir(m_directory);
     dir.cd(_game.media_type == MediaType::CD ? g_cd_dir : g_dvd_dir);
     QString path = dir.absoluteFilePath(_game.title) + ".iso";
-    QFile::remove(path);
+    if(QFile::exists(path))
+        QFile::remove(path);
+    else
+        QFile::remove(dir.absoluteFilePath(makeGameIsoFilename(_game.title, _game.id)));
 }
 
 void GameCollection::deletePixmaps(Game & _game)

@@ -31,7 +31,10 @@ DirectoryGameInstaller::DirectoryGameInstaller(Device & _device, GameCollection 
 bool DirectoryGameInstaller::performInstallation()
 {
     if(m_move_file && mr_device.isReadOnly())
-        throw IOException(tr("It is impossible to move file \"%1\". It is read only.").arg(mr_device.filepath()));
+    {
+        throw IOException(tr("It is impossible to move the file \"%1\". "
+            "Probably it is read-only or not an ISO image.").arg(mr_device.filepath()));
+    }
     QDir dest_dir(mr_collection.directory());
     QString dest_subdir = deviceMediaType() == MediaType::CD ? GameCollection::cdDirectory() : GameCollection::dvdDirectory();
     if(!dest_dir.cd(dest_subdir))

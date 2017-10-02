@@ -1,3 +1,10 @@
+oplpctools (1.2-1) UNRELEASED; urgency=low
+
+  * Ability to install games from the bin/cue images.
+  * Bug fixes
+
+ -- Sergey Smolyannikov <brainstream@yandex.ru>  Mon, 2 Oct 2017 17:09:42 +0300
+
 oplpctools (1.1-1) UNRELEASED; urgency=low
 
   * Ability to install whole ISO images into CD/DVD directory

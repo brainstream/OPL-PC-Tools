@@ -27,6 +27,7 @@
 #include "GameInstallDialog.h"
 #include "GameRenameDialog.h"
 #include "IsoRecoverDialog.h"
+#include "ManageGameArtsDialog.h"
 #include "Exception.h"
 
 namespace {
@@ -46,7 +47,10 @@ public:
         mp_game = _collection.game(_game_id);
     }
 
-    QVariant data(int _column, int _role) const override;
+    QVariant data(int _column, int _role) const override
+    {
+        return _role == Qt::DisplayRole ? mp_game->title : QTreeWidgetItem::data(_column, _role);
+    }
 
     void reload()
     {
@@ -64,48 +68,15 @@ private:
     const Game * mp_game;
 };
 
-QVariant GameTreeItem::data(int _column, int _role) const
-{
-    if(_role == Qt::DisplayRole)
-    {
-        switch(_column)
-        {
-        case 0:
-            return mp_game->title;
-        case 1:
-            return mp_game->id;
-        case 2:
-            switch(mp_game->media_type)
-            {
-            case MediaType::CD:
-                return "CD";
-            case MediaType::DVD:
-                return "DVD";
-            default:
-                return QObject::tr("Unknown");
-            }
-        case 3:
-            return mp_game->part_count;
-        default:
-            break;
-        }
-    }
-    return QTreeWidgetItem::data(_column, _role);
-}
-
 } // namespace
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent),
+    mp_label_current_root(nullptr),
+    mp_no_image(nullptr)
 {
     setupUi(this);
-    mp_tree_games->header()->setStretchLastSection(false);
-    mp_tree_games->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    mp_widget_game_details->setVisible(false);
-    mp_label_current_root = new QLabel(mp_statusbar);
-    mp_statusbar->addWidget(mp_label_current_root);
-    activateFileActions(false);
-    activateGameActions(nullptr);
+    initUi();
     QSettings settings;
     restoreGeometry(settings.value(g_settings_key_wnd_geometry).toByteArray());
     if(Settings::instance().reopenLastSestion())
@@ -114,6 +85,35 @@ MainWindow::MainWindow(QWidget *parent) :
         if(directory.exists())
             loadGameCollection(directory);
     }
+}
+
+MainWindow::~MainWindow()
+{
+    delete mp_no_image;
+}
+
+void MainWindow::initUi()
+{
+    mp_label_current_root = new QLabel(mp_statusbar);
+    mp_statusbar->addWidget(mp_label_current_root);
+    mp_no_image = new QPixmap(":images/no-image");
+    mp_tree_games->sortByColumn(0, Qt::AscendingOrder);
+
+    setupChangePixmapButton(mp_toolbtn_change_cover, SLOT(removeCover()));
+    setupChangePixmapButton(mp_toolbtn_change_icon, SLOT(removeIcon()));
+
+    mp_widget_game_details->setVisible(false);
+    activateFileActions(false);
+    activateGameActions(nullptr);
+}
+
+void MainWindow::setupChangePixmapButton(QToolButton * _btn, const char * _remove_slot)
+{
+    QAction * action = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
+    QMenu * menu = new QMenu(this);
+    menu->addAction(action);
+    _btn->setMenu(menu);
+    connect(action, SIGNAL(triggered(bool)), this, _remove_slot);
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -288,7 +288,7 @@ void MainWindow::removeCover()
     try
     {
         GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
-        if(item == nullptr) return;
+        if(item == nullptr || item->game().cover.isNull()) return;
         if(Settings::instance().confirmPixmapDeletion() &&
            QMessageBox::question(this, QString(), tr("Are you sure you want to delete the game cover?")) != QMessageBox::Yes)
         {
@@ -325,7 +325,7 @@ void MainWindow::removeIcon()
     try
     {
         GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
-        if(item == nullptr) return;
+        if(item == nullptr || item->game().icon.isNull()) return;
         if(Settings::instance().confirmPixmapDeletion() &&
            QMessageBox::question(this, QString(), tr("Are you sure you want to delete the game icon?")) != QMessageBox::Yes)
         {
@@ -340,6 +340,12 @@ void MainWindow::removeIcon()
     }
 }
 
+void MainWindow::manageArts()
+{
+    ManageGameArtsDialog dlg(this);
+    dlg.exec();
+}
+
 void MainWindow::gameSelectionChanged()
 {
     GameTreeItem * item = static_cast<GameTreeItem *>(mp_tree_games->currentItem());
@@ -350,8 +356,13 @@ void MainWindow::gameSelectionChanged()
         return;
     }
     const Game & game = item->game();
-    mp_label_cover->setPixmap(game.cover);
-    mp_label_icon->setPixmap(game.icon);
+    mp_label_game_id->setText(game.id);
+    mp_label_installation_type->setText(game.installation_type == GameInstallationType::UlConfig ? "UL" : "ISO");
+    mp_label_media_type->setText(game.media_type == MediaType::CD ? "CD" : "DVD");
+    mp_label_cover->setPixmap(game.cover.isNull() ?
+        mp_no_image->scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) : game.cover);
+    mp_label_icon->setPixmap(game.icon.isNull() ?
+        mp_no_image->scaled(mp_label_icon->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) : game.icon);
     mp_widget_game_details->setVisible(true);
     activateGameActions(&game);
 }

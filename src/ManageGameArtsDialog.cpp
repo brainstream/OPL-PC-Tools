@@ -15,49 +15,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include "MainWindow.h"
-#include <QApplication>
-#include <QTranslator>
-#include <QStandardPaths>
+#include "ManageGameArtsDialog.h"
 
-QTranslator * setupTranslator();
-
-int main(int argc, char *argv[])
+ManageGameArtsDialog::ManageGameArtsDialog(QWidget * _parent /*= nullptr*/) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    QApplication a(argc, argv);
-    a.setApplicationName("oplpctools");
-    a.setApplicationVersion(QT_STRINGIFY(_OPLPCTOOLS_VERSION));
-    a.setOrganizationName("brainstream");
-    QTranslator * translator = setupTranslator();
-    MainWindow w;
-    w.show();
-    int result = a.exec();
-    delete translator;
-    return result;
-}
-
-QTranslator * setupTranslator()
-{
-    QString locale = QLocale::system().name();
-    locale.truncate(locale.lastIndexOf('_'));
-    QCoreApplication * app = QApplication::instance();
-    const QString filename = QString("%1_%2.qm").arg(app->applicationName()).arg(locale);
-    QString filepath = QDir(app->applicationDirPath()).absoluteFilePath(filename);
-    if(!QFile::exists(filepath))
-    {
-        filepath = QStandardPaths::locate(QStandardPaths::AppDataLocation, filename);
-        if(filepath.isEmpty())
-            return nullptr;
-    }
-    QTranslator * translator = new QTranslator();
-    if(translator->load(filepath))
-    {
-        app->installTranslator(translator);
-        return translator;
-    }
-    else
-    {
-        delete translator;
-    }
-    return nullptr;
+    setupUi(this);
 }

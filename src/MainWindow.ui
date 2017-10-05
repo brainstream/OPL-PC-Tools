@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>654</height>
+    <width>1069</width>
+    <height>677</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,27 +39,15 @@
       <property name="expandsOnDoubleClick">
        <bool>false</bool>
       </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
       <attribute name="headerShowSortIndicator" stdset="0">
        <bool>true</bool>
       </attribute>
       <column>
        <property name="text">
         <string>Title</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>ID</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Type</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Parts</string>
        </property>
       </column>
      </widget>
@@ -74,21 +62,15 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>190</width>
+        <width>0</width>
         <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>194</width>
+        <width>16777215</width>
         <height>16777215</height>
        </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    text-align: left;
-    padding: 3px 15px;
-}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -118,6 +100,82 @@
           <item>
            <layout class="QVBoxLayout" name="mp_layout_game_details">
             <item>
+             <widget class="QLabel" name="mp_label_game_id">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+	font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string notr="true">Game ID</string>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::TextSelectableByMouse</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="mp_label_media_type">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text">
+                 <string notr="true">DVD</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="mp_label_installation_type">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text">
+                 <string notr="true">UL</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
              <widget class="QGroupBox" name="mp_groupbox_cover">
               <property name="title">
                <string>Cover</string>
@@ -139,15 +197,12 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>142</width>
-                   <height>202</height>
+                   <width>140</width>
+                   <height>200</height>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLabel {
-	border: 1px solid gray;
-	background-color: #d1d1d1;
-}</string>
+                  <string notr="true">background-color: #dfdfdf;</string>
                  </property>
                  <property name="text">
                   <string notr="true"/>
@@ -158,63 +213,34 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="mp_btn_set_cover">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
+                <widget class="QToolButton" name="mp_toolbtn_change_cover">
                  <property name="minimumSize">
                   <size>
-                   <width>142</width>
+                   <width>140</width>
                    <height>0</height>
                   </size>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
+                 <property name="maximumSize">
+                  <size>
+                   <width>140</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="text">
                   <string>Change</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="Resources.qrc">
-                   <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+                  <iconset theme="document-edit">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
+                 <property name="popupMode">
+                  <enum>QToolButton::MenuButtonPopup</enum>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="mp_btn_remove_cover">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextBesideIcon</enum>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>142</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Remove</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="Resources.qrc">
-                   <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
+                 <property name="autoRaise">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -251,18 +277,22 @@
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>66</width>
-                     <height>66</height>
+                     <width>64</width>
+                     <height>64</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>64</width>
+                     <height>64</height>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QLabel {
-	border: 1px solid gray;
-	background-color: #d1d1d1;
-}</string>
+                    <string notr="true">background-color: #dfdfdf;
+</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -272,16 +302,22 @@
                 </layout>
                </item>
                <item>
-                <widget class="QPushButton" name="mp_btn_set_icon">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
+                <widget class="QToolButton" name="mp_toolbtn_change_icon">
                  <property name="minimumSize">
                   <size>
-                   <width>142</width>
+                   <width>140</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>140</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="sizeIncrement">
+                  <size>
+                   <width>140</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -289,47 +325,28 @@
                   <string>Change</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="Resources.qrc">
-                   <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+                  <iconset theme="document-edit">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
+                 <property name="popupMode">
+                  <enum>QToolButton::MenuButtonPopup</enum>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="mp_btn_remove_icon">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextBesideIcon</enum>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>142</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Remove</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="Resources.qrc">
-                   <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
+                 <property name="autoRaise">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="mp_btn_manage_arts">
+              <property name="text">
+               <string>Manage Arts</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -350,6 +367,22 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>168</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </item>
@@ -360,7 +393,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>884</width>
+     <width>1069</width>
      <height>20</height>
     </rect>
    </property>
@@ -655,54 +688,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>mp_btn_set_icon</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setIcon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>849</x>
-     <y>528</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>441</x>
-     <y>286</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_btn_remove_icon</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>removeIcon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>776</x>
-     <y>528</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>441</x>
-     <y>286</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_btn_remove_cover</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>removeCover()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>776</x>
-     <y>371</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>441</x>
-     <y>286</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>mp_action_settings</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -767,18 +752,50 @@
    </hints>
   </connection>
   <connection>
-   <sender>mp_btn_set_cover</sender>
+   <sender>mp_toolbtn_change_icon</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setIcon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>781</x>
+     <y>470</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>326</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_toolbtn_change_cover</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>setCover()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>849</x>
-     <y>371</y>
+     <x>781</x>
+     <y>327</y>
     </hint>
     <hint type="destinationlabel">
      <x>441</x>
-     <y>286</y>
+     <y>326</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_btn_manage_arts</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>manageArts()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>965</x>
+     <y>560</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>534</x>
+     <y>338</y>
     </hint>
    </hints>
   </connection>
@@ -798,5 +815,6 @@
   <slot>removeIcon()</slot>
   <slot>showSettings()</slot>
   <slot>gameToIso()</slot>
+  <slot>manageArts()</slot>
  </slots>
 </ui>

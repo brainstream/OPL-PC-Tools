@@ -59,7 +59,8 @@ SOURCES +=\
     src/UlConfigGameInstaller.cpp \
     src/DirectoryGameInstaller.cpp \
     src/BinCueDeviceSource.cpp \
-    src/OpticalDriveDeviceSource.cpp
+    src/OpticalDriveDeviceSource.cpp \
+    src/ManageGameArtsDialog.cpp
 
 HEADERS  += \
     src/MainWindow.h \
@@ -86,7 +87,8 @@ HEADERS  += \
     src/DeviceSource.h \
     src/BinCueDeviceSource.h \
     src/OpticalDriveDeviceSource.h \
-    src/Iso9660DeviceSource.h
+    src/Iso9660DeviceSource.h \
+    src/ManageGameArtsDialog.h
 
 FORMS += \
     src/MainWindow.ui \
@@ -95,7 +97,8 @@ FORMS += \
     src/AboutDialog.ui \
     src/ChooseOpticalDiscDialog.ui \
     src/SettingsDialog.ui \
-    src/IsoRecoverDialog.ui
+    src/IsoRecoverDialog.ui \
+    src/ManageGameArtsDialog.ui
 
 RESOURCES += \
     src/Resources.qrc

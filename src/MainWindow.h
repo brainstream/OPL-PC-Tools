@@ -29,6 +29,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow() override;
 
 protected:
     void closeEvent(QCloseEvent * _event) override;
@@ -47,10 +48,13 @@ private slots:
     void removeCover();
     void setIcon();
     void removeIcon();
+    void manageArts();
     void gameSelectionChanged();
     void gameInstalled(const QString & _id);
 
 private:
+    void initUi();
+    void setupChangePixmapButton(QToolButton * _btn, const char * _remove_slot);
     QString getOpenPicturePath(const QString & _title);
     void loadGameCollection(const QDir & _directory);
     void setCurrentFilePath(const QString & _path);
@@ -59,6 +63,7 @@ private:
 
 private:
     QLabel * mp_label_current_root;
+    QPixmap * mp_no_image;
     GameCollection m_game_collection;
 };
 

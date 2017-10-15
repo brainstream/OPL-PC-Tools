@@ -27,8 +27,8 @@
 #include <OplPcTools/UI/IsoRecoverDialog.h>
 #include <OplPcTools/UI/ManageGameArtsDialog.h>
 #include <OplPcTools/Core/GameInstaller.h>
-#include <OplPcTools/Misc/Settings.h>
-#include <OplPcTools/Misc/Exception.h>
+#include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/Core/Exception.h>
 
 namespace {
 

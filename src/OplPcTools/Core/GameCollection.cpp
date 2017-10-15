@@ -18,8 +18,8 @@
 #include <algorithm>
 #include <QFile>
 #include <QTemporaryFile>
-#include <OplPcTools/Misc/IOException.h>
-#include <OplPcTools/Misc/ValidationException.h>
+#include <OplPcTools/Core/IOException.h>
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/Device.h>
 #include <OplPcTools/Core/Iso9660DeviceSource.h>
 #include <OplPcTools/Core/GameCollection.h>

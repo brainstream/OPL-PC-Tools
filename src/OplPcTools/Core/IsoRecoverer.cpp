@@ -19,7 +19,7 @@
 #include <QDir>
 #include <QThread>
 #include <OplPcTools/Core/IsoRecoverer.h>
-#include <OplPcTools/Misc/IOException.h>
+#include <OplPcTools/Core/IOException.h>
 
 IsoRecoverer::IsoRecoverer(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QObject * _parent /*= nullptr*/) :
     QObject(_parent),

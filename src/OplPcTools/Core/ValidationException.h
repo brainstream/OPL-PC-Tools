@@ -15,35 +15,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Misc/Settings.h>
+#ifndef __OPLPCTOOLS_VALIDATIONEXCEPTION__
+#define __OPLPCTOOLS_VALIDATIONEXCEPTION__
 
-const QString Settings::s_key_reopen_last_session("Settings/ReopenLastSession");
-const QString Settings::s_key_confirm_game_deletion("Settings/ConfirmGameDeletion");
-const QString Settings::s_key_confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
-const QString Settings::s_key_split_up_iso("Settings/SplitUpISO");
-const QString Settings::s_key_move_iso("Settings/MoveISO");
-const QString Settings::s_key_rename_iso("Settings/RenameISO");
+#include <OplPcTools/Core/Exception.h>
 
-Settings::Settings()
-{
-    m_reopen_last_session = loadBoolean(s_key_reopen_last_session, false);
-    m_confirm_game_deletion = loadBoolean(s_key_confirm_game_deletion, true);
-    m_confirm_pixmap_deletion = loadBoolean(s_key_confirm_pixmap_deletion, true);
-    m_split_up_iso = loadBoolean(s_key_split_up_iso, true);
-    m_move_iso = loadBoolean(s_key_move_iso, false);
-    m_rename_iso = loadBoolean(s_key_rename_iso, true);
-}
+DECLARE_EXCEPTION(ValidationException)
 
-bool Settings::loadBoolean(const QString & _key, bool _default_value)
-{
-    QVariant value = m_settins.value(_key);
-    if(value.isNull() || !value.isValid())
-        return _default_value;
-    return value.toBool();
-}
-
-Settings & Settings::instance()
-{
-    static Settings * settings = new Settings();
-    return *settings;
-}
+#endif // __OPLPCTOOLS_VALIDATIONEXCEPTION__

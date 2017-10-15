@@ -21,7 +21,7 @@
 #include <QString>
 #include <QMetaType>
 #include <QPixmap>
-#include <OplPcTools/Misc/ValidationException.h>
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/MediaType.h>
 #include <OplPcTools/Core/GameInstallationType.h>
 

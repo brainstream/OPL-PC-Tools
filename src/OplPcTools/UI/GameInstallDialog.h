@@ -19,7 +19,7 @@
 #define __OPLPCTOOLS_GAMEINSTALLDIALOG__
 
 #include "ui_GameInstallDialog.h"
-#include <OplPcTools/Misc/LambdaThread.h>
+#include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/Core/GameInstaller.h>
 #include <OplPcTools/Core/Device.h>
 

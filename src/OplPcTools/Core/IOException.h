@@ -15,51 +15,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_LAMBDATHREAD__
-#define __OPLPCTOOLS_LAMBDATHREAD__
+#ifndef __OPLPCTOOLS_IOEXCEPTION__
+#define __OPLPCTOOLS_IOEXCEPTION__
 
-#include <functional>
-#include <QThread>
-#include <OplPcTools/Misc/Exception.h>
+#include <OplPcTools/Core/Exception.h>
 
-class LambdaThread : public QThread
-{
-    Q_OBJECT
+DECLARE_EXCEPTION(IOException)
 
-public:
-    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
-        QThread(_parent),
-        m_lambda(_lambda)
-    {
-    }
-
-
-protected:
-    void run() override
-    {
-        try
-        {
-            m_lambda();
-        }
-        catch(const Exception & ex)
-        {
-            emit exception(ex.message());
-        }
-        catch(const std::exception & err)
-        {
-            emit exception(QString::fromStdString(err.what()));
-        }
-        catch(...)
-        {
-            emit exception(tr("An unknown error has occurred"));
-        }
-    }
-
-signals:
-    void exception(QString _message);
-
-private:
-    std::function<void()> m_lambda;
-};
-
-#endif // __OPLPCTOOLS_LAMBDATHREAD__
+#endif // __OPLPCTOOLS_IOEXCEPTION__

@@ -17,7 +17,7 @@
 
 #include <QStorageInfo>
 #include <QThread>
-#include <OplPcTools/Misc/IOException.h>
+#include <OplPcTools/Core/IOException.h>
 #include <OplPcTools/Core/DirectoryGameInstaller.h>
 
 

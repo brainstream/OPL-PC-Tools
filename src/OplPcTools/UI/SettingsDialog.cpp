@@ -15,7 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Misc/Settings.h>
+#include <OplPcTools/Core/Settings.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 SettingsDialog::SettingsDialog(QWidget * _parent) :

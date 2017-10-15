@@ -54,7 +54,7 @@ SOURCES += \
     OplPcTools/Core/IsoRecoverer.cpp \
     OplPcTools/Core/OpticalDriveDeviceSource.cpp \
     OplPcTools/Core/UlConfigGameInstaller.cpp \
-    OplPcTools/Misc/Settings.cpp \
+    OplPcTools/Core/Settings.cpp \
     OplPcTools/UI/AboutDialog.cpp \
     OplPcTools/UI/ChooseOpticalDiscDialog.cpp \
     OplPcTools/UI/GameInstallDialog.cpp \
@@ -78,11 +78,11 @@ HEADERS += \
     OplPcTools/Core/MediaType.h \
     OplPcTools/Core/OpticalDriveDeviceSource.h \
     OplPcTools/Core/UlConfigGameInstaller.h \
-    OplPcTools/Misc/Exception.h \
-    OplPcTools/Misc/IOException.h \
-    OplPcTools/Misc/LambdaThread.h \
-    OplPcTools/Misc/Settings.h \
-    OplPcTools/Misc/ValidationException.h \
+    OplPcTools/Core/Exception.h \
+    OplPcTools/Core/IOException.h \
+    OplPcTools/UI/LambdaThread.h \
+    OplPcTools/Core/Settings.h \
+    OplPcTools/Core/ValidationException.h \
     OplPcTools/UI/AboutDialog.h \
     OplPcTools/UI/ChooseOpticalDiscDialog.h \
     OplPcTools/UI/GameInstallDialog.h \

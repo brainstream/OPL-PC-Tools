@@ -18,8 +18,8 @@
 #include <QFile>
 #include <QDir>
 #include <QThread>
-#include <OplPcTools/Misc/IOException.h>
-#include <OplPcTools/Misc/ValidationException.h>
+#include <OplPcTools/Core/IOException.h>
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/UlConfigGameInstaller.h>
 
 UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent) :

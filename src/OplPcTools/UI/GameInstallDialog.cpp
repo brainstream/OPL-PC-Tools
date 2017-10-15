@@ -33,7 +33,7 @@
 #include <OplPcTools/Core/OpticalDriveDeviceSource.h>
 #include <OplPcTools/Core/Iso9660DeviceSource.h>
 #include <OplPcTools/Core/BinCueDeviceSource.h>
-#include <OplPcTools/Misc/Settings.h>
+#include <OplPcTools/Core/Settings.h>
 
 namespace {
 

@@ -19,7 +19,7 @@
 #define __OPLPCTOOLS_ISORECOVERDIALOG__
 
 #include <OplPcTools/Core/IsoRecoverer.h>
-#include <OplPcTools/Misc/LambdaThread.h>
+#include <OplPcTools/UI/LambdaThread.h>
 #include "ui_IsoRecoverDialog.h"
 
 class IsoRecoverDialog : public QDialog, private Ui::IsoRecoverDialog

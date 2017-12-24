@@ -18,52 +18,33 @@
 #ifndef __OPLPCTOOLS_MAINWINDOW__
 #define __OPLPCTOOLS_MAINWINDOW__
 
-#include <QLabel>
-#include <OplPcTools/Core/GameCollection.h>
-#include "ui_MainWindow.h"
+#include <QMainWindow>
+#include <OplPcTools/UI/UIContext.h>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+namespace OplPcTools {
+namespace UI {
+
+class MainWindow : public QMainWindow, public UIContext
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget * _parent = nullptr);
     ~MainWindow() override;
+    Core::GameCollection & collection() const override;
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void about();
-    void aboutQt();
-    void showSettings();
-    void loadGameCollection();
-    void reloadUlConfig();
-    void renameGame();
-    void addGame();
-    void gameToIso();
-    void deleteGame();
-    void setCover();
-    void removeCover();
-    void setIcon();
-    void removeIcon();
-    void manageArts();
-    void gameSelectionChanged();
-    void gameInstalled(const QString & _id);
+public slots:
+    void showGameInstaller() override;
+    void showIsoRecoverer() override;
+    void showGameDetails(const QString & _id) override;
 
 private:
-    void initUi();
-    void setupChangePixmapButton(QToolButton * _btn, const char * _remove_slot);
-    QString getOpenPicturePath(const QString & _title);
-    void loadGameCollection(const QDir & _directory);
-    void setCurrentFilePath(const QString & _path);
-    void activateFileActions(bool _activate);
-    void activateGameActions(const Game * _selected_game);
-
-private:
-    QLabel * mp_label_current_root;
-    QPixmap * mp_no_image;
-    GameCollection m_game_collection;
+    class MainWindowUI;
+    MainWindowUI * mp_ui;
+    Core::GameCollection * mp_collection;
 };
+
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_MAINWINDOW__

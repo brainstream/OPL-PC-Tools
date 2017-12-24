@@ -15,26 +15,26 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_BINCUEDEVICESOURCE__
-#define __OPLPCTOOLS_BINCUEDEVICESOURCE__
+#ifndef __OPLPCTOOLS_UICONTEXT__
+#define __OPLPCTOOLS_UICONTEXT__
 
-#include <QFile>
-#include <OplPcTools/Core/DeviceSource.h>
+#include <QWidget>
+#include <OplPcTools/Core/GameCollection.h>
 
-class BinCueDeviceSource : public DeviceSource
+namespace OplPcTools {
+namespace UI {
+
+class UIContext
 {
 public:
-    explicit BinCueDeviceSource(const QString & _bin_filepath);
-    QString filepath() const override;
-    bool isReadOnly() const override;
-    bool open() override;
-    bool isOpen() const override;
-    void close() override;
-    bool seek(qint64 _offset) override;
-    qint64 read(QByteArray & _buffer) override;
-
-private:
-    QFile m_bin_file;
+    virtual ~UIContext() { }
+    virtual void showGameInstaller() = 0;
+    virtual void showIsoRecoverer() = 0;
+    virtual void showGameDetails(const QString & _id) = 0;
+    virtual Core::GameCollection & collection() const = 0;
 };
 
-#endif // __OPLPCTOOLS_BINCUEDEVICESOURCE__
+} // namespace UI
+} // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_UICONTEXT__

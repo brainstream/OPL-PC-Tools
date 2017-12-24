@@ -15,51 +15,42 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_LAMBDATHREAD__
-#define __OPLPCTOOLS_LAMBDATHREAD__
+#ifndef __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+#define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
 
-#include <functional>
-#include <QThread>
-#include <OplPcTools/Core/Exception.h>
+#include <QWidget>
+#include <QTreeWidgetItem>
+#include <OplPcTools/UI/UIContext.h>
 
-class LambdaThread : public QThread
+namespace OplPcTools {
+namespace UI {
+
+class GameCollectionWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
-        QThread(_parent),
-        m_lambda(_lambda)
-    {
-    }
-
-
-protected:
-    void run() override
-    {
-        try
-        {
-            m_lambda();
-        }
-        catch(const Exception & ex)
-        {
-            emit exception(ex.message());
-        }
-        catch(const std::exception & err)
-        {
-            emit exception(QString::fromStdString(err.what()));
-        }
-        catch(...)
-        {
-            emit exception(tr("An unknown error has occurred"));
-        }
-    }
-
-signals:
-    void exception(QString _message);
+    explicit GameCollectionWidget(UIContext & _context, QWidget * _parent = nullptr);
+    ~GameCollectionWidget() override;
 
 private:
-    std::function<void()> m_lambda;
+    void activateCollectionControls(bool _activate);
+    void activateItemControls(bool _activate);
+
+private slots:
+    void load();
+    void reload();
+    void collectionLoaded();
+    void changeIconsSize();
+    void gameSelected();
+    void showGameDetails();
+
+private:
+    struct Private;
+    Private * mp_private;
 };
 
-#endif // __OPLPCTOOLS_LAMBDATHREAD__
+} // namespace UI
+} // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_GAMECOLLECTIONWIDGET__

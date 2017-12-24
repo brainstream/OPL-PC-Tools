@@ -19,40 +19,47 @@
 #define __OPLPCTOOLS_GAME__
 
 #include <QString>
-#include <QMetaType>
-#include <QPixmap>
-#include <OplPcTools/Core/ValidationException.h>
-#include <OplPcTools/Core/MediaType.h>
-#include <OplPcTools/Core/GameInstallationType.h>
+#include <QObject>
 
-const quint16 g_max_game_id_length = 15;
-const quint16 g_max_game_name_length = 32;
+namespace OplPcTools {
+namespace Core {
 
-struct Game
+class Game final
 {
-    Game() :
-        media_type(MediaType::Unknown),
-        part_count(0)
-    {
-    }
+public:
+    explicit inline Game(const QString & _id);
+    inline const QString & id() const;
+    inline void setTitle(const QString & _title);
+    inline const QString & title() const;
 
-    QString id;
-    QString title;
-    MediaType media_type;
-    GameInstallationType installation_type;
-    quint8 part_count;
-    QPixmap cover;
-    QString cover_filepath;
-    QPixmap icon;
-    QString icon_filepath;
+private:
+    QString m_id;
+    QString m_title;
 };
 
-void validateGameName(const QString & _name, GameInstallationType _installation_type);
+Game::Game(const QString & _id) :
+    m_id(_id)
+{
+    m_title = QObject::tr("<Untitled>");
+}
 
-void validateGameId(const QString & _id);
+const QString & Game::id() const
+{
+    return m_id;
+}
 
-QString makeGamePartName(const QString & _id, const QString & _name, quint8 _part);
+void Game::setTitle(const QString & _title)
+{
+    if(m_title != _title)
+        m_title = _title;
+}
 
-QString makeGameIsoFilename(const QString & _title, const QString & _id);
+const QString & Game::title() const
+{
+    return m_title;
+}
+
+} // namespace Core
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAME__

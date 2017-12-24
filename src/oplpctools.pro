@@ -20,94 +20,39 @@ QT += core gui widgets
 TARGET = oplpctools
 TEMPLATE = app
 
-CONFIG += c++14
+CONFIG += c++1z
 
-VERSION = "1.2"
+VERSION = "2.0"
 
-DEFINES += "_OPLPCTOOLS_VERSION=$$VERSION"
+DEFINES += \
+    "_OPLPCTOOLS_VERSION=$$VERSION" \
+    QT_DEPRECATED_WARNINGS \
 
 INCLUDEPATH += .
 
-linux {
-    contains(QMAKE_HOST.arch, x86_64): {
-        arch = "amd64"
-    } else {
-        arch = "i386"
-    }
-    deb.target = deb
-    deb.commands = /bin/bash $$_PRO_FILE_PWD_/../packages/make-deb.sh "$$OUT_PWD/$$TARGET" "$$VERSION" $$arch
-    QMAKE_EXTRA_TARGETS += deb
-}
-
 SOURCES += \
     OplPcTools/Main.cpp \
-    OplPcTools/Core/BinCueDeviceSource.cpp \
-    OplPcTools/Core/Device_FreeBSD.cpp \
-    OplPcTools/Core/Device_Linux.cpp \
-    OplPcTools/Core/Device_MacOSX.cpp \
-    OplPcTools/Core/Device_Windows.cpp \
-    OplPcTools/Core/Device.cpp \
-    OplPcTools/Core/DirectoryGameInstaller.cpp \
-    OplPcTools/Core/Game.cpp \
-    OplPcTools/Core/GameCollection.cpp \
-    OplPcTools/Core/GameInstaller.cpp \
-    OplPcTools/Core/IsoRecoverer.cpp \
-    OplPcTools/Core/OpticalDriveDeviceSource.cpp \
-    OplPcTools/Core/UlConfigGameInstaller.cpp \
-    OplPcTools/Core/Settings.cpp \
-    OplPcTools/UI/AboutDialog.cpp \
-    OplPcTools/UI/ChooseOpticalDiscDialog.cpp \
-    OplPcTools/UI/GameInstallDialog.cpp \
-    OplPcTools/UI/GameRenameDialog.cpp \
-    OplPcTools/UI/IsoRecoverDialog.cpp \
     OplPcTools/UI/MainWindow.cpp \
-    OplPcTools/UI/ManageGameArtsDialog.cpp \
-    OplPcTools/UI/SettingsDialog.cpp
+    OplPcTools/UI/GameCollectionWidget.cpp \
+    OplPcTools/UI/GameDetailsWidget.cpp \
+    OplPcTools/Core/GameCollection.cpp
 
 HEADERS += \
-    OplPcTools/Core/BinCueDeviceSource.h \
-    OplPcTools/Core/Device.h \
-    OplPcTools/Core/DeviceSource.h \
-    OplPcTools/Core/DirectoryGameInstaller.h \
-    OplPcTools/Core/Game.h \
-    OplPcTools/Core/GameCollection.h \
-    OplPcTools/Core/GameInstallationType.h \
-    OplPcTools/Core/GameInstaller.h \
-    OplPcTools/Core/Iso9660DeviceSource.h \
-    OplPcTools/Core/IsoRecoverer.h \
-    OplPcTools/Core/MediaType.h \
-    OplPcTools/Core/OpticalDriveDeviceSource.h \
-    OplPcTools/Core/UlConfigGameInstaller.h \
-    OplPcTools/Core/Exception.h \
-    OplPcTools/Core/IOException.h \
-    OplPcTools/UI/LambdaThread.h \
-    OplPcTools/Core/Settings.h \
-    OplPcTools/Core/ValidationException.h \
-    OplPcTools/UI/AboutDialog.h \
-    OplPcTools/UI/ChooseOpticalDiscDialog.h \
-    OplPcTools/UI/GameInstallDialog.h \
-    OplPcTools/UI/GameRenameDialog.h \
-    OplPcTools/UI/IsoRecoverDialog.h \
     OplPcTools/UI/MainWindow.h \
-    OplPcTools/UI/ManageGameArtsDialog.h \
-    OplPcTools/UI/SettingsDialog.h
+    OplPcTools/UI/GameCollectionWidget.h \
+    OplPcTools/UI/UIContext.h \
+    OplPcTools/UI/GameDetailsWidget.h \
+    OplPcTools/Core/GameCollection.h \
+    OplPcTools/Core/Game.h
 
 FORMS += \
-    OplPcTools/UI/AboutDialog.ui \
-    OplPcTools/UI/ChooseOpticalDiscDialog.ui \
-    OplPcTools/UI/GameInstallDialog.ui \
-    OplPcTools/UI/GameRenameDialog.ui \
-    OplPcTools/UI/IsoRecoverDialog.ui \
     OplPcTools/UI/MainWindow.ui \
-    OplPcTools/UI/ManageGameArtsDialog.ui \
-    OplPcTools/UI/SettingsDialog.ui
+    OplPcTools/UI/GameCollectionWidget.ui \
+    OplPcTools/UI/GameDetailsWidget.ui
 
 RESOURCES += \
-    OplPcTools/Resources/Resources.qrc
+    OplPcTools/Resources.qrc
 
 win32 {
-    RC_FILE = OplPcTools/Resources/Resources.rc
+    RC_FILE = OplPcTools/Resources.rc
 }
-
-TRANSLATIONS += \
-    Translations/oplpctools_ru.ts

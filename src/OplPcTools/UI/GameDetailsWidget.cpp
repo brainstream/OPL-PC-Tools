@@ -15,16 +15,46 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifdef __FreeBSD__
+#include <QDebug>
+#include <OplPcTools/UI/GameDetailsWidget.h>
+#include "ui_GameDetailsWidget.h"
 
-#include <OplPcTools/Core/Device.h>
+using namespace OplPcTools::UI;
 
-QList<DeviceName> loadDriveList()
+class GameDetailsWidget::UITemplate : public Ui::GameDetailsWidget { };
+
+GameDetailsWidget::GameDetailsWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
+    QWidget(_parent),
+    mp_ui(new UITemplate),
+    mr_context(_context)
 {
-    // Application cannot work with FreeBSD's sequential devices.
-    // Thus, it is a stub that allows other parts of the application to work.
-    QList<DeviceName> result;
-    return result;
+    mp_ui->setupUi(this);
+    connect(mp_ui->btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
 }
 
-#endif // __FreeBSD__
+GameDetailsWidget::~GameDetailsWidget()
+{
+    delete mp_ui;
+    qDebug() << "GameDetailsWidget destroyed";
+}
+
+void GameDetailsWidget::setGameId(const QString & _id)
+{
+    m_game_id = _id;
+}
+
+const QString & GameDetailsWidget::gameId() const
+{
+    return m_game_id;
+}
+
+void GameDetailsWidget::showEvent(QShowEvent * _event)
+{
+    Q_UNUSED(_event)
+    init();
+}
+
+void GameDetailsWidget::init()
+{
+    mp_ui->label_game_title->setText(m_game_id);
+}

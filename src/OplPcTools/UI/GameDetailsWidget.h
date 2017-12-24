@@ -15,30 +15,39 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/Settings.h>
-#include <OplPcTools/UI/SettingsDialog.h>
+#ifndef __OPLPCTOOLS_GAMEDETAILSWIDGET__
+#define __OPLPCTOOLS_GAMEDETAILSWIDGET__
 
-SettingsDialog::SettingsDialog(QWidget * _parent) :
-    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-{
-    setupUi(this);
-    Settings & settings = Settings::instance();
-    mp_checkbox_reopen_last_session->setChecked(settings.reopenLastSestion());
-    mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
-    mp_checkbox_confirm_pixmap_deletion->setChecked(settings.confirmPixmapDeletion());
-    mp_radiobtn_split_up->setChecked(settings.splitUpIso());
-    mp_checkbox_rename_iso->setChecked(settings.renameIso());
-    mp_checkbox_move_iso->setChecked(settings.moveIso());
-}
+#include <QWidget>
+#include <OplPcTools/UI/UIContext.h>
 
-void SettingsDialog::accept()
+namespace OplPcTools {
+namespace UI {
+
+class GameDetailsWidget : public QWidget
 {
-    Settings & settings = Settings::instance();
-    settings.setReopenLastSestion(mp_checkbox_reopen_last_session->isChecked());
-    settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
-    settings.setConfirmPixmapDeletion(mp_checkbox_confirm_pixmap_deletion->isChecked());
-    settings.setSplitUpIso(mp_radiobtn_split_up->isChecked());
-    settings.setMoveIso(mp_checkbox_move_iso->isChecked());
-    settings.setRenameIso(mp_checkbox_rename_iso->isChecked());
-    QDialog::accept();
-}
+    Q_OBJECT
+
+public:
+    explicit GameDetailsWidget(UIContext & _context, QWidget * _parent = nullptr);
+    ~GameDetailsWidget() override;
+    void setGameId(const QString & _id);
+    const QString & gameId() const;
+
+protected:
+    void showEvent(QShowEvent * _event) override;
+
+private:
+    void init();
+
+private:
+    class UITemplate;
+    UITemplate * mp_ui;
+    UIContext & mr_context;
+    QString m_game_id;
+};
+
+} // namespace UI
+} // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_GAMEDETAILSWIDGET__

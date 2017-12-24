@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="document-edit">Resources/icons/document-edit.svg</file>
+        <file alias="document-open">Resources/icons/document-open.svg</file>
+        <file alias="view-refresh">Resources/icons/view-refresh.svg</file>
+        <file alias="application">Resources/icons/application.png</file>
+        <file alias="media-optical">Resources/icons/media-optical.svg</file>
+        <file alias="list-add">Resources/icons/list-add.svg</file>
+        <file alias="list-remove">Resources/icons/list-remove.svg</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="no-image">Resources/images/no-image.svg</file>
+    </qresource>
+</RCC>

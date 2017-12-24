@@ -15,64 +15,32 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QMessageBox>
-#include <OplPcTools/UI/MainWindow.h>
-#include <OplPcTools/UI/GameCollectionWidget.h>
-#include <OplPcTools/UI/GameDetailsWidget.h>
+#include <QtGlobal>
 #include <OplPcTools/UI/AboutDialog.h>
-#include "ui_MainWindow.h"
+
+#include "ui_AboutDialog.h"
 
 using namespace OplPcTools::UI;
 
-class MainWindow::MainWindowUI : public Ui::MainWindow { };
+class AboutDialog::Private : public Ui::AboutDialog { };
 
-MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
-    QMainWindow(_parent),
-    mp_ui(new MainWindowUI)
+AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
+    mp_private(new Private)
 {
-    mp_collection = new OplPcTools::Core::GameCollection(this);
-    mp_ui->setupUi(this);
-    mp_ui->stacked_widget->addWidget(new GameCollectionWidget(*this));
+    mp_private->setupUi(this);
+    QApplication * app = static_cast<QApplication *>(QApplication::instance());
+    mp_private->label_app_name->setText(app->applicationDisplayName());
+    static const int start_development_year = 2017;
+    int build_year = QString(__DATE__).right(4).toInt();
+    QString years = (start_development_year < build_year) ?
+        QString("%1 - %2").arg(start_development_year).arg(build_year) :
+        QString::number(build_year);
+    mp_private->label_version->setText(mp_private->label_version->text().arg(QT_STRINGIFY(_OPLPCTOOLS_VERSION)));
+    mp_private->label_description->setText(mp_private->label_description->text().arg(years));
 }
 
-MainWindow::~MainWindow()
+AboutDialog::~AboutDialog()
 {
-    delete mp_ui;
-}
-
-OplPcTools::Core::GameCollection & MainWindow::collection() const
-{
-   return *mp_collection;
-}
-
-void MainWindow::showAboutDialog()
-{
-    AboutDialog dlg(this);
-    dlg.exec();
-}
-
-void MainWindow::showAboutQtDialog()
-{
-    QMessageBox::aboutQt(this);
-}
-
-void MainWindow::showGameInstaller()
-{
-    GameDetailsWidget * widget = new GameDetailsWidget(*this);
-    widget->setGameId("TODO: INSTALL GAME");
-    int index = mp_ui->stacked_widget->addWidget(widget);
-    mp_ui->stacked_widget->setCurrentIndex(index);
-}
-
-void MainWindow::showIsoRecoverer()
-{
-
-}
-
-void MainWindow::showGameDetails(const QString & _id)
-{
-    GameDetailsWidget * widget = new GameDetailsWidget(*this);
-    widget->setGameId(_id);
-    int index = mp_ui->stacked_widget->addWidget(widget);
-    mp_ui->stacked_widget->setCurrentIndex(index);
+    delete mp_private;
 }

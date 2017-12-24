@@ -33,7 +33,9 @@ public:
     ~MainWindow() override;
     Core::GameCollection & collection() const override;
 
-public slots:
+private slots:
+    void showAboutDialog();
+    void showAboutQtDialog();
     void showGameInstaller() override;
     void showIsoRecoverer() override;
     void showGameDetails(const QString & _id) override;

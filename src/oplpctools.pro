@@ -35,6 +35,7 @@ SOURCES += \
     OplPcTools/UI/MainWindow.cpp \
     OplPcTools/UI/GameCollectionWidget.cpp \
     OplPcTools/UI/GameDetailsWidget.cpp \
+    OplPcTools/UI/AboutDialog.cpp \
     OplPcTools/Core/GameCollection.cpp
 
 HEADERS += \
@@ -42,13 +43,15 @@ HEADERS += \
     OplPcTools/UI/GameCollectionWidget.h \
     OplPcTools/UI/UIContext.h \
     OplPcTools/UI/GameDetailsWidget.h \
+    OplPcTools/UI/AboutDialog.h \
     OplPcTools/Core/GameCollection.h \
     OplPcTools/Core/Game.h
 
 FORMS += \
     OplPcTools/UI/MainWindow.ui \
     OplPcTools/UI/GameCollectionWidget.ui \
-    OplPcTools/UI/GameDetailsWidget.ui
+    OplPcTools/UI/GameDetailsWidget.ui \
+    OplPcTools/UI/AboutDialog.ui
 
 RESOURCES += \
     OplPcTools/Resources.qrc

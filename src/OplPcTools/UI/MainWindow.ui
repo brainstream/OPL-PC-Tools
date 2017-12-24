@@ -36,33 +36,33 @@
      <height>20</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuTools">
+   <widget class="QMenu" name="menu_tools">
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="action_Settings"/>
+    <addaction name="action_settings"/>
    </widget>
-   <widget class="QMenu" name="menu_Help">
+   <widget class="QMenu" name="menu_help">
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="action_About"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="action_about"/>
+    <addaction name="action_about_qt"/>
    </widget>
-   <addaction name="menuTools"/>
-   <addaction name="menu_Help"/>
+   <addaction name="menu_tools"/>
+   <addaction name="menu_help"/>
   </widget>
-  <action name="action_Settings">
+  <action name="action_settings">
    <property name="text">
     <string>&amp;Settings...</string>
    </property>
   </action>
-  <action name="action_About">
+  <action name="action_about">
    <property name="text">
     <string>&amp;About...</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="action_about_qt">
    <property name="text">
     <string>About &amp;Qt...</string>
    </property>
@@ -71,8 +71,43 @@
  <resources>
   <include location="../Resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>action_about</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showAboutDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_about_qt</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showAboutQtDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>showGameInstaller()</slot>
+  <slot>showAboutDialog()</slot>
+  <slot>showAboutQtDialog()</slot>
  </slots>
 </ui>

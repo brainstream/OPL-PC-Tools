@@ -15,64 +15,28 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QMessageBox>
-#include <OplPcTools/UI/MainWindow.h>
-#include <OplPcTools/UI/GameCollectionWidget.h>
-#include <OplPcTools/UI/GameDetailsWidget.h>
-#include <OplPcTools/UI/AboutDialog.h>
-#include "ui_MainWindow.h"
+#ifndef __OPLPCTOOLS_ABOUTDIALOG__
+#define __OPLPCTOOLS_ABOUTDIALOG__
 
-using namespace OplPcTools::UI;
+#include <QDialog>
 
-class MainWindow::MainWindowUI : public Ui::MainWindow { };
+namespace OplPcTools {
+namespace UI {
 
-MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
-    QMainWindow(_parent),
-    mp_ui(new MainWindowUI)
+class AboutDialog : public QDialog
 {
-    mp_collection = new OplPcTools::Core::GameCollection(this);
-    mp_ui->setupUi(this);
-    mp_ui->stacked_widget->addWidget(new GameCollectionWidget(*this));
-}
+    Q_OBJECT
 
-MainWindow::~MainWindow()
-{
-    delete mp_ui;
-}
+public:
+    AboutDialog(QWidget * _parent = nullptr);
+    ~AboutDialog() override;
 
-OplPcTools::Core::GameCollection & MainWindow::collection() const
-{
-   return *mp_collection;
-}
+private:
+    class Private;
+    Private * mp_private;
+};
 
-void MainWindow::showAboutDialog()
-{
-    AboutDialog dlg(this);
-    dlg.exec();
-}
+} // namespace UI
+} // namespace OplPcTools
 
-void MainWindow::showAboutQtDialog()
-{
-    QMessageBox::aboutQt(this);
-}
-
-void MainWindow::showGameInstaller()
-{
-    GameDetailsWidget * widget = new GameDetailsWidget(*this);
-    widget->setGameId("TODO: INSTALL GAME");
-    int index = mp_ui->stacked_widget->addWidget(widget);
-    mp_ui->stacked_widget->setCurrentIndex(index);
-}
-
-void MainWindow::showIsoRecoverer()
-{
-
-}
-
-void MainWindow::showGameDetails(const QString & _id)
-{
-    GameDetailsWidget * widget = new GameDetailsWidget(*this);
-    widget->setGameId(_id);
-    int index = mp_ui->stacked_widget->addWidget(widget);
-    mp_ui->stacked_widget->setCurrentIndex(index);
-}
+#endif // __OPLPCTOOLS_ABOUTDIALOG__

@@ -15,38 +15,29 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
-#define __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#ifndef __OPLPCTOOLS_DEVICESOURCE__
+#define __OPLPCTOOLS_DEVICESOURCE__
 
-#include <QVector>
-#include <OplPcTools/Core/GameStorage.h>
+#include <QString>
+#include <QByteArray>
 
 namespace OplPcTools {
 namespace Core {
 
-class DirectoryGameStorage final : public GameStorage
+class DeviceSource
 {
-    Q_OBJECT
-
 public:
-    explicit DirectoryGameStorage(QObject * _parent = nullptr);
-    GameInstallationType installationType() const override;
-    bool load(const QDir & _directory) override;
-    bool renameGame(const QString & _id, const QString & _title) override;
-    bool renameGame(const int _index, const QString & _title) override;
-    bool registerGame(const Game & _game) override;
-
-public:
-    static const QString cd_directory;
-    static const QString dvd_directory;
-
-private:
-    void load(QDir _base_directory, MediaType _media_type);
-    bool renameGame(Game & _game, const QString & _title);
-    bool renameGameFiles(const QString & _id, const QString & _title);
+    virtual ~DeviceSource() { }
+    virtual QString filepath() const = 0;
+    virtual bool isReadOnly() const = 0;
+    virtual bool open() = 0;
+    virtual bool isOpen() const = 0;
+    virtual void close() = 0;
+    virtual bool seek(qint64 _offset) = 0;
+    virtual qint64 read(QByteArray & _buffer) = 0;
 };
 
 } // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#endif // __OPLPCTOOLS_DEVICESOURCE__

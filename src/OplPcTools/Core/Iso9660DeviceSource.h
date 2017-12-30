@@ -15,69 +15,34 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameCollection.h>
+#ifndef __OPLPCTOOLS_ISO9660DEVICESOURCE__
+#define __OPLPCTOOLS_ISO9660DEVICESOURCE__
 
-using namespace OplPcTools;
-using namespace OplPcTools::Core;
+#include <QFileInfo>
+#include <OplPcTools/Core/OpticalDriveDeviceSource.h>
 
-namespace {
+namespace OplPcTools {
+namespace Core {
 
-template<class TCollection>
-auto findGameById(TCollection & _collection, const QString & _id) -> typename TCollection::value_type
+class Iso9660DeviceSource : public OpticalDriveDeviceSource
 {
-    for(auto item : _collection)
+public:
+    explicit Iso9660DeviceSource(const QString & _filepath) :
+        OpticalDriveDeviceSource(_filepath)
     {
-        if(item->id() == _id)
-            return item;
+        m_is_readonly = !QFileInfo(_filepath).isWritable();
     }
-    return nullptr;
-}
 
-} // namespace
+    bool isReadOnly() const override
+    {
+        return m_is_readonly;
+    }
 
-GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
-    QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
-{
-}
+private:
+    bool m_is_readonly;
+};
 
-GameCollection::~GameCollection()
-{
-    delete mp_ul_conf_storage;
-    delete mp_dir_storage;
-}
+} // namespace Core
+} // namespace OplPcTools
 
-void GameCollection::load(const QDir & _directory)
-{
-    // TODO: handle exceptions
-    mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
-}
-
-const QString & GameCollection::directory() const
-{
-    return m_directory;
-}
-
-int GameCollection::count() const
-{
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
-}
-
-const Core::Game * GameCollection::operator [](int _index) const
-{
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
-}
-
-const Game * GameCollection::findGame(const QString & _id) const
-{
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
-    return game;
-}
+#endif // __OPLPCTOOLS_ISO9660DEVICESOURCE__

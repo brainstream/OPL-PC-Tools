@@ -15,62 +15,33 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameStorage.h>
+#ifndef __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__
+#define __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__
 
-using namespace OplPcTools::Core;
+#include <QFile>
+#include <OplPcTools/Core/DeviceSource.h>
 
-GameStorage::GameStorage(QObject * _parent /*= nullptr*/) :
-    QObject(_parent)
+namespace OplPcTools {
+namespace Core {
+
+class OpticalDriveDeviceSource : public DeviceSource
 {
-}
+public:
+    explicit OpticalDriveDeviceSource(const QString & _filepath);
+    ~OpticalDriveDeviceSource() override;
+    QString filepath() const override;
+    bool isReadOnly() const override;
+    bool open() override;
+    bool isOpen() const override;
+    void close() override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
 
-GameStorage::~GameStorage()
-{
-    clear();
-}
+private:
+    QFile * mp_file;
+};
 
-void GameStorage::clear()
-{
-    for(Game * game : m_games)
-        delete game;
-    m_games.clear();
-}
+} // namespace Core
+} // namespace OplPcTools
 
-const Game * GameStorage::operator [](int _index) const
-{
-    return gameAt(_index);
-}
-
-Game * GameStorage::gameAt(int _index) const
-{
-    // TODO: exception
-    return m_games[_index];
-}
-
-int GameStorage::count() const
-{
-    return m_games.count();
-}
-
-Game * GameStorage::createGame(const QString & _id)
-{
-    Game * game = new Game(_id);
-    m_games.append(game);
-    return game;
-}
-
-const Game * GameStorage::findGame(const QString & _id) const
-{
-    return findNonConstGame(_id);
-}
-
-Game * GameStorage::findNonConstGame(const QString & _id) const
-{
-    int count = m_games.count();
-    for(int i = 0; i < count; ++i)
-    {
-        if(_id == m_games[i]->id())
-            return m_games[i];
-    }
-    return nullptr;
-}
+#endif // __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__

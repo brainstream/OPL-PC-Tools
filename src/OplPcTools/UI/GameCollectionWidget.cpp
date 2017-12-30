@@ -23,6 +23,7 @@
 #include <OplPcTools/UI/GameCollectionWidget.h>
 #include "ui_GameCollectionWidget.h"
 
+using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
@@ -37,27 +38,27 @@ const char * icons_size = "GameListIconSize";
 class GameTreeItemModel : public QAbstractItemModel
 {
 public:
-    explicit GameTreeItemModel(OplPcTools::Core::GameCollection & _collection, QObject * _parent = nullptr);
+    explicit GameTreeItemModel(Core::GameCollection & _collection, QObject * _parent = nullptr);
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
-    const OplPcTools::Core::Game * game(const QModelIndex & _index) const;
+    const Core::Game * game(const QModelIndex & _index) const;
 
 private:
-    const OplPcTools::Core::GameCollection & mr_collection;
+    const Core::GameCollection & mr_collection;
 };
 
 } // namespace
 
-GameTreeItemModel::GameTreeItemModel(OplPcTools::Core::GameCollection & _collection, QObject * _parent /*= nullptr*/) :
+GameTreeItemModel::GameTreeItemModel(Core::GameCollection & _collection, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
     mr_collection(_collection)
 {
 //    connect(&_collection, SIGNAL(loaded()), this, SIGNAL(modelReset()));
 
-    connect(&_collection, &OplPcTools::Core::GameCollection::loaded, this, [this]() {
+    connect(&_collection, &Core::GameCollection::loaded, this, [this]() {
         beginResetModel();
         qDebug() << "Resetting the tree model";
         endResetModel();
@@ -102,7 +103,7 @@ QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
     }
 }
 
-const OplPcTools::Core::Game * GameTreeItemModel::game(const QModelIndex & _index) const
+const Core::Game * GameTreeItemModel::game(const QModelIndex & _index) const
 {
     return _index.isValid() ? mr_collection[_index.row()] : nullptr;
 }
@@ -129,6 +130,7 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     activateItemControls(false);
     mp_private->tree_model = new GameTreeItemModel(_context.collection(), this);
     mp_private->tree_games->setModel(mp_private->tree_model);
+    // TODO: sorting
     mp_private->default_cover = QPixmap(":/images/no-image")
         .scaled(mp_private->label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     connect(mp_private->tree_games->selectionModel(),
@@ -225,16 +227,17 @@ void GameCollectionWidget::changeIconsSize()
 
 void GameCollectionWidget::gameSelected()
 {
-    const OplPcTools::Core::Game * game = mp_private->tree_model->game(mp_private->tree_games->currentIndex());
+    const Core::Game * game = mp_private->tree_model->game(mp_private->tree_games->currentIndex());
     if(game)
     {
         mp_private->label_id->setText(game->id());
         mp_private->label_title->setText(game->title());
         // TODO: if no cover
         mp_private->label_cover->setPixmap(mp_private->default_cover);
-        // TODO: mp_private->label_type->setText();
-        // TODO: mp_private->label_parts->setText(0);
-        // TODO: mp_private->label_source->setText();
+        mp_private->label_type->setText(game->mediaType() == Core::MediaType::CD ? "CD" : "DVD");
+        mp_private->label_parts->setText(QString("%1").arg(game->partCount()));
+        mp_private->label_source->setText(
+            game->installationType() == Core::GameInstallationType::UlConfig ? "UL" : tr("Directory"));
         mp_private->widget_details->show();
     }
     else
@@ -246,6 +249,6 @@ void GameCollectionWidget::gameSelected()
 
 void GameCollectionWidget::showGameDetails()
 {
-    const OplPcTools::Core::Game * game = mp_private->tree_model->game(mp_private->tree_games->currentIndex());
+    const Core::Game * game = mp_private->tree_model->game(mp_private->tree_games->currentIndex());
     if(game) mp_private->context.showGameDetails(game->id());
 }

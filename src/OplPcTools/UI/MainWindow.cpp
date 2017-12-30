@@ -23,6 +23,7 @@
 #include <OplPcTools/UI/AboutDialog.h>
 #include "ui_MainWindow.h"
 
+using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
@@ -39,13 +40,13 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     QMainWindow(_parent),
     mp_private(new Private)
 {
-    mp_collection = new OplPcTools::Core::GameCollection(this);
+    mp_collection = new Core::GameCollection(this);
     mp_private->setupUi(this);
     GameCollectionWidget * game_collection_widget = new GameCollectionWidget(*this);
     mp_private->stacked_widget->addWidget(game_collection_widget);
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
-    if(OplPcTools::Core::Settings::instance().reopenLastSestion())
+    if(Core::Settings::instance().reopenLastSestion())
         game_collection_widget->tryLoadRecentDirectory();
 }
 
@@ -61,7 +62,7 @@ void MainWindow::closeEvent(QCloseEvent * _event)
     settings.setValue(SettingsKey::wnd_geometry, saveGeometry());
 }
 
-OplPcTools::Core::GameCollection & MainWindow::collection() const
+Core::GameCollection & MainWindow::collection() const
 {
    return *mp_collection;
 }

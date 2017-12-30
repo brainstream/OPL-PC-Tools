@@ -15,24 +15,52 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include "DirectoryGameStorage.h"
+#include <OplPcTools/Core/DirectoryGameStorage.h>
+#include <OplPcTools/Core/Device.h>
+#include <OplPcTools/Core/Iso9660DeviceSource.h>
 
 using namespace OplPcTools::Core;
+
+const QString DirectoryGameStorage::cd_directory("CD");
+const QString DirectoryGameStorage::dvd_directory("DVD");
 
 DirectoryGameStorage::DirectoryGameStorage(QObject * _parent /*= nullptr*/) :
     GameStorage(_parent)
 {
 }
 
+GameInstallationType DirectoryGameStorage::installationType() const
+{
+    return GameInstallationType::Directory;
+}
+
 bool DirectoryGameStorage::load(const QDir & _directory)
 {
     clear();
-    for(int i = 0; i < 20; ++i)
-    {
-        Game * game = createGame(QString("DIR_ID_#%1").arg(i));
-        game->setTitle(QString("#%1. The test DIR game").arg(i));
-    }
+    load(_directory, MediaType::CD);
+    load(_directory, MediaType::DVD);
     return true;
+}
+
+void DirectoryGameStorage::load(QDir _base_directory, MediaType _media_type)
+{
+    if(!_base_directory.cd(_media_type == MediaType::CD ? cd_directory : dvd_directory))
+        return;
+    for(const QString & iso : _base_directory.entryList({ "*.iso" }))
+    {
+        Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(_base_directory.absoluteFilePath(iso))));
+        if(!image.init())
+            break;
+        Game * game = createGame(image.gameId());
+        game->setMediaType(_media_type);
+        game->setPartCount(1);
+        QString title = QFileInfo(image.filepath()).fileName();
+        title = title.left(title.lastIndexOf('.'));
+        if(title.startsWith(image.gameId()))
+            game->setTitle(title.right(title.size() - image.gameId().size() - 1));
+        else
+            game->setTitle(title);
+    }
 }
 
 bool DirectoryGameStorage::renameGame(const QString & _id, const QString & _title)

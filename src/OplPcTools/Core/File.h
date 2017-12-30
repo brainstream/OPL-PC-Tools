@@ -15,69 +15,28 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameCollection.h>
+#ifndef __OPLPCTOOLS_FILE__
+#define __OPLPCTOOLS_FILE__
 
-using namespace OplPcTools;
-using namespace OplPcTools::Core;
+#include <QFile>
+#include <OplPcTools/Core/IOException.h>
 
-namespace {
+namespace OplPcTools {
+namespace Core {
 
-template<class TCollection>
-auto findGameById(TCollection & _collection, const QString & _id) -> typename TCollection::value_type
+inline void openFile(QFile & _file, QIODevice::OpenMode _flags)
 {
-    for(auto item : _collection)
-    {
-        if(item->id() == _id)
-            return item;
-    }
-    return nullptr;
+    if(!_file.open(_flags))
+        throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
 }
 
-} // namespace
-
-GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
-    QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
+inline void renameFile(const QString & _old_filename, const QString & _new_filename)
 {
+    if(!QFile::rename(_old_filename, _new_filename))
+        throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename).arg(_new_filename));
 }
 
-GameCollection::~GameCollection()
-{
-    delete mp_ul_conf_storage;
-    delete mp_dir_storage;
-}
+} // namespace Core
+} // namespace OplPcTools
 
-void GameCollection::load(const QDir & _directory)
-{
-    // TODO: handle exceptions
-    mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
-}
-
-const QString & GameCollection::directory() const
-{
-    return m_directory;
-}
-
-int GameCollection::count() const
-{
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
-}
-
-const Core::Game * GameCollection::operator [](int _index) const
-{
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
-}
-
-const Game * GameCollection::findGame(const QString & _id) const
-{
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
-    return game;
-}
+#endif // __OPLPCTOOLS_FILE__

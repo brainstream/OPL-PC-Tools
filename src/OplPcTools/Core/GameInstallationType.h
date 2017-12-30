@@ -18,10 +18,16 @@
 #ifndef __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 #define __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 
+namespace OplPcTools {
+namespace Core {
+
 enum class GameInstallationType
 {
     UlConfig,
     Directory
 };
+
+} // namespace Core
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAMEINSTALLATIONTYPE__

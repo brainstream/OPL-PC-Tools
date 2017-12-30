@@ -30,6 +30,7 @@ class UlConfigGameStorage final : public GameStorage
 public:
     explicit UlConfigGameStorage(QObject * _parent = nullptr);
     ~UlConfigGameStorage() override;
+    GameInstallationType installationType() const override;
     bool load(const QDir & _directory) override;
     bool renameGame(const QString & _id, const QString & _title) override;
     bool renameGame(const int _index, const QString & _title) override;
@@ -38,6 +39,9 @@ public:
 private:
     bool renameGame(Game & _game, const QString & _title);
     bool renameGameInConfig(const QString & _id, const QString & _title);
+
+private:
+    QString m_config_filepath;
 };
 
 } // namespace Core

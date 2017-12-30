@@ -15,69 +15,49 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameCollection.h>
+#ifndef __OPLPCTOOLS_EXCEPTION__
+#define __OPLPCTOOLS_EXCEPTION__
 
-using namespace OplPcTools;
-using namespace OplPcTools::Core;
+#include <QException>
+#include <QMetaType>
 
-namespace {
+namespace OplPcTools {
+namespace Core {
 
-template<class TCollection>
-auto findGameById(TCollection & _collection, const QString & _id) -> typename TCollection::value_type
+class Exception : public QException
 {
-    for(auto item : _collection)
+public:
+    explicit Exception(const QString & _message) :
+        m_message(_message)
     {
-        if(item->id() == _id)
-            return item;
     }
-    return nullptr;
-}
 
-} // namespace
+    const char * what() const noexcept override
+    {
+        return nullptr;
+    }
 
-GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
-    QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
-{
-}
+    const QString & message() const noexcept
+    {
+        return m_message;
+    }
 
-GameCollection::~GameCollection()
-{
-    delete mp_ul_conf_storage;
-    delete mp_dir_storage;
-}
+private:
+    QString m_message;
+};
 
-void GameCollection::load(const QDir & _directory)
-{
-    // TODO: handle exceptions
-    mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
-}
+} // namespace Core
+} // namespace OplPcTools
 
-const QString & GameCollection::directory() const
-{
-    return m_directory;
-}
 
-int GameCollection::count() const
-{
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
-}
+#define DECLARE_EXCEPTION(type_name)                      \
+    class type_name : public OplPcTools::Core::Exception  \
+    {                                                     \
+    public:                                               \
+        explicit type_name(const QString & _message) :    \
+            Exception(_message)                           \
+        {                                                 \
+        }                                                 \
+    };
 
-const Core::Game * GameCollection::operator [](int _index) const
-{
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
-}
-
-const Game * GameCollection::findGame(const QString & _id) const
-{
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
-    return game;
-}
+#endif // __OPLPCTOOLS_EXCEPTION__

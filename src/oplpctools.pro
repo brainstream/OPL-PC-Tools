@@ -29,10 +29,10 @@ DEFINES += \
     QT_DEPRECATED_WARNINGS
 
 CONFIG(debug, debug|release) {
-    message("The project will be built in the DEBUG confifuration")
+    message("The project will be built in the DEBUG configuration")
 }
 CONFIG(release, debug|release) {
-    message("The project will be built in the RELEASE confifuration")
+    message("The project will be built in the RELEASE configuration")
     #DEFINES += QT_NO_DEBUG_OUTPUT
 }
 
@@ -40,29 +40,50 @@ INCLUDEPATH += .
 
 SOURCES += \
     OplPcTools/Main.cpp \
-    OplPcTools/UI/MainWindow.cpp \
-    OplPcTools/UI/GameCollectionWidget.cpp \
-    OplPcTools/UI/GameDetailsWidget.cpp \
-    OplPcTools/UI/AboutDialog.cpp \
+    OplPcTools/Core/BinCueDeviceSource.cpp \
+    OplPcTools/Core/Device_FreeBSD.cpp \
+    OplPcTools/Core/Device_Linux.cpp \
+    OplPcTools/Core/Device_MacOSX.cpp \
+    OplPcTools/Core/Device_Windows.cpp \
+    OplPcTools/Core/Device.cpp \
+    OplPcTools/Core/DirectoryGameStorage.cpp \
     OplPcTools/Core/GameCollection.cpp \
+    OplPcTools/Core/GameStorage.cpp \
+    OplPcTools/Core/OpticalDriveDeviceSource.cpp \
     OplPcTools/Core/Settings.cpp \
     OplPcTools/Core/UlConfigGameStorage.cpp \
-    OplPcTools/Core/DirectoryGameStorage.cpp \
-    GameStorage.cpp
+    OplPcTools/UI/AboutDialog.cpp \
+    OplPcTools/UI/GameCollectionWidget.cpp \
+    OplPcTools/UI/GameDetailsWidget.cpp \
+    OplPcTools/UI/MainWindow.cpp \
+    OplPcTools/Core/GameArtManager.cpp
+
 
 HEADERS += \
-    OplPcTools/UI/MainWindow.h \
-    OplPcTools/UI/GameCollectionWidget.h \
-    OplPcTools/UI/UIContext.h \
-    OplPcTools/UI/GameDetailsWidget.h \
-    OplPcTools/UI/AboutDialog.h \
-    OplPcTools/Core/GameCollection.h \
+    OplPcTools/Core/BinCueDeviceSource.h \
+    OplPcTools/Core/Device.h \
+    OplPcTools/Core/DeviceSource.h \
+    OplPcTools/Core/DirectoryGameStorage.h \
+    OplPcTools/Core/Exception.h \
+    OplPcTools/Core/File.h \
     OplPcTools/Core/Game.h \
-    OplPcTools/Core/Settings.h \
+    OplPcTools/Core/GameCollection.h \
     OplPcTools/Core/GameInstallationType.h \
     OplPcTools/Core/GameStorage.h \
+    OplPcTools/Core/IOException.h \
+    OplPcTools/Core/OpticalDriveDeviceSource.h \
+    OplPcTools/Core/Settings.h \
     OplPcTools/Core/UlConfigGameStorage.h \
-    OplPcTools/Core/DirectoryGameStorage.h
+    OplPcTools/Core/ValidationException.h \
+    OplPcTools/UI/AboutDialog.h \
+    OplPcTools/UI/GameCollectionWidget.h \
+    OplPcTools/UI/GameDetailsWidget.h \
+    OplPcTools/UI/MainWindow.h \
+    OplPcTools/UI/UIContext.h \
+    OplPcTools/Core/MediaType.h \
+    OplPcTools/Core/Iso9660DeviceSource.h \
+    OplPcTools/Core/GameArtManager.h
+
 
 FORMS += \
     OplPcTools/UI/MainWindow.ui \

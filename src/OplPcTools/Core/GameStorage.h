@@ -37,9 +37,14 @@ public:
     int count() const;
     const Game * findGame(const QString & _id) const;
 
+    virtual GameInstallationType installationType() const = 0;
+    // TODO: use exceptions
     virtual bool load(const QDir & _directory) = 0;
+    // TODO: use exceptions
     virtual bool renameGame(const QString & _id, const QString & _title) = 0;
+    // TODO: use exceptions
     virtual bool renameGame(const int _index, const QString & _title) = 0;
+    // TODO: use exceptions
     virtual bool registerGame(const Game & _game) = 0;
 
 signals:

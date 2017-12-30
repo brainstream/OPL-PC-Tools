@@ -15,38 +15,93 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
-#define __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#ifndef __OPLPCTOOLS_DEVICE__
+#define __OPLPCTOOLS_DEVICE__
 
-#include <QVector>
-#include <OplPcTools/Core/GameStorage.h>
+#include <QString>
+#include <QList>
+#include <QSharedPointer>
+#include <OplPcTools/Core/MediaType.h>
+#include <OplPcTools/Core/DeviceSource.h>
 
 namespace OplPcTools {
 namespace Core {
 
-class DirectoryGameStorage final : public GameStorage
+struct DeviceName
 {
-    Q_OBJECT
+    QString name;
+    QString filename;
+};
+
+QList<DeviceName> loadDriveList();
+
+class Device final
+{   
+    Q_DISABLE_COPY(Device)
 
 public:
-    explicit DirectoryGameStorage(QObject * _parent = nullptr);
-    GameInstallationType installationType() const override;
-    bool load(const QDir & _directory) override;
-    bool renameGame(const QString & _id, const QString & _title) override;
-    bool renameGame(const int _index, const QString & _title) override;
-    bool registerGame(const Game & _game) override;
-
-public:
-    static const QString cd_directory;
-    static const QString dvd_directory;
+    explicit Device(QSharedPointer<DeviceSource> _source);
+    const QString filepath() const;
+    bool init();
+    bool isInitialized() const;
+    inline QString title() const;
+    inline void setTitle(const QString _title);
+    inline quint64 size() const;
+    inline MediaType mediaType() const;
+    inline void setMediaType(MediaType _media_type);
+    inline const QString & gameId() const;
+    bool open();
+    void close();
+    bool isOpen() const;
+    inline bool isReadOnly() const;
+    bool seek(quint64 _offset);
+    qint64 read(QByteArray & _buffer);
 
 private:
-    void load(QDir _base_directory, MediaType _media_type);
-    bool renameGame(Game & _game, const QString & _title);
-    bool renameGameFiles(const QString & _id, const QString & _title);
+    bool m_is_initialized;
+    QSharedPointer<DeviceSource> m_source_ptr;
+    MediaType m_media_type;
+    QString m_id;
+    QString m_title;
+    quint64 m_size;
 };
+
+QString Device::title() const
+{
+    return m_title;
+}
+
+void Device::setTitle(const QString _title)
+{
+    m_title = _title;
+}
+
+quint64 Device::size() const
+{
+    return m_size;
+}
+
+const QString & Device::gameId() const
+{
+    return m_id;
+}
+
+MediaType Device::mediaType() const
+{
+    return m_media_type;
+}
+
+void Device::setMediaType(MediaType _media_type)
+{
+    m_media_type = _media_type;
+}
+
+bool Device::isReadOnly() const
+{
+    return m_source_ptr->isReadOnly();
+}
 
 } // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#endif // __OPLPCTOOLS_DEVICE__

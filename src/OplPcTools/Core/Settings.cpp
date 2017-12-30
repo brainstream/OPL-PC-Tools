@@ -15,68 +15,37 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameCollection.h>
+#include <OplPcTools/Core/Settings.h>
 
 using namespace OplPcTools::Core;
 
-namespace {
+const QString Settings::Key::reopen_last_session("Settings/ReopenLastSession");
+const QString Settings::Key::confirm_game_deletion("Settings/ConfirmGameDeletion");
+const QString Settings::Key::confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
+const QString Settings::Key::split_up_iso("Settings/SplitUpISO");
+const QString Settings::Key::move_iso("Settings/MoveISO");
+const QString Settings::Key::rename_iso("Settings/RenameISO");
 
-template<class TCollection>
-auto findGameById(TCollection & _collection, const QString & _id) -> typename TCollection::value_type
+Settings::Settings()
 {
-    for(auto item : _collection)
-    {
-        if(item->id() == _id)
-            return item;
-    }
-    return nullptr;
+    m_reopen_last_session = loadBoolean(Key::reopen_last_session, false);
+    m_confirm_game_deletion = loadBoolean(Key::confirm_game_deletion, true);
+    m_confirm_pixmap_deletion = loadBoolean(Key::confirm_pixmap_deletion, true);
+    m_split_up_iso = loadBoolean(Key::split_up_iso, true);
+    m_move_iso = loadBoolean(Key::move_iso, false);
+    m_rename_iso = loadBoolean(Key::rename_iso, true);
 }
 
-} // namespace
-
-GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
-    QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
+bool Settings::loadBoolean(const QString & _key, bool _default_value)
 {
+    QVariant value = m_settins.value(_key);
+    if(value.isNull() || !value.canConvert(QVariant::Bool))
+        return _default_value;
+    return value.toBool();
 }
 
-GameCollection::~GameCollection()
+Settings & Settings::instance()
 {
-    delete mp_ul_conf_storage;
-    delete mp_dir_storage;
-}
-
-void GameCollection::load(const QDir & _directory)
-{
-    // TODO: handle exceptions
-    mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
-}
-
-const QString & GameCollection::directory() const
-{
-    return m_directory;
-}
-
-int GameCollection::count() const
-{
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
-}
-
-const OplPcTools::Core::Game * GameCollection::operator [](int _index) const
-{
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
-}
-
-const Game * GameCollection::findGame(const QString & _id) const
-{
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
-    return game;
+    static Settings * settings = new Settings();
+    return *settings;
 }

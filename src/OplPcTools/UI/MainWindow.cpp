@@ -16,6 +16,7 @@
  ***********************************************************************************************/
 
 #include <QMessageBox>
+#include <OplPcTools/Core/Settings.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/GameCollectionWidget.h>
 #include <OplPcTools/UI/GameDetailsWidget.h>
@@ -24,20 +25,40 @@
 
 using namespace OplPcTools::UI;
 
-class MainWindow::MainWindowUI : public Ui::MainWindow { };
+namespace {
+namespace SettingsKey {
+
+const char * wnd_geometry = "WindowGeometry";
+
+} // namespace SettingsKey
+} // namespace
+
+class MainWindow::Private : public Ui::MainWindow { };
 
 MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     QMainWindow(_parent),
-    mp_ui(new MainWindowUI)
+    mp_private(new Private)
 {
     mp_collection = new OplPcTools::Core::GameCollection(this);
-    mp_ui->setupUi(this);
-    mp_ui->stacked_widget->addWidget(new GameCollectionWidget(*this));
+    mp_private->setupUi(this);
+    GameCollectionWidget * game_collection_widget = new GameCollectionWidget(*this);
+    mp_private->stacked_widget->addWidget(game_collection_widget);
+    QSettings settings;
+    restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
+    if(OplPcTools::Core::Settings::instance().reopenLastSestion())
+        game_collection_widget->tryLoadRecentDirectory();
 }
 
 MainWindow::~MainWindow()
 {
-    delete mp_ui;
+    delete mp_private;
+}
+
+void MainWindow::closeEvent(QCloseEvent * _event)
+{
+    QMainWindow::closeEvent(_event);
+    QSettings settings;
+    settings.setValue(SettingsKey::wnd_geometry, saveGeometry());
 }
 
 OplPcTools::Core::GameCollection & MainWindow::collection() const
@@ -60,8 +81,8 @@ void MainWindow::showGameInstaller()
 {
     GameDetailsWidget * widget = new GameDetailsWidget(*this);
     widget->setGameId("TODO: INSTALL GAME");
-    int index = mp_ui->stacked_widget->addWidget(widget);
-    mp_ui->stacked_widget->setCurrentIndex(index);
+    int index = mp_private->stacked_widget->addWidget(widget);
+    mp_private->stacked_widget->setCurrentIndex(index);
 }
 
 void MainWindow::showIsoRecoverer()
@@ -73,6 +94,6 @@ void MainWindow::showGameDetails(const QString & _id)
 {
     GameDetailsWidget * widget = new GameDetailsWidget(*this);
     widget->setGameId(_id);
-    int index = mp_ui->stacked_widget->addWidget(widget);
-    mp_ui->stacked_widget->setCurrentIndex(index);
+    int index = mp_private->stacked_widget->addWidget(widget);
+    mp_private->stacked_widget->setCurrentIndex(index);
 }

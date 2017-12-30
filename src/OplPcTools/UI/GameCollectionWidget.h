@@ -18,6 +18,7 @@
 #ifndef __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
 #define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
 
+#include <QDir>
 #include <QWidget>
 #include <QTreeWidgetItem>
 #include <OplPcTools/UI/UIContext.h>
@@ -32,8 +33,12 @@ class GameCollectionWidget : public QWidget
 public:
     explicit GameCollectionWidget(UIContext & _context, QWidget * _parent = nullptr);
     ~GameCollectionWidget() override;
+    bool tryLoadRecentDirectory();
+    void load(const QDir & _directory);
 
 private:
+    void applySettings();
+    void saveSettings();
     void activateCollectionControls(bool _activate);
     void activateItemControls(bool _activate);
 

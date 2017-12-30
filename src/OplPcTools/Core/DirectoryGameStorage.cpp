@@ -15,68 +15,57 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameCollection.h>
+#include "DirectoryGameStorage.h"
 
 using namespace OplPcTools::Core;
 
-namespace {
-
-template<class TCollection>
-auto findGameById(TCollection & _collection, const QString & _id) -> typename TCollection::value_type
+DirectoryGameStorage::DirectoryGameStorage(QObject * _parent /*= nullptr*/) :
+    GameStorage(_parent)
 {
-    for(auto item : _collection)
+}
+
+bool DirectoryGameStorage::load(const QDir & _directory)
+{
+    clear();
+    for(int i = 0; i < 20; ++i)
     {
-        if(item->id() == _id)
-            return item;
+        Game * game = createGame(QString("DIR_ID_#%1").arg(i));
+        game->setTitle(QString("#%1. The test DIR game").arg(i));
     }
-    return nullptr;
+    return true;
 }
 
-} // namespace
-
-GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
-    QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
+bool DirectoryGameStorage::renameGame(const QString & _id, const QString & _title)
 {
+    // TODO: exception
+    Game * game = findNonConstGame(_id);
+    return game && renameGame(*game, _title);
 }
 
-GameCollection::~GameCollection()
+bool DirectoryGameStorage::renameGame(const int _index, const QString & _title)
 {
-    delete mp_ul_conf_storage;
-    delete mp_dir_storage;
+    // TODO: exception
+    return renameGame(*gameAt(_index), _title);
 }
 
-void GameCollection::load(const QDir & _directory)
+bool DirectoryGameStorage::renameGame(Game & _game, const QString & _title)
 {
-    // TODO: handle exceptions
-    mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
+    if(renameGameFiles(_game.id(), _title))
+    {
+        _game.setTitle(_title);
+        return true;
+    }
+    return false;
 }
 
-const QString & GameCollection::directory() const
+bool DirectoryGameStorage::renameGameFiles(const QString & _id, const QString & _title)
 {
-    return m_directory;
+    // TODO: rename files
+    return true;
 }
 
-int GameCollection::count() const
+bool DirectoryGameStorage::registerGame(const Game & _game)
 {
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
-}
-
-const OplPcTools::Core::Game * GameCollection::operator [](int _index) const
-{
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
-}
-
-const Game * GameCollection::findGame(const QString & _id) const
-{
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
-    return game;
+    // TODO: register game
+    return true;
 }

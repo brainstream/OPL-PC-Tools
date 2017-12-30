@@ -28,6 +28,8 @@ class Game final
 {
 public:
     explicit inline Game(const QString & _id);
+    Game(const Game &) = default;
+    Game & operator = (const Game &) = default;
     inline const QString & id() const;
     inline void setTitle(const QString & _title);
     inline const QString & title() const;

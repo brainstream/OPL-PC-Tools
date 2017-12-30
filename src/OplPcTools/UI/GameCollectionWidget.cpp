@@ -16,6 +16,7 @@
  ***********************************************************************************************/
 
 #include <QDebug>
+#include <QSettings>
 #include <QFileDialog>
 #include <QAbstractItemModel>
 #include <QPixmap>
@@ -25,6 +26,13 @@
 using namespace OplPcTools::UI;
 
 namespace {
+
+namespace SettingsKey {
+
+const char * ul_dir     = "ULDirectory";
+const char * icons_size = "GameListIconSize";
+
+} // namespace SettingsKey
 
 class GameTreeItemModel : public QAbstractItemModel
 {
@@ -47,7 +55,13 @@ GameTreeItemModel::GameTreeItemModel(OplPcTools::Core::GameCollection & _collect
     QAbstractItemModel(_parent),
     mr_collection(_collection)
 {
-    connect(&_collection, SIGNAL(loaded()), this, SIGNAL(modelReset()));
+//    connect(&_collection, SIGNAL(loaded()), this, SIGNAL(modelReset()));
+
+    connect(&_collection, &OplPcTools::Core::GameCollection::loaded, this, [this]() {
+        beginResetModel();
+        qDebug() << "Resetting the tree model";
+        endResetModel();
+    });
 }
 
 QModelIndex GameTreeItemModel::index(int _row, int _column, const QModelIndex & _parent) const
@@ -80,7 +94,7 @@ QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
     switch(_role)
     {
     case Qt::DisplayRole:
-        return QString("Item #%1").arg(_index.row());
+        return mr_collection[_index.row()]->title();
     case Qt::DecorationRole:
         return QIcon::fromTheme("document-edit");
     default:
@@ -90,7 +104,7 @@ QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
 
 const OplPcTools::Core::Game * GameTreeItemModel::game(const QModelIndex & _index) const
 {
-    return _index.isValid() ? &mr_collection[_index.row()] : nullptr;
+    return _index.isValid() ? mr_collection[_index.row()] : nullptr;
 }
 
 struct GameCollectionWidget::Private : public Ui::GameCollectionWidget
@@ -117,16 +131,16 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     mp_private->tree_games->setModel(mp_private->tree_model);
     mp_private->default_cover = QPixmap(":/images/no-image")
         .scaled(mp_private->label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
     connect(mp_private->tree_games->selectionModel(),
             SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
     connect(&mp_private->context.collection(), SIGNAL(loaded()), this, SLOT(collectionLoaded()));
+    connect(this, &GameCollectionWidget::destroyed, this, &GameCollectionWidget::saveSettings);
+    applySettings();
 }
 
 GameCollectionWidget::~GameCollectionWidget()
 {
     delete mp_private;
-    qDebug() << "GameCollectionWidget destroyed";
 }
 
 void GameCollectionWidget::activateCollectionControls(bool _activate)
@@ -142,12 +156,53 @@ void GameCollectionWidget::activateItemControls(bool _activate)
     mp_private->btn_edit->setEnabled(_activate);
 }
 
+void GameCollectionWidget::applySettings()
+{
+    QSettings settings;
+    QVariant icons_size_value = settings.value(SettingsKey::icons_size);
+    int icons_size = 3;
+    if(!icons_size_value.isNull() && icons_size_value.canConvert(QVariant::Int))
+    {
+        icons_size = icons_size_value.toInt();
+        if(icons_size > 4) icons_size = 4;
+        else if(icons_size < 1) icons_size = 1;
+    }
+    mp_private->slider_icons_size->setValue(icons_size);
+    icons_size *= 16;
+    mp_private->tree_games->setIconSize(QSize(icons_size, icons_size));
+}
+
+void GameCollectionWidget::saveSettings()
+{
+    QSettings settings;
+    settings.setValue(SettingsKey::icons_size, mp_private->slider_icons_size->value());
+}
+
 void GameCollectionWidget::load()
 {
-//    QString dirpath = settings.value(g_settings_key_ul_dir).toString();
-    QString dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root directory"));
-    if(dirpath.isEmpty()) return;
-    mp_private->context.collection().load(dirpath);
+    QSettings settings;
+    QString dirpath = settings.value(SettingsKey::ul_dir).toString();
+    QString choosen_dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root directory"), dirpath);
+    if(choosen_dirpath.isEmpty()) return;
+    if(choosen_dirpath != dirpath)
+        settings.setValue(SettingsKey::ul_dir, dirpath);
+    load(choosen_dirpath);
+}
+
+bool GameCollectionWidget::tryLoadRecentDirectory()
+{
+    QSettings settings;
+    QVariant value = settings.value(SettingsKey::ul_dir);
+    if(!value.isValid()) return false;
+    QDir dir(value.toString());
+    if(!dir.exists()) return false;
+    load(dir);
+    return true;
+}
+
+void GameCollectionWidget::load(const QDir & _directory)
+{
+    mp_private->context.collection().load(_directory);
 }
 
 void GameCollectionWidget::reload()

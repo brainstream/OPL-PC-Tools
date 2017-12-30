@@ -26,7 +26,15 @@ VERSION = "2.0"
 
 DEFINES += \
     "_OPLPCTOOLS_VERSION=$$VERSION" \
-    QT_DEPRECATED_WARNINGS \
+    QT_DEPRECATED_WARNINGS
+
+CONFIG(debug, debug|release) {
+    message("The project will be built in the DEBUG confifuration")
+}
+CONFIG(release, debug|release) {
+    message("The project will be built in the RELEASE confifuration")
+    #DEFINES += QT_NO_DEBUG_OUTPUT
+}
 
 INCLUDEPATH += .
 
@@ -36,7 +44,11 @@ SOURCES += \
     OplPcTools/UI/GameCollectionWidget.cpp \
     OplPcTools/UI/GameDetailsWidget.cpp \
     OplPcTools/UI/AboutDialog.cpp \
-    OplPcTools/Core/GameCollection.cpp
+    OplPcTools/Core/GameCollection.cpp \
+    OplPcTools/Core/Settings.cpp \
+    OplPcTools/Core/UlConfigGameStorage.cpp \
+    OplPcTools/Core/DirectoryGameStorage.cpp \
+    GameStorage.cpp
 
 HEADERS += \
     OplPcTools/UI/MainWindow.h \
@@ -45,7 +57,12 @@ HEADERS += \
     OplPcTools/UI/GameDetailsWidget.h \
     OplPcTools/UI/AboutDialog.h \
     OplPcTools/Core/GameCollection.h \
-    OplPcTools/Core/Game.h
+    OplPcTools/Core/Game.h \
+    OplPcTools/Core/Settings.h \
+    OplPcTools/Core/GameInstallationType.h \
+    OplPcTools/Core/GameStorage.h \
+    OplPcTools/Core/UlConfigGameStorage.h \
+    OplPcTools/Core/DirectoryGameStorage.h
 
 FORMS += \
     OplPcTools/UI/MainWindow.ui \

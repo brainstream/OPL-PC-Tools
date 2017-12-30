@@ -15,68 +15,62 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/GameCollection.h>
+#include <OplPcTools/Core/GameStorage.h>
 
 using namespace OplPcTools::Core;
 
-namespace {
-
-template<class TCollection>
-auto findGameById(TCollection & _collection, const QString & _id) -> typename TCollection::value_type
+GameStorage::GameStorage(QObject * _parent /*= nullptr*/) :
+    QObject(_parent)
 {
-    for(auto item : _collection)
+}
+
+GameStorage::~GameStorage()
+{
+    clear();
+}
+
+void GameStorage::clear()
+{
+    for(Game * game : m_games)
+        delete game;
+    m_games.clear();
+}
+
+const Game * GameStorage::operator [](int _index) const
+{
+    return gameAt(_index);
+}
+
+Game * GameStorage::gameAt(int _index) const
+{
+    // TODO: exception
+    return m_games[_index];
+}
+
+int GameStorage::count() const
+{
+    return m_games.count();
+}
+
+Game * GameStorage::createGame(const QString & _id)
+{
+    Game * game = new Game(_id);
+    m_games.append(game);
+    return game;
+}
+
+const Game * GameStorage::findGame(const QString & _id) const
+{
+    return findNonConstGame(_id);
+}
+
+Game * GameStorage::findNonConstGame(const QString & _id) const
+{
+    int count = m_games.count();
+    for(int i = 0; i < count; ++i)
     {
-        if(item->id() == _id)
-            return item;
+        if(_id == m_games[i]->id())
+            return m_games[i];
     }
     return nullptr;
-}
-
-} // namespace
-
-GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
-    QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
-{
-}
-
-GameCollection::~GameCollection()
-{
-    delete mp_ul_conf_storage;
-    delete mp_dir_storage;
-}
-
-void GameCollection::load(const QDir & _directory)
-{
-    // TODO: handle exceptions
-    mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
-}
-
-const QString & GameCollection::directory() const
-{
-    return m_directory;
-}
-
-int GameCollection::count() const
-{
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
-}
-
-const OplPcTools::Core::Game * GameCollection::operator [](int _index) const
-{
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
-}
-
-const Game * GameCollection::findGame(const QString & _id) const
-{
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
-    return game;
 }

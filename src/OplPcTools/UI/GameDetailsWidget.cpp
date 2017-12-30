@@ -35,7 +35,6 @@ GameDetailsWidget::GameDetailsWidget(UIContext & _context, QWidget * _parent /*=
 GameDetailsWidget::~GameDetailsWidget()
 {
     delete mp_ui;
-    qDebug() << "GameDetailsWidget destroyed";
 }
 
 void GameDetailsWidget::setGameId(const QString & _id)

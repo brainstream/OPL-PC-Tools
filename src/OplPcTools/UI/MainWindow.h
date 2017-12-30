@@ -33,6 +33,9 @@ public:
     ~MainWindow() override;
     Core::GameCollection & collection() const override;
 
+protected:
+    void closeEvent(QCloseEvent * _event) override;
+
 private slots:
     void showAboutDialog();
     void showAboutQtDialog();
@@ -41,8 +44,8 @@ private slots:
     void showGameDetails(const QString & _id) override;
 
 private:
-    class MainWindowUI;
-    MainWindowUI * mp_ui;
+    class Private;
+    Private * mp_private;
     Core::GameCollection * mp_collection;
 };
 

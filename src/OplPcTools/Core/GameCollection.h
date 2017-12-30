@@ -19,8 +19,10 @@
 #define __OPLPCTOOLS_GAMECOLLECTION__
 
 #include <QObject>
-#include <QVector>
+#include <QDir>
 #include <OplPcTools/Core/Game.h>
+#include <OplPcTools/Core/UlConfigGameStorage.h>
+#include <OplPcTools/Core/DirectoryGameStorage.h>
 
 namespace OplPcTools {
 namespace Core {
@@ -32,13 +34,11 @@ class GameCollection final : public QObject
 public:
     explicit GameCollection(QObject * _parent = nullptr);
     ~GameCollection() override;
-    inline const QString & directory() const;
-    void load(const QString & _directory);
+    void load(const QDir & _directory);
+    const QString & directory() const;
     const Game * findGame(const QString & _id) const;
-    Game * findGame(const QString & _id);
-    inline int count() const;
-    inline const Game & operator [](int _index) const;
-    inline Game & operator [](int _index);
+    int count() const;
+    const Game * operator [](int _index) const;
 
 signals:
     void loaded();
@@ -48,28 +48,9 @@ signals:
 
 private:
     QString m_directory;
-    QVector<Game *> m_games;
+    UlConfigGameStorage * mp_ul_conf_storage;
+    DirectoryGameStorage * mp_dir_storage;
 };
-
-const QString & GameCollection::directory() const
-{
-    return m_directory;
-}
-
-int GameCollection::count() const
-{
-    return m_games.count();
-}
-
-const Game & GameCollection::operator [](int _index) const
-{
-    return *m_games[_index];
-}
-
-Game & GameCollection::operator [](int _index)
-{
-    return *m_games[_index];
-}
 
 } // namespace Core
 } // namespace OplPcTools

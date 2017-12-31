@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="toolbar" native="true">
+    <widget class="QWidget" name="mp_toolbar" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -48,7 +48,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="btn_open">
+       <widget class="QToolButton" name="mp_btn_open">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -81,7 +81,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="btn_reload">
+       <widget class="QToolButton" name="mp_btn_reload">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -111,7 +111,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="spacer_3">
+       <spacer name="mp_spacer_3">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -127,7 +127,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="btn_edit">
+       <widget class="QToolButton" name="mp_btn_edit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -157,7 +157,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="btn_delete">
+       <widget class="QToolButton" name="mp_btn_delete">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -187,7 +187,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="btn_install">
+       <widget class="QToolButton" name="mp_btn_install">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -217,7 +217,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="spacer_2">
+       <spacer name="mp_spacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -233,16 +233,19 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="layout">
+    <layout class="QVBoxLayout" name="mp_layout">
      <property name="rightMargin">
       <number>4</number>
      </property>
      <item>
-      <widget class="QTreeView" name="tree_games">
+      <widget class="QTreeView" name="mp_tree_games">
        <property name="styleSheet">
         <string notr="true">::item {
 	padding: 2px 0;
 }</string>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
        </property>
        <property name="rootIsDecorated">
         <bool>false</bool>
@@ -262,16 +265,16 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="layout_2">
+      <layout class="QHBoxLayout" name="mp_layout_2">
        <item>
-        <widget class="QLabel" name="label_directory">
+        <widget class="QLabel" name="mp_label_directory">
          <property name="text">
           <string notr="true"/>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="spacer">
+        <spacer name="mp_spacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -284,7 +287,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QSlider" name="slider_icons_size">
+        <widget class="QSlider" name="mp_slider_icons_size">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -325,7 +328,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="widget_details_holder" native="true">
+    <widget class="QWidget" name="mp_widget_details_holder" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -358,7 +361,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="widget_details" native="true">
+       <widget class="QWidget" name="mp_widget_details" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -391,7 +394,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_cover">
+          <widget class="QLabel" name="mp_label_cover">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -419,7 +422,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer_2">
+          <spacer name="mp_verticalSpacer_2">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -435,7 +438,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_title">
+          <widget class="QLabel" name="mp_label_title">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -454,14 +457,14 @@
           </widget>
          </item>
          <item>
-          <widget class="Line" name="line">
+          <widget class="Line" name="mp_line">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="widget_stats" native="true">
+          <widget class="QWidget" name="mp_widget_stats" native="true">
            <property name="font">
             <font>
              <pointsize>8</pointsize>
@@ -484,7 +487,7 @@
              <number>0</number>
             </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="mp_label_2">
               <property name="text">
                <string>ID:</string>
               </property>
@@ -494,7 +497,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_id">
+             <widget class="QLabel" name="mp_label_id">
               <property name="text">
                <string notr="true"/>
               </property>
@@ -504,7 +507,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="mp_label_4">
               <property name="text">
                <string>Type:</string>
               </property>
@@ -514,7 +517,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_type">
+             <widget class="QLabel" name="mp_label_type">
               <property name="text">
                <string notr="true"/>
               </property>
@@ -524,7 +527,7 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="mp_label_6">
               <property name="text">
                <string>Source:</string>
               </property>
@@ -534,7 +537,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="label_source">
+             <widget class="QLabel" name="mp_label_source">
               <property name="text">
                <string notr="true"/>
               </property>
@@ -544,7 +547,7 @@
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QLabel" name="label_8">
+             <widget class="QLabel" name="mp_label_8">
               <property name="text">
                <string>Parts:</string>
               </property>
@@ -554,7 +557,7 @@
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLabel" name="label_parts">
+             <widget class="QLabel" name="mp_label_parts">
               <property name="text">
                <string notr="true"/>
               </property>
@@ -567,7 +570,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer">
+          <spacer name="mp_verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -590,7 +593,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>slider_icons_size</sender>
+   <sender>mp_slider_icons_size</sender>
    <signal>valueChanged(int)</signal>
    <receiver>GameCollectionWidget</receiver>
    <slot>changeIconsSize()</slot>
@@ -606,7 +609,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>tree_games</sender>
+   <sender>mp_tree_games</sender>
    <signal>doubleClicked(QModelIndex)</signal>
    <receiver>GameCollectionWidget</receiver>
    <slot>showGameDetails()</slot>
@@ -622,7 +625,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>btn_open</sender>
+   <sender>mp_btn_open</sender>
    <signal>clicked()</signal>
    <receiver>GameCollectionWidget</receiver>
    <slot>load()</slot>
@@ -638,7 +641,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>btn_reload</sender>
+   <sender>mp_btn_reload</sender>
    <signal>clicked()</signal>
    <receiver>GameCollectionWidget</receiver>
    <slot>reload()</slot>

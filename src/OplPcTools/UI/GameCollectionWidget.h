@@ -19,15 +19,20 @@
 #define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
 
 #include <QDir>
+#include <QPixmap>
 #include <QWidget>
-#include <QTreeWidgetItem>
+#include <QSortFilterProxyModel>
+#include <OplPcTools/Core/GameArtManager.h>
 #include <OplPcTools/UI/UIContext.h>
+#include "ui_GameCollectionWidget.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class GameCollectionWidget : public QWidget
+class GameCollectionWidget : public QWidget, private Ui::GameCollectionWidget
 {
+    class GameTreeModel;
+
     Q_OBJECT
 
 public:
@@ -51,8 +56,11 @@ private slots:
     void showGameDetails();
 
 private:
-    struct Private;
-    Private * mp_private;
+    UIContext & mr_context;
+    OplPcTools::Core::GameArtManager * mp_game_art_manager;
+    GameTreeModel * mp_model;
+    QSortFilterProxyModel * mp_prox_model;
+    QPixmap m_default_cover;
 };
 
 } // namespace UI

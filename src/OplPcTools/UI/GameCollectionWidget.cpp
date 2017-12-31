@@ -19,27 +19,25 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <QAbstractItemModel>
-#include <QPixmap>
 #include <OplPcTools/UI/GameCollectionWidget.h>
-#include <OplPcTools/Core/GameArtManager.h>
-#include "ui_GameCollectionWidget.h"
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
-
 namespace SettingsKey {
 
 const char * ul_dir     = "ULDirectory";
 const char * icons_size = "GameListIconSize";
 
-} // namespace SettingsKey
 
-class GameTreeItemModel : public QAbstractItemModel
+} // namespace SettingsKey
+} // namespace
+
+class GameCollectionWidget::GameTreeModel : public QAbstractItemModel
 {
 public:
-    explicit GameTreeItemModel(Core::GameCollection & _collection, QObject * _parent = nullptr);
+    explicit GameTreeModel(Core::GameCollection & _collection, QObject * _parent = nullptr);
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
@@ -54,9 +52,8 @@ private:
     Core::GameArtManager * mp_art_manager;
 };
 
-} // namespace
 
-GameTreeItemModel::GameTreeItemModel(Core::GameCollection & _collection, QObject * _parent /*= nullptr*/) :
+GameCollectionWidget::GameTreeModel::GameTreeModel(Core::GameCollection & _collection, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
     m_default_icon(QPixmap(":/images/no-icon")),
     mr_collection(_collection),
@@ -69,32 +66,32 @@ GameTreeItemModel::GameTreeItemModel(Core::GameCollection & _collection, QObject
     });
 }
 
-QModelIndex GameTreeItemModel::index(int _row, int _column, const QModelIndex & _parent) const
+QModelIndex GameCollectionWidget::GameTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
 {
     Q_UNUSED(_parent)
     return createIndex(_row, _column);
 }
 
-QModelIndex GameTreeItemModel::parent(const QModelIndex & _child) const
+QModelIndex GameCollectionWidget::GameTreeModel::parent(const QModelIndex & _child) const
 {
     Q_UNUSED(_child)
     return QModelIndex();
 }
 
-int GameTreeItemModel::rowCount(const QModelIndex & _parent) const
+int GameCollectionWidget::GameTreeModel::rowCount(const QModelIndex & _parent) const
 {
     if(_parent.isValid())
         return 0;
     return mr_collection.count();
 }
 
-int GameTreeItemModel::columnCount(const QModelIndex & _parent) const
+int GameCollectionWidget::GameTreeModel::columnCount(const QModelIndex & _parent) const
 {
     Q_UNUSED(_parent)
     return 1;
 }
 
-QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
+QVariant GameCollectionWidget::GameTreeModel::data(const QModelIndex & _index, int _role) const
 {
     switch(_role)
     {
@@ -111,72 +108,56 @@ QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
     return QVariant();
 }
 
-const Core::Game * GameTreeItemModel::game(const QModelIndex & _index) const
+const Core::Game * GameCollectionWidget::GameTreeModel::game(const QModelIndex & _index) const
 {
     return _index.isValid() ? mr_collection[_index.row()] : nullptr;
 }
 
-void GameTreeItemModel::setArtManager(Core::GameArtManager & _manager)
+void GameCollectionWidget::GameTreeModel::setArtManager(Core::GameArtManager & _manager)
 {
     mp_art_manager = &_manager;
 }
 
-struct GameCollectionWidget::Private : public Ui::GameCollectionWidget
-{
-    explicit Private(UIContext & _context) :
-        context(_context),
-        tree_model(nullptr),
-        game_art_manager(nullptr)
-    {
-    }
-
-    ~Private()
-    {
-        // FIXME: Ui::GameCollectionWidget contains no a virtual destructor!!!
-        delete game_art_manager;
-    }
-
-    UIContext & context;
-    GameTreeItemModel * tree_model;
-    QPixmap default_cover;
-    Core::GameArtManager * game_art_manager;
-};
-
 GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
     QWidget(_parent),
-    mp_private(new Private(_context))
+    mr_context(_context),
+    mp_game_art_manager(nullptr),
+    mp_model(nullptr),
+    mp_prox_model(nullptr)
 {
-    mp_private->setupUi(this);
+    setupUi(this);
+    m_default_cover = QPixmap(":/images/no-image")
+        .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    mp_model = new GameTreeModel(_context.collection(), this);
+    mp_prox_model = new QSortFilterProxyModel(this);
+    mp_prox_model->setSourceModel(mp_model);
+    mp_prox_model->setDynamicSortFilter(true);
+    mp_tree_games->setModel(mp_prox_model);
     activateCollectionControls(false);
     activateItemControls(false);
-    mp_private->tree_model = new GameTreeItemModel(_context.collection(), this);
-    mp_private->tree_games->setModel(mp_private->tree_model);
-    // TODO: sorting
-    mp_private->default_cover = QPixmap(":/images/no-image")
-        .scaled(mp_private->label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    connect(mp_private->tree_games->selectionModel(),
+    connect(mp_tree_games->selectionModel(),
             SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
-    connect(&mp_private->context.collection(), SIGNAL(loaded()), this, SLOT(collectionLoaded()));
+    connect(&mr_context.collection(), SIGNAL(loaded()), this, SLOT(collectionLoaded()));
     connect(this, &GameCollectionWidget::destroyed, this, &GameCollectionWidget::saveSettings);
     applySettings();
 }
 
 GameCollectionWidget::~GameCollectionWidget()
 {
-    delete mp_private;
+    delete mp_game_art_manager;
 }
 
 void GameCollectionWidget::activateCollectionControls(bool _activate)
 {
-    mp_private->btn_install->setEnabled(_activate);
-    mp_private->btn_reload->setEnabled(_activate);
+    mp_btn_install->setEnabled(_activate);
+    mp_btn_reload->setEnabled(_activate);
 }
 
 void GameCollectionWidget::activateItemControls(bool _activate)
 {
-    mp_private->widget_details->setVisible(_activate);
-    mp_private->btn_delete->setEnabled(_activate);
-    mp_private->btn_edit->setEnabled(_activate);
+    mp_widget_details->setVisible(_activate);
+    mp_btn_delete->setEnabled(_activate);
+    mp_btn_edit->setEnabled(_activate);
 }
 
 void GameCollectionWidget::applySettings()
@@ -190,15 +171,15 @@ void GameCollectionWidget::applySettings()
         if(icons_size > 4) icons_size = 4;
         else if(icons_size < 1) icons_size = 1;
     }
-    mp_private->slider_icons_size->setValue(icons_size);
+    mp_slider_icons_size->setValue(icons_size);
     icons_size *= 16;
-    mp_private->tree_games->setIconSize(QSize(icons_size, icons_size));
+    mp_tree_games->setIconSize(QSize(icons_size, icons_size));
 }
 
 void GameCollectionWidget::saveSettings()
 {
     QSettings settings;
-    settings.setValue(SettingsKey::icons_size, mp_private->slider_icons_size->value());
+    settings.setValue(SettingsKey::icons_size, mp_slider_icons_size->value());
 }
 
 void GameCollectionWidget::load()
@@ -225,56 +206,57 @@ bool GameCollectionWidget::tryLoadRecentDirectory()
 
 void GameCollectionWidget::load(const QDir & _directory)
 {
-    mp_private->context.collection().load(_directory);
-    delete mp_private->game_art_manager;
-    mp_private->game_art_manager = new Core::GameArtManager(_directory);
-    mp_private->game_art_manager->addCacheType(Core::GameArtType::Icon);
-    mp_private->game_art_manager->addCacheType(Core::GameArtType::Front);
-    mp_private->tree_model->setArtManager(*mp_private->game_art_manager);
+    mr_context.collection().load(_directory);
+    delete mp_game_art_manager;
+    mp_game_art_manager = new Core::GameArtManager(_directory);
+    mp_game_art_manager->addCacheType(Core::GameArtType::Icon);
+    mp_game_art_manager->addCacheType(Core::GameArtType::Front);
+    mp_model->setArtManager(*mp_game_art_manager);
+    mp_prox_model->sort(0, Qt::AscendingOrder);
 }
 
 void GameCollectionWidget::reload()
 {
-    load(mp_private->context.collection().directory());
+    load(mr_context.collection().directory());
 }
 
 void GameCollectionWidget::collectionLoaded()
 {
-    mp_private->label_directory->setText(mp_private->context.collection().directory());
+    mp_label_directory->setText(mr_context.collection().directory());
     activateCollectionControls(true);
     gameSelected();
 }
 
 void GameCollectionWidget::changeIconsSize()
 {
-    int size = mp_private->slider_icons_size->value() * 16;
-    mp_private->tree_games->setIconSize(QSize(size, size));
+    int size = mp_slider_icons_size->value() * 16;
+    mp_tree_games->setIconSize(QSize(size, size));
 }
 
 void GameCollectionWidget::gameSelected()
 {
-    const Core::Game * game = mp_private->tree_model->game(mp_private->tree_games->currentIndex());
+    const Core::Game * game = mp_model->game(mp_prox_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
-        mp_private->label_id->setText(game->id());
-        mp_private->label_title->setText(game->title());
-        QPixmap pixmap = mp_private->game_art_manager->load(game->id(), Core::GameArtType::Front);
-        mp_private->label_cover->setPixmap(pixmap.isNull() ? mp_private->default_cover : pixmap);
-        mp_private->label_type->setText(game->mediaType() == Core::MediaType::CD ? "CD" : "DVD");
-        mp_private->label_parts->setText(QString("%1").arg(game->partCount()));
-        mp_private->label_source->setText(
+        mp_label_id->setText(game->id());
+        mp_label_title->setText(game->title());
+        QPixmap pixmap = mp_game_art_manager->load(game->id(), Core::GameArtType::Front);
+        mp_label_cover->setPixmap(pixmap.isNull() ? m_default_cover : pixmap);
+        mp_label_type->setText(game->mediaType() == Core::MediaType::CD ? "CD" : "DVD");
+        mp_label_parts->setText(QString("%1").arg(game->partCount()));
+        mp_label_source->setText(
             game->installationType() == Core::GameInstallationType::UlConfig ? "UL" : tr("Directory"));
-        mp_private->widget_details->show();
+        mp_widget_details->show();
     }
     else
     {
-        mp_private->widget_details->hide();
+        mp_widget_details->hide();
     }
     activateItemControls(game != nullptr);
 }
 
 void GameCollectionWidget::showGameDetails()
 {
-    const Core::Game * game = mp_private->tree_model->game(mp_private->tree_games->currentIndex());
-    if(game) mp_private->context.showGameDetails(game->id());
+    const Core::Game * game = mp_model->game(mp_prox_model->mapToSource(mp_tree_games->currentIndex()));
+    if(game) mr_context.showGameDetails(game->id());
 }

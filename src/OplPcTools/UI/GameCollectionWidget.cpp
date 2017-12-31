@@ -46,19 +46,22 @@ public:
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
     const Core::Game * game(const QModelIndex & _index) const;
+    void setArtManager(Core::GameArtManager & _manager);
 
 private:
+    const QPixmap m_default_icon;
     const Core::GameCollection & mr_collection;
+    Core::GameArtManager * mp_art_manager;
 };
 
 } // namespace
 
 GameTreeItemModel::GameTreeItemModel(Core::GameCollection & _collection, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
-    mr_collection(_collection)
+    m_default_icon(QPixmap(":/images/no-icon")),
+    mr_collection(_collection),
+    mp_art_manager(nullptr)
 {
-//    connect(&_collection, SIGNAL(loaded()), this, SIGNAL(modelReset()));
-
     connect(&_collection, &Core::GameCollection::loaded, this, [this]() {
         beginResetModel();
         qDebug() << "Resetting the tree model";
@@ -98,15 +101,26 @@ QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
     case Qt::DisplayRole:
         return mr_collection[_index.row()]->title();
     case Qt::DecorationRole:
-        return QIcon::fromTheme("document-edit");
-    default:
-        return QVariant();
+    {
+        if(mp_art_manager)
+        {
+            QPixmap icon = mp_art_manager->load(mr_collection[_index.row()]->id(), Core::GameArtType::Icon);
+            return icon.isNull() ? m_default_icon : icon;
+        }
+        break;
     }
+    }
+    return QVariant();
 }
 
 const Core::Game * GameTreeItemModel::game(const QModelIndex & _index) const
 {
     return _index.isValid() ? mr_collection[_index.row()] : nullptr;
+}
+
+void GameTreeItemModel::setArtManager(Core::GameArtManager & _manager)
+{
+    mp_art_manager = &_manager;
 }
 
 struct GameCollectionWidget::Private : public Ui::GameCollectionWidget
@@ -218,6 +232,7 @@ void GameCollectionWidget::load(const QDir & _directory)
     mp_private->game_art_manager = new Core::GameArtManager(_directory);
     mp_private->game_art_manager->addCacheType(Core::GameArtType::Icon);
     mp_private->game_art_manager->addCacheType(Core::GameArtType::Front);
+    static_cast<GameTreeItemModel *>(mp_private->tree_games->model())->setArtManager(*mp_private->game_art_manager);
 }
 
 void GameCollectionWidget::reload()

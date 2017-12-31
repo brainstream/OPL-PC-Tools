@@ -10,5 +10,6 @@
     </qresource>
     <qresource prefix="/images">
         <file alias="no-image">Resources/images/no-image.svg</file>
+        <file alias="no-icon">Resources/images/no-icon.png</file>
     </qresource>
 </RCC>

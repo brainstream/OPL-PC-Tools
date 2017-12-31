@@ -15,7 +15,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QDebug>
 #include <QFile>
 #include <OplPcTools/Core/GameArtManager.h>
 
@@ -91,10 +90,7 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
 {
     Maybe<QPixmap> cached_pixmap = findInCache(_game_id, _type);
     if(m_cached_types & _type && cached_pixmap.hasValue())
-    {
-        qDebug() << "Pixmap has been loaded from the cache";
         return cached_pixmap.value();
-    }
     QDir dir(m_directory_path);
     if(!dir.exists())
         return QPixmap();

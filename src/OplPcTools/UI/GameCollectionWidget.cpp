@@ -101,14 +101,12 @@ QVariant GameTreeItemModel::data(const QModelIndex & _index, int _role) const
     case Qt::DisplayRole:
         return mr_collection[_index.row()]->title();
     case Qt::DecorationRole:
-    {
         if(mp_art_manager)
         {
             QPixmap icon = mp_art_manager->load(mr_collection[_index.row()]->id(), Core::GameArtType::Icon);
-            return icon.isNull() ? m_default_icon : icon;
+            return QIcon(icon.isNull() ? m_default_icon : icon);
         }
         break;
-    }
     }
     return QVariant();
 }

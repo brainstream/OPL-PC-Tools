@@ -21,6 +21,7 @@
 #include <QAbstractItemModel>
 #include <QPixmap>
 #include <OplPcTools/UI/GameCollectionWidget.h>
+#include <OplPcTools/Core/GameArtManager.h>
 #include "ui_GameCollectionWidget.h"
 
 using namespace OplPcTools;
@@ -112,13 +113,21 @@ struct GameCollectionWidget::Private : public Ui::GameCollectionWidget
 {
     explicit Private(UIContext & _context) :
         context(_context),
-        tree_model(nullptr)
+        tree_model(nullptr),
+        game_art_manager(nullptr)
     {
+    }
+
+    ~Private()
+    {
+        // FIXME: Ui::GameCollectionWidget contains no a virtual destructor!!!
+        delete game_art_manager;
     }
 
     UIContext & context;
     GameTreeItemModel * tree_model;
     QPixmap default_cover;
+    Core::GameArtManager * game_art_manager;
 };
 
 GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
@@ -205,6 +214,10 @@ bool GameCollectionWidget::tryLoadRecentDirectory()
 void GameCollectionWidget::load(const QDir & _directory)
 {
     mp_private->context.collection().load(_directory);
+    delete mp_private->game_art_manager;
+    mp_private->game_art_manager = new Core::GameArtManager(_directory);
+    mp_private->game_art_manager->addCacheType(Core::GameArtType::Icon);
+    mp_private->game_art_manager->addCacheType(Core::GameArtType::Front);
 }
 
 void GameCollectionWidget::reload()
@@ -232,8 +245,8 @@ void GameCollectionWidget::gameSelected()
     {
         mp_private->label_id->setText(game->id());
         mp_private->label_title->setText(game->title());
-        // TODO: if no cover
-        mp_private->label_cover->setPixmap(mp_private->default_cover);
+        QPixmap pixmap = mp_private->game_art_manager->load(game->id(), Core::GameArtType::Front);
+        mp_private->label_cover->setPixmap(pixmap.isNull() ? mp_private->default_cover : pixmap);
         mp_private->label_type->setText(game->mediaType() == Core::MediaType::CD ? "CD" : "DVD");
         mp_private->label_parts->setText(QString("%1").arg(game->partCount()));
         mp_private->label_source->setText(

@@ -15,11 +15,107 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QFile>
 #include <OplPcTools/Core/GameArtManager.h>
 
 using namespace OplPcTools::Core;
 
-GameArtManager::GameArtManager()
-{
+namespace {
 
+const QString art_directory("ART");
+const QString sfx_icon("_ICO");
+const QString sfx_front_cover("_COV");
+const QString sfx_back_cover("_COV2");
+const QString sfx_spine_cover("_LAB");
+const QString sfx_screenshot1("_SCR");
+const QString sfx_screenshot2("_SCR2");
+const QString sfx_background("_BG");
+
+QString suffix(GameArtType _art_type)
+{
+    switch(_art_type)
+    {
+    case GameArtType::Icon:
+        return sfx_icon;
+    case GameArtType::Front:
+        return sfx_front_cover;
+    case GameArtType::Back:
+        return sfx_back_cover;
+    case GameArtType::Spine:
+        return sfx_spine_cover;
+    case GameArtType::Screenshot1:
+        return sfx_screenshot1;
+    case GameArtType::Screenshot2:
+        return sfx_screenshot2;
+    case GameArtType::Background:
+        return sfx_background;
+    default:
+        return QString();
+    }
+}
+
+} // namespace
+
+GameArtManager::GameArtManager(const QDir & _base_directory)
+{
+    m_directory_path = _base_directory.absoluteFilePath(art_directory);
+}
+
+GameArtManager::~GameArtManager()
+{
+    for(const auto & item : m_cache)
+    {
+        for(const QPixmap * pixmap : item)
+            delete pixmap;
+    }
+}
+
+void GameArtManager::addCacheType(GameArtType _type)
+{
+    m_cached_types.insert(_type);
+}
+
+void GameArtManager::removeCacheType(GameArtType _type, bool _clear_cache)
+{
+    auto it = m_cached_types.find(_type);
+    if(it == m_cached_types.end())
+        return;
+    m_cached_types.erase(it);
+    if(!_clear_cache)
+        return;
+    for(auto & item : m_cache)
+    {
+        auto cache_it = item.find(_type);
+        if(cache_it != item.end())
+        {
+            delete *cache_it;
+            item.erase(cache_it);
+        }
+    }
+}
+
+QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
+{
+    if(m_cache.contains(_game_id))
+    {
+        const QMap<GameArtType, QPixmap*> & cache = m_cache[_game_id];
+        if(cache.contains(_type))
+            return *cache[_type];
+    }
+    QDir dir(m_directory_path);
+    if(!dir.exists())
+        return QPixmap();
+    static const QStringList exts { ".png", ".jpeg", ".jpg", ".bmp" };
+    const QString sfx = suffix(_type);
+    for(const QString & ext : exts)
+    {
+        QFile file(dir.absoluteFilePath(_game_id + sfx + ext));
+        if(!file.exists()) continue;
+        QPixmap pixmap(file.fileName());
+        if(pixmap.isNull()) continue;
+        if(m_cached_types.find(_type) != m_cached_types.end())
+            m_cache[_game_id][_type] = new QPixmap(pixmap);
+        return pixmap;
+    }
+    return QPixmap();
 }

@@ -20,14 +20,14 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/icons/application</normaloff>:/icons/application</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="mp_centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QStackedWidget" name="stacked_widget"/>
+     <widget class="QStackedWidget" name="mp_stacked_widget"/>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="QMenuBar" name="mp_menu_bar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -36,33 +36,33 @@
      <height>20</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_tools">
+   <widget class="QMenu" name="mp_menu_tools">
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="action_settings"/>
+    <addaction name="mp_action_settings"/>
    </widget>
-   <widget class="QMenu" name="menu_help">
+   <widget class="QMenu" name="mp_menu_help">
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="action_about"/>
-    <addaction name="action_about_qt"/>
+    <addaction name="mp_action_about"/>
+    <addaction name="mp_action_about_qt"/>
    </widget>
-   <addaction name="menu_tools"/>
-   <addaction name="menu_help"/>
+   <addaction name="mp_menu_tools"/>
+   <addaction name="mp_menu_help"/>
   </widget>
-  <action name="action_settings">
+  <action name="mp_action_settings">
    <property name="text">
     <string>&amp;Settings...</string>
    </property>
   </action>
-  <action name="action_about">
+  <action name="mp_action_about">
    <property name="text">
     <string>&amp;About...</string>
    </property>
   </action>
-  <action name="action_about_qt">
+  <action name="mp_action_about_qt">
    <property name="text">
     <string>About &amp;Qt...</string>
    </property>
@@ -73,7 +73,7 @@
  </resources>
  <connections>
   <connection>
-   <sender>action_about</sender>
+   <sender>mp_action_about</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>showAboutDialog()</slot>
@@ -89,7 +89,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>action_about_qt</sender>
+   <sender>mp_action_about_qt</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>showAboutQtDialog()</slot>

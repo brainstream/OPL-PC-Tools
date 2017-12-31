@@ -20,17 +20,17 @@
 
 #include <QMainWindow>
 #include <OplPcTools/UI/UIContext.h>
+#include "ui_MainWindow.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class MainWindow : public QMainWindow, public UIContext
+class MainWindow : public QMainWindow, public UIContext, private Ui::MainWindow
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget * _parent = nullptr);
-    ~MainWindow() override;
     Core::GameCollection & collection() const override;
 
 protected:

@@ -20,17 +20,17 @@
 
 #include <QWidget>
 #include <OplPcTools/UI/UIContext.h>
+#include "ui_GameDetailsWidget.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class GameDetailsWidget : public QWidget
+class GameDetailsWidget : public QWidget, private Ui::GameDetailsWidget
 {
     Q_OBJECT
 
 public:
     explicit GameDetailsWidget(UIContext & _context, QWidget * _parent = nullptr);
-    ~GameDetailsWidget() override;
     void setGameId(const QString & _id);
     const QString & gameId() const;
 
@@ -41,8 +41,6 @@ private:
     void init();
 
 private:
-    class UITemplate;
-    UITemplate * mp_ui;
     UIContext & mr_context;
     QString m_game_id;
 };

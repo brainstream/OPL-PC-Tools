@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_game_title">
+    <widget class="QLabel" name="mp_label_game_title">
      <property name="font">
       <font>
        <pointsize>14</pointsize>
@@ -29,7 +29,7 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
+    <spacer name="mp_spacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -42,9 +42,9 @@
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="mp_layout">
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="mp_spacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -57,7 +57,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_close">
+      <widget class="QPushButton" name="mp_btn_close">
        <property name="text">
         <string>Close</string>
        </property>

@@ -17,24 +17,15 @@
 
 #include <QDebug>
 #include <OplPcTools/UI/GameDetailsWidget.h>
-#include "ui_GameDetailsWidget.h"
 
 using namespace OplPcTools::UI;
 
-class GameDetailsWidget::UITemplate : public Ui::GameDetailsWidget { };
-
 GameDetailsWidget::GameDetailsWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
     QWidget(_parent),
-    mp_ui(new UITemplate),
     mr_context(_context)
 {
-    mp_ui->setupUi(this);
-    connect(mp_ui->btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
-}
-
-GameDetailsWidget::~GameDetailsWidget()
-{
-    delete mp_ui;
+    setupUi(this);
+    connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
 }
 
 void GameDetailsWidget::setGameId(const QString & _id)
@@ -55,5 +46,5 @@ void GameDetailsWidget::showEvent(QShowEvent * _event)
 
 void GameDetailsWidget::init()
 {
-    mp_ui->label_game_title->setText(m_game_id);
+    mp_label_game_title->setText(m_game_id);
 }

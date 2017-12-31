@@ -18,9 +18,9 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QVBoxLayout" name="layout">
+    <layout class="QVBoxLayout" name="mp_layout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="mp_label">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -48,7 +48,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="spacer">
+      <spacer name="mp_spacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -63,9 +63,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="layout_2">
+    <layout class="QVBoxLayout" name="mp_layout_2">
      <item>
-      <widget class="QLabel" name="label_app_name">
+      <widget class="QLabel" name="mp_label_app_name">
        <property name="font">
         <font>
          <pointsize>14</pointsize>
@@ -79,7 +79,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_version">
+      <widget class="QLabel" name="mp_label_version">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -97,7 +97,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_description">
+      <widget class="QLabel" name="mp_label_description">
        <property name="styleSheet">
         <string notr="true">QLabel {
 	margin-bottom: 1em;
@@ -118,7 +118,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_url">
+      <widget class="QLabel" name="mp_label_url">
        <property name="text">
         <string>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;OPL page on GitHub&lt;/a&gt;</string>
        </property>
@@ -131,7 +131,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_license">
+      <widget class="QLabel" name="mp_label_license">
        <property name="text">
         <string>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</string>
        </property>
@@ -144,7 +144,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="spacer_2">
+      <spacer name="mp_spacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -157,7 +157,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QDialogButtonBox" name="button_box">
+      <widget class="QDialogButtonBox" name="mp_button_box">
        <property name="standardButtons">
         <set>QDialogButtonBox::Ok</set>
        </property>
@@ -172,7 +172,7 @@
  </resources>
  <connections>
   <connection>
-   <sender>button_box</sender>
+   <sender>mp_button_box</sender>
    <signal>accepted()</signal>
    <receiver>AboutDialog</receiver>
    <slot>accept()</slot>

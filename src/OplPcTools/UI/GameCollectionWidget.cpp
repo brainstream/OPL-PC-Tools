@@ -15,7 +15,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QDebug>
 #include <QSettings>
 #include <QFileDialog>
 #include <QAbstractItemModel>
@@ -61,7 +60,6 @@ GameCollectionWidget::GameTreeModel::GameTreeModel(Core::GameCollection & _colle
 {
     connect(&_collection, &Core::GameCollection::loaded, this, [this]() {
         beginResetModel();
-        qDebug() << "Resetting the tree model";
         endResetModel();
     });
 }

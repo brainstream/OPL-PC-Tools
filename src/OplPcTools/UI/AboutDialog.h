@@ -19,21 +19,17 @@
 #define __OPLPCTOOLS_ABOUTDIALOG__
 
 #include <QDialog>
+#include "ui_AboutDialog.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class AboutDialog : public QDialog
+class AboutDialog : public QDialog, private Ui::AboutDialog
 {
     Q_OBJECT
 
 public:
-    AboutDialog(QWidget * _parent = nullptr);
-    ~AboutDialog() override;
-
-private:
-    class Private;
-    Private * mp_private;
+    explicit AboutDialog(QWidget * _parent = nullptr);
 };
 
 } // namespace UI

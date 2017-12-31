@@ -21,7 +21,6 @@
 #include <OplPcTools/UI/GameCollectionWidget.h>
 #include <OplPcTools/UI/GameDetailsWidget.h>
 #include <OplPcTools/UI/AboutDialog.h>
-#include "ui_MainWindow.h"
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -34,25 +33,17 @@ const char * wnd_geometry = "WindowGeometry";
 } // namespace SettingsKey
 } // namespace
 
-class MainWindow::Private : public Ui::MainWindow { };
-
 MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
-    QMainWindow(_parent),
-    mp_private(new Private)
+    QMainWindow(_parent)
 {
     mp_collection = new Core::GameCollection(this);
-    mp_private->setupUi(this);
+    setupUi(this);
     GameCollectionWidget * game_collection_widget = new GameCollectionWidget(*this);
-    mp_private->stacked_widget->addWidget(game_collection_widget);
+    mp_stacked_widget->addWidget(game_collection_widget);
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
     if(Core::Settings::instance().reopenLastSestion())
         game_collection_widget->tryLoadRecentDirectory();
-}
-
-MainWindow::~MainWindow()
-{
-    delete mp_private;
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -82,8 +73,8 @@ void MainWindow::showGameInstaller()
 {
     GameDetailsWidget * widget = new GameDetailsWidget(*this);
     widget->setGameId("TODO: INSTALL GAME");
-    int index = mp_private->stacked_widget->addWidget(widget);
-    mp_private->stacked_widget->setCurrentIndex(index);
+    int index = mp_stacked_widget->addWidget(widget);
+    mp_stacked_widget->setCurrentIndex(index);
 }
 
 void MainWindow::showIsoRecoverer()
@@ -95,6 +86,6 @@ void MainWindow::showGameDetails(const QString & _id)
 {
     GameDetailsWidget * widget = new GameDetailsWidget(*this);
     widget->setGameId(_id);
-    int index = mp_private->stacked_widget->addWidget(widget);
-    mp_private->stacked_widget->setCurrentIndex(index);
+    int index = mp_stacked_widget->addWidget(widget);
+    mp_stacked_widget->setCurrentIndex(index);
 }

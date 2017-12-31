@@ -82,7 +82,8 @@ HEADERS += \
     OplPcTools/UI/UIContext.h \
     OplPcTools/Core/MediaType.h \
     OplPcTools/Core/Iso9660DeviceSource.h \
-    OplPcTools/Core/GameArtManager.h
+    OplPcTools/Core/GameArtManager.h \
+    OplPcTools/Core/Maybe.h
 
 
 FORMS += \

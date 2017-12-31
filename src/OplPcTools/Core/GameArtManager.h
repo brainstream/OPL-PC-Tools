@@ -18,40 +18,47 @@
 #ifndef __OPLPCTOOLS_GAMEARTMANAGER__
 #define __OPLPCTOOLS_GAMEARTMANAGER__
 
-#include <set>
 #include <QDir>
 #include <QPixmap>
 #include <QMap>
+#include <OplPcTools/Core/Maybe.h>
 
 namespace OplPcTools {
 namespace Core {
 
 enum class GameArtType
 {
-    Icon,
-    Front,
-    Back,
-    Spine,
-    Screenshot1,
-    Screenshot2,
-    Background
+    Icon         = 0x1,
+    Front        = 0x2,
+    Back         = 0x4,
+    Spine        = 0x8,
+    Screenshot1  = 0x10,
+    Screenshot2  = 0x20,
+    Background   = 0x40
 };
 
 class GameArtManager final
 {
     Q_DISABLE_COPY(GameArtManager)
 
+    using GameCache = QMap<GameArtType, Maybe<QPixmap>>;
+    using CacheMap = QMap<QString, Maybe<GameCache>>;
+
 public:
     explicit GameArtManager(const QDir & _base_directory);
-    ~GameArtManager();
     void addCacheType(GameArtType _type);
     void removeCacheType(GameArtType _type, bool _clear_cache);
     QPixmap load(const QString & _game_id, GameArtType _type);
 
 private:
+    void clearCache(GameArtType _type);
+    Maybe<QPixmap> findInCache(const QString & _game_id, GameArtType _type) const;
+    void cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap);
+
+private:
     QString m_directory_path;
-    QMap<QString, QMap<GameArtType, QPixmap *>> m_cache;
-    std::set<GameArtType> m_cached_types;
+    CacheMap m_cache;
+    QFlags<GameArtType> m_cached_types;
 };
 
 } // namespace Core

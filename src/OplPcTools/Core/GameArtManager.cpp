@@ -15,6 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QDebug>
 #include <QFile>
 #include <OplPcTools/Core/GameArtManager.h>
 
@@ -56,51 +57,43 @@ QString suffix(GameArtType _art_type)
 
 } // namespace
 
-GameArtManager::GameArtManager(const QDir & _base_directory)
+GameArtManager::GameArtManager(const QDir & _base_directory) :
+    m_cached_types(0)
 {
     m_directory_path = _base_directory.absoluteFilePath(art_directory);
 }
 
-GameArtManager::~GameArtManager()
-{
-    for(const auto & item : m_cache)
-    {
-        for(const QPixmap * pixmap : item)
-            delete pixmap;
-    }
-}
-
 void GameArtManager::addCacheType(GameArtType _type)
 {
-    m_cached_types.insert(_type);
+    m_cached_types |= _type;
 }
 
 void GameArtManager::removeCacheType(GameArtType _type, bool _clear_cache)
 {
-    auto it = m_cached_types.find(_type);
-    if(it == m_cached_types.end())
+    if((m_cached_types & _type) == 0)
         return;
-    m_cached_types.erase(it);
-    if(!_clear_cache)
-        return;
-    for(auto & item : m_cache)
+    m_cached_types ^= _type;
+    if(_clear_cache)
+        clearCache(_type);
+}
+
+void GameArtManager::clearCache(GameArtType _type)
+{
+    for(auto & game_cache : m_cache)
     {
-        auto cache_it = item.find(_type);
-        if(cache_it != item.end())
-        {
-            delete *cache_it;
-            item.erase(cache_it);
-        }
+        auto it = game_cache->find(_type);
+        if(it != game_cache->end())
+            game_cache->erase(it);
     }
 }
 
 QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
 {
-    if(m_cache.contains(_game_id))
+    Maybe<QPixmap> cached_pixmap = findInCache(_game_id, _type);
+    if(m_cached_types & _type && cached_pixmap.hasValue())
     {
-        const QMap<GameArtType, QPixmap*> & cache = m_cache[_game_id];
-        if(cache.contains(_type))
-            return *cache[_type];
+        qDebug() << "Pixmap has been loaded from the cache";
+        return cached_pixmap.value();
     }
     QDir dir(m_directory_path);
     if(!dir.exists())
@@ -111,11 +104,33 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
     {
         QFile file(dir.absoluteFilePath(_game_id + sfx + ext));
         if(!file.exists()) continue;
-        QPixmap pixmap(file.fileName());
+        QPixmap pixmap(file.fileName()); // TODO: scale
         if(pixmap.isNull()) continue;
-        if(m_cached_types.find(_type) != m_cached_types.end())
-            m_cache[_game_id][_type] = new QPixmap(pixmap);
+        if(m_cached_types & _type)
+            cacheArt(_game_id, _type, pixmap);
         return pixmap;
     }
     return QPixmap();
+}
+
+Maybe<QPixmap> GameArtManager::findInCache(const QString & _game_id, GameArtType _type) const
+{
+    Maybe<GameCache> game_cache = m_cache[_game_id];
+    if(!game_cache.hasValue())
+        return Maybe<QPixmap>();
+    return (*game_cache)[_type];
+}
+
+void GameArtManager::cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap)
+{
+    if(m_cache.contains(_game_id))
+    {
+        (*m_cache[_game_id])[_type] = _pixmap;
+    }
+    else
+    {
+        GameCache game_cache;
+        game_cache[_type] = _pixmap;
+        m_cache[_game_id] = game_cache;
+    }
 }

@@ -123,22 +123,24 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     mr_context(_context),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
-    mp_prox_model(nullptr)
+    mp_proxy_model(nullptr)
 {
     setupUi(this);
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     mp_model = new GameTreeModel(_context.collection(), this);
-    mp_prox_model = new QSortFilterProxyModel(this);
-    mp_prox_model->setSourceModel(mp_model);
-    mp_prox_model->setDynamicSortFilter(true);
-    mp_tree_games->setModel(mp_prox_model);
+    mp_proxy_model = new QSortFilterProxyModel(this);
+    mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    mp_proxy_model->setSourceModel(mp_model);
+    mp_proxy_model->setDynamicSortFilter(true);
+    mp_tree_games->setModel(mp_proxy_model);
     activateCollectionControls(false);
     activateItemControls(false);
     connect(mp_tree_games->selectionModel(),
             SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
     connect(&mr_context.collection(), SIGNAL(loaded()), this, SLOT(collectionLoaded()));
     connect(this, &GameCollectionWidget::destroyed, this, &GameCollectionWidget::saveSettings);
+    connect(mp_edit_filter, SIGNAL(textChanged(QString)), mp_proxy_model, SLOT(setFilterFixedString(QString)));
     applySettings();
 }
 
@@ -212,7 +214,7 @@ void GameCollectionWidget::load(const QDir & _directory)
     mp_game_art_manager->addCacheType(Core::GameArtType::Icon);
     mp_game_art_manager->addCacheType(Core::GameArtType::Front);
     mp_model->setArtManager(*mp_game_art_manager);
-    mp_prox_model->sort(0, Qt::AscendingOrder);
+    mp_proxy_model->sort(0, Qt::AscendingOrder);
 }
 
 void GameCollectionWidget::reload()
@@ -235,7 +237,7 @@ void GameCollectionWidget::changeIconsSize()
 
 void GameCollectionWidget::gameSelected()
 {
-    const Core::Game * game = mp_model->game(mp_prox_model->mapToSource(mp_tree_games->currentIndex()));
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
         mp_label_id->setText(game->id());
@@ -257,6 +259,6 @@ void GameCollectionWidget::gameSelected()
 
 void GameCollectionWidget::showGameDetails()
 {
-    const Core::Game * game = mp_model->game(mp_prox_model->mapToSource(mp_tree_games->currentIndex()));
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game) mr_context.showGameDetails(game->id());
 }

@@ -59,7 +59,7 @@ private:
     UIContext & mr_context;
     OplPcTools::Core::GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
-    QSortFilterProxyModel * mp_prox_model;
+    QSortFilterProxyModel * mp_proxy_model;
     QPixmap m_default_cover;
 };
 

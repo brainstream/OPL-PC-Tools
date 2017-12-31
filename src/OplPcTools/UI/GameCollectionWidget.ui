@@ -238,6 +238,16 @@
       <number>4</number>
      </property>
      <item>
+      <widget class="QLineEdit" name="mp_edit_filter">
+       <property name="placeholderText">
+        <string>Filter</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QTreeView" name="mp_tree_games">
        <property name="styleSheet">
         <string notr="true">::item {
@@ -590,6 +600,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mp_edit_filter</tabstop>
+  <tabstop>mp_tree_games</tabstop>
+  <tabstop>mp_btn_open</tabstop>
+  <tabstop>mp_btn_reload</tabstop>
+  <tabstop>mp_btn_edit</tabstop>
+  <tabstop>mp_btn_delete</tabstop>
+  <tabstop>mp_btn_install</tabstop>
+  <tabstop>mp_slider_icons_size</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

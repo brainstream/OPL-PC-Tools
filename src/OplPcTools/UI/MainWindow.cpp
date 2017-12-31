@@ -16,6 +16,7 @@
  ***********************************************************************************************/
 
 #include <QMessageBox>
+#include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/Core/Settings.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/GameCollectionWidget.h>
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
 {
     mp_collection = new Core::GameCollection(this);
     setupUi(this);
+    setWindowTitle(APPLICATION_DISPLAY_NAME);
     GameCollectionWidget * game_collection_widget = new GameCollectionWidget(*this);
     mp_stacked_widget->addWidget(game_collection_widget);
     QSettings settings;

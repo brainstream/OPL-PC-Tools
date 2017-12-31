@@ -257,6 +257,9 @@
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
        <property name="rootIsDecorated">
         <bool>false</bool>
        </property>
@@ -669,6 +672,22 @@
     <hint type="sourcelabel">
      <x>29</x>
      <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mp_btn_edit</sender>
+   <signal>clicked()</signal>
+   <receiver>GameCollectionWidget</receiver>
+   <slot>showGameDetails()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>29</x>
+     <y>182</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>

@@ -213,6 +213,8 @@ void GameCollectionWidget::load(const QDir & _directory)
     mp_game_art_manager->addCacheType(Core::GameArtType::Front);
     mp_model->setArtManager(*mp_game_art_manager);
     mp_proxy_model->sort(0, Qt::AscendingOrder);
+    if(mr_context.collection().count() > 0)
+        mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
 }
 
 void GameCollectionWidget::reload()

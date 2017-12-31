@@ -15,7 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QtGlobal>
+#include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/AboutDialog.h>
 
 using namespace OplPcTools::UI;
@@ -24,13 +24,12 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
     setupUi(this);
-    QApplication * app = static_cast<QApplication *>(QApplication::instance());
-    mp_label_app_name->setText(app->applicationDisplayName());
+    mp_label_app_name->setText(APPLICATION_DISPLAY_NAME);
     static const int start_development_year = 2017;
     int build_year = QString(__DATE__).right(4).toInt();
     QString years = (start_development_year < build_year) ?
         QString("%1 - %2").arg(start_development_year).arg(build_year) :
         QString::number(build_year);
-    mp_label_version->setText(mp_label_version->text().arg(QT_STRINGIFY(_OPLPCTOOLS_VERSION)));
+    mp_label_version->setText(mp_label_version->text().arg(APPLICATION_VERSION));
     mp_label_description->setText(mp_label_description->text().arg(years));
 }

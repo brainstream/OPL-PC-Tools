@@ -15,17 +15,13 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QApplication>
-#include <OplPcTools/ApplicationInfo.h>
-#include <OplPcTools/UI/MainWindow.h>
+#ifndef __OPLPCTOOLS_APPLICATIONINFO__
+#define __OPLPCTOOLS_APPLICATIONINFO__
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    a.setApplicationName(APPLICATION_NAME);
-    a.setApplicationVersion(APPLICATION_VERSION);
-    a.setOrganizationName("brainstream");
-    OplPcTools::UI::MainWindow wnd;
-    wnd.show();
-    return a.exec();
-}
+#include <QtGlobal>
+
+#define APPLICATION_NAME           "oplpctools"
+#define APPLICATION_DISPLAY_NAME   "Open PlayStation 2 Loader PC Tools"
+#define APPLICATION_VERSION        QT_STRINGIFY(_OPLPCTOOLS_VERSION)
+
+#endif // __OPLPCTOOLS_APPLICATIONINFO__

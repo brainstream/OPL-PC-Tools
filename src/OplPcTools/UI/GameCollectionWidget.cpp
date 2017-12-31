@@ -230,12 +230,12 @@ void GameCollectionWidget::load(const QDir & _directory)
     mp_private->game_art_manager = new Core::GameArtManager(_directory);
     mp_private->game_art_manager->addCacheType(Core::GameArtType::Icon);
     mp_private->game_art_manager->addCacheType(Core::GameArtType::Front);
-    static_cast<GameTreeItemModel *>(mp_private->tree_games->model())->setArtManager(*mp_private->game_art_manager);
+    mp_private->tree_model->setArtManager(*mp_private->game_art_manager);
 }
 
 void GameCollectionWidget::reload()
 {
-    mp_private->context.collection().load(mp_private->context.collection().directory());
+    load(mp_private->context.collection().directory());
 }
 
 void GameCollectionWidget::collectionLoaded()

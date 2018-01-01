@@ -15,62 +15,63 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QDebug>
-#include <OplPcTools/UI/GameDetailsWidget.h>
+#ifndef __OPLPCTOOLS_GAMERENAMEDIALOG__
+#define __OPLPCTOOLS_GAMERENAMEDIALOG__
 
-using namespace OplPcTools;
-using namespace OplPcTools::UI;
+#include <OplPcTools/Core/GameInstallationType.h>
+#include "ui_GameRenameDialog.h"
 
-GameDetailsWidget::GameDetailsWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
-    QWidget(_parent),
-    mr_context(_context),
-    mp_game(nullptr)
+namespace OplPcTools {
+namespace UI {
+
+class GameRenameDialog : public QDialog, private Ui::GameRenameDialog
 {
-    setupUi(this);
-    init();
-    connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
-}
+    Q_OBJECT
 
-void GameDetailsWidget::setGameId(const QString & _id)
-{
-    mp_game = mr_context.collection().findGame(_id);
-    init();
-}
-
-const QString & GameDetailsWidget::gameId() const
-{
-    return m_game_id;
-}
-
-void GameDetailsWidget::showEvent(QShowEvent * _event)
-{
-    Q_UNUSED(_event)
-    init();
-}
-
-void GameDetailsWidget::init()
-{
-    if(mp_game == nullptr)
+private:
+    class Validator
     {
-        clear();
-        return;
-    }
-    // TODO: fill out the mp_list_arts
-    mp_edit_title->setDisabled(false);
-    mp_edit_title->setText(mp_game->title());
-    mp_btn_title_edit_accept->setDisabled(false);
-    mp_btn_title_edit_cancel->setDisabled(false);
-    mp_widget_art_details->hide();
-    mp_edit_title->selectAll();
-    mp_edit_title->setFocus();
-    // TODO: activate a first art
-}
+    public:
+        virtual ~Validator() { }
+        virtual bool validate(const QString & _name) = 0;
+        virtual const QString message() const = 0;
+    };
 
-void GameDetailsWidget::clear()
-{
-    mp_list_arts->clear();
-    mp_edit_title->setDisabled(true);
-    mp_btn_title_edit_accept->setDisabled(true);
-    mp_btn_title_edit_cancel->setDisabled(true);
-    mp_widget_art_details->hide();
-}
+    class UlConfigNameValidator : public GameRenameDialog::Validator
+    {
+    public:
+        bool validate(const QString & _name) override;
+        const QString message() const override;
+
+    private:
+        QString m_message;
+    };
+
+    class FilenameValidator : public GameRenameDialog::Validator
+    {
+    public:
+        FilenameValidator();
+        bool validate(const QString & _name) override;
+        const QString message() const override;
+
+    private:
+        bool m_is_invalid;
+        QString m_message;
+    };
+
+public:
+    GameRenameDialog(const QString & _initial_name, OplPcTools::Core::GameInstallationType _installation_type, QWidget *_parent = nullptr);
+    ~GameRenameDialog() override;
+    QString name() const;
+
+private slots:
+    void nameChanged(const QString & _name);
+
+private:
+    Validator * mp_validator;
+};
+
+} // namespace UI
+} // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_GAMERENAMEDIALOG__

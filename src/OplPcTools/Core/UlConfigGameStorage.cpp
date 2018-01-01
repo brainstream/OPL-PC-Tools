@@ -33,8 +33,8 @@ const QString g_image_prefix("ul.");
 struct RawConfigRecord
 {
     explicit RawConfigRecord(const Game & _game);
-    char name[g_max_game_name_length];
-    char image[g_max_game_id_length];
+    char name[Game::max_name_length];
+    char image[Game::max_id_length];
     quint8 parts;
     quint8 media;
     quint8 pad[15];
@@ -107,10 +107,10 @@ bool UlConfigGameStorage::load(const QDir & _directory)
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
         Game * game = createGame(QString::fromLatin1(&raw_record->image[g_image_prefix.size()],
             strlen(raw_record->image) - g_image_prefix.size()));
-        if(raw_record->name[g_max_game_name_length - 1] == '\0')
+        if(raw_record->name[Game::max_name_length - 1] == '\0')
             game->setTitle(QString::fromUtf8(raw_record->name, strlen(raw_record->name)));
         else
-            game->setTitle(QString::fromUtf8(raw_record->name, g_max_game_name_length));
+            game->setTitle(QString::fromUtf8(raw_record->name, Game::max_name_length));
         game->setPartCount(raw_record->parts);
         switch(raw_record->media)
         {

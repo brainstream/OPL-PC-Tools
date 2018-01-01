@@ -39,9 +39,11 @@ protected:
 
 private:
     void init();
+    void clear();
 
 private:
     UIContext & mr_context;
+    const OplPcTools::Core::Game * mp_game;
     QString m_game_id;
 };
 

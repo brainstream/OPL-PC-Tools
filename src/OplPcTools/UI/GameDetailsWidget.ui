@@ -7,59 +7,233 @@
     <x>0</x>
     <y>0</y>
     <width>832</width>
-    <height>577</height>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="QLabel" name="mp_label_game_title">
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string notr="true">THE GAME TITLE</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="mp_spacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>495</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="mp_layout">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <spacer name="mp_spacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="mp_edit_title">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="mp_btn_title_edit_cancel">
+         <property name="minimumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Cancel</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="edit-undo" resource="../Resources.qrc">
+           <normaloff>:/icons/edit-undo</normaloff>:/icons/edit-undo</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="mp_btn_title_edit_accept">
+         <property name="minimumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Save</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset theme="document-save" resource="../Resources.qrc">
+           <normaloff>:/icons/document-save</normaloff>:/icons/document-save</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>23</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="mp_list_arts">
+       <property name="iconSize">
         <size>
-         <width>40</width>
-         <height>20</height>
+         <width>64</width>
+         <height>64</height>
         </size>
        </property>
-      </spacer>
+       <property name="gridSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="viewMode">
+        <enum>QListView::IconMode</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>Icon</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-edit">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Front Cover</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-edit">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back Cover</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-edit">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="mp_layout">
+     <item>
+      <widget class="QWidget" name="mp_widget_sidebar" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="mp_widget_art_details" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="mp_btn_close">
        <property name="text">
-        <string>Close</string>
+        <string>Back</string>
+       </property>
+       <property name="icon">
+        <iconset theme="go-previous" resource="../Resources.qrc">
+         <normaloff>:/icons/go-previous</normaloff>:/icons/go-previous</iconset>
        </property>
       </widget>
      </item>
@@ -67,6 +241,15 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <tabstops>
+  <tabstop>mp_edit_title</tabstop>
+  <tabstop>mp_btn_title_edit_cancel</tabstop>
+  <tabstop>mp_btn_title_edit_accept</tabstop>
+  <tabstop>mp_list_arts</tabstop>
+  <tabstop>mp_btn_close</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

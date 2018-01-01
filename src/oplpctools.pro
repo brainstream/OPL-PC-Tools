@@ -56,7 +56,9 @@ SOURCES += \
     OplPcTools/UI/GameCollectionWidget.cpp \
     OplPcTools/UI/GameDetailsWidget.cpp \
     OplPcTools/UI/MainWindow.cpp \
-    OplPcTools/Core/GameArtManager.cpp
+    OplPcTools/Core/GameArtManager.cpp \
+    OplPcTools/UI/GameRenameDialog.cpp \
+    OplPcTools/Core/Game.cpp
 
 
 HEADERS += \
@@ -84,14 +86,16 @@ HEADERS += \
     OplPcTools/Core/Iso9660DeviceSource.h \
     OplPcTools/Core/GameArtManager.h \
     OplPcTools/Core/Maybe.h \
-    OplPcTools/ApplicationInfo.h
+    OplPcTools/ApplicationInfo.h \
+    OplPcTools/UI/GameRenameDialog.h
 
 
 FORMS += \
     OplPcTools/UI/MainWindow.ui \
     OplPcTools/UI/GameCollectionWidget.ui \
     OplPcTools/UI/GameDetailsWidget.ui \
-    OplPcTools/UI/AboutDialog.ui
+    OplPcTools/UI/AboutDialog.ui \
+    OplPcTools/UI/GameRenameDialog.ui
 
 RESOURCES += \
     OplPcTools/Resources.qrc

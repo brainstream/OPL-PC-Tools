@@ -6,8 +6,6 @@
         <file alias="application">Resources/icons/application.png</file>
         <file alias="list-add">Resources/icons/list-add.svg</file>
         <file alias="list-remove">Resources/icons/list-remove.svg</file>
-        <file alias="document-save">Resources/icons/document-save.svg</file>
-        <file alias="edit-undo">Resources/icons/edit-undo.svg</file>
         <file alias="go-previous">Resources/icons/go-previous.svg</file>
     </qresource>
     <qresource prefix="/images">

@@ -34,7 +34,8 @@ enum class GameArtType
     Spine        = 0x8,
     Screenshot1  = 0x10,
     Screenshot2  = 0x20,
-    Background   = 0x40
+    Background   = 0x40,
+    Logo         = 0x80
 };
 
 class GameArtManager final

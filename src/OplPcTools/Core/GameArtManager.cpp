@@ -30,6 +30,7 @@ const QString sfx_spine_cover("_LAB");
 const QString sfx_screenshot1("_SCR");
 const QString sfx_screenshot2("_SCR2");
 const QString sfx_background("_BG");
+const QString sfx_logo("_LGO");
 
 QString suffix(GameArtType _art_type)
 {
@@ -49,6 +50,8 @@ QString suffix(GameArtType _art_type)
         return sfx_screenshot2;
     case GameArtType::Background:
         return sfx_background;
+    case GameArtType::Logo:
+        return sfx_logo;
     default:
         return QString();
     }

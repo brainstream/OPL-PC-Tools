@@ -260,5 +260,5 @@ void GameCollectionWidget::gameSelected()
 void GameCollectionWidget::showGameDetails()
 {
     const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
-    if(game) mr_context.showGameDetails(game->id());
+    if(game) mr_context.showGameDetails(game->id(), *mp_game_art_manager);
 }

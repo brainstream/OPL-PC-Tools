@@ -15,20 +15,76 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QDebug>
+#include <QShortcut>
+#include <QListWidgetItem>
+#include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameDetailsWidget.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
-GameDetailsWidget::GameDetailsWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
+namespace {
+
+class ArtListItem : public QListWidgetItem
+{
+public:
+    ArtListItem(const QString & _title, const QPixmap & _pixmap, QListWidget * _view = nullptr) :
+        QListWidgetItem(_view, QListWidgetItem::UserType),
+        m_title(_title),
+        m_pixmap(_pixmap)
+    {
+    }
+
+    QVariant data(int _role) const override;
+
+private:
+    QString m_title;
+    QPixmap m_pixmap;
+};
+
+} // namespace
+
+
+QVariant ArtListItem::data(int _role) const
+{
+    switch(_role)
+    {
+    case Qt::DisplayRole:
+        return m_title;
+    case Qt::DecorationRole:
+        return m_pixmap;
+    default:
+        return QListWidgetItem::data(_role);
+    }
+}
+
+GameDetailsWidget::GameDetailsWidget(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     QWidget(_parent),
     mr_context(_context),
+    mr_art_manager(_art_manager),
     mp_game(nullptr)
 {
     setupUi(this);
+    setupShortcuts();
     init();
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
+}
+
+void GameDetailsWidget::setupShortcuts()
+{
+    QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::deleteLater);
+    shortcut = new QShortcut(QKeySequence("Esc"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::deleteLater);
+    shortcut = new QShortcut(QKeySequence("F2"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::renameGame);
+}
+
+void GameDetailsWidget::renameGame()
+{
+    if(mp_game == nullptr) return;
+    GameRenameDialog dlg(mp_game->title(), mp_game->installationType(), this);
+    dlg.exec();
 }
 
 void GameDetailsWidget::setGameId(const QString & _id)
@@ -42,12 +98,6 @@ const QString & GameDetailsWidget::gameId() const
     return m_game_id;
 }
 
-void GameDetailsWidget::showEvent(QShowEvent * _event)
-{
-    Q_UNUSED(_event)
-    init();
-}
-
 void GameDetailsWidget::init()
 {
     if(mp_game == nullptr)
@@ -55,22 +105,22 @@ void GameDetailsWidget::init()
         clear();
         return;
     }
-    // TODO: fill out the mp_list_arts
-    mp_edit_title->setDisabled(false);
-    mp_edit_title->setText(mp_game->title());
-    mp_btn_title_edit_accept->setDisabled(false);
-    mp_btn_title_edit_cancel->setDisabled(false);
+    mp_label_title->setText(mp_game->title());
     mp_widget_art_details->hide();
-    mp_edit_title->selectAll();
-    mp_edit_title->setFocus();
-    // TODO: activate a first art
+    mp_list_arts->clear();
+    mp_list_arts->addItem(new ArtListItem(tr("Icon"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Icon)));
+    mp_list_arts->addItem(new ArtListItem(tr("Front Cover"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Front)));
+    mp_list_arts->addItem(new ArtListItem(tr("Back Cover"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Back)));
+    mp_list_arts->addItem(new ArtListItem(tr("Spine Cover"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Spine)));
+    mp_list_arts->addItem(new ArtListItem(tr("Screenshot #1"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Screenshot1)));
+    mp_list_arts->addItem(new ArtListItem(tr("Screenshot #2"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Screenshot2)));
+    mp_list_arts->addItem(new ArtListItem(tr("Background"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Background)));
+    mp_list_arts->addItem(new ArtListItem(tr("Logo"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Logo)));
 }
 
 void GameDetailsWidget::clear()
 {
+    mp_label_title->clear();
     mp_list_arts->clear();
-    mp_edit_title->setDisabled(true);
-    mp_btn_title_edit_accept->setDisabled(true);
-    mp_btn_title_edit_cancel->setDisabled(true);
     mp_widget_art_details->hide();
 }

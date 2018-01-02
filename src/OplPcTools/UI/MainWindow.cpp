@@ -73,10 +73,6 @@ void MainWindow::showAboutQtDialog()
 
 void MainWindow::showGameInstaller()
 {
-    GameDetailsWidget * widget = new GameDetailsWidget(*this);
-    widget->setGameId("TODO: INSTALL GAME");
-    int index = mp_stacked_widget->addWidget(widget);
-    mp_stacked_widget->setCurrentIndex(index);
 }
 
 void MainWindow::showIsoRecoverer()
@@ -84,9 +80,9 @@ void MainWindow::showIsoRecoverer()
 
 }
 
-void MainWindow::showGameDetails(const QString & _id)
+void MainWindow::showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager)
 {
-    GameDetailsWidget * widget = new GameDetailsWidget(*this);
+    GameDetailsWidget * widget = new GameDetailsWidget(*this, _art_manager);
     widget->setGameId(_id);
     int index = mp_stacked_widget->addWidget(widget);
     mp_stacked_widget->setCurrentIndex(index);

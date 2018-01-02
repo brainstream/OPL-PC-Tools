@@ -20,6 +20,7 @@
 
 #include <QWidget>
 #include <OplPcTools/Core/GameCollection.h>
+#include <OplPcTools/Core/GameArtManager.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -30,7 +31,7 @@ public:
     virtual ~UIContext() { }
     virtual void showGameInstaller() = 0;
     virtual void showIsoRecoverer() = 0;
-    virtual void showGameDetails(const QString & _id) = 0;
+    virtual void showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager) = 0;
     virtual Core::GameCollection & collection() const = 0;
 };
 

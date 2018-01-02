@@ -41,7 +41,7 @@ private slots:
     void showAboutQtDialog();
     void showGameInstaller() override;
     void showIsoRecoverer() override;
-    void showGameDetails(const QString & _id) override;
+    void showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager) override;
 
 private:
     class Private;

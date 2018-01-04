@@ -15,54 +15,66 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <functional>
 #include <QFile>
+#include <OplPcTools/Core/IOException.h>
 #include <OplPcTools/Core/GameArtManager.h>
 
 using namespace OplPcTools::Core;
 
-namespace {
-
-const QString art_directory("ART");
-const QString sfx_icon("_ICO");
-const QString sfx_front_cover("_COV");
-const QString sfx_back_cover("_COV2");
-const QString sfx_spine_cover("_LAB");
-const QString sfx_screenshot1("_SCR");
-const QString sfx_screenshot2("_SCR2");
-const QString sfx_background("_BG");
-const QString sfx_logo("_LGO");
-
-QString suffix(GameArtType _art_type)
+struct GameArtManager::GameArtProperties
 {
-    switch(_art_type)
-    {
-    case GameArtType::Icon:
-        return sfx_icon;
-    case GameArtType::Front:
-        return sfx_front_cover;
-    case GameArtType::Back:
-        return sfx_back_cover;
-    case GameArtType::Spine:
-        return sfx_spine_cover;
-    case GameArtType::Screenshot1:
-        return sfx_screenshot1;
-    case GameArtType::Screenshot2:
-        return sfx_screenshot2;
-    case GameArtType::Background:
-        return sfx_background;
-    case GameArtType::Logo:
-        return sfx_logo;
-    default:
-        return QString();
-    }
-}
-
-} // namespace
+    QString suffix;
+    QSize size;
+};
 
 GameArtManager::GameArtManager(const QDir & _base_directory) :
     m_cached_types(0)
 {
-    m_directory_path = _base_directory.absoluteFilePath(art_directory);
+    m_directory_path = _base_directory.absoluteFilePath("ART");
+    initArtProperties();
+}
+
+GameArtManager::~GameArtManager()
+{
+    for(GameArtProperties * props : m_art_props)
+        delete props;
+}
+
+void GameArtManager::initArtProperties()
+{
+    m_art_props[GameArtType::Icon] = new GameArtProperties {
+        "_ICO",
+        QSize(64, 64)
+    };
+    m_art_props[GameArtType::Front] = new GameArtProperties {
+        "_COV",
+        QSize(140, 200)
+    };
+    m_art_props[GameArtType::Back] = new GameArtProperties {
+        "_COV2",
+        QSize(242, 344)
+    };
+    m_art_props[GameArtType::Spine] = new GameArtProperties {
+        "_LAB",
+        QSize(18, 240)
+    };
+    m_art_props[GameArtType::Screenshot1] = new GameArtProperties {
+        "_SCR",
+        QSize(250, 188)
+    };
+    m_art_props[GameArtType::Screenshot2] = new GameArtProperties {
+        "_SCR2",
+        QSize(250, 188)
+    };
+    m_art_props[GameArtType::Background] = new GameArtProperties {
+        "_BG",
+        QSize(640, 480)
+    };
+    m_art_props[GameArtType::Logo] = new GameArtProperties {
+        "_LGO",
+        QSize(300, 125)
+    };
 }
 
 void GameArtManager::addCacheType(GameArtType _type)
@@ -98,7 +110,7 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
     if(!dir.exists())
         return QPixmap();
     static const QStringList exts { ".png", ".jpeg", ".jpg", ".bmp" };
-    const QString sfx = suffix(_type);
+    const QString sfx = m_art_props[_type]->suffix;
     for(const QString & ext : exts)
     {
         QFile file(dir.absoluteFilePath(_game_id + sfx + ext));
@@ -132,4 +144,41 @@ void GameArtManager::cacheArt(const QString & _game_id, GameArtType _type, const
         game_cache[_type] = _pixmap;
         m_cache[_game_id] = game_cache;
     }
+}
+
+void GameArtManager::deleteArt(const QString & _game_id, GameArtType _type)
+{
+    Maybe<GameCache> game_cache = m_cache[_game_id];
+    if(game_cache.hasValue())
+        game_cache->remove(_type);
+    QStringList file_filter { QString("%1%2.*").arg(_game_id).arg(m_art_props[_type]->suffix) };
+    for(const QFileInfo & file_info : QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
+        QFile::remove(file_info.absoluteFilePath());
+}
+
+void GameArtManager::deleteArts(const QString & _game_id)
+{
+    m_cache.remove(_game_id);
+    QStringList file_filter { _game_id + "*.*" };
+    for(const QFileInfo & file_info : QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
+        QFile::remove(file_info.absoluteFilePath());
+}
+
+QPixmap GameArtManager::setArt(const QString & _game_id, GameArtType _type, const QString & _filepath)
+{
+    QPixmap pixmap(_filepath);
+    if(pixmap.isNull())
+        return pixmap;
+    const GameArtProperties * props = m_art_props[_type];
+    if(pixmap.size() != props->size)
+        pixmap = pixmap.scaled(props->size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QDir dir(m_directory_path);
+    if(!dir.exists())
+        dir.mkpath(".");
+    QString filename = dir.absoluteFilePath(_game_id + props->suffix + ".png");
+    if(!pixmap.save(filename))
+        throw IOException(QObject::tr("Unable to save file \"%1\"").arg(filename));
+    if(m_cached_types & _type)
+        cacheArt(_game_id, _type, pixmap);
+    return pixmap;
 }

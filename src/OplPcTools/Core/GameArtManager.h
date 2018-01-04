@@ -21,6 +21,7 @@
 #include <QDir>
 #include <QPixmap>
 #include <QMap>
+#include <QSize>
 #include <OplPcTools/Core/Maybe.h>
 
 namespace OplPcTools {
@@ -38,20 +39,26 @@ enum class GameArtType
     Logo         = 0x80
 };
 
-class GameArtManager final
+class GameArtManager final : public QObject
 {
     Q_DISABLE_COPY(GameArtManager)
 
     using GameCache = QMap<GameArtType, Maybe<QPixmap>>;
     using CacheMap = QMap<QString, Maybe<GameCache>>;
+    struct GameArtProperties;
 
 public:
     explicit GameArtManager(const QDir & _base_directory);
+    ~GameArtManager();
     void addCacheType(GameArtType _type);
     void removeCacheType(GameArtType _type, bool _clear_cache);
     QPixmap load(const QString & _game_id, GameArtType _type);
+    void deleteArt(const QString & _game_id, GameArtType _type);
+    void deleteArts(const QString & _game_id);
+    QPixmap setArt(const QString & _game_id, GameArtType _type, const QString & _filepath);
 
 private:
+    void initArtProperties();
     void clearCache(GameArtType _type);
     Maybe<QPixmap> findInCache(const QString & _game_id, GameArtType _type) const;
     void cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap);
@@ -60,6 +67,7 @@ private:
     QString m_directory_path;
     CacheMap m_cache;
     QFlags<GameArtType> m_cached_types;
+    QMap<GameArtType, GameArtProperties *> m_art_props;
 };
 
 } // namespace Core

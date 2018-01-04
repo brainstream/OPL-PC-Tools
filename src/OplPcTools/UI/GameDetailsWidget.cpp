@@ -15,8 +15,15 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QSharedPointer>
+#include <QStandardPaths>
 #include <QShortcut>
 #include <QListWidgetItem>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QCheckBox>
+#include <OplPcTools/Core/Exception.h>
+#include <OplPcTools/Core/Settings.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameDetailsWidget.h>
 
@@ -25,25 +32,65 @@ using namespace OplPcTools::UI;
 
 namespace {
 
+static const char * g_settings_key_cover_dir = "PixmapDirectory";
+
 class ArtListItem : public QListWidgetItem
 {
 public:
-    ArtListItem(const QString & _title, const QPixmap & _pixmap, QListWidget * _view = nullptr) :
-        QListWidgetItem(_view, QListWidgetItem::UserType),
-        m_title(_title),
-        m_pixmap(_pixmap)
-    {
-    }
-
+    ArtListItem(Core::GameArtType _type, const QString & _title, const QPixmap & _pixmap, QListWidget * _view = nullptr);
+    void setPixmap(const QPixmap & _pixmap);
+    inline Core::GameArtType type() const;
+    inline bool hasPixmap() const;
     QVariant data(int _role) const override;
 
 private:
+    static QSharedPointer<QPixmap> s_default_pixmap_ptr;
+    Core::GameArtType m_type;
     QString m_title;
     QPixmap m_pixmap;
+    bool m_has_pixmap;
 };
 
 } // namespace
 
+QSharedPointer<QPixmap> ArtListItem::s_default_pixmap_ptr = QSharedPointer<QPixmap>();
+
+ArtListItem::ArtListItem(Core::GameArtType _type, const QString & _title, const QPixmap & _pixmap, QListWidget * _view /*= nullptr*/) :
+    QListWidgetItem(_view, QListWidgetItem::UserType),
+    m_type(_type),
+    m_title(_title),
+    m_has_pixmap(false)
+{
+    setPixmap(_pixmap);
+}
+
+void ArtListItem::setPixmap(const QPixmap & _pixmap)
+{
+    m_has_pixmap = !_pixmap.isNull();
+    if(m_has_pixmap)
+    {
+        m_pixmap = _pixmap;
+    }
+    else
+    {
+        if(s_default_pixmap_ptr.isNull())
+        {
+            s_default_pixmap_ptr.reset(new QPixmap(QPixmap(":/images/no-image")
+                .scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
+        }
+        m_pixmap = *s_default_pixmap_ptr;
+    }
+}
+
+Core::GameArtType ArtListItem::type() const
+{
+    return m_type;
+}
+
+bool ArtListItem::hasPixmap() const
+{
+    return m_has_pixmap;
+}
 
 QVariant ArtListItem::data(int _role) const
 {
@@ -62,12 +109,24 @@ GameDetailsWidget::GameDetailsWidget(UIContext & _context, OplPcTools::Core::Gam
     QWidget(_parent),
     mr_context(_context),
     mr_art_manager(_art_manager),
-    mp_game(nullptr)
+    mp_game(nullptr),
+    mp_item_context_menu(nullptr),
+    mp_action_change_art(nullptr),
+    mp_action_remove_art(nullptr)
 {
     setupUi(this);
     setupShortcuts();
-    init();
+    mp_list_arts->setContextMenuPolicy(Qt::CustomContextMenu);
+    mp_item_context_menu = new QMenu(mp_list_arts);
+    mp_action_change_art = new QAction(tr("Change Picture..."));
+    mp_action_remove_art = new QAction(tr("Remove Picture"));
+    mp_item_context_menu->addAction(mp_action_change_art);
+    mp_item_context_menu->addAction(mp_action_remove_art);
+    initGameControls();
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
+    connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsWidget::showItemContextMenu);
+    connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsWidget::changeGameArt);
+    connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsWidget::removeGameArt);
 }
 
 void GameDetailsWidget::setupShortcuts()
@@ -78,6 +137,8 @@ void GameDetailsWidget::setupShortcuts()
     connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::deleteLater);
     shortcut = new QShortcut(QKeySequence("F2"), this);
     connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::renameGame);
+    shortcut = new QShortcut(QKeySequence("Del"), mp_list_arts);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::removeGameArt);
 }
 
 void GameDetailsWidget::renameGame()
@@ -87,38 +148,106 @@ void GameDetailsWidget::renameGame()
     dlg.exec();
 }
 
+void GameDetailsWidget::showItemContextMenu(const QPoint & _point)
+{
+    ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->itemAt(_point));
+    if(item == nullptr) return;
+    mp_action_remove_art->setEnabled(item->hasPixmap());
+    mp_item_context_menu->exec(mp_list_arts->mapToGlobal(_point));
+}
+
+void GameDetailsWidget::changeGameArt()
+{
+    try
+    {
+        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
+        if(item == nullptr)
+            return;
+        QSettings settings;
+        QString dirpath = settings.value(g_settings_key_cover_dir).toString();
+        if(dirpath.isEmpty())
+        {
+            QStringList dirpaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
+            if(!dirpaths.isEmpty())
+                dirpath = dirpaths.first();
+        }
+        QString filename = QFileDialog::getOpenFileName(
+            this, tr("Choose a Picture"), dirpath,
+            tr("Pictures") + " (*.png *.jpg *.jpeg *.bmp)");
+        if(filename.isEmpty())
+            return;
+        settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
+        QPixmap pixmap = mr_art_manager.setArt(mp_game->id(), item->type(), filename);
+        item->setPixmap(pixmap);
+        mp_list_arts->doItemsLayout();
+    }
+    catch(const Core::Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
+void GameDetailsWidget::removeGameArt()
+{
+    try
+    {
+        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
+        if(item == nullptr || !item->hasPixmap()) return;
+        if(Core::Settings::instance().confirmPixmapDeletion())
+        {
+            QCheckBox * checkbox = new QCheckBox("Don't show again");
+            QMessageBox message_box(QMessageBox::Question, tr("Remove Picture"),
+                        tr("The %1 will be deleted.\nContinue?").arg(item->text()),
+                        QMessageBox::Yes | QMessageBox::No);
+            message_box.setDefaultButton(QMessageBox::Yes);
+            message_box.setCheckBox(checkbox);
+            if(message_box.exec() != QMessageBox::Yes)
+                return;
+            if(checkbox->isChecked())
+                Core::Settings::instance().setConfirmPixmapDeletion(false);
+        }
+        mr_art_manager.deleteArt(mp_game->id(), item->type());
+        item->setPixmap(QPixmap());
+        mp_list_arts->doItemsLayout();
+    }
+    catch(const Core::Exception & exception)
+    {
+        QMessageBox::critical(this, QString(), exception.message());
+    }
+}
+
 void GameDetailsWidget::setGameId(const QString & _id)
 {
     mp_game = mr_context.collection().findGame(_id);
-    init();
+    initGameControls();
 }
 
-const QString & GameDetailsWidget::gameId() const
-{
-    return m_game_id;
-}
-
-void GameDetailsWidget::init()
+void GameDetailsWidget::initGameControls()
 {
     if(mp_game == nullptr)
     {
-        clear();
+        clearGameControls();
         return;
     }
     mp_label_title->setText(mp_game->title());
     mp_widget_art_details->hide();
     mp_list_arts->clear();
-    mp_list_arts->addItem(new ArtListItem(tr("Icon"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Icon)));
-    mp_list_arts->addItem(new ArtListItem(tr("Front Cover"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Front)));
-    mp_list_arts->addItem(new ArtListItem(tr("Back Cover"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Back)));
-    mp_list_arts->addItem(new ArtListItem(tr("Spine Cover"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Spine)));
-    mp_list_arts->addItem(new ArtListItem(tr("Screenshot #1"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Screenshot1)));
-    mp_list_arts->addItem(new ArtListItem(tr("Screenshot #2"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Screenshot2)));
-    mp_list_arts->addItem(new ArtListItem(tr("Background"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Background)));
-    mp_list_arts->addItem(new ArtListItem(tr("Logo"), mr_art_manager.load(mp_game->id(), Core::GameArtType::Logo)));
+    addArtListItem(Core::GameArtType::Icon, tr("Icon"));
+    addArtListItem(Core::GameArtType::Front, tr("Front Cover"));
+    addArtListItem(Core::GameArtType::Back, tr("Back Cover"));
+    addArtListItem(Core::GameArtType::Spine, tr("Spine Cover"));
+    addArtListItem(Core::GameArtType::Screenshot1, tr("Screenshot #1"));
+    addArtListItem(Core::GameArtType::Screenshot2, tr("Screenshot #2"));
+    addArtListItem(Core::GameArtType::Background, tr("Background"));
+    addArtListItem(Core::GameArtType::Logo, tr("Logo"));
 }
 
-void GameDetailsWidget::clear()
+void GameDetailsWidget::addArtListItem(Core::GameArtType _type, const QString & _text)
+{
+    mp_list_arts->addItem(new ArtListItem(_type, _text, mr_art_manager.load(mp_game->id(), _type)));
+}
+
+void GameDetailsWidget::clearGameControls()
 {
     mp_label_title->clear();
     mp_list_arts->clear();

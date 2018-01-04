@@ -19,6 +19,8 @@
 #define __OPLPCTOOLS_GAMEDETAILSWIDGET__
 
 #include <QWidget>
+#include <QMenu>
+#include <QAction>
 #include <OplPcTools/Core/GameArtManager.h>
 #include <OplPcTools/UI/UIContext.h>
 #include "ui_GameDetailsWidget.h"
@@ -33,21 +35,26 @@ class GameDetailsWidget : public QWidget, private Ui::GameDetailsWidget
 public:
     GameDetailsWidget(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
     void setGameId(const QString & _id);
-    const QString & gameId() const;
 
 private:
     void setupShortcuts();
-    void init();
-    void clear();
+    void initGameControls();
+    void addArtListItem(Core::GameArtType _type, const QString & _text);
+    void clearGameControls();
 
 private slots:
     void renameGame();
+    void showItemContextMenu(const QPoint & _point);
+    void changeGameArt();
+    void removeGameArt();
 
 private:
     UIContext & mr_context;
     OplPcTools::Core::GameArtManager & mr_art_manager;
     const OplPcTools::Core::Game * mp_game;
-    QString m_game_id;
+    QMenu * mp_item_context_menu;
+    QAction * mp_action_change_art;
+    QAction * mp_action_remove_art;
 };
 
 } // namespace UI

@@ -52,6 +52,7 @@ private slots:
     void reload();
     void collectionLoaded();
     void gameRenamed(const QString & _id);
+    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
     void changeIconsSize();
     void gameSelected();
     void showGameDetails();

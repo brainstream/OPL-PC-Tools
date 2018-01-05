@@ -46,8 +46,9 @@ public:
     void setArtManager(Core::GameArtManager & _manager);
 
 private:
-    void onCollectionLoaded();
-    void onGameRenamed(const QString & _id);
+    void collectionLoaded();
+    void updateRecord(const QString & _id);
+    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
 
 private:
     const QPixmap m_default_icon;
@@ -62,17 +63,17 @@ GameCollectionWidget::GameTreeModel::GameTreeModel(Core::GameCollection & _colle
     mr_collection(_collection),
     mp_art_manager(nullptr)
 {
-    connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionWidget::GameTreeModel::onCollectionLoaded);
-    connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::GameTreeModel::onGameRenamed);
+    connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionWidget::GameTreeModel::collectionLoaded);
+    connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::GameTreeModel::updateRecord);
 }
 
-void GameCollectionWidget::GameTreeModel::onCollectionLoaded()
+void GameCollectionWidget::GameTreeModel::collectionLoaded()
 {
     beginResetModel();
     endResetModel();
 }
 
-void GameCollectionWidget::GameTreeModel::onGameRenamed(const QString & _id)
+void GameCollectionWidget::GameTreeModel::updateRecord(const QString & _id)
 {
     int count = mr_collection.count();
     for(int i = 0; i < count; ++i)
@@ -84,6 +85,13 @@ void GameCollectionWidget::GameTreeModel::onGameRenamed(const QString & _id)
             return;
         }
     }
+}
+
+void GameCollectionWidget::GameTreeModel::gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap)
+{
+    Q_UNUSED(_pixmap)
+    if(_type == Core::GameArtType::Icon)
+        updateRecord(_game_id);
 }
 
 QModelIndex GameCollectionWidget::GameTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
@@ -135,7 +143,10 @@ const Core::Game * GameCollectionWidget::GameTreeModel::game(const QModelIndex &
 
 void GameCollectionWidget::GameTreeModel::setArtManager(Core::GameArtManager & _manager)
 {
+    if(mp_art_manager)
+        disconnect(mp_art_manager, &Core::GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
     mp_art_manager = &_manager;
+    connect(mp_art_manager, &Core::GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
 }
 
 GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
@@ -231,6 +242,7 @@ void GameCollectionWidget::load(const QDir & _directory)
     mr_context.collection().load(_directory);
     delete mp_game_art_manager;
     mp_game_art_manager = new Core::GameArtManager(_directory);
+    connect(mp_game_art_manager, &Core::GameArtManager::artChanged, this, &GameCollectionWidget::gameArtChanged);
     mp_game_art_manager->addCacheType(Core::GameArtType::Icon);
     mp_game_art_manager->addCacheType(Core::GameArtType::Front);
     mp_model->setArtManager(*mp_game_art_manager);
@@ -256,6 +268,15 @@ void GameCollectionWidget::gameRenamed(const QString & _id)
     const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->id() == _id)
         gameSelected();
+}
+
+void GameCollectionWidget::gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap)
+{
+    if(_type != Core::GameArtType::Front)
+        return;
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    if(game && game->id() == _game_id)
+        mp_label_cover->setPixmap(_pixmap ? *_pixmap : m_default_cover);
 }
 
 void GameCollectionWidget::changeIconsSize()

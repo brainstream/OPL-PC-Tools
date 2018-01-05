@@ -28,7 +28,8 @@ struct GameArtManager::GameArtProperties
     QSize size;
 };
 
-GameArtManager::GameArtManager(const QDir & _base_directory) :
+GameArtManager::GameArtManager(const QDir & _base_directory, QObject * _parent /*= nullptr*/) :
+    QObject(_parent),
     m_cached_types(0)
 {
     m_directory_path = _base_directory.absoluteFilePath("ART");
@@ -152,11 +153,19 @@ void GameArtManager::deleteArt(const QString & _game_id, GameArtType _type)
     if(game_cache.hasValue())
         game_cache->remove(_type);
     QStringList file_filter { QString("%1%2.*").arg(_game_id).arg(m_art_props[_type]->suffix) };
+    bool changed = false;
     for(const QFileInfo & file_info : QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
-        QFile::remove(file_info.absoluteFilePath());
+    {
+        if(QFile::remove(file_info.absoluteFilePath()))
+            changed = true;
+    }
+    if(changed)
+    {
+        emit artChanged(_game_id, _type, nullptr);
+    }
 }
 
-void GameArtManager::deleteArts(const QString & _game_id)
+void GameArtManager::clearArts(const QString & _game_id)
 {
     m_cache.remove(_game_id);
     QStringList file_filter { _game_id + "*.*" };
@@ -180,5 +189,6 @@ QPixmap GameArtManager::setArt(const QString & _game_id, GameArtType _type, cons
         throw IOException(QObject::tr("Unable to save file \"%1\"").arg(filename));
     if(m_cached_types & _type)
         cacheArt(_game_id, _type, pixmap);
+    emit artChanged(_game_id, _type, &pixmap);
     return pixmap;
 }

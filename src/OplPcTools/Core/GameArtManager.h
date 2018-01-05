@@ -22,6 +22,7 @@
 #include <QPixmap>
 #include <QMap>
 #include <QSize>
+#include <QObject>
 #include <OplPcTools/Core/Maybe.h>
 
 namespace OplPcTools {
@@ -41,21 +42,24 @@ enum class GameArtType
 
 class GameArtManager final : public QObject
 {
-    Q_DISABLE_COPY(GameArtManager)
+    Q_OBJECT
 
     using GameCache = QMap<GameArtType, Maybe<QPixmap>>;
     using CacheMap = QMap<QString, Maybe<GameCache>>;
     struct GameArtProperties;
 
 public:
-    explicit GameArtManager(const QDir & _base_directory);
+    explicit GameArtManager(const QDir & _base_directory, QObject * _parent = nullptr);
     ~GameArtManager();
     void addCacheType(GameArtType _type);
     void removeCacheType(GameArtType _type, bool _clear_cache);
     QPixmap load(const QString & _game_id, GameArtType _type);
     void deleteArt(const QString & _game_id, GameArtType _type);
-    void deleteArts(const QString & _game_id);
+    void clearArts(const QString & _game_id);
     QPixmap setArt(const QString & _game_id, GameArtType _type, const QString & _filepath);
+
+signals:
+    void artChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
 
 private:
     void initArtProperties();

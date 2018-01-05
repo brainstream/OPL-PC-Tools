@@ -37,7 +37,6 @@ class GameCollectionWidget : public QWidget, private Ui::GameCollectionWidget
 
 public:
     explicit GameCollectionWidget(UIContext & _context, QWidget * _parent = nullptr);
-    ~GameCollectionWidget() override;
     bool tryLoadRecentDirectory();
     void load(const QDir & _directory);
 

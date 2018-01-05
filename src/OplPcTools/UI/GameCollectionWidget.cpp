@@ -175,11 +175,6 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     applySettings();
 }
 
-GameCollectionWidget::~GameCollectionWidget()
-{
-    delete mp_game_art_manager;
-}
-
 void GameCollectionWidget::activateCollectionControls(bool _activate)
 {
     mp_btn_install->setEnabled(_activate);
@@ -241,7 +236,7 @@ void GameCollectionWidget::load(const QDir & _directory)
 {
     mr_context.collection().load(_directory);
     delete mp_game_art_manager;
-    mp_game_art_manager = new Core::GameArtManager(_directory);
+    mp_game_art_manager = new Core::GameArtManager(_directory, this);
     connect(mp_game_art_manager, &Core::GameArtManager::artChanged, this, &GameCollectionWidget::gameArtChanged);
     mp_game_art_manager->addCacheType(Core::GameArtType::Icon);
     mp_game_art_manager->addCacheType(Core::GameArtType::Front);

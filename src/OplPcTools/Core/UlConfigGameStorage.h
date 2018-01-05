@@ -29,16 +29,18 @@ class UlConfigGameStorage final : public GameStorage
 
 public:
     explicit UlConfigGameStorage(QObject * _parent = nullptr);
-    ~UlConfigGameStorage() override;
     GameInstallationType installationType() const override;
-    bool load(const QDir & _directory) override;
-    bool renameGame(const QString & _id, const QString & _title) override;
-    bool renameGame(const int _index, const QString & _title) override;
-    bool registerGame(const Game & _game) override;
 
-private:
-    bool renameGame(Game & _game, const QString & _title);
-    bool renameGameInConfig(const QString & _id, const QString & _title);
+    static void validateTitle(const QString & _title);
+    static QString makePartFilename(const QString & _id, const QString & _name, quint8 _part);
+
+public:
+    static const quint16 max_name_length = 32;
+
+protected:
+    bool performLoading(const QDir & _directory) override;
+    bool performRenaming(const Game & _game, const QString & _title) override;
+    bool performRegistration(const Game & _game) override;
 
 private:
     QString m_config_filepath;

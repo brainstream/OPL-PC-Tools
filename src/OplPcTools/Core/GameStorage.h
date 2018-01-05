@@ -34,27 +34,38 @@ public:
     explicit GameStorage(QObject * _parent = nullptr);
     virtual ~GameStorage();
     const Game * operator [](int _index) const;
-    int count() const;
     const Game * findGame(const QString & _id) const;
+    bool load(const QDir & _directory);
+    int count() const;
+    bool renameGame(const QString & _id, const QString & _title);
+    bool renameGame(const int _index, const QString & _title);
+    bool registerGame(const Game & _game);
 
     virtual GameInstallationType installationType() const = 0;
-    // TODO: use exceptions
-    virtual bool load(const QDir & _directory) = 0;
-    // TODO: use exceptions
-    virtual bool renameGame(const QString & _id, const QString & _title) = 0;
-    // TODO: use exceptions
-    virtual bool renameGame(const int _index, const QString & _title) = 0;
-    // TODO: use exceptions
-    virtual bool registerGame(const Game & _game) = 0;
+
+    static void validateId(const QString & _id);
+
+public:
+    static const quint16 max_id_length   = 15;
 
 signals:
+    void loaded();
     void gameRegistered(const QString & _game_id);
+    void gameRenamed(const QString & _game_id);
+
 
 protected:
-    void clear();
     Game * createGame(const QString & _id);
     Game * findNonConstGame(const QString & _id) const;
     Game * gameAt(int _index) const;
+
+    virtual bool performLoading(const QDir & _directory) = 0;
+    virtual bool performRenaming(const Game & _game, const QString & _title) = 0;
+    virtual bool performRegistration(const Game & _game) = 0;
+
+private:
+    void clear();
+    bool renameGame(Game * _game, const QString & _title);
 
 private:
     QVector<Game *> m_games;

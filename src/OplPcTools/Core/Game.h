@@ -42,15 +42,6 @@ public:
     inline void setInstallationType(GameInstallationType _type);
     inline GameInstallationType installationType() const;
 
-    static void validateName(const QString & _name, GameInstallationType _installation_type);
-    static void validateId(const QString & _id);
-    static QString makePartName(const QString & _id, const QString & _name, quint8 _part);
-    static QString makeIsoFilename(const QString & _title, const QString & _id);
-
-public:
-    static const quint16 max_id_length   = 15;
-    static const quint16 max_name_length = 32;
-
 private:
     QString m_id;
     QString m_title;

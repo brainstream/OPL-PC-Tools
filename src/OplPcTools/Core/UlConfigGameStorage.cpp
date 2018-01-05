@@ -17,6 +17,7 @@
 
 #include <cstring>
 #include <QTemporaryFile>
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/File.h>
 #include <OplPcTools/Core/UlConfigGameStorage.h>
 
@@ -33,8 +34,8 @@ const QString g_image_prefix("ul.");
 struct RawConfigRecord
 {
     explicit RawConfigRecord(const Game & _game);
-    char name[Game::max_name_length];
-    char image[Game::max_id_length];
+    char name[UlConfigGameStorage::max_name_length];
+    char image[GameStorage::max_id_length];
     quint8 parts;
     quint8 media;
     quint8 pad[15];
@@ -75,14 +76,39 @@ size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _r
     return ~0;
 }
 
+// This function originally was taken from the OPL project (iso2opl.c).
+// https://github.com/ifcaro/Open-PS2-Loader
+quint32 crc32(const QString & _string)
+{
+    std::string string = _string.toStdString();
+    quint32 * crctab = new quint32[0x400];
+    int crc = 0;
+    int count = 0;
+    for(int table = 0; table < 256; ++table)
+    {
+        crc = table << 24;
+        for(count = 8; count > 0; --count)
+        {
+            if (crc < 0)
+                crc = crc << 1;
+            else
+                crc = (crc << 1) ^ 0x04C11DB7;
+        }
+        crctab[255 - table] = crc;
+    }
+    do
+    {
+        int byte = string[count++];
+        crc = crctab[byte ^ ((crc >> 24) & 0xFF)] ^ ((crc << 8) & 0xFFFFFF00);
+    } while (string[count - 1] != 0);
+    delete [] crctab;
+    return crc;
+}
+
 } // namespace
 
 UlConfigGameStorage::UlConfigGameStorage(QObject * _parent /*= nullptr*/) :
     GameStorage(_parent)
-{
-}
-
-UlConfigGameStorage::~UlConfigGameStorage()
 {
 }
 
@@ -91,9 +117,8 @@ GameInstallationType UlConfigGameStorage::installationType() const
     return GameInstallationType::UlConfig;
 }
 
-bool UlConfigGameStorage::load(const QDir & _directory)
+bool UlConfigGameStorage::performLoading(const QDir & _directory)
 {
-    clear();
     m_config_filepath = _directory.absoluteFilePath(UL_CONFIG_FILENAME);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
@@ -107,10 +132,10 @@ bool UlConfigGameStorage::load(const QDir & _directory)
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
         Game * game = createGame(QString::fromLatin1(&raw_record->image[g_image_prefix.size()],
             strlen(raw_record->image) - g_image_prefix.size()));
-        if(raw_record->name[Game::max_name_length - 1] == '\0')
+        if(raw_record->name[max_name_length - 1] == '\0')
             game->setTitle(QString::fromUtf8(raw_record->name, strlen(raw_record->name)));
         else
-            game->setTitle(QString::fromUtf8(raw_record->name, Game::max_name_length));
+            game->setTitle(QString::fromUtf8(raw_record->name, max_name_length));
         game->setPartCount(raw_record->parts);
         switch(raw_record->media)
         {
@@ -126,39 +151,40 @@ bool UlConfigGameStorage::load(const QDir & _directory)
         }
     }
     delete [] buffer;
-}
-
-bool UlConfigGameStorage::renameGame(const QString & _id, const QString & _title)
-{
-    // TODO: exception
-    Game * game = findNonConstGame(_id);
-    return game && renameGame(*game, _title);
-}
-
-bool UlConfigGameStorage::renameGame(const int _index, const QString & _title)
-{
-    // TODO: exception
-    return renameGame(*gameAt(_index), _title);
-}
-
-bool UlConfigGameStorage::renameGame(Game & _game, const QString & _title)
-{
-    if(renameGameInConfig(_game.id(), _title))
-    {
-        _game.setTitle(_title);
-        return true;
-    }
-    return false;
-}
-
-bool UlConfigGameStorage::renameGameInConfig(const QString & _id, const QString & _title)
-{
-    // TODO: update ul.conf
     return true;
 }
 
-bool UlConfigGameStorage::registerGame(const Game & _game)
+bool UlConfigGameStorage::performRenaming(const Game & _game, const QString & _title)
+{
+    QFile file(m_config_filepath);
+    openFile(file, QIODevice::ReadWrite);
+    size_t offset = findRecordOffset(file, _game.id());
+    if(!~offset)
+        throw ValidationException(QObject::tr("Config record was not found"));
+    file.seek(offset);
+    char data[sizeof(RawConfigRecord::name)];
+    memset(&data, 0, sizeof(RawConfigRecord::name));
+    QByteArray name_bytes = _title.toUtf8();
+    strncpy(data, name_bytes.constData(), name_bytes.size());
+    if(file.write(data, sizeof(data)) != sizeof(data))
+        throw IOException(QObject::tr("An error occurred while writing data to file"));
+    return true;
+}
+
+bool UlConfigGameStorage::performRegistration(const Game & _game)
 {
     // TODO: register game
     return true;
+}
+
+QString UlConfigGameStorage::makePartFilename(const QString & _id, const QString & _name, quint8 _part)
+{
+    QString crc = QString("%1").arg(crc32(_name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
+    return QString("ul.%1.%2.%3").arg(crc).arg(_id).arg(_part, 2, 10, QChar('0'));
+}
+
+void UlConfigGameStorage::validateTitle(const QString & _title)
+{
+    if(_title.toUtf8().size() > max_name_length)
+        throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(max_name_length));
 }

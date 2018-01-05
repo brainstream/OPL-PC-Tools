@@ -81,3 +81,11 @@ const Game * GameCollection::findGame(const QString & _id) const
     if(!game) game = mp_dir_storage->findGame(_id);
     return game;
 }
+
+bool GameCollection::renameGame(const Game & _game, const QString & _title)
+{
+    if(_game.installationType() == GameInstallationType::UlConfig)
+        return mp_ul_conf_storage->renameGame(_game.id(), _title);
+    else
+        return mp_dir_storage->renameGame(_game.id(), _title);
+}

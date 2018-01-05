@@ -16,7 +16,8 @@
  ***********************************************************************************************/
 
 #include <QPushButton>
-#include <OplPcTools/Core/Game.h>
+#include <OplPcTools/Core/UlConfigGameStorage.h>
+#include <OplPcTools/Core/DirectoryGameStorage.h>
 #include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 
@@ -25,7 +26,7 @@ using namespace OplPcTools::UI;
 
 bool GameRenameDialog::UlConfigNameValidator::validate(const QString & _name)
 {
-    int bytes_left = Core::Game::max_name_length - _name.toUtf8().length();
+    int bytes_left = Core::UlConfigGameStorage::max_name_length - _name.toUtf8().length();
     if(bytes_left < 0)
     {
         m_message = QObject::tr("Length exceeded by %1 byte(s)").arg(-bytes_left);
@@ -53,7 +54,7 @@ bool GameRenameDialog::FilenameValidator::validate(const QString & _name)
     m_is_invalid = false;
     try
     {
-        Core::Game::validateName(_name, Core::GameInstallationType::Directory);
+        Core::DirectoryGameStorage::validateTitle(_name);
     }
     catch(const Core::ValidationException & _exception)
     {

@@ -87,3 +87,8 @@ void MainWindow::showGameDetails(const QString & _id, OplPcTools::Core::GameArtM
     int index = mp_stacked_widget->addWidget(widget);
     mp_stacked_widget->setCurrentIndex(index);
 }
+
+void MainWindow::showErrorMessage(const QString & _message)
+{
+    QMessageBox::critical(this, tr("Error"), _message);
+}

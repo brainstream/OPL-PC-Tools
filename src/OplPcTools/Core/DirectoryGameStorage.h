@@ -18,7 +18,6 @@
 #ifndef __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
 #define __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
 
-#include <QVector>
 #include <OplPcTools/Core/GameStorage.h>
 
 namespace OplPcTools {
@@ -31,19 +30,25 @@ class DirectoryGameStorage final : public GameStorage
 public:
     explicit DirectoryGameStorage(QObject * _parent = nullptr);
     GameInstallationType installationType() const override;
-    bool load(const QDir & _directory) override;
-    bool renameGame(const QString & _id, const QString & _title) override;
-    bool renameGame(const int _index, const QString & _title) override;
-    bool registerGame(const Game & _game) override;
+
+    static void validateTitle(const QString & _title);
+    static QString makeIsoFilename(const QString & _title, const QString & _id);
+    static QString makeIsoFilename(const QString & _title);
 
 public:
     static const QString cd_directory;
     static const QString dvd_directory;
 
+protected:
+    bool performLoading(const QDir & _directory) override;
+    bool performRenaming(const Game & _game, const QString & _title) override;
+    bool performRegistration(const Game & _game) override;
+
 private:
-    void load(QDir _base_directory, MediaType _media_type);
-    bool renameGame(Game & _game, const QString & _title);
-    bool renameGameFiles(const QString & _id, const QString & _title);
+    void loadDirectory(MediaType _media_type);
+
+private:
+    QString m_base_directory;
 };
 
 } // namespace Core

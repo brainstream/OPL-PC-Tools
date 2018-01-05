@@ -145,7 +145,16 @@ void GameDetailsWidget::renameGame()
 {
     if(mp_game == nullptr) return;
     GameRenameDialog dlg(mp_game->title(), mp_game->installationType(), this);
-    dlg.exec();
+    if(dlg.exec() != QDialog::Accepted)
+        return;
+    try
+    {
+        mr_context.collection().renameGame(*mp_game, dlg.name());
+    }
+    catch(const Core::Exception & exception)
+    {
+        mr_context.showErrorMessage(exception.message());
+    }
 }
 
 void GameDetailsWidget::showItemContextMenu(const QPoint & _point)
@@ -183,7 +192,7 @@ void GameDetailsWidget::changeGameArt()
     }
     catch(const Core::Exception & exception)
     {
-        QMessageBox::critical(this, QString(), exception.message());
+        mr_context.showErrorMessage(exception.message());
     }
 }
 
@@ -212,7 +221,7 @@ void GameDetailsWidget::removeGameArt()
     }
     catch(const Core::Exception & exception)
     {
-        QMessageBox::critical(this, QString(), exception.message());
+        mr_context.showErrorMessage(exception.message());
     }
 }
 
@@ -230,7 +239,6 @@ void GameDetailsWidget::initGameControls()
         return;
     }
     mp_label_title->setText(mp_game->title());
-    mp_widget_art_details->hide();
     mp_list_arts->clear();
     addArtListItem(Core::GameArtType::Icon, tr("Icon"));
     addArtListItem(Core::GameArtType::Front, tr("Front Cover"));
@@ -251,5 +259,4 @@ void GameDetailsWidget::clearGameControls()
 {
     mp_label_title->clear();
     mp_list_arts->clear();
-    mp_widget_art_details->hide();
 }

@@ -57,8 +57,7 @@ SOURCES += \
     OplPcTools/UI/GameDetailsWidget.cpp \
     OplPcTools/UI/MainWindow.cpp \
     OplPcTools/Core/GameArtManager.cpp \
-    OplPcTools/UI/GameRenameDialog.cpp \
-    OplPcTools/Core/Game.cpp
+    OplPcTools/UI/GameRenameDialog.cpp
 
 
 HEADERS += \

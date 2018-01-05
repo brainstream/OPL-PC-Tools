@@ -39,6 +39,7 @@ public:
     const Game * findGame(const QString & _id) const;
     int count() const;
     const Game * operator [](int _index) const;
+    bool renameGame(const Game & _game, const QString & _title);
 
 signals:
     void loaded();

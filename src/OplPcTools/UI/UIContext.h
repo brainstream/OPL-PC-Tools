@@ -32,6 +32,7 @@ public:
     virtual void showGameInstaller() = 0;
     virtual void showIsoRecoverer() = 0;
     virtual void showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager) = 0;
+    virtual void showErrorMessage(const QString & _message) = 0;
     virtual Core::GameCollection & collection() const = 0;
 };
 

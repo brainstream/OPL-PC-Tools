@@ -15,6 +15,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QVector>
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/DirectoryGameStorage.h>
 #include <OplPcTools/Core/Device.h>
 #include <OplPcTools/Core/Iso9660DeviceSource.h>
@@ -34,21 +36,22 @@ GameInstallationType DirectoryGameStorage::installationType() const
     return GameInstallationType::Directory;
 }
 
-bool DirectoryGameStorage::load(const QDir & _directory)
+bool DirectoryGameStorage::performLoading(const QDir & _directory)
 {
-    clear();
-    load(_directory, MediaType::CD);
-    load(_directory, MediaType::DVD);
+    m_base_directory = _directory.absolutePath();
+    loadDirectory(MediaType::CD);
+    loadDirectory(MediaType::DVD);
     return true;
 }
 
-void DirectoryGameStorage::load(QDir _base_directory, MediaType _media_type)
+void DirectoryGameStorage::loadDirectory(MediaType _media_type)
 {
-    if(!_base_directory.cd(_media_type == MediaType::CD ? cd_directory : dvd_directory))
+    QDir base_directory(m_base_directory);
+    if(!base_directory.cd(_media_type == MediaType::CD ? cd_directory : dvd_directory))
         return;
-    for(const QString & iso : _base_directory.entryList({ "*.iso" }))
+    for(const QString & iso : base_directory.entryList({ "*.iso" }))
     {
-        Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(_base_directory.absoluteFilePath(iso))));
+        Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(base_directory.absoluteFilePath(iso))));
         if(!image.init())
             break;
         Game * game = createGame(image.gameId());
@@ -63,37 +66,47 @@ void DirectoryGameStorage::load(QDir _base_directory, MediaType _media_type)
     }
 }
 
-bool DirectoryGameStorage::renameGame(const QString & _id, const QString & _title)
+bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _title)
 {
-    // TODO: exception
-    Game * game = findNonConstGame(_id);
-    return game && renameGame(*game, _title);
-}
-
-bool DirectoryGameStorage::renameGame(const int _index, const QString & _title)
-{
-    // TODO: exception
-    return renameGame(*gameAt(_index), _title);
-}
-
-bool DirectoryGameStorage::renameGame(Game & _game, const QString & _title)
-{
-    if(renameGameFiles(_game.id(), _title))
+    QDir directory(m_base_directory);
+    if(!directory.cd(_game.mediaType() == MediaType::CD ? cd_directory : dvd_directory))
+        return false;
+    QString old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id()));
+    bool is_name_included_id = true;
+    if(!QFile::exists(old_filename))
     {
-        _game.setTitle(_title);
-        return true;
+        is_name_included_id = false;
+        old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title()));
+        if(!QFile::exists(old_filename))
+            return false;
     }
-    return false;
+    QString new_filename = directory.absoluteFilePath(
+        is_name_included_id ? makeIsoFilename(_title, _game.id()) : makeIsoFilename(_title));
+    return QFile::rename(old_filename, new_filename);
 }
 
-bool DirectoryGameStorage::renameGameFiles(const QString & _id, const QString & _title)
-{
-    // TODO: rename files
-    return true;
-}
-
-bool DirectoryGameStorage::registerGame(const Game & _game)
+bool DirectoryGameStorage::performRegistration(const Game & _game)
 {
     // TODO: register game
     return true;
+}
+
+QString DirectoryGameStorage::makeIsoFilename(const QString & _title, const QString & _id)
+{
+    return QString("%1.%2.iso").arg(_id).arg(_title);
+}
+
+QString DirectoryGameStorage::makeIsoFilename(const QString & _title)
+{
+    return _title + ".iso";
+}
+
+void DirectoryGameStorage::validateTitle(const QString & _title)
+{
+    static const QString disallowed_characters("<>:\"/\\|?*");
+    for(const QChar & ch : disallowed_characters)
+    {
+       if(_title.contains(ch))
+           throw ValidationException(QObject::tr("Name must not contain following symbols: ") + disallowed_characters);
+    }
 }

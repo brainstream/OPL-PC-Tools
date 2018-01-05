@@ -32,6 +32,10 @@ class MainWindow : public QMainWindow, public UIContext, private Ui::MainWindow
 public:
     explicit MainWindow(QWidget * _parent = nullptr);
     Core::GameCollection & collection() const override;
+    void showGameInstaller() override;
+    void showIsoRecoverer() override;
+    void showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager) override;
+    void showErrorMessage(const QString & _message) override;
 
 protected:
     void closeEvent(QCloseEvent * _event) override;
@@ -39,9 +43,6 @@ protected:
 private slots:
     void showAboutDialog();
     void showAboutQtDialog();
-    void showGameInstaller() override;
-    void showIsoRecoverer() override;
-    void showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager) override;
 
 private:
     class Private;

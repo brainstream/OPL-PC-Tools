@@ -15,6 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/GameStorage.h>
 
 using namespace OplPcTools::Core;
@@ -47,18 +48,6 @@ Game * GameStorage::gameAt(int _index) const
     return m_games[_index];
 }
 
-int GameStorage::count() const
-{
-    return m_games.count();
-}
-
-Game * GameStorage::createGame(const QString & _id)
-{
-    Game * game = new Game(_id, installationType());
-    m_games.append(game);
-    return game;
-}
-
 const Game * GameStorage::findGame(const QString & _id) const
 {
     return findNonConstGame(_id);
@@ -73,4 +62,67 @@ Game * GameStorage::findNonConstGame(const QString & _id) const
             return m_games[i];
     }
     return nullptr;
+}
+
+bool GameStorage::load(const QDir & _directory)
+{
+    clear();
+    if(performLoading(_directory))
+    {
+        emit loaded();
+        return true;
+    }
+    return false;
+}
+
+int GameStorage::count() const
+{
+    return m_games.count();
+}
+
+Game * GameStorage::createGame(const QString & _id)
+{
+    Game * game = new Game(_id, installationType());
+    m_games.append(game);
+    return game;
+}
+
+bool GameStorage::renameGame(const QString & _id, const QString & _title)
+{
+    return renameGame(findNonConstGame(_id), _title);
+}
+
+bool GameStorage::renameGame(const int _index, const QString & _title)
+{
+    return renameGame(m_games[_index], _title);
+}
+
+bool GameStorage::renameGame(Game * _game, const QString & _title)
+{
+    if(_game && performRenaming(*_game, _title))
+    {
+        _game->setTitle(_title);
+        emit gameRenamed(_game->id());
+        return true;
+    }
+    return false;
+}
+
+bool GameStorage::registerGame(const Game & _game)
+{
+    if(performRegistration(_game))
+    {
+        Game * game = new Game(_game);
+        game->setInstallationType(installationType());
+        m_games.append(game);
+        emit gameRegistered(game->id());
+        return true;
+    }
+    return false;
+}
+
+void GameStorage::validateId(const QString & _id)
+{
+    if(_id.toLatin1().size() > max_id_length)
+        throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(max_id_length));
 }

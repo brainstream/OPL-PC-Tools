@@ -127,6 +127,7 @@ GameDetailsWidget::GameDetailsWidget(UIContext & _context, OplPcTools::Core::Gam
     connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsWidget::showItemContextMenu);
     connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsWidget::changeGameArt);
     connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsWidget::removeGameArt);
+    connect(mp_label_title, &ClickableLabel::doubleClicked, this, &GameDetailsWidget::renameGame);
 }
 
 void GameDetailsWidget::setupShortcuts()
@@ -149,7 +150,8 @@ void GameDetailsWidget::renameGame()
         return;
     try
     {
-        mr_context.collection().renameGame(*mp_game, dlg.name());
+        if(mr_context.collection().renameGame(*mp_game, dlg.name()))
+            mp_label_title->setText(dlg.name());
     }
     catch(const Core::Exception & exception)
     {

@@ -45,7 +45,7 @@ signals:
     void loaded();
     void gameDeleted(const QString & _game_id);
     void gameAdded(const QString & _game_id);
-    void gameChanged(const QString & _game_id);
+    void gameRenamed(const QString & _game_id);
 
 private:
     QString m_directory;

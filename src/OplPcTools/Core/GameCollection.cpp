@@ -40,6 +40,10 @@ GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
     mp_ul_conf_storage(new UlConfigGameStorage),
     mp_dir_storage(new DirectoryGameStorage)
 {
+    connect(mp_dir_storage, &DirectoryGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
+    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
+    connect(mp_dir_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
+    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRegistered, this, &GameCollection::gameAdded);
 }
 
 GameCollection::~GameCollection()

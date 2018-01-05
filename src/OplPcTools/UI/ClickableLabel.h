@@ -15,56 +15,40 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
-#define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+#ifndef __OPLPCTOOLS_CLICKABLELABEL__
+#define __OPLPCTOOLS_CLICKABLELABEL__
 
-#include <QDir>
-#include <QPixmap>
-#include <QWidget>
-#include <QSortFilterProxyModel>
-#include <OplPcTools/Core/GameArtManager.h>
-#include <OplPcTools/UI/UIContext.h>
-#include "ui_GameCollectionWidget.h"
+#include <QLabel>
 
 namespace OplPcTools {
 namespace UI {
 
-class GameCollectionWidget : public QWidget, private Ui::GameCollectionWidget
+class ClickableLabel : public QLabel
 {
-    class GameTreeModel;
-
     Q_OBJECT
 
 public:
-    explicit GameCollectionWidget(UIContext & _context, QWidget * _parent = nullptr);
-    ~GameCollectionWidget() override;
-    bool tryLoadRecentDirectory();
-    void load(const QDir & _directory);
+    explicit ClickableLabel(QWidget * _parent = nullptr, Qt::WindowFlags _flags = Qt::WindowFlags()) :
+        QLabel(_parent, _flags)
+    {
+    }
 
-private:
-    void applySettings();
-    void saveSettings();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(bool _activate);
+    explicit ClickableLabel(const QString & _text, QWidget * _parent = nullptr, Qt::WindowFlags _flags = Qt::WindowFlags()) :
+        QLabel(_text, _parent, _flags)
+    {
+    }
 
-private slots:
-    void load();
-    void reload();
-    void collectionLoaded();
-    void gameRenamed(const QString & _id);
-    void changeIconsSize();
-    void gameSelected();
-    void showGameDetails();
+signals:
+    void doubleClicked();
 
-private:
-    UIContext & mr_context;
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *) override
+    {
+        emit doubleClicked();
+    }
 };
 
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+#endif // __OPLPCTOOLS_CLICKABLELABEL__

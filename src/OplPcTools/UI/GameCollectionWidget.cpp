@@ -46,6 +46,10 @@ public:
     void setArtManager(Core::GameArtManager & _manager);
 
 private:
+    void onCollectionLoaded();
+    void onGameRenamed(const QString & _id);
+
+private:
     const QPixmap m_default_icon;
     const Core::GameCollection & mr_collection;
     Core::GameArtManager * mp_art_manager;
@@ -58,10 +62,28 @@ GameCollectionWidget::GameTreeModel::GameTreeModel(Core::GameCollection & _colle
     mr_collection(_collection),
     mp_art_manager(nullptr)
 {
-    connect(&_collection, &Core::GameCollection::loaded, this, [this]() {
-        beginResetModel();
-        endResetModel();
-    });
+    connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionWidget::GameTreeModel::onCollectionLoaded);
+    connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::GameTreeModel::onGameRenamed);
+}
+
+void GameCollectionWidget::GameTreeModel::onCollectionLoaded()
+{
+    beginResetModel();
+    endResetModel();
+}
+
+void GameCollectionWidget::GameTreeModel::onGameRenamed(const QString & _id)
+{
+    int count = mr_collection.count();
+    for(int i = 0; i < count; ++i)
+    {
+        const Core::Game * game = mr_collection[i];
+        if(game->id() == _id)
+        {
+            emit dataChanged(createIndex(i, 0), createIndex(i, 0));
+            return;
+        }
+    }
 }
 
 QModelIndex GameCollectionWidget::GameTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
@@ -134,11 +156,11 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     mp_tree_games->setModel(mp_proxy_model);
     activateCollectionControls(false);
     activateItemControls(false);
-    connect(mp_tree_games->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
-    connect(&mr_context.collection(), SIGNAL(loaded()), this, SLOT(collectionLoaded()));
+    connect(mp_tree_games->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
+    connect(&mr_context.collection(), &Core::GameCollection::loaded, this, &GameCollectionWidget::collectionLoaded);
+    connect(&mr_context.collection(), &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::gameRenamed);
     connect(this, &GameCollectionWidget::destroyed, this, &GameCollectionWidget::saveSettings);
-    connect(mp_edit_filter, SIGNAL(textChanged(QString)), mp_proxy_model, SLOT(setFilterFixedString(QString)));
+    connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     applySettings();
 }
 
@@ -227,6 +249,13 @@ void GameCollectionWidget::collectionLoaded()
     mp_label_directory->setText(mr_context.collection().directory());
     activateCollectionControls(true);
     gameSelected();
+}
+
+void GameCollectionWidget::gameRenamed(const QString & _id)
+{
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    if(game && game->id() == _id)
+        gameSelected();
 }
 
 void GameCollectionWidget::changeIconsSize()

@@ -46,7 +46,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="mp_label_title">
+      <widget class="OplPcTools::UI::ClickableLabel" name="mp_label_title">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -126,6 +126,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OplPcTools::UI::ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">OplPcTools/UI/ClickableLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>mp_btn_close</tabstop>
   <tabstop>mp_btn_rename_game</tabstop>

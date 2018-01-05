@@ -168,9 +168,8 @@
          <string>Delete</string>
         </property>
         <property name="icon">
-         <iconset theme="list-remove">
-          <normalon>:/icons/list-remove</normalon>
-         </iconset>
+         <iconset theme="edit-delete" resource="../Resources.qrc">
+          <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -613,7 +612,9 @@
   <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_slider_icons_size</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>mp_slider_icons_size</sender>

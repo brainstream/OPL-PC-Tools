@@ -156,6 +156,7 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
 
 bool UlConfigGameStorage::performRenaming(const Game & _game, const QString & _title)
 {
+    validateTitle(_title);
     QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
     size_t offset = findRecordOffset(file, _game.id());

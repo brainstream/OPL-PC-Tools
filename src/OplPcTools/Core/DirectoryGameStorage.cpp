@@ -68,6 +68,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
 
 bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _title)
 {
+    validateTitle(_title);
     QDir directory(m_base_directory);
     if(!directory.cd(_game.mediaType() == MediaType::CD ? cd_directory : dvd_directory))
         return false;

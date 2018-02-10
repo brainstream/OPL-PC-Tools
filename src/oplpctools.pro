@@ -39,7 +39,6 @@ CONFIG(release, debug|release) {
 INCLUDEPATH += .
 
 SOURCES += \
-    OplPcTools/Main.cpp \
     OplPcTools/Core/BinCueDeviceSource.cpp \
     OplPcTools/Core/Device_FreeBSD.cpp \
     OplPcTools/Core/Device_Linux.cpp \
@@ -57,7 +56,8 @@ SOURCES += \
     OplPcTools/UI/GameDetailsWidget.cpp \
     OplPcTools/UI/MainWindow.cpp \
     OplPcTools/Core/GameArtManager.cpp \
-    OplPcTools/UI/GameRenameDialog.cpp
+    OplPcTools/UI/GameRenameDialog.cpp \
+    OplPcTools/UI/Application.cpp
 
 
 HEADERS += \
@@ -80,7 +80,6 @@ HEADERS += \
     OplPcTools/UI/GameCollectionWidget.h \
     OplPcTools/UI/GameDetailsWidget.h \
     OplPcTools/UI/MainWindow.h \
-    OplPcTools/UI/UIContext.h \
     OplPcTools/Core/MediaType.h \
     OplPcTools/Core/Iso9660DeviceSource.h \
     OplPcTools/Core/GameArtManager.h \
@@ -88,7 +87,8 @@ HEADERS += \
     OplPcTools/ApplicationInfo.h \
     OplPcTools/UI/GameRenameDialog.h \
     OplPcTools/UI/ClickableLabel.h \
-    OplPcTools/UI/Intent.h
+    OplPcTools/UI/Intent.h \
+    OplPcTools/UI/Application.h
 
 
 FORMS += \

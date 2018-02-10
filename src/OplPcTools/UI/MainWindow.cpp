@@ -16,10 +16,9 @@
  ***********************************************************************************************/
 
 #include <QMessageBox>
+#include <QSettings>
 #include <OplPcTools/ApplicationInfo.h>
-#include <OplPcTools/Core/Settings.h>
 #include <OplPcTools/UI/MainWindow.h>
-#include <OplPcTools/UI/GameDetailsWidget.h>
 #include <OplPcTools/UI/AboutDialog.h>
 
 using namespace OplPcTools;
@@ -36,7 +35,6 @@ const char * wnd_geometry = "WindowGeometry";
 MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     QMainWindow(_parent)
 {
-    mp_collection = new Core::GameCollection(this);
     setupUi(this);
     setWindowTitle(APPLICATION_DISPLAY_NAME);
     QSettings settings;
@@ -56,11 +54,6 @@ void MainWindow::pushWidget(Intent & _intent)
     mp_stacked_widget->setCurrentIndex(index);
 }
 
-Core::GameCollection & MainWindow::collection() const
-{
-   return *mp_collection;
-}
-
 void MainWindow::showAboutDialog()
 {
     AboutDialog dlg(this);
@@ -70,9 +63,4 @@ void MainWindow::showAboutDialog()
 void MainWindow::showAboutQtDialog()
 {
     QMessageBox::aboutQt(this);
-}
-
-void MainWindow::showErrorMessage(const QString & _message)
-{
-    QMessageBox::critical(this, tr("Error"), _message);
 }

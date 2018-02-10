@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QSortFilterProxyModel>
 #include <OplPcTools/Core/GameArtManager.h>
-#include <OplPcTools/UI/UIContext.h>
+#include <OplPcTools/UI/Intent.h>
 #include "ui_GameCollectionWidget.h"
 
 namespace OplPcTools {
@@ -37,11 +37,11 @@ class GameCollectionWidget : public QWidget, private Ui::GameCollectionWidget
     Q_OBJECT
 
 public:
-    explicit GameCollectionWidget(UIContext & _context, QWidget * _parent = nullptr);
+    explicit GameCollectionWidget(QWidget * _parent = nullptr);
     bool tryLoadRecentDirectory();
     void load(const QDir & _directory);
 
-    static QSharedPointer<Intent> createIntent(UIContext & _context);
+    static QSharedPointer<Intent> createIntent();
 
 private:
     void applySettings();
@@ -60,7 +60,6 @@ private slots:
     void showGameDetails();
 
 private:
-    UIContext & mr_context;
     OplPcTools::Core::GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
     QSortFilterProxyModel * mp_proxy_model;

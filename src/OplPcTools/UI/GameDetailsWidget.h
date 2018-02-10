@@ -22,8 +22,9 @@
 #include <QWidget>
 #include <QMenu>
 #include <QAction>
+#include <OplPcTools/UI/Intent.h>
+#include <OplPcTools/Core/Game.h>
 #include <OplPcTools/Core/GameArtManager.h>
-#include <OplPcTools/UI/UIContext.h>
 #include "ui_GameDetailsWidget.h"
 
 namespace OplPcTools {
@@ -34,10 +35,10 @@ class GameDetailsWidget : public QWidget, private Ui::GameDetailsWidget
     Q_OBJECT
 
 public:
-    GameDetailsWidget(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
+    explicit GameDetailsWidget(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
     void setGameId(const QString & _id);
 
-    static QSharedPointer<Intent> createIntent(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id);
+    static QSharedPointer<Intent> createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id);
 
 private:
     void setupShortcuts();
@@ -52,7 +53,6 @@ private slots:
     void removeGameArt();
 
 private:
-    UIContext & mr_context;
     OplPcTools::Core::GameArtManager & mr_art_manager;
     const OplPcTools::Core::Game * mp_game;
     QMenu * mp_item_context_menu;

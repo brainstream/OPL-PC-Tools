@@ -18,6 +18,8 @@
 #include <QFileDialog>
 #include <QAbstractItemModel>
 #include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/Core/GameCollection.h>
+#include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsWidget.h>
 #include <OplPcTools/UI/GameCollectionWidget.h>
 
@@ -36,21 +38,13 @@ const char * icons_size = "GameListIconSize";
 class GameCollectionWidgetIntent : public Intent
 {
 public:
-    explicit GameCollectionWidgetIntent(UIContext & _context) :
-        mr_context(_context)
-    {
-    }
-
     QWidget * createWidget(QWidget * _parent) override
     {
-        GameCollectionWidget * widget = new GameCollectionWidget(mr_context, _parent);
+        GameCollectionWidget * widget = new GameCollectionWidget(_parent);
         if(Core::Settings::instance().reopenLastSestion())
             widget->tryLoadRecentDirectory();
         return widget;
     }
-
-private:
-    UIContext & mr_context;
 };
 
 } // namespace
@@ -171,9 +165,8 @@ void GameCollectionWidget::GameTreeModel::setArtManager(Core::GameArtManager & _
     connect(mp_art_manager, &Core::GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
 }
 
-GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _parent /*= nullptr*/) :
+GameCollectionWidget::GameCollectionWidget(QWidget * _parent /*= nullptr*/) :
     QWidget(_parent),
-    mr_context(_context),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
     mp_proxy_model(nullptr)
@@ -181,7 +174,8 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     setupUi(this);
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    mp_model = new GameTreeModel(_context.collection(), this);
+    Core::GameCollection & game_collection = Application::instance().gameCollection();
+    mp_model = new GameTreeModel(game_collection, this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
     mp_proxy_model->setSourceModel(mp_model);
@@ -190,16 +184,16 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     activateCollectionControls(false);
     activateItemControls(false);
     connect(mp_tree_games->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
-    connect(&mr_context.collection(), &Core::GameCollection::loaded, this, &GameCollectionWidget::collectionLoaded);
-    connect(&mr_context.collection(), &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::gameRenamed);
+    connect(&game_collection, &Core::GameCollection::loaded, this, &GameCollectionWidget::collectionLoaded);
+    connect(&game_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::gameRenamed);
     connect(this, &GameCollectionWidget::destroyed, this, &GameCollectionWidget::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     applySettings();
 }
 
-QSharedPointer<Intent> GameCollectionWidget::createIntent(UIContext & _context)
+QSharedPointer<Intent> GameCollectionWidget::createIntent()
 {
-    return QSharedPointer<Intent>(new GameCollectionWidgetIntent(_context));
+    return QSharedPointer<Intent>(new GameCollectionWidgetIntent);
 }
 
 void GameCollectionWidget::activateCollectionControls(bool _activate)
@@ -261,7 +255,8 @@ bool GameCollectionWidget::tryLoadRecentDirectory()
 
 void GameCollectionWidget::load(const QDir & _directory)
 {
-    mr_context.collection().load(_directory);
+    Core::GameCollection & game_collection = Application::instance().gameCollection();
+    game_collection.load(_directory);
     delete mp_game_art_manager;
     mp_game_art_manager = new Core::GameArtManager(_directory, this);
     connect(mp_game_art_manager, &Core::GameArtManager::artChanged, this, &GameCollectionWidget::gameArtChanged);
@@ -269,18 +264,18 @@ void GameCollectionWidget::load(const QDir & _directory)
     mp_game_art_manager->addCacheType(Core::GameArtType::Front);
     mp_model->setArtManager(*mp_game_art_manager);
     mp_proxy_model->sort(0, Qt::AscendingOrder);
-    if(mr_context.collection().count() > 0)
+    if(game_collection.count() > 0)
         mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
 }
 
 void GameCollectionWidget::reload()
 {
-    load(mr_context.collection().directory());
+    load(Application::instance().gameCollection().directory());
 }
 
 void GameCollectionWidget::collectionLoaded()
 {
-    mp_label_directory->setText(mr_context.collection().directory());
+    mp_label_directory->setText(Application::instance().gameCollection().directory());
     activateCollectionControls(true);
     gameSelected();
 }
@@ -334,7 +329,7 @@ void GameCollectionWidget::showGameDetails()
     const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
-        QSharedPointer<Intent> intent = GameDetailsWidget::createIntent(mr_context, *mp_game_art_manager, game->id());
-        mr_context.pushWidget(*intent);
+        QSharedPointer<Intent> intent = GameDetailsWidget::createIntent(*mp_game_art_manager, game->id());
+        Application::instance().pushWidget(*intent);
     }
 }

@@ -15,28 +15,41 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_UICONTEXT__
-#define __OPLPCTOOLS_UICONTEXT__
+#ifndef __OPLPCTOOLS_APPLICATION__
+#define __OPLPCTOOLS_APPLICATION__
 
+#include <QApplication>
 #include <QWidget>
+#include <OplPcTools/Core/GameCollection.h>
 #include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/Core/GameCollection.h> // TODO: delete
-#include <OplPcTools/Core/GameArtManager.h> // TODO: delete
+#include <OplPcTools/UI/MainWindow.h>
 
 namespace OplPcTools {
 namespace UI {
 
-class UIContext
+class Application : public QApplication
 {
-public:
-    virtual ~UIContext() { }
-    virtual void showErrorMessage(const QString & _message) = 0; // TODO: delete
-    virtual Core::GameCollection & collection() const = 0;
+protected:
+    Application(int & _argc, char ** _argv);
 
-    virtual void pushWidget(Intent & _intent) = 0;
+public:
+    ~Application() override;
+    void showMainWindow();
+    void showErrorMessage(const QString & _message);
+    void pushWidget(Intent & _intent);
+    Core::GameCollection & gameCollection() const;
+
+    static Application & instance();
+
+private:
+    MainWindow * ensureMainWindow();
+
+private:
+    MainWindow * mp_main_window;
+    Core::GameCollection * mp_game_collection;
 };
 
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_UICONTEXT__
+#endif // __OPLPCTOOLS_APPLICATION__

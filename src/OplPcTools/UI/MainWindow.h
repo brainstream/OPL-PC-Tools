@@ -19,22 +19,19 @@
 #define __OPLPCTOOLS_MAINWINDOW__
 
 #include <QMainWindow>
-#include <OplPcTools/UI/UIContext.h>  // TODO: delete
 #include <OplPcTools/UI/Intent.h>
 #include "ui_MainWindow.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class MainWindow : public QMainWindow, public UIContext, private Ui::MainWindow
+class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget * _parent = nullptr);
-    void pushWidget(Intent & _intent) override; // TODO: remove override
-    Core::GameCollection & collection() const override; // TODO: delete
-    void showErrorMessage(const QString & _message) override; // TODO: delete
+    void pushWidget(Intent & _intent);
 
 protected:
     void closeEvent(QCloseEvent * _event) override;
@@ -42,9 +39,6 @@ protected:
 private slots:
     void showAboutDialog();
     void showAboutQtDialog();
-
-private:
-    Core::GameCollection * mp_collection; // TODO: delete
 };
 
 } // namespace UI

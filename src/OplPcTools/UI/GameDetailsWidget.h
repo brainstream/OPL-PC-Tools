@@ -18,6 +18,7 @@
 #ifndef __OPLPCTOOLS_GAMEDETAILSWIDGET__
 #define __OPLPCTOOLS_GAMEDETAILSWIDGET__
 
+#include <QSharedPointer>
 #include <QWidget>
 #include <QMenu>
 #include <QAction>
@@ -35,6 +36,8 @@ class GameDetailsWidget : public QWidget, private Ui::GameDetailsWidget
 public:
     GameDetailsWidget(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
     void setGameId(const QString & _id);
+
+    static QSharedPointer<Intent> createIntent(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id);
 
 private:
     void setupShortcuts();

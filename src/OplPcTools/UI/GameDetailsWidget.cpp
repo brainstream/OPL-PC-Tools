@@ -34,6 +34,29 @@ namespace {
 
 static const char * g_settings_key_cover_dir = "PixmapDirectory";
 
+class GameDetailsWidgetIntent : public Intent
+{
+public:
+    GameDetailsWidgetIntent(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id) :
+        mr_context(_context),
+        mr_art_manager(_art_manager),
+        m_game_id(_game_id)
+    {
+    }
+
+    QWidget * createWidget(QWidget * _parent) override
+    {
+        GameDetailsWidget * widget = new GameDetailsWidget(mr_context, mr_art_manager, _parent);
+        widget->setGameId(m_game_id);
+        return widget;
+    }
+
+private:
+    UIContext & mr_context;
+    OplPcTools::Core::GameArtManager & mr_art_manager;
+    const QString m_game_id;
+};
+
 class ArtListItem : public QListWidgetItem
 {
 public:
@@ -128,6 +151,11 @@ GameDetailsWidget::GameDetailsWidget(UIContext & _context, OplPcTools::Core::Gam
     connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsWidget::changeGameArt);
     connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsWidget::removeGameArt);
     connect(mp_label_title, &ClickableLabel::doubleClicked, this, &GameDetailsWidget::renameGame);
+}
+
+QSharedPointer<Intent> GameDetailsWidget::createIntent(UIContext & _context, OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id)
+{
+    return QSharedPointer<Intent>(new GameDetailsWidgetIntent(_context, _art_manager, _game_id));
 }
 
 void GameDetailsWidget::setupShortcuts()

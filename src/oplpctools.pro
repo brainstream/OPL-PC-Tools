@@ -87,7 +87,8 @@ HEADERS += \
     OplPcTools/Core/Maybe.h \
     OplPcTools/ApplicationInfo.h \
     OplPcTools/UI/GameRenameDialog.h \
-    OplPcTools/UI/ClickableLabel.h
+    OplPcTools/UI/ClickableLabel.h \
+    OplPcTools/UI/Intent.h
 
 
 FORMS += \

@@ -18,6 +18,7 @@
 #ifndef __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
 #define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
 
+#include <QSharedPointer>
 #include <QDir>
 #include <QPixmap>
 #include <QWidget>
@@ -39,6 +40,8 @@ public:
     explicit GameCollectionWidget(UIContext & _context, QWidget * _parent = nullptr);
     bool tryLoadRecentDirectory();
     void load(const QDir & _directory);
+
+    static QSharedPointer<Intent> createIntent(UIContext & _context);
 
 private:
     void applySettings();

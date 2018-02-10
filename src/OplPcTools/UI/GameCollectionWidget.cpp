@@ -15,22 +15,44 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QSettings>
 #include <QFileDialog>
 #include <QAbstractItemModel>
+#include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/UI/GameDetailsWidget.h>
 #include <OplPcTools/UI/GameCollectionWidget.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
+
 namespace SettingsKey {
 
 const char * ul_dir     = "ULDirectory";
 const char * icons_size = "GameListIconSize";
 
-
 } // namespace SettingsKey
+
+class GameCollectionWidgetIntent : public Intent
+{
+public:
+    explicit GameCollectionWidgetIntent(UIContext & _context) :
+        mr_context(_context)
+    {
+    }
+
+    QWidget * createWidget(QWidget * _parent) override
+    {
+        GameCollectionWidget * widget = new GameCollectionWidget(mr_context, _parent);
+        if(Core::Settings::instance().reopenLastSestion())
+            widget->tryLoadRecentDirectory();
+        return widget;
+    }
+
+private:
+    UIContext & mr_context;
+};
+
 } // namespace
 
 class GameCollectionWidget::GameTreeModel : public QAbstractItemModel
@@ -175,6 +197,11 @@ GameCollectionWidget::GameCollectionWidget(UIContext & _context, QWidget * _pare
     applySettings();
 }
 
+QSharedPointer<Intent> GameCollectionWidget::createIntent(UIContext & _context)
+{
+    return QSharedPointer<Intent>(new GameCollectionWidgetIntent(_context));
+}
+
 void GameCollectionWidget::activateCollectionControls(bool _activate)
 {
     mp_btn_install->setEnabled(_activate);
@@ -307,6 +334,7 @@ void GameCollectionWidget::showGameDetails()
     const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
-        mr_context.showGameDetails(game->id(), *mp_game_art_manager);
+        QSharedPointer<Intent> intent = GameDetailsWidget::createIntent(mr_context, *mp_game_art_manager, game->id());
+        mr_context.pushWidget(*intent);
     }
 }

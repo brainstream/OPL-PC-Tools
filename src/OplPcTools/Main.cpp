@@ -18,6 +18,7 @@
 #include <QApplication>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/MainWindow.h>
+#include <OplPcTools/UI/GameCollectionWidget.h>
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,8 @@ int main(int argc, char *argv[])
     a.setApplicationVersion(APPLICATION_VERSION);
     a.setOrganizationName("brainstream");
     OplPcTools::UI::MainWindow wnd;
+    QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionWidget::createIntent(wnd);
+    wnd.pushWidget(*intent);
     wnd.show();
     return a.exec();
 }

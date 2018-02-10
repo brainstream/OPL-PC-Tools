@@ -19,8 +19,9 @@
 #define __OPLPCTOOLS_UICONTEXT__
 
 #include <QWidget>
-#include <OplPcTools/Core/GameCollection.h>
-#include <OplPcTools/Core/GameArtManager.h>
+#include <OplPcTools/UI/Intent.h>
+#include <OplPcTools/Core/GameCollection.h> // TODO: delete
+#include <OplPcTools/Core/GameArtManager.h> // TODO: delete
 
 namespace OplPcTools {
 namespace UI {
@@ -29,11 +30,10 @@ class UIContext
 {
 public:
     virtual ~UIContext() { }
-    virtual void showGameInstaller() = 0;
-    virtual void showIsoRecoverer() = 0;
-    virtual void showGameDetails(const QString & _id, OplPcTools::Core::GameArtManager & _art_manager) = 0;
-    virtual void showErrorMessage(const QString & _message) = 0;
+    virtual void showErrorMessage(const QString & _message) = 0; // TODO: delete
     virtual Core::GameCollection & collection() const = 0;
+
+    virtual void pushWidget(Intent & _intent) = 0;
 };
 
 } // namespace UI

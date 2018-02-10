@@ -15,64 +15,22 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QMessageBox>
-#include <OplPcTools/ApplicationInfo.h>
-#include <OplPcTools/Core/Settings.h>
-#include <OplPcTools/UI/MainWindow.h>
-#include <OplPcTools/UI/GameDetailsWidget.h>
-#include <OplPcTools/UI/AboutDialog.h>
+#ifndef __OPLPCTOOLS_INTENT__
+#define __OPLPCTOOLS_INTENT__
 
-using namespace OplPcTools;
-using namespace OplPcTools::UI;
+#include <QWidget>
 
-namespace {
-namespace SettingsKey {
+namespace OplPcTools {
+namespace UI {
 
-const char * wnd_geometry = "WindowGeometry";
-
-} // namespace SettingsKey
-} // namespace
-
-MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
-    QMainWindow(_parent)
+class Intent
 {
-    mp_collection = new Core::GameCollection(this);
-    setupUi(this);
-    setWindowTitle(APPLICATION_DISPLAY_NAME);
-    QSettings settings;
-    restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
-}
+public:
+    virtual ~Intent() { }
+    virtual QWidget * createWidget(QWidget * _parent) = 0;
+};
 
-void MainWindow::closeEvent(QCloseEvent * _event)
-{
-    QMainWindow::closeEvent(_event);
-    QSettings settings;
-    settings.setValue(SettingsKey::wnd_geometry, saveGeometry());
-}
+} // namespace UI
+} // namespace OplPcTools
 
-void MainWindow::pushWidget(Intent & _intent)
-{
-    int index = mp_stacked_widget->addWidget(_intent.createWidget(mp_stacked_widget));
-    mp_stacked_widget->setCurrentIndex(index);
-}
-
-Core::GameCollection & MainWindow::collection() const
-{
-   return *mp_collection;
-}
-
-void MainWindow::showAboutDialog()
-{
-    AboutDialog dlg(this);
-    dlg.exec();
-}
-
-void MainWindow::showAboutQtDialog()
-{
-    QMessageBox::aboutQt(this);
-}
-
-void MainWindow::showErrorMessage(const QString & _message)
-{
-    QMessageBox::critical(this, tr("Error"), _message);
-}
+#endif // __OPLPCTOOLS_INTENT__

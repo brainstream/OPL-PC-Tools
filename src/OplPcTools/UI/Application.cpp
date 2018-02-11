@@ -74,9 +74,9 @@ void Application::showErrorMessage(const QString &_message)
     QMessageBox::critical(ensureMainWindow(), tr("Error"), _message);
 }
 
-void Application::pushActivity(Intent & _intent)
+bool Application::pushActivity(Intent & _intent)
 {
-    ensureMainWindow()->pushActivity(_intent);
+    return ensureMainWindow()->pushActivity(_intent);
 }
 
 Core::GameCollection & Application::gameCollection() const

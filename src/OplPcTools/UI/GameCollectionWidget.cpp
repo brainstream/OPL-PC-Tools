@@ -41,10 +41,7 @@ class GameCollectionWidgetIntent : public Intent
 public:
     Activity * createActivity(QWidget * _parent) override
     {
-        GameCollectionWidget * widget = new GameCollectionWidget(_parent);
-        if(Core::Settings::instance().reopenLastSestion())
-            widget->tryLoadRecentDirectory();
-        return widget;
+        return new GameCollectionWidget(_parent);
     }
 };
 
@@ -198,6 +195,13 @@ QSharedPointer<Intent> GameCollectionWidget::createIntent()
     return QSharedPointer<Intent>(new GameCollectionWidgetIntent);
 }
 
+bool GameCollectionWidget::onAttach()
+{
+    if(Core::Settings::instance().reopenLastSestion())
+        tryLoadRecentDirectory();
+    return true;
+}
+
 void GameCollectionWidget::activateCollectionControls(bool _activate)
 {
     mp_btn_install->setEnabled(_activate);
@@ -342,7 +346,7 @@ void GameCollectionWidget::showIsoRestorer()
     const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->installationType() == Core::GameInstallationType::UlConfig)
     {
-        QSharedPointer<Intent> intent = IsoRestorerWidget::createIntent(*game);
+        QSharedPointer<Intent> intent = IsoRestorerWidget::createIntent(game->id());
         Application::instance().pushActivity(*intent);
     }
 }

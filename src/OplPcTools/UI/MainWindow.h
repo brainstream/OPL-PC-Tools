@@ -31,7 +31,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
 public:
     explicit MainWindow(QWidget * _parent = nullptr);
-    void pushActivity(Intent & _intent);
+    bool pushActivity(Intent & _intent);
 
 protected:
     void closeEvent(QCloseEvent * _event) override;

@@ -27,19 +27,21 @@
 namespace OplPcTools {
 namespace UI {
 
-class IsoRestorerWidget : public Activity
+class IsoRestorerWidget : public Activity, private Ui::IsoRestorerWidget
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerWidget(QWidget * _parent = nullptr);
-    ~IsoRestorerWidget() override;
-    void restore(const OplPcTools::Core::Game & _game);
+    explicit IsoRestorerWidget(const QString & _game_id, QWidget * _parent = nullptr);
+    bool onAttach() override;
 
-    static QSharedPointer<Intent> createIntent(const OplPcTools::Core::Game & _game);
+    static QSharedPointer<Intent> createIntent(const QString & _game_id);
 
 private:
-    Ui::IsoRestorerWidget * mp_ui;
+    void restore(const Core::Game & _game, const QString & _destination);
+
+private:
+    const QString m_game_id;
 };
 
 } // namespace UI

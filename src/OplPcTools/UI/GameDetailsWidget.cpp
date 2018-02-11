@@ -144,7 +144,7 @@ GameDetailsWidget::GameDetailsWidget(OplPcTools::Core::GameArtManager & _art_man
     mp_item_context_menu->addAction(mp_action_change_art);
     mp_item_context_menu->addAction(mp_action_remove_art);
     initGameControls();
-    connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::deleteLater);
+    connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::close);
     connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsWidget::showItemContextMenu);
     connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsWidget::changeGameArt);
     connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsWidget::removeGameArt);
@@ -159,9 +159,9 @@ QSharedPointer<Intent> GameDetailsWidget::createIntent(OplPcTools::Core::GameArt
 void GameDetailsWidget::setupShortcuts()
 {
     QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::deleteLater);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::close);
     shortcut = new QShortcut(QKeySequence("Esc"), this);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::deleteLater);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::close);
     shortcut = new QShortcut(QKeySequence("F2"), this);
     connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::renameGame);
     shortcut = new QShortcut(QKeySequence("Del"), mp_list_arts);

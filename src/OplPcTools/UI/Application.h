@@ -36,7 +36,7 @@ public:
     ~Application() override;
     void showMainWindow();
     void showErrorMessage(const QString & _message);
-    void pushActivity(Intent & _intent);
+    bool pushActivity(Intent & _intent);
     Core::GameCollection & gameCollection() const;
 
     static Application & instance();

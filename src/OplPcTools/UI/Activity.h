@@ -31,8 +31,9 @@ public:
     {
     }
 
-    virtual void onAttach()
+    virtual bool onAttach()
     {
+        return true;
     }
 };
 

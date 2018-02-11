@@ -91,7 +91,8 @@ HEADERS += \
     OplPcTools/UI/Intent.h \
     OplPcTools/UI/Application.h \
     OplPcTools/Core/IsoRestorer.h \
-    OplPcTools/UI/IsoRestorerWidget.h
+    OplPcTools/UI/IsoRestorerWidget.h \
+    OplPcTools/UI/Activity.h
 
 
 FORMS += \

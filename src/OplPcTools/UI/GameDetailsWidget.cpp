@@ -44,7 +44,7 @@ public:
     {
     }
 
-    QWidget * createWidget(QWidget * _parent) override
+    Activity * createActivity(QWidget * _parent) override
     {
         GameDetailsWidget * widget = new GameDetailsWidget(mr_art_manager, _parent);
         widget->setGameId(m_game_id);
@@ -128,7 +128,7 @@ QVariant ArtListItem::data(int _role) const
 }
 
 GameDetailsWidget::GameDetailsWidget(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
-    QWidget(_parent),
+    Activity(_parent),
     mr_art_manager(_art_manager),
     mp_game(nullptr),
     mp_item_context_menu(nullptr),

@@ -30,7 +30,7 @@
 namespace OplPcTools {
 namespace UI {
 
-class GameDetailsWidget : public QWidget, private Ui::GameDetailsWidget
+class GameDetailsWidget : public Activity, private Ui::GameDetailsWidget
 {
     Q_OBJECT
 

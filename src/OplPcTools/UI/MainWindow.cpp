@@ -48,10 +48,12 @@ void MainWindow::closeEvent(QCloseEvent * _event)
     settings.setValue(SettingsKey::wnd_geometry, saveGeometry());
 }
 
-void MainWindow::pushWidget(Intent & _intent)
+void MainWindow::pushActivity(Intent & _intent)
 {
-    int index = mp_stacked_widget->addWidget(_intent.createWidget(mp_stacked_widget));
+    Activity * activity = _intent.createActivity(mp_stacked_widget);
+    int index = mp_stacked_widget->addWidget(activity);
     mp_stacked_widget->setCurrentIndex(index);
+    activity->onAttach();
 }
 
 void MainWindow::showAboutDialog()

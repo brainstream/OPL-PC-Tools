@@ -18,7 +18,7 @@
 #ifndef __OPLPCTOOLS_INTENT__
 #define __OPLPCTOOLS_INTENT__
 
-#include <QWidget>
+#include <OplPcTools/UI/Activity.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -27,7 +27,7 @@ class Intent
 {
 public:
     virtual ~Intent() { }
-    virtual QWidget * createWidget(QWidget * _parent) = 0;
+    virtual Activity * createActivity(QWidget * _parent) = 0;
 };
 
 } // namespace UI

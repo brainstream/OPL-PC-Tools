@@ -74,9 +74,9 @@ void Application::showErrorMessage(const QString &_message)
     QMessageBox::critical(ensureMainWindow(), tr("Error"), _message);
 }
 
-void Application::pushWidget(Intent & _intent)
+void Application::pushActivity(Intent & _intent)
 {
-    ensureMainWindow()->pushWidget(_intent);
+    ensureMainWindow()->pushActivity(_intent);
 }
 
 Core::GameCollection & Application::gameCollection() const
@@ -91,7 +91,7 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
     QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionWidget::createIntent();
-    gp_application->pushWidget(*intent);
+    gp_application->pushActivity(*intent);
     gp_application->showMainWindow();
     int result = gp_application->exec();
     delete gp_application;

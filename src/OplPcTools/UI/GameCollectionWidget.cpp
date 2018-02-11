@@ -39,7 +39,7 @@ const char * icons_size = "GameListIconSize";
 class GameCollectionWidgetIntent : public Intent
 {
 public:
-    QWidget * createWidget(QWidget * _parent) override
+    Activity * createActivity(QWidget * _parent) override
     {
         GameCollectionWidget * widget = new GameCollectionWidget(_parent);
         if(Core::Settings::instance().reopenLastSestion())
@@ -167,7 +167,7 @@ void GameCollectionWidget::GameTreeModel::setArtManager(Core::GameArtManager & _
 }
 
 GameCollectionWidget::GameCollectionWidget(QWidget * _parent /*= nullptr*/) :
-    QWidget(_parent),
+    Activity(_parent),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
     mp_proxy_model(nullptr)
@@ -333,7 +333,7 @@ void GameCollectionWidget::showGameDetails()
     if(game)
     {
         QSharedPointer<Intent> intent = GameDetailsWidget::createIntent(*mp_game_art_manager, game->id());
-        Application::instance().pushWidget(*intent);
+        Application::instance().pushActivity(*intent);
     }
 }
 
@@ -343,6 +343,6 @@ void GameCollectionWidget::showIsoRestorer()
     if(game && game->installationType() == Core::GameInstallationType::UlConfig)
     {
         QSharedPointer<Intent> intent = IsoRestorerWidget::createIntent(*game);
-        Application::instance().pushWidget(*intent);
+        Application::instance().pushActivity(*intent);
     }
 }

@@ -27,7 +27,7 @@
 namespace OplPcTools {
 namespace UI {
 
-class IsoRestorerWidget : public QWidget
+class IsoRestorerWidget : public Activity
 {
     Q_OBJECT
 

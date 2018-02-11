@@ -31,7 +31,7 @@ public:
     {
     }
 
-    QWidget * createWidget(QWidget * _parent) override
+    Activity * createActivity(QWidget * _parent) override
     {
         IsoRestorerWidget * widget = new IsoRestorerWidget(_parent);
         widget->restore(mr_game);
@@ -46,7 +46,7 @@ private:
 } // namespace
 
 IsoRestorerWidget::IsoRestorerWidget(QWidget * _parent /*= nullptr*/) :
-    QWidget(_parent),
+    Activity(_parent),
     mp_ui(new Ui::IsoRestorerWidget)
 {
     mp_ui->setupUi(this);

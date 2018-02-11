@@ -7,6 +7,7 @@
         <file alias="list-add">Resources/icons/list-add.svg</file>
         <file alias="go-previous">Resources/icons/go-previous.svg</file>
         <file alias="edit-delete">Resources/icons/edit-delete.svg</file>
+        <file alias="edit-undo">Resources/icons/edit-undo.svg</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="no-image">Resources/images/no-image.svg</file>

@@ -15,60 +15,38 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
-#define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+#ifndef __OPLPCTOOLS_ISORESTORER__
+#define __OPLPCTOOLS_ISORESTORER__
 
-#include <QSharedPointer>
-#include <QDir>
-#include <QPixmap>
-#include <QWidget>
-#include <QSortFilterProxyModel>
+#include <QObject>
 #include <OplPcTools/Core/Game.h>
-#include <OplPcTools/Core/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameCollectionWidget.h"
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class GameCollectionWidget : public QWidget, private Ui::GameCollectionWidget
+class IsoRestorer final : public QObject
 {
-    class GameTreeModel;
-
     Q_OBJECT
 
 public:
-    explicit GameCollectionWidget(QWidget * _parent = nullptr);
-    bool tryLoadRecentDirectory();
-    void load(const QDir & _directory);
+    IsoRestorer(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QObject * _parent = nullptr);
+    bool restore();
 
-    static QSharedPointer<Intent> createIntent();
-
-private:
-    void applySettings();
-    void saveSettings();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(const Core::Game * _selected_game);
-
-private slots:
-    void load();
-    void reload();
-    void collectionLoaded();
-    void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
-    void changeIconsSize();
-    void gameSelected();
-    void showGameDetails();
-    void showIsoRestorer();
+signals:
+    void progress(quint64 _total_bytes, quint64 _done_bytes);
+    void rollbackStarted();
+    void rollbackFinished();
 
 private:
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+    void rollback();
+
+private:
+    const Game & mr_game;
+    const QString m_game_dirpath;
+    const QString m_iso_filepath;
 };
 
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+#endif // __OPLPCTOOLS_ISORESTORER__

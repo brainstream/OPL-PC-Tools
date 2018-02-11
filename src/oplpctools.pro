@@ -33,7 +33,7 @@ CONFIG(debug, debug|release) {
 }
 CONFIG(release, debug|release) {
     message("The project will be built in the RELEASE configuration")
-    #DEFINES += QT_NO_DEBUG_OUTPUT
+    DEFINES += QT_NO_DEBUG_OUTPUT
 }
 
 INCLUDEPATH += .
@@ -57,8 +57,9 @@ SOURCES += \
     OplPcTools/UI/MainWindow.cpp \
     OplPcTools/Core/GameArtManager.cpp \
     OplPcTools/UI/GameRenameDialog.cpp \
-    OplPcTools/UI/Application.cpp
-
+    OplPcTools/UI/Application.cpp \
+    OplPcTools/Core/IsoRestorer.cpp \
+    OplPcTools/UI/IsoRestorerWidget.cpp
 
 HEADERS += \
     OplPcTools/Core/BinCueDeviceSource.h \
@@ -88,7 +89,9 @@ HEADERS += \
     OplPcTools/UI/GameRenameDialog.h \
     OplPcTools/UI/ClickableLabel.h \
     OplPcTools/UI/Intent.h \
-    OplPcTools/UI/Application.h
+    OplPcTools/UI/Application.h \
+    OplPcTools/Core/IsoRestorer.h \
+    OplPcTools/UI/IsoRestorerWidget.h
 
 
 FORMS += \
@@ -96,7 +99,8 @@ FORMS += \
     OplPcTools/UI/GameCollectionWidget.ui \
     OplPcTools/UI/GameDetailsWidget.ui \
     OplPcTools/UI/AboutDialog.ui \
-    OplPcTools/UI/GameRenameDialog.ui
+    OplPcTools/UI/GameRenameDialog.ui \
+    OplPcTools/UI/IsoRestorerWidget.ui
 
 RESOURCES += \
     OplPcTools/Resources.qrc

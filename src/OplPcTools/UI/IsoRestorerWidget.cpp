@@ -15,60 +15,55 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
-#define __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+#include <QDebug>
+#include <OplPcTools/UI/IsoRestorerWidget.h>
 
-#include <QSharedPointer>
-#include <QDir>
-#include <QPixmap>
-#include <QWidget>
-#include <QSortFilterProxyModel>
-#include <OplPcTools/Core/Game.h>
-#include <OplPcTools/Core/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameCollectionWidget.h"
+using namespace OplPcTools;
+using namespace OplPcTools::UI;
 
-namespace OplPcTools {
-namespace UI {
+namespace {
 
-class GameCollectionWidget : public QWidget, private Ui::GameCollectionWidget
+class IsoRestorerWidgetIntent : public Intent
 {
-    class GameTreeModel;
-
-    Q_OBJECT
-
 public:
-    explicit GameCollectionWidget(QWidget * _parent = nullptr);
-    bool tryLoadRecentDirectory();
-    void load(const QDir & _directory);
+    explicit IsoRestorerWidgetIntent(const Core::Game & _game) :
+        mr_game(_game)
+    {
+    }
 
-    static QSharedPointer<Intent> createIntent();
-
-private:
-    void applySettings();
-    void saveSettings();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(const Core::Game * _selected_game);
-
-private slots:
-    void load();
-    void reload();
-    void collectionLoaded();
-    void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
-    void changeIconsSize();
-    void gameSelected();
-    void showGameDetails();
-    void showIsoRestorer();
+    QWidget * createWidget(QWidget * _parent) override
+    {
+        IsoRestorerWidget * widget = new IsoRestorerWidget(_parent);
+        widget->restore(mr_game);
+        return widget;
+    }
 
 private:
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+    const Core::Game & mr_game;
+    const QString m_destination;
 };
 
-} // namespace UI
-} // namespace OplPcTools
+} // namespace
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONWIDGET__
+IsoRestorerWidget::IsoRestorerWidget(QWidget * _parent /*= nullptr*/) :
+    QWidget(_parent),
+    mp_ui(new Ui::IsoRestorerWidget)
+{
+    mp_ui->setupUi(this);
+    connect(mp_ui->mp_button_box, &QDialogButtonBox::rejected, this, &IsoRestorerWidget::deleteLater);
+}
+
+IsoRestorerWidget::~IsoRestorerWidget()
+{
+    delete mp_ui;
+}
+
+QSharedPointer<Intent> IsoRestorerWidget::createIntent(const Core::Game & _game)
+{
+    return QSharedPointer<Intent>(new IsoRestorerWidgetIntent(_game));
+}
+
+void IsoRestorerWidget::restore(const Core::Game & _game)
+{
+    qDebug() << "resotoring " << _game.title() << "...";
+}

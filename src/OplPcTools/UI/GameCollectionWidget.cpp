@@ -21,6 +21,7 @@
 #include <OplPcTools/Core/GameCollection.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsWidget.h>
+#include <OplPcTools/UI/IsoRestorerWidget.h>
 #include <OplPcTools/UI/GameCollectionWidget.h>
 
 using namespace OplPcTools;
@@ -182,12 +183,13 @@ GameCollectionWidget::GameCollectionWidget(QWidget * _parent /*= nullptr*/) :
     mp_proxy_model->setDynamicSortFilter(true);
     mp_tree_games->setModel(mp_proxy_model);
     activateCollectionControls(false);
-    activateItemControls(false);
+    activateItemControls(nullptr);
     connect(mp_tree_games->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
     connect(&game_collection, &Core::GameCollection::loaded, this, &GameCollectionWidget::collectionLoaded);
     connect(&game_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionWidget::gameRenamed);
     connect(this, &GameCollectionWidget::destroyed, this, &GameCollectionWidget::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
+    connect(mp_btn_restore_iso, &QToolButton::clicked, this, &GameCollectionWidget::showIsoRestorer);
     applySettings();
 }
 
@@ -202,11 +204,12 @@ void GameCollectionWidget::activateCollectionControls(bool _activate)
     mp_btn_reload->setEnabled(_activate);
 }
 
-void GameCollectionWidget::activateItemControls(bool _activate)
+void GameCollectionWidget::activateItemControls(const Core::Game * _selected_game)
 {
-    mp_widget_details->setVisible(_activate);
-    mp_btn_delete->setEnabled(_activate);
-    mp_btn_edit->setEnabled(_activate);
+    mp_widget_details->setVisible(_selected_game);
+    mp_btn_delete->setEnabled(_selected_game);
+    mp_btn_edit->setEnabled(_selected_game);
+    mp_btn_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == Core::GameInstallationType::UlConfig);
 }
 
 void GameCollectionWidget::applySettings()
@@ -321,7 +324,7 @@ void GameCollectionWidget::gameSelected()
     {
         mp_widget_details->hide();
     }
-    activateItemControls(game != nullptr);
+    activateItemControls(game);
 }
 
 void GameCollectionWidget::showGameDetails()
@@ -330,6 +333,16 @@ void GameCollectionWidget::showGameDetails()
     if(game)
     {
         QSharedPointer<Intent> intent = GameDetailsWidget::createIntent(*mp_game_art_manager, game->id());
+        Application::instance().pushWidget(*intent);
+    }
+}
+
+void GameCollectionWidget::showIsoRestorer()
+{
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    if(game && game->installationType() == Core::GameInstallationType::UlConfig)
+    {
+        QSharedPointer<Intent> intent = IsoRestorerWidget::createIntent(*game);
         Application::instance().pushWidget(*intent);
     }
 }

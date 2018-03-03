@@ -67,7 +67,7 @@
         </font>
        </property>
        <property name="text">
-        <string notr="true">The Game Title</string>
+        <string notr="true"/>
        </property>
       </widget>
      </item>

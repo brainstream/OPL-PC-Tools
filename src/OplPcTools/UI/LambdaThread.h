@@ -15,47 +15,57 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERWIDGET__
-#define __OPLPCTOOLS_ISORESTORERWIDGET__
+#ifndef __OPLPCTOOLS_LAMBDATHREAD__
+#define __OPLPCTOOLS_LAMBDATHREAD__
 
+#include <functional>
 #include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Core/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerWidget.h"
+#include <OplPcTools/Core/Exception.h>
 
 namespace OplPcTools {
 namespace UI {
 
-class IsoRestorerWidget : public Activity, private Ui::IsoRestorerWidget
+class LambdaThread : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerWidget(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
+        QThread(_parent),
+        m_lambda(_lambda)
+    {
+    }
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
+
+protected:
+    void run() override
+    {
+        try
+        {
+            m_lambda();
+        }
+        catch(const OplPcTools::Core::Exception & ex)
+        {
+            emit exception(ex.message());
+        }
+        catch(const std::exception & err)
+        {
+            emit exception(QString::fromStdString(err.what()));
+        }
+        catch(...)
+        {
+            emit exception(tr("An unknown error has occurred"));
+        }
+    }
+
+signals:
+    void exception(QString _message);
 
 private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
+    std::function<void()> m_lambda;
 };
 
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERWIDGET__
+#endif // __OPLPCTOOLS_LAMBDATHREAD__

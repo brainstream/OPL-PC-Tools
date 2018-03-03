@@ -1,8 +1,7 @@
 Makefile
 Makefile.*
-.qmake.stash
+CMakeLists.txt.user
 .directory
-*.pro.user
 *.autosave
 /distr/
 /build*/

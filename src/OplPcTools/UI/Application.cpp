@@ -69,7 +69,7 @@ MainWindow * Application::ensureMainWindow()
     return mp_main_window;
 }
 
-void Application::showErrorMessage(const QString &_message)
+void Application::showErrorMessage(const QString & _message)
 {
     QMessageBox::critical(ensureMainWindow(), tr("Error"), _message);
 }

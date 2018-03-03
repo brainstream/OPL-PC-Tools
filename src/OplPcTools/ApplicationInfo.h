@@ -20,7 +20,7 @@
 
 #include <QtGlobal>
 
-#define APPLICATION_NAME           "oplpctools"
+#define APPLICATION_NAME           QT_STRINGIFY(_OPLPCTOOLS_EXE)
 #define APPLICATION_DISPLAY_NAME   "Open PlayStation 2 Loader PC Tools"
 #define APPLICATION_VERSION        QT_STRINGIFY(_OPLPCTOOLS_VERSION)
 

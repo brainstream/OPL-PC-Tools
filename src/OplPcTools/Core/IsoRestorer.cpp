@@ -47,7 +47,10 @@ bool IsoRestorer::restore()
         filenames.append(filename);
         QFileInfo file_info(filename);
         if(!file_info.exists())
+        {
+            rollback();
             throw IOException(tr("File not found: \"%1\"").arg(filename));
+        }
         all_files_total_size += file_info.size();
     }
     quint64 total_write_bytes = 0;

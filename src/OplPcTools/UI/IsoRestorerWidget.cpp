@@ -100,9 +100,12 @@ void IsoRestorerWidget::restore(const Core::Game & _game, const QString & _desti
     }, this);
     mp_working_thread = working_thread;
     auto cleanup = [this, restorer]() {
-        mp_working_thread->deleteLater();
-        mp_working_thread = nullptr;
-        restorer->deleteLater();
+        if(mp_working_thread)
+        {
+            mp_working_thread->deleteLater();
+            mp_working_thread = nullptr;
+            restorer->deleteLater();
+        }
     };
     connect(mp_working_thread, &QThread::finished, this, &IsoRestorerWidget::onThreadFinished);
     connect(mp_working_thread, &QThread::finished, cleanup);

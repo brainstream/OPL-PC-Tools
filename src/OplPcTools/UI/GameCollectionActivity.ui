@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameCollectionWidget</class>
- <widget class="QWidget" name="GameCollectionWidget">
+ <class>GameCollectionActivity</class>
+ <widget class="QWidget" name="GameCollectionActivity">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -645,7 +645,7 @@
   <connection>
    <sender>mp_slider_icons_size</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>GameCollectionWidget</receiver>
+   <receiver>GameCollectionActivity</receiver>
    <slot>changeIconsSize()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -661,7 +661,7 @@
   <connection>
    <sender>mp_tree_games</sender>
    <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>GameCollectionWidget</receiver>
+   <receiver>GameCollectionActivity</receiver>
    <slot>showGameDetails()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -677,7 +677,7 @@
   <connection>
    <sender>mp_btn_open</sender>
    <signal>clicked()</signal>
-   <receiver>GameCollectionWidget</receiver>
+   <receiver>GameCollectionActivity</receiver>
    <slot>load()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -693,7 +693,7 @@
   <connection>
    <sender>mp_btn_reload</sender>
    <signal>clicked()</signal>
-   <receiver>GameCollectionWidget</receiver>
+   <receiver>GameCollectionActivity</receiver>
    <slot>reload()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -709,7 +709,7 @@
   <connection>
    <sender>mp_btn_edit</sender>
    <signal>clicked()</signal>
-   <receiver>GameCollectionWidget</receiver>
+   <receiver>GameCollectionActivity</receiver>
    <slot>showGameDetails()</slot>
    <hints>
     <hint type="sourcelabel">

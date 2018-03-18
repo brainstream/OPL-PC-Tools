@@ -64,21 +64,21 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/Core/DirectoryGameStorage.h
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/LambdaThread.h
-    ${OPT_SRC_DIR}/UI/GameCollectionWidget.h
+    ${OPT_SRC_DIR}/UI/GameCollectionActivity.h
     ${OPT_SRC_DIR}/UI/MainWindow.h
-    ${OPT_SRC_DIR}/UI/GameDetailsWidget.h
+    ${OPT_SRC_DIR}/UI/GameDetailsActivity.h
     ${OPT_SRC_DIR}/UI/ClickableLabel.h
-    ${OPT_SRC_DIR}/UI/IsoRestorerWidget.h
+    ${OPT_SRC_DIR}/UI/IsoRestorerActivity.h
     ${OPT_SRC_DIR}/UI/GameRenameDialog.h
 )
 
 set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/MainWindow.ui
-    ${OPT_SRC_DIR}/UI/GameCollectionWidget.ui
-    ${OPT_SRC_DIR}/UI/GameDetailsWidget.ui
+    ${OPT_SRC_DIR}/UI/GameCollectionActivity.ui
+    ${OPT_SRC_DIR}/UI/GameDetailsActivity.ui
     ${OPT_SRC_DIR}/UI/AboutDialog.ui
     ${OPT_SRC_DIR}/UI/GameRenameDialog.ui
-    ${OPT_SRC_DIR}/UI/IsoRestorerWidget.ui
+    ${OPT_SRC_DIR}/UI/IsoRestorerActivity.ui
 )
 
 set(OPT_SRC_RES
@@ -127,11 +127,11 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/Intent.h
     ${OPT_SRC_DIR}/UI/Activity.h
     ${OPT_SRC_DIR}/UI/AboutDialog.cpp
-    ${OPT_SRC_DIR}/UI/GameCollectionWidget.cpp
-    ${OPT_SRC_DIR}/UI/GameDetailsWidget.cpp
+    ${OPT_SRC_DIR}/UI/GameCollectionActivity.cpp
+    ${OPT_SRC_DIR}/UI/GameDetailsActivity.cpp
     ${OPT_SRC_DIR}/UI/MainWindow.cpp
     ${OPT_SRC_DIR}/UI/GameRenameDialog.cpp
-    ${OPT_SRC_DIR}/UI/IsoRestorerWidget.cpp
+    ${OPT_SRC_DIR}/UI/IsoRestorerActivity.cpp
 )
 
 if(WIN32)

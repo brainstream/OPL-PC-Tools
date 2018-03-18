@@ -15,25 +15,25 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERWIDGET__
-#define __OPLPCTOOLS_ISORESTORERWIDGET__
+#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
+#define __OPLPCTOOLS_ISORESTORERACTIVITY__
 
 #include <QThread>
 #include <QWidget>
 #include <QSharedPointer>
 #include <OplPcTools/Core/Game.h>
 #include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerWidget.h"
+#include "ui_IsoRestorerActivity.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class IsoRestorerWidget : public Activity, private Ui::IsoRestorerWidget
+class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerWidget(const QString & _game_id, QWidget * _parent = nullptr);
+    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
     bool onAttach() override;
 
     static QSharedPointer<Intent> createIntent(const QString & _game_id);
@@ -58,4 +58,4 @@ private:
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERWIDGET__
+#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__

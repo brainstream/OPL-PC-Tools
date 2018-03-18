@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameDetailsWidget</class>
- <widget class="QWidget" name="GameDetailsWidget">
+ <class>GameDetailsActivity</class>
+ <widget class="QWidget" name="GameDetailsActivity">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -144,7 +144,7 @@
   <connection>
    <sender>mp_btn_rename_game</sender>
    <signal>clicked()</signal>
-   <receiver>GameDetailsWidget</receiver>
+   <receiver>GameDetailsActivity</receiver>
    <slot>renameGame()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -160,7 +160,7 @@
   <connection>
    <sender>mp_list_arts</sender>
    <signal>itemDoubleClicked(QListWidgetItem*)</signal>
-   <receiver>GameDetailsWidget</receiver>
+   <receiver>GameDetailsActivity</receiver>
    <slot>changeGameArt()</slot>
    <hints>
     <hint type="sourcelabel">

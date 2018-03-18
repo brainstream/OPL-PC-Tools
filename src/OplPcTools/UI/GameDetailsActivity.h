@@ -15,8 +15,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMEDETAILSWIDGET__
-#define __OPLPCTOOLS_GAMEDETAILSWIDGET__
+#ifndef __OPLPCTOOLS_GAMEDETAILSACTIVITY__
+#define __OPLPCTOOLS_GAMEDETAILSACTIVITY__
 
 #include <QSharedPointer>
 #include <QWidget>
@@ -25,17 +25,17 @@
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/Core/Game.h>
 #include <OplPcTools/Core/GameArtManager.h>
-#include "ui_GameDetailsWidget.h"
+#include "ui_GameDetailsActivity.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class GameDetailsWidget : public Activity, private Ui::GameDetailsWidget
+class GameDetailsActivity : public Activity, private Ui::GameDetailsActivity
 {
     Q_OBJECT
 
 public:
-    explicit GameDetailsWidget(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
+    explicit GameDetailsActivity(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
     void setGameId(const QString & _id);
 
     static QSharedPointer<Intent> createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id);
@@ -63,4 +63,4 @@ private:
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMEDETAILSWIDGET__
+#endif // __OPLPCTOOLS_GAMEDETAILSACTIVITY__

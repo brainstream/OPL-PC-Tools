@@ -17,7 +17,7 @@
 
 #include <QMessageBox>
 #include <OplPcTools/ApplicationInfo.h>
-#include <OplPcTools/UI/GameCollectionWidget.h>
+#include <OplPcTools/UI/GameCollectionActivity.h>
 #include <OplPcTools/UI/Application.h>
 
 using namespace OplPcTools;
@@ -90,7 +90,7 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
-    QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionWidget::createIntent();
+    QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionActivity::createIntent();
     gp_application->pushActivity(*intent);
     gp_application->showMainWindow();
     int result = gp_application->exec();

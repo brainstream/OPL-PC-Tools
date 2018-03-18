@@ -26,7 +26,7 @@
 #include <OplPcTools/Core/Settings.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
-#include <OplPcTools/UI/GameDetailsWidget.h>
+#include <OplPcTools/UI/GameDetailsActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -46,7 +46,7 @@ public:
 
     Activity * createActivity(QWidget * _parent) override
     {
-        GameDetailsWidget * widget = new GameDetailsWidget(mr_art_manager, _parent);
+        GameDetailsActivity * widget = new GameDetailsActivity(mr_art_manager, _parent);
         widget->setGameId(m_game_id);
         return widget;
     }
@@ -127,7 +127,7 @@ QVariant ArtListItem::data(int _role) const
     }
 }
 
-GameDetailsWidget::GameDetailsWidget(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
+GameDetailsActivity::GameDetailsActivity(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_art_manager(_art_manager),
     mp_game(nullptr),
@@ -144,31 +144,31 @@ GameDetailsWidget::GameDetailsWidget(OplPcTools::Core::GameArtManager & _art_man
     mp_item_context_menu->addAction(mp_action_change_art);
     mp_item_context_menu->addAction(mp_action_remove_art);
     initGameControls();
-    connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsWidget::close);
-    connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsWidget::showItemContextMenu);
-    connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsWidget::changeGameArt);
-    connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsWidget::removeGameArt);
-    connect(mp_label_title, &ClickableLabel::doubleClicked, this, &GameDetailsWidget::renameGame);
+    connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsActivity::close);
+    connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsActivity::showItemContextMenu);
+    connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsActivity::changeGameArt);
+    connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsActivity::removeGameArt);
+    connect(mp_label_title, &ClickableLabel::doubleClicked, this, &GameDetailsActivity::renameGame);
 }
 
-QSharedPointer<Intent> GameDetailsWidget::createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id)
+QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id)
 {
     return QSharedPointer<Intent>(new GameDetailsWidgetIntent(_art_manager, _game_id));
 }
 
-void GameDetailsWidget::setupShortcuts()
+void GameDetailsActivity::setupShortcuts()
 {
     QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::close);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::close);
     shortcut = new QShortcut(QKeySequence("Esc"), this);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::close);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::close);
     shortcut = new QShortcut(QKeySequence("F2"), this);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::renameGame);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::renameGame);
     shortcut = new QShortcut(QKeySequence("Del"), mp_list_arts);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsWidget::removeGameArt);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::removeGameArt);
 }
 
-void GameDetailsWidget::renameGame()
+void GameDetailsActivity::renameGame()
 {
     if(mp_game == nullptr) return;
     GameRenameDialog dlg(mp_game->title(), mp_game->installationType(), this);
@@ -185,7 +185,7 @@ void GameDetailsWidget::renameGame()
     }
 }
 
-void GameDetailsWidget::showItemContextMenu(const QPoint & _point)
+void GameDetailsActivity::showItemContextMenu(const QPoint & _point)
 {
     ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->itemAt(_point));
     if(item == nullptr) return;
@@ -193,7 +193,7 @@ void GameDetailsWidget::showItemContextMenu(const QPoint & _point)
     mp_item_context_menu->exec(mp_list_arts->mapToGlobal(_point));
 }
 
-void GameDetailsWidget::changeGameArt()
+void GameDetailsActivity::changeGameArt()
 {
     try
     {
@@ -224,7 +224,7 @@ void GameDetailsWidget::changeGameArt()
     }
 }
 
-void GameDetailsWidget::removeGameArt()
+void GameDetailsActivity::removeGameArt()
 {
     try
     {
@@ -253,13 +253,13 @@ void GameDetailsWidget::removeGameArt()
     }
 }
 
-void GameDetailsWidget::setGameId(const QString & _id)
+void GameDetailsActivity::setGameId(const QString & _id)
 {
     mp_game = Application::instance().gameCollection().findGame(_id);
     initGameControls();
 }
 
-void GameDetailsWidget::initGameControls()
+void GameDetailsActivity::initGameControls()
 {
     if(mp_game == nullptr)
     {
@@ -278,12 +278,12 @@ void GameDetailsWidget::initGameControls()
     addArtListItem(Core::GameArtType::Logo, tr("Logo"));
 }
 
-void GameDetailsWidget::addArtListItem(Core::GameArtType _type, const QString & _text)
+void GameDetailsActivity::addArtListItem(Core::GameArtType _type, const QString & _text)
 {
     mp_list_arts->addItem(new ArtListItem(_type, _text, mr_art_manager.load(mp_game->id(), _type)));
 }
 
-void GameDetailsWidget::clearGameControls()
+void GameDetailsActivity::clearGameControls()
 {
     mp_label_title->clear();
     mp_list_arts->clear();

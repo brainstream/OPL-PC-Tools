@@ -22,7 +22,7 @@
 #include <OplPcTools/Core/Game.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/LambdaThread.h>
-#include <OplPcTools/UI/IsoRestorerWidget.h>
+#include <OplPcTools/UI/IsoRestorerActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -45,7 +45,7 @@ public:
 
     Activity * createActivity(QWidget * _parent) override
     {
-        IsoRestorerWidget * widget = new IsoRestorerWidget(m_game_id, _parent);
+        IsoRestorerActivity * widget = new IsoRestorerActivity(m_game_id, _parent);
         return widget;
     }
 
@@ -55,23 +55,23 @@ private:
 
 } // namespace
 
-IsoRestorerWidget::IsoRestorerWidget(const QString & _game_id, QWidget * _parent /*= nullptr*/) :
+IsoRestorerActivity::IsoRestorerActivity(const QString & _game_id, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     m_game_id(_game_id),
     mp_working_thread(nullptr)
 {
     setupUi(this);
     mp_btn_back->setDisabled(true);
-    connect(mp_button_box, &QDialogButtonBox::rejected, this, &IsoRestorerWidget::onCancel);
-    connect(mp_btn_back, &QPushButton::clicked, this, &IsoRestorerWidget::deleteLater);
+    connect(mp_button_box, &QDialogButtonBox::rejected, this, &IsoRestorerActivity::onCancel);
+    connect(mp_btn_back, &QPushButton::clicked, this, &IsoRestorerActivity::deleteLater);
 }
 
-QSharedPointer<Intent> IsoRestorerWidget::createIntent(const QString & _game_id)
+QSharedPointer<Intent> IsoRestorerActivity::createIntent(const QString & _game_id)
 {
     return QSharedPointer<Intent>(new IsoRestorerWidgetIntent(_game_id));
 }
 
-bool IsoRestorerWidget::onAttach()
+bool IsoRestorerActivity::onAttach()
 {
     const Core::Game * game = Application::instance().gameCollection().findGame(m_game_id);
     if(!game)
@@ -90,7 +90,7 @@ bool IsoRestorerWidget::onAttach()
     return true;
 }
 
-void IsoRestorerWidget::restore(const Core::Game & _game, const QString & _destination)
+void IsoRestorerActivity::restore(const Core::Game & _game, const QString & _destination)
 {
     if(mp_working_thread) return;
     m_finish_status.clear();
@@ -107,19 +107,19 @@ void IsoRestorerWidget::restore(const Core::Game & _game, const QString & _desti
             restorer->deleteLater();
         }
     };
-    connect(mp_working_thread, &QThread::finished, this, &IsoRestorerWidget::onThreadFinished);
+    connect(mp_working_thread, &QThread::finished, this, &IsoRestorerActivity::onThreadFinished);
     connect(mp_working_thread, &QThread::finished, cleanup);
-    connect(working_thread, &LambdaThread::exception, this, &IsoRestorerWidget::onException);
+    connect(working_thread, &LambdaThread::exception, this, &IsoRestorerActivity::onException);
     connect(working_thread, &LambdaThread::exception, cleanup);
-    connect(restorer, &Core::IsoRestorer::progress, this, &IsoRestorerWidget::onProgress);
-    connect(restorer, &Core::IsoRestorer::rollbackStarted, this, &IsoRestorerWidget::onRollbackStarted);
+    connect(restorer, &Core::IsoRestorer::progress, this, &IsoRestorerActivity::onProgress);
+    connect(restorer, &Core::IsoRestorer::rollbackStarted, this, &IsoRestorerActivity::onRollbackStarted);
     mp_progress_bar->setMinimum(0);
     mp_progress_bar->setMaximum(s_progress_max);
     mp_label_status->setText(tr("Restoring '%1' to '%2'...").arg(_game.title()).arg(_destination));
     mp_working_thread->start(QThread::HighestPriority);
 }
 
-void IsoRestorerWidget::onProgress(quint64 _total_bytes, quint64 _processed_bytes)
+void IsoRestorerActivity::onProgress(quint64 _total_bytes, quint64 _processed_bytes)
 {
     if(_total_bytes == _processed_bytes)
     {
@@ -136,7 +136,7 @@ void IsoRestorerWidget::onProgress(quint64 _total_bytes, quint64 _processed_byte
     }
 }
 
-void IsoRestorerWidget::onRollbackStarted()
+void IsoRestorerActivity::onRollbackStarted()
 {
     mp_progress_bar->setMaximum(0);
     mp_progress_bar->setValue(0);
@@ -144,13 +144,13 @@ void IsoRestorerWidget::onRollbackStarted()
     m_finish_status = tr("Canceled");
 }
 
-void IsoRestorerWidget::onException(QString _message)
+void IsoRestorerActivity::onException(QString _message)
 {
     mp_label_status->setText(_message);
     Application::instance().showErrorMessage(_message);
 }
 
-void IsoRestorerWidget::onThreadFinished()
+void IsoRestorerActivity::onThreadFinished()
 {
     if(!m_finish_status.isEmpty())
         mp_label_status->setText(m_finish_status);
@@ -161,7 +161,7 @@ void IsoRestorerWidget::onThreadFinished()
 }
 
 
-void IsoRestorerWidget::onCancel()
+void IsoRestorerActivity::onCancel()
 {
     if(mp_working_thread)
     {

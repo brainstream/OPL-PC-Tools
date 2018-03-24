@@ -15,42 +15,39 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
 
-#include <QApplication>
-#include <QWidget>
-#include <OplPcTools/Core/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+#include <OplPcTools/Core/GameInstaller.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class Application : public QApplication
+class UlConfigGameInstaller : public GameInstaller
 {
-protected:
-    Application(int & _argc, char ** _argv);
+    Q_OBJECT
 
 public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _message);
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    Core::GameCollection & gameCollection() const;
-
-    static Application & instance();
+    UlConfigGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    ~UlConfigGameInstaller() override;
+    bool install() override;
+    inline const Game * installedGame() const override;
 
 private:
-    MainWindow * ensureMainWindow();
+    void rollback();
+    void registerGame();
 
 private:
-    MainWindow * mp_main_window;
-    Core::GameCollection * mp_game_collection;
+    QStringList m_written_parts;
+    Game * mp_game;
 };
 
-} // namespace UI
+const Game * UlConfigGameInstaller::installedGame() const
+{
+    return mp_game;
+}
+
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_APPLICATION__
+#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__

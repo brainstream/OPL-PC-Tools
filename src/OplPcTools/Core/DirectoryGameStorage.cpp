@@ -111,3 +111,8 @@ void DirectoryGameStorage::validateTitle(const QString & _title)
            throw ValidationException(QObject::tr("Name must not contain following symbols: ") + disallowed_characters);
     }
 }
+
+QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const QString & _id)
+{
+    return QString("%1.%2.iso").arg(_id).arg(_title);
+}

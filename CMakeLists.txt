@@ -62,6 +62,9 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/Core/GameStorage.h
     ${OPT_SRC_DIR}/Core/UlConfigGameStorage.h
     ${OPT_SRC_DIR}/Core/DirectoryGameStorage.h
+    ${OPT_SRC_DIR}/Core/GameInstaller.h
+    ${OPT_SRC_DIR}/Core/DirectoryGameInstaller.h
+    ${OPT_SRC_DIR}/Core/UlConfigGameInstaller.h
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/LambdaThread.h
     ${OPT_SRC_DIR}/UI/GameCollectionActivity.h
@@ -126,6 +129,9 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/Core/UlConfigGameStorage.cpp
     ${OPT_SRC_DIR}/Core/IsoRestorer.cpp
     ${OPT_SRC_DIR}/Core/GameArtManager.cpp
+    ${OPT_SRC_DIR}/Core/GameInstaller.cpp
+    ${OPT_SRC_DIR}/Core/DirectoryGameInstaller.cpp
+    ${OPT_SRC_DIR}/Core/UlConfigGameInstaller.cpp
     ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/UI/Application.cpp
     ${OPT_SRC_DIR}/UI/Intent.h

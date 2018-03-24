@@ -20,6 +20,7 @@
 
 #include <QWidget>
 #include <QTreeWidgetItem>
+#include <OplPcTools/Core/GameInstaller.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/Intent.h>
 #include "ui_GameInstallerActivity.h"
@@ -52,9 +53,23 @@ private:
     void splitUpOptionChanged(bool _checked);
     void renameOptionChanged();
     void moveOptionChanged();
+    void install();
+    bool startTask();
+    void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
+    void rollbackStarted();
+    void rollbackFinished();
+    void registrationStarted();
+    void registrationFinished();
+    void threadFinished();
+    void installerError(QString _message);
+    void setTaskError(const QString & _message, int _index = -1);
+    QString canceledErrorMessage() const;
 
 private:
     LambdaThread * mp_working_thread;
+    Core::GameInstaller * mp_installer;
+    quint32 m_processing_task_index;
+    bool m_is_canceled;
 };
 
 } // namespace UI

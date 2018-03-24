@@ -15,42 +15,66 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#ifndef __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__
+#define __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__
 
-#include <QApplication>
-#include <QWidget>
-#include <OplPcTools/Core/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+#include <OplPcTools/Core/GameInstaller.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class Application : public QApplication
+class DirectoryGameInstaller : public GameInstaller
 {
-protected:
-    Application(int & _argc, char ** _argv);
+    Q_OBJECT
 
 public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _message);
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    Core::GameCollection & gameCollection() const;
-
-    static Application & instance();
-
-private:
-    MainWindow * ensureMainWindow();
+    DirectoryGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    ~DirectoryGameInstaller() override;
+    inline quint8 options() const;
+    inline void setOptionMoveFile(bool _value);
+    inline bool isOptionMoveFileSet() const;
+    inline void setOptionRenameFile(bool _value);
+    inline bool isOptionRenameFileSet() const;
+    bool install() override;
+    inline const Game * installedGame() const override;
 
 private:
-    MainWindow * mp_main_window;
-    Core::GameCollection * mp_game_collection;
+    bool copyDeviceTo(const QString & _dest);
+    void rollback(const QString & _dest);
+    void registerGame();
+
+private:
+    bool m_move_file;
+    bool m_rename_file;
+    Game * mp_game;
 };
 
-} // namespace UI
+void DirectoryGameInstaller::setOptionMoveFile(bool _value)
+{
+    m_move_file = _value;
+}
+
+bool DirectoryGameInstaller::isOptionMoveFileSet() const
+{
+    return m_move_file;
+}
+
+void DirectoryGameInstaller::setOptionRenameFile(bool _value)
+{
+    m_rename_file = _value;
+}
+
+bool DirectoryGameInstaller::isOptionRenameFileSet() const
+{
+    return m_rename_file;
+}
+
+const Game * DirectoryGameInstaller::installedGame() const
+{
+    return mp_game;
+}
+
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_APPLICATION__
+#endif // __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__

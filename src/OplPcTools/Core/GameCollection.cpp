@@ -86,10 +86,20 @@ const Game * GameCollection::findGame(const QString & _id) const
     return game;
 }
 
+void GameCollection::addGame(const Game & _game)
+{
+    storage(_game.installationType()).registerGame(_game);
+}
+
+GameStorage & GameCollection::storage(GameInstallationType _installation_type) const
+{
+    if(_installation_type == GameInstallationType::Directory)
+        return *mp_ul_conf_storage;
+    else
+        return *mp_dir_storage;
+}
+
 bool GameCollection::renameGame(const Game & _game, const QString & _title)
 {
-    if(_game.installationType() == GameInstallationType::UlConfig)
-        return mp_ul_conf_storage->renameGame(_game.id(), _title);
-    else
-        return mp_dir_storage->renameGame(_game.id(), _title);
+    storage(_game.installationType()).renameGame(_game.id(), _title);
 }

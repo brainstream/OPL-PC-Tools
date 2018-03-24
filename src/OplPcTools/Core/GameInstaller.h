@@ -15,42 +15,42 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#ifndef __OPLPCTOOLS_GAMEINSTALLER__
+#define __OPLPCTOOLS_GAMEINSTALLER__
 
-#include <QApplication>
-#include <QWidget>
+#include <QObject>
+#include <QStringList>
 #include <OplPcTools/Core/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+#include <OplPcTools/Core/Device.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class Application : public QApplication
+class GameInstaller : public QObject
 {
-protected:
-    Application(int & _argc, char ** _argv);
+    Q_OBJECT
 
 public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _message);
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    Core::GameCollection & gameCollection() const;
+    GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    virtual bool install() = 0;
+    virtual const Game * installedGame() const = 0;
 
-    static Application & instance();
+signals:
+    void progress(quint64 _total_bytes, quint64 _done_bytes);
+    void registrationStarted();
+    void registrationFinished();
+    void rollbackStarted();
+    void rollbackFinished();
 
-private:
-    MainWindow * ensureMainWindow();
+protected:
+    MediaType deviceMediaType() const;  
 
-private:
-    MainWindow * mp_main_window;
-    Core::GameCollection * mp_game_collection;
+protected:
+    Device & mr_device;
+    GameCollection & mr_collection;
 };
 
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_APPLICATION__
+#endif // __OPLPCTOOLS_GAMEINSTALLER__

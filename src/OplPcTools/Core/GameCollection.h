@@ -39,13 +39,17 @@ public:
     const Game * findGame(const QString & _id) const;
     int count() const;
     const Game * operator [](int _index) const;
+    void addGame(const Game & _game);
     bool renameGame(const Game & _game, const QString & _title);
 
 signals:
     void loaded();
-    void gameDeleted(const QString & _game_id);
+    void gameDeleted(const QString & _game_id); // TODO: use!
     void gameAdded(const QString & _game_id);
     void gameRenamed(const QString & _game_id);
+
+private:
+    GameStorage & storage(GameInstallationType _installation_type) const;
 
 private:
     QString m_directory;

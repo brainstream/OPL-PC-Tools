@@ -26,6 +26,8 @@
 #include <OplPcTools/Core/BinCueDeviceSource.h>
 #include <OplPcTools/Core/OpticalDriveDeviceSource.h>
 #include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/Core/UlConfigGameInstaller.h>
+#include <OplPcTools/Core/DirectoryGameInstaller.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
@@ -121,23 +123,25 @@ QVariant TaskListItem::data(int _column, int _role) const
         return QVariant();
     if(_column == 0)
         return m_device_ptr->title();
-    switch(m_status)
-    {
-    case GameInstallationStatus::Done:
-        return QObject::tr("Done");
-    case GameInstallationStatus::Error:
-        return QObject::tr("Error");
-    case GameInstallationStatus::Installation:
-        return QObject::tr("Installation");
-    case GameInstallationStatus::Queued:
-        return QObject::tr("Queued");
-    case GameInstallationStatus::Registration:
-        return QObject::tr("Registration");
-    case GameInstallationStatus::RollingBack:
-        return QObject::tr("Rolling back");
-    default:
-        return QString();
-    }
+    // TODO: delete?
+//    switch(m_status)
+//    {
+//    case GameInstallationStatus::Done:
+//        return QObject::tr("Done");
+//    case GameInstallationStatus::Error:
+//        return QObject::tr("Error");
+//    case GameInstallationStatus::Installation:
+//        return QObject::tr("Installation");
+//    case GameInstallationStatus::Queued:
+//        return QObject::tr("Queued");
+//    case GameInstallationStatus::Registration:
+//        return QObject::tr("Registration");
+//    case GameInstallationStatus::RollingBack:
+//        return QObject::tr("Rolling back");
+//    default:
+//        return QString();
+//    }
+    return QString();
 }
 
 Core::Device & TaskListItem::device()
@@ -212,10 +216,9 @@ void TaskListItem::enabelMoving(bool _enable)
 
 void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem & _option, const QModelIndex & _index ) const
 {
-    if (_index.column() != 1) { // TODO: const
-        QItemDelegate::paint(_painter, _option, _index);
+    QItemDelegate::paint(_painter, _option, _index);
+    if(_index.column() != 1) // TODO: const
         return;
-    }
     QStyleOptionProgressBar progress_bar_option;
     progress_bar_option.state = QStyle::State_Enabled;
     progress_bar_option.direction = QApplication::layoutDirection();
@@ -233,7 +236,10 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
 
 GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
-    mp_working_thread(nullptr)
+    mp_working_thread(nullptr),
+    mp_installer(nullptr),
+    m_processing_task_index(0),
+    m_is_canceled(false)
 {
     setupUi(this);
     mp_tree_tasks->header()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -253,6 +259,7 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     connect(mp_checkbox_rename, &QCheckBox::clicked, this, &GameInstallerActivity::renameOptionChanged);
     connect(mp_radio_split_up, &QRadioButton::clicked, this, &GameInstallerActivity::splitUpOptionChanged);
     connect(mp_radio_dnot_split_up, &QRadioButton::clicked, this, &GameInstallerActivity::splitUpOptionChanged);
+    connect(mp_btn_install, &QPushButton::clicked, this, &GameInstallerActivity::install);
     taskSelectionChanged();
 }
 
@@ -473,4 +480,154 @@ void GameInstallerActivity::moveOptionChanged()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item) return;
     item->enabelMoving(mp_checkbox_move->isChecked());
+}
+
+void GameInstallerActivity::install()
+{
+    mp_btn_add_image->setDisabled(true);
+    mp_btn_add_disc->setDisabled(true);
+    mp_btn_install->setDisabled(true);
+    mp_radio_mtauto->setDisabled(true);
+    mp_radio_mtcd->setDisabled(true);
+    mp_radio_mtdvd->setDisabled(true);
+    mp_radio_dnot_split_up->setDisabled(true);
+    mp_radio_split_up->setDisabled(true);
+    mp_btn_back->setDisabled(true);
+    mp_btn_remove->setDisabled(true);
+    mp_btn_rename->setDisabled(true);
+    mp_checkbox_move->setDisabled(true);
+    mp_checkbox_rename->setDisabled(true);
+    mp_btn_cancel->setDisabled(false);
+    m_processing_task_index = 0;
+    startTask();
+}
+
+void GameInstallerActivity::installProgress(quint64 _total_bytes, quint64 _processed_bytes)
+{
+    double current_progress = static_cast<double>(_processed_bytes) / _total_bytes;
+    double single_task_in_overal_progress = 1.0 / mp_tree_tasks->topLevelItemCount();
+    double overall_progress = single_task_in_overal_progress * m_processing_task_index +
+            single_task_in_overal_progress * current_progress;
+    // TODO: set current progress!!!
+    //mp_progressbar_current->setValue(current_progress * g_progressbar_max_value);
+    mp_progressbar_overall->setValue(overall_progress * g_progressbar_max_value);
+}
+
+void GameInstallerActivity::rollbackStarted()
+{
+    mp_btn_cancel->setDisabled(true);
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(true);
+    mp_progressbar_overall->setValue(0);
+    mp_progressbar_overall->setMaximum(0);
+    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
+            setStatus(GameInstallationStatus::RollingBack);
+}
+
+void GameInstallerActivity::rollbackFinished()
+{
+    setTaskError(canceledErrorMessage());
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
+    mp_progressbar_overall->setMaximum(g_progressbar_max_value);
+    mp_progressbar_overall->setValue(g_progressbar_max_value);
+}
+
+QString GameInstallerActivity::canceledErrorMessage() const
+{
+    static const QString message = tr("Canceled by user");
+    return message;
+}
+
+void GameInstallerActivity::setTaskError(const QString & _message, int _index /*= -1*/)
+{
+    if(_index < 0) _index = m_processing_task_index;
+    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(_index))->setError(_message);
+    if(_index == mp_tree_tasks->currentIndex().row())
+        mp_label_error_message->setText(_message);
+}
+
+void GameInstallerActivity::registrationStarted()
+{
+    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
+            setStatus(GameInstallationStatus::Registration);
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(true);
+}
+
+void GameInstallerActivity::registrationFinished()
+{
+    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
+            setStatus(GameInstallationStatus::Done);
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
+    // TODO: delete?
+    //emit gameInstalled(mp_installer->installedGame()->id);
+}
+
+void GameInstallerActivity::threadFinished()
+{
+    ++m_processing_task_index;
+    mp_working_thread = nullptr;
+    if(startTask())
+        return;
+    mp_btn_back->setDisabled(false);
+    mp_btn_cancel->setDisabled(true);
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
+    mp_progressbar_overall->setValue(g_progressbar_max_value);
+    Application::instance().showMessage(tr("Done!"));
+}
+
+bool GameInstallerActivity::startTask()
+{
+    delete mp_installer;
+    mp_installer = nullptr;
+    if(m_is_canceled)
+        return false;
+    TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index));
+    if(!item)
+        return false;
+    if(mp_radio_mtcd->isChecked())
+        item->setMediaType(Core::MediaType::CD);
+    else if(mp_radio_mtdvd->isChecked())
+        item->setMediaType(Core::MediaType::DVD);
+    else
+        item->setMediaType(Core::MediaType::Unknown);
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(false);
+    Core::GameCollection & collection = Application::instance().gameCollection();
+    if(item->isSplittingUpEnabled())
+    {
+        mp_installer = new Core::UlConfigGameInstaller(item->device(), collection, this);
+    }
+    else
+    {
+        Core::DirectoryGameInstaller * dir_installer = new Core::DirectoryGameInstaller(item->device(), collection, this);
+        dir_installer->setOptionMoveFile(item->isMovingEnabled());
+        dir_installer->setOptionRenameFile(item->isRenamingEnabled());
+        mp_installer = dir_installer;
+    }
+    mp_working_thread = new LambdaThread([this]() {
+        mp_installer->install();
+    }, this);
+    connect(mp_working_thread, &QThread::finished, this, &GameInstallerActivity::threadFinished);
+    connect(mp_working_thread, &QThread::finished, mp_working_thread, &QThread::deleteLater);
+    connect(mp_working_thread, &LambdaThread::exception, this, &GameInstallerActivity::installerError);
+    connect(mp_installer, &Core::GameInstaller::progress, this, &GameInstallerActivity::installProgress);
+    connect(mp_installer, &Core::GameInstaller::rollbackStarted, this, &GameInstallerActivity::rollbackStarted);
+    connect(mp_installer, &Core::GameInstaller::rollbackFinished, this, &GameInstallerActivity::rollbackFinished);
+    connect(mp_installer, &Core::GameInstaller::registrationStarted, this, &GameInstallerActivity::registrationStarted);
+    connect(mp_installer, &Core::GameInstaller::registrationFinished, this, &GameInstallerActivity::registrationFinished);
+    static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
+            setStatus(GameInstallationStatus::Installation);
+    mp_working_thread->start(QThread::HighestPriority);
+    return true;
+}
+
+void GameInstallerActivity::installerError(QString _message)
+{
+    // TODO: set status
+    //setCurrentProgressBarUnknownStatus(false, g_progressbar_max_value);
+    setTaskError(_message);
 }

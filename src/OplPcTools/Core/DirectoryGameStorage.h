@@ -34,6 +34,7 @@ public:
     static void validateTitle(const QString & _title);
     static QString makeIsoFilename(const QString & _title, const QString & _id);
     static QString makeIsoFilename(const QString & _title);
+    static QString makeGameIsoFilename(const QString & _title, const QString & _id);
 
 public:
     static const QString cd_directory;

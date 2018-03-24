@@ -37,7 +37,7 @@ public:
     inline const QString & title() const;
     inline void setMediaType(MediaType _media_type);
     inline MediaType mediaType() const;
-    inline void setPartCount(int _count);
+    inline void setPartCount(quint8 _count);
     inline quint8 partCount() const;
     inline void setInstallationType(GameInstallationType _type);
     inline GameInstallationType installationType() const;
@@ -85,7 +85,7 @@ MediaType Game::mediaType() const
     return m_media_type;
 }
 
-void Game::setPartCount(int _count)
+void Game::setPartCount(quint8 _count)
 {
     m_part_count = _count;
 }

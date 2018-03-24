@@ -15,42 +15,22 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#include <OplPcTools/Core/GameInstaller.h>
 
-#include <QApplication>
-#include <QWidget>
-#include <OplPcTools/Core/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+using namespace OplPcTools::Core;
 
-namespace OplPcTools {
-namespace UI {
-
-class Application : public QApplication
+GameInstaller::GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent /*= nullptr*/) :
+    QObject(_parent),
+    mr_device(_device),
+    mr_collection(_collection)
 {
-protected:
-    Application(int & _argc, char ** _argv);
+}
 
-public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _message);
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    Core::GameCollection & gameCollection() const;
-
-    static Application & instance();
-
-private:
-    MainWindow * ensureMainWindow();
-
-private:
-    MainWindow * mp_main_window;
-    Core::GameCollection * mp_game_collection;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_APPLICATION__
+MediaType GameInstaller::deviceMediaType() const
+{
+    const quint64 iso_size = mr_device.size();
+    MediaType type = mr_device.mediaType();
+    if(type == MediaType::Unknown)
+        type = iso_size > 681984000 ? MediaType::DVD : MediaType::CD;
+    return type;
+}

@@ -23,6 +23,7 @@
 #include <OplPcTools/UI/GameDetailsActivity.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
 #include <OplPcTools/UI/GameCollectionActivity.h>
+#include <OplPcTools/UI/GameInstallerActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -36,7 +37,7 @@ const char * icons_size = "GameListIconSize";
 
 } // namespace SettingsKey
 
-class GameCollectionWidgetIntent : public Intent
+class GameCollectionActivityIntent : public Intent
 {
 public:
     Activity * createActivity(QWidget * _parent) override
@@ -192,7 +193,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
 
 QSharedPointer<Intent> GameCollectionActivity::createIntent()
 {
-    return QSharedPointer<Intent>(new GameCollectionWidgetIntent);
+    return QSharedPointer<Intent>(new GameCollectionActivityIntent);
 }
 
 bool GameCollectionActivity::onAttach()
@@ -349,4 +350,10 @@ void GameCollectionActivity::showIsoRestorer()
         QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->id());
         Application::instance().pushActivity(*intent);
     }
+}
+
+void GameCollectionActivity::showGameInstaller()
+{
+    QSharedPointer<Intent> intent = GameInstallerActivity::createIntent();
+    Application::instance().pushActivity(*intent);
 }

@@ -722,6 +722,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mp_btn_install</sender>
+   <signal>clicked()</signal>
+   <receiver>GameCollectionActivity</receiver>
+   <slot>showGameInstaller()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>319</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>changeIconsSize()</slot>
@@ -729,5 +745,6 @@
   <slot>showGameDetails()</slot>
   <slot>load()</slot>
   <slot>reload()</slot>
+  <slot>showGameInstaller()</slot>
  </slots>
 </ui>

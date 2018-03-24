@@ -15,62 +15,32 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
-#define __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#ifndef __OPLPCTOOLS_CHOOSEOPTICALDISCDIALOG__
+#define __OPLPCTOOLS_CHOOSEOPTICALDISCDIALOG__
 
 #include <QSharedPointer>
-#include <QDir>
-#include <QPixmap>
-#include <QWidget>
-#include <QSortFilterProxyModel>
-#include <OplPcTools/Core/Game.h>
-#include <OplPcTools/Core/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameCollectionActivity.h"
+#include <OplPcTools/Core/Device.h>
+#include "ui_ChooseOpticalDiscDialog.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class GameCollectionActivity : public Activity, private Ui::GameCollectionActivity
+class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDialog
 {
-    class GameTreeModel;
-
     Q_OBJECT
 
 public:
-    explicit GameCollectionActivity(QWidget * _parent = nullptr);
-    bool onAttach() override;
-    bool tryLoadRecentDirectory();
-    void load(const QDir & _directory);
-
-    static QSharedPointer<Intent> createIntent();
-
-private:
-    void applySettings();
-    void saveSettings();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(const Core::Game * _selected_game);
+    explicit ChooseOpticalDiscDialog(QWidget * _parent = nullptr);
+    QList<QSharedPointer<OplPcTools::Core::Device>> devices() const;
 
 private slots:
-    void load();
-    void reload();
-    void collectionLoaded();
-    void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
-    void changeIconsSize();
-    void gameSelected();
-    void showGameDetails();
-    void showIsoRestorer();
-    void showGameInstaller();
+    void deviceSelectionChanged();
 
 private:
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+    void fixDeviceTitle(OplPcTools::Core::Device & _device) const;
 };
 
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#endif // __OPLPCTOOLS_CHOOSEOPTICALDISCDIALOG__

@@ -15,62 +15,49 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
-#define __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#ifndef __OPLPCTOOLS_GAMEINSTALLERACTIVITY__
+#define __OPLPCTOOLS_GAMEINSTALLERACTIVITY__
 
-#include <QSharedPointer>
-#include <QDir>
-#include <QPixmap>
 #include <QWidget>
-#include <QSortFilterProxyModel>
-#include <OplPcTools/Core/Game.h>
-#include <OplPcTools/Core/GameArtManager.h>
+#include <QTreeWidgetItem>
+#include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/Intent.h>
-#include "ui_GameCollectionActivity.h"
+#include "ui_GameInstallerActivity.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class GameCollectionActivity : public Activity, private Ui::GameCollectionActivity
+class GameInstallerActivity : public Activity, private Ui::GameInstallerActivity
 {
-    class GameTreeModel;
-
     Q_OBJECT
 
 public:
-    explicit GameCollectionActivity(QWidget * _parent = nullptr);
-    bool onAttach() override;
-    bool tryLoadRecentDirectory();
-    void load(const QDir & _directory);
-
+    explicit GameInstallerActivity(QWidget * _parent = nullptr);
     static QSharedPointer<Intent> createIntent();
 
-private:
-    void applySettings();
-    void saveSettings();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(const Core::Game * _selected_game);
-
-private slots:
-    void load();
-    void reload();
-    void collectionLoaded();
-    void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
-    void changeIconsSize();
-    void gameSelected();
-    void showGameDetails();
-    void showIsoRestorer();
-    void showGameInstaller();
+protected:
+    void dragEnterEvent(QDragEnterEvent * _event) override;
+    void dropEvent(QDropEvent * _event) override;
 
 private:
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+    void taskSelectionChanged();
+    void addDiscImage();
+    void addDiscImage(const QString & _file_path);
+    void addDisc();
+    QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
+    QString truncateGameName(const QString & _name) const;
+    void renameGame();
+    void removeGame();
+    void mediaTypeChanged(bool _checked);
+    void splitUpOptionChanged(bool _checked);
+    void renameOptionChanged();
+    void moveOptionChanged();
+
+private:
+    LambdaThread * mp_working_thread;
 };
 
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#endif // __OPLPCTOOLS_GAMEINSTALLERACTIVITY__

@@ -35,10 +35,10 @@ namespace {
 
 static const char * g_settings_key_cover_dir = "PixmapDirectory";
 
-class GameDetailsWidgetIntent : public Intent
+class GameDetailsActivityIntent : public Intent
 {
 public:
-    GameDetailsWidgetIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id) :
+    GameDetailsActivityIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id) :
         mr_art_manager(_art_manager),
         m_game_id(_game_id)
     {
@@ -153,7 +153,7 @@ GameDetailsActivity::GameDetailsActivity(OplPcTools::Core::GameArtManager & _art
 
 QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id)
 {
-    return QSharedPointer<Intent>(new GameDetailsWidgetIntent(_art_manager, _game_id));
+    return QSharedPointer<Intent>(new GameDetailsActivityIntent(_art_manager, _game_id));
 }
 
 void GameDetailsActivity::setupShortcuts()

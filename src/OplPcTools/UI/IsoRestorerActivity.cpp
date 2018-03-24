@@ -35,10 +35,10 @@ static const char * iso_recover_dir = "ISORecoverDirectory";
 
 } // namespace SettingsKey
 
-class IsoRestorerWidgetIntent : public Intent
+class IsoRestorerActivityIntent : public Intent
 {
 public:
-    explicit IsoRestorerWidgetIntent(const QString & _game_id) :
+    explicit IsoRestorerActivityIntent(const QString & _game_id) :
         m_game_id(_game_id)
     {
     }
@@ -68,7 +68,7 @@ IsoRestorerActivity::IsoRestorerActivity(const QString & _game_id, QWidget * _pa
 
 QSharedPointer<Intent> IsoRestorerActivity::createIntent(const QString & _game_id)
 {
-    return QSharedPointer<Intent>(new IsoRestorerWidgetIntent(_game_id));
+    return QSharedPointer<Intent>(new IsoRestorerActivityIntent(_game_id));
 }
 
 bool IsoRestorerActivity::onAttach()

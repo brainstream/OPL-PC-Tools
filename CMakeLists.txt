@@ -69,7 +69,9 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.h
     ${OPT_SRC_DIR}/UI/ClickableLabel.h
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.h
+    ${OPT_SRC_DIR}/UI/GameInstallerActivity.h
     ${OPT_SRC_DIR}/UI/GameRenameDialog.h
+    ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.h
 )
 
 set(OPT_SRC_UI
@@ -79,6 +81,8 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/AboutDialog.ui
     ${OPT_SRC_DIR}/UI/GameRenameDialog.ui
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.ui
+    ${OPT_SRC_DIR}/UI/GameInstallerActivity.ui
+    ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
 )
 
 set(OPT_SRC_RES
@@ -132,6 +136,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/MainWindow.cpp
     ${OPT_SRC_DIR}/UI/GameRenameDialog.cpp
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.cpp
+    ${OPT_SRC_DIR}/UI/GameInstallerActivity.cpp
+    ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.cpp
 )
 
 if(WIN32)

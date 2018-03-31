@@ -246,7 +246,7 @@ void GameCollectionActivity::load()
     QString choosen_dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root directory"), dirpath);
     if(choosen_dirpath.isEmpty()) return;
     if(choosen_dirpath != dirpath)
-        settings.setValue(SettingsKey::ul_dir, dirpath);
+        settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
     load(choosen_dirpath);
 }
 

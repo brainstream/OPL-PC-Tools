@@ -71,7 +71,7 @@ MainWindow * Application::ensureMainWindow()
 
 void Application::showMessage(const QString & _message)
 {
-    QMessageBox::information(ensureMainWindow(), QString(), _message);
+    QMessageBox::information(ensureMainWindow(), APPLICATION_DISPLAY_NAME, _message);
 }
 
 void Application::showErrorMessage(const QString & _message)

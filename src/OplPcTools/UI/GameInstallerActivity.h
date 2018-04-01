@@ -41,12 +41,13 @@ protected:
     void dropEvent(QDropEvent * _event) override;
 
 private:
+    void setupShortcuts();
+    void close();
     void taskSelectionChanged();
     void addDiscImage();
     void addDiscImage(const QString & _file_path);
     void addDisc();
     QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
-    QString truncateGameName(const QString & _name) const;
     void renameGame();
     void removeGame();
     void mediaTypeChanged(bool _checked);
@@ -64,6 +65,8 @@ private:
     void installerError(QString _message);
     void setTaskError(const QString & _message, int _index = -1);
     QString canceledErrorMessage() const;
+    void setOverallProgressUnknownStatus(bool _unknown, int _value = 0);
+    void cancel();
 
 private:
     LambdaThread * mp_working_thread;

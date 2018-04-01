@@ -62,6 +62,7 @@ public:
 
 private:
     void collectionLoaded();
+    void gameAdded(const QString & _id);
     void updateRecord(const QString & _id);
     void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
 
@@ -80,10 +81,18 @@ GameCollectionActivity::GameTreeModel::GameTreeModel(Core::GameCollection & _col
 {
     connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::GameTreeModel::collectionLoaded);
     connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::GameTreeModel::updateRecord);
+    connect(&_collection, &Core::GameCollection::gameAdded, this, &GameCollectionActivity::GameTreeModel::gameAdded);
 }
 
 void GameCollectionActivity::GameTreeModel::collectionLoaded()
 {
+    beginResetModel();
+    endResetModel();
+}
+
+void GameCollectionActivity::GameTreeModel::gameAdded(const QString & _id)
+{
+    Q_UNUSED(_id);
     beginResetModel();
     endResetModel();
 }

@@ -264,7 +264,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QGroupBox" name="mp_groupbox">
+              <widget class="QGroupBox" name="mp_groupbox_media_type">
                <property name="title">
                 <string>Media Type</string>
                </property>
@@ -297,7 +297,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QGroupBox" name="mp_groupbox_2">
+              <widget class="QGroupBox" name="mp_groupbox_options">
                <property name="title">
                 <string/>
                </property>
@@ -411,22 +411,5 @@
  <resources>
   <include location="../Resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>mp_btn_back</sender>
-   <signal>clicked()</signal>
-   <receiver>GameInstallerActivity</receiver>
-   <slot>deleteLater()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>40</x>
-     <y>13</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>449</x>
-     <y>296</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

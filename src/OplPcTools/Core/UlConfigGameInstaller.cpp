@@ -58,7 +58,7 @@ bool UlConfigGameInstaller::install()
     quint8 part_count = 1;
     for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size; ++part_count)
     {
-        QString part_filename = UlConfigGameStorage::makePartFilename(mp_game->id(), mp_game->title(), mp_game->partCount() - 1);
+        QString part_filename = UlConfigGameStorage::makePartFilename(mp_game->id(), mp_game->title(), part_count - 1);
         QFile part(dest_dir.absoluteFilePath(part_filename));
         if(part.exists())
         {

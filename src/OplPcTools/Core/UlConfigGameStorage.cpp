@@ -174,7 +174,14 @@ bool UlConfigGameStorage::performRenaming(const Game & _game, const QString & _t
 
 bool UlConfigGameStorage::performRegistration(const Game & _game)
 {
-    // TODO: register game
+    validateTitle(_game.title());
+    validateId(g_image_prefix + _game.id());
+    QFile file(m_config_filepath);
+    openFile(file, QIODevice::WriteOnly | QIODevice::Append);
+    RawConfigRecord record(_game);
+    const char * data = reinterpret_cast<const char *>(&record);
+    if(file.write(data, sizeof(RawConfigRecord)) != sizeof(RawConfigRecord))
+        throw IOException(QObject::tr("An error occurred while writing data to file"));
     return true;
 }
 

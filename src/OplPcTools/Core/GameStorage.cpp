@@ -113,7 +113,6 @@ bool GameStorage::registerGame(const Game & _game)
     if(performRegistration(_game))
     {
         Game * game = new Game(_game);
-        game->setInstallationType(installationType());
         m_games.append(game);
         emit gameRegistered(game->id());
         return true;

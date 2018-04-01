@@ -70,6 +70,7 @@ private:
     const QPixmap m_default_icon;
     const Core::GameCollection & mr_collection;
     Core::GameArtManager * mp_art_manager;
+    int m_row_count;
 };
 
 
@@ -77,7 +78,8 @@ GameCollectionActivity::GameTreeModel::GameTreeModel(Core::GameCollection & _col
     QAbstractItemModel(_parent),
     m_default_icon(QPixmap(":/images/no-icon")),
     mr_collection(_collection),
-    mp_art_manager(nullptr)
+    mp_art_manager(nullptr),
+    m_row_count(_collection.count())
 {
     connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::GameTreeModel::collectionLoaded);
     connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::GameTreeModel::updateRecord);
@@ -87,14 +89,16 @@ GameCollectionActivity::GameTreeModel::GameTreeModel(Core::GameCollection & _col
 void GameCollectionActivity::GameTreeModel::collectionLoaded()
 {
     beginResetModel();
+    m_row_count = mr_collection.count();
     endResetModel();
 }
 
 void GameCollectionActivity::GameTreeModel::gameAdded(const QString & _id)
 {
     Q_UNUSED(_id);
-    beginResetModel();
-    endResetModel();
+    beginInsertRows(QModelIndex(), m_row_count, m_row_count);
+    ++m_row_count;
+    endInsertRows();
 }
 
 void GameCollectionActivity::GameTreeModel::updateRecord(const QString & _id)
@@ -134,7 +138,7 @@ int GameCollectionActivity::GameTreeModel::rowCount(const QModelIndex & _parent)
 {
     if(_parent.isValid())
         return 0;
-    return mr_collection.count();
+    return m_row_count;
 }
 
 int GameCollectionActivity::GameTreeModel::columnCount(const QModelIndex & _parent) const
@@ -193,6 +197,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     activateItemControls(nullptr);
     connect(mp_tree_games->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
     connect(&game_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::collectionLoaded);
+    connect(&game_collection, &Core::GameCollection::gameAdded, this, &GameCollectionActivity::gameAdded);
     connect(&game_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::gameRenamed);
     connect(this, &GameCollectionActivity::destroyed, this, &GameCollectionActivity::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
@@ -295,6 +300,15 @@ void GameCollectionActivity::collectionLoaded()
     mp_label_directory->setText(Application::instance().gameCollection().directory());
     activateCollectionControls(true);
     gameSelected();
+}
+
+void GameCollectionActivity::gameAdded(const QString & _id)
+{
+    Q_UNUSED(_id)
+    QModelIndex index = mp_tree_games->currentIndex();
+    if(!index.isValid())
+        index = mp_proxy_model->index(0, 0);
+    mp_tree_games->setCurrentIndex(index);
 }
 
 void GameCollectionActivity::gameRenamed(const QString & _id)

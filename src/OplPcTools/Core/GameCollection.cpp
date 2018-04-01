@@ -15,6 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/Core/ValidationException.h>
 #include <OplPcTools/Core/GameCollection.h>
 
 using namespace OplPcTools;
@@ -88,15 +89,17 @@ const Game * GameCollection::findGame(const QString & _id) const
 
 void GameCollection::addGame(const Game & _game)
 {
+    if(findGame(_game.id()))
+        throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id()));
     storage(_game.installationType()).registerGame(_game);
 }
 
 GameStorage & GameCollection::storage(GameInstallationType _installation_type) const
 {
     if(_installation_type == GameInstallationType::Directory)
-        return *mp_ul_conf_storage;
-    else
         return *mp_dir_storage;
+    else
+        return *mp_ul_conf_storage;
 }
 
 bool GameCollection::renameGame(const Game & _game, const QString & _title)

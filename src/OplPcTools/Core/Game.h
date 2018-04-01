@@ -39,7 +39,6 @@ public:
     inline MediaType mediaType() const;
     inline void setPartCount(quint8 _count);
     inline quint8 partCount() const;
-    inline void setInstallationType(GameInstallationType _type);
     inline GameInstallationType installationType() const;
 
 private:
@@ -93,11 +92,6 @@ void Game::setPartCount(quint8 _count)
 quint8 Game::partCount() const
 {
     return m_part_count;
-}
-
-void Game::setInstallationType(GameInstallationType _type)
-{
-    m_installation_type = _type;
 }
 
 GameInstallationType Game::installationType() const

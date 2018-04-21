@@ -15,34 +15,27 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_MAINWINDOW__
-#define __OPLPCTOOLS_MAINWINDOW__
+#ifndef __OPLPCTOOLS_SETTINGSDIALOG__
+#define __OPLPCTOOLS_SETTINGSDIALOG__
 
-#include <QMainWindow>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_MainWindow.h"
+#include <QDialog>
+#include "ui_SettingsDialog.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class SettingsDialog : public QDialog, private Ui::SettingsDialog
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget * _parent = nullptr);
-    bool pushActivity(Intent & _intent);
+    explicit SettingsDialog(QWidget * _parent = nullptr);
 
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void showAboutDialog();
-    void showAboutQtDialog();
-    void showSettingsDialog();
+public slots:
+    void accept() override;
 };
 
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_MAINWINDOW__
+#endif // __OPLPCTOOLS_SETTINGSDIALOG__

@@ -15,34 +15,33 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_MAINWINDOW__
-#define __OPLPCTOOLS_MAINWINDOW__
+#include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/UI/SettingsDialog.h>
 
-#include <QMainWindow>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_MainWindow.h"
+using namespace OplPcTools;
+using namespace OplPcTools::UI;
 
-namespace OplPcTools {
-namespace UI {
-
-class MainWindow : public QMainWindow, private Ui::MainWindow
+SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    Q_OBJECT
+    setupUi(this);
+    Core::Settings & settings = Core::Settings::instance();
+    mp_checkbx_reopen_last_catalog->setChecked(settings.reopenLastSestion());
+    mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
+    mp_checkbox_confirm_picture_deletion->setChecked(settings.confirmPixmapDeletion());
+    mp_groupbox_donot_splitup->setChecked(!settings.splitUpIso());
+    mp_checkbox_add_id->setChecked(settings.renameIso());
+    mp_checkobx_move_iso->setChecked(settings.moveIso());
+}
 
-public:
-    explicit MainWindow(QWidget * _parent = nullptr);
-    bool pushActivity(Intent & _intent);
-
-protected:
-    void closeEvent(QCloseEvent * _event) override;
-
-private slots:
-    void showAboutDialog();
-    void showAboutQtDialog();
-    void showSettingsDialog();
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_MAINWINDOW__
+void SettingsDialog::accept()
+{
+    Core::Settings & settings = Core::Settings::instance();
+    settings.setReopenLastSestion(mp_checkbx_reopen_last_catalog->isChecked());
+    settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
+    settings.setConfirmPixmapDeletion(mp_checkbox_confirm_picture_deletion->isChecked());
+    settings.setSplitUpIso(!mp_groupbox_donot_splitup->isChecked());
+    settings.setRenameIso(mp_checkbox_add_id->isChecked());
+    settings.setMoveIso(mp_checkobx_move_iso->isChecked());
+    QDialog::accept();
+}

@@ -20,6 +20,7 @@
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/AboutDialog.h>
+#include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -39,6 +40,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     setWindowTitle(APPLICATION_DISPLAY_NAME);
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
+    connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)
@@ -74,4 +76,10 @@ void MainWindow::showAboutDialog()
 void MainWindow::showAboutQtDialog()
 {
     QMessageBox::aboutQt(this);
+}
+
+void MainWindow::showSettingsDialog()
+{
+    SettingsDialog dlg(this);
+    dlg.exec();
 }

@@ -230,7 +230,8 @@ void GameDetailsActivity::removeGameArt()
     {
         ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
         if(item == nullptr || !item->hasPixmap()) return;
-        if(Core::Settings::instance().confirmPixmapDeletion())
+        Core::Settings & settings = Core::Settings::instance();
+        if(settings.confirmPixmapDeletion())
         {
             QCheckBox * checkbox = new QCheckBox("Don't show again");
             QMessageBox message_box(QMessageBox::Question, tr("Remove Picture"),
@@ -241,7 +242,7 @@ void GameDetailsActivity::removeGameArt()
             if(message_box.exec() != QMessageBox::Yes)
                 return;
             if(checkbox->isChecked())
-                Core::Settings::instance().setConfirmPixmapDeletion(false);
+                settings.setConfirmPixmapDeletion(false);
         }
         mr_art_manager.deleteArt(mp_game->id(), item->type());
         item->setPixmap(QPixmap());

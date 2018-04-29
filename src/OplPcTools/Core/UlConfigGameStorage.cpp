@@ -196,3 +196,49 @@ void UlConfigGameStorage::validateTitle(const QString & _title)
     if(_title.toUtf8().size() > max_name_length)
         throw ValidationException(QObject::tr("Maximum name length is %1 bytes").arg(max_name_length));
 }
+
+bool UlConfigGameStorage::performDeletion(const Game & _game)
+{
+    deleteGameConfig(_game.id());
+    deletePartFiles(_game);
+    return true;
+}
+
+void UlConfigGameStorage::deleteGameConfig(const QString _id)
+{
+    QFile config(m_config_filepath);
+    openFile(config, QIODevice::ReadOnly);
+    size_t offset = findRecordOffset(config, _id);
+    if(!~offset)
+        throw ValidationException(tr("Unable to locate Game \"%1\" in the config file").arg(_id));
+    QTemporaryFile temp_file;
+    temp_file.open();
+    temp_file.setAutoRemove(true);
+    if(offset > 0)
+    {
+        config.seek(0);
+        temp_file.write(config.read(offset));
+    }
+    config.seek(offset + sizeof(RawConfigRecord));
+    temp_file.write(config.readAll());
+    temp_file.flush();
+    config.close();
+    temp_file.close();
+    QString config_bk = m_config_filepath + "_bk";
+    if(!QFile::rename(m_config_filepath, config_bk))
+        throw IOException(QObject::tr("Unable to backup config file"));
+    QFile::rename(temp_file.fileName(), config.fileName());
+    temp_file.setAutoRemove(false);
+    QFile::remove(config_bk);
+}
+
+void UlConfigGameStorage::deletePartFiles(const Game & _game)
+{
+    QDir root_dir(m_config_filepath);
+    root_dir.cdUp();
+    for(int part = 0; part < _game.partCount(); ++part)
+    {
+        QString path = root_dir.absoluteFilePath(makePartFilename(_game.id(), _game.title(), part));
+        QFile::remove(path);
+    }
+}

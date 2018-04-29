@@ -45,6 +45,10 @@ GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
     connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
     connect(mp_dir_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
     connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRegistered, this, &GameCollection::gameAdded);
+    connect(mp_dir_storage, &DirectoryGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
+    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
+    connect(mp_dir_storage, &DirectoryGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
+    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
 }
 
 GameCollection::~GameCollection()
@@ -105,4 +109,9 @@ GameStorage & GameCollection::storage(GameInstallationType _installation_type) c
 bool GameCollection::renameGame(const Game & _game, const QString & _title)
 {
     storage(_game.installationType()).renameGame(_game.id(), _title);
+}
+
+void GameCollection::deleteGame(const Game & _game)
+{
+    storage(_game.installationType()).deleteGame(_game.id());
 }

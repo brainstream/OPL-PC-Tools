@@ -115,3 +115,14 @@ QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const 
 {
     return QString("%1.%2.iso").arg(_id).arg(_title);
 }
+
+bool DirectoryGameStorage::performDeletion(const Game & _game)
+{
+    QDir dir(m_base_directory);
+    dir.cd(_game.mediaType() == MediaType::CD ? cd_directory : dvd_directory);
+    QString path = dir.absoluteFilePath(_game.title()) + ".iso";
+    if(QFile::exists(path) && QFile::remove(path))
+        return true;
+    path = dir.absoluteFilePath(makeGameIsoFilename(_game.title(), _game.id()));
+    return QFile::exists(path) && QFile::remove(path);
+}

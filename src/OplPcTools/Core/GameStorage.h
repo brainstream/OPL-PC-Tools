@@ -40,6 +40,7 @@ public:
     bool renameGame(const QString & _id, const QString & _title);
     bool renameGame(const int _index, const QString & _title);
     bool registerGame(const Game & _game);
+    bool deleteGame(const QString & _id);
 
     virtual GameInstallationType installationType() const = 0;
 
@@ -52,6 +53,8 @@ signals:
     void loaded();
     void gameRegistered(const QString & _game_id);
     void gameRenamed(const QString & _game_id);
+    void gameAboutToBeDeleted(const QString & _game_id);
+    void gameDeleted(const QString & _game_id);
 
 
 protected:
@@ -62,6 +65,7 @@ protected:
     virtual bool performLoading(const QDir & _directory) = 0;
     virtual bool performRenaming(const Game & _game, const QString & _title) = 0;
     virtual bool performRegistration(const Game & _game) = 0;
+    virtual bool performDeletion(const Game & _game) = 0;
 
 private:
     void clear();

@@ -63,6 +63,7 @@ private slots:
     void showGameDetails();
     void showIsoRestorer();
     void showGameInstaller();
+    void deleteGame();
 
 private:
     OplPcTools::Core::GameArtManager * mp_game_art_manager;

@@ -125,3 +125,24 @@ void GameStorage::validateId(const QString & _id)
     if(_id.toLatin1().size() > max_id_length)
         throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(max_id_length));
 }
+
+bool GameStorage::deleteGame(const QString & _id)
+{
+    for(int i = m_games.count() - 1; i >= 0; --i)
+    {
+        Game * game = m_games.at(i);
+        if(game->id() == _id)
+        {
+            if(performDeletion(*game))
+            {
+                emit gameAboutToBeDeleted(_id);
+                m_games.remove(i);
+                delete game;
+                emit gameDeleted(_id);
+                return true;
+            }
+            break;
+        }
+    }
+    return false;
+}

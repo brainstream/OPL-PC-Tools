@@ -15,6 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QMessageBox>
 #include <QFileDialog>
 #include <QAbstractItemModel>
 #include <OplPcTools/Core/Settings.h>
@@ -63,6 +64,8 @@ public:
 private:
     void collectionLoaded();
     void gameAdded(const QString & _id);
+    void gameAboutToBeDeleted(const QString & _id);
+    void gameDeleted(const QString & _id);
     void updateRecord(const QString & _id);
     void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
 
@@ -84,6 +87,8 @@ GameCollectionActivity::GameTreeModel::GameTreeModel(Core::GameCollection & _col
     connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::GameTreeModel::collectionLoaded);
     connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::GameTreeModel::updateRecord);
     connect(&_collection, &Core::GameCollection::gameAdded, this, &GameCollectionActivity::GameTreeModel::gameAdded);
+    connect(&_collection, &Core::GameCollection::gameAboutToBeDeleted, this, &GameCollectionActivity::GameTreeModel::gameAboutToBeDeleted);
+    connect(&_collection, &Core::GameCollection::gameDeleted, this, &GameCollectionActivity::GameTreeModel::gameDeleted);
 }
 
 void GameCollectionActivity::GameTreeModel::collectionLoaded()
@@ -99,6 +104,26 @@ void GameCollectionActivity::GameTreeModel::gameAdded(const QString & _id)
     beginInsertRows(QModelIndex(), m_row_count, m_row_count);
     ++m_row_count;
     endInsertRows();
+}
+
+void GameCollectionActivity::GameTreeModel::gameAboutToBeDeleted(const QString & _id)
+{
+    for(int i = 0; i < m_row_count; ++i)
+    {
+        const Core::Game * game = mr_collection[i];
+        if(game->id() == _id)
+        {
+            beginRemoveRows(QModelIndex(), i, i);
+            return;
+        }
+    }
+}
+
+void GameCollectionActivity::GameTreeModel::gameDeleted(const QString & _id)
+{
+    Q_UNUSED(_id);
+    m_row_count = mr_collection.count();
+    endRemoveRows();
 }
 
 void GameCollectionActivity::GameTreeModel::updateRecord(const QString & _id)
@@ -202,6 +227,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     connect(this, &GameCollectionActivity::destroyed, this, &GameCollectionActivity::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     connect(mp_btn_restore_iso, &QToolButton::clicked, this, &GameCollectionActivity::showIsoRestorer);
+    connect(mp_btn_delete, &QToolButton::clicked, this, &GameCollectionActivity::deleteGame);
     applySettings();
 }
 
@@ -379,4 +405,36 @@ void GameCollectionActivity::showGameInstaller()
 {
     QSharedPointer<Intent> intent = GameInstallerActivity::createIntent();
     Application::instance().pushActivity(*intent);
+}
+
+void GameCollectionActivity::deleteGame()
+{
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const QString id = game->id();
+    Core::Settings & settings = Core::Settings::instance();
+    if(settings.confirmGameDeletion())
+    {
+        QCheckBox * checkbox = new QCheckBox("Don't show again");
+        QMessageBox message_box(QMessageBox::Question, tr("Remove Game"),
+                    tr("The %1 will be deleted.\nContinue?").arg(game->title()),
+                    QMessageBox::Yes | QMessageBox::No);
+        message_box.setDefaultButton(QMessageBox::Yes);
+        message_box.setCheckBox(checkbox);
+        if(message_box.exec() != QMessageBox::Yes)
+            return;
+        if(checkbox->isChecked())
+            settings.setConfirmGameDeletion(false);
+    }
+    if(!game) return;
+    try
+    {
+        Core::GameCollection & collection = Application::instance().gameCollection();
+        collection.deleteGame(*game);
+        mp_game_art_manager->clearArts(id);
+    }
+    catch(Core::Exception & exception)
+    {
+        Application::instance().showErrorMessage(exception.message());
+    }
+    // TODO: other exceptions
 }

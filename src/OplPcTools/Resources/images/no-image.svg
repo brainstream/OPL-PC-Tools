@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg id="svg8" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="200mm" width="200mm" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="0 0 200 199.99999">
+ <metadata id="metadata5">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1" transform="translate(-50.207 4.8756)">
+  <g id="g4625" transform="translate(22.679 .75595)">
+   <g id="g4497" fill="#b1b1b1" transform="translate(43.339 -46.012)">
+    <path id="path3770" d="m217.18 330.56-83.844 319.21 314.16 84.854 84.852-318.2zm21.213 35.355 261.63 71.721-52.527 192.94-263.65-70.711z" transform="scale(.26458)"/>
+    <path id="path4596" style="color-rendering:auto;text-decoration-color:#000000;color:#000000;font-variant-numeric:normal;shape-rendering:auto;font-variant-ligatures:normal;text-decoration-line:none;font-variant-position:normal;mix-blend-mode:normal;solid-color:#000000;font-feature-settings:normal;shape-padding:0;font-variant-alternates:normal;text-indent:0;dominant-baseline:auto;font-variant-caps:normal;image-rendering:auto;white-space:normal;text-decoration-style:solid;text-orientation:mixed;isolation:auto;text-transform:none" d="m108.34 123.55-15.578 13.16-6.6855-9.0918-11.752 10.686-4.8223-7.502-9.0723 10.447 0.19922 0.0566 52.045 15.023z"/>
+    <path id="path3774" style="color-rendering:auto;text-decoration-color:#000000;color:#000000;font-variant-numeric:normal;shape-rendering:auto;font-variant-ligatures:normal;text-decoration-line:none;font-variant-position:normal;mix-blend-mode:normal;solid-color:#000000;font-feature-settings:normal;shape-padding:0;font-variant-alternates:normal;text-indent:0;dominant-baseline:auto;font-variant-caps:normal;image-rendering:auto;white-space:normal;text-decoration-style:solid;text-orientation:mixed;isolation:auto;text-transform:none" d="m108.14 124.07 4.2168 31.898-51.455-14.854 8.5684-9.8652 4.7988 7.4668 11.768-10.699 6.6797 9.084z"/>
+    <path id="path3776" d="m37.685 145.19 3.7418-14.165-4.5436-16.303 9.6217-2.6727 2.94-8.8199-21.916 5.6127z"/>
+    <path id="path3778" d="m114.93 99.221-25.391-6.1472 21.382-6.6817z"/>
+    <path id="path3780" d="m45.97 178.6 31.003 8.0181-25.925 6.6817z"/>
+    <circle id="path3784" cy="117.66" cx="74.835" r="6.1472"/>
+   </g>
+  </g>
+ </g>
+</svg>

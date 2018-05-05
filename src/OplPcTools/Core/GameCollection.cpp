@@ -66,6 +66,11 @@ void GameCollection::load(const QDir & _directory)
     emit loaded();
 }
 
+bool GameCollection::isLoaded() const
+{
+    return !m_directory.isEmpty();
+}
+
 const QString & GameCollection::directory() const
 {
     return m_directory;

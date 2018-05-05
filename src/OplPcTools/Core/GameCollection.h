@@ -35,6 +35,7 @@ public:
     explicit GameCollection(QObject * _parent = nullptr);
     ~GameCollection() override;
     void load(const QDir & _directory);
+    bool isLoaded() const;
     const QString & directory() const;
     const Game * findGame(const QString & _id) const;
     int count() const;

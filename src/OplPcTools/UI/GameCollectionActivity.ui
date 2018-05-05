@@ -48,20 +48,12 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="mp_btn_open">
+       <widget class="QToolButton" name="mp_btn_load">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Open</string>
-        </property>
-        <property name="icon">
-         <iconset theme="document-open">
-          <normalon>:/icons/document-open</normalon>
-         </iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -87,14 +79,6 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Reload</string>
-        </property>
-        <property name="icon">
-         <iconset theme="view-refresh">
-          <normalon>:/icons/view-refresh</normalon>
-         </iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -134,14 +118,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="text">
-         <string>Edit</string>
-        </property>
-        <property name="icon">
-         <iconset theme="document-edit">
-          <normalon>:/icons/document-edit</normalon>
-         </iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>32</width>
@@ -164,13 +140,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="text">
-         <string>Delete</string>
-        </property>
-        <property name="icon">
-         <iconset theme="edit-delete" resource="../Resources.qrc">
-          <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>32</width>
@@ -192,14 +161,6 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Install</string>
-        </property>
-        <property name="icon">
-         <iconset theme="list-add">
-          <normalon>:/icons/list-add</normalon>
-         </iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -627,11 +588,86 @@
     </widget>
    </item>
   </layout>
+  <action name="mp_action_edit">
+   <property name="icon">
+    <iconset theme="document-edit" resource="../Resources.qrc">
+     <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+   </property>
+   <property name="text">
+    <string>Edit</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit Game</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="mp_action_delete">
+   <property name="icon">
+    <iconset theme="edit-delete" resource="../Resources.qrc">
+     <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Game</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="mp_action_install">
+   <property name="icon">
+    <iconset theme="list-add" resource="../Resources.qrc">
+     <normaloff>:/icons/list-add</normaloff>:/icons/list-add</iconset>
+   </property>
+   <property name="text">
+    <string>Install</string>
+   </property>
+   <property name="toolTip">
+    <string>Install Game</string>
+   </property>
+   <property name="shortcut">
+    <string>Ins</string>
+   </property>
+  </action>
+  <action name="mp_action_reload">
+   <property name="icon">
+    <iconset theme="view-refresh" resource="../Resources.qrc">
+     <normaloff>:/icons/view-refresh</normaloff>:/icons/view-refresh</iconset>
+   </property>
+   <property name="text">
+    <string>Reload</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload Collection</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="mp_action_load">
+   <property name="icon">
+    <iconset theme="document-open" resource="../Resources.qrc">
+     <normaloff>:/icons/document-open</normaloff>:/icons/document-open</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Collection</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>mp_edit_filter</tabstop>
   <tabstop>mp_tree_games</tabstop>
-  <tabstop>mp_btn_open</tabstop>
+  <tabstop>mp_btn_load</tabstop>
   <tabstop>mp_btn_reload</tabstop>
   <tabstop>mp_btn_edit</tabstop>
   <tabstop>mp_btn_delete</tabstop>
@@ -641,110 +677,5 @@
  <resources>
   <include location="../Resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>mp_slider_icons_size</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>GameCollectionActivity</receiver>
-   <slot>changeIconsSize()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>821</x>
-     <y>616</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>461</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_tree_games</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>GameCollectionActivity</receiver>
-   <slot>showGameDetails()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>429</x>
-     <y>451</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>461</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_btn_open</sender>
-   <signal>clicked()</signal>
-   <receiver>GameCollectionActivity</receiver>
-   <slot>load()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>29</x>
-     <y>28</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_btn_reload</sender>
-   <signal>clicked()</signal>
-   <receiver>GameCollectionActivity</receiver>
-   <slot>reload()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>29</x>
-     <y>92</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_btn_edit</sender>
-   <signal>clicked()</signal>
-   <receiver>GameCollectionActivity</receiver>
-   <slot>showGameDetails()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>29</x>
-     <y>182</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mp_btn_install</sender>
-   <signal>clicked()</signal>
-   <receiver>GameCollectionActivity</receiver>
-   <slot>showGameInstaller()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>30</x>
-     <y>319</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>changeIconsSize()</slot>
-  <slot>showGamePreview()</slot>
-  <slot>showGameDetails()</slot>
-  <slot>load()</slot>
-  <slot>reload()</slot>
-  <slot>showGameInstaller()</slot>
- </slots>
+ <connections/>
 </ui>

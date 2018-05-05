@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QPixmap>
 #include <QWidget>
+#include <QMenu>
 #include <QSortFilterProxyModel>
 #include <OplPcTools/Core/Game.h>
 #include <OplPcTools/Core/GameArtManager.h>
@@ -41,7 +42,6 @@ public:
     explicit GameCollectionActivity(QWidget * _parent = nullptr);
     bool onAttach() override;
     bool tryLoadRecentDirectory();
-    void load(const QDir & _directory);
 
     static QSharedPointer<Intent> createIntent();
 
@@ -50,24 +50,25 @@ private:
     void saveSettings();
     void activateCollectionControls(bool _activate);
     void activateItemControls(const Core::Game * _selected_game);
-
-private slots:
+    void changeIconsSize();
+    void showTreeContextMenu(const QPoint & _point);
     void load();
+    void loadDirectory(const QDir & _directory);
     void reload();
+    void showGameDetails();
+    void showGameInstaller();
+    void deleteGame();
     void collectionLoaded();
     void gameAdded(const QString & _id);
     void gameRenamed(const QString & _id);
     void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
-    void changeIconsSize();
     void gameSelected();
-    void showGameDetails();
     void showIsoRestorer();
-    void showGameInstaller();
-    void deleteGame();
 
 private:
     OplPcTools::Core::GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
+    QMenu * mp_context_menu;
     QSortFilterProxyModel * mp_proxy_model;
     QPixmap m_default_cover;
 };

@@ -206,6 +206,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     Activity(_parent),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
+    mp_context_menu(nullptr),
     mp_proxy_model(nullptr)
 {
     setupUi(this);
@@ -218,16 +219,35 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_proxy_model->setSourceModel(mp_model);
     mp_proxy_model->setDynamicSortFilter(true);
     mp_tree_games->setModel(mp_proxy_model);
+    mp_btn_load->setDefaultAction(mp_action_load);
+    mp_btn_reload->setDefaultAction(mp_action_reload);
+    mp_btn_edit->setDefaultAction(mp_action_edit);
+    mp_btn_delete->setDefaultAction(mp_action_delete);
+    mp_btn_install->setDefaultAction(mp_action_install);
+    mp_context_menu = new QMenu(this);
+    mp_context_menu->addAction(mp_action_edit);
+    mp_context_menu->addAction(mp_action_delete);
+    mp_context_menu->addSeparator();
+    mp_context_menu->addAction(mp_action_install);
+    mp_context_menu->addAction(mp_action_reload);
+    mp_tree_games->setContextMenuPolicy(Qt::CustomContextMenu);
     activateCollectionControls(false);
     activateItemControls(nullptr);
-    connect(mp_tree_games->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(gameSelected()));
+    connect(mp_slider_icons_size, &QSlider::valueChanged, [this](int) { changeIconsSize(); });
+    connect(mp_action_load, &QAction::triggered, this, &GameCollectionActivity::load);
+    connect(mp_action_reload, &QAction::triggered, this, &GameCollectionActivity::reload);
+    connect(mp_action_edit, &QAction::triggered, this, &GameCollectionActivity::showGameDetails);
+    connect(mp_action_delete, &QAction::triggered, this, &GameCollectionActivity::deleteGame);
+    connect(mp_action_install, &QAction::triggered, this, &GameCollectionActivity::showGameInstaller);
+    connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
+    connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameCollectionActivity::showTreeContextMenu);
+    connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { gameSelected(); });
     connect(&game_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::collectionLoaded);
     connect(&game_collection, &Core::GameCollection::gameAdded, this, &GameCollectionActivity::gameAdded);
     connect(&game_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::gameRenamed);
     connect(this, &GameCollectionActivity::destroyed, this, &GameCollectionActivity::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     connect(mp_btn_restore_iso, &QToolButton::clicked, this, &GameCollectionActivity::showIsoRestorer);
-    connect(mp_btn_delete, &QToolButton::clicked, this, &GameCollectionActivity::deleteGame);
     applySettings();
 }
 
@@ -243,17 +263,29 @@ bool GameCollectionActivity::onAttach()
     return true;
 }
 
+void GameCollectionActivity::changeIconsSize()
+{
+    int size = mp_slider_icons_size->value() * 16;
+    mp_tree_games->setIconSize(QSize(size, size));
+}
+
+void GameCollectionActivity::showTreeContextMenu(const QPoint & _point)
+{
+    if(Application::instance().gameCollection().isLoaded())
+        mp_context_menu->exec(mp_tree_games->mapToGlobal(_point));
+}
+
 void GameCollectionActivity::activateCollectionControls(bool _activate)
 {
-    mp_btn_install->setEnabled(_activate);
-    mp_btn_reload->setEnabled(_activate);
+    mp_action_install->setEnabled(_activate);
+    mp_action_reload->setEnabled(_activate);
 }
 
 void GameCollectionActivity::activateItemControls(const Core::Game * _selected_game)
 {
     mp_widget_details->setVisible(_selected_game);
-    mp_btn_delete->setEnabled(_selected_game);
-    mp_btn_edit->setEnabled(_selected_game);
+    mp_action_delete->setEnabled(_selected_game);
+    mp_action_edit->setEnabled(_selected_game);
     mp_btn_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == Core::GameInstallationType::UlConfig);
 }
 
@@ -287,7 +319,7 @@ void GameCollectionActivity::load()
     if(choosen_dirpath.isEmpty()) return;
     if(choosen_dirpath != dirpath)
         settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
-    load(choosen_dirpath);
+    loadDirectory(choosen_dirpath);
 }
 
 bool GameCollectionActivity::tryLoadRecentDirectory()
@@ -297,11 +329,11 @@ bool GameCollectionActivity::tryLoadRecentDirectory()
     if(!value.isValid()) return false;
     QDir dir(value.toString());
     if(!dir.exists()) return false;
-    load(dir);
+    loadDirectory(dir);
     return true;
 }
 
-void GameCollectionActivity::load(const QDir & _directory)
+void GameCollectionActivity::loadDirectory(const QDir & _directory)
 {
     Core::GameCollection & game_collection = Application::instance().gameCollection();
     game_collection.load(_directory);
@@ -318,7 +350,7 @@ void GameCollectionActivity::load(const QDir & _directory)
 
 void GameCollectionActivity::reload()
 {
-    load(Application::instance().gameCollection().directory());
+    loadDirectory(Application::instance().gameCollection().directory());
 }
 
 void GameCollectionActivity::collectionLoaded()
@@ -351,12 +383,6 @@ void GameCollectionActivity::gameArtChanged(const QString & _game_id, Core::Game
     const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->id() == _game_id)
         mp_label_cover->setPixmap(_pixmap ? *_pixmap : m_default_cover);
-}
-
-void GameCollectionActivity::changeIconsSize()
-{
-    int size = mp_slider_icons_size->value() * 16;
-    mp_tree_games->setIconSize(QSize(size, size));
 }
 
 void GameCollectionActivity::gameSelected()

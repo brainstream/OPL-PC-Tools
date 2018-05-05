@@ -55,6 +55,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
         <property name="iconSize">
          <size>
           <width>32</width>
@@ -79,6 +82,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true"/>
         </property>
         <property name="iconSize">
          <size>
@@ -111,12 +117,40 @@
        </spacer>
       </item>
       <item>
+       <widget class="QToolButton" name="mp_btn_rename">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="mp_btn_edit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true"/>
         </property>
         <property name="iconSize">
          <size>
@@ -140,6 +174,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
         <property name="iconSize">
          <size>
           <width>32</width>
@@ -161,6 +198,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true"/>
         </property>
         <property name="iconSize">
          <size>
@@ -272,6 +312,9 @@
            <width>100</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="toolTip">
           <string>Icons Size</string>
@@ -590,8 +633,8 @@
   </layout>
   <action name="mp_action_edit">
    <property name="icon">
-    <iconset theme="document-edit" resource="../Resources.qrc">
-     <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+    <iconset theme="document-properties" resource="../Resources.qrc">
+     <normaloff>:/icons/document-properties</normaloff>:/icons/document-properties</iconset>
    </property>
    <property name="text">
     <string>Edit</string>
@@ -600,7 +643,7 @@
     <string>Edit Game</string>
    </property>
    <property name="shortcut">
-    <string>F2</string>
+    <string>F4</string>
    </property>
   </action>
   <action name="mp_action_delete">
@@ -663,16 +706,32 @@
     <string>Ctrl+O</string>
    </property>
   </action>
+  <action name="mp_action_rename">
+   <property name="icon">
+    <iconset theme="document-edit" resource="../Resources.qrc">
+     <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+   </property>
+   <property name="text">
+    <string>Rename</string>
+   </property>
+   <property name="toolTip">
+    <string>Rename Game</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
-  <tabstop>mp_edit_filter</tabstop>
   <tabstop>mp_tree_games</tabstop>
+  <tabstop>mp_btn_restore_iso</tabstop>
   <tabstop>mp_btn_load</tabstop>
   <tabstop>mp_btn_reload</tabstop>
+  <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_edit</tabstop>
   <tabstop>mp_btn_delete</tabstop>
   <tabstop>mp_btn_install</tabstop>
-  <tabstop>mp_slider_icons_size</tabstop>
+  <tabstop>mp_edit_filter</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources.qrc"/>

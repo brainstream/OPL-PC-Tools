@@ -55,6 +55,7 @@ private:
     void load();
     void loadDirectory(const QDir & _directory);
     void reload();
+    void renameGame();
     void showGameDetails();
     void showGameInstaller();
     void deleteGame();

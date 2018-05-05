@@ -10,6 +10,7 @@
         <file alias="edit-undo">Resources/icons/edit-undo.svg</file>
         <file alias="media-optical">Resources/icons/media-optical.svg</file>
         <file alias="media-playback-start">Resources/icons/media-playback-start.svg</file>
+        <file alias="document-properties">Resources/icons/document-properties.svg</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="no-image">Resources/images/no-image.svg</file>

@@ -148,7 +148,7 @@ GameDetailsActivity::GameDetailsActivity(OplPcTools::Core::GameArtManager & _art
     connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsActivity::showItemContextMenu);
     connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsActivity::changeGameArt);
     connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsActivity::removeGameArt);
-    connect(mp_label_title, &ClickableLabel::doubleClicked, this, &GameDetailsActivity::renameGame);
+    connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
 }
 
 QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id)

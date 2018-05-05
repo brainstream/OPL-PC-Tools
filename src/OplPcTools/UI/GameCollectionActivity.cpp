@@ -15,6 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QShortcut>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QAbstractItemModel>
@@ -25,6 +26,7 @@
 #include <OplPcTools/UI/IsoRestorerActivity.h>
 #include <OplPcTools/UI/GameCollectionActivity.h>
 #include <OplPcTools/UI/GameInstallerActivity.h>
+#include <OplPcTools/UI/GameRenameDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -210,6 +212,10 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_proxy_model(nullptr)
 {
     setupUi(this);
+    QShortcut * filter_shortcat = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
+        .arg(mp_edit_filter->placeholderText())
+        .arg(filter_shortcat->key().toString()));
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     Core::GameCollection & game_collection = Application::instance().gameCollection();
@@ -221,10 +227,12 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_tree_games->setModel(mp_proxy_model);
     mp_btn_load->setDefaultAction(mp_action_load);
     mp_btn_reload->setDefaultAction(mp_action_reload);
+    mp_btn_rename->setDefaultAction(mp_action_rename);
     mp_btn_edit->setDefaultAction(mp_action_edit);
     mp_btn_delete->setDefaultAction(mp_action_delete);
     mp_btn_install->setDefaultAction(mp_action_install);
     mp_context_menu = new QMenu(this);
+    mp_context_menu->addAction(mp_action_rename);
     mp_context_menu->addAction(mp_action_edit);
     mp_context_menu->addAction(mp_action_delete);
     mp_context_menu->addSeparator();
@@ -233,10 +241,12 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_tree_games->setContextMenuPolicy(Qt::CustomContextMenu);
     activateCollectionControls(false);
     activateItemControls(nullptr);
+    connect(filter_shortcat, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
     connect(mp_slider_icons_size, &QSlider::valueChanged, [this](int) { changeIconsSize(); });
     connect(mp_action_load, &QAction::triggered, this, &GameCollectionActivity::load);
     connect(mp_action_reload, &QAction::triggered, this, &GameCollectionActivity::reload);
     connect(mp_action_edit, &QAction::triggered, this, &GameCollectionActivity::showGameDetails);
+    connect(mp_action_rename, &QAction::triggered, this, &GameCollectionActivity::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameCollectionActivity::deleteGame);
     connect(mp_action_install, &QAction::triggered, this, &GameCollectionActivity::showGameInstaller);
     connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
@@ -286,6 +296,7 @@ void GameCollectionActivity::activateItemControls(const Core::Game * _selected_g
     mp_widget_details->setVisible(_selected_game);
     mp_action_delete->setEnabled(_selected_game);
     mp_action_edit->setEnabled(_selected_game);
+    mp_action_rename->setEnabled(_selected_game);
     mp_btn_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == Core::GameInstallationType::UlConfig);
 }
 
@@ -405,6 +416,26 @@ void GameCollectionActivity::gameSelected()
         mp_widget_details->hide();
     }
     activateItemControls(game);
+}
+
+void GameCollectionActivity::renameGame()
+{
+    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    if(game)
+    {
+        GameRenameDialog dlg(game->title(), game->installationType(), this);
+        if(dlg.exec() == QDialog::Accepted)
+        {
+            try
+            {
+                Application::instance().gameCollection().renameGame(*game, dlg.name());
+            }
+            catch(const Core::Exception & exception)
+            {
+                Application::instance().showErrorMessage(exception.message());
+            }
+        }
+    }
 }
 
 void GameCollectionActivity::showGameDetails()

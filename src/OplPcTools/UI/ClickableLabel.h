@@ -19,6 +19,7 @@
 #define __OPLPCTOOLS_CLICKABLELABEL__
 
 #include <QLabel>
+#include <QMouseEvent>
 
 namespace OplPcTools {
 namespace UI {
@@ -29,23 +30,60 @@ class ClickableLabel : public QLabel
 
 public:
     explicit ClickableLabel(QWidget * _parent = nullptr, Qt::WindowFlags _flags = Qt::WindowFlags()) :
-        QLabel(_parent, _flags)
+        QLabel(_parent, _flags),
+        m_pressed(false),
+        m_mouse_in(false)
     {
     }
 
     explicit ClickableLabel(const QString & _text, QWidget * _parent = nullptr, Qt::WindowFlags _flags = Qt::WindowFlags()) :
-        QLabel(_text, _parent, _flags)
+        QLabel(_text, _parent, _flags),
+        m_pressed(false),
+        m_mouse_in(false)
     {
     }
 
 signals:
-    void doubleClicked();
+    void clicked();
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent *) override
+    void mousePressEvent(QMouseEvent * _event) override
     {
-        emit doubleClicked();
+        m_pressed = _event->button() == Qt::LeftButton;
     }
+
+    void mouseReleaseEvent(QMouseEvent * _event) override
+    {
+        if(_event->button() != Qt::LeftButton)
+            return;
+        m_mouse_in = rect().contains(_event->pos());
+        if(m_pressed && m_mouse_in)
+        {
+            m_pressed = false;
+            emit clicked();
+        }
+    }
+
+    void enterEvent(QEvent *) override
+    {
+        m_mouse_in = true;
+        QFont fnt = font();
+        fnt.setUnderline(true);
+        setFont(fnt);
+    }
+
+    void leaveEvent(QEvent *) override
+    {
+        m_pressed = false;
+        m_mouse_in = false;
+        QFont fnt = font();
+        fnt.setUnderline(false);
+        setFont(fnt);
+    }
+
+private:
+    bool m_mouse_in;
+    bool m_pressed;
 };
 
 } // namespace UI

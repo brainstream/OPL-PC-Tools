@@ -15,47 +15,52 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_GAMECOLLECTION__
+#define __OPLPCTOOLS_GAMECOLLECTION__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
+#include <QObject>
+#include <QDir>
 #include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/DirectoryGameStorage.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+class GameCollection final : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+    explicit GameCollection(QObject * _parent = nullptr);
+    ~GameCollection() override;
+    void load(const QDir & _directory);
+    bool isLoaded() const;
+    const QString & directory() const;
+    const Game * findGame(const QString & _id) const;
+    int count() const;
+    const Game * operator [](int _index) const;
+    void addGame(const Game & _game);
+    bool renameGame(const Game & _game, const QString & _title);
+    void deleteGame(const Game & _game);
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
+signals:
+    void loaded();
+    void gameAboutToBeDeleted(const QString _game_id);
+    void gameDeleted(const QString & _game_id);
+    void gameAdded(const QString & _game_id);
+    void gameRenamed(const QString & _game_id);
 
 private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
+    GameStorage & storage(GameInstallationType _installation_type) const;
 
 private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
+    QString m_directory;
+    UlConfigGameStorage * mp_ul_conf_storage;
+    DirectoryGameStorage * mp_dir_storage;
 };
 
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_GAMECOLLECTION__

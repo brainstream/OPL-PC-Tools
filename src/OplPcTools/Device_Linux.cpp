@@ -15,47 +15,58 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifdef __linux__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <linux/cdrom.h>
+#include <OplPcTools/Device.h>
 
-namespace OplPcTools {
-namespace UI {
+using namespace OplPcTools::Core;
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+namespace {
+
+bool isBlockDevice(const char * _file)
 {
-    Q_OBJECT
+    struct stat file_stat;
+    lstat(_file, &file_stat);
+    return S_ISBLK(file_stat.st_mode);
+}
 
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+bool isOpticalDrive(const char * _file)
+{
+    if(!isBlockDevice(_file)) return false;
+    int fd = open(_file, O_RDONLY | O_NONBLOCK);
+    if(fd < 0) return false;
+    bool result = ioctl(fd, CDROM_GET_CAPABILITY) >= 0;
+    close(fd);
+    return result;
+}
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
+} // namespace
 
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
+QList<DeviceName> OplPcTools::Core::loadDriveList()
+{
+    QList<DeviceName> result;
+    std::string dev_dir_path("/dev/");
+    DIR * dev_dir = opendir(dev_dir_path.c_str());
+    if(!dev_dir) return result;
+    for(struct dirent * entry = readdir(dev_dir); entry != nullptr; entry = readdir(dev_dir))
+    {
+        std::string filename = dev_dir_path + entry->d_name;
+        if(isOpticalDrive(filename.c_str()))
+        {
+            DeviceName device_name;
+            device_name.name = entry->d_name;
+            device_name.filename = QString::fromStdString(filename);
+            result.append(device_name);
+        }
+    }
+    closedir(dev_dir);
+    return result;
+}
 
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __linux__

@@ -15,66 +15,66 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
-#define __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#ifndef __OPLPCTOOLS_GAMEARTMANAGER__
+#define __OPLPCTOOLS_GAMEARTMANAGER__
 
-#include <QSharedPointer>
 #include <QDir>
 #include <QPixmap>
-#include <QWidget>
-#include <QMenu>
-#include <QSortFilterProxyModel>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameCollectionActivity.h"
+#include <QMap>
+#include <QSize>
+#include <QObject>
+#include <OplPcTools/Maybe.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class GameCollectionActivity : public Activity, private Ui::GameCollectionActivity
+enum class GameArtType
 {
-    class GameTreeModel;
-
-    Q_OBJECT
-
-public:
-    explicit GameCollectionActivity(QWidget * _parent = nullptr);
-    bool onAttach() override;
-    bool tryLoadRecentDirectory();
-
-    static QSharedPointer<Intent> createIntent();
-
-private:
-    void applySettings();
-    void saveSettings();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(const Core::Game * _selected_game);
-    void changeIconsSize();
-    void showTreeContextMenu(const QPoint & _point);
-    void load();
-    void loadDirectory(const QDir & _directory);
-    void reload();
-    void renameGame();
-    void showGameDetails();
-    void showGameInstaller();
-    void deleteGame();
-    void collectionLoaded();
-    void gameAdded(const QString & _id);
-    void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
-    void gameSelected();
-    void showIsoRestorer();
-
-private:
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QMenu * mp_context_menu;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+    Icon         = 0x1,
+    Front        = 0x2,
+    Back         = 0x4,
+    Spine        = 0x8,
+    Screenshot1  = 0x10,
+    Screenshot2  = 0x20,
+    Background   = 0x40,
+    Logo         = 0x80
 };
 
-} // namespace UI
+class GameArtManager final : public QObject
+{
+    Q_OBJECT
+
+    using GameCache = QMap<GameArtType, Maybe<QPixmap>>;
+    using CacheMap = QMap<QString, Maybe<GameCache>>;
+    struct GameArtProperties;
+
+public:
+    explicit GameArtManager(const QDir & _base_directory, QObject * _parent = nullptr);
+    ~GameArtManager();
+    void addCacheType(GameArtType _type);
+    void removeCacheType(GameArtType _type, bool _clear_cache);
+    QPixmap load(const QString & _game_id, GameArtType _type);
+    void deleteArt(const QString & _game_id, GameArtType _type);
+    void clearArts(const QString & _game_id);
+    QPixmap setArt(const QString & _game_id, GameArtType _type, const QString & _filepath);
+
+signals:
+    void artChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
+
+private:
+    void initArtProperties();
+    void clearCache(GameArtType _type);
+    Maybe<QPixmap> findInCache(const QString & _game_id, GameArtType _type) const;
+    void cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap);
+
+private:
+    QString m_directory_path;
+    CacheMap m_cache;
+    QFlags<GameArtType> m_cached_types;
+    QMap<GameArtType, GameArtProperties *> m_art_props;
+};
+
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#endif // __OPLPCTOOLS_GAMEARTMANAGER__

@@ -15,47 +15,42 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_GAMEINSTALLER__
+#define __OPLPCTOOLS_GAMEINSTALLER__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <QObject>
+#include <QStringList>
+#include <OplPcTools/GameCollection.h>
+#include <OplPcTools/Device.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+class GameInstaller : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+    GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    virtual bool install() = 0;
+    virtual const Game * installedGame() const = 0;
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
+signals:
+    void progress(quint64 _total_bytes, quint64 _done_bytes);
+    void registrationStarted();
+    void registrationFinished();
+    void rollbackStarted();
+    void rollbackFinished();
 
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
+protected:
+    MediaType deviceMediaType() const;  
 
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
+protected:
+    Device & mr_device;
+    GameCollection & mr_collection;
 };
 
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_GAMEINSTALLER__

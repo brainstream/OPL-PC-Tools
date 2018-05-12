@@ -19,7 +19,7 @@
 #define __OPLPCTOOLS_CHOOSEOPTICALDISCDIALOG__
 
 #include <QSharedPointer>
-#include <OplPcTools/Core/Device.h>
+#include <OplPcTools/Device.h>
 #include "ui_ChooseOpticalDiscDialog.h"
 
 namespace OplPcTools {

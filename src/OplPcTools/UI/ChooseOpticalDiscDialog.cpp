@@ -17,9 +17,9 @@
 
 #include <QPushButton>
 #include <QThread>
-#include <OplPcTools/Core/Exception.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
-#include <OplPcTools/Core/OpticalDriveDeviceSource.h>
+#include <OplPcTools/OpticalDriveDeviceSource.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;

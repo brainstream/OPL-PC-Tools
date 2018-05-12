@@ -15,47 +15,17 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_VALIDATIONEXCEPTION__
+#define __OPLPCTOOLS_VALIDATIONEXCEPTION__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
-{
-    Q_OBJECT
+DECLARE_EXCEPTION(ValidationException)
 
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
-
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
-};
-
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_VALIDATIONEXCEPTION__

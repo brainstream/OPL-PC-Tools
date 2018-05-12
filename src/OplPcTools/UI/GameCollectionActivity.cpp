@@ -19,8 +19,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QAbstractItemModel>
-#include <OplPcTools/Core/Settings.h>
-#include <OplPcTools/Core/GameCollection.h>
+#include <OplPcTools/Settings.h>
+#include <OplPcTools/GameCollection.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>

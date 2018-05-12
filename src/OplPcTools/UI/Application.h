@@ -20,7 +20,7 @@
 
 #include <QApplication>
 #include <QWidget>
-#include <OplPcTools/Core/GameCollection.h>
+#include <OplPcTools/GameCollection.h>
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/UI/MainWindow.h>
 

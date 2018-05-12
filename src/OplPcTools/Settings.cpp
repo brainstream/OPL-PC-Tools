@@ -15,47 +15,37 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#include <OplPcTools/Settings.h>
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+using namespace OplPcTools::Core;
 
-namespace OplPcTools {
-namespace UI {
+const QString Settings::Key::reopen_last_session("Settings/ReopenLastSession");
+const QString Settings::Key::confirm_game_deletion("Settings/ConfirmGameDeletion");
+const QString Settings::Key::confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
+const QString Settings::Key::split_up_iso("Settings/SplitUpISO");
+const QString Settings::Key::move_iso("Settings/MoveISO");
+const QString Settings::Key::rename_iso("Settings/RenameISO");
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+Settings::Settings()
 {
-    Q_OBJECT
+    m_reopen_last_session = loadBoolean(Key::reopen_last_session, false);
+    m_confirm_game_deletion = loadBoolean(Key::confirm_game_deletion, true);
+    m_confirm_pixmap_deletion = loadBoolean(Key::confirm_pixmap_deletion, true);
+    m_split_up_iso = loadBoolean(Key::split_up_iso, true);
+    m_move_iso = loadBoolean(Key::move_iso, false);
+    m_rename_iso = loadBoolean(Key::rename_iso, true);
+}
 
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+bool Settings::loadBoolean(const QString & _key, bool _default_value)
+{
+    QVariant value = m_settins.value(_key);
+    if(value.isNull() || !value.canConvert(QVariant::Bool))
+        return _default_value;
+    return value.toBool();
+}
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+Settings & Settings::instance()
+{
+    static Settings * settings = new Settings();
+    return *settings;
+}

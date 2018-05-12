@@ -56,15 +56,15 @@ include_directories(
 )
 
 set(OPT_SRC_MOC
-    ${OPT_SRC_DIR}/Core/GameArtManager.h
-    ${OPT_SRC_DIR}/Core/GameCollection.h
-    ${OPT_SRC_DIR}/Core/IsoRestorer.h
-    ${OPT_SRC_DIR}/Core/GameStorage.h
-    ${OPT_SRC_DIR}/Core/UlConfigGameStorage.h
-    ${OPT_SRC_DIR}/Core/DirectoryGameStorage.h
-    ${OPT_SRC_DIR}/Core/GameInstaller.h
-    ${OPT_SRC_DIR}/Core/DirectoryGameInstaller.h
-    ${OPT_SRC_DIR}/Core/UlConfigGameInstaller.h
+    ${OPT_SRC_DIR}/GameArtManager.h
+    ${OPT_SRC_DIR}/GameCollection.h
+    ${OPT_SRC_DIR}/IsoRestorer.h
+    ${OPT_SRC_DIR}/GameStorage.h
+    ${OPT_SRC_DIR}/UlConfigGameStorage.h
+    ${OPT_SRC_DIR}/DirectoryGameStorage.h
+    ${OPT_SRC_DIR}/GameInstaller.h
+    ${OPT_SRC_DIR}/DirectoryGameInstaller.h
+    ${OPT_SRC_DIR}/UlConfigGameInstaller.h
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/LambdaThread.h
     ${OPT_SRC_DIR}/UI/GameCollectionActivity.h
@@ -91,7 +91,7 @@ set(OPT_SRC_UI
 )
 
 set(OPT_SRC_RES
-    ${OPT_SRC_DIR}/Resources.qrc
+    ${OPT_SRC_DIR}/Resources/Resources.qrc
 )
 
 qt5_wrap_cpp(OPT_SRC_MOC ${OPT_SRC_MOC})
@@ -103,37 +103,37 @@ set(OPT_SRC
     ${OPT_SRC_UI}
     ${OPT_SRC_RES}
     ${OPT_SRC_DIR}/ApplicationInfo.h
-    ${OPT_SRC_DIR}/Core/Exception.h
-    ${OPT_SRC_DIR}/Core/IOException.h
-    ${OPT_SRC_DIR}/Core/ValidationException.h
-    ${OPT_SRC_DIR}/Core/File.h
-    ${OPT_SRC_DIR}/Core/Maybe.h
-    ${OPT_SRC_DIR}/Core/DeviceSource.h
-    ${OPT_SRC_DIR}/Core/Iso9660DeviceSource.h
-    ${OPT_SRC_DIR}/Core/BinCueDeviceSource.h
-    ${OPT_SRC_DIR}/Core/BinCueDeviceSource.cpp
-    ${OPT_SRC_DIR}/Core/OpticalDriveDeviceSource.h
-    ${OPT_SRC_DIR}/Core/OpticalDriveDeviceSource.cpp
-    ${OPT_SRC_DIR}/Core/Device.h
-    ${OPT_SRC_DIR}/Core/Device.cpp
-    ${OPT_SRC_DIR}/Core/Device_FreeBSD.cpp
-    ${OPT_SRC_DIR}/Core/Device_Linux.cpp
-    ${OPT_SRC_DIR}/Core/Device_MacOSX.cpp
-    ${OPT_SRC_DIR}/Core/Device_Windows.cpp
-    ${OPT_SRC_DIR}/Core/Game.h
-    ${OPT_SRC_DIR}/Core/GameInstallationType.h
-    ${OPT_SRC_DIR}/Core/MediaType.h
-    ${OPT_SRC_DIR}/Core/DirectoryGameStorage.cpp
-    ${OPT_SRC_DIR}/Core/GameCollection.cpp
-    ${OPT_SRC_DIR}/Core/GameStorage.cpp
-    ${OPT_SRC_DIR}/Core/Settings.h
-    ${OPT_SRC_DIR}/Core/Settings.cpp
-    ${OPT_SRC_DIR}/Core/UlConfigGameStorage.cpp
-    ${OPT_SRC_DIR}/Core/IsoRestorer.cpp
-    ${OPT_SRC_DIR}/Core/GameArtManager.cpp
-    ${OPT_SRC_DIR}/Core/GameInstaller.cpp
-    ${OPT_SRC_DIR}/Core/DirectoryGameInstaller.cpp
-    ${OPT_SRC_DIR}/Core/UlConfigGameInstaller.cpp
+    ${OPT_SRC_DIR}/Exception.h
+    ${OPT_SRC_DIR}/IOException.h
+    ${OPT_SRC_DIR}/ValidationException.h
+    ${OPT_SRC_DIR}/File.h
+    ${OPT_SRC_DIR}/Maybe.h
+    ${OPT_SRC_DIR}/DeviceSource.h
+    ${OPT_SRC_DIR}/Iso9660DeviceSource.h
+    ${OPT_SRC_DIR}/BinCueDeviceSource.h
+    ${OPT_SRC_DIR}/BinCueDeviceSource.cpp
+    ${OPT_SRC_DIR}/OpticalDriveDeviceSource.h
+    ${OPT_SRC_DIR}/OpticalDriveDeviceSource.cpp
+    ${OPT_SRC_DIR}/Device.h
+    ${OPT_SRC_DIR}/Device.cpp
+    ${OPT_SRC_DIR}/Device_FreeBSD.cpp
+    ${OPT_SRC_DIR}/Device_Linux.cpp
+    ${OPT_SRC_DIR}/Device_MacOSX.cpp
+    ${OPT_SRC_DIR}/Device_Windows.cpp
+    ${OPT_SRC_DIR}/Game.h
+    ${OPT_SRC_DIR}/GameInstallationType.h
+    ${OPT_SRC_DIR}/MediaType.h
+    ${OPT_SRC_DIR}/DirectoryGameStorage.cpp
+    ${OPT_SRC_DIR}/GameCollection.cpp
+    ${OPT_SRC_DIR}/GameStorage.cpp
+    ${OPT_SRC_DIR}/Settings.h
+    ${OPT_SRC_DIR}/Settings.cpp
+    ${OPT_SRC_DIR}/UlConfigGameStorage.cpp
+    ${OPT_SRC_DIR}/IsoRestorer.cpp
+    ${OPT_SRC_DIR}/GameArtManager.cpp
+    ${OPT_SRC_DIR}/GameInstaller.cpp
+    ${OPT_SRC_DIR}/DirectoryGameInstaller.cpp
+    ${OPT_SRC_DIR}/UlConfigGameInstaller.cpp
     ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/UI/Application.cpp
     ${OPT_SRC_DIR}/UI/Intent.h
@@ -151,7 +151,7 @@ set(OPT_SRC
 
 if(WIN32)
     list(APPEND OPT_SRC
-        ${OPT_SRC_DIR}/Resources.rc)
+        ${OPT_SRC_DIR}/Resources/Resources.rc)
 endif()
 
 

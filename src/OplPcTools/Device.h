@@ -15,47 +15,93 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_DEVICE__
+#define __OPLPCTOOLS_DEVICE__
 
-#include <QThread>
-#include <QWidget>
+#include <QString>
+#include <QList>
 #include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <OplPcTools/MediaType.h>
+#include <OplPcTools/DeviceSource.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+struct DeviceName
 {
-    Q_OBJECT
-
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
-
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
+    QString name;
+    QString filename;
 };
 
-} // namespace UI
+QList<DeviceName> loadDriveList();
+
+class Device final
+{   
+    Q_DISABLE_COPY(Device)
+
+public:
+    explicit Device(QSharedPointer<DeviceSource> _source);
+    const QString filepath() const;
+    bool init();
+    bool isInitialized() const;
+    inline QString title() const;
+    inline void setTitle(const QString _title);
+    inline quint64 size() const;
+    inline MediaType mediaType() const;
+    inline void setMediaType(MediaType _media_type);
+    inline const QString & gameId() const;
+    bool open();
+    void close();
+    bool isOpen() const;
+    inline bool isReadOnly() const;
+    bool seek(quint64 _offset);
+    qint64 read(QByteArray & _buffer);
+
+private:
+    bool m_is_initialized;
+    QSharedPointer<DeviceSource> m_source_ptr;
+    MediaType m_media_type;
+    QString m_id;
+    QString m_title;
+    quint64 m_size;
+};
+
+QString Device::title() const
+{
+    return m_title;
+}
+
+void Device::setTitle(const QString _title)
+{
+    m_title = _title;
+}
+
+quint64 Device::size() const
+{
+    return m_size;
+}
+
+const QString & Device::gameId() const
+{
+    return m_id;
+}
+
+MediaType Device::mediaType() const
+{
+    return m_media_type;
+}
+
+void Device::setMediaType(MediaType _media_type)
+{
+    m_media_type = _media_type;
+}
+
+bool Device::isReadOnly() const
+{
+    return m_source_ptr->isReadOnly();
+}
+
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_DEVICE__

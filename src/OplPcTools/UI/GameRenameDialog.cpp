@@ -16,9 +16,9 @@
  ***********************************************************************************************/
 
 #include <QPushButton>
-#include <OplPcTools/Core/UlConfigGameStorage.h>
-#include <OplPcTools/Core/DirectoryGameStorage.h>
-#include <OplPcTools/Core/ValidationException.h>
+#include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/DirectoryGameStorage.h>
+#include <OplPcTools/ValidationException.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 
 using namespace OplPcTools;

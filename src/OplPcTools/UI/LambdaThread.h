@@ -20,7 +20,7 @@
 
 #include <functional>
 #include <QThread>
-#include <OplPcTools/Core/Exception.h>
+#include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
 namespace UI {

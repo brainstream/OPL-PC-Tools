@@ -15,47 +15,43 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_ULCONFIGGAMESTORAGE__
+#define __OPLPCTOOLS_ULCONFIGGAMESTORAGE__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <OplPcTools/GameStorage.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+class UlConfigGameStorage final : public GameStorage
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+    explicit UlConfigGameStorage(QObject * _parent = nullptr);
+    GameInstallationType installationType() const override;
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
+    static void validateTitle(const QString & _title);
+    static QString makePartFilename(const QString & _id, const QString & _name, quint8 _part);
+
+public:
+    static const quint16 max_name_length = 32;
+
+protected:
+    bool performLoading(const QDir & _directory) override;
+    bool performRenaming(const Game & _game, const QString & _title) override;
+    bool performRegistration(const Game & _game) override;
+    bool performDeletion(const Game & _game) override;
 
 private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
+    void deleteGameConfig(const QString _id);
+    void deletePartFiles(const Game & _game);
 
 private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
+    QString m_config_filepath;
 };
 
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_ULCONFIGGAMESTORAGE__

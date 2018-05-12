@@ -18,8 +18,8 @@
 #include <cmath>
 #include <QFileDialog>
 #include <QSettings>
-#include <OplPcTools/Core/IsoRestorer.h>
-#include <OplPcTools/Core/Game.h>
+#include <OplPcTools/IsoRestorer.h>
+#include <OplPcTools/Game.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>

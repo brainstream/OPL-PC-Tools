@@ -15,47 +15,22 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#include <OplPcTools/GameInstaller.h>
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+using namespace OplPcTools::Core;
 
-namespace OplPcTools {
-namespace UI {
-
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+GameInstaller::GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent /*= nullptr*/) :
+    QObject(_parent),
+    mr_device(_device),
+    mr_collection(_collection)
 {
-    Q_OBJECT
+}
 
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
-
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+MediaType GameInstaller::deviceMediaType() const
+{
+    const quint64 iso_size = mr_device.size();
+    MediaType type = mr_device.mediaType();
+    if(type == MediaType::Unknown)
+        type = iso_size > 681984000 ? MediaType::DVD : MediaType::CD;
+    return type;
+}

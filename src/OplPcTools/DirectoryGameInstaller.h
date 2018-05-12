@@ -15,47 +15,66 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__
+#define __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <OplPcTools/GameInstaller.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+class DirectoryGameInstaller : public GameInstaller
 {
     Q_OBJECT
 
 public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
-
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
+    DirectoryGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    ~DirectoryGameInstaller() override;
+    inline quint8 options() const;
+    inline void setOptionMoveFile(bool _value);
+    inline bool isOptionMoveFileSet() const;
+    inline void setOptionRenameFile(bool _value);
+    inline bool isOptionRenameFileSet() const;
+    bool install() override;
+    inline const Game * installedGame() const override;
 
 private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
+    bool copyDeviceTo(const QString & _dest);
+    void rollback(const QString & _dest);
+    void registerGame();
+
+private:
+    bool m_move_file;
+    bool m_rename_file;
+    Game * mp_game;
 };
 
-} // namespace UI
+void DirectoryGameInstaller::setOptionMoveFile(bool _value)
+{
+    m_move_file = _value;
+}
+
+bool DirectoryGameInstaller::isOptionMoveFileSet() const
+{
+    return m_move_file;
+}
+
+void DirectoryGameInstaller::setOptionRenameFile(bool _value)
+{
+    m_rename_file = _value;
+}
+
+bool DirectoryGameInstaller::isOptionRenameFileSet() const
+{
+    return m_rename_file;
+}
+
+const Game * DirectoryGameInstaller::installedGame() const
+{
+    return mp_game;
+}
+
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_DIRECTORYGAMEINSTALLER__

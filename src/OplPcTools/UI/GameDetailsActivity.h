@@ -23,8 +23,8 @@
 #include <QMenu>
 #include <QAction>
 #include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/Core/Game.h>
-#include <OplPcTools/Core/GameArtManager.h>
+#include <OplPcTools/Game.h>
+#include <OplPcTools/GameArtManager.h>
 #include "ui_GameDetailsActivity.h"
 
 namespace OplPcTools {

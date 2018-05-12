@@ -20,7 +20,7 @@
 
 #include <QWidget>
 #include <QTreeWidgetItem>
-#include <OplPcTools/Core/GameInstaller.h>
+#include <OplPcTools/GameInstaller.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/Intent.h>
 #include "ui_GameInstallerActivity.h"

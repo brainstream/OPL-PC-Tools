@@ -15,47 +15,18 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifdef __FreeBSD__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <OplPcTools/Device.h>
 
-namespace OplPcTools {
-namespace UI {
+using namespace OplPcTools::Core;
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+QList<DeviceName> OplPcTools::Core::loadDriveList()
 {
-    Q_OBJECT
+    // Application cannot work with FreeBSD's sequential devices.
+    // Thus, it is a stub that allows other parts of the application to work.
+    QList<DeviceName> result;
+    return result;
+}
 
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
-
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __FreeBSD__

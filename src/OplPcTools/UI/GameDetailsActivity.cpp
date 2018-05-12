@@ -22,8 +22,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QCheckBox>
-#include <OplPcTools/Core/Exception.h>
-#include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>

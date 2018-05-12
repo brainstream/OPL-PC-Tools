@@ -15,47 +15,28 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORERACTIVITY__
-#define __OPLPCTOOLS_ISORESTORERACTIVITY__
+#ifndef __OPLPCTOOLS_FILE__
+#define __OPLPCTOOLS_FILE__
 
-#include <QThread>
-#include <QWidget>
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_IsoRestorerActivity.h"
+#include <QFile>
+#include <OplPcTools/IOException.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace Core {
 
-class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
+inline void openFile(QFile & _file, QIODevice::OpenMode _flags)
 {
-    Q_OBJECT
+    if(!_file.open(_flags))
+        throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
+}
 
-public:
-    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
-    bool onAttach() override;
+inline void renameFile(const QString & _old_filename, const QString & _new_filename)
+{
+    if(!QFile::rename(_old_filename, _new_filename))
+        throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename).arg(_new_filename));
+}
 
-    static QSharedPointer<Intent> createIntent(const QString & _game_id);
-
-private:
-    void restore(const Core::Game & _game, const QString & _destination);
-
-private slots:
-    void onProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void onRollbackStarted();
-    void onException(QString _message);
-    void onThreadFinished();
-    void onCancel();
-
-private:
-    static const quint32 s_progress_max = 1000;
-    const QString m_game_id;
-    QThread * mp_working_thread;
-    QString m_finish_status;
-};
-
-} // namespace UI
+} // namespace Core
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISORESTORERACTIVITY__
+#endif // __OPLPCTOOLS_FILE__

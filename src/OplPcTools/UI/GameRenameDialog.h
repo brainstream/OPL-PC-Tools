@@ -18,7 +18,7 @@
 #ifndef __OPLPCTOOLS_GAMERENAMEDIALOG__
 #define __OPLPCTOOLS_GAMERENAMEDIALOG__
 
-#include <OplPcTools/Core/GameInstallationType.h>
+#include <OplPcTools/GameInstallationType.h>
 #include "ui_GameRenameDialog.h"
 
 namespace OplPcTools {

@@ -15,7 +15,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Core/Settings.h>
+#include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;

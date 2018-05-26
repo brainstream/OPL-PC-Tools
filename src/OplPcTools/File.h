@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -22,7 +23,6 @@
 #include <OplPcTools/IOException.h>
 
 namespace OplPcTools {
-namespace Core {
 
 inline void openFile(QFile & _file, QIODevice::OpenMode _flags)
 {
@@ -36,7 +36,6 @@ inline void renameFile(const QString & _old_filename, const QString & _new_filen
         throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename).arg(_new_filename));
 }
 
-} // namespace Core
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_FILE__

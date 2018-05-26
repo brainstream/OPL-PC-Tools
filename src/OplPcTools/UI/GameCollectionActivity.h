@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -49,7 +50,7 @@ private:
     void applySettings();
     void saveSettings();
     void activateCollectionControls(bool _activate);
-    void activateItemControls(const Core::Game * _selected_game);
+    void activateItemControls(const Game * _selected_game);
     void changeIconsSize();
     void showTreeContextMenu(const QPoint & _point);
     void load();
@@ -62,12 +63,12 @@ private:
     void collectionLoaded();
     void gameAdded(const QString & _id);
     void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
+    void gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
     void gameSelected();
     void showIsoRestorer();
 
 private:
-    OplPcTools::Core::GameArtManager * mp_game_art_manager;
+    OplPcTools::GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
     QMenu * mp_context_menu;
     QSortFilterProxyModel * mp_proxy_model;

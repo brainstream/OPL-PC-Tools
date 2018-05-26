@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -25,7 +26,7 @@
 #include <linux/cdrom.h>
 #include <OplPcTools/Device.h>
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 namespace {
 
@@ -48,7 +49,7 @@ bool isOpticalDrive(const char * _file)
 
 } // namespace
 
-QList<DeviceName> OplPcTools::Core::loadDriveList()
+QList<DeviceName> OplPcTools::loadDriveList()
 {
     QList<DeviceName> result;
     std::string dev_dir_path("/dev/");

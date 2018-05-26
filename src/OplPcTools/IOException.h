@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -21,11 +22,9 @@
 #include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
-namespace Core {
 
 DECLARE_EXCEPTION(IOException)
 
-} // namespace Core
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_IOEXCEPTION__

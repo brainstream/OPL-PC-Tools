@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -19,7 +20,6 @@
 #define __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 
 namespace OplPcTools {
-namespace Core {
 
 enum class GameInstallationType
 {
@@ -27,7 +27,6 @@ enum class GameInstallationType
     Directory
 };
 
-} // namespace Core
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAMEINSTALLATIONTYPE__

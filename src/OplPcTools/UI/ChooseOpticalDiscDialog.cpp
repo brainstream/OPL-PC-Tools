@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -29,7 +30,7 @@ namespace {
 struct DeviceDisplayData
 {
     QString name;
-    QSharedPointer<Core::Device> device;
+    QSharedPointer<Device> device;
 };
 
 class DeviceListItem : public QTreeWidgetItem
@@ -37,7 +38,7 @@ class DeviceListItem : public QTreeWidgetItem
 public:
     DeviceListItem(QTreeWidget * _view, const DeviceDisplayData & _data);
     QVariant data(int _column, int _role) const;
-    inline QSharedPointer<Core::Device> device() const;
+    inline QSharedPointer<Device> device() const;
 
 private:
     DeviceDisplayData m_data;
@@ -65,7 +66,7 @@ QVariant DeviceListItem::data(int _column, int _role) const
     return QTreeWidgetItem::data(_column, _role);
 }
 
-QSharedPointer<Core::Device> DeviceListItem::device() const
+QSharedPointer<Device> DeviceListItem::device() const
 {
     return m_data.device;
 }
@@ -94,18 +95,18 @@ void InitializationThread::run()
 {
     try
     {
-        QList<Core::DeviceName> devices = Core::loadDriveList();
-        for(const Core::DeviceName & device_name : devices)
+        QList<DeviceName> devices = loadDriveList();
+        for(const DeviceName & device_name : devices)
         {
             DeviceDisplayData display_data;
-            display_data.device = QSharedPointer<Core::Device>(new Core::Device(
-                QSharedPointer<Core::DeviceSource>(new Core::OpticalDriveDeviceSource(device_name.filename))));
+            display_data.device = QSharedPointer<Device>(new Device(
+                QSharedPointer<DeviceSource>(new OpticalDriveDeviceSource(device_name.filename))));
             display_data.name = device_name.name;
             if(display_data.device->init())
                 m_devices.append(display_data);
         }
     }
-    catch(const Core::Exception & exception)
+    catch(const Exception & exception)
     {
         m_error_message = exception.message();
     }
@@ -158,7 +159,7 @@ ChooseOpticalDiscDialog::ChooseOpticalDiscDialog(QWidget * _parent /*= nullptr*/
     thread->start();
 }
 
-void ChooseOpticalDiscDialog::fixDeviceTitle(Core::Device & _device) const
+void ChooseOpticalDiscDialog::fixDeviceTitle(Device & _device) const
 {
     QString title = _device.title();
     if(title.isEmpty())
@@ -189,9 +190,9 @@ void ChooseOpticalDiscDialog::deviceSelectionChanged()
     mp_button_box->button(QDialogButtonBox::Open)->setDisabled(mp_tree_devices->selectedItems().isEmpty());
 }
 
-QList<QSharedPointer<Core::Device> > ChooseOpticalDiscDialog::devices() const
+QList<QSharedPointer<Device> > ChooseOpticalDiscDialog::devices() const
 {
-    QList<QSharedPointer<Core::Device>> result;
+    QList<QSharedPointer<Device>> result;
     QModelIndexList indexes = mp_tree_devices->selectionModel()->selectedRows();
     for(const QModelIndex & index : indexes)
     {

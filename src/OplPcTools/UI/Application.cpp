@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -43,7 +44,7 @@ Application::Application(int & _argc, char ** _argv) :
     mp_main_window(nullptr),
     mp_game_collection(nullptr)
 {
-    mp_game_collection = new Core::GameCollection(this);
+    mp_game_collection = new GameCollection(this);
 }
 
 Application::~Application()
@@ -84,7 +85,7 @@ bool Application::pushActivity(Intent & _intent)
     return ensureMainWindow()->pushActivity(_intent);
 }
 
-Core::GameCollection & Application::gameCollection() const
+GameCollection & Application::gameCollection() const
 {
     return *mp_game_collection;
 }

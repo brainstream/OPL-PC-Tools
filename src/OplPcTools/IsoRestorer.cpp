@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -22,7 +23,7 @@
 #include <OplPcTools/IOException.h>
 #include <OplPcTools/IsoRestorer.h>
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 IsoRestorer::IsoRestorer(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QObject * _parent /*= nullptr*/) :
     QObject(_parent),

@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -26,7 +27,7 @@ using namespace OplPcTools::UI;
 
 bool GameRenameDialog::UlConfigNameValidator::validate(const QString & _name)
 {
-    int bytes_left = Core::UlConfigGameStorage::max_name_length - _name.toUtf8().length();
+    int bytes_left = UlConfigGameStorage::max_name_length - _name.toUtf8().length();
     if(bytes_left < 0)
     {
         m_message = QObject::tr("Length exceeded by %1 byte(s)").arg(-bytes_left);
@@ -54,9 +55,9 @@ bool GameRenameDialog::FilenameValidator::validate(const QString & _name)
     m_is_invalid = false;
     try
     {
-        Core::DirectoryGameStorage::validateTitle(_name);
+        DirectoryGameStorage::validateTitle(_name);
     }
-    catch(const Core::ValidationException & _exception)
+    catch(const ValidationException & _exception)
     {
         m_is_invalid = true;
         m_message = _exception.message();
@@ -70,11 +71,11 @@ const QString GameRenameDialog::FilenameValidator::message() const
 }
 
 GameRenameDialog::GameRenameDialog(const QString & _initial_name,
-                                   Core::GameInstallationType _installation_type,
+                                   GameInstallationType _installation_type,
                                    QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    if(_installation_type == Core::GameInstallationType::Directory)
+    if(_installation_type == GameInstallationType::Directory)
         mp_validator = new FilenameValidator();
     else
         mp_validator = new UlConfigNameValidator();

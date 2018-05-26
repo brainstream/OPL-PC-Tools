@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -60,7 +61,7 @@ private:
     };
 
 public:
-    GameRenameDialog(const QString & _initial_name, OplPcTools::Core::GameInstallationType _installation_type, QWidget *_parent = nullptr);
+    GameRenameDialog(const QString & _initial_name, OplPcTools::GameInstallationType _installation_type, QWidget *_parent = nullptr);
     ~GameRenameDialog() override;
     QString name() const;
 

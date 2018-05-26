@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -38,7 +39,7 @@ static const char * g_settings_key_cover_dir = "PixmapDirectory";
 class GameDetailsActivityIntent : public Intent
 {
 public:
-    GameDetailsActivityIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id) :
+    GameDetailsActivityIntent(OplPcTools::GameArtManager & _art_manager, const QString & _game_id) :
         mr_art_manager(_art_manager),
         m_game_id(_game_id)
     {
@@ -52,22 +53,22 @@ public:
     }
 
 private:
-    OplPcTools::Core::GameArtManager & mr_art_manager;
+    OplPcTools::GameArtManager & mr_art_manager;
     const QString m_game_id;
 };
 
 class ArtListItem : public QListWidgetItem
 {
 public:
-    ArtListItem(Core::GameArtType _type, const QString & _title, const QPixmap & _pixmap, QListWidget * _view = nullptr);
+    ArtListItem(GameArtType _type, const QString & _title, const QPixmap & _pixmap, QListWidget * _view = nullptr);
     void setPixmap(const QPixmap & _pixmap);
-    inline Core::GameArtType type() const;
+    inline GameArtType type() const;
     inline bool hasPixmap() const;
     QVariant data(int _role) const override;
 
 private:
     static QSharedPointer<QPixmap> s_default_pixmap_ptr;
-    Core::GameArtType m_type;
+    GameArtType m_type;
     QString m_title;
     QPixmap m_pixmap;
     bool m_has_pixmap;
@@ -77,7 +78,7 @@ private:
 
 QSharedPointer<QPixmap> ArtListItem::s_default_pixmap_ptr = QSharedPointer<QPixmap>();
 
-ArtListItem::ArtListItem(Core::GameArtType _type, const QString & _title, const QPixmap & _pixmap, QListWidget * _view /*= nullptr*/) :
+ArtListItem::ArtListItem(GameArtType _type, const QString & _title, const QPixmap & _pixmap, QListWidget * _view /*= nullptr*/) :
     QListWidgetItem(_view, QListWidgetItem::UserType),
     m_type(_type),
     m_title(_title),
@@ -104,7 +105,7 @@ void ArtListItem::setPixmap(const QPixmap & _pixmap)
     }
 }
 
-Core::GameArtType ArtListItem::type() const
+GameArtType ArtListItem::type() const
 {
     return m_type;
 }
@@ -127,7 +128,7 @@ QVariant ArtListItem::data(int _role) const
     }
 }
 
-GameDetailsActivity::GameDetailsActivity(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
+GameDetailsActivity::GameDetailsActivity(OplPcTools::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_art_manager(_art_manager),
     mp_game(nullptr),
@@ -151,7 +152,7 @@ GameDetailsActivity::GameDetailsActivity(OplPcTools::Core::GameArtManager & _art
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
 }
 
-QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id)
+QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::GameArtManager & _art_manager, const QString & _game_id)
 {
     return QSharedPointer<Intent>(new GameDetailsActivityIntent(_art_manager, _game_id));
 }
@@ -179,7 +180,7 @@ void GameDetailsActivity::renameGame()
         if(Application::instance().gameCollection().renameGame(*mp_game, dlg.name()))
             mp_label_title->setText(dlg.name());
     }
-    catch(const Core::Exception & exception)
+    catch(const Exception & exception)
     {
         Application::instance().showErrorMessage(exception.message());
     }
@@ -218,7 +219,7 @@ void GameDetailsActivity::changeGameArt()
         item->setPixmap(pixmap);
         mp_list_arts->doItemsLayout();
     }
-    catch(const Core::Exception & exception)
+    catch(const Exception & exception)
     {
         Application::instance().showErrorMessage(exception.message());
     }
@@ -230,7 +231,7 @@ void GameDetailsActivity::removeGameArt()
     {
         ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
         if(item == nullptr || !item->hasPixmap()) return;
-        Core::Settings & settings = Core::Settings::instance();
+        Settings & settings = Settings::instance();
         if(settings.confirmPixmapDeletion())
         {
             QCheckBox * checkbox = new QCheckBox("Don't show again");
@@ -248,7 +249,7 @@ void GameDetailsActivity::removeGameArt()
         item->setPixmap(QPixmap());
         mp_list_arts->doItemsLayout();
     }
-    catch(const Core::Exception & exception)
+    catch(const Exception & exception)
     {
         Application::instance().showErrorMessage(exception.message());
     }
@@ -269,17 +270,17 @@ void GameDetailsActivity::initGameControls()
     }
     mp_label_title->setText(mp_game->title());
     mp_list_arts->clear();
-    addArtListItem(Core::GameArtType::Icon, tr("Icon"));
-    addArtListItem(Core::GameArtType::Front, tr("Front Cover"));
-    addArtListItem(Core::GameArtType::Back, tr("Back Cover"));
-    addArtListItem(Core::GameArtType::Spine, tr("Spine Cover"));
-    addArtListItem(Core::GameArtType::Screenshot1, tr("Screenshot #1"));
-    addArtListItem(Core::GameArtType::Screenshot2, tr("Screenshot #2"));
-    addArtListItem(Core::GameArtType::Background, tr("Background"));
-    addArtListItem(Core::GameArtType::Logo, tr("Logo"));
+    addArtListItem(GameArtType::Icon, tr("Icon"));
+    addArtListItem(GameArtType::Front, tr("Front Cover"));
+    addArtListItem(GameArtType::Back, tr("Back Cover"));
+    addArtListItem(GameArtType::Spine, tr("Spine Cover"));
+    addArtListItem(GameArtType::Screenshot1, tr("Screenshot #1"));
+    addArtListItem(GameArtType::Screenshot2, tr("Screenshot #2"));
+    addArtListItem(GameArtType::Background, tr("Background"));
+    addArtListItem(GameArtType::Logo, tr("Logo"));
 }
 
-void GameDetailsActivity::addArtListItem(Core::GameArtType _type, const QString & _text)
+void GameDetailsActivity::addArtListItem(GameArtType _type, const QString & _text)
 {
     mp_list_arts->addItem(new ArtListItem(_type, _text, mr_art_manager.load(mp_game->id(), _type)));
 }

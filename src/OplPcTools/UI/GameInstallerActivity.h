@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -70,7 +71,7 @@ private:
 
 private:
     LambdaThread * mp_working_thread;
-    Core::GameInstaller * mp_installer;
+    GameInstaller * mp_installer;
     quint32 m_processing_task_index;
     bool m_is_canceled;
 };

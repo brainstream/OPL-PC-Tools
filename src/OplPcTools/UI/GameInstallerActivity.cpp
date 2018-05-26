@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -77,9 +78,9 @@ public:
 class TaskListItem : public QTreeWidgetItem
 {
 public:
-    TaskListItem(QSharedPointer<Core::Device> _device, QTreeWidget * _widget);
+    TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget);
     QVariant data(int _column, int _role) const;
-    inline Core::Device & device();
+    inline Device & device();
     void rename(const QString & _new_name);
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
@@ -87,7 +88,7 @@ public:
     inline const QString & errorMessage() const;
     inline void setProgress(int _progress);
     inline int progress() const;
-    inline void setMediaType(Core::MediaType _media_type);
+    inline void setMediaType(MediaType _media_type);
     inline bool isSplittingUpEnabled() const;
     inline void enabelSplittingUp(bool _enable);
     inline bool isRenamingEnabled() const;
@@ -96,7 +97,7 @@ public:
     inline void enabelMoving(bool _enable);
 
 private:
-    QSharedPointer<Core::Device> m_device_ptr;
+    QSharedPointer<Device> m_device_ptr;
     GameInstallationStatus m_status;
     int m_progress;
     QString m_error_message;
@@ -122,13 +123,13 @@ private:
 
 } // namespace
 
-TaskListItem::TaskListItem(QSharedPointer<Core::Device> _device, QTreeWidget * _widget) :
+TaskListItem::TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget) :
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
     m_device_ptr(_device),
     m_status(GameInstallationStatus::Queued),
     m_progress(0)
 {
-    const Core::Settings & settings = Core::Settings::instance();
+    const Settings & settings = Settings::instance();
     m_is_splitting_up_enabled = settings.splitUpIso();
     m_is_renaming_enabled = settings.renameIso();
     m_is_moving_enabled = settings.moveIso() && !_device->isReadOnly();
@@ -156,7 +157,7 @@ QVariant TaskListItem::data(int _column, int _role) const
     return QVariant();
 }
 
-Core::Device & TaskListItem::device()
+Device & TaskListItem::device()
 {
     return *m_device_ptr;
 }
@@ -205,7 +206,7 @@ int TaskListItem::progress() const
     return m_progress;
 }
 
-void TaskListItem::setMediaType(Core::MediaType _media_type)
+void TaskListItem::setMediaType(MediaType _media_type)
 {
     m_device_ptr->setMediaType(_media_type);
 }
@@ -339,10 +340,10 @@ void GameInstallerActivity::taskSelectionChanged()
     mp_label_title->setText(item->device().title());
     switch(item->device().mediaType())
     {
-    case Core::MediaType::CD:
+    case MediaType::CD:
         mp_radio_mtcd->setChecked(true);
         break;
-    case Core::MediaType::DVD:
+    case MediaType::DVD:
         mp_radio_mtdvd->setChecked(true);
         break;
     default:
@@ -382,12 +383,12 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
         mp_tree_tasks->setCurrentItem(existingTask);
         return;
     }
-    Core::DeviceSource * source = nullptr;
+    DeviceSource * source = nullptr;
     if(_file_path.endsWith(g_iso_ext))
-        source = new Core::Iso9660DeviceSource(_file_path);
+        source = new Iso9660DeviceSource(_file_path);
     else
-        source = new Core::BinCueDeviceSource(_file_path);
-    QSharedPointer<Core::Device> device(new Core::Device(QSharedPointer<Core::DeviceSource>(source)));
+        source = new BinCueDeviceSource(_file_path);
+    QSharedPointer<Device> device(new Device(QSharedPointer<DeviceSource>(source)));
     if(device->init())
     {
         device->setTitle(file_info.completeBaseName());
@@ -447,8 +448,8 @@ void GameInstallerActivity::addDisc()
     ChooseOpticalDiscDialog dlg(this);
     if(dlg.exec() != QDialog::Accepted)
         return;
-    QList<QSharedPointer<Core::Device>> device_list = dlg.devices();
-    for(QSharedPointer<Core::Device> & device : device_list)
+    QList<QSharedPointer<Device>> device_list = dlg.devices();
+    for(QSharedPointer<Device> & device : device_list)
     {
         QTreeWidgetItem * existingTask = findTaskInList(device->filepath());
         if(existingTask)
@@ -470,7 +471,7 @@ void GameInstallerActivity::renameGame()
     if(!item || item->status() != GameInstallationStatus::Queued)
         return;
     GameRenameDialog dlg(item->device().title(),
-            item->isSplittingUpEnabled() ? Core::GameInstallationType::UlConfig : Core::GameInstallationType::Directory, this);
+            item->isSplittingUpEnabled() ? GameInstallationType::UlConfig : GameInstallationType::Directory, this);
     if(dlg.exec() == QDialog::Accepted)
     {
         item->rename(dlg.name());
@@ -495,11 +496,11 @@ void GameInstallerActivity::mediaTypeChanged(bool _checked)
     if(!_checked) return;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item) return;
-    Core::MediaType media_type = Core::MediaType::Unknown;
+    MediaType media_type = MediaType::Unknown;
     if(mp_radio_mtcd->isChecked())
-        media_type = Core::MediaType::CD;
+        media_type = MediaType::CD;
     else if(mp_radio_mtdvd->isChecked())
-        media_type = Core::MediaType::DVD;
+        media_type = MediaType::DVD;
     item->setMediaType(media_type);
 }
 
@@ -629,19 +630,19 @@ bool GameInstallerActivity::startTask()
     if(!item)
         return false;
     if(mp_radio_mtcd->isChecked())
-        item->setMediaType(Core::MediaType::CD);
+        item->setMediaType(MediaType::CD);
     else if(mp_radio_mtdvd->isChecked())
-        item->setMediaType(Core::MediaType::DVD);
+        item->setMediaType(MediaType::DVD);
     else
-        item->setMediaType(Core::MediaType::Unknown);
-    Core::GameCollection & collection = Application::instance().gameCollection();
+        item->setMediaType(MediaType::Unknown);
+    GameCollection & collection = Application::instance().gameCollection();
     if(item->isSplittingUpEnabled())
     {
-        mp_installer = new Core::UlConfigGameInstaller(item->device(), collection, this);
+        mp_installer = new UlConfigGameInstaller(item->device(), collection, this);
     }
     else
     {
-        Core::DirectoryGameInstaller * dir_installer = new Core::DirectoryGameInstaller(item->device(), collection, this);
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), collection, this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;
@@ -652,11 +653,11 @@ bool GameInstallerActivity::startTask()
     connect(mp_working_thread, &QThread::finished, this, &GameInstallerActivity::threadFinished);
     connect(mp_working_thread, &QThread::finished, mp_working_thread, &QThread::deleteLater);
     connect(mp_working_thread, &LambdaThread::exception, this, &GameInstallerActivity::installerError);
-    connect(mp_installer, &Core::GameInstaller::progress, this, &GameInstallerActivity::installProgress);
-    connect(mp_installer, &Core::GameInstaller::rollbackStarted, this, &GameInstallerActivity::rollbackStarted);
-    connect(mp_installer, &Core::GameInstaller::rollbackFinished, this, &GameInstallerActivity::rollbackFinished);
-    connect(mp_installer, &Core::GameInstaller::registrationStarted, this, &GameInstallerActivity::registrationStarted);
-    connect(mp_installer, &Core::GameInstaller::registrationFinished, this, &GameInstallerActivity::registrationFinished);
+    connect(mp_installer, &GameInstaller::progress, this, &GameInstallerActivity::installProgress);
+    connect(mp_installer, &GameInstaller::rollbackStarted, this, &GameInstallerActivity::rollbackStarted);
+    connect(mp_installer, &GameInstaller::rollbackFinished, this, &GameInstallerActivity::rollbackFinished);
+    connect(mp_installer, &GameInstaller::registrationStarted, this, &GameInstallerActivity::registrationStarted);
+    connect(mp_installer, &GameInstaller::registrationFinished, this, &GameInstallerActivity::registrationFinished);
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
             setStatus(GameInstallationStatus::Installation);
     mp_working_thread->start(QThread::HighestPriority);

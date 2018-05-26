@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -20,7 +21,6 @@
 #define __OPLPCTOOLS_MEDIATYPE__
 
 namespace OplPcTools {
-namespace Core {
 
 enum class MediaType
 {
@@ -29,7 +29,6 @@ enum class MediaType
     DVD
 };
 
-} // namespace Core
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_MEDIATYPE__

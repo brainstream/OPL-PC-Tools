@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -22,7 +23,6 @@
 #include <QMetaType>
 
 namespace OplPcTools {
-namespace Core {
 
 class Exception : public QException
 {
@@ -46,12 +46,11 @@ private:
     QString m_message;
 };
 
-} // namespace Core
 } // namespace OplPcTools
 
 
 #define DECLARE_EXCEPTION(type_name)                      \
-    class type_name : public OplPcTools::Core::Exception  \
+    class type_name : public OplPcTools::Exception  \
     {                                                     \
     public:                                               \
         explicit type_name(const QString & _message) :    \

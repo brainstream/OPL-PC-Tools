@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -35,15 +36,15 @@ class GameDetailsActivity : public Activity, private Ui::GameDetailsActivity
     Q_OBJECT
 
 public:
-    explicit GameDetailsActivity(OplPcTools::Core::GameArtManager & _art_manager, QWidget * _parent = nullptr);
+    explicit GameDetailsActivity(OplPcTools::GameArtManager & _art_manager, QWidget * _parent = nullptr);
     void setGameId(const QString & _id);
 
-    static QSharedPointer<Intent> createIntent(OplPcTools::Core::GameArtManager & _art_manager, const QString & _game_id);
+    static QSharedPointer<Intent> createIntent(OplPcTools::GameArtManager & _art_manager, const QString & _game_id);
 
 private:
     void setupShortcuts();
     void initGameControls();
-    void addArtListItem(Core::GameArtType _type, const QString & _text);
+    void addArtListItem(GameArtType _type, const QString & _text);
     void clearGameControls();
 
 private slots:
@@ -53,8 +54,8 @@ private slots:
     void removeGameArt();
 
 private:
-    OplPcTools::Core::GameArtManager & mr_art_manager;
-    const OplPcTools::Core::Game * mp_game;
+    OplPcTools::GameArtManager & mr_art_manager;
+    const OplPcTools::Game * mp_game;
     QMenu * mp_item_context_menu;
     QAction * mp_action_change_art;
     QAction * mp_action_remove_art;

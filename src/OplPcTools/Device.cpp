@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -19,9 +20,9 @@
 #include <QFileInfo>
 #include <OplPcTools/Device.h>
 
-using namespace OplPcTools::Core;
-
 #define ISO9660_OFFSET 0x8000
+
+using namespace OplPcTools;
 
 namespace {
 

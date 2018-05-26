@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -54,14 +55,14 @@ public:
 class GameCollectionActivity::GameTreeModel : public QAbstractItemModel
 {
 public:
-    explicit GameTreeModel(Core::GameCollection & _collection, QObject * _parent = nullptr);
+    explicit GameTreeModel(GameCollection & _collection, QObject * _parent = nullptr);
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
-    const Core::Game * game(const QModelIndex & _index) const;
-    void setArtManager(Core::GameArtManager & _manager);
+    const Game * game(const QModelIndex & _index) const;
+    void setArtManager(GameArtManager & _manager);
 
 private:
     void collectionLoaded();
@@ -69,28 +70,28 @@ private:
     void gameAboutToBeDeleted(const QString & _id);
     void gameDeleted(const QString & _id);
     void updateRecord(const QString & _id);
-    void gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap);
+    void gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
 
 private:
     const QPixmap m_default_icon;
-    const Core::GameCollection & mr_collection;
-    Core::GameArtManager * mp_art_manager;
+    const GameCollection & mr_collection;
+    GameArtManager * mp_art_manager;
     int m_row_count;
 };
 
 
-GameCollectionActivity::GameTreeModel::GameTreeModel(Core::GameCollection & _collection, QObject * _parent /*= nullptr*/) :
+GameCollectionActivity::GameTreeModel::GameTreeModel(GameCollection & _collection, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
     m_default_icon(QPixmap(":/images/no-icon")),
     mr_collection(_collection),
     mp_art_manager(nullptr),
     m_row_count(_collection.count())
 {
-    connect(&_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::GameTreeModel::collectionLoaded);
-    connect(&_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::GameTreeModel::updateRecord);
-    connect(&_collection, &Core::GameCollection::gameAdded, this, &GameCollectionActivity::GameTreeModel::gameAdded);
-    connect(&_collection, &Core::GameCollection::gameAboutToBeDeleted, this, &GameCollectionActivity::GameTreeModel::gameAboutToBeDeleted);
-    connect(&_collection, &Core::GameCollection::gameDeleted, this, &GameCollectionActivity::GameTreeModel::gameDeleted);
+    connect(&_collection, &GameCollection::loaded, this, &GameCollectionActivity::GameTreeModel::collectionLoaded);
+    connect(&_collection, &GameCollection::gameRenamed, this, &GameCollectionActivity::GameTreeModel::updateRecord);
+    connect(&_collection, &GameCollection::gameAdded, this, &GameCollectionActivity::GameTreeModel::gameAdded);
+    connect(&_collection, &GameCollection::gameAboutToBeDeleted, this, &GameCollectionActivity::GameTreeModel::gameAboutToBeDeleted);
+    connect(&_collection, &GameCollection::gameDeleted, this, &GameCollectionActivity::GameTreeModel::gameDeleted);
 }
 
 void GameCollectionActivity::GameTreeModel::collectionLoaded()
@@ -112,7 +113,7 @@ void GameCollectionActivity::GameTreeModel::gameAboutToBeDeleted(const QString &
 {
     for(int i = 0; i < m_row_count; ++i)
     {
-        const Core::Game * game = mr_collection[i];
+        const Game * game = mr_collection[i];
         if(game->id() == _id)
         {
             beginRemoveRows(QModelIndex(), i, i);
@@ -133,7 +134,7 @@ void GameCollectionActivity::GameTreeModel::updateRecord(const QString & _id)
     int count = mr_collection.count();
     for(int i = 0; i < count; ++i)
     {
-        const Core::Game * game = mr_collection[i];
+        const Game * game = mr_collection[i];
         if(game->id() == _id)
         {
             emit dataChanged(createIndex(i, 0), createIndex(i, 0));
@@ -142,10 +143,10 @@ void GameCollectionActivity::GameTreeModel::updateRecord(const QString & _id)
     }
 }
 
-void GameCollectionActivity::GameTreeModel::gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap)
+void GameCollectionActivity::GameTreeModel::gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
 {
     Q_UNUSED(_pixmap)
-    if(_type == Core::GameArtType::Icon)
+    if(_type == GameArtType::Icon)
         updateRecord(_game_id);
 }
 
@@ -183,7 +184,7 @@ QVariant GameCollectionActivity::GameTreeModel::data(const QModelIndex & _index,
     case Qt::DecorationRole:
         if(mp_art_manager)
         {
-            QPixmap icon = mp_art_manager->load(mr_collection[_index.row()]->id(), Core::GameArtType::Icon);
+            QPixmap icon = mp_art_manager->load(mr_collection[_index.row()]->id(), GameArtType::Icon);
             return QIcon(icon.isNull() ? m_default_icon : icon);
         }
         break;
@@ -191,17 +192,17 @@ QVariant GameCollectionActivity::GameTreeModel::data(const QModelIndex & _index,
     return QVariant();
 }
 
-const Core::Game * GameCollectionActivity::GameTreeModel::game(const QModelIndex & _index) const
+const Game * GameCollectionActivity::GameTreeModel::game(const QModelIndex & _index) const
 {
     return _index.isValid() ? mr_collection[_index.row()] : nullptr;
 }
 
-void GameCollectionActivity::GameTreeModel::setArtManager(Core::GameArtManager & _manager)
+void GameCollectionActivity::GameTreeModel::setArtManager(GameArtManager & _manager)
 {
     if(mp_art_manager)
-        disconnect(mp_art_manager, &Core::GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
+        disconnect(mp_art_manager, &GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
     mp_art_manager = &_manager;
-    connect(mp_art_manager, &Core::GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
+    connect(mp_art_manager, &GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
 }
 
 GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) :
@@ -218,7 +219,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
         .arg(filter_shortcat->key().toString()));
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    Core::GameCollection & game_collection = Application::instance().gameCollection();
+    GameCollection & game_collection = Application::instance().gameCollection();
     mp_model = new GameTreeModel(game_collection, this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -252,9 +253,9 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameCollectionActivity::showTreeContextMenu);
     connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { gameSelected(); });
-    connect(&game_collection, &Core::GameCollection::loaded, this, &GameCollectionActivity::collectionLoaded);
-    connect(&game_collection, &Core::GameCollection::gameAdded, this, &GameCollectionActivity::gameAdded);
-    connect(&game_collection, &Core::GameCollection::gameRenamed, this, &GameCollectionActivity::gameRenamed);
+    connect(&game_collection, &GameCollection::loaded, this, &GameCollectionActivity::collectionLoaded);
+    connect(&game_collection, &GameCollection::gameAdded, this, &GameCollectionActivity::gameAdded);
+    connect(&game_collection, &GameCollection::gameRenamed, this, &GameCollectionActivity::gameRenamed);
     connect(this, &GameCollectionActivity::destroyed, this, &GameCollectionActivity::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     connect(mp_btn_restore_iso, &QToolButton::clicked, this, &GameCollectionActivity::showIsoRestorer);
@@ -268,7 +269,7 @@ QSharedPointer<Intent> GameCollectionActivity::createIntent()
 
 bool GameCollectionActivity::onAttach()
 {
-    if(Core::Settings::instance().reopenLastSestion())
+    if(Settings::instance().reopenLastSestion())
         tryLoadRecentDirectory();
     return true;
 }
@@ -291,13 +292,13 @@ void GameCollectionActivity::activateCollectionControls(bool _activate)
     mp_action_reload->setEnabled(_activate);
 }
 
-void GameCollectionActivity::activateItemControls(const Core::Game * _selected_game)
+void GameCollectionActivity::activateItemControls(const Game * _selected_game)
 {
     mp_widget_details->setVisible(_selected_game);
     mp_action_delete->setEnabled(_selected_game);
     mp_action_edit->setEnabled(_selected_game);
     mp_action_rename->setEnabled(_selected_game);
-    mp_btn_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == Core::GameInstallationType::UlConfig);
+    mp_btn_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == GameInstallationType::UlConfig);
 }
 
 void GameCollectionActivity::applySettings()
@@ -346,13 +347,13 @@ bool GameCollectionActivity::tryLoadRecentDirectory()
 
 void GameCollectionActivity::loadDirectory(const QDir & _directory)
 {
-    Core::GameCollection & game_collection = Application::instance().gameCollection();
+    GameCollection & game_collection = Application::instance().gameCollection();
     game_collection.load(_directory);
     delete mp_game_art_manager;
-    mp_game_art_manager = new Core::GameArtManager(_directory, this);
-    connect(mp_game_art_manager, &Core::GameArtManager::artChanged, this, &GameCollectionActivity::gameArtChanged);
-    mp_game_art_manager->addCacheType(Core::GameArtType::Icon);
-    mp_game_art_manager->addCacheType(Core::GameArtType::Front);
+    mp_game_art_manager = new GameArtManager(_directory, this);
+    connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameCollectionActivity::gameArtChanged);
+    mp_game_art_manager->addCacheType(GameArtType::Icon);
+    mp_game_art_manager->addCacheType(GameArtType::Front);
     mp_model->setArtManager(*mp_game_art_manager);
     mp_proxy_model->sort(0, Qt::AscendingOrder);
     if(game_collection.count() > 0)
@@ -382,33 +383,33 @@ void GameCollectionActivity::gameAdded(const QString & _id)
 
 void GameCollectionActivity::gameRenamed(const QString & _id)
 {
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->id() == _id)
         gameSelected();
 }
 
-void GameCollectionActivity::gameArtChanged(const QString & _game_id, Core::GameArtType _type, const QPixmap * _pixmap)
+void GameCollectionActivity::gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
 {
-    if(_type != Core::GameArtType::Front)
+    if(_type != GameArtType::Front)
         return;
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->id() == _game_id)
         mp_label_cover->setPixmap(_pixmap ? *_pixmap : m_default_cover);
 }
 
 void GameCollectionActivity::gameSelected()
 {
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
         mp_label_id->setText(game->id());
         mp_label_title->setText(game->title());
-        QPixmap pixmap = mp_game_art_manager->load(game->id(), Core::GameArtType::Front);
+        QPixmap pixmap = mp_game_art_manager->load(game->id(), GameArtType::Front);
         mp_label_cover->setPixmap(pixmap.isNull() ? m_default_cover : pixmap);
-        mp_label_type->setText(game->mediaType() == Core::MediaType::CD ? "CD" : "DVD");
+        mp_label_type->setText(game->mediaType() == MediaType::CD ? "CD" : "DVD");
         mp_label_parts->setText(QString("%1").arg(game->partCount()));
         mp_label_source->setText(
-            game->installationType() == Core::GameInstallationType::UlConfig ? "UL" : tr("Directory"));
+            game->installationType() == GameInstallationType::UlConfig ? "UL" : tr("Directory"));
         mp_widget_details->show();
     }
     else
@@ -420,7 +421,7 @@ void GameCollectionActivity::gameSelected()
 
 void GameCollectionActivity::renameGame()
 {
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
         GameRenameDialog dlg(game->title(), game->installationType(), this);
@@ -430,7 +431,7 @@ void GameCollectionActivity::renameGame()
             {
                 Application::instance().gameCollection().renameGame(*game, dlg.name());
             }
-            catch(const Core::Exception & exception)
+            catch(const Exception & exception)
             {
                 Application::instance().showErrorMessage(exception.message());
             }
@@ -440,7 +441,7 @@ void GameCollectionActivity::renameGame()
 
 void GameCollectionActivity::showGameDetails()
 {
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
         QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_art_manager, game->id());
@@ -450,8 +451,8 @@ void GameCollectionActivity::showGameDetails()
 
 void GameCollectionActivity::showIsoRestorer()
 {
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
-    if(game && game->installationType() == Core::GameInstallationType::UlConfig)
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    if(game && game->installationType() == GameInstallationType::UlConfig)
     {
         QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->id());
         Application::instance().pushActivity(*intent);
@@ -466,9 +467,9 @@ void GameCollectionActivity::showGameInstaller()
 
 void GameCollectionActivity::deleteGame()
 {
-    const Core::Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     const QString id = game->id();
-    Core::Settings & settings = Core::Settings::instance();
+    Settings & settings = Settings::instance();
     if(settings.confirmGameDeletion())
     {
         QCheckBox * checkbox = new QCheckBox("Don't show again");
@@ -485,11 +486,11 @@ void GameCollectionActivity::deleteGame()
     if(!game) return;
     try
     {
-        Core::GameCollection & collection = Application::instance().gameCollection();
+        GameCollection & collection = Application::instance().gameCollection();
         collection.deleteGame(*game);
         mp_game_art_manager->clearArts(id);
     }
-    catch(Core::Exception & exception)
+    catch(Exception & exception)
     {
         Application::instance().showErrorMessage(exception.message());
     }

@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -31,13 +32,13 @@ class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDia
 
 public:
     explicit ChooseOpticalDiscDialog(QWidget * _parent = nullptr);
-    QList<QSharedPointer<OplPcTools::Core::Device>> devices() const;
+    QList<QSharedPointer<OplPcTools::Device>> devices() const;
 
 private slots:
     void deviceSelectionChanged();
 
 private:
-    void fixDeviceTitle(OplPcTools::Core::Device & _device) const;
+    void fixDeviceTitle(OplPcTools::Device & _device) const;
 };
 
 } // namespace UI

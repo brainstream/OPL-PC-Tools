@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -17,7 +18,7 @@
 
 #include <OplPcTools/Settings.h>
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 const QString Settings::Key::reopen_last_session("Settings/ReopenLastSession");
 const QString Settings::Key::confirm_game_deletion("Settings/ConfirmGameDeletion");

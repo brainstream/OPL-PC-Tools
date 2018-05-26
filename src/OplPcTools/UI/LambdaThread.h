@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -44,7 +45,7 @@ protected:
         {
             m_lambda();
         }
-        catch(const OplPcTools::Core::Exception & ex)
+        catch(const OplPcTools::Exception & ex)
         {
             emit exception(ex.message());
         }

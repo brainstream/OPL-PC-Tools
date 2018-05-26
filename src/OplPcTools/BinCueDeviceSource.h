@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -18,13 +19,10 @@
 #ifndef __OPLPCTOOLS_BINCUEDEVICESOURCE__
 #define __OPLPCTOOLS_BINCUEDEVICESOURCE__
 
-namespace OplPcTools {
-namespace Core {
-
 #include <QFile>
 #include <OplPcTools/DeviceSource.h>
 
-using namespace OplPcTools::Core;
+namespace OplPcTools {
 
 class BinCueDeviceSource : public DeviceSource
 {
@@ -42,7 +40,6 @@ private:
     QFile m_bin_file;
 };
 
-} // namespace Core
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_BINCUEDEVICESOURCE__

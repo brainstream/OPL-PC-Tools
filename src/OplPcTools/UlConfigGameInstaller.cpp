@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -22,7 +23,7 @@
 #include <OplPcTools/ValidationException.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent) :
     GameInstaller(_device, _collection, _parent),

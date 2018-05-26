@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -17,7 +18,7 @@
 
 #include <OplPcTools/GameInstaller.h>
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 GameInstaller::GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent /*= nullptr*/) :
     QObject(_parent),

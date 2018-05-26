@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -19,7 +20,6 @@
 #include <OplPcTools/GameCollection.h>
 
 using namespace OplPcTools;
-using namespace OplPcTools::Core;
 
 namespace {
 
@@ -81,7 +81,7 @@ int GameCollection::count() const
     return mp_ul_conf_storage->count() + mp_dir_storage->count();
 }
 
-const Core::Game * GameCollection::operator [](int _index) const
+const Game * GameCollection::operator [](int _index) const
 {
     int dir_index = _index - mp_ul_conf_storage->count();
     const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :

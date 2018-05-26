@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -73,7 +74,7 @@ QSharedPointer<Intent> IsoRestorerActivity::createIntent(const QString & _game_i
 
 bool IsoRestorerActivity::onAttach()
 {
-    const Core::Game * game = Application::instance().gameCollection().findGame(m_game_id);
+    const Game * game = Application::instance().gameCollection().findGame(m_game_id);
     if(!game)
         return false;
     mp_label_title->setText(game->title());
@@ -90,11 +91,11 @@ bool IsoRestorerActivity::onAttach()
     return true;
 }
 
-void IsoRestorerActivity::restore(const Core::Game & _game, const QString & _destination)
+void IsoRestorerActivity::restore(const Game & _game, const QString & _destination)
 {
     if(mp_working_thread) return;
     m_finish_status.clear();
-    Core::IsoRestorer * restorer = new Core::IsoRestorer(_game, Application::instance().gameCollection().directory(), _destination, this);
+    IsoRestorer * restorer = new IsoRestorer(_game, Application::instance().gameCollection().directory(), _destination, this);
     LambdaThread * working_thread = new LambdaThread([restorer]() {
         restorer->restore();
     }, this);
@@ -111,8 +112,8 @@ void IsoRestorerActivity::restore(const Core::Game & _game, const QString & _des
     connect(mp_working_thread, &QThread::finished, cleanup);
     connect(working_thread, &LambdaThread::exception, this, &IsoRestorerActivity::onException);
     connect(working_thread, &LambdaThread::exception, cleanup);
-    connect(restorer, &Core::IsoRestorer::progress, this, &IsoRestorerActivity::onProgress);
-    connect(restorer, &Core::IsoRestorer::rollbackStarted, this, &IsoRestorerActivity::onRollbackStarted);
+    connect(restorer, &IsoRestorer::progress, this, &IsoRestorerActivity::onProgress);
+    connect(restorer, &IsoRestorer::rollbackStarted, this, &IsoRestorerActivity::onRollbackStarted);
     mp_progress_bar->setMinimum(0);
     mp_progress_bar->setMaximum(s_progress_max);
     mp_label_status->setText(tr("Restoring '%1' to '%2'...").arg(_game.title()).arg(_destination));

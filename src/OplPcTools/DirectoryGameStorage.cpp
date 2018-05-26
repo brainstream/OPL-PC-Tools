@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -21,7 +22,7 @@
 #include <OplPcTools/Device.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 const QString DirectoryGameStorage::cd_directory("CD");
 const QString DirectoryGameStorage::dvd_directory("DVD");

@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -25,7 +26,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
     setupUi(this);
-    Core::Settings & settings = Core::Settings::instance();
+    Settings & settings = Settings::instance();
     mp_checkbx_reopen_last_catalog->setChecked(settings.reopenLastSestion());
     mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
     mp_checkbox_confirm_picture_deletion->setChecked(settings.confirmPixmapDeletion());
@@ -36,7 +37,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
 
 void SettingsDialog::accept()
 {
-    Core::Settings & settings = Core::Settings::instance();
+    Settings & settings = Settings::instance();
     settings.setReopenLastSestion(mp_checkbx_reopen_last_catalog->isChecked());
     settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
     settings.setConfirmPixmapDeletion(mp_checkbox_confirm_picture_deletion->isChecked());

@@ -1,4 +1,5 @@
 /***********************************************************************************************
+ * Copyright © 2017-2018 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -24,7 +25,7 @@
 #define BIN_SECTOR_OFFSET  0
 #define ISO_SECTOR_SIZE    2048
 
-using namespace OplPcTools::Core;
+using namespace OplPcTools;
 
 BinCueDeviceSource::BinCueDeviceSource(const QString & _bin_filepath) :
     m_bin_file(_bin_filepath)

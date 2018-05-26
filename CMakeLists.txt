@@ -22,7 +22,8 @@ project("OPL PC Tools")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OPT_EXE_NAME "oplpctools")
-set(OPT_VERSION  "2.0")
+set(OPT_VERSION_MAJOR  2)
+set(OPT_VERSION_MINOR  0)
 set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -45,6 +46,7 @@ else()
     message(FATAL_ERROR "ERROR: Qt not found. Please specify a path to Qt installation using the QT5_DIR variable.")
 endif()
 find_package(Qt5Widgets REQUIRED HINTS ${QT5_DIR})
+find_package(Qt5Network REQUIRED HINTS ${QT5_DIR})
 
 
 #######################
@@ -65,6 +67,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/DirectoryGameStorage.h
     ${OPT_SRC_DIR}/GameInstaller.h
     ${OPT_SRC_DIR}/DirectoryGameInstaller.h
+    ${OPT_SRC_DIR}/Updater.h
     ${OPT_SRC_DIR}/UlConfigGameInstaller.h
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/LambdaThread.h
@@ -134,6 +137,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameArtManager.cpp
     ${OPT_SRC_DIR}/GameInstaller.cpp
     ${OPT_SRC_DIR}/DirectoryGameInstaller.cpp
+    ${OPT_SRC_DIR}/Updater.cpp
     ${OPT_SRC_DIR}/UlConfigGameInstaller.cpp
     ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/UI/Application.cpp
@@ -162,7 +166,8 @@ endif()
 
 add_definitions(
     -DQT_DEPRECATED_WARNINGS
-    -D_OPLPCTOOLS_VERSION=${OPT_VERSION}
+    -D_OPLPCTOOLS_VERSION_MAJOR=${OPT_VERSION_MAJOR}
+    -D_OPLPCTOOLS_VERSION_MINOR=${OPT_VERSION_MINOR}
     -D_OPLPCTOOLS_EXE=${OPT_EXE_NAME}
 )
 
@@ -181,6 +186,7 @@ target_link_libraries(${OPT_EXE_NAME}
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
+    Qt5::Network
 )
 
 add_custom_target(misc SOURCES

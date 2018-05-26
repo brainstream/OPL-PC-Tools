@@ -35,6 +35,11 @@ public:
     {
     }
 
+    Maybe(nullptr_t) :
+        Maybe()
+    {
+    }
+
     Maybe(const ValueType & _value) :
         m_has_value(true),
         mp_value(new ValueType(_value))

@@ -603,7 +603,7 @@
             <string>&amp;Resore ISO</string>
            </property>
            <property name="icon">
-            <iconset theme="edit-undo" resource="../Resources.qrc">
+            <iconset theme="edit-undo" resource="../Resources/Resources.qrc">
              <normaloff>:/icons/edit-undo</normaloff>:/icons/edit-undo</iconset>
            </property>
            <property name="toolButtonStyle">
@@ -633,7 +633,7 @@
   </layout>
   <action name="mp_action_edit">
    <property name="icon">
-    <iconset theme="document-properties" resource="../Resources.qrc">
+    <iconset theme="document-properties" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/document-properties</normaloff>:/icons/document-properties</iconset>
    </property>
    <property name="text">
@@ -648,7 +648,7 @@
   </action>
   <action name="mp_action_delete">
    <property name="icon">
-    <iconset theme="edit-delete" resource="../Resources.qrc">
+    <iconset theme="edit-delete" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
    </property>
    <property name="text">
@@ -663,7 +663,7 @@
   </action>
   <action name="mp_action_install">
    <property name="icon">
-    <iconset theme="list-add" resource="../Resources.qrc">
+    <iconset theme="list-add" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/list-add</normaloff>:/icons/list-add</iconset>
    </property>
    <property name="text">
@@ -678,7 +678,7 @@
   </action>
   <action name="mp_action_reload">
    <property name="icon">
-    <iconset theme="view-refresh" resource="../Resources.qrc">
+    <iconset theme="view-refresh" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/view-refresh</normaloff>:/icons/view-refresh</iconset>
    </property>
    <property name="text">
@@ -693,7 +693,7 @@
   </action>
   <action name="mp_action_load">
    <property name="icon">
-    <iconset theme="document-open" resource="../Resources.qrc">
+    <iconset theme="document-open" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/document-open</normaloff>:/icons/document-open</iconset>
    </property>
    <property name="text">
@@ -708,7 +708,7 @@
   </action>
   <action name="mp_action_rename">
    <property name="icon">
-    <iconset theme="document-edit" resource="../Resources.qrc">
+    <iconset theme="document-edit" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
    </property>
    <property name="text">
@@ -734,7 +734,7 @@
   <tabstop>mp_edit_filter</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

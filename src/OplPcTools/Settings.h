@@ -36,6 +36,7 @@ private:
         static const QString split_up_iso;
         static const QString move_iso;
         static const QString rename_iso;
+        static const QString check_new_version;
     };
 
 private:
@@ -106,6 +107,16 @@ public:
         setProperyValue(Key::rename_iso, &m_rename_iso, _value);
     }
 
+    bool checkNewVersion() const
+    {
+        return m_check_new_version;
+    }
+
+    void setCheckNewVersion(bool _value)
+    {
+        setProperyValue(Key::check_new_version, &m_check_new_version, _value);
+    }
+
 private:
     bool loadBoolean(const QString & _key, bool _default_value);
 
@@ -124,6 +135,7 @@ private:
     bool m_split_up_iso;
     bool m_move_iso;
     bool m_rename_iso;
+    bool m_check_new_version;
 };
 
 } // namespace OplPcTools

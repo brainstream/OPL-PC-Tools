@@ -57,7 +57,7 @@
         <string>&amp;Install</string>
        </property>
        <property name="icon">
-        <iconset theme="media-playback-start" resource="../Resources.qrc">
+        <iconset theme="media-playback-start" resource="../Resources/Resources.qrc">
          <normaloff>:/icons/media-playback-start</normaloff>:/icons/media-playback-start</iconset>
        </property>
       </widget>
@@ -150,7 +150,7 @@
              <string>&amp;Add Image</string>
             </property>
             <property name="icon">
-             <iconset theme="list-add" resource="../Resources.qrc">
+             <iconset theme="list-add" resource="../Resources/Resources.qrc">
               <normaloff>:/icons/list-add</normaloff>:/icons/list-add</iconset>
             </property>
            </widget>
@@ -161,7 +161,7 @@
              <string>Add &amp;Disc</string>
             </property>
             <property name="icon">
-             <iconset theme="media-optical" resource="../Resources.qrc">
+             <iconset theme="media-optical" resource="../Resources/Resources.qrc">
               <normaloff>:/icons/media-optical</normaloff>:/icons/media-optical</iconset>
             </property>
            </widget>
@@ -185,7 +185,7 @@
              <string>Remove</string>
             </property>
             <property name="icon">
-             <iconset theme="edit-delete" resource="../Resources.qrc">
+             <iconset theme="edit-delete" resource="../Resources/Resources.qrc">
               <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
             </property>
            </widget>
@@ -196,7 +196,7 @@
              <string>Rename</string>
             </property>
             <property name="icon">
-             <iconset theme="document-edit" resource="../Resources.qrc">
+             <iconset theme="document-edit" resource="../Resources/Resources.qrc">
               <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
             </property>
            </widget>
@@ -409,7 +409,7 @@
   <tabstop>mp_btn_rename</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

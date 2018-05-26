@@ -26,6 +26,7 @@ const QString Settings::Key::confirm_pixmap_deletion("Settings/ConfirmPixmapDele
 const QString Settings::Key::split_up_iso("Settings/SplitUpISO");
 const QString Settings::Key::move_iso("Settings/MoveISO");
 const QString Settings::Key::rename_iso("Settings/RenameISO");
+const QString Settings::Key::check_new_version("Settings/CheckNewVersion");
 
 Settings::Settings()
 {
@@ -35,6 +36,7 @@ Settings::Settings()
     m_split_up_iso = loadBoolean(Key::split_up_iso, true);
     m_move_iso = loadBoolean(Key::move_iso, false);
     m_rename_iso = loadBoolean(Key::rename_iso, true);
+    m_check_new_version = loadBoolean(Key::check_new_version, true);
 }
 
 bool Settings::loadBoolean(const QString & _key, bool _default_value)

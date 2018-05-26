@@ -18,6 +18,10 @@
 
 #include <QMessageBox>
 #include <QSettings>
+#include <QDesktopServices>
+#include <QUrl>
+#include <OplPcTools/Settings.h>
+#include <OplPcTools/Updater.h>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/AboutDialog.h>
@@ -39,9 +43,33 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
 {
     setupUi(this);
     setWindowTitle(APPLICATION_DISPLAY_NAME);
+    setupUpdater();
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
+}
+
+void MainWindow::setupUpdater()
+{
+    mp_widget_update->setVisible(false);
+    if(!Settings::instance().checkNewVersion())
+        return;
+    Updater * updater = new Updater(this);
+    connect(updater, &Updater::updateAvailable, [this, updater]() {
+        const Update * update = updater->latestUpdate();
+        mp_label_update->setText(QString("Version %1.%2 is available")
+            .arg(update->version.major())
+            .arg(update->version.minor()));
+        QString url = update->html_url;
+        connect(mp_btn_update_download, &QToolButton::clicked, [this, url]() {
+            mp_widget_update->hide();
+            QDesktopServices::openUrl(url);
+        });
+        mp_widget_update->setVisible(true);
+        updater->deleteLater();
+    });
+    connect(mp_btn_update_cancel, &QToolButton::clicked, mp_widget_update, &QWidget::hide);
+    updater->checkForUpdate();
 }
 
 void MainWindow::closeEvent(QCloseEvent * _event)

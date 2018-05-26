@@ -41,6 +41,9 @@ private slots:
     void showAboutDialog();
     void showAboutQtDialog();
     void showSettingsDialog();
+
+private:
+    void setupUpdater();
 };
 
 } // namespace UI

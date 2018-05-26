@@ -25,16 +25,23 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="mp_checkbox_check_new_versions">
+     <property name="text">
+      <string>Check for app updates</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="mp_checkbox_confirm_game_deletion">
      <property name="text">
-      <string>Confirm the removal of the game</string>
+      <string>Confirm the removal of a game</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="mp_checkbox_confirm_picture_deletion">
      <property name="text">
-      <string>Confirm the removal of the picture</string>
+      <string>Confirm the removal of a picture</string>
      </property>
     </widget>
    </item>
@@ -89,6 +96,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mp_checkbx_reopen_last_catalog</tabstop>
+  <tabstop>mp_checkbox_check_new_versions</tabstop>
+  <tabstop>mp_checkbox_confirm_game_deletion</tabstop>
+  <tabstop>mp_checkbox_confirm_picture_deletion</tabstop>
+  <tabstop>mp_groupbox_donot_splitup</tabstop>
+  <tabstop>mp_checkobx_move_iso</tabstop>
+  <tabstop>mp_checkbox_add_id</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

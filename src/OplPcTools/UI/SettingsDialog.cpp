@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/Updater.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;
@@ -33,6 +34,10 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_groupbox_donot_splitup->setChecked(!settings.splitUpIso());
     mp_checkbox_add_id->setChecked(settings.renameIso());
     mp_checkobx_move_iso->setChecked(settings.moveIso());
+    if(Updater::isSupported())
+        mp_checkbox_check_new_versions->setChecked(settings.checkNewVersion());
+    else
+        mp_checkbox_check_new_versions->setEnabled(false);
 }
 
 void SettingsDialog::accept()
@@ -44,5 +49,7 @@ void SettingsDialog::accept()
     settings.setSplitUpIso(!mp_groupbox_donot_splitup->isChecked());
     settings.setRenameIso(mp_checkbox_add_id->isChecked());
     settings.setMoveIso(mp_checkobx_move_iso->isChecked());
+    if(mp_checkbox_check_new_versions->isEnabled())
+        settings.setCheckNewVersion(mp_checkbox_check_new_versions->isChecked());
     QDialog::accept();
 }

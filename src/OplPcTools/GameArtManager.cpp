@@ -150,7 +150,7 @@ void GameArtManager::cacheArt(const QString & _game_id, GameArtType _type, const
 
 void GameArtManager::deleteArt(const QString & _game_id, GameArtType _type)
 {
-    Maybe<GameCache> game_cache = m_cache[_game_id];
+    Maybe<GameCache> & game_cache = m_cache[_game_id];
     if(game_cache.hasValue())
         game_cache->remove(_type);
     QStringList file_filter { QString("%1%2.*").arg(_game_id).arg(m_art_props[_type]->suffix) };

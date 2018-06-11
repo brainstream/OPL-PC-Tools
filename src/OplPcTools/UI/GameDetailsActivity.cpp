@@ -162,7 +162,11 @@ void GameDetailsActivity::setupShortcuts()
     shortcut = new QShortcut(QKeySequence("F2"), this);
     connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::renameGame);
     shortcut = new QShortcut(QKeySequence("Del"), mp_list_arts);
+    mp_action_delete_art->setShortcut(shortcut->key());
     connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::deleteGameArt);
+    shortcut = new QShortcut(QKeySequence("Space"), mp_list_arts);
+    mp_action_change_art->setShortcut(shortcut->key());
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::changeGameArt);
 }
 
 void GameDetailsActivity::renameGame()

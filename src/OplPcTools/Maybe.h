@@ -35,7 +35,7 @@ public:
     {
     }
 
-    Maybe(nullptr_t) :
+    Maybe(std::nullptr_t) :
         Maybe()
     {
     }

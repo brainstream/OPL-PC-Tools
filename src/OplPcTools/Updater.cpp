@@ -45,7 +45,7 @@ Maybe<Platform> buildPlatform()
 #if defined(__linux__)
     return Platform::Linux;
 #elif defined(_WIN32)
-    return Platform::Windows
+    return Platform::Windows;
 #else
     return nullptr;
 #endif

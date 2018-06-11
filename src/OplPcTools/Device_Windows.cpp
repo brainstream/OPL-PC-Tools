@@ -21,6 +21,8 @@
 #include <windows.h>
 #include <OplPcTools/Device.h>
 
+using namespace OplPcTools;
+
 namespace {
 
 bool isOpticalDrive(char letter)

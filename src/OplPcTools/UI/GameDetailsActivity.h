@@ -51,14 +51,12 @@ private slots:
     void renameGame();
     void showItemContextMenu(const QPoint & _point);
     void changeGameArt();
-    void removeGameArt();
+    void deleteGameArt();
 
 private:
     OplPcTools::GameArtManager & mr_art_manager;
     const OplPcTools::Game * mp_game;
     QMenu * mp_item_context_menu;
-    QAction * mp_action_change_art;
-    QAction * mp_action_remove_art;
 };
 
 } // namespace UI

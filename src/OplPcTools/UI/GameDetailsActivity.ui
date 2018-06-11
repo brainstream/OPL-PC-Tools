@@ -125,6 +125,24 @@
     </widget>
    </item>
   </layout>
+  <action name="mp_action_change_art">
+   <property name="icon">
+    <iconset theme="document-edit" resource="../Resources/Resources.qrc">
+     <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+   </property>
+   <property name="text">
+    <string>Change Picture...</string>
+   </property>
+  </action>
+  <action name="mp_action_delete_art">
+   <property name="icon">
+    <iconset theme="edit-delete" resource="../Resources/Resources.qrc">
+     <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Picture</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

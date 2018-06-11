@@ -132,23 +132,19 @@ GameDetailsActivity::GameDetailsActivity(OplPcTools::GameArtManager & _art_manag
     Activity(_parent),
     mr_art_manager(_art_manager),
     mp_game(nullptr),
-    mp_item_context_menu(nullptr),
-    mp_action_change_art(nullptr),
-    mp_action_remove_art(nullptr)
+    mp_item_context_menu(nullptr)
 {
     setupUi(this);
     setupShortcuts();
     mp_list_arts->setContextMenuPolicy(Qt::CustomContextMenu);
     mp_item_context_menu = new QMenu(mp_list_arts);
-    mp_action_change_art = new QAction(tr("Change Picture..."));
-    mp_action_remove_art = new QAction(tr("Remove Picture"));
     mp_item_context_menu->addAction(mp_action_change_art);
-    mp_item_context_menu->addAction(mp_action_remove_art);
+    mp_item_context_menu->addAction(mp_action_delete_art);
     initGameControls();
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsActivity::close);
     connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameDetailsActivity::showItemContextMenu);
     connect(mp_action_change_art, &QAction::triggered, this, &GameDetailsActivity::changeGameArt);
-    connect(mp_action_remove_art, &QAction::triggered, this, &GameDetailsActivity::removeGameArt);
+    connect(mp_action_delete_art, &QAction::triggered, this, &GameDetailsActivity::deleteGameArt);
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
 }
 
@@ -166,7 +162,7 @@ void GameDetailsActivity::setupShortcuts()
     shortcut = new QShortcut(QKeySequence("F2"), this);
     connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::renameGame);
     shortcut = new QShortcut(QKeySequence("Del"), mp_list_arts);
-    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::removeGameArt);
+    connect(shortcut, &QShortcut::activated, this, &GameDetailsActivity::deleteGameArt);
 }
 
 void GameDetailsActivity::renameGame()
@@ -177,8 +173,8 @@ void GameDetailsActivity::renameGame()
         return;
     try
     {
-        if(Application::instance().gameCollection().renameGame(*mp_game, dlg.name()))
-            mp_label_title->setText(dlg.name());
+        Application::instance().gameCollection().renameGame(*mp_game, dlg.name());
+        mp_label_title->setText(dlg.name());
     }
     catch(const Exception & exception)
     {
@@ -194,7 +190,7 @@ void GameDetailsActivity::showItemContextMenu(const QPoint & _point)
 {
     ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->itemAt(_point));
     if(item == nullptr) return;
-    mp_action_remove_art->setEnabled(item->hasPixmap());
+    mp_action_delete_art->setEnabled(item->hasPixmap());
     mp_item_context_menu->exec(mp_list_arts->mapToGlobal(_point));
 }
 
@@ -214,7 +210,8 @@ void GameDetailsActivity::changeGameArt()
                 dirpath = dirpaths.first();
         }
         QString filename = QFileDialog::getOpenFileName(
-            this, tr("Choose a Picture"), dirpath,
+            Application::instance().activeWindow(),
+            tr("Choose a Picture"), dirpath,
             tr("Pictures") + " (*.png *.jpg *.jpeg *.bmp)");
         if(filename.isEmpty())
             return;
@@ -233,7 +230,7 @@ void GameDetailsActivity::changeGameArt()
     }
 }
 
-void GameDetailsActivity::removeGameArt()
+void GameDetailsActivity::deleteGameArt()
 {
     try
     {

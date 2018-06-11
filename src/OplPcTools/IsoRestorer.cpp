@@ -20,7 +20,7 @@
 #include <QDir>
 #include <QThread>
 #include <OplPcTools/UlConfigGameStorage.h>
-#include <OplPcTools/IOException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/IsoRestorer.h>
 
 using namespace OplPcTools;

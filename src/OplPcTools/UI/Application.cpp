@@ -75,6 +75,11 @@ void Application::showMessage(const QString & _message)
     QMessageBox::information(ensureMainWindow(), APPLICATION_DISPLAY_NAME, _message);
 }
 
+void Application::showErrorMessage()
+{
+    showErrorMessage(tr("Something went wrong"));
+}
+
 void Application::showErrorMessage(const QString & _message)
 {
     QMessageBox::critical(ensureMainWindow(), tr("Error"), _message);

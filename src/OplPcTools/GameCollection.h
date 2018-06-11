@@ -41,7 +41,7 @@ public:
     int count() const;
     const Game * operator [](int _index) const;
     void addGame(const Game & _game);
-    bool renameGame(const Game & _game, const QString & _title);
+    void renameGame(const Game & _game, const QString & _title);
     void deleteGame(const Game & _game);
 
 signals:

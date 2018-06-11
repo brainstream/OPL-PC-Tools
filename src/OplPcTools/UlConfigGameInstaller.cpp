@@ -19,8 +19,7 @@
 #include <QFile>
 #include <QDir>
 #include <QThread>
-#include <OplPcTools/IOException.h>
-#include <OplPcTools/ValidationException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
 
 using namespace OplPcTools;

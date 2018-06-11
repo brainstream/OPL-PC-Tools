@@ -108,8 +108,6 @@ set(OPT_SRC
     ${OPT_SRC_RES}
     ${OPT_SRC_DIR}/ApplicationInfo.h
     ${OPT_SRC_DIR}/Exception.h
-    ${OPT_SRC_DIR}/IOException.h
-    ${OPT_SRC_DIR}/ValidationException.h
     ${OPT_SRC_DIR}/File.h
     ${OPT_SRC_DIR}/Maybe.h
     ${OPT_SRC_DIR}/DeviceSource.h

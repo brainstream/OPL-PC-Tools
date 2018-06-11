@@ -18,7 +18,7 @@
 
 #include <functional>
 #include <QFile>
-#include <OplPcTools/IOException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/GameArtManager.h>
 
 using namespace OplPcTools;

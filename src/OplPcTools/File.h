@@ -20,7 +20,7 @@
 #define __OPLPCTOOLS_FILE__
 
 #include <QFile>
-#include <OplPcTools/IOException.h>
+#include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
 

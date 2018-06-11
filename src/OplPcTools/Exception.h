@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_EXCEPTION__
 #define __OPLPCTOOLS_EXCEPTION__
 
+#include <QObject>
 #include <QException>
 #include <QMetaType>
 
@@ -46,11 +47,8 @@ private:
     QString m_message;
 };
 
-} // namespace OplPcTools
-
-
 #define DECLARE_EXCEPTION(type_name)                      \
-    class type_name : public OplPcTools::Exception  \
+    class type_name : public OplPcTools::Exception        \
     {                                                     \
     public:                                               \
         explicit type_name(const QString & _message) :    \
@@ -59,4 +57,13 @@ private:
         }                                                 \
     };
 
+DECLARE_EXCEPTION(ValidationException)
+
+DECLARE_EXCEPTION(IOException)
+
+} // namespace OplPcTools
+
 #endif // __OPLPCTOOLS_EXCEPTION__
+
+
+

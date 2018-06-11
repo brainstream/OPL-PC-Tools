@@ -435,6 +435,10 @@ void GameCollectionActivity::renameGame()
             {
                 Application::instance().showErrorMessage(exception.message());
             }
+            catch(...)
+            {
+                Application::instance().showErrorMessage();
+            }
         }
     }
 }
@@ -494,5 +498,8 @@ void GameCollectionActivity::deleteGame()
     {
         Application::instance().showErrorMessage(exception.message());
     }
-    // TODO: other exceptions
+    catch(...)
+    {
+        Application::instance().showErrorMessage();
+    }
 }

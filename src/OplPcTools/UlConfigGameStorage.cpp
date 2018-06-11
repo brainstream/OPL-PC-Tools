@@ -18,7 +18,7 @@
 
 #include <cstring>
 #include <QTemporaryFile>
-#include <OplPcTools/ValidationException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/UlConfigGameStorage.h>
 

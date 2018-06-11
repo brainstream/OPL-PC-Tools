@@ -184,6 +184,10 @@ void GameDetailsActivity::renameGame()
     {
         Application::instance().showErrorMessage(exception.message());
     }
+    catch(...)
+    {
+        Application::instance().showErrorMessage();
+    }
 }
 
 void GameDetailsActivity::showItemContextMenu(const QPoint & _point)
@@ -223,6 +227,10 @@ void GameDetailsActivity::changeGameArt()
     {
         Application::instance().showErrorMessage(exception.message());
     }
+    catch(...)
+    {
+        Application::instance().showErrorMessage();
+    }
 }
 
 void GameDetailsActivity::removeGameArt()
@@ -252,6 +260,10 @@ void GameDetailsActivity::removeGameArt()
     catch(const Exception & exception)
     {
         Application::instance().showErrorMessage(exception.message());
+    }
+    catch(...)
+    {
+        Application::instance().showErrorMessage();
     }
 }
 

@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/ValidationException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/GameCollection.h>
 
 using namespace OplPcTools;
@@ -111,12 +111,14 @@ GameStorage & GameCollection::storage(GameInstallationType _installation_type) c
         return *mp_ul_conf_storage;
 }
 
-bool GameCollection::renameGame(const Game & _game, const QString & _title)
+void GameCollection::renameGame(const Game & _game, const QString & _title)
 {
-    storage(_game.installationType()).renameGame(_game.id(), _title);
+    if(!storage(_game.installationType()).renameGame(_game.id(), _title))
+        throw Exception(tr("Unable to rename game \"%1\" to \"%2\"").arg(_game.title()).arg(_title));
 }
 
 void GameCollection::deleteGame(const Game & _game)
 {
-    storage(_game.installationType()).deleteGame(_game.id());
+    if(!storage(_game.installationType()).deleteGame(_game.id()))
+        throw Exception(tr("Unable to delete game \"%1\"").arg(_game.title()));
 }

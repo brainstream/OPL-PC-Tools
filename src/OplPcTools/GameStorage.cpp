@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/ValidationException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/GameStorage.h>
 
 using namespace OplPcTools;

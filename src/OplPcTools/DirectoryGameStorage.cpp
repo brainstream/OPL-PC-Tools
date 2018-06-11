@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <QVector>
-#include <OplPcTools/ValidationException.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/Device.h>
 #include <OplPcTools/Iso9660DeviceSource.h>

@@ -260,7 +260,16 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     progress_bar_option.textVisible = true;
     progress_bar_option.progress = item->progress();
     progress_bar_option.text = QString::asprintf("%d%%", progress_bar_option.progress / (g_progressbar_max_value / 100));
-    QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progress_bar_option, _painter);
+    QStyleOption progress_indicator_option;
+    progress_indicator_option.state = QStyle::State_Enabled;
+    progress_indicator_option.direction = QApplication::layoutDirection();
+    progress_indicator_option.rect = _option.rect;
+    progress_indicator_option.rect.setWidth(progress_indicator_option.rect.width() * progress_bar_option.progress / g_progressbar_max_value);
+    progress_indicator_option.fontMetrics = QApplication::fontMetrics();
+    QStyle * style = QApplication::style();
+    style->drawControl(QStyle::CE_ProgressBarGroove, &progress_bar_option, _painter);
+    style->drawPrimitive(QStyle::PE_IndicatorProgressChunk, &progress_indicator_option, _painter);
+    style->drawControl(QStyle::CE_ProgressBarLabel, &progress_bar_option, _painter);
 }
 
 GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :

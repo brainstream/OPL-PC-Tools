@@ -243,17 +243,15 @@ void TaskListItem::enabelMoving(bool _enable)
 
 void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem & _option, const QModelIndex & _index ) const
 {
+    QStyledItemDelegate::paint(_painter, _option, _index);
     const TaskListItem * item = static_cast<TaskListItem *>(mp_tree->topLevelItem(_index.row()));
     if(_index.column() != Column::Status || item->status() != GameInstallationStatus::Installation)
-    {
-        QStyledItemDelegate::paint(_painter, _option, _index);
         return;
-    }
     QStyleOptionProgressBar progress_bar_option;
     progress_bar_option.state = QStyle::State_Enabled;
-    progress_bar_option.direction = QApplication::layoutDirection();
+    progress_bar_option.direction = _option.direction;
     progress_bar_option.rect = _option.rect;
-    progress_bar_option.fontMetrics = QApplication::fontMetrics();
+    progress_bar_option.fontMetrics = _option.fontMetrics;
     progress_bar_option.minimum = 0;
     progress_bar_option.maximum = g_progressbar_max_value;
     progress_bar_option.textAlignment = Qt::AlignCenter;
@@ -262,12 +260,11 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     progress_bar_option.text = QString::asprintf("%d%%", progress_bar_option.progress / (g_progressbar_max_value / 100));
     QStyleOption progress_indicator_option;
     progress_indicator_option.state = QStyle::State_Enabled;
-    progress_indicator_option.direction = QApplication::layoutDirection();
+    progress_indicator_option.direction = _option.direction;
     progress_indicator_option.rect = _option.rect;
     progress_indicator_option.rect.setWidth(progress_indicator_option.rect.width() * progress_bar_option.progress / g_progressbar_max_value);
-    progress_indicator_option.fontMetrics = QApplication::fontMetrics();
+    progress_indicator_option.fontMetrics = _option.fontMetrics;
     QStyle * style = QApplication::style();
-    style->drawControl(QStyle::CE_ProgressBarGroove, &progress_bar_option, _painter);
     style->drawPrimitive(QStyle::PE_IndicatorProgressChunk, &progress_indicator_option, _painter);
     style->drawControl(QStyle::CE_ProgressBarLabel, &progress_bar_option, _painter);
 }

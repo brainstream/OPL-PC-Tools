@@ -47,7 +47,7 @@ else()
 endif()
 find_package(Qt5Widgets REQUIRED HINTS ${QT5_DIR})
 find_package(Qt5Network REQUIRED HINTS ${QT5_DIR})
-
+find_package(Qt5LinguistTools REQUIRED HINTS ${QT5_DIR})
 
 #######################
 # Sources
@@ -157,6 +157,18 @@ if(WIN32)
         ${OPT_SRC_DIR}/Resources/Resources.rc)
 endif()
 
+#######################
+# Localization
+#######################
+
+set(TRANSLATIONS
+    ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_ru.ts
+)
+
+qt5_create_translation(QM_FILES
+    ${OPT_SRC}
+    ${TRANSLATIONS}
+)
 
 #######################
 # Definitions
@@ -175,9 +187,9 @@ add_definitions(
 #######################
 
 if(WIN32)
-    add_executable(${OPT_EXE_NAME} WIN32 ${OPT_SRC})
+    add_executable(${OPT_EXE_NAME} WIN32 ${OPT_SRC} ${QM_FILES})
 else()
-    add_executable(${OPT_EXE_NAME} ${OPT_SRC})
+    add_executable(${OPT_EXE_NAME} ${OPT_SRC} ${QM_FILES})
 endif()
 
 target_link_libraries(${OPT_EXE_NAME}

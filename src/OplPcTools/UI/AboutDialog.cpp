@@ -33,4 +33,5 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
         QString::number(build_year);
     mp_label_version->setText(mp_label_version->text().arg(APPLICATION_VERSION));
     mp_label_description->setText(mp_label_description->text().arg(years));
+    adjustSize();
 }

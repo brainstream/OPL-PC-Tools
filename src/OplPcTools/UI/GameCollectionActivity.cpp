@@ -347,17 +347,28 @@ bool GameCollectionActivity::tryLoadRecentDirectory()
 
 void GameCollectionActivity::loadDirectory(const QDir & _directory)
 {
-    GameCollection & game_collection = Application::instance().gameCollection();
-    game_collection.load(_directory);
-    delete mp_game_art_manager;
-    mp_game_art_manager = new GameArtManager(_directory, this);
-    connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameCollectionActivity::gameArtChanged);
-    mp_game_art_manager->addCacheType(GameArtType::Icon);
-    mp_game_art_manager->addCacheType(GameArtType::Front);
-    mp_model->setArtManager(*mp_game_art_manager);
-    mp_proxy_model->sort(0, Qt::AscendingOrder);
-    if(game_collection.count() > 0)
-        mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
+    try
+    {
+        GameCollection & game_collection = Application::instance().gameCollection();
+        game_collection.load(_directory);
+        delete mp_game_art_manager;
+        mp_game_art_manager = new GameArtManager(_directory, this);
+        connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameCollectionActivity::gameArtChanged);
+        mp_game_art_manager->addCacheType(GameArtType::Icon);
+        mp_game_art_manager->addCacheType(GameArtType::Front);
+        mp_model->setArtManager(*mp_game_art_manager);
+        mp_proxy_model->sort(0, Qt::AscendingOrder);
+        if(game_collection.count() > 0)
+            mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
+    }
+    catch(const Exception & exception)
+    {
+        Application::instance().showErrorMessage(exception.message());
+    }
+    catch(...)
+    {
+        Application::instance().showErrorMessage();
+    }
 }
 
 void GameCollectionActivity::reload()

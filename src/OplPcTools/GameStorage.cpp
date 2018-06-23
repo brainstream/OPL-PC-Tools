@@ -45,7 +45,6 @@ const Game * GameStorage::operator [](int _index) const
 
 Game * GameStorage::gameAt(int _index) const
 {
-    // TODO: exception
     return m_games[_index];
 }
 

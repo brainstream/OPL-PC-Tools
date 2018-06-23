@@ -59,7 +59,6 @@ GameCollection::~GameCollection()
 
 void GameCollection::load(const QDir & _directory)
 {
-    // TODO: handle exceptions
     mp_ul_conf_storage->load(_directory);
     mp_dir_storage->load(_directory);
     m_directory = _directory.absolutePath();

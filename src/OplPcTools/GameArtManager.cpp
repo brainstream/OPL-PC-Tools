@@ -117,8 +117,11 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
     {
         QFile file(dir.absoluteFilePath(_game_id + sfx + ext));
         if(!file.exists()) continue;
-        QPixmap pixmap(file.fileName()); // TODO: scale
+        QPixmap pixmap(file.fileName());
         if(pixmap.isNull()) continue;
+        const GameArtProperties * props = m_art_props[_type];
+        if(pixmap.size() != props->size)
+            pixmap = pixmap.scaled(props->size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         if(m_cached_types & _type)
             cacheArt(_game_id, _type, pixmap);
         return pixmap;

@@ -17,6 +17,8 @@
  ***********************************************************************************************/
 
 #include <QMessageBox>
+#include <QTranslator>
+#include <QStandardPaths>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/GameCollectionActivity.h>
 #include <OplPcTools/UI/Application.h>
@@ -36,6 +38,32 @@ public:
 };
 
 PrivateApplication * gp_application = nullptr;
+
+QTranslator * setupTranslator()
+{
+    QString locale = QLocale::system().name();
+    locale.truncate(locale.lastIndexOf('_'));
+    QCoreApplication * app = QApplication::instance();
+    const QString filename = QString("%1_%2.qm").arg(app->applicationName()).arg(locale);
+    QString filepath = QDir(app->applicationDirPath()).absoluteFilePath(filename);
+    if(!QFile::exists(filepath))
+    {
+        filepath = QStandardPaths::locate(QStandardPaths::AppDataLocation, filename);
+        if(filepath.isEmpty())
+            return nullptr;
+    }
+    QTranslator * translator = new QTranslator();
+    if(translator->load(filepath))
+    {
+        app->installTranslator(translator);
+        return translator;
+    }
+    else
+    {
+        delete translator;
+    }
+    return nullptr;
+}
 
 } // namespace
 
@@ -101,11 +129,13 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
+    QTranslator * translator = setupTranslator();
     QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionActivity::createIntent();
     gp_application->pushActivity(*intent);
     gp_application->showMainWindow();
     int result = gp_application->exec();
     delete gp_application;
+    delete translator;
     gp_application = nullptr;
     return result;
 }

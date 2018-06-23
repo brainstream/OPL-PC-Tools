@@ -474,12 +474,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="80"/>
+        <location filename="../UI/Application.cpp" line="108"/>
         <source>Something went wrong</source>
         <translation>Что-то пошло не так</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="85"/>
+        <location filename="../UI/Application.cpp" line="113"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
@@ -505,6 +505,11 @@
         <translation>Каталог</translation>
     </message>
     <message>
+        <location filename="../UI/GameCollectionActivity.cpp" line="490"/>
+        <source>Don&apos;t show again</source>
+        <translation>Не показывать снова</translation>
+    </message>
+    <message>
         <location filename="../UI/GameCollectionActivity.cpp" line="491"/>
         <source>Remove Game</source>
         <translation>Удалить игру</translation>
@@ -528,6 +533,11 @@ Continue?</source>
         <location filename="../UI/GameDetailsActivity.cpp" line="219"/>
         <source>Pictures</source>
         <translation>Картинки</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="246"/>
+        <source>Don&apos;t show again</source>
+        <translation>Не показывать снова</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.cpp" line="247"/>
@@ -615,7 +625,7 @@ Continue?</source>
     <message>
         <location filename="../UI/IsoRestorerActivity.cpp" line="85"/>
         <source>Choose an ISO image filename to save</source>
-        <translation>Выбрать файл для сохранения образа ISO</translation>
+        <translation>Выбор файла для сохранения образа ISO</translation>
     </message>
     <message>
         <location filename="../UI/IsoRestorerActivity.cpp" line="86"/>

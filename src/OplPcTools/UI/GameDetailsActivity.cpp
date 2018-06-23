@@ -243,7 +243,7 @@ void GameDetailsActivity::deleteGameArt()
         Settings & settings = Settings::instance();
         if(settings.confirmPixmapDeletion())
         {
-            QCheckBox * checkbox = new QCheckBox("Don't show again");
+            QCheckBox * checkbox = new QCheckBox(tr("Don't show again"));
             QMessageBox message_box(QMessageBox::Question, tr("Remove Picture"),
                         tr("The %1 will be deleted.\nContinue?").arg(item->text()),
                         QMessageBox::Yes | QMessageBox::No);

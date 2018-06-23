@@ -487,7 +487,7 @@ void GameCollectionActivity::deleteGame()
     Settings & settings = Settings::instance();
     if(settings.confirmGameDeletion())
     {
-        QCheckBox * checkbox = new QCheckBox("Don't show again");
+        QCheckBox * checkbox = new QCheckBox(tr("Don't show again"));
         QMessageBox message_box(QMessageBox::Question, tr("Remove Game"),
                     tr("The %1 will be deleted.\nContinue?").arg(game->title()),
                     QMessageBox::Yes | QMessageBox::No);

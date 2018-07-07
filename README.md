@@ -6,8 +6,6 @@ but the CD/DVD sources will not work. It is a known issue and I am planning to f
 
 It is the absolutely open project and everyone are welcome to contribute to. But please, remember about the code-style!
 
-Also, there is the Debian repository on the packagecloud service: https://packagecloud.io/brainstream/oplpctools.
-
 ## With OPL PC Tools You Can
 
 ### Manage Your Game Collection

@@ -8,16 +8,20 @@ It is the absolutely open project and everyone are welcome to contribute to. But
 
 Also, there is the Debian repository on the packagecloud service: https://packagecloud.io/brainstream/oplpctools.
 
-## Abilitiies
+## With OPL PC Tools You Can
 
-#### Assigning covers and icons to games
+### Manage Your Game Collection
 
 ![Main Window](screenshots/Main.png)
 
-#### Iinstalling multiple games from the different sources (CD/DVD or the *.iso files) in the automatic sequential mode
+### Manage Game Pictures
+
+![Main Window](screenshots/Arts.png)
+
+### Iinstall Multiple Games From the Different Sources (CD/DVD or the *.iso files) in the Automatic Sequential Mode
 
 ![Installation](screenshots/Install.png)
 
-#### Recovering an *.iso file from an installed game
+### Recover the *.iso Files From the Installed Games
 
 ![Recovering](screenshots/Recovery.png)

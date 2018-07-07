@@ -19,7 +19,7 @@
 cmake_minimum_required(VERSION 3.2)
 project("OPL PC Tools")
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OPT_EXE_NAME "oplpctools")
 set(OPT_VERSION_MAJOR  2)
@@ -204,3 +204,4 @@ add_custom_target(misc SOURCES
     LICENSE.txt
     README.md
 )
+

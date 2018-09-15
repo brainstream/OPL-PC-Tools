@@ -17,7 +17,6 @@
  ***********************************************************************************************/
 
 #include <cstring>
-#include <QTemporaryFile>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/UlConfigGameStorage.h>
@@ -212,9 +211,8 @@ void UlConfigGameStorage::deleteGameConfig(const QString _id)
     size_t offset = findRecordOffset(config, _id);
     if(!~offset)
         throw ValidationException(tr("Unable to locate Game \"%1\" in the config file").arg(_id));
-    QTemporaryFile temp_file;
-    temp_file.open();
-    temp_file.setAutoRemove(true);
+    QFile temp_file(m_config_filepath + ".tmp");
+    openFile(temp_file, QIODevice::WriteOnly | QIODevice::Truncate);
     if(offset > 0)
     {
         config.seek(0);
@@ -225,11 +223,10 @@ void UlConfigGameStorage::deleteGameConfig(const QString _id)
     temp_file.flush();
     config.close();
     temp_file.close();
-    QString config_bk = m_config_filepath + "_bk";
+    QString config_bk = m_config_filepath + ".bk";
     if(!QFile::rename(m_config_filepath, config_bk))
         throw IOException(QObject::tr("Unable to backup config file"));
     QFile::rename(temp_file.fileName(), config.fileName());
-    temp_file.setAutoRemove(false);
     QFile::remove(config_bk);
 }
 

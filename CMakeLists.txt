@@ -203,5 +203,6 @@ add_custom_target(misc SOURCES
     .gitignore
     LICENSE.txt
     README.md
+    release/make-release-linux.sh
 )
 

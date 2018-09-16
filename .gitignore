@@ -13,3 +13,4 @@ CMakeLists.txt.user
 /packages/*.exe
 /packages/*.msi
 /packages/*.pkg
+/release/release-*

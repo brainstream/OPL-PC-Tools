@@ -600,7 +600,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>&amp;Resore ISO</string>
+            <string>&amp;Restore ISO</string>
            </property>
            <property name="icon">
             <iconset theme="edit-undo" resource="../Resources/Resources.qrc">

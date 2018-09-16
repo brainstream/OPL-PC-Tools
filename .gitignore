@@ -3,6 +3,7 @@ Makefile.*
 CMakeLists.txt.user
 .directory
 *.autosave
+*.qm
 /distr/
 /build*/
 /translations/*.qm

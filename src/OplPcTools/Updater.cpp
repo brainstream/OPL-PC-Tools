@@ -136,7 +136,7 @@ void ReleaseParser::parse(const QByteArray & _json)
 
 Maybe<Version> ReleaseParser::parseVersionTag(const QString & _tag_name) const
 {
-    QRegExp regex("v(\\d+)\\.(\\d+)");
+    QRegExp regex("(\\d+)\\.(\\d+)");
     if(!regex.exactMatch(_tag_name))
         return nullptr;
     bool parsed = false;

@@ -26,6 +26,7 @@
 #include <OplPcTools/Device.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
 #include <OplPcTools/BinCueDeviceSource.h>
+#include <OplPcTools/NrgDeviceSource.h>
 #include <OplPcTools/OpticalDriveDeviceSource.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
@@ -55,6 +56,7 @@ enum
 const int g_progressbar_max_value = 1000;
 const char * g_iso_ext = ".iso";
 const char * g_bin_ext = ".bin";
+const char * g_nrg_ext = ".nrg";
 
 enum class GameInstallationStatus
 {
@@ -368,7 +370,10 @@ void GameInstallerActivity::taskSelectionChanged()
 void GameInstallerActivity::addDiscImage()
 {
     QSettings settings;
-    QString filter = tr("All Supported Images (*%1 *%2);;ISO Images (*%1);;Bin Files(*%2)").arg(g_iso_ext).arg(g_bin_ext);
+    QString filter = tr("All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)")
+            .arg(g_iso_ext)
+            .arg(g_bin_ext)
+            .arg(g_nrg_ext);
     QString iso_dir = settings.value(SettingsKey::iso_dir).toString();
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(files.isEmpty()) return;
@@ -392,8 +397,10 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
     DeviceSource * source = nullptr;
     if(_file_path.endsWith(g_iso_ext))
         source = new Iso9660DeviceSource(_file_path);
-    else
+    else if(_file_path.endsWith(g_bin_ext))
         source = new BinCueDeviceSource(_file_path);
+    else if(_file_path.endsWith(g_nrg_ext))
+        source = new NrgDeviceSource(_file_path);
     QSharedPointer<Device> device(new Device(QSharedPointer<DeviceSource>(source)));
     if(device->init())
     {
@@ -430,7 +437,7 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
     for(const QUrl & url : _event->mimeData()->urls())
     {
         QString path = url.path();
-        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext))
+        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext) || path.endsWith(g_nrg_ext))
         {
             _event->accept();
             return;
@@ -444,7 +451,7 @@ void GameInstallerActivity::dropEvent(QDropEvent * _event)
     for(const QUrl & url : _event->mimeData()->urls())
     {
         QString path = url.path();
-        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext))
+        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext) || path.endsWith(g_nrg_ext))
             addDiscImage(url.path());
     }
 }

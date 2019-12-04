@@ -16,45 +16,23 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#ifndef __OPLPCTOOLS_ENDIANNESS__
+#define __OPLPCTOOLS_ENDIANNESS__
 
-#include <QApplication>
-#include <QWidget>
-#include <OplPcTools/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+#include <array>
+#include <QtGlobal>
 
 namespace OplPcTools {
-namespace UI {
 
-class Application : public QApplication
+template<typename IntT>
+IntT readBigEndian(std::array<quint8, sizeof(IntT)> bytes)
 {
-    Q_OBJECT
+    IntT value = 0;
+    for(quint8 byte : bytes)
+        value = (value << 8) | byte;
+    return value;
+}
 
-protected:
-    Application(int & _argc, char ** _argv);
-
-public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _message);
-    void showErrorMessage();
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    GameCollection & gameCollection() const;
-
-    static Application & instance();
-
-private:
-    MainWindow * ensureMainWindow();
-
-private:
-    MainWindow * mp_main_window;
-    GameCollection * mp_game_collection;
-};
-
-} // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_APPLICATION__
+#endif // __OPLPCTOOLS_ENDIANNESS__

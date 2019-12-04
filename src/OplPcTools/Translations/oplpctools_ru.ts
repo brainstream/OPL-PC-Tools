@@ -599,27 +599,31 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="371"/>
         <source>All Supported Images (*%1 *%2);;ISO Images (*%1);;Bin Files(*%2)</source>
-        <translation>Все поддерживаемые образы (*%1 *%2);;Образы диска ISO(*%1);;Файлы bin (*%2)</translation>
+        <translation type="vanished">Все поддерживаемые образы (*%1 *%2);;Образы диска ISO(*%1);;Файлы bin (*%2)</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="373"/>
+        <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.cpp" line="378"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="408"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="415"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="583"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="590"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="626"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="633"/>
         <source>Done!</source>
         <translation>Готово!</translation>
     </message>
@@ -709,27 +713,27 @@ Continue?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="147"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="149"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="149"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="151"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="151"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="157"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -798,6 +802,31 @@ Continue?</source>
         <location filename="../File.h" line="36"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="120"/>
+        <source>Unable to locate the NER5 chunk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="123"/>
+        <source>Unable to read the NER5 chunk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="125"/>
+        <source>Format is not supported. Only NRG version 2 is supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="137"/>
+        <source>Unable to locate a NRG chunk header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="140"/>
+        <source>Unable to read a NRG chunk header</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

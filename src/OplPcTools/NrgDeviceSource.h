@@ -16,45 +16,31 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#ifndef __OPLPCTOOLS_NRGDEVICESOURCE__
+#define __OPLPCTOOLS_NRGDEVICESOURCE__
 
-#include <QApplication>
-#include <QWidget>
-#include <OplPcTools/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+#include <OplPcTools/DeviceSource.h>
 
 namespace OplPcTools {
-namespace UI {
 
-class Application : public QApplication
+class NrgDeviceSource : public DeviceSource
 {
-    Q_OBJECT
-
-protected:
-    Application(int & _argc, char ** _argv);
-
 public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _message);
-    void showErrorMessage();
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    GameCollection & gameCollection() const;
-
-    static Application & instance();
-
-private:
-    MainWindow * ensureMainWindow();
+    explicit NrgDeviceSource(const QString & _nrg_filepath);
+    ~NrgDeviceSource() override;
+    QString filepath() const override;
+    bool isReadOnly() const override;
+    bool open() override;
+    bool isOpen() const override;
+    void close() override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
 
 private:
-    MainWindow * mp_main_window;
-    GameCollection * mp_game_collection;
+    class NrgImage;
+    NrgImage * mp_image;
 };
 
-} // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_APPLICATION__
+#endif // __OPLPCTOOLS_NRGDEVICESOURCE__

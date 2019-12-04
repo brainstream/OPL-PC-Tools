@@ -59,6 +59,7 @@ include_directories(
 )
 
 set(OPT_SRC_MOC
+    ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/GameArtManager.h
     ${OPT_SRC_DIR}/GameCollection.h
     ${OPT_SRC_DIR}/IsoRestorer.h
@@ -110,10 +111,13 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/Exception.h
     ${OPT_SRC_DIR}/File.h
     ${OPT_SRC_DIR}/Maybe.h
+    ${OPT_SRC_DIR}/Endianness.h
     ${OPT_SRC_DIR}/DeviceSource.h
     ${OPT_SRC_DIR}/Iso9660DeviceSource.h
     ${OPT_SRC_DIR}/BinCueDeviceSource.h
     ${OPT_SRC_DIR}/BinCueDeviceSource.cpp
+    ${OPT_SRC_DIR}/NrgDeviceSource.h
+    ${OPT_SRC_DIR}/NrgDeviceSource.cpp
     ${OPT_SRC_DIR}/OpticalDriveDeviceSource.h
     ${OPT_SRC_DIR}/OpticalDriveDeviceSource.cpp
     ${OPT_SRC_DIR}/Device.h
@@ -137,7 +141,6 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/DirectoryGameInstaller.cpp
     ${OPT_SRC_DIR}/Updater.cpp
     ${OPT_SRC_DIR}/UlConfigGameInstaller.cpp
-    ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/UI/Application.cpp
     ${OPT_SRC_DIR}/UI/Intent.h
     ${OPT_SRC_DIR}/UI/Activity.h

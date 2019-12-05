@@ -16,23 +16,27 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ENDIANNESS__
-#define __OPLPCTOOLS_ENDIANNESS__
+#ifndef __OPLPCTOOLS_BIGENDIAN__
+#define __OPLPCTOOLS_BIGENDIAN__
 
-#include <array>
 #include <QtGlobal>
 
 namespace OplPcTools {
 
 template<typename IntT>
-IntT readBigEndian(std::array<quint8, sizeof(IntT)> bytes)
+struct BigEndian
 {
-    IntT value = 0;
-    for(quint8 byte : bytes)
-        value = (value << 8) | byte;
-    return value;
-}
+    quint8 data[sizeof(IntT)];
+
+    IntT toIntLE() const
+    {
+        IntT value = 0;
+        for(short i = 0; i < sizeof(IntT); ++i)
+            value = (value << 8) | data[i];
+        return value;
+    }
+} __attribute__((packed));
 
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ENDIANNESS__
+#endif // __OPLPCTOOLS_BIGENDIAN__

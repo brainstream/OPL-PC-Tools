@@ -111,7 +111,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/Exception.h
     ${OPT_SRC_DIR}/File.h
     ${OPT_SRC_DIR}/Maybe.h
-    ${OPT_SRC_DIR}/Endianness.h
+    ${OPT_SRC_DIR}/BigEndian.h
     ${OPT_SRC_DIR}/DeviceSource.h
     ${OPT_SRC_DIR}/Iso9660DeviceSource.h
     ${OPT_SRC_DIR}/BinCueDeviceSource.h

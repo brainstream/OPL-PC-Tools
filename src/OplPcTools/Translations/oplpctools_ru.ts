@@ -5,37 +5,37 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../UI/AboutDialog.ui" line="20"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_AboutDialog.h" line="156"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_AboutDialog.h" line="156"/>
         <source>About Program</source>
         <translation>О программе</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="96"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_AboutDialog.h" line="158"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_AboutDialog.h" line="158"/>
         <source>Version %1</source>
         <translation>Версия %1</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="119"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_AboutDialog.h" line="159"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_AboutDialog.h" line="159"/>
         <source>Tools for managing PS2 disc images used in OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
         <translation>Инструмент для управления образами дисков PS2, использующихся в OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Официальная страница на GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="129"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_AboutDialog.h" line="160"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_AboutDialog.h" line="160"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Sergey Smolyannikov&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Сергей Смольянников&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="158"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_AboutDialog.h" line="161"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_AboutDialog.h" line="161"/>
         <source>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;OPL page on GitHub&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Страница OPL на GitHub&lt;/a</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="171"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_AboutDialog.h" line="162"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_AboutDialog.h" line="162"/>
         <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, верисия 3&lt;/a</translation>
     </message>
@@ -44,25 +44,25 @@
     <name>ChooseOpticalDiscDialog</name>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="14"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_ChooseOpticalDiscDialog.h" line="125"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_ChooseOpticalDiscDialog.h" line="125"/>
         <source>Choose CD/DVD Device</source>
         <translation>Выберете CD/DVD привод</translation>
     </message>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="73"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_ChooseOpticalDiscDialog.h" line="128"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_ChooseOpticalDiscDialog.h" line="128"/>
         <source>Device</source>
         <translation>Привод</translation>
     </message>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="78"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_ChooseOpticalDiscDialog.h" line="127"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_ChooseOpticalDiscDialog.h" line="127"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="115"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_ChooseOpticalDiscDialog.h" line="129"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_ChooseOpticalDiscDialog.h" line="129"/>
         <source>Initialization...</source>
         <translation>Инициализация...</translation>
     </message>
@@ -71,37 +71,37 @@
     <name>GameCollectionActivity</name>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="240"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="506"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="506"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="320"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="508"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="508"/>
         <source>Icons Size</source>
         <translation>Размер иконки</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="514"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="510"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="510"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="534"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="511"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="511"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="554"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="512"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="512"/>
         <source>Source:</source>
         <translation>Источник:</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="574"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="513"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="513"/>
         <source>Parts:</source>
         <translation>Частей:</translation>
     </message>
@@ -111,79 +111,79 @@
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="603"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="514"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="514"/>
         <source>&amp;Restore ISO</source>
         <translation>&amp;Восстановить ISO</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="640"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="482"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="482"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="643"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="484"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="484"/>
         <source>Edit Game</source>
         <translation>Редактировать игру</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="655"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="486"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="486"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="658"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="488"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="488"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="670"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="490"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="490"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="673"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="492"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="492"/>
         <source>Install Game</source>
         <translation>Установить игру</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="685"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="494"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="494"/>
         <source>Reload</source>
         <translation>Перезагрузить</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="688"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="496"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="496"/>
         <source>Reload Collection</source>
         <translation>Перезагрузить коллекцию</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="700"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="498"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="498"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="703"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="500"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="500"/>
         <source>Open Collection</source>
         <translation>Открыть коллекцию</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="715"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="502"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="502"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="718"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameCollectionActivity.h" line="504"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="504"/>
         <source>Rename Game</source>
         <translation>Переименовать игру</translation>
     </message>
@@ -192,25 +192,25 @@
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameDetailsActivity.h" line="138"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameDetailsActivity.h" line="138"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="86"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameDetailsActivity.h" line="140"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameDetailsActivity.h" line="140"/>
         <source>Rename...</source>
         <translation>Переименовть...</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="134"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameDetailsActivity.h" line="136"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameDetailsActivity.h" line="136"/>
         <source>Change Picture...</source>
         <translation>Изменить картинку...</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="143"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameDetailsActivity.h" line="137"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameDetailsActivity.h" line="137"/>
         <source>Delete Picture</source>
         <translation>Удалить картинку</translation>
     </message>
@@ -219,115 +219,115 @@
     <name>GameInstallerActivity</name>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="37"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="357"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="357"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="61"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="358"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="358"/>
         <source>&amp;Install</source>
         <translation>&amp;Установить</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="72"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="359"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="359"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="139"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="362"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="362"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="144"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="361"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="361"/>
         <source>Status</source>
         <translation>Статус</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="154"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="363"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="363"/>
         <source>&amp;Add Image</source>
         <translation>&amp;Добавить образ</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="165"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="364"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="364"/>
         <source>Add &amp;Disc</source>
         <translation>Добавить &amp;диск</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="189"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="365"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="365"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="200"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="366"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="366"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="285"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="367"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="367"/>
         <source>Media Type</source>
         <translation>Тип диска</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="291"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="368"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="368"/>
         <source>Auto</source>
         <translation>Автоматически</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="301"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="369"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="369"/>
         <source>DVD</source>
         <translation>DVD</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="308"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="370"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="370"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="324"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="373"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="373"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the only way to run large games (larger than 4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should split up large files into parts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Единственный способ запустать большие (более 4 ГиБ) игры с USB накопителя. Поскольку OPL поддерживает только файловую систему FAT32, вы должны разбивать большие файлы на части.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="327"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="375"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="375"/>
         <source>Split up ISO file into parts</source>
         <translation>Разделять файлы ISO на части</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="334"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="377"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="377"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Рекомендованный способ, если вы планируете запускать игры через локальную сеть. Файлы ISO будут помещены в каталог DVD или CS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="337"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="379"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="379"/>
         <source>Do not split up ISO file</source>
         <translation>Не разделять файлы ISO</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="347"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="380"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="380"/>
         <source>Move ISO file instead of copy</source>
         <translation>Перенести файлы ISO вместо копирования</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="354"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameInstallerActivity.h" line="381"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameInstallerActivity.h" line="381"/>
         <source>Add a game ID to filename</source>
         <translation>Добавить ID игры к имени файла</translation>
     </message>
@@ -336,7 +336,7 @@
     <name>GameRenameDialog</name>
     <message>
         <location filename="../UI/GameRenameDialog.ui" line="14"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_GameRenameDialog.h" line="76"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameRenameDialog.h" line="76"/>
         <source>Game Name</source>
         <translation>Имя игры</translation>
     </message>
@@ -345,7 +345,7 @@
     <name>IsoRestorerActivity</name>
     <message>
         <location filename="../UI/IsoRestorerActivity.ui" line="40"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_IsoRestorerActivity.h" line="127"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_IsoRestorerActivity.h" line="127"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
@@ -354,49 +354,49 @@
     <name>MainWindow</name>
     <message>
         <location filename="../UI/MainWindow.ui" line="146"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="150"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="150"/>
         <source>Newest version of the application is available</source>
         <translation>Доступна новая версия приложения</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="162"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="151"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="151"/>
         <source>Download</source>
         <translation>Скачать</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="178"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="152"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="152"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="224"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="153"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="153"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="230"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="154"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="154"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="240"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="147"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="147"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="245"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="148"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="148"/>
         <source>&amp;About...</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="250"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_MainWindow.h" line="149"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_MainWindow.h" line="149"/>
         <source>About &amp;Qt...</source>
         <translation>О &amp;Qt...</translation>
     </message>
@@ -804,28 +804,38 @@ Continue?</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../NrgDeviceSource.cpp" line="120"/>
+        <location filename="../NrgDeviceSource.cpp" line="114"/>
         <source>Unable to locate the NER5 chunk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../NrgDeviceSource.cpp" line="123"/>
+        <location filename="../NrgDeviceSource.cpp" line="117"/>
         <source>Unable to read the NER5 chunk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../NrgDeviceSource.cpp" line="125"/>
+        <location filename="../NrgDeviceSource.cpp" line="119"/>
         <source>Format is not supported. Only NRG version 2 is supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../NrgDeviceSource.cpp" line="137"/>
-        <source>Unable to locate a NRG chunk header</source>
+        <location filename="../NrgDeviceSource.cpp" line="126"/>
+        <source>Unable to locate the NRG chunk header</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../NrgDeviceSource.cpp" line="140"/>
-        <source>Unable to read a NRG chunk header</source>
+        <location filename="../NrgDeviceSource.cpp" line="129"/>
+        <source>Unable to read the NRG chunk header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="136"/>
+        <source>Unable to locate the DAOX chunk header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../NrgDeviceSource.cpp" line="139"/>
+        <source>Unable to read the DAOX track header</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -833,49 +843,49 @@ Continue?</source>
     <name>SettingsDialog</name>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="14"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="114"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="114"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="23"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="115"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="115"/>
         <source>Open the last used OPL catalog on startup</source>
         <translation>Открывать последний OPL каталог на старте программы</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="30"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="116"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="116"/>
         <source>Check for app updates</source>
         <translation>Проверять обновления приложения</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="37"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="117"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="117"/>
         <source>Confirm the removal of a game</source>
         <translation>Подтверждать удаление игры</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="44"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="118"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="118"/>
         <source>Confirm the removal of a picture</source>
         <translation>Подтверждать удаление картинок</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="51"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="119"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="119"/>
         <source>Do not split up ISO files by default</source>
         <translation>Не разделять файлы ISO на части</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="60"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="120"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="120"/>
         <source>Move ISO files instead of copy</source>
         <translation>Перемещать файлы ISO вместо копирования</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="67"/>
-        <location filename="../../../../build-oplpctools2-Desktop_Qt_5_9_3_GCC_64bit-Debug/ui_SettingsDialog.h" line="121"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_SettingsDialog.h" line="121"/>
         <source>Add a game ID to filename</source>
         <translation>Добавлять ID игры к имени файла</translation>
     </message>

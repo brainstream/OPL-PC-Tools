@@ -18,30 +18,43 @@
 
 #include <cstring>
 #include <QFile>
-#include <OplPcTools/Endianness.h>
+#include <OplPcTools/BigEndian.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/NrgDeviceSource.h>
 
+#define INVALID_TRACK_LOCATION (~(quint64)0)
+
 using namespace OplPcTools;
-
-#define NER5_FOOTER_LENGTH  12
-#define CHUNK_HEADER_LENGTH 8
-#define CHUNK_ID_LENGTH     4
-#define CHUNK_SIZE_LENGTH   4
-
 
 namespace {
 
-struct TrackHeader // TODO: is it necessary
+struct Chunk
+{
+    char id[4];
+    BigEndian<quint32> size;
+} __attribute__((packed));
+
+struct Ner5
+{
+    char id[4];
+    BigEndian<quint64> offset_of_first_chunk;
+} __attribute__((packed));
+
+struct Daox
+{
+    quint8 header[30];
+} __attribute__((packed));
+
+struct DaoxTrack
 {
     char isrc[12];
     quint8 sector_size[2];
     quint8 mode[2];
     quint8 unknown[2];
     quint8 pre_gap[8];
-    quint8 track_begin[8];
-    quint8 track_end[8];
+    BigEndian<quint64> track_begin;
+    BigEndian<quint64> track_end;
 } __attribute__((packed));
 
 } // namespace
@@ -50,24 +63,6 @@ struct TrackHeader // TODO: is it necessary
 class NrgDeviceSource::NrgImage final
 {
     Q_DISABLE_COPY(NrgImage)
-
-    struct ChunkHeader
-    {
-        QString id;
-        quint32 size;
-    };
-
-    struct TrackLocation
-    {
-        TrackLocation() :
-            begin(0),
-            size(0)
-        {
-        }
-
-        quint64 begin;
-        quint64 size;
-    };
 
 public:
     explicit NrgImage(const QString & _filepath);
@@ -80,19 +75,18 @@ public:
 
 private:
     quint64 readFirstChunkOffset();
-    ChunkHeader readChunkHeader(quint64 _offset);
-    TrackLocation readDaoHeader(quint64 _offset, quint32 _size);
+    Chunk readChunkHeader(quint64 _offset);
+    quint64 getTrackLocation(quint64 _dao_header_offset);
 
 private:
     QFile m_file;
-    TrackLocation m_track;
+    quint64 m_track_location;
 };
 
 
-
-
 NrgDeviceSource::NrgImage::NrgImage(const QString & _filepath) :
-    m_file(_filepath)
+    m_file(_filepath),
+    m_track_location(INVALID_TRACK_LOCATION)
 {
 }
 
@@ -102,72 +96,48 @@ void NrgDeviceSource::NrgImage::open()
     quint64 offset = readFirstChunkOffset();
     for(;;)
     {
-        ChunkHeader header = readChunkHeader(offset);
-        if(header.id == "END!")
+        Chunk header = readChunkHeader(offset);
+        if(std::strcmp("END!", header.id) == 0)
             break;
-        if(header.id == "DAOX")
+        if(std::strcmp("DAOX", header.id) == 0)
         {
-            m_track = readDaoHeader(offset, header.size);
+            m_track_location = getTrackLocation(offset);
             break;
         }
-        offset += header.size;
+        offset += header.size.toIntLE() + sizeof(Chunk);
     }
 }
 
 quint64 NrgDeviceSource::NrgImage::readFirstChunkOffset()
 {
-    if(!m_file.seek(m_file.size() - NER5_FOOTER_LENGTH))
-        throw IOException(QObject::tr("Unable to locate the NER5 chunk")); // TODO: generic solution
-    char buffer[12];
-    if(m_file.read(buffer, NER5_FOOTER_LENGTH) != NER5_FOOTER_LENGTH)
-        throw IOException(QObject::tr("Unable to read the NER5 chunk")); // TODO: generic solution
-    if(std::strcmp("NER5", buffer) != 0)
+    if(!m_file.seek(m_file.size() - sizeof(Ner5)))
+        throw IOException(QObject::tr("Unable to locate the NER5 chunk"));
+    Ner5 ner5;
+    if(m_file.read(reinterpret_cast<char *>(&ner5), sizeof(Ner5)) != sizeof(Ner5))
+        throw IOException(QObject::tr("Unable to read the NER5 chunk"));
+    if(std::strcmp("NER5", ner5.id) != 0)
         throw IOException(QObject::tr("Format is not supported. Only NRG version 2 is supported."));
-
-    // TODO: ugly!
-    std::array<quint8, sizeof(quint64)> offset;
-    std::copy(&buffer[CHUNK_ID_LENGTH], &buffer[CHUNK_ID_LENGTH + sizeof(quint64)], offset.begin());
-
-    return readBigEndian<quint64>(offset);
+    return ner5.offset_of_first_chunk.toIntLE();
 }
 
-NrgDeviceSource::NrgImage::ChunkHeader NrgDeviceSource::NrgImage::readChunkHeader(quint64 _offset)
+Chunk NrgDeviceSource::NrgImage::readChunkHeader(quint64 _offset)
 {
     if(!m_file.seek(_offset))
-        throw IOException(QObject::tr("Unable to locate a NRG chunk header")); // TODO: generic solution
-    char buffer[CHUNK_HEADER_LENGTH];
-    if(!m_file.read(buffer, CHUNK_HEADER_LENGTH))
-        throw IOException(QObject::tr("Unable to read a NRG chunk header")); // TODO: generic solution
-    ChunkHeader header;
-    header.id = QString::fromLatin1(buffer, CHUNK_ID_LENGTH);
-
-    // TODO: ugly!
-    std::array<uint8_t, CHUNK_SIZE_LENGTH> size;
-    std::copy(&buffer[CHUNK_ID_LENGTH], &buffer[CHUNK_HEADER_LENGTH], size.begin());
-
-    header.size = readBigEndian<uint32_t>(size) + CHUNK_HEADER_LENGTH;
-    return header;
+        throw IOException(QObject::tr("Unable to locate the NRG chunk header"));
+    Chunk chunk;
+    if(!m_file.read(reinterpret_cast<char *>(&chunk), sizeof(Chunk)))
+        throw IOException(QObject::tr("Unable to read the NRG chunk header"));
+    return chunk;
 }
 
-NrgDeviceSource::NrgImage::TrackLocation NrgDeviceSource::NrgImage::readDaoHeader(quint64 _offset, quint32 _size)
+quint64 NrgDeviceSource::NrgImage::getTrackLocation(quint64 _dao_header_offset)
 {
-    const quint32 session_header_size = 30;
-    m_file.seek(_offset + session_header_size);
-    // while(read_bytes < _size) // TODO: read all tracks
-    TrackHeader header;
-    m_file.read(reinterpret_cast<char *>(&header), sizeof(TrackHeader)); // TODO: check result (generic solution)
-
-    // TODO: ugly!
-    std::array<quint8, sizeof(quint64)> track_begin;
-    std::copy(header.track_begin, &header.track_begin[sizeof(header.track_begin)], track_begin.begin());
-    // TODO: ugly!
-    std::array<quint8, sizeof(quint64)> track_end;
-    std::copy(header.track_end, &header.track_end[sizeof(header.track_begin)], track_end.begin());
-
-    TrackLocation location;
-    location.begin = readBigEndian<quint64>(track_begin);
-    location.size = readBigEndian<quint64>(track_end) - location.begin - 1;
-    return location;
+    if(!m_file.seek(_dao_header_offset + sizeof(Daox::header)))
+        throw IOException(QObject::tr("Unable to locate the DAOX chunk header"));
+    DaoxTrack first_track_header;
+    if(!m_file.read(reinterpret_cast<char *>(&first_track_header), sizeof(DaoxTrack)))
+        throw IOException(QObject::tr("Unable to read the DAOX track header"));
+    return first_track_header.track_begin.toIntLE();
 }
 
 void NrgDeviceSource::NrgImage::close()
@@ -187,14 +157,14 @@ QString NrgDeviceSource::NrgImage::filepath() const
 
 bool NrgDeviceSource::NrgImage::seek(quint64 _offset)
 {
-    if(m_track.size == 0)
+    if(m_track_location == INVALID_TRACK_LOCATION)
         return false;
-    return m_file.seek(m_track.begin + _offset);
+    return m_file.seek(m_track_location + _offset);
 }
 
 qint64 NrgDeviceSource::NrgImage::read(QByteArray & _buffer)
 {
-    if(m_track.size == 0)
+    if(m_track_location == INVALID_TRACK_LOCATION)
         return 0;
     return m_file.read(_buffer.data(), _buffer.size());
 }
@@ -221,7 +191,13 @@ bool NrgDeviceSource::isReadOnly() const
 
 bool NrgDeviceSource::open()
 {
-    mp_image->open();
+    try {
+        mp_image->open();
+    } catch(...) {
+        if(mp_image->isOpen())
+            mp_image->close();
+        return false;
+    }
     return true;
 }
 

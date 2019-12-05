@@ -17,7 +17,6 @@
  ***********************************************************************************************/
 
 #include <cstring>
-#include <QFile>
 #include <OplPcTools/BigEndian.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/NrgDeviceSource.h>
@@ -91,7 +90,8 @@ NrgDeviceSource::NrgImage::NrgImage(const QString & _filepath) :
 
 bool NrgDeviceSource::NrgImage::open()
 {
-    openFile(m_file, QIODevice::ReadOnly);
+    if(!m_file.open(QIODevice::ReadOnly))
+        return false;
     quint64 offset = readFirstChunkOffset();
     if(offset == INVALID_OFFSET)
         return false;

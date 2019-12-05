@@ -20,10 +20,9 @@
 #include <QFile>
 #include <OplPcTools/BigEndian.h>
 #include <OplPcTools/File.h>
-#include <OplPcTools/Exception.h>
 #include <OplPcTools/NrgDeviceSource.h>
 
-#define INVALID_TRACK_LOCATION (~(quint64)0)
+#define INVALID_OFFSET (~(quint64)0)
 
 using namespace OplPcTools;
 
@@ -66,7 +65,7 @@ class NrgDeviceSource::NrgImage final
 
 public:
     explicit NrgImage(const QString & _filepath);
-    void open();
+    bool open();
     void close();
     inline bool isOpen() const;
     inline QString filepath() const;
@@ -75,7 +74,7 @@ public:
 
 private:
     quint64 readFirstChunkOffset();
-    Chunk readChunkHeader(quint64 _offset);
+    bool readChunkHeader(quint64 _offset, Chunk * _chunk);
     quint64 getTrackLocation(quint64 _dao_header_offset);
 
 private:
@@ -86,57 +85,61 @@ private:
 
 NrgDeviceSource::NrgImage::NrgImage(const QString & _filepath) :
     m_file(_filepath),
-    m_track_location(INVALID_TRACK_LOCATION)
+    m_track_location(INVALID_OFFSET)
 {
 }
 
-void NrgDeviceSource::NrgImage::open()
+bool NrgDeviceSource::NrgImage::open()
 {
     openFile(m_file, QIODevice::ReadOnly);
     quint64 offset = readFirstChunkOffset();
+    if(offset == INVALID_OFFSET)
+        return false;
     for(;;)
     {
-        Chunk header = readChunkHeader(offset);
+        Chunk header;
+        if(!readChunkHeader(offset, &header))
+            return false;
         if(std::strcmp("END!", header.id) == 0)
             break;
         if(std::strcmp("DAOX", header.id) == 0)
         {
             m_track_location = getTrackLocation(offset);
-            break;
+            return true;
         }
         offset += header.size.toIntLE() + sizeof(Chunk);
     }
+    return false;
 }
 
 quint64 NrgDeviceSource::NrgImage::readFirstChunkOffset()
 {
     if(!m_file.seek(m_file.size() - sizeof(Ner5)))
-        throw IOException(QObject::tr("Unable to locate the NER5 chunk"));
+        return INVALID_OFFSET;
     Ner5 ner5;
     if(m_file.read(reinterpret_cast<char *>(&ner5), sizeof(Ner5)) != sizeof(Ner5))
-        throw IOException(QObject::tr("Unable to read the NER5 chunk"));
+        return INVALID_OFFSET;
     if(std::strcmp("NER5", ner5.id) != 0)
-        throw IOException(QObject::tr("Format is not supported. Only NRG version 2 is supported."));
+        return INVALID_OFFSET;
     return ner5.offset_of_first_chunk.toIntLE();
 }
 
-Chunk NrgDeviceSource::NrgImage::readChunkHeader(quint64 _offset)
+bool NrgDeviceSource::NrgImage::readChunkHeader(quint64 _offset, Chunk * _chunk)
 {
     if(!m_file.seek(_offset))
-        throw IOException(QObject::tr("Unable to locate the NRG chunk header"));
-    Chunk chunk;
-    if(!m_file.read(reinterpret_cast<char *>(&chunk), sizeof(Chunk)))
-        throw IOException(QObject::tr("Unable to read the NRG chunk header"));
-    return chunk;
+        return false;
+    if(!m_file.read(reinterpret_cast<char *>(_chunk), sizeof(Chunk)))
+        return false;
+    return true;
 }
 
 quint64 NrgDeviceSource::NrgImage::getTrackLocation(quint64 _dao_header_offset)
 {
     if(!m_file.seek(_dao_header_offset + sizeof(Daox::header)))
-        throw IOException(QObject::tr("Unable to locate the DAOX chunk header"));
+        return INVALID_OFFSET;
     DaoxTrack first_track_header;
     if(!m_file.read(reinterpret_cast<char *>(&first_track_header), sizeof(DaoxTrack)))
-        throw IOException(QObject::tr("Unable to read the DAOX track header"));
+        return INVALID_OFFSET;
     return first_track_header.track_begin.toIntLE();
 }
 
@@ -157,14 +160,14 @@ QString NrgDeviceSource::NrgImage::filepath() const
 
 bool NrgDeviceSource::NrgImage::seek(quint64 _offset)
 {
-    if(m_track_location == INVALID_TRACK_LOCATION)
+    if(m_track_location == INVALID_OFFSET)
         return false;
     return m_file.seek(m_track_location + _offset);
 }
 
 qint64 NrgDeviceSource::NrgImage::read(QByteArray & _buffer)
 {
-    if(m_track_location == INVALID_TRACK_LOCATION)
+    if(m_track_location == INVALID_OFFSET)
         return 0;
     return m_file.read(_buffer.data(), _buffer.size());
 }

@@ -106,10 +106,6 @@
         <translation>Частей:</translation>
     </message>
     <message>
-        <source>&amp;Resore ISO</source>
-        <translation type="vanished">&amp;Восстановить ISO</translation>
-    </message>
-    <message>
         <location filename="../UI/GameCollectionActivity.ui" line="603"/>
         <location filename="../../../../build-oplpctools2-Qt_5_9_3-Debug/ui_GameCollectionActivity.h" line="514"/>
         <source>&amp;Restore ISO</source>
@@ -599,13 +595,9 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <source>All Supported Images (*%1 *%2);;ISO Images (*%1);;Bin Files(*%2)</source>
-        <translation type="vanished">Все поддерживаемые образы (*%1 *%2);;Образы диска ISO(*%1);;Файлы bin (*%2)</translation>
-    </message>
-    <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="373"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="378"/>
@@ -802,41 +794,6 @@ Continue?</source>
         <location filename="../File.h" line="36"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="114"/>
-        <source>Unable to locate the NER5 chunk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="117"/>
-        <source>Unable to read the NER5 chunk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="119"/>
-        <source>Format is not supported. Only NRG version 2 is supported.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="126"/>
-        <source>Unable to locate the NRG chunk header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="129"/>
-        <source>Unable to read the NRG chunk header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="136"/>
-        <source>Unable to locate the DAOX chunk header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../NrgDeviceSource.cpp" line="139"/>
-        <source>Unable to read the DAOX track header</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

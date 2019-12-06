@@ -39,7 +39,7 @@ struct RawConfigRecord
     quint8 parts;
     quint8 media;
     quint8 pad[15];
-};
+} __attribute__((packed));
 
 RawConfigRecord::RawConfigRecord(const Game & _game)
 {
@@ -105,6 +105,21 @@ quint32 crc32(const QString & _string)
     return crc;
 }
 
+bool validateGame(const Game & _game)
+{
+    if(_game.partCount() > 10) return false;
+    for(const QChar & ch : _game.id())
+        if(!ch.isPrint()) return false;
+    for(const QChar & ch : _game.title())
+        if(!ch.isPrint()) return false;
+    return true;
+}
+
+inline void throwUlCorrupted()
+{
+    throw ValidationException(QObject::tr("%1 is corrupted").arg(UL_CONFIG_FILENAME));
+}
+
 } // namespace
 
 UlConfigGameStorage::UlConfigGameStorage(QObject * _parent /*= nullptr*/) :
@@ -123,6 +138,8 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
     QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
     const size_t record_size = sizeof(RawConfigRecord);
+    if(file.size() % record_size != 0)
+        throwUlCorrupted();
     char * buffer = new char[record_size];
     for(;;)
     {
@@ -149,6 +166,8 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
             game->setMediaType(MediaType::Unknown);
             break;
         }
+        if(!validateGame(*game))
+            throwUlCorrupted();
     }
     delete [] buffer;
     return true;

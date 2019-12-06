@@ -483,6 +483,7 @@ void GameCollectionActivity::showGameInstaller()
 void GameCollectionActivity::deleteGame()
 {
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
+    if(!game) return;
     const QString id = game->id();
     Settings & settings = Settings::instance();
     if(settings.confirmGameDeletion())
@@ -498,7 +499,6 @@ void GameCollectionActivity::deleteGame()
         if(checkbox->isChecked())
             settings.setConfirmGameDeletion(false);
     }
-    if(!game) return;
     try
     {
         GameCollection & collection = Application::instance().gameCollection();

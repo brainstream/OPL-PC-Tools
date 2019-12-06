@@ -505,17 +505,17 @@
         <translation>Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="490"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="491"/>
         <source>Don&apos;t show again</source>
         <translation>Не показывать снова</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="491"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="492"/>
         <source>Remove Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="492"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="493"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation>Игра %1 будет удалена.
@@ -702,7 +702,7 @@ Continue?</source>
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="213"/>
+        <location filename="../UlConfigGameStorage.cpp" line="232"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Не могу найти игру &quot;%1&quot; в файле конфигурации</translation>
     </message>
@@ -750,23 +750,28 @@ Continue?</source>
         <translation>Не могу сохранить файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="164"/>
+        <location filename="../UlConfigGameStorage.cpp" line="120"/>
+        <source>%1 is corrupted</source>
+        <translation>%1 повреждён</translation>
+    </message>
+    <message>
+        <location filename="../UlConfigGameStorage.cpp" line="183"/>
         <source>Config record was not found</source>
         <translation>Конфигурационная запись не найдена</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="171"/>
-        <location filename="../UlConfigGameStorage.cpp" line="184"/>
+        <location filename="../UlConfigGameStorage.cpp" line="190"/>
+        <location filename="../UlConfigGameStorage.cpp" line="203"/>
         <source>An error occurred while writing data to file</source>
         <translation>Во время записи данных в файл произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="197"/>
+        <location filename="../UlConfigGameStorage.cpp" line="216"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>Максимальная длина имени – %1 байт</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="228"/>
+        <location filename="../UlConfigGameStorage.cpp" line="247"/>
         <source>Unable to backup config file</source>
         <translation>Не могу сделать бекап файла конфигурации</translation>
     </message>

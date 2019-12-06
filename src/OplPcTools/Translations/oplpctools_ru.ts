@@ -832,7 +832,7 @@ Continue?</source>
         <location filename="../UI/SettingsDialog.ui" line="51"/>
         <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="116"/>
         <source>Do not split up ISO files by default</source>
-        <translation>Не разделять файлы ISO на части</translation>
+        <translation>По умолчанию не разделять файлы ISO на части</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="60"/>

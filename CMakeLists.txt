@@ -19,6 +19,13 @@
 cmake_minimum_required(VERSION 3.2)
 project("OPL PC Tools")
 
+message("CMake version: " ${CMAKE_VERSION})
+if(CMAKE_COMPILER_IS_GNUCXX)
+    message("GNU g++ version: " ${CMAKE_CXX_COMPILER_VERSION})
+else()
+    message(FATAL_ERROR "GNU g++ is required")
+endif()
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OPT_EXE_NAME "oplpctools")
@@ -29,10 +36,9 @@ set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_SKIP_BUILD_RPATH ON)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(STATUS "Application will be built in the Debug configuration")
+    message("Application will be built in the Debug configuration")
     set(CMAKE_VERBOSE_MAKEFILE ON)
 endif()
-
 
 #######################
 # Libraries
@@ -41,7 +47,7 @@ endif()
 set(QT5_DIR "" CACHE PATH "Provides a path to search Qt5 installation")
 find_package(Qt5Core HINTS ${QT5_DIR})
 if(Qt5Core_FOUND)
-    message(STATUS "Qt version: ${Qt5Core_VERSION_STRING}")
+    message("Qt version: ${Qt5Core_VERSION_STRING}")
 else()
     message(FATAL_ERROR "ERROR: Qt not found. Please specify a path to Qt installation using the QT5_DIR variable.")
 endif()
@@ -207,6 +213,7 @@ add_custom_target(misc SOURCES
     .gitignore
     LICENSE.txt
     README.md
+    NOTES.txt
     release/make-release-linux.sh
 )
 

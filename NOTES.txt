@@ -1,0 +1,5 @@
+MS Windows
+Qt 5.9.3 must be used. Because it is the latest version that supports XP.
+
+Linux
+Qt 5.12+ must be used. Because older versions require old obsolete libssl-1.0.0.

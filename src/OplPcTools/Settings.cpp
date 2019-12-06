@@ -27,6 +27,7 @@ const QString Settings::Key::split_up_iso("Settings/SplitUpISO");
 const QString Settings::Key::move_iso("Settings/MoveISO");
 const QString Settings::Key::rename_iso("Settings/RenameISO");
 const QString Settings::Key::check_new_version("Settings/CheckNewVersion");
+const QString Settings::Key::validate_ul_cfg("Settings/ValidateUlCfg");
 
 Settings::Settings()
 {
@@ -37,6 +38,7 @@ Settings::Settings()
     m_move_iso = loadBoolean(Key::move_iso, false);
     m_rename_iso = loadBoolean(Key::rename_iso, true);
     m_check_new_version = loadBoolean(Key::check_new_version, true);
+    m_validate_ul_cfg = loadBoolean(Key::validate_ul_cfg, true);
 }
 
 bool Settings::loadBoolean(const QString & _key, bool _default_value)

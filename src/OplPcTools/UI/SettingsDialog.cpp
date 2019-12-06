@@ -31,13 +31,15 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_checkbx_reopen_last_catalog->setChecked(settings.reopenLastSestion());
     mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
     mp_checkbox_confirm_picture_deletion->setChecked(settings.confirmPixmapDeletion());
-    mp_groupbox_donot_splitup->setChecked(!settings.splitUpIso());
+    mp_checkbox_donot_splitup->setChecked(!settings.splitUpIso());
     mp_checkbox_add_id->setChecked(settings.renameIso());
     mp_checkobx_move_iso->setChecked(settings.moveIso());
+    mp_checkbox_validate_ulcfg->setChecked(settings.validateUlCfg());
     if(Updater::isSupported())
         mp_checkbox_check_new_versions->setChecked(settings.checkNewVersion());
     else
         mp_checkbox_check_new_versions->setEnabled(false);
+    mp_tabs->setCurrentIndex(0);
 }
 
 void SettingsDialog::accept()
@@ -46,9 +48,10 @@ void SettingsDialog::accept()
     settings.setReopenLastSestion(mp_checkbx_reopen_last_catalog->isChecked());
     settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
     settings.setConfirmPixmapDeletion(mp_checkbox_confirm_picture_deletion->isChecked());
-    settings.setSplitUpIso(!mp_groupbox_donot_splitup->isChecked());
+    settings.setSplitUpIso(!mp_checkbox_donot_splitup->isChecked());
     settings.setRenameIso(mp_checkbox_add_id->isChecked());
     settings.setMoveIso(mp_checkobx_move_iso->isChecked());
+    settings.setValidateUlCfg(mp_checkbox_validate_ulcfg->isChecked());
     if(mp_checkbox_check_new_versions->isEnabled())
         settings.setCheckNewVersion(mp_checkbox_check_new_versions->isChecked());
     QDialog::accept();

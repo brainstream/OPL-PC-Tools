@@ -702,7 +702,7 @@ Continue?</source>
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="232"/>
+        <location filename="../UlConfigGameStorage.cpp" line="234"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Не могу найти игру &quot;%1&quot; в файле конфигурации</translation>
     </message>
@@ -750,28 +750,28 @@ Continue?</source>
         <translation>Не могу сохранить файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="120"/>
+        <location filename="../UlConfigGameStorage.cpp" line="121"/>
         <source>%1 is corrupted</source>
         <translation>%1 повреждён</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="183"/>
+        <location filename="../UlConfigGameStorage.cpp" line="185"/>
         <source>Config record was not found</source>
         <translation>Конфигурационная запись не найдена</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="190"/>
-        <location filename="../UlConfigGameStorage.cpp" line="203"/>
+        <location filename="../UlConfigGameStorage.cpp" line="192"/>
+        <location filename="../UlConfigGameStorage.cpp" line="205"/>
         <source>An error occurred while writing data to file</source>
         <translation>Во время записи данных в файл произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="216"/>
+        <location filename="../UlConfigGameStorage.cpp" line="218"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>Максимальная длина имени – %1 байт</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="247"/>
+        <location filename="../UlConfigGameStorage.cpp" line="249"/>
         <source>Unable to backup config file</source>
         <translation>Не могу сделать бекап файла конфигурации</translation>
     </message>
@@ -810,51 +810,75 @@ Continue?</source>
     <name>SettingsDialog</name>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="14"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="111"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="154"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="23"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="112"/>
-        <source>Open the last used OPL catalog on startup</source>
-        <translation>Открывать последний OPL каталог на старте программы</translation>
+        <location filename="../UI/SettingsDialog.ui" line="27"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="160"/>
+        <source>Main</source>
+        <translation>Основные</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="30"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="113"/>
+        <location filename="../UI/SettingsDialog.ui" line="47"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="157"/>
         <source>Check for app updates</source>
         <translation>Проверять обновления приложения</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="37"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="114"/>
+        <location filename="../UI/SettingsDialog.ui" line="40"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="156"/>
+        <source>Validate ul.cfg</source>
+        <translation>Валидировать ul.cfg</translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="33"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="155"/>
+        <source>Open recently used collection</source>
+        <translation>Открывать недавно использованную коллекцию</translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="54"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="158"/>
         <source>Confirm the removal of a game</source>
         <translation>Подтверждать удаление игры</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="44"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="115"/>
+        <location filename="../UI/SettingsDialog.ui" line="61"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="159"/>
         <source>Confirm the removal of a picture</source>
-        <translation>Подтверждать удаление картинок</translation>
+        <translation>Подтверждать удаление изображения</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="51"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="116"/>
-        <source>Do not split up ISO files by default</source>
-        <translation>По умолчанию не разделять файлы ISO на части</translation>
+        <location filename="../UI/SettingsDialog.ui" line="82"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="165"/>
+        <source>Installation</source>
+        <translation>Инсталляция</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="60"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="117"/>
-        <source>Move ISO files instead of copy</source>
-        <translation>Перемещать файлы ISO вместо копирования</translation>
+        <location filename="../UI/SettingsDialog.ui" line="88"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="161"/>
+        <source>Default behaviour</source>
+        <translation>Поведение по умолчанию</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="67"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="118"/>
-        <source>Add a game ID to filename</source>
-        <translation>Добавлять ID игры к имени файла</translation>
+        <location filename="../UI/SettingsDialog.ui" line="94"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="162"/>
+        <source>Write ISO in a single file</source>
+        <translation>Записывать ISO в один файл</translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="101"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="163"/>
+        <source>Move ISO instead of copy</source>
+        <translation>Перемещать ISO вместо копирования</translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="108"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_SettingsDialog.h" line="164"/>
+        <source>Add a game ID to a filename</source>
+        <translation>Добавлять ID к имени игр</translation>
     </message>
 </context>
 </TS>

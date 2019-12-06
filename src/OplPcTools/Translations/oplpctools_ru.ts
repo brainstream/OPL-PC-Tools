@@ -616,8 +616,13 @@ Continue?</source>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="633"/>
-        <source>Done!</source>
-        <translation>Готово!</translation>
+        <source>Done</source>
+        <translation>Готово</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.cpp" line="633"/>
+        <source>Installation complete</source>
+        <translation>Установка завершена</translation>
     </message>
 </context>
 <context>

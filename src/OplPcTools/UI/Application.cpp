@@ -98,9 +98,9 @@ MainWindow * Application::ensureMainWindow()
     return mp_main_window;
 }
 
-void Application::showMessage(const QString & _message)
+void Application::showMessage(const QString & _title, const QString & _message)
 {
-    QMessageBox::information(ensureMainWindow(), APPLICATION_DISPLAY_NAME, _message);
+    QMessageBox::information(ensureMainWindow(), _title, _message);
 }
 
 void Application::showErrorMessage()

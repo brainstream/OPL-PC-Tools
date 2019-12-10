@@ -46,8 +46,12 @@ cp ${ASSETS_DIR}/linux/${EXE_NAME}.sh $OUT_DIR
 chmod +x $OUT_DIR/${EXE_NAME}.sh
 
 echo
+echo =============================================
 echo IMPORTANT!
+echo =============================================
 echo Copy dependencies to ${OUT_BIN_DIR}
+echo Copy qbase_*.qm to ${OUT_BIN_DIR}
+echo =============================================
 echo
 
 popd

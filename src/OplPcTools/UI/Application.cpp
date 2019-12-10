@@ -39,12 +39,12 @@ public:
 
 PrivateApplication * gp_application = nullptr;
 
-QTranslator * setupTranslator()
+QTranslator * setupTranslator(const QString & _base_name)
 {
     QString locale = QLocale::system().name();
     locale.truncate(locale.lastIndexOf('_'));
     QCoreApplication * app = QApplication::instance();
-    const QString filename = QString("%1_%2.qm").arg(app->applicationName()).arg(locale);
+    const QString filename = QString("%1_%2.qm").arg(_base_name).arg(locale);
     QString filepath = QDir(app->applicationDirPath()).absoluteFilePath(filename);
     if(!QFile::exists(filepath))
     {
@@ -129,13 +129,15 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
-    QTranslator * translator = setupTranslator();
+    QTranslator * translator = setupTranslator(gp_application->applicationName());
+    QTranslator * qt_translator = setupTranslator("qtbase");
     QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionActivity::createIntent();
     gp_application->pushActivity(*intent);
     gp_application->showMainWindow();
     int result = gp_application->exec();
     delete gp_application;
     delete translator;
+    delete qt_translator;
     gp_application = nullptr;
     return result;
 }

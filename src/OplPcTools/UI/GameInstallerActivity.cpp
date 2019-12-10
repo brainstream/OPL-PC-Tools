@@ -132,9 +132,9 @@ TaskListItem::TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget
     m_progress(0)
 {
     const Settings & settings = Settings::instance();
-    m_is_splitting_up_enabled = settings.splitUpIso();
-    m_is_renaming_enabled = settings.renameIso();
-    m_is_moving_enabled = settings.moveIso() && !_device->isReadOnly();
+    m_is_splitting_up_enabled = settings.flag(Settings::Flag::SplitUpIso);
+    m_is_renaming_enabled = settings.flag(Settings::Flag::RenameIso);
+    m_is_moving_enabled = settings.flag(Settings::Flag::MoveIso) && !_device->isReadOnly();
 }
 
 QVariant TaskListItem::data(int _column, int _role) const

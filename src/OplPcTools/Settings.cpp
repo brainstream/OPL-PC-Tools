@@ -20,33 +20,62 @@
 
 using namespace OplPcTools;
 
-const QString Settings::Key::reopen_last_session("Settings/ReopenLastSession");
-const QString Settings::Key::confirm_game_deletion("Settings/ConfirmGameDeletion");
-const QString Settings::Key::confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
-const QString Settings::Key::split_up_iso("Settings/SplitUpISO");
-const QString Settings::Key::move_iso("Settings/MoveISO");
-const QString Settings::Key::rename_iso("Settings/RenameISO");
-const QString Settings::Key::check_new_version("Settings/CheckNewVersion");
-const QString Settings::Key::validate_ul_cfg("Settings/ValidateUlCfg");
+namespace {
+
+const char * flagToKey(Settings::Flag _flag)
+{
+    switch (_flag) {
+    case Settings::Flag::ReopenLastSession:
+        return "Settings/ReopenLastSession";
+    case Settings::Flag::ConfirmGameDeletion:
+        return "Settings/ConfirmGameDeletion";
+    case Settings::Flag::ConfirmPixmapDeletion:
+        return "Settings/ConfirmPixmapDeletion";
+    case Settings::Flag::SplitUpIso:
+        return "Settings/SplitUpISO";
+    case Settings::Flag::MoveIso:
+        return "Settings/MoveISO";
+    case Settings::Flag::RenameIso:
+        return "Settings/RenameISO";
+    case Settings::Flag::CheckNewVersion:
+        return "Settings/CheckNewVersion";
+    case Settings::Flag::ValidateUlCfg:
+        return "Settings/ValidateUlCfg";
+    default:
+        return nullptr;
+    }
+}
+
+} // namespace
+
 
 Settings::Settings()
 {
-    m_reopen_last_session = loadBoolean(Key::reopen_last_session, false);
-    m_confirm_game_deletion = loadBoolean(Key::confirm_game_deletion, true);
-    m_confirm_pixmap_deletion = loadBoolean(Key::confirm_pixmap_deletion, true);
-    m_split_up_iso = loadBoolean(Key::split_up_iso, true);
-    m_move_iso = loadBoolean(Key::move_iso, false);
-    m_rename_iso = loadBoolean(Key::rename_iso, true);
-    m_check_new_version = loadBoolean(Key::check_new_version, true);
-    m_validate_ul_cfg = loadBoolean(Key::validate_ul_cfg, true);
+    QSettings settings;
+    loadFlag(settings, Flag::ReopenLastSession, false);
+    loadFlag(settings, Flag::ConfirmGameDeletion, true);
+    loadFlag(settings, Flag::ConfirmPixmapDeletion, true);
+    loadFlag(settings, Flag::SplitUpIso, true);
+    loadFlag(settings, Flag::MoveIso, false);
+    loadFlag(settings, Flag::RenameIso, true);
+    loadFlag(settings, Flag::CheckNewVersion, true);
+    loadFlag(settings, Flag::ValidateUlCfg, true);
 }
 
-bool Settings::loadBoolean(const QString & _key, bool _default_value)
+void Settings::loadFlag(const QSettings & _settings, Flag _flag, bool _default_value)
 {
-    QVariant value = m_settins.value(_key);
-    if(value.isNull() || !value.canConvert(QVariant::Bool))
-        return _default_value;
-    return value.toBool();
+    bool value = _default_value;
+    QVariant var = _settings.value(flagToKey(_flag));
+    if(var.canConvert(QVariant::Bool))
+       value = var.toBool();
+    m_flags[_flag] = value;
+}
+
+void Settings::setOption(Flag _flag, bool _value)
+{
+    QSettings settings;
+    settings.setValue(flagToKey(_flag), _value);
+    m_flags[_flag] = _value;
 }
 
 Settings & Settings::instance()

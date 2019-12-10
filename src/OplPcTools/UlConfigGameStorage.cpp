@@ -140,7 +140,7 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
     QFile file(m_config_filepath);
     openFile(file, QIODevice::ReadWrite);
     const size_t record_size = sizeof(RawConfigRecord);
-    if(settings.validateUlCfg() && file.size() % record_size != 0)
+    if(settings.flag(Settings::Flag::ValidateUlCfg) && file.size() % record_size != 0)
         throwUlCorrupted();
     char * buffer = new char[record_size];
     for(;;)
@@ -168,7 +168,7 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
             game->setMediaType(MediaType::Unknown);
             break;
         }
-        if(settings.validateUlCfg() && !validateGame(*game))
+        if(settings.flag(Settings::Flag::ValidateUlCfg) && !validateGame(*game))
             throwUlCorrupted();
     }
     delete [] buffer;

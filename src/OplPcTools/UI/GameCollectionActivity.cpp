@@ -271,7 +271,7 @@ QSharedPointer<Intent> GameCollectionActivity::createIntent()
 
 bool GameCollectionActivity::onAttach()
 {
-    if(Settings::instance().reopenLastSestion())
+    if(Settings::instance().flag(Settings::Flag::ReopenLastSession))
         tryLoadRecentDirectory();
     return true;
 }
@@ -488,7 +488,7 @@ void GameCollectionActivity::deleteGame()
     if(!game) return;
     const QString id = game->id();
     Settings & settings = Settings::instance();
-    if(settings.confirmGameDeletion())
+    if(settings.flag(Settings::Flag::ConfirmGameDeletion))
     {
         QCheckBox * checkbox = new QCheckBox(tr("Don't show again"));
         QMessageBox message_box(QMessageBox::Question, tr("Remove Game"),
@@ -499,7 +499,7 @@ void GameCollectionActivity::deleteGame()
         if(message_box.exec() != QMessageBox::Yes)
             return;
         if(checkbox->isChecked())
-            settings.setConfirmGameDeletion(false);
+            settings.setOption(Settings::Flag::ConfirmGameDeletion, false);
     }
     try
     {

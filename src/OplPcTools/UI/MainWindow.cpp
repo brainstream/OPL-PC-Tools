@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
 void MainWindow::setupUpdater()
 {
     mp_widget_update->setVisible(false);
-    if(!Settings::instance().checkNewVersion())
+    if(!Settings::instance().flag(Settings::Flag::CheckNewVersion))
         return;
     Updater * updater = new Updater(this);
     connect(updater, &Updater::updateAvailable, [this, updater]() {

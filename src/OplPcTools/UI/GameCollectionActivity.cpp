@@ -232,9 +232,11 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_btn_edit->setDefaultAction(mp_action_edit);
     mp_btn_delete->setDefaultAction(mp_action_delete);
     mp_btn_install->setDefaultAction(mp_action_install);
+    mp_btn_resore_iso->setDefaultAction(mp_action_restore_iso);
     mp_context_menu = new QMenu(this);
     mp_context_menu->addAction(mp_action_rename);
     mp_context_menu->addAction(mp_action_edit);
+    mp_context_menu->addAction(mp_action_restore_iso);
     mp_context_menu->addAction(mp_action_delete);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_install);
@@ -250,6 +252,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     connect(mp_action_rename, &QAction::triggered, this, &GameCollectionActivity::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameCollectionActivity::deleteGame);
     connect(mp_action_install, &QAction::triggered, this, &GameCollectionActivity::showGameInstaller);
+    connect(mp_action_restore_iso, &QAction::triggered, this, &GameCollectionActivity::showIsoRestorer);
     connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameCollectionActivity::showTreeContextMenu);
     connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { gameSelected(); });
@@ -258,7 +261,6 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     connect(&game_collection, &GameCollection::gameRenamed, this, &GameCollectionActivity::gameRenamed);
     connect(this, &GameCollectionActivity::destroyed, this, &GameCollectionActivity::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
-    connect(mp_btn_restore_iso, &QToolButton::clicked, this, &GameCollectionActivity::showIsoRestorer);
     applySettings();
 }
 
@@ -298,7 +300,7 @@ void GameCollectionActivity::activateItemControls(const Game * _selected_game)
     mp_action_delete->setEnabled(_selected_game);
     mp_action_edit->setEnabled(_selected_game);
     mp_action_rename->setEnabled(_selected_game);
-    mp_btn_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == GameInstallationType::UlConfig);
+    mp_action_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == GameInstallationType::UlConfig);
 }
 
 void GameCollectionActivity::applySettings()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>944</width>
-    <height>629</height>
+    <width>882</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -98,6 +98,31 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="mp_btn_install">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="mp_spacer_3">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -164,7 +189,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="mp_btn_delete">
+       <widget class="QToolButton" name="mp_btn_resore_iso">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -172,7 +197,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string notr="true"/>
+         <string/>
         </property>
         <property name="iconSize">
          <size>
@@ -189,9 +214,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="mp_btn_install">
+       <widget class="QToolButton" name="mp_btn_delete">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -592,26 +617,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="mp_btn_restore_iso">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>&amp;Restore ISO</string>
-           </property>
-           <property name="icon">
-            <iconset theme="edit-undo" resource="../Resources/Resources.qrc">
-             <normaloff>:/icons/edit-undo</normaloff>:/icons/edit-undo</iconset>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextBesideIcon</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="mp_verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -640,7 +645,7 @@
     <string>Edit</string>
    </property>
    <property name="toolTip">
-    <string>Edit Game</string>
+    <string>Edit game</string>
    </property>
    <property name="shortcut">
     <string notr="true">F4</string>
@@ -655,7 +660,7 @@
     <string>Delete</string>
    </property>
    <property name="toolTip">
-    <string>Delete Game</string>
+    <string>Delete game</string>
    </property>
    <property name="shortcut">
     <string notr="true">Del</string>
@@ -670,7 +675,7 @@
     <string>Install</string>
    </property>
    <property name="toolTip">
-    <string>Install Game</string>
+    <string>Install game</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ins</string>
@@ -685,7 +690,7 @@
     <string>Reload</string>
    </property>
    <property name="toolTip">
-    <string>Reload Collection</string>
+    <string>Reload collection</string>
    </property>
    <property name="shortcut">
     <string notr="true">F5</string>
@@ -700,7 +705,7 @@
     <string>Open</string>
    </property>
    <property name="toolTip">
-    <string>Open Collection</string>
+    <string>Open collection</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+O</string>
@@ -708,29 +713,41 @@
   </action>
   <action name="mp_action_rename">
    <property name="icon">
-    <iconset theme="document-edit" resource="../Resources/Resources.qrc">
+    <iconset theme="gtk-edit" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
    </property>
    <property name="text">
     <string>Rename</string>
    </property>
    <property name="toolTip">
-    <string>Rename Game</string>
+    <string>Rename game</string>
    </property>
    <property name="shortcut">
     <string notr="true">F2</string>
    </property>
   </action>
+  <action name="mp_action_restore_iso">
+   <property name="icon">
+    <iconset theme="edit-undo" resource="../Resources/Resources.qrc">
+     <normaloff>:/icons/edit-undo</normaloff>:/icons/edit-undo</iconset>
+   </property>
+   <property name="text">
+    <string>Restore ISO</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+R</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>mp_tree_games</tabstop>
-  <tabstop>mp_btn_restore_iso</tabstop>
   <tabstop>mp_btn_load</tabstop>
   <tabstop>mp_btn_reload</tabstop>
+  <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_edit</tabstop>
+  <tabstop>mp_btn_resore_iso</tabstop>
   <tabstop>mp_btn_delete</tabstop>
-  <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_edit_filter</tabstop>
  </tabstops>
  <resources>

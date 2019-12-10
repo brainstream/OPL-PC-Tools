@@ -499,7 +499,7 @@ void GameCollectionActivity::deleteGame()
         if(message_box.exec() != QMessageBox::Yes)
             return;
         if(checkbox->isChecked())
-            settings.setOption(Settings::Flag::ConfirmGameDeletion, false);
+            settings.setFlag(Settings::Flag::ConfirmGameDeletion, false);
     }
     try
     {

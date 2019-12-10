@@ -45,14 +45,14 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
 void SettingsDialog::accept()
 {
     Settings & settings = Settings::instance();
-    settings.setOption(Settings::Flag::RenameIso,mp_checkbx_reopen_last_catalog->isChecked());
-    settings.setOption(Settings::Flag::ConfirmGameDeletion, mp_checkbox_confirm_game_deletion->isChecked());
-    settings.setOption(Settings::Flag::ConfirmPixmapDeletion, mp_checkbox_confirm_picture_deletion->isChecked());
-    settings.setOption(Settings::Flag::SplitUpIso, !mp_checkbox_donot_splitup->isChecked());
-    settings.setOption(Settings::Flag::RenameIso, mp_checkbox_add_id->isChecked());
-    settings.setOption(Settings::Flag::MoveIso, mp_checkobx_move_iso->isChecked());
-    settings.setOption(Settings::Flag::ValidateUlCfg, mp_checkbox_validate_ulcfg->isChecked());
+    settings.setFlag(Settings::Flag::RenameIso,mp_checkbx_reopen_last_catalog->isChecked());
+    settings.setFlag(Settings::Flag::ConfirmGameDeletion, mp_checkbox_confirm_game_deletion->isChecked());
+    settings.setFlag(Settings::Flag::ConfirmPixmapDeletion, mp_checkbox_confirm_picture_deletion->isChecked());
+    settings.setFlag(Settings::Flag::SplitUpIso, !mp_checkbox_donot_splitup->isChecked());
+    settings.setFlag(Settings::Flag::RenameIso, mp_checkbox_add_id->isChecked());
+    settings.setFlag(Settings::Flag::MoveIso, mp_checkobx_move_iso->isChecked());
+    settings.setFlag(Settings::Flag::ValidateUlCfg, mp_checkbox_validate_ulcfg->isChecked());
     if(mp_checkbox_check_new_versions->isEnabled())
-        settings.setOption(Settings::Flag::CheckNewVersion, mp_checkbox_check_new_versions->isChecked());
+        settings.setFlag(Settings::Flag::CheckNewVersion, mp_checkbox_check_new_versions->isChecked());
     QDialog::accept();
 }

@@ -71,7 +71,7 @@ void Settings::loadFlag(const QSettings & _settings, Flag _flag, bool _default_v
     m_flags[_flag] = value;
 }
 
-void Settings::setOption(Flag _flag, bool _value)
+void Settings::setFlag(Flag _flag, bool _value)
 {
     QSettings settings;
     settings.setValue(flagToKey(_flag), _value);

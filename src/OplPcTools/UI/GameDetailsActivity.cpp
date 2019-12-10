@@ -252,7 +252,7 @@ void GameDetailsActivity::deleteGameArt()
             if(message_box.exec() != QMessageBox::Yes)
                 return;
             if(checkbox->isChecked())
-                settings.setOption(Settings::Flag::ConfirmPixmapDeletion, false);
+                settings.setFlag(Settings::Flag::ConfirmPixmapDeletion, false);
         }
         mr_art_manager.deleteArt(mp_game->id(), item->type());
         item->setPixmap(QPixmap());

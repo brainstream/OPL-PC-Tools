@@ -45,7 +45,7 @@ public:
 public:
     static Settings & instance();
     inline bool flag(Flag _flag) const;
-    void setOption(Flag _flag, bool _value);
+    void setFlag(Flag _flag, bool _value);
 
 private:
     Settings();

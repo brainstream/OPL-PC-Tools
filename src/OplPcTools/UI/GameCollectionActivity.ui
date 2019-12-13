@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
-    <height>484</height>
+    <width>1035</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -463,22 +463,6 @@
           </widget>
          </item>
          <item>
-          <spacer name="mp_verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QLabel" name="mp_label_title">
            <property name="minimumSize">
             <size>
@@ -713,7 +697,7 @@
   </action>
   <action name="mp_action_rename">
    <property name="icon">
-    <iconset theme="gtk-edit" resource="../Resources/Resources.qrc">
+    <iconset theme="document-edit" resource="../Resources/Resources.qrc">
      <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
    </property>
    <property name="text">

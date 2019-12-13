@@ -69,12 +69,12 @@ OUT_IMG_DIR="${OUT_DIR}/images"
 
 pushd ${CURRENT_DIR}
 
-if [ -e $WORKING_DIR ]; then
-    rm -rf ${WORKING_DIR}
+if [ -e "$WORKING_DIR" ]; then
+    rm -rf "${WORKING_DIR}"
 fi
-mkdir -p ${BUILD_DIR}
-mkdir -p ${OUT_BIN_DIR}
-mkdir -p ${OUT_IMG_DIR}
+mkdir -pv "${BUILD_DIR}"
+mkdir -pv "${OUT_BIN_DIR}"
+mkdir -pv "${OUT_IMG_DIR}"
 
 echo Building
 cd ${BUILD_DIR}
@@ -84,38 +84,44 @@ chrpath -d ${EXE_NAME}
 strip -s --strip-unneeded ${EXE_NAME}
 
 
-echo Copiying application files
-cd ${WORKING_DIR}
-cp ${BUILD_DIR}/${EXE_NAME} ${OUT_BIN_DIR}
-cp ${BUILD_DIR}/*.qm ${OUT_BIN_DIR}
-cp ${SRC_DIR}/LICENSE.txt ${OUT_DIR}
-cp ${SRC_DIR}/src/OplPcTools/Resources/icons/application.png ${OUT_IMG_DIR}/icon.png
-cp ${ASSETS_DIR}/linux/${EXE_NAME}.sh ${OUT_DIR}
-chmod +x ${OUT_DIR}/${EXE_NAME}.sh
+echo Copying application files
+cd "${WORKING_DIR}"
+cp -v "${BUILD_DIR}/${EXE_NAME}" "${OUT_BIN_DIR}"
+cp -v "${BUILD_DIR}"/*.qm "${OUT_BIN_DIR}"
+cp -v "${SRC_DIR}/LICENSE.txt" "${OUT_DIR}"
+cp -v "${SRC_DIR}/src/OplPcTools/Resources/icons/application.png" "${OUT_IMG_DIR}/icon.png"
+cp -v "${ASSETS_DIR}/linux/"* "${OUT_DIR}"
+chmod +x "${OUT_DIR}/${EXE_NAME}.sh"
 
-
-echo Copiying Qt translations
-for tr in "${OUT_BIN_DIR}/*.qm"; do
+echo Copying Qt translations
+for tr in "${OUT_BIN_DIR}"/*.qm; do
     culture=`echo ${tr} | grep -oP "(?<=oplpctools_)[a-z]{2}(?=\.qm)"`
-    cp ${QT_DIR}/translations/qtbase_${culture}.qm ${OUT_BIN_DIR}
+    cp -v "${QT_DIR}/translations/qtbase_${culture}.qm" "${OUT_BIN_DIR}"
 done
 
-echo Copiying Qt libraries
-cp `realpath ${QT_DIR}/lib/libQt5Core.so.5` "${OUT_BIN_DIR}/libQt5Core.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5Widgets.so.5` "${OUT_BIN_DIR}/libQt5Widgets.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5Network.so.5` "${OUT_BIN_DIR}/libQt5Network.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5Gui.so.5` "${OUT_BIN_DIR}/libQt5Gui.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5DBus.so.5` "${OUT_BIN_DIR}/libQt5DBus.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5Gui.so.5` "${OUT_BIN_DIR}/libQt5Gui.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5Svg.so.5` "${OUT_BIN_DIR}/libQt5Svg.so.5"
-cp `realpath ${QT_DIR}/lib/libQt5XcbQpa.so.5` "${OUT_BIN_DIR}/libQt5XcbQpa.so.5"
-cp `realpath ${QT_DIR}/lib/libicudata.so.56` "${OUT_BIN_DIR}/libicudata.so.56"
-cp `realpath ${QT_DIR}/lib/libicui18n.so.56` "${OUT_BIN_DIR}/libicui18n.so.56"
-cp `realpath ${QT_DIR}/lib/libicuuc.so.56` "${OUT_BIN_DIR}/libicuuc.so.56"
-mkdir "${OUT_BIN_DIR}/platforms"
-cp `realpath ${QT_DIR}/plugins/platforms/libqxcb.so` "${OUT_BIN_DIR}/platforms/libqxcb.so"
+echo Copying dependencies
+mkdir -v "${OUT_BIN_DIR}/platforms"
+mkdir -v "${OUT_BIN_DIR}/imageformats"
+cp -v "${QT_DIR}/lib/libQt5Core.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5Widgets.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5Network.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5Gui.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5DBus.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5Gui.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5Svg.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libQt5XcbQpa.so.5" "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libicudata.so."?? "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libicui18n.so."?? "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/lib/libicuuc.so."?? "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/plugins/platforms/libqxcb.so" "${OUT_BIN_DIR}/platforms/libqxcb.so"
+cp -v /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 "${OUT_BIN_DIR}"
+cp -v /usr/lib/x86_64-linux-gnu/libxcb.so.1 "${OUT_BIN_DIR}"
+cp -v /usr/lib/x86_64-linux-gnu/libxkbcommon-x11.so.0 "${OUT_BIN_DIR}"
+cp -v /usr/lib/x86_64-linux-gnu/libxkbcommon.so.0 "${OUT_BIN_DIR}"
+cp -v "${QT_DIR}/plugins/imageformats/"*.so "${OUT_BIN_DIR}/imageformats"
 
 echo Packing
-tar czvf "${EXE_NAME}_linux_${VERSION}_${ARCH}.tar.gz" -C ${OUT_DIR} .
+cd ${WORKING_DIR}
+tar czvf "${EXE_NAME}_linux_${VERSION}_${ARCH}.tar.gz" "${EXE_NAME}"
 
 popd

@@ -450,9 +450,9 @@ void GameInstallerActivity::dropEvent(QDropEvent * _event)
 {
     for(const QUrl & url : _event->mimeData()->urls())
     {
-        QString path = url.path();
+        QString path = url.toLocalFile();
         if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext) || path.endsWith(g_nrg_ext))
-            addDiscImage(url.path());
+            addDiscImage(path);
     }
 }
 

@@ -334,7 +334,7 @@
         <location filename="../UI/GameRenameDialog.ui" line="14"/>
         <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameRenameDialog.h" line="73"/>
         <source>Game Name</source>
-        <translation>Имя игры</translation>
+        <translation>Название игры</translation>
     </message>
 </context>
 <context>

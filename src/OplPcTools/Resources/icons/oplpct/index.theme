@@ -1,12 +1,12 @@
 [Icon Theme]
 Name=oplpct
 
-[actions/16]
-Size=16
+[actions/128]
+Size=128
 Context=Actions
 Type=Fixed
 
-[devices/16]
-Size=16
+[devices/128]
+Size=128
 Context=Devices
 Type=Fixed 

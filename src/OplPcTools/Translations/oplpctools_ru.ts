@@ -71,115 +71,115 @@
     <name>GameCollectionActivity</name>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="265"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="512"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="507"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="345"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="514"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="509"/>
         <source>Icons Size</source>
         <translation>Размер иконки</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="539"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="516"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="523"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="511"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="559"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="517"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="543"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="512"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="579"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="518"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="563"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="513"/>
         <source>Source:</source>
         <translation>Источник:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="599"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="519"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="583"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="514"/>
         <source>Parts:</source>
         <translation>Частей:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="648"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="488"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="632"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="483"/>
         <source>Edit game</source>
         <translation>Редактировать игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="663"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="492"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="647"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="487"/>
         <source>Delete game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="678"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="496"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="662"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="491"/>
         <source>Install game</source>
         <translation>Установить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="693"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="500"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="677"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="495"/>
         <source>Reload collection</source>
         <translation>Перезагрузить коллекцию</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="708"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="504"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="692"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="499"/>
         <source>Open collection</source>
         <translation>Открывать коллекцию</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="723"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="508"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="707"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="503"/>
         <source>Rename game</source>
         <translation>Переименовать игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="735"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="510"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="719"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="505"/>
         <source>Restore ISO</source>
         <translation>Восстановить ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="645"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="486"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="629"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="481"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="660"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="490"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="644"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="485"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="675"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="494"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="659"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="489"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="690"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="498"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="674"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="493"/>
         <source>Reload</source>
         <translation>Перезагрузить</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="705"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="502"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="689"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="497"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="720"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="506"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="704"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameCollectionActivity.h" line="501"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
@@ -188,25 +188,25 @@
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="137"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="134"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="86"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="139"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="136"/>
         <source>Rename...</source>
         <translation>Переименовть...</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="134"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="135"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="132"/>
         <source>Change Picture...</source>
         <translation>Изменить картинку...</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="143"/>
-        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="136"/>
+        <location filename="../../../../build-oplpctools2-Qt_5_12_6-Debug/ui_GameDetailsActivity.h" line="133"/>
         <source>Delete Picture</source>
         <translation>Удалить картинку</translation>
     </message>
@@ -474,12 +474,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="108"/>
+        <location filename="../UI/Application.cpp" line="114"/>
         <source>Something went wrong</source>
         <translation>Что-то пошло не так</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="113"/>
+        <location filename="../UI/Application.cpp" line="119"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>

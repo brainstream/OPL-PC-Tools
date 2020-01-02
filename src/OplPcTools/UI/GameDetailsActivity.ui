@@ -40,7 +40,8 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="go-previous"/>
+        <iconset theme="go-previous" resource="../Resources/Resources.qrc">
+         <normaloff>:/go-previous</normaloff>:/go-previous</iconset>
        </property>
       </widget>
      </item>
@@ -88,7 +89,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="document-edit"/>
+        <iconset theme="document-edit" resource="../Resources/Resources.qrc">
+         <normaloff>:/document-edit</normaloff>:/document-edit</iconset>
        </property>
       </widget>
      </item>
@@ -153,7 +155,9 @@
   <tabstop>mp_btn_close</tabstop>
   <tabstop>mp_btn_rename_game</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>mp_btn_rename_game</sender>

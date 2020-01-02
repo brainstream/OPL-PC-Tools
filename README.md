@@ -16,7 +16,7 @@ It is the absolutely open project and everyone are welcome to contribute to. But
 
 ![Main Window](screenshots/Arts.png)
 
-### Iinstall Multiple Games From the Different Sources (CD/DVD or the *.iso files) in the Automatic Sequential Mode
+### Iinstall Multiple Games From the Different Sources (CD/DVD or *.iso, *.bin, *.nrg files) in the Automatic Sequential Mode
 
 ![Installation](screenshots/Install.png)
 

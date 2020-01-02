@@ -37,8 +37,7 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="go-previous" resource="../Resources/Resources.qrc">
-         <normaloff>:/icons/go-previous</normaloff>:/icons/go-previous</iconset>
+        <iconset theme="go-previous"/>
        </property>
       </widget>
      </item>
@@ -61,8 +60,7 @@
         <string>&amp;Install</string>
        </property>
        <property name="icon">
-        <iconset theme="media-playback-start" resource="../Resources/Resources.qrc">
-         <normaloff>:/icons/media-playback-start</normaloff>:/icons/media-playback-start</iconset>
+        <iconset theme="media-playback-start"/>
        </property>
       </widget>
      </item>
@@ -154,8 +152,7 @@
              <string>&amp;Add Image</string>
             </property>
             <property name="icon">
-             <iconset theme="list-add" resource="../Resources/Resources.qrc">
-              <normaloff>:/icons/list-add</normaloff>:/icons/list-add</iconset>
+             <iconset theme="list-add"/>
             </property>
            </widget>
           </item>
@@ -165,8 +162,7 @@
              <string>Add &amp;Disc</string>
             </property>
             <property name="icon">
-             <iconset theme="media-optical" resource="../Resources/Resources.qrc">
-              <normaloff>:/icons/media-optical</normaloff>:/icons/media-optical</iconset>
+             <iconset theme="media-optical"/>
             </property>
            </widget>
           </item>
@@ -189,8 +185,7 @@
              <string>Remove</string>
             </property>
             <property name="icon">
-             <iconset theme="edit-delete" resource="../Resources/Resources.qrc">
-              <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
+             <iconset theme="edit-delete"/>
             </property>
            </widget>
           </item>
@@ -200,8 +195,7 @@
              <string>Rename</string>
             </property>
             <property name="icon">
-             <iconset theme="document-edit" resource="../Resources/Resources.qrc">
-              <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+             <iconset theme="document-edit"/>
             </property>
            </widget>
           </item>
@@ -424,8 +418,6 @@
   <tabstop>mp_btn_remove</tabstop>
   <tabstop>mp_btn_rename</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

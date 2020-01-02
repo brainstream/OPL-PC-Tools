@@ -43,9 +43,8 @@ QTranslator * setupTranslator(const QString & _base_name)
 {
     QString locale = QLocale::system().name();
     locale.truncate(locale.lastIndexOf('_'));
-    QCoreApplication * app = QApplication::instance();
     const QString filename = QString("%1_%2.qm").arg(_base_name).arg(locale);
-    QString filepath = QDir(app->applicationDirPath()).absoluteFilePath(filename);
+    QString filepath = QDir(gp_application->applicationDirPath()).absoluteFilePath(filename);
     if(!QFile::exists(filepath))
     {
         filepath = QStandardPaths::locate(QStandardPaths::AppDataLocation, filename);
@@ -55,7 +54,7 @@ QTranslator * setupTranslator(const QString & _base_name)
     QTranslator * translator = new QTranslator();
     if(translator->load(filepath))
     {
-        app->installTranslator(translator);
+        gp_application->installTranslator(translator);
         return translator;
     }
     else
@@ -63,6 +62,13 @@ QTranslator * setupTranslator(const QString & _base_name)
         delete translator;
     }
     return nullptr;
+}
+
+void setTheme()
+{
+    QPalette palette = gp_application->palette("");
+    bool is_dark_theme = palette.windowText().color().rgb() > palette.window().color().rgb();
+    QIcon::setThemeName(is_dark_theme ? "oplpct-dark" : "oplpct");
 }
 
 } // namespace
@@ -129,6 +135,7 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
+    setTheme();
     QTranslator * translator = setupTranslator(gp_application->applicationName());
     QTranslator * qt_translator = setupTranslator("qtbase");
     QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionActivity::createIntent();

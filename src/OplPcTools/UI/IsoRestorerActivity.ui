@@ -40,8 +40,7 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="go-previous" resource="../Resources/Resources.qrc">
-         <normaloff>:/icons/go-previous</normaloff>:/icons/go-previous</iconset>
+        <iconset theme="go-previous"/>
        </property>
       </widget>
      </item>
@@ -124,8 +123,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resources/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

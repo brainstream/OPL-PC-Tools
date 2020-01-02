@@ -1,19 +1,34 @@
 <RCC>
-    <qresource prefix="/icons">
-        <file alias="document-edit">icons/document-edit.png</file>
-        <file alias="document-open">icons/document-open.png</file>
-        <file alias="view-refresh">icons/view-refresh.png</file>
-        <file alias="application">icons/application.png</file>
-        <file alias="list-add">icons/list-add.png</file>
-        <file alias="go-previous">icons/go-previous.png</file>
-        <file alias="edit-delete">icons/edit-delete.png</file>
-        <file alias="edit-undo">icons/edit-undo.png</file>
-        <file alias="media-optical">icons/media-optical.png</file>
-        <file alias="media-playback-start">icons/media-playback-start.png</file>
-        <file alias="document-properties">icons/document-properties.png</file>
-    </qresource>
     <qresource prefix="/images">
         <file alias="no-image">images/no-image.svg</file>
         <file alias="no-icon">images/no-icon.png</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="application">icons/application.png</file>
+    </qresource>    
+    <qresource prefix="/">
+        <file>icons/oplpct/index.theme</file>
+        <file>icons/oplpct/actions/16/document-edit.svg</file>
+        <file>icons/oplpct/actions/16/document-open.svg</file>
+        <file>icons/oplpct/actions/16/document-properties.svg</file>
+        <file>icons/oplpct/actions/16/edit-delete.svg</file>
+        <file>icons/oplpct/actions/16/edit-undo.svg</file>
+        <file>icons/oplpct/actions/16/go-previous.svg</file>
+        <file>icons/oplpct/actions/16/list-add.svg</file>
+        <file>icons/oplpct/actions/16/media-playback-start.svg</file>
+        <file>icons/oplpct/actions/16/view-refresh.svg</file>
+        <file>icons/oplpct/devices/16/media-optical.svg</file>
+        
+        <file>icons/oplpct-dark/index.theme</file>
+        <file>icons/oplpct-dark/actions/16/document-edit.svg</file>
+        <file>icons/oplpct-dark/actions/16/document-open.svg</file>
+        <file>icons/oplpct-dark/actions/16/document-properties.svg</file>
+        <file>icons/oplpct-dark/actions/16/edit-delete.svg</file>
+        <file>icons/oplpct-dark/actions/16/edit-undo.svg</file>
+        <file>icons/oplpct-dark/actions/16/go-previous.svg</file>
+        <file>icons/oplpct-dark/actions/16/list-add.svg</file>
+        <file>icons/oplpct-dark/actions/16/media-playback-start.svg</file>
+        <file>icons/oplpct-dark/actions/16/view-refresh.svg</file>
+        <file>icons/oplpct-dark/devices/16/media-optical.svg</file>
     </qresource>
 </RCC>

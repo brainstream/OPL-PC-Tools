@@ -54,7 +54,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
     {
         Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(base_directory.absoluteFilePath(iso))));
         if(!image.init())
-            break;
+            continue;
         Game * game = createGame(image.gameId());
         game->setMediaType(_media_type);
         game->setPartCount(1);

@@ -229,7 +229,7 @@ bool Iso9660::readConfig(DeviceSource & _source)
         if(record->record_length == 0)
             break;
         processed += record->record_length;
-        if(strcmp("SYSTEM.CNF;1", record->filename) == 0)
+        if(strncmp("SYSTEM.CNF", record->filename, 10) == 0)
             result = parseConfig(_source, record);
         if(result) break;
     }
@@ -238,7 +238,8 @@ bool Iso9660::readConfig(DeviceSource & _source)
 
 bool Iso9660::parseConfig(DeviceSource & _source, const FileRecord * _file_record)
 {
-    quint32 file_location = _file_record->extent_location * mp_descriptor->block_size;
+    qint64 ex_location = _file_record->extent_location;
+    qint64 file_location = ex_location * mp_descriptor->block_size;
     if(!_source.seek(file_location))
         return false;
     QByteArray config(_file_record->data_length, Qt::Uninitialized);

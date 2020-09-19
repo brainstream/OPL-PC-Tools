@@ -172,6 +172,7 @@ endif()
 
 set(TRANSLATIONS
     ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_ru.ts
+    ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_pt.ts
 )
 
 qt5_create_translation(QM_FILES

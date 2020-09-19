@@ -219,5 +219,6 @@ add_custom_target(misc SOURCES
     README.md
     NOTES.txt
     release/make-release-linux.sh
+    release/assets/linux/make-desktop-file.sh
+    release/assets/linux/oplpctools.sh
 )
-

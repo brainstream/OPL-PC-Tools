@@ -17,8 +17,8 @@
    </size>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/icons/application</normaloff>:/icons/application</iconset>
+   <iconset resource="../Resources/Resources.qrc">
+    <normaloff>:/images/application</normaloff>:/images/application</iconset>
   </property>
   <widget class="QWidget" name="mp_centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -161,7 +161,9 @@ color: rgb(56, 56, 56);</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>mp_action_about</sender>

@@ -73,10 +73,10 @@ void setTheme()
         app_directory.absoluteFilePath("../icons"),
     };
     for(const QString & location : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
-        iconSearchPaths.append(QDir(location).absoluteFilePath("icons"));
+        iconSearchPaths << QDir(location).absoluteFilePath("icons");
     QIcon::setThemeSearchPaths(iconSearchPaths);
-    QIcon::setThemeName(Settings::instance().iconTheme());
-    QIcon::setFallbackThemeName("Tango");
+    const QString & icon_theme_name = Settings::instance().iconTheme();
+    QIcon::setThemeName(icon_theme_name.isEmpty() ? "Tango" : icon_theme_name);
 }
 
 } // namespace

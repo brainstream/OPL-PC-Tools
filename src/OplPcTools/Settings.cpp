@@ -46,6 +46,8 @@ const char * flagToKey(Settings::Flag _flag)
     }
 }
 
+const QString icon_theme_key("Settings/IconTheme");
+
 } // namespace
 
 
@@ -60,6 +62,7 @@ Settings::Settings()
     loadFlag(settings, Flag::RenameIso, true);
     loadFlag(settings, Flag::CheckNewVersion, true);
     loadFlag(settings, Flag::ValidateUlCfg, true);
+    m_icon_theme = settings.value(icon_theme_key, QString()).toString();
 }
 
 void Settings::loadFlag(const QSettings & _settings, Flag _flag, bool _default_value)
@@ -76,6 +79,11 @@ void Settings::setFlag(Flag _flag, bool _value)
     QSettings settings;
     settings.setValue(flagToKey(_flag), _value);
     m_flags[_flag] = _value;
+}
+
+const QString & Settings::iconTheme() const
+{
+    return m_icon_theme;
 }
 
 Settings & Settings::instance()

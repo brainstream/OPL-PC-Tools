@@ -20,6 +20,7 @@
 #include <QTranslator>
 #include <QStandardPaths>
 #include <OplPcTools/ApplicationInfo.h>
+#include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/GameCollectionActivity.h>
 #include <OplPcTools/UI/Application.h>
 
@@ -66,9 +67,16 @@ QTranslator * setupTranslator(const QString & _base_name)
 
 void setTheme()
 {
-    QPalette palette = gp_application->palette("");
-    bool is_dark_theme = palette.windowText().color().rgb() > palette.window().color().rgb();
-    QIcon::setThemeName(is_dark_theme ? "oplpct-dark" : "oplpct");
+    QDir app_directory(gp_application->applicationDirPath());
+    QStringList iconSearchPaths {
+        app_directory.absoluteFilePath("icons"),
+        app_directory.absoluteFilePath("../icons"),
+    };
+    for(const QString & location : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
+        iconSearchPaths.append(QDir(location).absoluteFilePath("icons"));
+    QIcon::setThemeSearchPaths(iconSearchPaths);
+    QIcon::setThemeName(Settings::instance().iconTheme());
+    QIcon::setFallbackThemeName("Tango");
 }
 
 } // namespace

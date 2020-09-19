@@ -46,6 +46,7 @@ public:
     static Settings & instance();
     inline bool flag(Flag _flag) const;
     void setFlag(Flag _flag, bool _value);
+    const QString & iconTheme() const;
 
 private:
     Settings();
@@ -53,6 +54,7 @@ private:
 
 private:
     QMap<Flag, bool> m_flags;
+    QString m_icon_theme;
 };
 
 bool Settings::flag(Flag _flag) const

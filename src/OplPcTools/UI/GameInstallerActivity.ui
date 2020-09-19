@@ -37,8 +37,7 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="go-previous" resource="../Resources/Resources.qrc">
-         <normaloff>:/go-previous</normaloff>:/go-previous</iconset>
+        <iconset theme="oplpct-back"/>
        </property>
       </widget>
      </item>
@@ -61,8 +60,8 @@
         <string>&amp;Install</string>
        </property>
        <property name="icon">
-        <iconset theme="media-playback-start" resource="../Resources/Resources.qrc">
-         <normaloff>:/media-playback-start</normaloff>:/media-playback-start</iconset>
+        <iconset theme="oplpct-start">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -154,8 +153,8 @@
              <string>&amp;Add Image</string>
             </property>
             <property name="icon">
-             <iconset theme="list-add" resource="../Resources/Resources.qrc">
-              <normaloff>:/list-add</normaloff>:/list-add</iconset>
+             <iconset theme="oplpct-add">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -165,8 +164,8 @@
              <string>Add &amp;Disc</string>
             </property>
             <property name="icon">
-             <iconset theme="media-optical" resource="../Resources/Resources.qrc">
-              <normaloff>:/media-optical</normaloff>:/media-optical</iconset>
+             <iconset theme="oplpct-disc">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -189,8 +188,8 @@
              <string>Remove</string>
             </property>
             <property name="icon">
-             <iconset theme="edit-delete" resource="../Resources/Resources.qrc">
-              <normaloff>:/edit-delete</normaloff>:/edit-delete</iconset>
+             <iconset theme="oplpct-delete">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -200,8 +199,8 @@
              <string>Rename</string>
             </property>
             <property name="icon">
-             <iconset theme="document-edit" resource="../Resources/Resources.qrc">
-              <normaloff>:/document-edit</normaloff>:/document-edit</iconset>
+             <iconset theme="oplpct-rename">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -424,8 +423,6 @@
   <tabstop>mp_btn_remove</tabstop>
   <tabstop>mp_btn_rename</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

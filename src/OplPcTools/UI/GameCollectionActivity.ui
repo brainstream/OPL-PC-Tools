@@ -622,8 +622,7 @@
   </layout>
   <action name="mp_action_edit">
    <property name="icon">
-    <iconset theme="document-properties" resource="../Resources/Resources.qrc">
-     <normaloff>:/document-properties</normaloff>:/document-properties</iconset>
+    <iconset theme="oplpct-edit"/>
    </property>
    <property name="text">
     <string>Edit</string>
@@ -637,8 +636,7 @@
   </action>
   <action name="mp_action_delete">
    <property name="icon">
-    <iconset theme="edit-delete" resource="../Resources/Resources.qrc">
-     <normaloff>:/edit-delete</normaloff>:/edit-delete</iconset>
+    <iconset theme="oplpct-delete"/>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -652,8 +650,7 @@
   </action>
   <action name="mp_action_install">
    <property name="icon">
-    <iconset theme="list-add" resource="../Resources/Resources.qrc">
-     <normaloff>:/list-add</normaloff>:/list-add</iconset>
+    <iconset theme="oplpct-add"/>
    </property>
    <property name="text">
     <string>Install</string>
@@ -667,8 +664,7 @@
   </action>
   <action name="mp_action_reload">
    <property name="icon">
-    <iconset theme="view-refresh" resource="../Resources/Resources.qrc">
-     <normaloff>:/view-refresh</normaloff>:/view-refresh</iconset>
+    <iconset theme="oplpct-reload"/>
    </property>
    <property name="text">
     <string>Reload</string>
@@ -682,8 +678,7 @@
   </action>
   <action name="mp_action_load">
    <property name="icon">
-    <iconset theme="document-open" resource="../Resources/Resources.qrc">
-     <normaloff>:/document-open</normaloff>:/document-open</iconset>
+    <iconset theme="oplpct-load"/>
    </property>
    <property name="text">
     <string>Open</string>
@@ -697,8 +692,7 @@
   </action>
   <action name="mp_action_rename">
    <property name="icon">
-    <iconset theme="document-edit" resource="../Resources/Resources.qrc">
-     <normaloff>:/document-edit</normaloff>:/document-edit</iconset>
+    <iconset theme="oplpct-rename"/>
    </property>
    <property name="text">
     <string>Rename</string>
@@ -712,8 +706,7 @@
   </action>
   <action name="mp_action_restore_iso">
    <property name="icon">
-    <iconset theme="edit-undo" resource="../Resources/Resources.qrc">
-     <normaloff>:/edit-undo</normaloff>:/edit-undo</iconset>
+    <iconset theme="oplpct-restore"/>
    </property>
    <property name="text">
     <string>Restore ISO</string>
@@ -734,8 +727,6 @@
   <tabstop>mp_btn_delete</tabstop>
   <tabstop>mp_edit_filter</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

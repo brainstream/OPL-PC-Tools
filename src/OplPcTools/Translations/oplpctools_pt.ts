@@ -71,115 +71,115 @@
     <name>GameCollectionActivity</name>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="265"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="507"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="465"/>
         <source>Filter</source>
         <translation>Filtro</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="345"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="509"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="467"/>
         <source>Icons Size</source>
         <translation>Tamanho dos ícones</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="523"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="511"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="469"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="543"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="512"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="470"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="563"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="513"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="471"/>
         <source>Source:</source>
         <translation>Fonte:</translation>
     </message>
     <message>
         <location filename="../UI/GameCollectionActivity.ui" line="583"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="514"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="472"/>
         <source>Parts:</source>
         <translation>Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="632"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="483"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="631"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="441"/>
         <source>Edit game</source>
         <translation>Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="647"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="487"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="645"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="445"/>
         <source>Delete game</source>
         <translation>Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="662"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="491"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="659"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="449"/>
         <source>Install game</source>
         <translation>Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="677"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="495"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="673"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="453"/>
         <source>Reload collection</source>
         <translation>Atualizar coleção</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="692"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="499"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="687"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="457"/>
         <source>Open collection</source>
         <translation>Abrir coleção</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="707"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="503"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="701"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="461"/>
         <source>Rename game</source>
         <translation>Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="719"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="505"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="712"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="463"/>
         <source>Restore ISO</source>
         <translation>Restaurar ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="629"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="481"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="628"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="439"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="644"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="485"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="642"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="443"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="659"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="489"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="656"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="447"/>
         <source>Install</source>
         <translation>Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="674"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="493"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="670"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="451"/>
         <source>Reload</source>
         <translation>Atualizar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="689"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="497"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="684"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="455"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="704"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="501"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="698"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="459"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
@@ -188,25 +188,25 @@
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="134"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="122"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="86"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="136"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="85"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
         <source>Rename...</source>
         <translation>Renomear...</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="134"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="132"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="132"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="120"/>
         <source>Change Picture...</source>
         <translation>Mudar imagem...</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="143"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="133"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="141"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="121"/>
         <source>Delete Picture</source>
         <translation>Apagar imagem</translation>
     </message>
@@ -215,115 +215,115 @@
     <name>GameInstallerActivity</name>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="37"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="356"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="350"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="61"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="357"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="60"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="351"/>
         <source>&amp;Install</source>
         <translation>&amp;Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="72"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="358"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="71"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="352"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="139"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="361"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="138"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="355"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="144"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="360"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="143"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="354"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="154"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="362"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="153"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="356"/>
         <source>&amp;Add Image</source>
         <translation>&amp;Adicionar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="165"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="363"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="164"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="357"/>
         <source>Add &amp;Disc</source>
         <translation>Adicionar &amp;Disco</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="189"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="364"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="188"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="358"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="200"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="365"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="199"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="359"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="285"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="366"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="284"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="360"/>
         <source>Media Type</source>
         <translation>Tipo de mídia</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="291"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="367"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="290"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="361"/>
         <source>Auto</source>
         <translation>Automático</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="301"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="368"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="300"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="362"/>
         <source>DVD</source>
         <translation>DVD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="308"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="369"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="307"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="363"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="324"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="372"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="323"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="366"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the only way to run large games (larger than 4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should split up large files into parts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Essa é a única forma de rodar jogos grandes (maiores que 4GB) pelo USB, já que o OPL aceita apenas o sistema de arquivos FAT32, que suporta apenas arquivos menores que 4GB. Por isso você deve dividir os arquivos em várias partes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="327"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="374"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="326"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="368"/>
         <source>Split up ISO file into parts</source>
         <translation>Dividir o arquivo ISO em partes menores</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="334"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="376"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="333"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="370"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse é o método recomendado se você planeja jogar pela rede. O arquivo ISO vai ser colocado dentro da pasta DVD ou CD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="337"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="378"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="336"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="372"/>
         <source>Do not split up ISO file</source>
         <translation>Não dividir o arquivo ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="347"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="379"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="346"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="373"/>
         <source>Move ISO file instead of copy</source>
         <translation>Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="354"/>
-        <location filename="../../../build/ui_GameInstallerActivity.h" line="380"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="353"/>
+        <location filename="../../../build/ui_GameInstallerActivity.h" line="374"/>
         <source>Add a game ID to filename</source>
         <translation>Adicionar um ID de jogo ao nome do arquivo</translation>
     </message>
@@ -341,7 +341,7 @@
     <name>IsoRestorerActivity</name>
     <message>
         <location filename="../UI/IsoRestorerActivity.ui" line="40"/>
-        <location filename="../../../build/ui_IsoRestorerActivity.h" line="125"/>
+        <location filename="../../../build/ui_IsoRestorerActivity.h" line="119"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
@@ -349,50 +349,50 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../UI/MainWindow.ui" line="146"/>
-        <location filename="../../../build/ui_MainWindow.h" line="149"/>
+        <location filename="../UI/MainWindow.ui" line="56"/>
+        <location filename="../../../build/ui_MainWindow.h" line="137"/>
         <source>Newest version of the application is available</source>
         <translation>Uma nova versão do programa está disponível</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="162"/>
-        <location filename="../../../build/ui_MainWindow.h" line="150"/>
+        <location filename="../UI/MainWindow.ui" line="72"/>
+        <location filename="../../../build/ui_MainWindow.h" line="138"/>
         <source>Download</source>
         <translation>Baixar</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="178"/>
-        <location filename="../../../build/ui_MainWindow.h" line="151"/>
+        <location filename="../UI/MainWindow.ui" line="88"/>
+        <location filename="../../../build/ui_MainWindow.h" line="139"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="224"/>
-        <location filename="../../../build/ui_MainWindow.h" line="152"/>
+        <location filename="../UI/MainWindow.ui" line="134"/>
+        <location filename="../../../build/ui_MainWindow.h" line="140"/>
         <source>&amp;Tools</source>
         <translation>&amp;Ferramentas</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="230"/>
-        <location filename="../../../build/ui_MainWindow.h" line="153"/>
+        <location filename="../UI/MainWindow.ui" line="140"/>
+        <location filename="../../../build/ui_MainWindow.h" line="141"/>
         <source>&amp;Help</source>
         <translation>&amp;Ajuda</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="240"/>
-        <location filename="../../../build/ui_MainWindow.h" line="146"/>
+        <location filename="../UI/MainWindow.ui" line="150"/>
+        <location filename="../../../build/ui_MainWindow.h" line="134"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Configurações...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="245"/>
-        <location filename="../../../build/ui_MainWindow.h" line="147"/>
+        <location filename="../UI/MainWindow.ui" line="155"/>
+        <location filename="../../../build/ui_MainWindow.h" line="135"/>
         <source>&amp;About...</source>
         <translation>&amp;Sobre...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="250"/>
-        <location filename="../../../build/ui_MainWindow.h" line="148"/>
+        <location filename="../UI/MainWindow.ui" line="160"/>
+        <location filename="../../../build/ui_MainWindow.h" line="136"/>
         <source>About &amp;Qt...</source>
         <translation>Sobre o &amp;Qt...</translation>
     </message>
@@ -474,12 +474,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="114"/>
+        <location filename="../UI/Application.cpp" line="127"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="119"/>
+        <location filename="../UI/Application.cpp" line="132"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -672,6 +672,14 @@ Tem certeza?</translation>
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::SettingsDialog</name>
+    <message>
+        <location filename="../UI/SettingsDialog.cpp" line="56"/>
+        <source>The icon theme will change after restarting the app</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UlConfigGameInstaller</name>
     <message>
         <location filename="../UlConfigGameInstaller.cpp" line="42"/>
@@ -810,75 +818,87 @@ Tem certeza?</translation>
     <name>SettingsDialog</name>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="14"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="154"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="176"/>
         <source>Settings</source>
         <translation>Configurações</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="27"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="160"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="182"/>
         <source>Main</source>
         <translation>Principal</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="47"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="157"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="179"/>
         <source>Check for app updates</source>
         <translation>Verificar por atualizações</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="40"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="156"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="178"/>
         <source>Validate ul.cfg</source>
         <translation>Validar ul.cfg</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="33"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="155"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="177"/>
         <source>Open recently used collection</source>
         <translation>Abrir coleção recentemente usada</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="54"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="158"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="180"/>
         <source>Confirm the removal of a game</source>
         <translation>Confirme a remoção de um jogo</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="61"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="159"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="181"/>
         <source>Confirm the removal of a picture</source>
         <translation>Confirme a remoção de uma imagem</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="82"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="165"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="187"/>
         <source>Installation</source>
         <translation>Instalação</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="88"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="161"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="183"/>
         <source>Default behaviour</source>
         <translation>Comportamento padrão</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="94"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="162"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="184"/>
         <source>Write ISO in a single file</source>
         <translation>Salvar ISO em um único arquivo</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="101"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="163"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="185"/>
         <source>Move ISO instead of copy</source>
         <translation>Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="108"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="164"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="186"/>
         <source>Add a game ID to a filename</source>
         <translation>Adicionar um ID de jogo ao um arquivo</translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="132"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="189"/>
+        <source>Appearance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="138"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="188"/>
+        <source>Icon Theme</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

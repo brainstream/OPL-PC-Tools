@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="mp_tabs">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mp_tab_main">
       <attribute name="title">
@@ -124,6 +124,23 @@
           </size>
          </property>
         </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="mp_tab_appearance">
+      <attribute name="title">
+       <string>Appearance</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="mp_label_icon_theme">
+         <property name="text">
+          <string>Icon Theme</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="mp_combobox_icon_theme"/>
        </item>
       </layout>
      </widget>

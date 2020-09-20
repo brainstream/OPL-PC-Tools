@@ -34,6 +34,12 @@ public:
 
 public slots:
     void accept() override;
+
+private slots:
+    void iconThemeChanged(const QString & _theme);
+
+private:
+    bool m_is_icon_theme_alert_shown;
 };
 
 } // namespace UI

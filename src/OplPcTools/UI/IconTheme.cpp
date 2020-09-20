@@ -16,46 +16,54 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATION__
-#define __OPLPCTOOLS_APPLICATION__
+#include <QIcon>
+#include <QDir>
+#include <QSet>
+#include <QSettings>
+#include <OplPcTools/UI/IconTheme.h>
 
-#include <QApplication>
-#include <QWidget>
-#include <OplPcTools/GameCollection.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/MainWindow.h>
+namespace {
+
+QString tryReadIconTheme(const QDir _dir)
+{
+    QString filename = _dir.absoluteFilePath("index.theme");
+    if(!QFile::exists(filename))
+        return QString();
+    QSettings settings(filename, QSettings::IniFormat);
+    return settings.value("Icon Theme/Name", QString()).toString();
+}
+
+QStringList scanIconThemes(const QDir & _dir)
+{
+    QStringList result;
+    if(!_dir.exists())
+        return result;
+    for(const QString & theme_dir : _dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+    {
+        QString theme = tryReadIconTheme(_dir.absoluteFilePath(theme_dir));
+        if(!theme.isEmpty())
+            result << theme;
+    }
+    return result;
+}
+
+} // namespace
 
 namespace OplPcTools {
 namespace UI {
 
-class Application : public QApplication
+QStringList loadIconThemes()
 {
-    Q_OBJECT
-
-protected:
-    Application(int & _argc, char ** _argv);
-
-public:
-    ~Application() override;
-    void showMainWindow();
-    void showMessage(const QString & _title, const QString & _message);
-    void showMessage(const QString & _message);
-    void showErrorMessage();
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
-    GameCollection & gameCollection() const;
-
-    static Application & instance();
-
-private:
-    MainWindow * ensureMainWindow();
-
-private:
-    MainWindow * mp_main_window;
-    GameCollection * mp_game_collection;
-};
+    QSet<QString> theme_set;
+    for(const QString & path : QIcon::themeSearchPaths())
+    {
+        for(const QString & theme : scanIconThemes(path))
+            theme_set.insert(theme);
+    }
+    QStringList result = QStringList::fromSet(theme_set);
+    std::sort(result.begin(), result.end());
+    return result;
+}
 
 } // namespace UI
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_APPLICATION__

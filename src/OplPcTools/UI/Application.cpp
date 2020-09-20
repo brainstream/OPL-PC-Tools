@@ -65,7 +65,7 @@ QTranslator * setupTranslator(const QString & _base_name)
     return nullptr;
 }
 
-void setTheme()
+void setupIconTheme()
 {
     QDir app_directory(gp_application->applicationDirPath());
     QStringList iconSearchPaths {
@@ -75,8 +75,7 @@ void setTheme()
     for(const QString & location : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
         iconSearchPaths << QDir(location).absoluteFilePath("icons");
     QIcon::setThemeSearchPaths(iconSearchPaths);
-    const QString & icon_theme_name = Settings::instance().iconTheme();
-    QIcon::setThemeName(icon_theme_name.isEmpty() ? "Tango" : icon_theme_name);
+    QIcon::setThemeName(Settings::instance().iconTheme());
 }
 
 } // namespace
@@ -117,6 +116,12 @@ void Application::showMessage(const QString & _title, const QString & _message)
     QMessageBox::information(ensureMainWindow(), _title, _message);
 }
 
+void Application::showMessage(const QString & _message)
+{
+    auto main_window = ensureMainWindow();
+    QMessageBox::information(main_window, main_window->windowTitle(), _message);
+}
+
 void Application::showErrorMessage()
 {
     showErrorMessage(tr("Something went wrong"));
@@ -143,7 +148,7 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
-    setTheme();
+    setupIconTheme();
     QTranslator * translator = setupTranslator(gp_application->applicationName());
     QTranslator * qt_translator = setupTranslator("qtbase");
     QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionActivity::createIntent();

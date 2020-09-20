@@ -62,7 +62,7 @@ Settings::Settings()
     loadFlag(settings, Flag::RenameIso, true);
     loadFlag(settings, Flag::CheckNewVersion, true);
     loadFlag(settings, Flag::ValidateUlCfg, true);
-    m_icon_theme = settings.value(icon_theme_key, QString()).toString();
+    m_icon_theme = settings.value(icon_theme_key, "Tango").toString();
 }
 
 void Settings::loadFlag(const QSettings & _settings, Flag _flag, bool _default_value)
@@ -84,6 +84,13 @@ void Settings::setFlag(Flag _flag, bool _value)
 const QString & Settings::iconTheme() const
 {
     return m_icon_theme;
+}
+
+void Settings::setIconTheme(const QString & _theme)
+{
+    QSettings settings;
+    settings.setValue(icon_theme_key, _theme);
+    m_icon_theme = _theme;
 }
 
 Settings & Settings::instance()

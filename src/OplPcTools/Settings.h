@@ -47,6 +47,7 @@ public:
     inline bool flag(Flag _flag) const;
     void setFlag(Flag _flag, bool _value);
     const QString & iconTheme() const;
+    void setIconTheme(const QString & _theme);
 
 private:
     Settings();

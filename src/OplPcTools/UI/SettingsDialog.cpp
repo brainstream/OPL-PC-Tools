@@ -18,13 +18,16 @@
 
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
+#include <OplPcTools/UI/Application.h>
+#include <OplPcTools/UI/IconTheme.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
-    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
+    m_is_icon_theme_alert_shown(false)
 {
     setupUi(this);
     Settings & settings = Settings::instance();
@@ -39,7 +42,19 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
         mp_checkbox_check_new_versions->setChecked(settings.flag(Settings::Flag::CheckNewVersion));
     else
         mp_checkbox_check_new_versions->setEnabled(false);
+    mp_combobox_icon_theme->insertItems(0, loadIconThemes());
+    mp_combobox_icon_theme->setCurrentText(QIcon::themeName());
+    connect(mp_combobox_icon_theme, &QComboBox::currentTextChanged, this, &SettingsDialog::iconThemeChanged);
     mp_tabs->setCurrentIndex(0);
+}
+
+void SettingsDialog::iconThemeChanged(const QString & _theme)
+{
+    if(!m_is_icon_theme_alert_shown && QIcon::themeName() != _theme)
+    {
+        m_is_icon_theme_alert_shown = true;
+        Application::instance().showMessage(tr("The icon theme will change after restarting the app"));
+    }
 }
 
 void SettingsDialog::accept()
@@ -54,5 +69,6 @@ void SettingsDialog::accept()
     settings.setFlag(Settings::Flag::ValidateUlCfg, mp_checkbox_validate_ulcfg->isChecked());
     settings.setFlag(Settings::Flag::CheckNewVersion,
         mp_checkbox_check_new_versions->isEnabled() && mp_checkbox_check_new_versions->isChecked());
+    settings.setIconTheme(mp_combobox_icon_theme->currentText());
     QDialog::accept();
 }

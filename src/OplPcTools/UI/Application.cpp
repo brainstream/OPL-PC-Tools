@@ -144,6 +144,7 @@ GameCollection & Application::gameCollection() const
 
 int main(int _argc, char * _argv[])
 {
+    QApplication::setDesktopSettingsAware(true);
     gp_application = new PrivateApplication(_argc, _argv);
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);

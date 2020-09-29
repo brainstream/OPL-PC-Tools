@@ -1,5 +1,5 @@
 # OPL PC Tools
-Tools for managing PS2 disc images used in [Open PlayStation 2 Loader](https://github.com/ifcaro/Open-PS2-Loader).
+Tools for managing PS2 disc images used in [Open PS2 Loader](https://github.com/ifcaro/Open-PS2-Loader).
 
 Written in Qt and running under Linux and MS Window. It is possible to build the application under MacOS X and FreeBSD,
 but the CD/DVD sources will not work. It is a known issue and I am planning to fix it. Someday.

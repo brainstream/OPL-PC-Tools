@@ -135,6 +135,7 @@ GameDetailsActivity::GameDetailsActivity(OplPcTools::GameArtManager & _art_manag
     mp_item_context_menu(nullptr)
 {
     setupUi(this);
+    mp_tabs->setCurrentIndex(0);
     setupShortcuts();
     mp_list_arts->setContextMenuPolicy(Qt::CustomContextMenu);
     mp_item_context_menu = new QMenu(mp_list_arts);

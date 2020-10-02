@@ -21,7 +21,7 @@
 
 #include <QObject>
 #include <QStringList>
-#include <OplPcTools/GameCollection.h>
+#include <OplPcTools/GameManager.h>
 #include <OplPcTools/Device.h>
 
 namespace OplPcTools {
@@ -31,7 +31,7 @@ class GameInstaller : public QObject
     Q_OBJECT
 
 public:
-    GameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    GameInstaller(Device & _device, GameManager & _manager, QObject * _parent = nullptr);
     virtual bool install() = 0;
     virtual const Game * installedGame() const = 0;
 
@@ -47,7 +47,7 @@ protected:
 
 protected:
     Device & mr_device;
-    GameCollection & mr_collection;
+    GameManager & mr_manager;
 };
 
 } // namespace OplPcTools

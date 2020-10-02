@@ -16,37 +16,34 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
-#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#ifndef __OPLPCTOOLS_VMCMANAGER__
+#define __OPLPCTOOLS_VMCMANAGER__
 
-#include <OplPcTools/GameInstaller.h>
+#include <OplPcTools/Vmc.h>
+#include <QDir>
+#include <QObject>
 
 namespace OplPcTools {
 
-class UlConfigGameInstaller : public GameInstaller
+
+class VmcManager final : public QObject
 {
     Q_OBJECT
+    class VmcList;
 
 public:
-    UlConfigGameInstaller(Device & _device, GameManager & _manager, QObject * _parent = nullptr);
-    ~UlConfigGameInstaller() override;
-    bool install() override;
-    inline const Game * installedGame() const override;
+    explicit VmcManager(QObject * _parent = nullptr);
+    ~VmcManager() override;
+    void load(const QDir & _directory);
+    bool isLoaded() const;
+    const int count() const;
+    const Vmc * operator[](int _index) const;
 
 private:
-    void rollback();
-    void registerGame();
-
-private:
-    QStringList m_written_parts;
-    Game * mp_game;
+    VmcList * mp_vmcs;
 };
 
-const Game * UlConfigGameInstaller::installedGame() const
-{
-    return mp_game;
-}
 
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#endif // __OPLPCTOOLS_VMCMANAGER__

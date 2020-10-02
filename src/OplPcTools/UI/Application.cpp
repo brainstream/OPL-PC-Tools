@@ -83,15 +83,15 @@ void setupIconTheme()
 Application::Application(int & _argc, char ** _argv) :
     QApplication(_argc, _argv),
     mp_main_window(nullptr),
-    mp_game_collection(nullptr)
+    mp_game_manager(nullptr)
 {
-    mp_game_collection = new GameCollection(this);
+    mp_game_manager = new GameManager(this);
 }
 
 Application::~Application()
 {
     delete mp_main_window;
-    delete mp_game_collection;
+    delete mp_game_manager;
 }
 
 Application & Application::instance()
@@ -137,9 +137,9 @@ bool Application::pushActivity(Intent & _intent)
     return ensureMainWindow()->pushActivity(_intent);
 }
 
-GameCollection & Application::gameCollection() const
+GameManager & Application::gameManager() const
 {
-    return *mp_game_collection;
+    return *mp_game_manager;
 }
 
 int main(int _argc, char * _argv[])

@@ -607,14 +607,14 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::GameCollection</name>
+    <name>OplPcTools::GameManager</name>
     <message>
-        <location filename="../GameCollection.cpp" line="116"/>
+        <location filename="../GameManager.cpp" line="116"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать игру &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="122"/>
+        <location filename="../GameManager.cpp" line="122"/>
         <source>Unable to delete game &quot;%1&quot;</source>
         <translation>Не могу удалить игру &quot;%1&quot;</translation>
     </message>
@@ -965,7 +965,7 @@ Continue?</source>
         <translation>Максимальная длина имени образа – %1 байт</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="101"/>
+        <location filename="../GameManager.cpp" line="101"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>

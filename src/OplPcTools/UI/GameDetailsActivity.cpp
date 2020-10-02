@@ -183,7 +183,7 @@ void GameDetailsActivity::renameGame()
         return;
     try
     {
-        Application::instance().gameCollection().renameGame(*mp_game, dlg.name());
+        Application::instance().gameManager().renameGame(*mp_game, dlg.name());
         mp_label_title->setText(dlg.name());
     }
     catch(const Exception & exception)
@@ -276,7 +276,7 @@ void GameDetailsActivity::deleteGameArt()
 
 void GameDetailsActivity::setGameId(const QString & _id)
 {
-    mp_game = Application::instance().gameCollection().findGame(_id);
+    mp_game = Application::instance().gameManager().findGame(_id);
     initGameControls();
 }
 

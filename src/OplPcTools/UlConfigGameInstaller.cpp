@@ -24,8 +24,8 @@
 
 using namespace OplPcTools;
 
-UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent) :
-    GameInstaller(_device, _collection, _parent),
+UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, GameManager & _manager, QObject * _parent) :
+    GameInstaller(_device, _manager, _parent),
     mp_game(nullptr)
 {
 }
@@ -52,7 +52,7 @@ bool UlConfigGameInstaller::install()
     const ssize_t read_part_size = 4194304;
     quint64 processed_bytes = 0;
     unsigned int write_operation = 0;
-    QDir dest_dir(mr_collection.directory());
+    QDir dest_dir(mr_manager.directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
     mr_device.seek(0);
     quint8 part_count = 0;
@@ -139,6 +139,6 @@ void UlConfigGameInstaller::rollback()
 void UlConfigGameInstaller::registerGame()
 {
     emit registrationStarted();
-    mr_collection.addGame(*mp_game);
+    mr_manager.addGame(*mp_game);
     emit registrationFinished();
 }

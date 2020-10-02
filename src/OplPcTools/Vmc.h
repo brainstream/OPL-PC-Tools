@@ -16,37 +16,53 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
-#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#ifndef __OPLPCTOOLS_VMC__
+#define __OPLPCTOOLS_VMC__
 
-#include <OplPcTools/GameInstaller.h>
+#include <QString>
 
 namespace OplPcTools {
 
-class UlConfigGameInstaller : public GameInstaller
+enum class VmcSize
 {
-    Q_OBJECT
-
-public:
-    UlConfigGameInstaller(Device & _device, GameManager & _manager, QObject * _parent = nullptr);
-    ~UlConfigGameInstaller() override;
-    bool install() override;
-    inline const Game * installedGame() const override;
-
-private:
-    void rollback();
-    void registerGame();
-
-private:
-    QStringList m_written_parts;
-    Game * mp_game;
+    _8M   = 8,
+    _16M  = 16,
+    _32M  = 32,
+    _64M  = 64,
+    _128M = 128,
+    _256M = 256
 };
 
-const Game * UlConfigGameInstaller::installedGame() const
+class Vmc final
 {
-    return mp_game;
+public:
+    inline Vmc(const QString & _title, VmcSize _size);
+    Vmc(const Vmc &) = default;
+    ~Vmc() = default;
+    inline const QString & title() const;
+    inline VmcSize size() const;
+
+private:
+    QString m_title;
+    VmcSize m_size;
+};
+
+Vmc::Vmc(const QString & _title, VmcSize _size) :
+    m_title(_title),
+    m_size(_size)
+{
+}
+
+const QString & Vmc::title() const
+{
+    return m_title;
+}
+
+VmcSize Vmc::size() const
+{
+    return m_size;
 }
 
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#endif // __OPLPCTOOLS_VMC__

@@ -16,37 +16,62 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
-#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#include <OplPcTools/VmcManager.h>
+#include <QVector>
 
-#include <OplPcTools/GameInstaller.h>
+using namespace OplPcTools;
 
-namespace OplPcTools {
-
-class UlConfigGameInstaller : public GameInstaller
+class VmcManager::VmcList final
 {
-    Q_OBJECT
-
 public:
-    UlConfigGameInstaller(Device & _device, GameManager & _manager, QObject * _parent = nullptr);
-    ~UlConfigGameInstaller() override;
-    bool install() override;
-    inline const Game * installedGame() const override;
+    VmcList()
+    {
+        vmcs = {
+            new Vmc("Test #1", VmcSize::_8M),
+            new Vmc("Test #2", VmcSize::_128M),
+            new Vmc("Test #3", VmcSize::_16M),
+            new Vmc("Test #4", VmcSize::_8M),
+            new Vmc("Test #5", VmcSize::_64M),
+        };
+    }
 
-private:
-    void rollback();
-    void registerGame();
+    ~VmcList()
+    {
+        for(const Vmc * vmc: vmcs)
+            delete vmc;
+    }
 
-private:
-    QStringList m_written_parts;
-    Game * mp_game;
+    QVector<Vmc *> vmcs;
 };
 
-const Game * UlConfigGameInstaller::installedGame() const
+VmcManager::VmcManager(QObject * _parent /*= nullptr*/) :
+    QObject(_parent),
+    mp_vmcs(nullptr)
 {
-    return mp_game;
 }
 
-} // namespace OplPcTools
+VmcManager::~VmcManager()
+{
+    delete mp_vmcs;
+}
 
-#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+
+void VmcManager::load(const QDir & _directory)
+{
+
+}
+
+bool VmcManager::isLoaded() const
+{
+    return mp_vmcs != nullptr;
+}
+
+const int VmcManager::count() const
+{
+    return isLoaded() ? mp_vmcs->vmcs.size() : 0;
+}
+
+const Vmc * VmcManager::operator[](int _index) const
+{
+    return isLoaded() && count() > _index && _index >= 0 ? mp_vmcs->vmcs[_index] : nullptr;
+}

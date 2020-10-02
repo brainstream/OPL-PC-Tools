@@ -32,6 +32,8 @@ class VmcListActivity: public Activity, private Ui::VmcListActivity
 {
 public:
     explicit VmcListActivity(QWidget * _parent = nullptr);
+
+public:
     static QSharedPointer<Intent> createIntent();
 
 private:

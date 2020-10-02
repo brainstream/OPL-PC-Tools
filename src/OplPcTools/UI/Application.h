@@ -21,7 +21,7 @@
 
 #include <QApplication>
 #include <QWidget>
-#include <OplPcTools/GameCollection.h>
+#include <OplPcTools/GameManager.h>
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/UI/MainWindow.h>
 
@@ -43,7 +43,7 @@ public:
     void showErrorMessage();
     void showErrorMessage(const QString & _message);
     bool pushActivity(Intent & _intent);
-    GameCollection & gameCollection() const;
+    GameManager & gameManager() const;
 
     static Application & instance();
 
@@ -52,7 +52,7 @@ private:
 
 private:
     MainWindow * mp_main_window;
-    GameCollection * mp_game_collection;
+    GameManager * mp_game_manager;
 };
 
 } // namespace UI

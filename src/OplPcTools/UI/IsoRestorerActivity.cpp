@@ -79,7 +79,7 @@ QSharedPointer<Intent> IsoRestorerActivity::createIntent(const QString & _game_i
 
 bool IsoRestorerActivity::onAttach()
 {
-    const Game * game = Application::instance().gameCollection().findGame(m_game_id);
+    const Game * game = Application::instance().gameManager().findGame(m_game_id);
     if(!game)
         return false;
     mp_label_title->setText(game->title());
@@ -100,7 +100,7 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
 {
     if(mp_working_thread) return;
     m_finish_status.clear();
-    IsoRestorer * restorer = new IsoRestorer(_game, Application::instance().gameCollection().directory(), _destination, this);
+    IsoRestorer * restorer = new IsoRestorer(_game, Application::instance().gameManager().directory(), _destination, this);
     LambdaThread * working_thread = new LambdaThread([restorer]() {
         restorer->restore();
     }, this);

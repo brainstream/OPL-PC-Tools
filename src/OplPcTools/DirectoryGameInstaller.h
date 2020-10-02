@@ -28,7 +28,7 @@ class DirectoryGameInstaller : public GameInstaller
     Q_OBJECT
 
 public:
-    DirectoryGameInstaller(Device & _device, GameCollection & _collection, QObject * _parent = nullptr);
+    DirectoryGameInstaller(Device & _device, GameManager & _manager, QObject * _parent = nullptr);
     ~DirectoryGameInstaller() override;
     inline quint8 options() const;
     inline void setOptionMoveFile(bool _value);

@@ -16,8 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTION__
-#define __OPLPCTOOLS_GAMECOLLECTION__
+#ifndef __OPLPCTOOLS_GAMEMANAGER__
+#define __OPLPCTOOLS_GAMEMANAGER__
 
 #include <QObject>
 #include <QDir>
@@ -27,13 +27,13 @@
 
 namespace OplPcTools {
 
-class GameCollection final : public QObject
+class GameManager final : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit GameCollection(QObject * _parent = nullptr);
-    ~GameCollection() override;
+    explicit GameManager(QObject * _parent = nullptr);
+    ~GameManager() override;
     void load(const QDir & _directory);
     bool isLoaded() const;
     const QString & directory() const;
@@ -62,4 +62,4 @@ private:
 
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTION__
+#endif // __OPLPCTOOLS_GAMEMANAGER__

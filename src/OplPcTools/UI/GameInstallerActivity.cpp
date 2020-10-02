@@ -653,14 +653,14 @@ bool GameInstallerActivity::startTask()
         item->setMediaType(MediaType::DVD);
     else
         item->setMediaType(MediaType::Unknown);
-    GameCollection & collection = Application::instance().gameCollection();
+    GameManager & game_manager = Application::instance().gameManager();
     if(item->isSplittingUpEnabled())
     {
-        mp_installer = new UlConfigGameInstaller(item->device(), collection, this);
+        mp_installer = new UlConfigGameInstaller(item->device(), game_manager, this);
     }
     else
     {
-        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), collection, this);
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), game_manager, this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;

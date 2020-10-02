@@ -67,7 +67,8 @@ include_directories(
 set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/GameArtManager.h
-    ${OPT_SRC_DIR}/GameCollection.h
+    ${OPT_SRC_DIR}/VmcManager.h
+    ${OPT_SRC_DIR}/GameManager.h
     ${OPT_SRC_DIR}/IsoRestorer.h
     ${OPT_SRC_DIR}/GameStorage.h
     ${OPT_SRC_DIR}/UlConfigGameStorage.h
@@ -137,13 +138,15 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameInstallationType.h
     ${OPT_SRC_DIR}/MediaType.h
     ${OPT_SRC_DIR}/DirectoryGameStorage.cpp
-    ${OPT_SRC_DIR}/GameCollection.cpp
+    ${OPT_SRC_DIR}/GameManager.cpp
     ${OPT_SRC_DIR}/GameStorage.cpp
     ${OPT_SRC_DIR}/Settings.h
     ${OPT_SRC_DIR}/Settings.cpp
     ${OPT_SRC_DIR}/UlConfigGameStorage.cpp
     ${OPT_SRC_DIR}/IsoRestorer.cpp
     ${OPT_SRC_DIR}/GameArtManager.cpp
+    ${OPT_SRC_DIR}/Vmc.h
+    ${OPT_SRC_DIR}/VmcManager.cpp
     ${OPT_SRC_DIR}/GameInstaller.cpp
     ${OPT_SRC_DIR}/DirectoryGameInstaller.cpp
     ${OPT_SRC_DIR}/Updater.cpp

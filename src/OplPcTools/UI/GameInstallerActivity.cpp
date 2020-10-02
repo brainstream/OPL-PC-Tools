@@ -75,6 +75,11 @@ public:
     {
         return new GameInstallerActivity(_parent);
     }
+
+    QString activityClass() const override
+    {
+        return "GameInstaller";
+    }
 };
 
 class TaskListItem : public QTreeWidgetItem

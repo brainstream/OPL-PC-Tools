@@ -52,6 +52,11 @@ public:
         return widget;
     }
 
+    QString activityClass() const override
+    {
+        return "GameDetails";
+    }
+
 private:
     OplPcTools::GameArtManager & mr_art_manager;
     const QString m_game_id;

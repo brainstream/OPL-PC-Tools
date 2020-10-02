@@ -508,51 +508,69 @@
     <name>MainWindow</name>
     <message>
         <location filename="../UI/MainWindow.ui" line="56"/>
-        <location filename="../../../build/ui_MainWindow.h" line="137"/>
+        <location filename="../../../build/ui_MainWindow.h" line="146"/>
         <source>Newest version of the application is available</source>
         <translation>Доступна новая версия приложения</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="72"/>
-        <location filename="../../../build/ui_MainWindow.h" line="138"/>
+        <location filename="../../../build/ui_MainWindow.h" line="147"/>
         <source>Download</source>
         <translation>Скачать</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="88"/>
-        <location filename="../../../build/ui_MainWindow.h" line="139"/>
+        <location filename="../../../build/ui_MainWindow.h" line="148"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="134"/>
-        <location filename="../../../build/ui_MainWindow.h" line="140"/>
+        <location filename="../../../build/ui_MainWindow.h" line="149"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="140"/>
-        <location filename="../../../build/ui_MainWindow.h" line="141"/>
+        <location filename="../UI/MainWindow.ui" line="141"/>
+        <location filename="../../../build/ui_MainWindow.h" line="150"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="150"/>
-        <location filename="../../../build/ui_MainWindow.h" line="134"/>
+        <location filename="../UI/MainWindow.ui" line="151"/>
+        <location filename="../../../build/ui_MainWindow.h" line="136"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="155"/>
-        <location filename="../../../build/ui_MainWindow.h" line="135"/>
+        <location filename="../UI/MainWindow.ui" line="154"/>
+        <location filename="../../../build/ui_MainWindow.h" line="138"/>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/MainWindow.ui" line="159"/>
+        <location filename="../../../build/ui_MainWindow.h" line="140"/>
         <source>&amp;About...</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="160"/>
-        <location filename="../../../build/ui_MainWindow.h" line="136"/>
+        <location filename="../UI/MainWindow.ui" line="164"/>
+        <location filename="../../../build/ui_MainWindow.h" line="141"/>
         <source>About &amp;Qt...</source>
         <translation>О &amp;Qt...</translation>
+    </message>
+    <message>
+        <location filename="../UI/MainWindow.ui" line="169"/>
+        <location filename="../../../build/ui_MainWindow.h" line="142"/>
+        <source>&amp;Virtual Memory Cards...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/MainWindow.ui" line="172"/>
+        <location filename="../../../build/ui_MainWindow.h" line="144"/>
+        <source>Ctrl+M</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -653,27 +671,27 @@
 <context>
     <name>OplPcTools::UI::GameCollectionActivity</name>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="332"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="336"/>
         <source>Choose the OPL root directory</source>
         <translation>Выбор корневого каталога OPL</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="425"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="429"/>
         <source>Directory</source>
         <translation>Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="493"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="497"/>
         <source>Don&apos;t show again</source>
         <translation>Не показывать снова</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="494"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="498"/>
         <source>Remove Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="495"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="499"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation>Игра %1 будет удалена.
@@ -683,69 +701,69 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::GameDetailsActivity</name>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="219"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="224"/>
         <source>Choose a Picture</source>
         <translation>Выберать картинку</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="220"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="225"/>
         <source>Pictures</source>
         <translation>Картинки</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="247"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="252"/>
         <source>Don&apos;t show again</source>
         <translation>Не показывать снова</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="248"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="253"/>
         <source>Remove Picture</source>
         <translation>Удалить картинку</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="249"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="254"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation>Картинка %1 будет удалена.
 Продолжить?</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="287"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="292"/>
         <source>Icon</source>
         <translation>Иконка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="288"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="293"/>
         <source>Front Cover</source>
         <translation>Передняя обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="289"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="294"/>
         <source>Back Cover</source>
         <translation>Задняя обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="290"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="295"/>
         <source>Spine Cover</source>
         <translation>Боковая обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="291"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="296"/>
         <source>Screenshot #1</source>
         <translation>Скриншот №1</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="292"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="297"/>
         <source>Screenshot #2</source>
         <translation>Скриншот №2</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="293"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="298"/>
         <source>Background</source>
         <translation>Фоновое изображение</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="294"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="299"/>
         <source>Logo</source>
         <translation>Логотип</translation>
     </message>
@@ -753,32 +771,32 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="373"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="378"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
         <translation>Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="378"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="383"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="415"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="420"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="590"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="595"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="633"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="633"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -786,37 +804,37 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::IsoRestorerActivity</name>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="85"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="90"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Выбор файла для сохранения образа ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="86"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="91"/>
         <source>ISO Image</source>
         <translation>Образ ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="119"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="124"/>
         <source>Restoring &apos;%1&apos; to &apos;%2&apos;...</source>
         <translation>Восстановление &apos;%1&apos; в &apos;%2&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="127"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="132"/>
         <source>Synchronization of buffers. Please wait...</source>
         <translation>Синхронизация буферов. Пожалуйста, подождите...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="128"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="133"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="144"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="149"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="145"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="150"/>
         <source>Canceled</source>
         <translation>Отменено</translation>
     </message>
@@ -876,27 +894,27 @@ Continue?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="149"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="151"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="157"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -970,6 +988,16 @@ Continue?</source>
         <location filename="../File.h" line="36"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListActivity.cpp" line="120"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListActivity.cpp" line="122"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1057,6 +1085,39 @@ Continue?</source>
         <location filename="../../../build/ui_SettingsDialog.h" line="188"/>
         <source>Icon Theme</source>
         <translation>Тема иконок</translation>
+    </message>
+</context>
+<context>
+    <name>VmcListActivity</name>
+    <message>
+        <location filename="../UI/VmcListActivity.ui" line="14"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="147"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListActivity.ui" line="34"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="148"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListActivity.ui" line="45"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="149"/>
+        <source>Filter</source>
+        <translation type="unfinished">Фильтр</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListActivity.ui" line="66"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="151"/>
+        <source>Create VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListActivity.ui" line="55"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="150"/>
+        <source>Delete VMC</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

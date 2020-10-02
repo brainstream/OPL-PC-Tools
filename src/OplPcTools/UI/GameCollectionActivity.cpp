@@ -48,6 +48,11 @@ public:
     {
         return new GameCollectionActivity(_parent);
     }
+
+    QString activityClass() const override
+    {
+        return "GameCollection";
+    }
 };
 
 } // namespace
@@ -213,10 +218,10 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_proxy_model(nullptr)
 {
     setupUi(this);
-    QShortcut * filter_shortcat = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText())
-        .arg(filter_shortcat->key().toString()));
+        .arg(filter_shortcut->key().toString()));
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     GameCollection & game_collection = Application::instance().gameCollection();
@@ -244,7 +249,7 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     mp_tree_games->setContextMenuPolicy(Qt::CustomContextMenu);
     activateCollectionControls(false);
     activateItemControls(nullptr);
-    connect(filter_shortcat, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
+    connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
     connect(mp_slider_icons_size, &QSlider::valueChanged, [this](int) { changeIconsSize(); });
     connect(mp_action_load, &QAction::triggered, this, &GameCollectionActivity::load);
     connect(mp_action_reload, &QAction::triggered, this, &GameCollectionActivity::reload);
@@ -315,8 +320,7 @@ void GameCollectionActivity::applySettings()
         else if(icons_size < 1) icons_size = 1;
     }
     mp_slider_icons_size->setValue(icons_size);
-    icons_size *= 16;
-    mp_tree_games->setIconSize(QSize(icons_size, icons_size));
+    changeIconsSize();
 }
 
 void GameCollectionActivity::saveSettings()

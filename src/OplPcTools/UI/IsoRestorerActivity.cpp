@@ -50,6 +50,11 @@ public:
         return widget;
     }
 
+    QString activityClass() const override
+    {
+        return "IsoRestorer";
+    }
+
 private:
     const QString m_game_id;
 };

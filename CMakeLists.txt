@@ -29,8 +29,8 @@ endif()
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OPT_EXE_NAME "oplpctools")
-set(OPT_VERSION_MAJOR  2)
-set(OPT_VERSION_MINOR  4)
+set(OPT_VERSION_MAJOR  3)
+set(OPT_VERSION_MINOR  0)
 set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -97,6 +97,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/GameRenameDialog.ui
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.ui
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.ui
+    ${OPT_SRC_DIR}/UI/VmcListActivity.ui
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
     ${OPT_SRC_DIR}/UI/SettingsDialog.ui
 )
@@ -161,6 +162,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/SettingsDialog.cpp
     ${OPT_SRC_DIR}/UI/IconTheme.cpp
     ${OPT_SRC_DIR}/UI/IconTheme.h
+    ${OPT_SRC_DIR}/UI/VmcListActivity.cpp
+    ${OPT_SRC_DIR}/UI/VmcListActivity.h
 )
 
 if(WIN32)

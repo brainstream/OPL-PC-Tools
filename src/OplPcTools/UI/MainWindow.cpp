@@ -26,6 +26,7 @@
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/AboutDialog.h>
 #include <OplPcTools/UI/SettingsDialog.h>
+#include <OplPcTools/UI/VmcListActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -39,7 +40,8 @@ const char * wnd_geometry = "WindowGeometry";
 } // namespace
 
 MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
-    QMainWindow(_parent)
+    QMainWindow(_parent),
+    mp_activities(new QMap<QString, Activity *>)
 {
     setupUi(this);
     setWindowTitle(APPLICATION_DISPLAY_NAME);
@@ -47,6 +49,15 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
+    connect(mp_action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
+    connect(mp_action_about_qt, &QAction::triggered, this, &MainWindow::showAboutQtDialog);
+    connect(actionmp_action_vmc_list, &QAction::triggered, this, &MainWindow::showVmcList);
+}
+
+MainWindow::~MainWindow()
+{
+    delete mp_activities;
+    mp_activities = nullptr;
 }
 
 void MainWindow::setupUpdater()
@@ -81,12 +92,24 @@ void MainWindow::closeEvent(QCloseEvent * _event)
 
 bool MainWindow::pushActivity(Intent & _intent)
 {
-    Activity * activity = _intent.createActivity(mp_stacked_widget);
+    const QString activity_class = _intent.activityClass();
+    Activity * activity = mp_activities->value(activity_class, nullptr);
+    if(activity)
+    {
+        mp_stacked_widget->setCurrentWidget(activity);
+        return true;
+    }
+    activity = _intent.createActivity(mp_stacked_widget);
     activity->setAttribute(Qt::WA_DeleteOnClose);
     int index = mp_stacked_widget->addWidget(activity);
     mp_stacked_widget->setCurrentIndex(index);
     if(activity->onAttach())
     {
+        mp_activities->insert(activity_class, activity);
+        connect(activity, &Activity::destroyed, [this, activity_class]() {
+            if(mp_activities)
+                mp_activities->remove(activity_class);
+        });
         return true;
     }
     else
@@ -95,6 +118,8 @@ bool MainWindow::pushActivity(Intent & _intent)
         return false;
     }
 }
+
+
 
 void MainWindow::showAboutDialog()
 {
@@ -111,4 +136,9 @@ void MainWindow::showSettingsDialog()
 {
     SettingsDialog dlg(this);
     dlg.exec();
+}
+
+void MainWindow::showVmcList()
+{
+    pushActivity(*VmcListActivity::createIntent());
 }

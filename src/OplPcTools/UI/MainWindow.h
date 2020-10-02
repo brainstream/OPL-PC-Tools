@@ -32,18 +32,22 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
 public:
     explicit MainWindow(QWidget * _parent = nullptr);
+    ~MainWindow() override;
+
     bool pushActivity(Intent & _intent);
 
 protected:
     void closeEvent(QCloseEvent * _event) override;
 
-private slots:
+private:
     void showAboutDialog();
     void showAboutQtDialog();
     void showSettingsDialog();
+    void showVmcList();
+    void setupUpdater();
 
 private:
-    void setupUpdater();
+    QMap<QString, Activity *> * mp_activities;
 };
 
 } // namespace UI

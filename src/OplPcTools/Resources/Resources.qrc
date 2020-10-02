@@ -3,5 +3,6 @@
         <file alias="no-image">images/no-image.svg</file>
         <file alias="no-icon">images/no-icon.png</file>
         <file alias="application">images/application.png</file>
+        <file alias="vmc">images/vmc.png</file>
     </qresource>
 </RCC>

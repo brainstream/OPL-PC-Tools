@@ -18,10 +18,12 @@
 
 #include <QMessageBox>
 #include <QSettings>
+#include <QFileDialog>
 #include <QDesktopServices>
 #include <QUrl>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
+#include <OplPcTools/UI/Application.h>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/AboutDialog.h>
@@ -34,6 +36,7 @@ namespace {
 namespace SettingsKey {
 
 const char * wnd_geometry = "WindowGeometry";
+const char * ul_dir     = "ULDirectory";
 
 } // namespace SettingsKey
 } // namespace
@@ -47,6 +50,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     setupUpdater();
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
+    connect(mp_action_open_library, &QAction::triggered, this, &MainWindow::openLibrary);
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
     connect(mp_action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
     connect(mp_action_about_qt, &QAction::triggered, this, &MainWindow::showAboutQtDialog);
@@ -117,7 +121,16 @@ bool MainWindow::pushActivity(Intent & _intent)
     }
 }
 
-
+void MainWindow::openLibrary()
+{
+    QSettings settings;
+    QString dirpath = settings.value(SettingsKey::ul_dir).toString();
+    QString choosen_dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root directory"), dirpath);
+    if(choosen_dirpath.isEmpty()) return;
+    if(choosen_dirpath != dirpath)
+        settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
+    Application::instance().library().load(QDir(choosen_dirpath));
+}
 
 void MainWindow::showAboutDialog()
 {

@@ -20,45 +20,20 @@
 
 using namespace OplPcTools;
 
-Library::Library(const QDir & _directory) :
-    m_directory(_directory),
-    mp_games(nullptr),
-    mp_game_arts(nullptr),
-    mp_vmcs(nullptr)
+Library::Library(QObject * _parent /*= nullptr*/) :
+    QObject(_parent)
 {
+    mp_games = new GameManager(this);
+    mp_vmcs = new VmcManager(this);
 }
 
-bool Library::load(const QDir & _directory)
+void Library::load(const QDir & _directory)
 {
-//    if(mp_games)
-//    {
-//        mp_games->deleteLater();
-//        mp_games = nullptr;
-//    }
-//    if(mp_game_arts)
-//    {
-//        mp_game_arts->deleteLater();
-//        mp_game_arts = nullptr;
-//    }
-//    if(mp_vmcs)
-//    {
-//        mp_vmcs->deleteLater();
-//        mp_vmcs = nullptr;
-//    }
-//    GameManager * games = new GameManager(m_directory, this);
-//    VmcManager * vmcs = new VmcManager(m_directory, this);
-//    if(!games->load() || !vmcs->load())
-//    {
-//        delete games;
-//        delete vmcs;
-//        return false;
-//    }
-//    mp_games = games;
-//    mp_game_arts = new GameArtManager(m_directory, this);
-//    mp_game_arts->addCacheType(GameArtType::Icon);
-//    mp_game_arts->addCacheType(GameArtType::Front);
-//    mp_vmcs = vmcs;
-    return true;
+    emit loading();
+    mp_games->load(_directory);
+    mp_vmcs->load(_directory);
+    m_directory = _directory;
+    emit loaded();
 }
 
 

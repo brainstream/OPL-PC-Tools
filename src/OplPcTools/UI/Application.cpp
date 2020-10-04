@@ -84,6 +84,7 @@ Application::Application(int & _argc, char ** _argv) :
     QApplication(_argc, _argv),
     mp_main_window(nullptr)
 {
+    mp_library = new Library(this);
 }
 
 Application::~Application()
@@ -132,6 +133,11 @@ void Application::showErrorMessage(const QString & _message)
 bool Application::pushActivity(Intent & _intent)
 {
     return ensureMainWindow()->pushActivity(_intent);
+}
+
+Library & Application::library() const
+{
+    return *mp_library;
 }
 
 int main(int _argc, char * _argv[])

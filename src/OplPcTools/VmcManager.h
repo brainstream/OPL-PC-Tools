@@ -31,9 +31,9 @@ class VmcManager final : public QObject
     Q_OBJECT
 
 public:
-    explicit VmcManager(const QDir & _base_directory, QObject * _parent = nullptr);
+    explicit VmcManager(QObject * _parent = nullptr);
     ~VmcManager() override;
-    bool load();
+    bool load(const QDir & _base_directory);
     bool isLoaded() const;
     const int count() const;
     const Vmc * operator[](int _index) const;

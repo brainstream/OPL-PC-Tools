@@ -19,27 +19,32 @@
 #ifndef __OPLPCTOOLS_LIBRARY__
 #define __OPLPCTOOLS_LIBRARY__
 
+#include <QObject>
 #include <OplPcTools/GameManager.h>
 #include <OplPcTools/GameArtManager.h>
 #include <OplPcTools/VmcManager.h>
 
 namespace OplPcTools {
 
-class Library final
+class Library final : public QObject
 {
+    Q_OBJECT
+
 public:
-    Library(const QDir & _directory);
+    explicit Library(QObject * _parent = nullptr);
     inline const QDir & directory() const;
-    bool load(const QDir & _directory);
-    inline GameManager * games() const;
-    inline GameArtManager * arts() const;
-    inline VmcManager * vmcs() const;
+    void load(const QDir & _directory);
+    inline GameManager & games() const;
+    inline VmcManager & vmcs() const;
+
+signals:
+    void loading();
+    void loaded();
 
 private:
     static Library * sp_instance;
     QDir m_directory;
     GameManager * mp_games;
-    GameArtManager * mp_game_arts;
     VmcManager * mp_vmcs;
 };
 
@@ -48,19 +53,14 @@ const QDir & Library::directory() const
     return m_directory;
 }
 
-GameManager * Library::games() const
+GameManager & Library::games() const
 {
-    return mp_games;
+    return *mp_games;
 }
 
-GameArtManager * Library::arts() const
+VmcManager & Library::vmcs() const
 {
-    return mp_game_arts;
-}
-
-VmcManager * Library::vmcs() const
-{
-    return mp_vmcs;
+    return *mp_vmcs;
 }
 
 } // namespace OplPcTools

@@ -372,116 +372,92 @@
 <context>
     <name>GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="253"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="506"/>
+        <location filename="../UI/GameListWidget.ui" line="187"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="438"/>
         <source>Filter</source>
         <translation type="unfinished">Filtro</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="333"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="508"/>
+        <location filename="../UI/GameListWidget.ui" line="267"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="440"/>
         <source>Icons Size</source>
         <translation type="unfinished">Tamanho dos ícones</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="511"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="510"/>
+        <location filename="../UI/GameListWidget.ui" line="445"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="442"/>
         <source>ID:</source>
         <translation type="unfinished">ID:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="531"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="511"/>
+        <location filename="../UI/GameListWidget.ui" line="465"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="443"/>
         <source>Type:</source>
         <translation type="unfinished">Tipo:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="551"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="512"/>
+        <location filename="../UI/GameListWidget.ui" line="485"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="444"/>
         <source>Source:</source>
         <translation type="unfinished">Fonte:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="571"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="513"/>
+        <location filename="../UI/GameListWidget.ui" line="505"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="445"/>
         <source>Parts:</source>
         <translation type="unfinished">Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="617"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="480"/>
+        <location filename="../UI/GameListWidget.ui" line="551"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="420"/>
         <source>Edit</source>
         <translation type="unfinished">Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="620"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="482"/>
+        <location filename="../UI/GameListWidget.ui" line="554"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="422"/>
         <source>Edit game</source>
         <translation type="unfinished">Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="632"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="484"/>
+        <location filename="../UI/GameListWidget.ui" line="566"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="424"/>
         <source>Delete</source>
         <translation type="unfinished">Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="635"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="486"/>
+        <location filename="../UI/GameListWidget.ui" line="569"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="426"/>
         <source>Delete game</source>
         <translation type="unfinished">Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="647"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="488"/>
+        <location filename="../UI/GameListWidget.ui" line="581"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="428"/>
         <source>Install</source>
         <translation type="unfinished">Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="650"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="490"/>
+        <location filename="../UI/GameListWidget.ui" line="584"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="430"/>
         <source>Install game</source>
         <translation type="unfinished">Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="662"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="492"/>
-        <source>Reload</source>
-        <translation type="unfinished">Atualizar</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameListWidget.ui" line="665"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="494"/>
-        <source>Reload collection</source>
-        <translation type="unfinished">Atualizar coleção</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameListWidget.ui" line="677"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="496"/>
-        <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameListWidget.ui" line="680"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="498"/>
-        <source>Open collection</source>
-        <translation type="unfinished">Abrir coleção</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameListWidget.ui" line="692"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="500"/>
+        <location filename="../UI/GameListWidget.ui" line="596"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="432"/>
         <source>Rename</source>
         <translation type="unfinished">Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="695"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="502"/>
+        <location filename="../UI/GameListWidget.ui" line="599"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="434"/>
         <source>Rename game</source>
         <translation type="unfinished">Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="707"/>
-        <location filename="../../../build/ui_GameListWidget.h" line="504"/>
+        <location filename="../UI/GameListWidget.ui" line="611"/>
+        <location filename="../../../build/ui_GameListWidget.h" line="436"/>
         <source>Restore ISO</source>
         <translation type="unfinished">Restaurar ISO</translation>
     </message>
@@ -508,26 +484,20 @@
     <name>LibraryActivity</name>
     <message>
         <location filename="../UI/LibraryActivity.ui" line="14"/>
-        <location filename="../../../build/ui_LibraryActivity.h" line="80"/>
+        <location filename="../../../build/ui_LibraryActivity.h" line="81"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/LibraryActivity.ui" line="36"/>
-        <location filename="../../../build/ui_LibraryActivity.h" line="81"/>
+        <location filename="../../../build/ui_LibraryActivity.h" line="82"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/LibraryActivity.ui" line="41"/>
-        <location filename="../../../build/ui_LibraryActivity.h" line="82"/>
-        <source>Virtual Memory Cards</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/LibraryActivity.ui" line="51"/>
         <location filename="../../../build/ui_LibraryActivity.h" line="83"/>
-        <source>TextLabel</source>
+        <source>Virtual Memory Cards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -535,57 +505,69 @@
     <name>MainWindow</name>
     <message>
         <location filename="../UI/MainWindow.ui" line="56"/>
-        <location filename="../../../build/ui_MainWindow.h" line="138"/>
+        <location filename="../../../build/ui_MainWindow.h" line="149"/>
         <source>Newest version of the application is available</source>
         <translation>Uma nova versão do programa está disponível</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="72"/>
-        <location filename="../../../build/ui_MainWindow.h" line="139"/>
+        <location filename="../../../build/ui_MainWindow.h" line="150"/>
         <source>Download</source>
         <translation>Baixar</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="88"/>
-        <location filename="../../../build/ui_MainWindow.h" line="140"/>
+        <location filename="../../../build/ui_MainWindow.h" line="151"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="134"/>
-        <location filename="../../../build/ui_MainWindow.h" line="141"/>
+        <location filename="../../../build/ui_MainWindow.h" line="152"/>
         <source>&amp;Tools</source>
         <translation>&amp;Ferramentas</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="140"/>
-        <location filename="../../../build/ui_MainWindow.h" line="142"/>
+        <location filename="../../../build/ui_MainWindow.h" line="153"/>
         <source>&amp;Help</source>
         <translation>&amp;Ajuda</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="150"/>
-        <location filename="../../../build/ui_MainWindow.h" line="132"/>
+        <location filename="../UI/MainWindow.ui" line="147"/>
+        <location filename="../../../build/ui_MainWindow.h" line="154"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/MainWindow.ui" line="157"/>
+        <location filename="../../../build/ui_MainWindow.h" line="142"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Configurações...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="153"/>
-        <location filename="../../../build/ui_MainWindow.h" line="134"/>
+        <location filename="../UI/MainWindow.ui" line="160"/>
+        <location filename="../../../build/ui_MainWindow.h" line="144"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="158"/>
-        <location filename="../../../build/ui_MainWindow.h" line="136"/>
+        <location filename="../UI/MainWindow.ui" line="165"/>
+        <location filename="../../../build/ui_MainWindow.h" line="146"/>
         <source>&amp;About...</source>
         <translation>&amp;Sobre...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="163"/>
-        <location filename="../../../build/ui_MainWindow.h" line="137"/>
+        <location filename="../UI/MainWindow.ui" line="170"/>
+        <location filename="../../../build/ui_MainWindow.h" line="147"/>
         <source>About &amp;Qt...</source>
         <translation>Sobre o &amp;Qt...</translation>
+    </message>
+    <message>
+        <location filename="../UI/MainWindow.ui" line="178"/>
+        <location filename="../../../build/ui_MainWindow.h" line="148"/>
+        <source>&amp;Open Library...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -665,12 +647,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="124"/>
+        <location filename="../UI/Application.cpp" line="125"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="129"/>
+        <location filename="../UI/Application.cpp" line="130"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -789,27 +771,22 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="310"/>
-        <source>Choose the OPL root directory</source>
-        <translation type="unfinished">Escolha a raiz da pasta do OPL</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameListWidget.cpp" line="402"/>
+        <location filename="../UI/GameListWidget.cpp" line="380"/>
         <source>Directory</source>
         <translation type="unfinished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="470"/>
+        <location filename="../UI/GameListWidget.cpp" line="448"/>
         <source>Don&apos;t show again</source>
         <translation type="unfinished">Não mostrar novamente</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="471"/>
+        <location filename="../UI/GameListWidget.cpp" line="449"/>
         <source>Remove Game</source>
         <translation type="unfinished">Remover jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="472"/>
+        <location filename="../UI/GameListWidget.cpp" line="450"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation type="unfinished">%1 Vai ser apagado.
@@ -860,6 +837,14 @@ Tem certeza?</translation>
         <location filename="../UI/LambdaThread.h" line="58"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::MainWindow</name>
+    <message>
+        <location filename="../UI/MainWindow.cpp" line="128"/>
+        <source>Choose the OPL root directory</source>
+        <translation type="unfinished">Escolha a raiz da pasta do OPL</translation>
     </message>
 </context>
 <context>

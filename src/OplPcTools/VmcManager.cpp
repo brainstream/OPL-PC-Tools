@@ -21,9 +21,8 @@
 
 using namespace OplPcTools;
 
-VmcManager::VmcManager(const QDir & _base_directory, QObject * _parent /*= nullptr*/) :
+VmcManager::VmcManager(QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    m_directory(_base_directory.absoluteFilePath("VMC")),
     mp_vmcs(nullptr)
 {
 }
@@ -39,9 +38,11 @@ VmcManager::~VmcManager()
 }
 
 
-bool VmcManager::load()
+bool VmcManager::load(const QDir & _base_directory)
 {
-    QFileInfo fi(m_directory.absolutePath());
+    QString vmc_dir_path = _base_directory.absoluteFilePath("VMC");
+    QDir directory = QDir(vmc_dir_path);
+    QFileInfo fi(vmc_dir_path);
     if(fi.exists())
     {
         if(!fi.isDir())
@@ -51,10 +52,10 @@ bool VmcManager::load()
     {
         return true;
     }
-    for(const QString & filename : m_directory.entryList({ ".bin" }, QDir::Files | QDir::Readable))
+    for(const QString & filename : directory.entryList({ ".bin" }, QDir::Files | QDir::Readable))
     {
         QString title = filename.left(filename.lastIndexOf("."));
-        QFileInfo file(m_directory.absoluteFilePath(filename));
+        QFileInfo file(directory.absoluteFilePath(filename));
         VmcSize size = VmcSize::_8M;
         switch(file.size() / (1024 * 1024)) // FIXME: read VMC
         {

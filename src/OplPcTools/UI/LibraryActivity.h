@@ -34,6 +34,9 @@ public:
     explicit LibraryActivity(QWidget * _parent = nullptr);
 
 public:
+    void onLibraryLoaded();
+
+public:
     static QSharedPointer<Intent> createIntent();
 };
 

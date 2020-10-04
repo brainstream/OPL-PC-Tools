@@ -142,6 +142,13 @@ color: rgb(56, 56, 56);</string>
     <addaction name="mp_action_about"/>
     <addaction name="mp_action_about_qt"/>
    </widget>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="mp_action_open_library"/>
+   </widget>
+   <addaction name="menu_File"/>
    <addaction name="mp_menu_tools"/>
    <addaction name="mp_menu_help"/>
   </widget>
@@ -161,6 +168,14 @@ color: rgb(56, 56, 56);</string>
   <action name="mp_action_about_qt">
    <property name="text">
     <string>About &amp;Qt...</string>
+   </property>
+  </action>
+  <action name="mp_action_open_library">
+   <property name="icon">
+    <iconset theme="oplpct-load"/>
+   </property>
+   <property name="text">
+    <string>&amp;Open Library...</string>
    </property>
   </action>
  </widget>

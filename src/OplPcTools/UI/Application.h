@@ -21,6 +21,7 @@
 
 #include <QApplication>
 #include <QWidget>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/UI/MainWindow.h>
 
@@ -42,6 +43,7 @@ public:
     void showErrorMessage();
     void showErrorMessage(const QString & _message);
     bool pushActivity(Intent & _intent);
+    Library & library() const;
 
     static Application & instance();
 
@@ -50,6 +52,7 @@ private:
 
 private:
     MainWindow * mp_main_window;
+    Library * mp_library;
 };
 
 } // namespace UI

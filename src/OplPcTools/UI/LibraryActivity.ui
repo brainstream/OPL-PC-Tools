@@ -44,16 +44,16 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="mp_layout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="mp_label_path">
        <property name="text">
-        <string>TextLabel</string>
+        <string notr="true"/>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="mp_spacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

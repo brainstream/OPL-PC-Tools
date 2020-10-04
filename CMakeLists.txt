@@ -66,6 +66,7 @@ include_directories(
 
 set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/Application.h
+    ${OPT_SRC_DIR}/Library.h
     ${OPT_SRC_DIR}/GameArtManager.h
     ${OPT_SRC_DIR}/VmcManager.h
     ${OPT_SRC_DIR}/GameManager.h
@@ -140,7 +141,6 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameInstallationType.h
     ${OPT_SRC_DIR}/MediaType.h
     ${OPT_SRC_DIR}/DirectoryGameStorage.cpp
-    ${OPT_SRC_DIR}/Library.h
     ${OPT_SRC_DIR}/Library.cpp
     ${OPT_SRC_DIR}/GameManager.cpp
     ${OPT_SRC_DIR}/GameStorage.cpp

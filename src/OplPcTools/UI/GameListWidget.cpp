@@ -36,7 +36,6 @@ namespace {
 
 namespace SettingsKey {
 
-const char * ul_dir     = "ULDirectory";
 const char * icons_size = "GameListIconSize";
 
 } // namespace SettingsKey
@@ -204,7 +203,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_proxy_model(nullptr)
 {
     setupUi(this);
-    mp_game_manager = new GameManager(this);
+    mp_game_manager = &Application::instance().library().games();
     QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText())
@@ -217,8 +216,6 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_proxy_model->setSourceModel(mp_model);
     mp_proxy_model->setDynamicSortFilter(true);
     mp_tree_games->setModel(mp_proxy_model);
-    mp_btn_load->setDefaultAction(mp_action_load);
-    mp_btn_reload->setDefaultAction(mp_action_reload);
     mp_btn_rename->setDefaultAction(mp_action_rename);
     mp_btn_edit->setDefaultAction(mp_action_edit);
     mp_btn_delete->setDefaultAction(mp_action_delete);
@@ -231,14 +228,12 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_context_menu->addAction(mp_action_delete);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_install);
-    mp_context_menu->addAction(mp_action_reload);
     mp_tree_games->setContextMenuPolicy(Qt::CustomContextMenu);
     activateCollectionControls(false);
     activateItemControls(nullptr);
+    connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::load);
     connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
     connect(mp_slider_icons_size, &QSlider::valueChanged, [this](int) { changeIconsSize(); });
-    connect(mp_action_load, &QAction::triggered, this, &GameListWidget::load);
-    connect(mp_action_reload, &QAction::triggered, this, &GameListWidget::reload);
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
@@ -270,7 +265,6 @@ void GameListWidget::showTreeContextMenu(const QPoint & _point)
 void GameListWidget::activateCollectionControls(bool _activate)
 {
     mp_action_install->setEnabled(_activate);
-    mp_action_reload->setEnabled(_activate);
 }
 
 void GameListWidget::activateItemControls(const Game * _selected_game)
@@ -303,35 +297,24 @@ void GameListWidget::saveSettings()
     settings.setValue(SettingsKey::icons_size, mp_slider_icons_size->value());
 }
 
-void GameListWidget::load()
-{
-    QSettings settings;
-    QString dirpath = settings.value(SettingsKey::ul_dir).toString();
-    QString choosen_dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root directory"), dirpath);
-    if(choosen_dirpath.isEmpty()) return;
-    if(choosen_dirpath != dirpath)
-        settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
-    loadDirectory(choosen_dirpath);
-}
-
 bool GameListWidget::tryLoadRecentDirectory()
 {
-    QSettings settings;
-    QVariant value = settings.value(SettingsKey::ul_dir);
-    if(!value.isValid()) return false;
-    QDir dir(value.toString());
-    if(!dir.exists()) return false;
-    loadDirectory(dir);
+//    QSettings settings;
+//    QVariant value = settings.value(SettingsKey::ul_dir);
+//    if(!value.isValid()) return false;
+//    QDir dir(value.toString());
+//    if(!dir.exists()) return false;
+//    loadDirectory(dir);
     return true;
 }
 
-void GameListWidget::loadDirectory(const QDir & _directory)
+void GameListWidget::load()
 {
     try
     {
-        mp_game_manager->load(_directory);
+        const QDir & directory = Application::instance().library().directory();
         delete mp_game_art_manager;
-        mp_game_art_manager = new GameArtManager(_directory, this);
+        mp_game_art_manager = new GameArtManager(directory, this);
         connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameListWidget::gameArtChanged);
         mp_game_art_manager->addCacheType(GameArtType::Icon);
         mp_game_art_manager->addCacheType(GameArtType::Front);
@@ -348,11 +331,6 @@ void GameListWidget::loadDirectory(const QDir & _directory)
     {
         Application::instance().showErrorMessage();
     }
-}
-
-void GameListWidget::reload()
-{
-    loadDirectory(mp_game_manager->directory());
 }
 
 void GameListWidget::collectionLoaded()

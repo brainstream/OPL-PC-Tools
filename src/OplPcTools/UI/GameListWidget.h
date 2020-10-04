@@ -43,11 +43,8 @@ public:
     bool tryLoadRecentDirectory();
 
 private:
-    void applySettings();
-    void saveSettings();
     void activateCollectionControls(bool _activate);
     void activateItemControls(const Game * _selected_game);
-    void changeIconsSize();
     void showTreeContextMenu(const QPoint & _point);
     void load();
     void renameGame();

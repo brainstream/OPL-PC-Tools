@@ -101,6 +101,9 @@
      <property name="tabPosition">
       <enum>QTabWidget::South</enum>
      </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="mp_tab_arts">
       <attribute name="title">
        <string>Pictures</string>

@@ -33,9 +33,6 @@ public:
 
 private:
     void setupShortcuts();
-    void applySettings();
-    void saveSettings();
-    void changeIconSize();
 
 private:
     QSortFilterProxyModel * mp_proxy_model;

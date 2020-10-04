@@ -26,12 +26,6 @@ using namespace OplPcTools::UI;
 
 namespace {
 
-namespace SettingsKey {
-
-const char * icons_size = "VmcListIconSize";
-
-} // namespace SettingsKey
-
 class VmcTreeModel final : public QAbstractItemModel
 {
 public:
@@ -124,10 +118,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->setModel(mp_proxy_model);
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    connect(this, &VmcListWidget::destroyed, this, &VmcListWidget::saveSettings);
-    connect(mp_slider_icons_size, &QSlider::valueChanged, this, &VmcListWidget::changeIconSize);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
-    applySettings();
 }
 
 void VmcListWidget::setupShortcuts()
@@ -141,31 +132,4 @@ void VmcListWidget::setupShortcuts()
         .arg(mp_edit_filter->placeholderText())
         .arg(shortcut->key().toString()));
     connect(shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
-}
-
-void VmcListWidget::applySettings()
-{
-    QSettings settings;
-    QVariant icons_size_value = settings.value(SettingsKey::icons_size);
-    int icons_size = 2;
-    if(!icons_size_value.isNull() && icons_size_value.canConvert(QVariant::Int))
-    {
-        icons_size = icons_size_value.toInt();
-        if(icons_size > 4) icons_size = 4;
-        else if(icons_size < 1) icons_size = 1;
-    }
-    mp_slider_icons_size->setValue(icons_size);
-    changeIconSize();
-}
-
-void VmcListWidget::changeIconSize()
-{
-    int size = mp_slider_icons_size->value() * 16;
-    mp_tree_vmcs->setIconSize(QSize(size, size));
-}
-
-void VmcListWidget::saveSettings()
-{
-    QSettings settings;
-    settings.setValue(SettingsKey::icons_size, mp_slider_icons_size->value());
 }

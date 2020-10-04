@@ -32,11 +32,19 @@
       <number>0</number>
      </property>
      <widget class="OplPcTools::UI::GameListWidget" name="mp_tab_games">
+      <attribute name="icon">
+       <iconset resource="../Resources/Resources.qrc">
+        <normaloff>:/images/no-icon</normaloff>:/images/no-icon</iconset>
+      </attribute>
       <attribute name="title">
        <string>Games</string>
       </attribute>
      </widget>
      <widget class="OplPcTools::UI::VmcListWidget" name="mp_tab_vmcs">
+      <attribute name="icon">
+       <iconset resource="../Resources/Resources.qrc">
+        <normaloff>:/images/vmc</normaloff>:/images/vmc</iconset>
+      </attribute>
       <attribute name="title">
        <string>Virtual Memory Cards</string>
       </attribute>
@@ -83,6 +91,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

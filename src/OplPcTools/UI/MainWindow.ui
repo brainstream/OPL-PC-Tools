@@ -172,10 +172,14 @@ color: rgb(56, 56, 56);</string>
   </action>
   <action name="mp_action_open_library">
    <property name="icon">
-    <iconset theme="oplpct-load"/>
+    <iconset theme="oplpct-load">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Open Library...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

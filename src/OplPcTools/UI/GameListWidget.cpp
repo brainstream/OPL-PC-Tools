@@ -32,15 +32,6 @@
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
-namespace {
-
-namespace SettingsKey {
-
-const char * icons_size = "GameListIconSize";
-
-} // namespace SettingsKey
-} // namespace
-
 class GameListWidget::GameTreeModel : public QAbstractItemModel
 {
 public:
@@ -233,7 +224,6 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     activateItemControls(nullptr);
     connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::load);
     connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
-    connect(mp_slider_icons_size, &QSlider::valueChanged, [this](int) { changeIconsSize(); });
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
@@ -245,15 +235,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_game_manager, &GameManager::loaded, this, &GameListWidget::collectionLoaded);
     connect(mp_game_manager, &GameManager::gameAdded, this, &GameListWidget::gameAdded);
     connect(mp_game_manager, &GameManager::gameRenamed, this, &GameListWidget::gameRenamed);
-    connect(this, &GameListWidget::destroyed, this, &GameListWidget::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
-    applySettings();
-}
-
-void GameListWidget::changeIconsSize()
-{
-    int size = mp_slider_icons_size->value() * 16;
-    mp_tree_games->setIconSize(QSize(size, size));
 }
 
 void GameListWidget::showTreeContextMenu(const QPoint & _point)
@@ -274,27 +256,6 @@ void GameListWidget::activateItemControls(const Game * _selected_game)
     mp_action_edit->setEnabled(_selected_game);
     mp_action_rename->setEnabled(_selected_game);
     mp_action_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == GameInstallationType::UlConfig);
-}
-
-void GameListWidget::applySettings()
-{
-    QSettings settings;
-    QVariant icons_size_value = settings.value(SettingsKey::icons_size);
-    int icons_size = 3;
-    if(!icons_size_value.isNull() && icons_size_value.canConvert(QVariant::Int))
-    {
-        icons_size = icons_size_value.toInt();
-        if(icons_size > 4) icons_size = 4;
-        else if(icons_size < 1) icons_size = 1;
-    }
-    mp_slider_icons_size->setValue(icons_size);
-    changeIconsSize();
-}
-
-void GameListWidget::saveSettings()
-{
-    QSettings settings;
-    settings.setValue(SettingsKey::icons_size, mp_slider_icons_size->value());
 }
 
 bool GameListWidget::tryLoadRecentDirectory()
@@ -335,7 +296,6 @@ void GameListWidget::load()
 
 void GameListWidget::collectionLoaded()
 {
-    mp_label_directory->setText(mp_game_manager->directory());
     activateCollectionControls(true);
     gameSelected();
 }

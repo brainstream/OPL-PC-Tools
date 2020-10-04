@@ -224,70 +224,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="mp_layout_2">
-       <item>
-        <widget class="QLabel" name="mp_label_directory">
-         <property name="text">
-          <string notr="true"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="mp_spacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QSlider" name="mp_slider_icons_size">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="toolTip">
-          <string>Icons Size</string>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>4</number>
-         </property>
-         <property name="singleStep">
-          <number>1</number>
-         </property>
-         <property name="pageStep">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>3</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </item>
    <item>
@@ -616,12 +552,13 @@
   </action>
  </widget>
  <tabstops>
-  <tabstop>mp_tree_games</tabstop>
   <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_edit</tabstop>
   <tabstop>mp_btn_resore_iso</tabstop>
   <tabstop>mp_btn_delete</tabstop>
+  <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_edit_filter</tabstop>
+  <tabstop>mp_tree_games</tabstop>
  </tabstops>
  <resources/>
  <connections/>

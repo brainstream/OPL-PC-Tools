@@ -16,12 +16,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Settings.h>
-#include <OplPcTools/UI/VmcListActivity.h>
 #include <QPixmap>
 #include <QAbstractItemModel>
 #include <QShortcut>
-
+#include <OplPcTools/Settings.h>
+#include <OplPcTools/UI/VmcListWidget.h>
 
 using namespace OplPcTools::UI;
 
@@ -32,20 +31,6 @@ namespace SettingsKey {
 const char * icons_size = "VmcListIconSize";
 
 } // namespace SettingsKey
-
-class VmcListActivityIntent : public Intent
-{
-public:
-    Activity * createActivity(QWidget * _parent) override
-    {
-        return new VmcListActivity(_parent);
-    }
-
-    QString activityClass() const
-    {
-        return "VmcList";
-    }
-};
 
 class VmcTreeModel final : public QAbstractItemModel
 {
@@ -126,8 +111,8 @@ QVariant VmcTreeModel::headerData(int _section, Qt::Orientation _orientation, in
 }
 
 
-VmcListActivity::VmcListActivity(QWidget * _parent /*= nullptr*/):
-    Activity(_parent)
+VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
+    QWidget(_parent)
 {
     setupUi(this);
     setupShortcuts();
@@ -139,18 +124,18 @@ VmcListActivity::VmcListActivity(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->setModel(mp_proxy_model);
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    connect(this, &VmcListActivity::destroyed, this, &VmcListActivity::saveSettings);
-    connect(mp_slider_icons_size, &QSlider::valueChanged, this, &VmcListActivity::changeIconSize);
+    connect(this, &VmcListWidget::destroyed, this, &VmcListWidget::saveSettings);
+    connect(mp_slider_icons_size, &QSlider::valueChanged, this, &VmcListWidget::changeIconSize);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     applySettings();
 }
 
-void VmcListActivity::setupShortcuts()
+void VmcListWidget::setupShortcuts()
 {
     QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
-    connect(shortcut, &QShortcut::activated, this, &VmcListActivity::close);
+    connect(shortcut, &QShortcut::activated, this, &VmcListWidget::close);
     shortcut = new QShortcut(QKeySequence("Esc"), this);
-    connect(shortcut, &QShortcut::activated, this, &VmcListActivity::close);
+    connect(shortcut, &QShortcut::activated, this, &VmcListWidget::close);
     shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText())
@@ -158,7 +143,7 @@ void VmcListActivity::setupShortcuts()
     connect(shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
 }
 
-void VmcListActivity::applySettings()
+void VmcListWidget::applySettings()
 {
     QSettings settings;
     QVariant icons_size_value = settings.value(SettingsKey::icons_size);
@@ -173,19 +158,14 @@ void VmcListActivity::applySettings()
     changeIconSize();
 }
 
-void VmcListActivity::changeIconSize()
+void VmcListWidget::changeIconSize()
 {
     int size = mp_slider_icons_size->value() * 16;
     mp_tree_vmcs->setIconSize(QSize(size, size));
 }
 
-void VmcListActivity::saveSettings()
+void VmcListWidget::saveSettings()
 {
     QSettings settings;
     settings.setValue(SettingsKey::icons_size, mp_slider_icons_size->value());
-}
-
-QSharedPointer<Intent> VmcListActivity::createIntent()
-{
-    return QSharedPointer<Intent>(new VmcListActivityIntent);
 }

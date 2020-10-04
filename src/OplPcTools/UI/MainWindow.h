@@ -43,7 +43,6 @@ private:
     void showAboutDialog();
     void showAboutQtDialog();
     void showSettingsDialog();
-    void showVmcList();
     void setupUpdater();
 
 private:

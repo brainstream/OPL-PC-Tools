@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameCollectionActivity</class>
- <widget class="QWidget" name="GameCollectionActivity">
+ <class>GameListWidget</class>
+ <widget class="QWidget" name="GameListWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

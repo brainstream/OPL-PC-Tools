@@ -29,14 +29,14 @@
    <item>
     <widget class="QTabWidget" name="mp_tabs">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
-     <widget class="OplPcTools::UI::GameCollectionActivity" name="mp_tab_games">
+     <widget class="OplPcTools::UI::GameListWidget" name="mp_tab_games">
       <attribute name="title">
        <string>Games</string>
       </attribute>
      </widget>
-     <widget class="OplPcTools::UI::VmcListActivity" name="mp_tab_vmcs">
+     <widget class="OplPcTools::UI::VmcListWidget" name="mp_tab_vmcs">
       <attribute name="title">
        <string>Virtual Memory Cards</string>
       </attribute>
@@ -71,15 +71,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>OplPcTools::UI::GameCollectionActivity</class>
+   <class>OplPcTools::UI::GameListWidget</class>
    <extends>QWidget</extends>
-   <header location="global">OplPcTools/UI/GameCollectionActivity.h</header>
+   <header location="global">OplPcTools/UI/GameListWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>OplPcTools::UI::VmcListActivity</class>
+   <class>OplPcTools::UI::VmcListWidget</class>
    <extends>QWidget</extends>
-   <header location="global">OplPcTools/UI/VmcListActivity.h</header>
+   <header location="global">OplPcTools/UI/VmcListWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

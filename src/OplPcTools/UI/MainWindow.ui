@@ -133,7 +133,6 @@ color: rgb(56, 56, 56);</string>
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionmp_action_vmc_list"/>
     <addaction name="mp_action_settings"/>
    </widget>
    <widget class="QMenu" name="mp_menu_help">
@@ -162,14 +161,6 @@ color: rgb(56, 56, 56);</string>
   <action name="mp_action_about_qt">
    <property name="text">
     <string>About &amp;Qt...</string>
-   </property>
-  </action>
-  <action name="actionmp_action_vmc_list">
-   <property name="text">
-    <string>&amp;Virtual Memory Cards...</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>

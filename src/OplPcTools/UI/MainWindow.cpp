@@ -26,7 +26,6 @@
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/AboutDialog.h>
 #include <OplPcTools/UI/SettingsDialog.h>
-#include <OplPcTools/UI/VmcListActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -51,7 +50,6 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
     connect(mp_action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
     connect(mp_action_about_qt, &QAction::triggered, this, &MainWindow::showAboutQtDialog);
-    connect(actionmp_action_vmc_list, &QAction::triggered, this, &MainWindow::showVmcList);
 }
 
 MainWindow::~MainWindow()
@@ -136,9 +134,4 @@ void MainWindow::showSettingsDialog()
 {
     SettingsDialog dlg(this);
     dlg.exec();
-}
-
-void MainWindow::showVmcList()
-{
-    pushActivity(*VmcListActivity::createIntent());
 }

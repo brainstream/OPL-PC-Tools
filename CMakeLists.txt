@@ -80,7 +80,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/LambdaThread.h
     ${OPT_SRC_DIR}/UI/LibraryActivity.h
-    ${OPT_SRC_DIR}/UI/GameCollectionActivity.h
+    ${OPT_SRC_DIR}/UI/GameListWidget.h
     ${OPT_SRC_DIR}/UI/MainWindow.h
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.h
     ${OPT_SRC_DIR}/UI/ClickableLabel.h
@@ -94,13 +94,13 @@ set(OPT_SRC_MOC
 set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/MainWindow.ui
     ${OPT_SRC_DIR}/UI/LibraryActivity.ui
-    ${OPT_SRC_DIR}/UI/GameCollectionActivity.ui
+    ${OPT_SRC_DIR}/UI/GameListWidget.ui
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.ui
     ${OPT_SRC_DIR}/UI/AboutDialog.ui
     ${OPT_SRC_DIR}/UI/GameRenameDialog.ui
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.ui
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.ui
-    ${OPT_SRC_DIR}/UI/VmcListActivity.ui
+    ${OPT_SRC_DIR}/UI/VmcListWidget.ui
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
     ${OPT_SRC_DIR}/UI/SettingsDialog.ui
 )
@@ -160,7 +160,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/Activity.h
     ${OPT_SRC_DIR}/UI/AboutDialog.cpp
     ${OPT_SRC_DIR}/UI/LibraryActivity.cpp
-    ${OPT_SRC_DIR}/UI/GameCollectionActivity.cpp
+    ${OPT_SRC_DIR}/UI/GameListWidget.cpp
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.cpp
     ${OPT_SRC_DIR}/UI/MainWindow.cpp
     ${OPT_SRC_DIR}/UI/GameRenameDialog.cpp
@@ -170,8 +170,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/SettingsDialog.cpp
     ${OPT_SRC_DIR}/UI/IconTheme.cpp
     ${OPT_SRC_DIR}/UI/IconTheme.h
-    ${OPT_SRC_DIR}/UI/VmcListActivity.cpp
-    ${OPT_SRC_DIR}/UI/VmcListActivity.h
+    ${OPT_SRC_DIR}/UI/VmcListWidget.cpp
+    ${OPT_SRC_DIR}/UI/VmcListWidget.h
 )
 
 if(WIN32)

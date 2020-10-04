@@ -16,25 +16,20 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCLISTACTIVITY__
-#define __OPLPCTOOLS_VMCLISTACTIVITY__
+#ifndef __OPLPCTOOLS_VMCLISTWIDGET__
+#define __OPLPCTOOLS_VMCLISTWIDGET__
 
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/Activity.h>
-#include "ui_VmcListActivity.h"
+#include "ui_VmcListWidget.h"
 #include <QSortFilterProxyModel>
 
 namespace OplPcTools {
 namespace UI {
 
 
-class VmcListActivity: public Activity, private Ui::VmcListActivity  // TODO: rename, remove Activity
+class VmcListWidget: public QWidget, private Ui::VmcListWidget
 {
 public:
-    explicit VmcListActivity(QWidget * _parent = nullptr);
-
-public:
-    static QSharedPointer<Intent> createIntent();
+    explicit VmcListWidget(QWidget * _parent = nullptr);
 
 private:
     void setupShortcuts();
@@ -50,4 +45,4 @@ private:
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMCLISTACTIVITY__
+#endif // __OPLPCTOOLS_VMCLISTWIDGET__

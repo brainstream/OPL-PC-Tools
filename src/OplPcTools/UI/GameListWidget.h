@@ -16,8 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
-#define __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#ifndef __OPLPCTOOLS_GAMELISTWIDGET__
+#define __OPLPCTOOLS_GAMELISTWIDGET__
 
 #include <QSharedPointer>
 #include <QDir>
@@ -27,24 +27,20 @@
 #include <QSortFilterProxyModel>
 #include <OplPcTools/GameManager.h>
 #include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameCollectionActivity.h"
+#include "ui_GameListWidget.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class GameCollectionActivity : public Activity, private Ui::GameCollectionActivity
+class GameListWidget : public QWidget, private Ui::GameListWidget
 {
     class GameTreeModel;
 
     Q_OBJECT
 
 public:
-    explicit GameCollectionActivity(QWidget * _parent = nullptr);
-    bool onAttach() override;
+    explicit GameListWidget(QWidget * _parent = nullptr);
     bool tryLoadRecentDirectory();
-
-    static QSharedPointer<Intent> createIntent();
 
 private:
     void applySettings();
@@ -79,4 +75,4 @@ private:
 } // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECOLLECTIONACTIVITY__
+#endif // __OPLPCTOOLS_GAMELISTWIDGET__

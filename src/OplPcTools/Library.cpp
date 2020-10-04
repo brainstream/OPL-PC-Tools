@@ -16,38 +16,49 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCLISTACTIVITY__
-#define __OPLPCTOOLS_VMCLISTACTIVITY__
+#include <OplPcTools/Library.h>
 
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/Activity.h>
-#include "ui_VmcListActivity.h"
-#include <QSortFilterProxyModel>
+using namespace OplPcTools;
 
-namespace OplPcTools {
-namespace UI {
-
-
-class VmcListActivity: public Activity, private Ui::VmcListActivity  // TODO: rename, remove Activity
+Library::Library(const QDir & _directory) :
+    m_directory(_directory),
+    mp_games(nullptr),
+    mp_game_arts(nullptr),
+    mp_vmcs(nullptr)
 {
-public:
-    explicit VmcListActivity(QWidget * _parent = nullptr);
+}
 
-public:
-    static QSharedPointer<Intent> createIntent();
+bool Library::load(const QDir & _directory)
+{
+//    if(mp_games)
+//    {
+//        mp_games->deleteLater();
+//        mp_games = nullptr;
+//    }
+//    if(mp_game_arts)
+//    {
+//        mp_game_arts->deleteLater();
+//        mp_game_arts = nullptr;
+//    }
+//    if(mp_vmcs)
+//    {
+//        mp_vmcs->deleteLater();
+//        mp_vmcs = nullptr;
+//    }
+//    GameManager * games = new GameManager(m_directory, this);
+//    VmcManager * vmcs = new VmcManager(m_directory, this);
+//    if(!games->load() || !vmcs->load())
+//    {
+//        delete games;
+//        delete vmcs;
+//        return false;
+//    }
+//    mp_games = games;
+//    mp_game_arts = new GameArtManager(m_directory, this);
+//    mp_game_arts->addCacheType(GameArtType::Icon);
+//    mp_game_arts->addCacheType(GameArtType::Front);
+//    mp_vmcs = vmcs;
+    return true;
+}
 
-private:
-    void setupShortcuts();
-    void applySettings();
-    void saveSettings();
-    void changeIconSize();
 
-private:
-    QSortFilterProxyModel * mp_proxy_model;
-};
-
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCLISTACTIVITY__

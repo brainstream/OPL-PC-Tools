@@ -14,31 +14,8 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
    <item>
     <layout class="QHBoxLayout" name="mp_layout">
-     <item>
-      <widget class="QPushButton" name="mp_btn_back">
-       <property name="text">
-        <string>Back</string>
-       </property>
-       <property name="icon">
-        <iconset theme="oplpct-back">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QLineEdit" name="mp_edit_filter">
        <property name="placeholderText">
@@ -143,7 +120,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>mp_btn_back</tabstop>
   <tabstop>mp_edit_filter</tabstop>
   <tabstop>mp_btn_delete_vmc</tabstop>
   <tabstop>mp_btn_create_vmc</tabstop>

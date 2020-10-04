@@ -14,18 +14,6 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
    <item>
     <widget class="QWidget" name="mp_toolbar" native="true">
      <property name="sizePolicy">
@@ -622,7 +610,8 @@
   </layout>
   <action name="mp_action_edit">
    <property name="icon">
-    <iconset theme="oplpct-edit"/>
+    <iconset theme="oplpct-edit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Edit</string>
@@ -636,7 +625,8 @@
   </action>
   <action name="mp_action_delete">
    <property name="icon">
-    <iconset theme="oplpct-delete"/>
+    <iconset theme="oplpct-delete">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -650,7 +640,8 @@
   </action>
   <action name="mp_action_install">
    <property name="icon">
-    <iconset theme="oplpct-add"/>
+    <iconset theme="oplpct-add">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Install</string>
@@ -664,7 +655,8 @@
   </action>
   <action name="mp_action_reload">
    <property name="icon">
-    <iconset theme="oplpct-reload"/>
+    <iconset theme="oplpct-reload">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Reload</string>
@@ -678,7 +670,8 @@
   </action>
   <action name="mp_action_load">
    <property name="icon">
-    <iconset theme="oplpct-load"/>
+    <iconset theme="oplpct-load">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -692,7 +685,8 @@
   </action>
   <action name="mp_action_rename">
    <property name="icon">
-    <iconset theme="oplpct-rename"/>
+    <iconset theme="oplpct-rename">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Rename</string>
@@ -706,7 +700,8 @@
   </action>
   <action name="mp_action_restore_iso">
    <property name="icon">
-    <iconset theme="oplpct-restore"/>
+    <iconset theme="oplpct-restore">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Restore ISO</string>

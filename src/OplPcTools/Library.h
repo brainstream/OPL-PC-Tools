@@ -16,38 +16,53 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCLISTACTIVITY__
-#define __OPLPCTOOLS_VMCLISTACTIVITY__
+#ifndef __OPLPCTOOLS_LIBRARY__
+#define __OPLPCTOOLS_LIBRARY__
 
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/UI/Activity.h>
-#include "ui_VmcListActivity.h"
-#include <QSortFilterProxyModel>
+#include <OplPcTools/GameManager.h>
+#include <OplPcTools/GameArtManager.h>
+#include <OplPcTools/VmcManager.h>
 
 namespace OplPcTools {
-namespace UI {
 
-
-class VmcListActivity: public Activity, private Ui::VmcListActivity  // TODO: rename, remove Activity
+class Library final
 {
 public:
-    explicit VmcListActivity(QWidget * _parent = nullptr);
-
-public:
-    static QSharedPointer<Intent> createIntent();
-
-private:
-    void setupShortcuts();
-    void applySettings();
-    void saveSettings();
-    void changeIconSize();
+    Library(const QDir & _directory);
+    inline const QDir & directory() const;
+    bool load(const QDir & _directory);
+    inline GameManager * games() const;
+    inline GameArtManager * arts() const;
+    inline VmcManager * vmcs() const;
 
 private:
-    QSortFilterProxyModel * mp_proxy_model;
+    static Library * sp_instance;
+    QDir m_directory;
+    GameManager * mp_games;
+    GameArtManager * mp_game_arts;
+    VmcManager * mp_vmcs;
 };
 
+const QDir & Library::directory() const
+{
+    return m_directory;
+}
 
-} // namespace UI
+GameManager * Library::games() const
+{
+    return mp_games;
+}
+
+GameArtManager * Library::arts() const
+{
+    return mp_game_arts;
+}
+
+VmcManager * Library::vmcs() const
+{
+    return mp_vmcs;
+}
+
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMCLISTACTIVITY__
+#endif // __OPLPCTOOLS_LIBRARY__

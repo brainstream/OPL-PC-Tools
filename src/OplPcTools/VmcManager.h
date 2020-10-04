@@ -29,18 +29,18 @@ namespace OplPcTools {
 class VmcManager final : public QObject
 {
     Q_OBJECT
-    class VmcList;
 
 public:
-    explicit VmcManager(QObject * _parent = nullptr);
+    explicit VmcManager(const QDir & _base_directory, QObject * _parent = nullptr);
     ~VmcManager() override;
-    void load(const QDir & _directory);
+    bool load();
     bool isLoaded() const;
     const int count() const;
     const Vmc * operator[](int _index) const;
 
 private:
-    VmcList * mp_vmcs;
+    const QDir m_directory;
+    QVector<Vmc *> * mp_vmcs;
 };
 
 

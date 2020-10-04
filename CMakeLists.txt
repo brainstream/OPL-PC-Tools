@@ -79,6 +79,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UlConfigGameInstaller.h
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/LambdaThread.h
+    ${OPT_SRC_DIR}/UI/LibraryActivity.h
     ${OPT_SRC_DIR}/UI/GameCollectionActivity.h
     ${OPT_SRC_DIR}/UI/MainWindow.h
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.h
@@ -92,6 +93,7 @@ set(OPT_SRC_MOC
 
 set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/MainWindow.ui
+    ${OPT_SRC_DIR}/UI/LibraryActivity.ui
     ${OPT_SRC_DIR}/UI/GameCollectionActivity.ui
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.ui
     ${OPT_SRC_DIR}/UI/AboutDialog.ui
@@ -138,6 +140,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameInstallationType.h
     ${OPT_SRC_DIR}/MediaType.h
     ${OPT_SRC_DIR}/DirectoryGameStorage.cpp
+    ${OPT_SRC_DIR}/Library.h
+    ${OPT_SRC_DIR}/Library.cpp
     ${OPT_SRC_DIR}/GameManager.cpp
     ${OPT_SRC_DIR}/GameStorage.cpp
     ${OPT_SRC_DIR}/Settings.h
@@ -155,6 +159,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/Intent.h
     ${OPT_SRC_DIR}/UI/Activity.h
     ${OPT_SRC_DIR}/UI/AboutDialog.cpp
+    ${OPT_SRC_DIR}/UI/LibraryActivity.cpp
     ${OPT_SRC_DIR}/UI/GameCollectionActivity.cpp
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.cpp
     ${OPT_SRC_DIR}/UI/MainWindow.cpp

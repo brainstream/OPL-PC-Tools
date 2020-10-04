@@ -21,7 +21,7 @@
 #include <QStandardPaths>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/Settings.h>
-#include <OplPcTools/UI/GameCollectionActivity.h>
+#include <OplPcTools/UI/LibraryActivity.h>
 #include <OplPcTools/UI/Application.h>
 
 using namespace OplPcTools;
@@ -152,7 +152,7 @@ int main(int _argc, char * _argv[])
     setupIconTheme();
     QTranslator * translator = setupTranslator(gp_application->applicationName());
     QTranslator * qt_translator = setupTranslator("qtbase");
-    QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::GameCollectionActivity::createIntent();
+    QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::LibraryActivity::createIntent();
     gp_application->pushActivity(*intent);
     gp_application->showMainWindow();
     int result = gp_application->exec();

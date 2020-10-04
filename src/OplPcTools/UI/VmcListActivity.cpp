@@ -140,7 +140,6 @@ VmcListActivity::VmcListActivity(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     connect(this, &VmcListActivity::destroyed, this, &VmcListActivity::saveSettings);
-    connect(mp_btn_back, &QPushButton::clicked, this, &VmcListActivity::deleteLater);
     connect(mp_slider_icons_size, &QSlider::valueChanged, this, &VmcListActivity::changeIconSize);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     applySettings();

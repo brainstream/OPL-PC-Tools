@@ -70,116 +70,116 @@
 <context>
     <name>GameCollectionActivity</name>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="265"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="465"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="253"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="506"/>
         <source>Filter</source>
         <translation>Filtro</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="345"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="467"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="333"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="508"/>
         <source>Icons Size</source>
         <translation>Tamanho dos ícones</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="523"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="469"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="511"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="510"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="543"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="470"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="531"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="511"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="563"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="471"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="551"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="512"/>
         <source>Source:</source>
         <translation>Fonte:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="583"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="472"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="571"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="513"/>
         <source>Parts:</source>
         <translation>Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="631"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="441"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="620"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="482"/>
         <source>Edit game</source>
         <translation>Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="645"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="445"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="635"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="486"/>
         <source>Delete game</source>
         <translation>Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="659"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="449"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="650"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="490"/>
         <source>Install game</source>
         <translation>Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="673"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="453"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="665"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="494"/>
         <source>Reload collection</source>
         <translation>Atualizar coleção</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="687"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="457"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="680"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="498"/>
         <source>Open collection</source>
         <translation>Abrir coleção</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="701"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="461"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="695"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="502"/>
         <source>Rename game</source>
         <translation>Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="712"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="463"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="707"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="504"/>
         <source>Restore ISO</source>
         <translation>Restaurar ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="628"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="439"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="617"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="480"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="642"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="443"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="632"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="484"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="656"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="447"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="647"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="488"/>
         <source>Install</source>
         <translation>Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="670"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="451"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="662"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="492"/>
         <source>Reload</source>
         <translation>Atualizar</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="684"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="455"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="677"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="496"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../UI/GameCollectionActivity.ui" line="698"/>
-        <location filename="../../../build/ui_GameCollectionActivity.h" line="459"/>
+        <location filename="../UI/GameCollectionActivity.ui" line="692"/>
+        <location filename="../../../build/ui_GameCollectionActivity.h" line="500"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
@@ -1091,31 +1091,25 @@ Tem certeza?</translation>
     <name>VmcListActivity</name>
     <message>
         <location filename="../UI/VmcListActivity.ui" line="14"/>
-        <location filename="../../../build/ui_VmcListActivity.h" line="147"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="131"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListActivity.ui" line="34"/>
-        <location filename="../../../build/ui_VmcListActivity.h" line="148"/>
-        <source>Back</source>
-        <translation type="unfinished">Voltar</translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListActivity.ui" line="45"/>
-        <location filename="../../../build/ui_VmcListActivity.h" line="149"/>
+        <location filename="../UI/VmcListActivity.ui" line="22"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="132"/>
         <source>Filter</source>
         <translation type="unfinished">Filtro</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListActivity.ui" line="66"/>
-        <location filename="../../../build/ui_VmcListActivity.h" line="151"/>
+        <location filename="../UI/VmcListActivity.ui" line="43"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="134"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListActivity.ui" line="55"/>
-        <location filename="../../../build/ui_VmcListActivity.h" line="150"/>
+        <location filename="../UI/VmcListActivity.ui" line="32"/>
+        <location filename="../../../build/ui_VmcListActivity.h" line="133"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>

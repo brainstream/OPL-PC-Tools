@@ -21,45 +21,64 @@
 
 using namespace OplPcTools;
 
-class VmcManager::VmcList final
-{
-public:
-    VmcList()
-    {
-        vmcs = {
-            new Vmc("Test #1", VmcSize::_8M),
-            new Vmc("Test #2", VmcSize::_128M),
-            new Vmc("Test #3", VmcSize::_16M),
-            new Vmc("Test #4", VmcSize::_8M),
-            new Vmc("Test #5", VmcSize::_64M),
-        };
-    }
-
-    ~VmcList()
-    {
-        for(const Vmc * vmc: vmcs)
-            delete vmc;
-    }
-
-    QVector<Vmc *> vmcs;
-};
-
-VmcManager::VmcManager(QObject * _parent /*= nullptr*/) :
+VmcManager::VmcManager(const QDir & _base_directory, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
+    m_directory(_base_directory.absoluteFilePath("VMC")),
     mp_vmcs(nullptr)
 {
 }
 
 VmcManager::~VmcManager()
 {
+    if(mp_vmcs)
+    {
+        for(const Vmc * vmc: *mp_vmcs)
+            delete vmc;
+    }
     delete mp_vmcs;
 }
 
 
-void VmcManager::load(const QDir & _directory)
+bool VmcManager::load()
 {
-
+    QFileInfo fi(m_directory.absolutePath());
+    if(fi.exists())
+    {
+        if(!fi.isDir())
+            return false;
+    }
+    else
+    {
+        return true;
+    }
+    for(const QString & filename : m_directory.entryList({ ".bin" }, QDir::Files | QDir::Readable))
+    {
+        QString title = filename.left(filename.lastIndexOf("."));
+        QFileInfo file(m_directory.absoluteFilePath(filename));
+        VmcSize size = VmcSize::_8M;
+        switch(file.size() / (1024 * 1024)) // FIXME: read VMC
+        {
+        case 16:
+            size = VmcSize::_16M;
+            break;
+        case 32:
+            size = VmcSize::_32M;
+            break;
+        case 64:
+            size = VmcSize::_64M;
+            break;
+        case 128:
+            size = VmcSize::_128M;
+            break;
+        case 256:
+            size = VmcSize::_256M;
+            break;
+        }
+        mp_vmcs->append(new Vmc(title, size));
+    }
+    return true;
 }
+
 
 bool VmcManager::isLoaded() const
 {
@@ -68,10 +87,10 @@ bool VmcManager::isLoaded() const
 
 const int VmcManager::count() const
 {
-    return isLoaded() ? mp_vmcs->vmcs.size() : 0;
+    return isLoaded() ? mp_vmcs->size() : 0;
 }
 
 const Vmc * VmcManager::operator[](int _index) const
 {
-    return isLoaded() && count() > _index && _index >= 0 ? mp_vmcs->vmcs[_index] : nullptr;
+    return isLoaded() && count() > _index && _index >= 0 ? (*mp_vmcs)[_index] : nullptr;
 }

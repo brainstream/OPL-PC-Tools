@@ -25,7 +25,7 @@
 #include <QWidget>
 #include <QMenu>
 #include <QSortFilterProxyModel>
-#include <OplPcTools/Game.h>
+#include <OplPcTools/GameManager.h>
 #include <OplPcTools/GameArtManager.h>
 #include <OplPcTools/UI/Intent.h>
 #include "ui_GameCollectionActivity.h"
@@ -68,7 +68,8 @@ private:
     void showIsoRestorer();
 
 private:
-    OplPcTools::GameArtManager * mp_game_art_manager;
+    GameManager * mp_game_manager;
+    GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
     QMenu * mp_context_menu;
     QSortFilterProxyModel * mp_proxy_model;

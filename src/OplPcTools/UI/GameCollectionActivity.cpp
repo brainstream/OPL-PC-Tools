@@ -212,20 +212,21 @@ void GameCollectionActivity::GameTreeModel::setArtManager(GameArtManager & _mana
 
 GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
+    mp_game_manager(nullptr),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
     mp_context_menu(nullptr),
     mp_proxy_model(nullptr)
 {
     setupUi(this);
+    mp_game_manager = new GameManager(this);
     QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText())
         .arg(filter_shortcut->key().toString()));
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    GameManager & game_manager = Application::instance().gameManager();
-    mp_model = new GameTreeModel(game_manager, this);
+    mp_model = new GameTreeModel(*mp_game_manager, this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
     mp_proxy_model->setSourceModel(mp_model);
@@ -261,9 +262,9 @@ GameCollectionActivity::GameCollectionActivity(QWidget * _parent /*= nullptr*/) 
     connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameCollectionActivity::showTreeContextMenu);
     connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { gameSelected(); });
-    connect(&game_manager, &GameManager::loaded, this, &GameCollectionActivity::collectionLoaded);
-    connect(&game_manager, &GameManager::gameAdded, this, &GameCollectionActivity::gameAdded);
-    connect(&game_manager, &GameManager::gameRenamed, this, &GameCollectionActivity::gameRenamed);
+    connect(mp_game_manager, &GameManager::loaded, this, &GameCollectionActivity::collectionLoaded);
+    connect(mp_game_manager, &GameManager::gameAdded, this, &GameCollectionActivity::gameAdded);
+    connect(mp_game_manager, &GameManager::gameRenamed, this, &GameCollectionActivity::gameRenamed);
     connect(this, &GameCollectionActivity::destroyed, this, &GameCollectionActivity::saveSettings);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     applySettings();
@@ -289,7 +290,7 @@ void GameCollectionActivity::changeIconsSize()
 
 void GameCollectionActivity::showTreeContextMenu(const QPoint & _point)
 {
-    if(Application::instance().gameManager().isLoaded())
+    if(mp_game_manager->isLoaded())
         mp_context_menu->exec(mp_tree_games->mapToGlobal(_point));
 }
 
@@ -355,8 +356,7 @@ void GameCollectionActivity::loadDirectory(const QDir & _directory)
 {
     try
     {
-        GameManager & game_manager = Application::instance().gameManager();
-        game_manager.load(_directory);
+        mp_game_manager->load(_directory);
         delete mp_game_art_manager;
         mp_game_art_manager = new GameArtManager(_directory, this);
         connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameCollectionActivity::gameArtChanged);
@@ -364,7 +364,7 @@ void GameCollectionActivity::loadDirectory(const QDir & _directory)
         mp_game_art_manager->addCacheType(GameArtType::Front);
         mp_model->setArtManager(*mp_game_art_manager);
         mp_proxy_model->sort(0, Qt::AscendingOrder);
-        if(game_manager.count() > 0)
+        if(mp_game_manager->count() > 0)
             mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
     }
     catch(const Exception & exception)
@@ -379,12 +379,12 @@ void GameCollectionActivity::loadDirectory(const QDir & _directory)
 
 void GameCollectionActivity::reload()
 {
-    loadDirectory(Application::instance().gameManager().directory());
+    loadDirectory(mp_game_manager->directory());
 }
 
 void GameCollectionActivity::collectionLoaded()
 {
-    mp_label_directory->setText(Application::instance().gameManager().directory());
+    mp_label_directory->setText(mp_game_manager->directory());
     activateCollectionControls(true);
     gameSelected();
 }
@@ -446,7 +446,7 @@ void GameCollectionActivity::renameGame()
         {
             try
             {
-                Application::instance().gameManager().renameGame(*game, dlg.name());
+                mp_game_manager->renameGame(*game, dlg.name());
             }
             catch(const Exception & exception)
             {
@@ -465,7 +465,7 @@ void GameCollectionActivity::showGameDetails()
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
-        QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_art_manager, game->id());
+        QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_manager, *mp_game_art_manager, game->id());
         Application::instance().pushActivity(*intent);
     }
 }
@@ -475,14 +475,14 @@ void GameCollectionActivity::showIsoRestorer()
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->installationType() == GameInstallationType::UlConfig)
     {
-        QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->id());
+        QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(*mp_game_manager, game->id());
         Application::instance().pushActivity(*intent);
     }
 }
 
 void GameCollectionActivity::showGameInstaller()
 {
-    QSharedPointer<Intent> intent = GameInstallerActivity::createIntent();
+    QSharedPointer<Intent> intent = GameInstallerActivity::createIntent(*mp_game_manager);
     Application::instance().pushActivity(*intent);
 }
 
@@ -507,8 +507,7 @@ void GameCollectionActivity::deleteGame()
     }
     try
     {
-        GameManager & game_manager = Application::instance().gameManager();
-        game_manager.deleteGame(*game);
+        mp_game_manager->deleteGame(*game);
         mp_game_art_manager->clearArts(id);
     }
     catch(Exception & exception)

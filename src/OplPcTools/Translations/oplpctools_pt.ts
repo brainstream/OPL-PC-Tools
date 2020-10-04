@@ -505,6 +505,33 @@
     </message>
 </context>
 <context>
+    <name>LibraryActivity</name>
+    <message>
+        <location filename="../UI/LibraryActivity.ui" line="14"/>
+        <location filename="../../../build/ui_LibraryActivity.h" line="80"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/LibraryActivity.ui" line="36"/>
+        <location filename="../../../build/ui_LibraryActivity.h" line="81"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/LibraryActivity.ui" line="41"/>
+        <location filename="../../../build/ui_LibraryActivity.h" line="82"/>
+        <source>Virtual Memory Cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/LibraryActivity.ui" line="51"/>
+        <location filename="../../../build/ui_LibraryActivity.h" line="83"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../UI/MainWindow.ui" line="56"/>
@@ -650,12 +677,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="127"/>
+        <location filename="../UI/Application.cpp" line="124"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="132"/>
+        <location filename="../UI/Application.cpp" line="129"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -671,7 +698,7 @@
 <context>
     <name>OplPcTools::UI::GameCollectionActivity</name>
     <message>
-        <location filename="../UI/GameCollectionActivity.cpp" line="336"/>
+        <location filename="../UI/GameCollectionActivity.cpp" line="337"/>
         <source>Choose the OPL root directory</source>
         <translation>Escolha a raiz da pasta do OPL</translation>
     </message>
@@ -701,69 +728,69 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::GameDetailsActivity</name>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="224"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="228"/>
         <source>Choose a Picture</source>
         <translation>Escolha uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="225"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="229"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="252"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="256"/>
         <source>Don&apos;t show again</source>
         <translation>Não mostrar novamente</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="253"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="257"/>
         <source>Remove Picture</source>
         <translation>Remover imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="254"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="258"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation>%1 Vai ser apagado.
 Tem certeza?</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="292"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="296"/>
         <source>Icon</source>
         <translation>Ícone</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="293"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="297"/>
         <source>Front Cover</source>
         <translation>Capa da frente</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="294"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="298"/>
         <source>Back Cover</source>
         <translation>Capa de trás</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="295"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="299"/>
         <source>Spine Cover</source>
         <translation>Capa do lado</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="296"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="300"/>
         <source>Screenshot #1</source>
         <translation>Captura de tela #1</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="297"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="301"/>
         <source>Screenshot #2</source>
         <translation>Captura de tela #2</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="298"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="302"/>
         <source>Background</source>
         <translation>Plano de fundo</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="303"/>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>
@@ -771,32 +798,32 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="378"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
         <translation>Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="383"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="392"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="420"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="429"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="595"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="604"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="647"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="647"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -804,37 +831,37 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::IsoRestorerActivity</name>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="90"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="93"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Escolha um nome para o arquivo ISO ser salvo</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="91"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="94"/>
         <source>ISO Image</source>
         <translation>Imagem ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="124"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="127"/>
         <source>Restoring &apos;%1&apos; to &apos;%2&apos;...</source>
         <translation>Restaurando &apos;%1&apos; para &apos;%2&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="132"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="135"/>
         <source>Synchronization of buffers. Please wait...</source>
         <translation>Sincronizando os buffers . Espera um pouquinho...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="133"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="136"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="149"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="152"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="150"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="153"/>
         <source>Canceled</source>
         <translation>Cancelado</translation>
     </message>
@@ -894,27 +921,27 @@ Tem certeza?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="164"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="166"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="168"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="170"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>

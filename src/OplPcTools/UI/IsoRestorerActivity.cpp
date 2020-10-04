@@ -39,14 +39,15 @@ static const char * iso_recover_dir = "ISORecoverDirectory";
 class IsoRestorerActivityIntent : public Intent
 {
 public:
-    explicit IsoRestorerActivityIntent(const QString & _game_id) :
+    explicit IsoRestorerActivityIntent(GameManager & _game_manager, const QString & _game_id) :
+        mr_game_manager(_game_manager),
         m_game_id(_game_id)
     {
     }
 
     Activity * createActivity(QWidget * _parent) override
     {
-        IsoRestorerActivity * widget = new IsoRestorerActivity(m_game_id, _parent);
+        IsoRestorerActivity * widget = new IsoRestorerActivity(mr_game_manager, m_game_id, _parent);
         return widget;
     }
 
@@ -56,13 +57,15 @@ public:
     }
 
 private:
+    GameManager & mr_game_manager;
     const QString m_game_id;
 };
 
 } // namespace
 
-IsoRestorerActivity::IsoRestorerActivity(const QString & _game_id, QWidget * _parent /*= nullptr*/) :
+IsoRestorerActivity::IsoRestorerActivity(GameManager & _game_manager, const QString & _game_id, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
+    mr_game_manager(_game_manager),
     m_game_id(_game_id),
     mp_working_thread(nullptr)
 {
@@ -72,14 +75,14 @@ IsoRestorerActivity::IsoRestorerActivity(const QString & _game_id, QWidget * _pa
     connect(mp_btn_back, &QPushButton::clicked, this, &IsoRestorerActivity::deleteLater);
 }
 
-QSharedPointer<Intent> IsoRestorerActivity::createIntent(const QString & _game_id)
+QSharedPointer<Intent> IsoRestorerActivity::createIntent(GameManager & _game_manager, const QString & _game_id)
 {
-    return QSharedPointer<Intent>(new IsoRestorerActivityIntent(_game_id));
+    return QSharedPointer<Intent>(new IsoRestorerActivityIntent(_game_manager, _game_id));
 }
 
 bool IsoRestorerActivity::onAttach()
 {
-    const Game * game = Application::instance().gameManager().findGame(m_game_id);
+    const Game * game = mr_game_manager.findGame(m_game_id);
     if(!game)
         return false;
     mp_label_title->setText(game->title());
@@ -100,7 +103,7 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
 {
     if(mp_working_thread) return;
     m_finish_status.clear();
-    IsoRestorer * restorer = new IsoRestorer(_game, Application::instance().gameManager().directory(), _destination, this);
+    IsoRestorer * restorer = new IsoRestorer(_game, mr_game_manager.directory(), _destination, this);
     LambdaThread * working_thread = new LambdaThread([restorer]() {
         restorer->restore();
     }, this);

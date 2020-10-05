@@ -40,6 +40,7 @@ protected:
     void closeEvent(QCloseEvent * _event) override;
 
 private:
+    void tryOpenRecentLibrary();
     void openLibrary();
     void showAboutDialog();
     void showAboutQtDialog();

@@ -36,7 +36,7 @@ namespace {
 namespace SettingsKey {
 
 const char * wnd_geometry = "WindowGeometry";
-const char * ul_dir     = "ULDirectory";
+const char * ul_dir       = "ULDirectory";
 
 } // namespace SettingsKey
 } // namespace
@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
     connect(mp_action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
     connect(mp_action_about_qt, &QAction::triggered, this, &MainWindow::showAboutQtDialog);
+    tryOpenRecentLibrary();
 }
 
 MainWindow::~MainWindow()
@@ -119,6 +120,18 @@ bool MainWindow::pushActivity(Intent & _intent)
         delete activity;
         return false;
     }
+}
+
+void MainWindow::tryOpenRecentLibrary()
+{
+    if(!Settings::instance().flag(Settings::Flag::ReopenLastSession))
+        return;
+    QSettings settings;
+    QVariant value = settings.value(SettingsKey::ul_dir);
+    if(!value.isValid()) return;
+    QDir dir(value.toString());
+    if(!dir.exists()) return;
+    Application::instance().library().load(dir);
 }
 
 void MainWindow::openLibrary()

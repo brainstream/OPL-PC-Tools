@@ -40,7 +40,6 @@ class GameListWidget : public QWidget, private Ui::GameListWidget
 
 public:
     explicit GameListWidget(QWidget * _parent = nullptr);
-    bool tryLoadRecentDirectory();
 
 private:
     void activateCollectionControls(bool _activate);

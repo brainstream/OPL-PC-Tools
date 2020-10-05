@@ -771,22 +771,22 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="340"/>
+        <location filename="../UI/GameListWidget.cpp" line="330"/>
         <source>Directory</source>
         <translation type="unfinished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="408"/>
+        <location filename="../UI/GameListWidget.cpp" line="398"/>
         <source>Don&apos;t show again</source>
         <translation type="unfinished">Não mostrar novamente</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="409"/>
+        <location filename="../UI/GameListWidget.cpp" line="399"/>
         <source>Remove Game</source>
         <translation type="unfinished">Remover jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="410"/>
+        <location filename="../UI/GameListWidget.cpp" line="400"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation type="unfinished">%1 Vai ser apagado.
@@ -842,7 +842,7 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::MainWindow</name>
     <message>
-        <location filename="../UI/MainWindow.cpp" line="128"/>
+        <location filename="../UI/MainWindow.cpp" line="141"/>
         <source>Choose the OPL root directory</source>
         <translation type="unfinished">Escolha a raiz da pasta do OPL</translation>
     </message>

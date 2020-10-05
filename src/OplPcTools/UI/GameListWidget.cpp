@@ -236,6 +236,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_game_manager, &GameManager::gameAdded, this, &GameListWidget::gameAdded);
     connect(mp_game_manager, &GameManager::gameRenamed, this, &GameListWidget::gameRenamed);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
+    load();
 }
 
 void GameListWidget::showTreeContextMenu(const QPoint & _point)
@@ -256,17 +257,6 @@ void GameListWidget::activateItemControls(const Game * _selected_game)
     mp_action_edit->setEnabled(_selected_game);
     mp_action_rename->setEnabled(_selected_game);
     mp_action_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == GameInstallationType::UlConfig);
-}
-
-bool GameListWidget::tryLoadRecentDirectory()
-{
-//    QSettings settings;
-//    QVariant value = settings.value(SettingsKey::ul_dir);
-//    if(!value.isValid()) return false;
-//    QDir dir(value.toString());
-//    if(!dir.exists()) return false;
-//    loadDirectory(dir);
-    return true;
 }
 
 void GameListWidget::load()

@@ -44,6 +44,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
         mp_checkbox_check_new_versions->setEnabled(false);
     mp_combobox_icon_theme->insertItems(0, loadIconThemes());
     mp_combobox_icon_theme->setCurrentText(QIcon::themeName());
+    mp_spinbox_icon_size->setValue(settings.iconSize());
     connect(mp_combobox_icon_theme, &QComboBox::currentTextChanged, this, &SettingsDialog::iconThemeChanged);
     mp_tabs->setCurrentIndex(0);
 }
@@ -70,5 +71,6 @@ void SettingsDialog::accept()
     settings.setFlag(Settings::Flag::CheckNewVersion,
         mp_checkbox_check_new_versions->isEnabled() && mp_checkbox_check_new_versions->isChecked());
     settings.setIconTheme(mp_combobox_icon_theme->currentText());
+    settings.setIconSize(mp_spinbox_icon_size->value());
     QDialog::accept();
 }

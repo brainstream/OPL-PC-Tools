@@ -42,6 +42,7 @@ public:
     explicit GameListWidget(QWidget * _parent = nullptr);
 
 private:
+    void setIconSize();
     void activateCollectionControls(bool _activate);
     void activateItemControls(const Game * _selected_game);
     void showTreeContextMenu(const QPoint & _point);

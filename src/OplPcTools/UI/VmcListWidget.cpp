@@ -150,6 +150,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
+    connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcListWidget::setIconSize);
 }
 
 void VmcListWidget::setupShortcuts()
@@ -163,4 +164,13 @@ void VmcListWidget::setupShortcuts()
         .arg(mp_edit_filter->placeholderText())
         .arg(shortcut->key().toString()));
     connect(shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
+    setIconSize();
+}
+
+void VmcListWidget::setIconSize()
+{
+    QSize size;
+    size.setWidth(Settings::instance().iconSize());
+    size.setHeight(size.width());
+    mp_tree_vmcs->setIconSize(size);
 }

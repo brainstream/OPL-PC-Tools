@@ -47,6 +47,7 @@ const char * flagToKey(Settings::Flag _flag)
 }
 
 const QString icon_theme_key("Settings/IconTheme");
+const QString icon_size_key("Settings/IconSize");
 
 } // namespace
 
@@ -63,6 +64,7 @@ Settings::Settings()
     loadFlag(settings, Flag::CheckNewVersion, true);
     loadFlag(settings, Flag::ValidateUlCfg, true);
     m_icon_theme = settings.value(icon_theme_key, "Tango").toString();
+    m_icon_size = settings.value(icon_size_key, 40).toUInt();
 }
 
 void Settings::loadFlag(const QSettings & _settings, Flag _flag, bool _default_value)
@@ -91,6 +93,22 @@ void Settings::setIconTheme(const QString & _theme)
     QSettings settings;
     settings.setValue(icon_theme_key, _theme);
     m_icon_theme = _theme;
+}
+
+quint32 Settings::iconSize() const
+{
+    return m_icon_size;
+}
+
+void Settings::setIconSize(quint32 _size)
+{
+    if(_size != m_icon_size)
+    {
+        QSettings settings;
+        settings.setValue(icon_size_key, _size);
+        m_icon_size = _size;
+        emit iconSizeChanged();
+    }
 }
 
 Settings & Settings::instance()

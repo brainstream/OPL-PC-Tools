@@ -54,7 +54,7 @@ private:
 
 private:
     const QPixmap m_default_icon;
-    const GameManager & mr_manager;
+    const GameManager & mr_game_manager;
     GameArtManager * mp_art_manager;
     int m_row_count;
 };
@@ -63,21 +63,21 @@ private:
 GameListWidget::GameTreeModel::GameTreeModel(QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
     m_default_icon(QPixmap(":/images/no-icon")),
-    mr_manager(Application::instance().library().games()),
+    mr_game_manager(Application::instance().library().games()),
     mp_art_manager(nullptr),
-    m_row_count(mr_manager.count())
+    m_row_count(mr_game_manager.count())
 {
     connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::GameTreeModel::onLibraryLoaded);
-    connect(&mr_manager, &GameManager::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
-    connect(&mr_manager, &GameManager::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
-    connect(&mr_manager, &GameManager::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
-    connect(&mr_manager, &GameManager::gameDeleted, this, &GameListWidget::GameTreeModel::onGameDeleted);
+    connect(&mr_game_manager, &GameManager::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
+    connect(&mr_game_manager, &GameManager::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
+    connect(&mr_game_manager, &GameManager::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
+    connect(&mr_game_manager, &GameManager::gameDeleted, this, &GameListWidget::GameTreeModel::onGameDeleted);
 }
 
 void GameListWidget::GameTreeModel::onLibraryLoaded()
 {
     beginResetModel();
-    m_row_count = mr_manager.count();
+    m_row_count = mr_game_manager.count();
     endResetModel();
 }
 
@@ -93,7 +93,7 @@ void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const QString & _id)
 {
     for(int i = 0; i < m_row_count; ++i)
     {
-        const Game * game = mr_manager[i];
+        const Game * game = mr_game_manager[i];
         if(game->id() == _id)
         {
             beginRemoveRows(QModelIndex(), i, i);
@@ -105,16 +105,16 @@ void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const QString & _id)
 void GameListWidget::GameTreeModel::onGameDeleted(const QString & _id)
 {
     Q_UNUSED(_id);
-    m_row_count = mr_manager.count();
+    m_row_count = mr_game_manager.count();
     endRemoveRows();
 }
 
 void GameListWidget::GameTreeModel::updateRecord(const QString & _id)
 {
-    int count = mr_manager.count();
+    int count = mr_game_manager.count();
     for(int i = 0; i < count; ++i)
     {
-        const Game * game = mr_manager[i];
+        const Game * game = mr_game_manager[i];
         if(game->id() == _id)
         {
             emit dataChanged(createIndex(i, 0), createIndex(i, 0));
@@ -160,11 +160,11 @@ QVariant GameListWidget::GameTreeModel::data(const QModelIndex & _index, int _ro
     switch(_role)
     {
     case Qt::DisplayRole:
-        return mr_manager[_index.row()]->title();
+        return mr_game_manager[_index.row()]->title();
     case Qt::DecorationRole:
         if(mp_art_manager)
         {
-            QPixmap icon = mp_art_manager->load(mr_manager[_index.row()]->id(), GameArtType::Icon);
+            QPixmap icon = mp_art_manager->load(mr_game_manager[_index.row()]->id(), GameArtType::Icon);
             return QIcon(icon.isNull() ? m_default_icon : icon);
         }
         break;
@@ -174,13 +174,11 @@ QVariant GameListWidget::GameTreeModel::data(const QModelIndex & _index, int _ro
 
 const Game * GameListWidget::GameTreeModel::game(const QModelIndex & _index) const
 {
-    return _index.isValid() ? mr_manager[_index.row()] : nullptr;
+    return _index.isValid() ? mr_game_manager[_index.row()] : nullptr;
 }
 
 void GameListWidget::GameTreeModel::setArtManager(GameArtManager & _manager)
 {
-    if(mp_art_manager)
-        disconnect(mp_art_manager, &GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
     mp_art_manager = &_manager;
     connect(mp_art_manager, &GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
 }
@@ -222,6 +220,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_tree_games->setContextMenuPolicy(Qt::CustomContextMenu);
     activateCollectionControls(false);
     activateItemControls(nullptr);
+    connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
     connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
     connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
@@ -235,7 +234,16 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_game_manager, &GameManager::gameAdded, this, &GameListWidget::gameAdded);
     connect(mp_game_manager, &GameManager::gameRenamed, this, &GameListWidget::gameRenamed);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
+    setIconSize();
     onLibraryLoaded();
+}
+
+void GameListWidget::setIconSize()
+{
+    QSize size;
+    size.setWidth(Settings::instance().iconSize());
+    size.setHeight(size.width());
+    mp_tree_games->setIconSize(size);
 }
 
 void GameListWidget::showTreeContextMenu(const QPoint & _point)

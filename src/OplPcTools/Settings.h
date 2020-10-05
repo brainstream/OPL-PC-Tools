@@ -25,9 +25,9 @@
 
 namespace OplPcTools {
 
-class Settings final
+class Settings  final : public QObject
 {
-    Q_DISABLE_COPY(Settings)
+    Q_OBJECT
 
 public:
     enum class Flag
@@ -48,6 +48,11 @@ public:
     void setFlag(Flag _flag, bool _value);
     const QString & iconTheme() const;
     void setIconTheme(const QString & _theme);
+    quint32 iconSize() const;
+    void setIconSize(quint32 _size);
+
+signals:
+    void iconSizeChanged();
 
 private:
     Settings();
@@ -56,6 +61,7 @@ private:
 private:
     QMap<Flag, bool> m_flags;
     QString m_icon_theme;
+    quint16 m_icon_size;
 };
 
 bool Settings::flag(Flag _flag) const

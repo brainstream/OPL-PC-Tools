@@ -771,22 +771,22 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="325"/>
+        <location filename="../UI/GameListWidget.cpp" line="333"/>
         <source>Directory</source>
         <translation type="unfinished">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="393"/>
+        <location filename="../UI/GameListWidget.cpp" line="401"/>
         <source>Don&apos;t show again</source>
         <translation type="unfinished">Не показывать снова</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="394"/>
+        <location filename="../UI/GameListWidget.cpp" line="402"/>
         <source>Remove Game</source>
         <translation type="unfinished">Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="395"/>
+        <location filename="../UI/GameListWidget.cpp" line="403"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation type="unfinished">Картинка %1 будет удалена.
@@ -850,7 +850,7 @@ Continue?</source>
 <context>
     <name>OplPcTools::UI::SettingsDialog</name>
     <message>
-        <location filename="../UI/SettingsDialog.cpp" line="56"/>
+        <location filename="../UI/SettingsDialog.cpp" line="57"/>
         <source>The icon theme will change after restarting the app</source>
         <translation>Тема иконок будет изменена после перезапуска программы</translation>
     </message>
@@ -1034,87 +1034,93 @@ Continue?</source>
     <name>SettingsDialog</name>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="14"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="176"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="192"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="27"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="182"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="198"/>
         <source>Main</source>
         <translation>Основные</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="47"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="179"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="195"/>
         <source>Check for app updates</source>
         <translation>Проверять обновления приложения</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="40"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="178"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="194"/>
         <source>Validate ul.cfg</source>
         <translation>Валидировать ul.cfg</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="33"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="177"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="193"/>
         <source>Open recently used collection</source>
         <translation>Открывать недавно использованную коллекцию</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="54"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="180"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="196"/>
         <source>Confirm the removal of a game</source>
         <translation>Подтверждать удаление игры</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="61"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="181"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="197"/>
         <source>Confirm the removal of a picture</source>
         <translation>Подтверждать удаление изображения</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="82"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="187"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="203"/>
         <source>Installation</source>
         <translation>Инсталляция</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="88"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="183"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="199"/>
         <source>Default behaviour</source>
         <translation>Поведение по умолчанию</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="94"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="184"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="200"/>
         <source>Write ISO in a single file</source>
         <translation>Записывать ISO в один файл</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="101"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="185"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="201"/>
         <source>Move ISO instead of copy</source>
         <translation>Перемещать ISO вместо копирования</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="108"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="186"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="202"/>
         <source>Add a game ID to a filename</source>
         <translation>Добавлять ID к имени игр</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="132"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="189"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="206"/>
         <source>Appearance</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="138"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="188"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="204"/>
         <source>Icon Theme</source>
         <translation>Тема иконок</translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="148"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="205"/>
+        <source>List Icon Size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

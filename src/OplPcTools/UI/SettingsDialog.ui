@@ -142,6 +142,26 @@
        <item row="0" column="1">
         <widget class="QComboBox" name="mp_combobox_icon_theme"/>
        </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>List Icon Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="mp_spinbox_icon_size">
+         <property name="minimum">
+          <number>16</number>
+         </property>
+         <property name="maximum">
+          <number>64</number>
+         </property>
+         <property name="singleStep">
+          <number>8</number>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

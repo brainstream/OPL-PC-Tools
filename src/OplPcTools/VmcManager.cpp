@@ -23,7 +23,7 @@ using namespace OplPcTools;
 
 VmcManager::VmcManager(QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    mp_vmcs(nullptr)
+    mp_vmcs(new QVector<Vmc *>)
 {
 }
 
@@ -52,7 +52,7 @@ bool VmcManager::load(const QDir & _base_directory)
     {
         return true;
     }
-    for(const QString & filename : directory.entryList({ ".bin" }, QDir::Files | QDir::Readable))
+    for(const QString & filename : directory.entryList({ "*.bin" }, QDir::Files | QDir::Readable))
     {
         QString title = filename.left(filename.lastIndexOf("."));
         QFileInfo file(directory.absoluteFilePath(filename));

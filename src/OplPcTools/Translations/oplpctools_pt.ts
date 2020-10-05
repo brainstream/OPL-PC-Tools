@@ -990,12 +990,42 @@ Tem certeza?</translation>
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="99"/>
+        <location filename="../UI/VmcListWidget.cpp" line="106"/>
+        <source>8 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="108"/>
+        <source>16 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="110"/>
+        <source>32 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="112"/>
+        <source>64 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="114"/>
+        <source>128 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="116"/>
+        <source>256 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="130"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="101"/>
+        <location filename="../UI/VmcListWidget.cpp" line="132"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>

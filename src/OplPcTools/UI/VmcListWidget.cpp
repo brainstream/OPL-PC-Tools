@@ -20,8 +20,10 @@
 #include <QAbstractItemModel>
 #include <QShortcut>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 
+using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
@@ -38,14 +40,26 @@ public:
     QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
 
 private:
+    void onLibraryLoaded();
+
+private:
     QPixmap m_icon;
+    VmcManager & mr_vmcs;
 };
 
 } // namespace
 
 VmcTreeModel::VmcTreeModel():
-    m_icon(":/images/vmc")
+    m_icon(":/images/vmc"),
+    mr_vmcs(Application::instance().library().vmcs())
 {
+    connect(&Application::instance().library(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
+}
+
+void VmcTreeModel::onLibraryLoaded()
+{
+    beginResetModel();
+    endResetModel();
 }
 
 QModelIndex VmcTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
@@ -62,7 +76,7 @@ QModelIndex VmcTreeModel::parent(const QModelIndex & _child) const
 
 int VmcTreeModel::rowCount(const QModelIndex & _parent) const
 {
-    return _parent.isValid() ? 0 : 5;
+    return _parent.isValid() ? 0 : mr_vmcs.count();
 }
 
 int VmcTreeModel::columnCount(const QModelIndex & _parent) const
@@ -73,18 +87,34 @@ int VmcTreeModel::columnCount(const QModelIndex & _parent) const
 
 QVariant VmcTreeModel::data(const QModelIndex & _index, int _role) const
 {
+    const Vmc * vmc = mr_vmcs[_index.row()];
     if(_index.column() == 0)
     {
-        switch (_role) {
+        switch (_role)
+        {
         case Qt::DisplayRole:
-            return QString("Test VMC #%1").arg(_index.row());
+            return vmc->title();
         case Qt::DecorationRole:
             return QIcon(m_icon);
         }
     }
     else if(_role == Qt::DisplayRole)
     {
-        return QString("8 MB");
+        switch (vmc->size())
+        {
+        case VmcSize::_8M:
+            return QString(QObject::tr("8 MiB"));
+        case VmcSize::_16M:
+            return QString(QObject::tr("16 MiB"));
+        case VmcSize::_32M:
+            return QString(QObject::tr("32 MiB"));
+        case VmcSize::_64M:
+            return QString(QObject::tr("64 MiB"));
+        case VmcSize::_128M:
+            return QString(QObject::tr("128 MiB"));
+        case VmcSize::_256M:
+            return QString(QObject::tr("256 MiB"));
+        }
     }
     return QVariant();
 }
@@ -94,7 +124,8 @@ QVariant VmcTreeModel::headerData(int _section, Qt::Orientation _orientation, in
     Q_UNUSED(_orientation);
     if(_role == Qt::DisplayRole)
     {
-        switch (_section) {
+        switch (_section)
+        {
         case 0:
             return QObject::tr("Name");
         case 1:

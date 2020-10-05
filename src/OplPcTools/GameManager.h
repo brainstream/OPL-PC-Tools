@@ -45,7 +45,6 @@ public:
     void deleteGame(const Game & _game);
 
 signals:
-    void loaded();
     void gameAboutToBeDeleted(const QString _game_id);
     void gameDeleted(const QString & _game_id);
     void gameAdded(const QString & _game_id);

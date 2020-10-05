@@ -62,7 +62,6 @@ void GameManager::load(const QDir & _directory)
     mp_ul_conf_storage->load(_directory);
     mp_dir_storage->load(_directory);
     m_directory = _directory.absolutePath();
-    emit loaded();
 }
 
 bool GameManager::isLoaded() const

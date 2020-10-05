@@ -45,12 +45,11 @@ private:
     void activateCollectionControls(bool _activate);
     void activateItemControls(const Game * _selected_game);
     void showTreeContextMenu(const QPoint & _point);
-    void load();
+    void onLibraryLoaded();
     void renameGame();
     void showGameDetails();
     void showGameInstaller();
     void deleteGame();
-    void collectionLoaded();
     void gameAdded(const QString & _id);
     void gameRenamed(const QString & _id);
     void gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);

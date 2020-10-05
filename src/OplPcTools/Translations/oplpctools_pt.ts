@@ -606,12 +606,12 @@
 <context>
     <name>OplPcTools::GameManager</name>
     <message>
-        <location filename="../GameManager.cpp" line="116"/>
+        <location filename="../GameManager.cpp" line="115"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Incapaz de renomear o jogo de &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../GameManager.cpp" line="122"/>
+        <location filename="../GameManager.cpp" line="121"/>
         <source>Unable to delete game &quot;%1&quot;</source>
         <translation>Incapaz de deletar o jogo &quot;%1&quot;</translation>
     </message>
@@ -771,22 +771,22 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="330"/>
+        <location filename="../UI/GameListWidget.cpp" line="325"/>
         <source>Directory</source>
         <translation type="unfinished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="398"/>
+        <location filename="../UI/GameListWidget.cpp" line="393"/>
         <source>Don&apos;t show again</source>
         <translation type="unfinished">Não mostrar novamente</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="399"/>
+        <location filename="../UI/GameListWidget.cpp" line="394"/>
         <source>Remove Game</source>
         <translation type="unfinished">Remover jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="400"/>
+        <location filename="../UI/GameListWidget.cpp" line="395"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation type="unfinished">%1 Vai ser apagado.
@@ -965,7 +965,7 @@ Tem certeza?</translation>
         <translation>O tamanho maximo da imagem é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../GameManager.cpp" line="101"/>
+        <location filename="../GameManager.cpp" line="100"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>

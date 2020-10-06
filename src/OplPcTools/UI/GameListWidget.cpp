@@ -270,7 +270,7 @@ void GameListWidget::onLibraryLoaded()
 {
     try
     {
-        const QDir & directory = Application::instance().library().directory();
+        const QDir directory (Application::instance().library().directory());
         delete mp_game_art_manager;
         mp_game_art_manager = new GameArtManager(directory, this);
         connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameListWidget::gameArtChanged);

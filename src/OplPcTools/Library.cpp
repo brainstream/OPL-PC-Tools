@@ -32,7 +32,7 @@ void Library::load(const QDir & _directory)
     emit loading();
     mp_games->load(_directory);
     mp_vmcs->load(_directory);
-    m_directory = _directory;
+    m_directory = _directory.absolutePath();
     emit loaded();
 }
 

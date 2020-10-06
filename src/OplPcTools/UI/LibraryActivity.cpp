@@ -27,11 +27,12 @@ LibraryActivity::LibraryActivity(QWidget * _parent) :
     setupUi(this);
     mp_tabs->setCurrentIndex(0);
     connect(&Application::instance().library(), &Library::loaded, this, &LibraryActivity::onLibraryLoaded);
+    onLibraryLoaded();
 }
 
 void LibraryActivity::onLibraryLoaded()
 {
-    mp_label_path->setText(Application::instance().library().directory().absolutePath());
+    mp_label_path->setText(Application::instance().library().directory());
 }
 
 QSharedPointer<Intent> LibraryActivity::createIntent()

@@ -32,7 +32,7 @@ class Library final : public QObject
 
 public:
     explicit Library(QObject * _parent = nullptr);
-    inline const QDir & directory() const;
+    inline const QString & directory() const;
     void load(const QDir & _directory);
     inline GameManager & games() const;
     inline VmcManager & vmcs() const;
@@ -43,12 +43,12 @@ signals:
 
 private:
     static Library * sp_instance;
-    QDir m_directory;
+    QString m_directory;
     GameManager * mp_games;
     VmcManager * mp_vmcs;
 };
 
-const QDir & Library::directory() const
+const QString & Library::directory() const
 {
     return m_directory;
 }

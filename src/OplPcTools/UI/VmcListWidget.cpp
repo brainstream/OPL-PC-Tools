@@ -141,6 +141,9 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
 {
     setupUi(this);
     setupShortcuts();
+    mp_btn_create_vmc->setDefaultAction(mp_action_create_vmc);
+    mp_btn_delete_vmc->setDefaultAction(mp_action_delete_vmc);
+    mp_btn_rename_vmc->setDefaultAction(mp_action_rename_vmc);
     VmcTreeModel * model = new VmcTreeModel();
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);

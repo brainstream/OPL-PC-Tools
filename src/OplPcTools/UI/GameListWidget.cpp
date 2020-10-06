@@ -396,7 +396,7 @@ void GameListWidget::deleteGame()
     if(!game) return;
     const QString id = game->id();
     Settings & settings = Settings::instance();
-    if(settings.flag(Settings::Flag::ConfirmGameDeletion))
+    if(settings.confirmGameDeletion())
     {
         QCheckBox * checkbox = new QCheckBox(tr("Don't show again"));
         QMessageBox message_box(QMessageBox::Question, tr("Remove Game"),
@@ -407,7 +407,7 @@ void GameListWidget::deleteGame()
         if(message_box.exec() != QMessageBox::Yes)
             return;
         if(checkbox->isChecked())
-            settings.setFlag(Settings::Flag::ConfirmGameDeletion, false);
+            settings.setConfirmGameDeletion(false);
     }
     try
     {

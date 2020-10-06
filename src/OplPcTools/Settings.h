@@ -19,9 +19,7 @@
 #ifndef __OPLPCTOOLS_SETTINGS__
 #define __OPLPCTOOLS_SETTINGS__
 
-#include <QString>
 #include <QSettings>
-#include <OplPcTools/GameInstallationType.h>
 
 namespace OplPcTools {
 
@@ -30,23 +28,27 @@ class Settings  final : public QObject
     Q_OBJECT
 
 public:
-    enum class Flag
-    {
-        ReopenLastSession,
-        ConfirmGameDeletion,
-        ConfirmPixmapDeletion,
-        SplitUpIso,
-        MoveIso,
-        RenameIso,
-        CheckNewVersion,
-        ValidateUlCfg
-    };
+    static Settings & instance();
 
 public:
-    static Settings & instance();
-    inline bool flag(Flag _flag) const;
-    void setFlag(Flag _flag, bool _value);
-    const QString & iconTheme() const;
+    void flush();
+    bool reopenLastSession() const;
+    void setReopenLastSession(bool _value);
+    bool confirmGameDeletion() const;
+    void setConfirmGameDeletion(bool _value);
+    bool confirmPixmapDeletion() const;
+    void setConfirmPixmapDeletion(bool _value);
+    bool splitUpIso() const;
+    void setSplitUpIso(bool _value);
+    bool moveIso() const;
+    void setMoveIso(bool _value);
+    bool renameIso() const;
+    void setRenameIso(bool _value);
+    bool checkNewVersion() const;
+    void setCheckNewVersion(bool _value);
+    bool validateUlCfg() const;
+    void setValidateUlCfg(bool _value);
+    QString iconTheme() const;
     void setIconTheme(const QString & _theme);
     quint32 iconSize() const;
     void setIconSize(quint32 _size);
@@ -56,18 +58,11 @@ signals:
 
 private:
     Settings();
-    void loadFlag(const QSettings & _settings, Flag _flag, bool _default_value);
+    bool loadFlag(const QString & _key, bool _default_value);
 
 private:
-    QMap<Flag, bool> m_flags;
-    QString m_icon_theme;
-    quint16 m_icon_size;
+    QSettings * mp_settings;
 };
-
-bool Settings::flag(Flag _flag) const
-{
-    return m_flags[_flag];
-}
 
 } // namespace OplPcTools
 

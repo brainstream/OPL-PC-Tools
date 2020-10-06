@@ -21,92 +21,134 @@
 using namespace OplPcTools;
 
 namespace {
+namespace Key {
 
-const char * flagToKey(Settings::Flag _flag)
-{
-    switch (_flag) {
-    case Settings::Flag::ReopenLastSession:
-        return "Settings/ReopenLastSession";
-    case Settings::Flag::ConfirmGameDeletion:
-        return "Settings/ConfirmGameDeletion";
-    case Settings::Flag::ConfirmPixmapDeletion:
-        return "Settings/ConfirmPixmapDeletion";
-    case Settings::Flag::SplitUpIso:
-        return "Settings/SplitUpISO";
-    case Settings::Flag::MoveIso:
-        return "Settings/MoveISO";
-    case Settings::Flag::RenameIso:
-        return "Settings/RenameISO";
-    case Settings::Flag::CheckNewVersion:
-        return "Settings/CheckNewVersion";
-    case Settings::Flag::ValidateUlCfg:
-        return "Settings/ValidateUlCfg";
-    default:
-        return nullptr;
-    }
-}
+const QString reopen_last_session("Settings/ReopenLastSession");
+const QString confirm_game_deletion("Settings/ConfirmGameDeletion");
+const QString confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
+const QString split_up_iso("Settings/SplitUpISO");
+const QString move_iso("Settings/MoveISO");
+const QString rename_iso("Settings/RenameISO");
+const QString check_new_version("Settings/CheckNewVersion");
+const QString validate_ul_cfg("Settings/ValidateUlCfg");
+const QString icon_theme("Settings/IconTheme");
+const QString icon_size("Settings/IconSize");
 
-const QString icon_theme_key("Settings/IconTheme");
-const QString icon_size_key("Settings/IconSize");
-
+} // namespace Key
 } // namespace
 
 
 Settings::Settings()
 {
-    QSettings settings;
-    loadFlag(settings, Flag::ReopenLastSession, false);
-    loadFlag(settings, Flag::ConfirmGameDeletion, true);
-    loadFlag(settings, Flag::ConfirmPixmapDeletion, true);
-    loadFlag(settings, Flag::SplitUpIso, true);
-    loadFlag(settings, Flag::MoveIso, false);
-    loadFlag(settings, Flag::RenameIso, true);
-    loadFlag(settings, Flag::CheckNewVersion, true);
-    loadFlag(settings, Flag::ValidateUlCfg, true);
-    m_icon_theme = settings.value(icon_theme_key, "Tango").toString();
-    m_icon_size = settings.value(icon_size_key, 40).toUInt();
+    mp_settings = new QSettings(this);
 }
 
-void Settings::loadFlag(const QSettings & _settings, Flag _flag, bool _default_value)
+void Settings::flush()
 {
-    bool value = _default_value;
-    QVariant var = _settings.value(flagToKey(_flag));
-    if(var.canConvert(QVariant::Bool))
-       value = var.toBool();
-    m_flags[_flag] = value;
+    mp_settings->sync();
 }
 
-void Settings::setFlag(Flag _flag, bool _value)
+bool Settings::reopenLastSession() const
 {
-    QSettings settings;
-    settings.setValue(flagToKey(_flag), _value);
-    m_flags[_flag] = _value;
+    return mp_settings->value(Key::reopen_last_session, false).toBool();
 }
 
-const QString & Settings::iconTheme() const
+void Settings::setReopenLastSession(bool _value)
 {
-    return m_icon_theme;
+    mp_settings->setValue(Key::reopen_last_session, _value);
+}
+
+bool Settings::confirmGameDeletion() const
+{
+    return mp_settings->value(Key::confirm_game_deletion, true).toBool();
+}
+
+void Settings::setConfirmGameDeletion(bool _value)
+{
+    mp_settings->setValue(Key::confirm_game_deletion, _value);
+}
+
+bool Settings::confirmPixmapDeletion() const
+{
+    return mp_settings->value(Key::confirm_pixmap_deletion, true).toBool();
+}
+
+void Settings::setConfirmPixmapDeletion(bool _value)
+{
+    mp_settings->setValue(Key::confirm_pixmap_deletion, _value);
+}
+
+bool Settings::splitUpIso() const
+{
+    return mp_settings->value(Key::split_up_iso, true).toBool();
+}
+
+void Settings::setSplitUpIso(bool _value)
+{
+    mp_settings->setValue(Key::split_up_iso, _value);
+}
+
+bool Settings::moveIso() const
+{
+    return mp_settings->value(Key::move_iso, false).toBool();
+}
+
+void Settings::setMoveIso(bool _value)
+{
+    mp_settings->setValue(Key::move_iso, _value);
+}
+
+bool Settings::renameIso() const
+{
+    return mp_settings->value(Key::rename_iso, true).toBool();
+}
+
+void Settings::setRenameIso(bool _value)
+{
+    mp_settings->setValue(Key::rename_iso, _value);
+}
+
+bool Settings::checkNewVersion() const
+{
+    return mp_settings->value(Key::check_new_version, true).toBool();
+}
+
+void Settings::setCheckNewVersion(bool _value)
+{
+    mp_settings->setValue(Key::check_new_version, _value);
+}
+
+bool Settings::validateUlCfg() const
+{
+    return mp_settings->value(Key::validate_ul_cfg, true).toBool();
+}
+
+void Settings::setValidateUlCfg(bool _value)
+{
+    mp_settings->setValue(Key::validate_ul_cfg, _value);
+}
+
+QString Settings::iconTheme() const
+{
+    return mp_settings->value(Key::icon_theme, "Tango").toString();
 }
 
 void Settings::setIconTheme(const QString & _theme)
 {
-    QSettings settings;
-    settings.setValue(icon_theme_key, _theme);
-    m_icon_theme = _theme;
+    mp_settings->setValue(Key::icon_theme, _theme);
 }
 
 quint32 Settings::iconSize() const
 {
-    return m_icon_size;
+    return mp_settings->value(Key::icon_size, 40).toUInt();
 }
 
 void Settings::setIconSize(quint32 _size)
 {
-    if(_size != m_icon_size)
+    const quint32 old_size = iconSize();
+    if(old_size != _size)
     {
-        QSettings settings;
-        settings.setValue(icon_size_key, _size);
-        m_icon_size = _size;
+        mp_settings->setValue(Key::icon_size, _size);
         emit iconSizeChanged();
     }
 }

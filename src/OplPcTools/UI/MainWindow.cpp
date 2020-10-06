@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
 {
     setupUi(this);
     setWindowTitle(APPLICATION_DISPLAY_NAME);
+    mp_action_about_qt->setIcon(style()->standardIcon(QStyle::SP_TitleBarMenuButton));
+    mp_action_about->setIcon(style()->standardIcon(QStyle::SP_MessageBoxInformation));
     setupUpdater();
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
@@ -66,7 +68,7 @@ MainWindow::~MainWindow()
 void MainWindow::setupUpdater()
 {
     mp_widget_update->setVisible(false);
-    if(!Settings::instance().flag(Settings::Flag::CheckNewVersion))
+    if(!Settings::instance().checkNewVersion())
         return;
     Updater * updater = new Updater(this);
     connect(updater, &Updater::updateAvailable, [this, updater]() {
@@ -124,7 +126,7 @@ bool MainWindow::pushActivity(Intent & _intent)
 
 void MainWindow::tryOpenRecentLibrary()
 {
-    if(!Settings::instance().flag(Settings::Flag::ReopenLastSession))
+    if(!Settings::instance().reopenLastSession())
         return;
     QSettings settings;
     QVariant value = settings.value(SettingsKey::ul_dir);

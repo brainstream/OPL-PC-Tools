@@ -54,6 +54,7 @@ public:
     void setIconSize(quint32 _size);
 
 signals:
+    void iconThemeChanged();
     void iconSizeChanged();
 
 private:

@@ -499,61 +499,67 @@
     <name>MainWindow</name>
     <message>
         <location filename="../UI/MainWindow.ui" line="56"/>
-        <location filename="../../../build/ui_MainWindow.h" line="166"/>
+        <location filename="../../../build/ui_MainWindow.h" line="216"/>
         <source>Newest version of the application is available</source>
         <translation>Uma nova versão do programa está disponível</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="72"/>
-        <location filename="../../../build/ui_MainWindow.h" line="167"/>
+        <location filename="../../../build/ui_MainWindow.h" line="217"/>
         <source>Download</source>
         <translation>Baixar</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="88"/>
-        <location filename="../../../build/ui_MainWindow.h" line="168"/>
+        <location filename="../../../build/ui_MainWindow.h" line="218"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="134"/>
-        <location filename="../../../build/ui_MainWindow.h" line="169"/>
+        <location filename="../UI/MainWindow.ui" line="216"/>
+        <location filename="../../../build/ui_MainWindow.h" line="219"/>
         <source>&amp;Tools</source>
         <translation>&amp;Ferramentas</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="140"/>
-        <location filename="../../../build/ui_MainWindow.h" line="170"/>
+        <location filename="../UI/MainWindow.ui" line="222"/>
+        <location filename="../../../build/ui_MainWindow.h" line="220"/>
         <source>&amp;Help</source>
         <translation>&amp;Ajuda</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="147"/>
-        <location filename="../../../build/ui_MainWindow.h" line="171"/>
+        <location filename="../UI/MainWindow.ui" line="229"/>
+        <location filename="../../../build/ui_MainWindow.h" line="221"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="160"/>
-        <location filename="../../../build/ui_MainWindow.h" line="162"/>
+        <location filename="../UI/MainWindow.ui" line="243"/>
+        <location filename="../../../build/ui_MainWindow.h" line="209"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Configurações...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="168"/>
-        <location filename="../../../build/ui_MainWindow.h" line="163"/>
+        <location filename="../UI/MainWindow.ui" line="251"/>
+        <location filename="../../../build/ui_MainWindow.h" line="210"/>
         <source>&amp;About...</source>
         <translation>&amp;Sobre...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="176"/>
-        <location filename="../../../build/ui_MainWindow.h" line="164"/>
+        <location filename="../UI/MainWindow.ui" line="254"/>
+        <location filename="../../../build/ui_MainWindow.h" line="212"/>
+        <source>F1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/MainWindow.ui" line="259"/>
+        <location filename="../../../build/ui_MainWindow.h" line="214"/>
         <source>About &amp;Qt...</source>
         <translation>Sobre o &amp;Qt...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="188"/>
-        <location filename="../../../build/ui_MainWindow.h" line="165"/>
+        <location filename="../UI/MainWindow.ui" line="271"/>
+        <location filename="../../../build/ui_MainWindow.h" line="215"/>
         <source>&amp;Open Library...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -759,22 +765,22 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="333"/>
+        <location filename="../UI/GameListWidget.cpp" line="334"/>
         <source>Directory</source>
         <translation type="unfinished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="401"/>
+        <location filename="../UI/GameListWidget.cpp" line="402"/>
         <source>Don&apos;t show again</source>
         <translation type="unfinished">Não mostrar novamente</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="402"/>
+        <location filename="../UI/GameListWidget.cpp" line="403"/>
         <source>Remove Game</source>
         <translation type="unfinished">Remover jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="403"/>
+        <location filename="../UI/GameListWidget.cpp" line="404"/>
         <source>The %1 will be deleted.
 Continue?</source>
         <translation type="unfinished">%1 Vai ser apagado.
@@ -830,17 +836,9 @@ Tem certeza?</translation>
 <context>
     <name>OplPcTools::UI::MainWindow</name>
     <message>
-        <location filename="../UI/MainWindow.cpp" line="143"/>
+        <location filename="../UI/MainWindow.cpp" line="153"/>
         <source>Choose the OPL root directory</source>
         <translation type="unfinished">Escolha a raiz da pasta do OPL</translation>
-    </message>
-</context>
-<context>
-    <name>OplPcTools::UI::SettingsDialog</name>
-    <message>
-        <location filename="../UI/SettingsDialog.cpp" line="57"/>
-        <source>The icon theme will change after restarting the app</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1115,49 +1113,49 @@ Tem certeza?</translation>
     <name>VmcListWidget</name>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="14"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="168"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="172"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="128"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="181"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="185"/>
         <source>Filter</source>
         <translation type="unfinished">Filtro</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="160"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="169"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="173"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="175"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="173"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="177"/>
         <source>Delete</source>
         <translation type="unfinished">Apagar</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="190"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="177"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="181"/>
         <source>Rename</source>
         <translation type="unfinished">Renomear</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="178"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="175"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="179"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="193"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="179"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="183"/>
         <source>Rename VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="163"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="171"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="175"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>

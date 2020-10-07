@@ -197,6 +197,13 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>mp_btn_rename_vmc</tabstop>
+  <tabstop>mp_btn_delete_vmc</tabstop>
+  <tabstop>mp_btn_create_vmc</tabstop>
+  <tabstop>mp_edit_filter</tabstop>
+  <tabstop>mp_tree_vmcs</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

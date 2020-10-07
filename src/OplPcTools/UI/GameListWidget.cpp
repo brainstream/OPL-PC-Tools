@@ -221,6 +221,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     activateCollectionControls(false);
     activateItemControls(nullptr);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
+    connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
     connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);

@@ -152,6 +152,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->setModel(mp_proxy_model);
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcListWidget::setIconSize);
 }

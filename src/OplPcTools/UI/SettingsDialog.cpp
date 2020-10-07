@@ -26,8 +26,7 @@ using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
-    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
-    m_is_icon_theme_alert_shown(false)
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
     setupUi(this);
     Settings & settings = Settings::instance();
@@ -45,17 +44,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_combobox_icon_theme->insertItems(0, loadIconThemes());
     mp_combobox_icon_theme->setCurrentText(QIcon::themeName());
     mp_spinbox_icon_size->setValue(settings.iconSize());
-    connect(mp_combobox_icon_theme, &QComboBox::currentTextChanged, this, &SettingsDialog::iconThemeChanged);
     mp_tabs->setCurrentIndex(0);
-}
-
-void SettingsDialog::iconThemeChanged(const QString & _theme)
-{
-    if(!m_is_icon_theme_alert_shown && QIcon::themeName() != _theme)
-    {
-        m_is_icon_theme_alert_shown = true;
-        Application::instance().showMessage(tr("The icon theme will change after restarting the app"));
-    }
 }
 
 void SettingsDialog::accept()

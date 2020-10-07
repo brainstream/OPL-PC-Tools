@@ -34,6 +34,7 @@ public:
     explicit Library(QObject * _parent = nullptr);
     inline const QString & directory() const;
     void load(const QDir & _directory);
+    inline bool isLoaded() const;
     inline GameManager & games() const;
     inline VmcManager & vmcs() const;
 
@@ -51,6 +52,11 @@ private:
 const QString & Library::directory() const
 {
     return m_directory;
+}
+
+inline bool Library::isLoaded() const
+{
+    return !m_directory.isEmpty();
 }
 
 GameManager & Library::games() const

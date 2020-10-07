@@ -42,6 +42,7 @@ protected:
 private:
     void tryOpenRecentLibrary();
     void openLibrary();
+    void onLibraryLoaded();
     void showAboutDialog();
     void showAboutQtDialog();
     void showSettingsDialog();

@@ -46,12 +46,16 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     mp_activities(new QMap<QString, Activity *>)
 {
     setupUi(this);
+    mp_stacked_widget->hide();
     setWindowTitle(APPLICATION_DISPLAY_NAME);
     mp_action_about_qt->setIcon(style()->standardIcon(QStyle::SP_TitleBarMenuButton));
     mp_action_about->setIcon(style()->standardIcon(QStyle::SP_MessageBoxInformation));
+    mp_btn_open_library->setDefaultAction(mp_action_open_library);
+    mp_btn_open_library->setToolTip(QString());
     setupUpdater();
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
+    connect(&Application::instance().library(), &Library::loaded, this, &MainWindow::onLibraryLoaded);
     connect(mp_action_open_library, &QAction::triggered, this, &MainWindow::openLibrary);
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
     connect(mp_action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
@@ -122,6 +126,12 @@ bool MainWindow::pushActivity(Intent & _intent)
         delete activity;
         return false;
     }
+}
+
+void MainWindow::onLibraryLoaded()
+{
+    mp_stacked_widget->show();
+    mp_widget_open_library->hide();
 }
 
 void MainWindow::tryOpenRecentLibrary()

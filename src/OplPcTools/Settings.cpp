@@ -135,7 +135,11 @@ QString Settings::iconTheme() const
 
 void Settings::setIconTheme(const QString & _theme)
 {
-    mp_settings->setValue(Key::icon_theme, _theme);
+    if(iconTheme() != _theme)
+    {
+        mp_settings->setValue(Key::icon_theme, _theme);
+        emit iconThemeChanged();
+    }
 }
 
 quint32 Settings::iconSize() const
@@ -145,8 +149,7 @@ quint32 Settings::iconSize() const
 
 void Settings::setIconSize(quint32 _size)
 {
-    const quint32 old_size = iconSize();
-    if(old_size != _size)
+    if(iconSize() != _size)
     {
         mp_settings->setValue(Key::icon_size, _size);
         emit iconSizeChanged();

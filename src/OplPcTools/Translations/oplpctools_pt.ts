@@ -673,58 +673,56 @@
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.cpp" line="256"/>
-        <source>Don&apos;t show again</source>
-        <translation>Não mostrar novamente</translation>
+        <source>Do not ask again</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.cpp" line="257"/>
-        <source>Remove Picture</source>
-        <translation>Remover imagem</translation>
+        <source>Delete Picture</source>
+        <translation type="unfinished">Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="258"/>
-        <source>The %1 will be deleted.
-Continue?</source>
-        <translation>%1 Vai ser apagado.
-Tem certeza?</translation>
+        <location filename="../UI/GameDetailsActivity.cpp" line="259"/>
+        <source>Are you sure you want to delete this picture?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="296"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="298"/>
         <source>Icon</source>
         <translation>Ícone</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="297"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="299"/>
         <source>Front Cover</source>
         <translation>Capa da frente</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="298"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="300"/>
         <source>Back Cover</source>
         <translation>Capa de trás</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="301"/>
         <source>Spine Cover</source>
         <translation>Capa do lado</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="300"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="302"/>
         <source>Screenshot #1</source>
         <translation>Captura de tela #1</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="301"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="303"/>
         <source>Screenshot #2</source>
         <translation>Captura de tela #2</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="302"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="304"/>
         <source>Background</source>
         <translation>Plano de fundo</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="303"/>
+        <location filename="../UI/GameDetailsActivity.cpp" line="305"/>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>
@@ -771,20 +769,18 @@ Tem certeza?</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.cpp" line="402"/>
-        <source>Don&apos;t show again</source>
-        <translation type="unfinished">Não mostrar novamente</translation>
+        <source>Do not ask again</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.cpp" line="403"/>
-        <source>Remove Game</source>
-        <translation type="unfinished">Remover jogo</translation>
+        <source>Delete Game</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="404"/>
-        <source>The %1 will be deleted.
-Continue?</source>
-        <translation type="unfinished">%1 Vai ser apagado.
-Tem certeza?</translation>
+        <location filename="../UI/GameListWidget.cpp" line="405"/>
+        <source>Are you sure you want to delete this game?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

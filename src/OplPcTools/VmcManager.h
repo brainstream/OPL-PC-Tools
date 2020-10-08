@@ -33,16 +33,27 @@ class VmcManager final : public QObject
 public:
     explicit VmcManager(QObject * _parent = nullptr);
     ~VmcManager() override;
+    const Vmc * operator[](int _index) const;
+    const Vmc * operator[](const QUuid & _uuid) const;
     bool load(const QDir & _base_directory);
     bool isLoaded() const;
     const int count() const;
-    const Vmc * operator[](int _index) const;
+    void renameVmc(const QUuid & _uuid, const QString & _title);
+    void deleteVmc(const QUuid & _uuid);
+
+signals:
+    void vmcRenamed(const QUuid & _uuid);
+    void vmcAboutToBeDeleted(const QUuid & _uuid);
+    void vmcDeleted(const QUuid & _uuid);
 
 private:
-    const QDir m_directory;
+    QString makeFilename(const QString & _vmc_title) const;
+    Vmc * findVmc(const QUuid & _uuid) const;
+
+private:
+    QDir m_directory;
     QVector<Vmc *> * mp_vmcs;
 };
-
 
 } // namespace OplPcTools
 

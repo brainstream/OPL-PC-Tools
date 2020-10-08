@@ -31,7 +31,6 @@ public:
     explicit DirectoryGameStorage(QObject * _parent = nullptr);
     GameInstallationType installationType() const override;
 
-    static void validateTitle(const QString & _title);
     static QString makeIsoFilename(const QString & _title, const QString & _id);
     static QString makeIsoFilename(const QString & _title);
     static QString makeGameIsoFilename(const QString & _title, const QString & _id);

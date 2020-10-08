@@ -26,7 +26,7 @@ else()
     message(FATAL_ERROR "GNU g++ is required")
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OPT_EXE_NAME "oplpctools")
 set(OPT_VERSION_MAJOR  3)
@@ -91,6 +91,8 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/GameRenameDialog.h
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.h
     ${OPT_SRC_DIR}/UI/SettingsDialog.h
+    ${OPT_SRC_DIR}/UI/VmcListWidget.h
+    ${OPT_SRC_DIR}/UI/VmcRenameDialog.h
 )
 
 set(OPT_SRC_UI
@@ -105,6 +107,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/VmcListWidget.ui
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
     ${OPT_SRC_DIR}/UI/SettingsDialog.ui
+    ${OPT_SRC_DIR}/UI/VmcRenameDialog.ui
 )
 
 set(OPT_SRC_RES
@@ -122,6 +125,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/ApplicationInfo.h
     ${OPT_SRC_DIR}/Exception.h
     ${OPT_SRC_DIR}/File.h
+    ${OPT_SRC_DIR}/File.cpp
     ${OPT_SRC_DIR}/Maybe.h
     ${OPT_SRC_DIR}/BigEndian.h
     ${OPT_SRC_DIR}/DeviceSource.h
@@ -171,7 +175,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/IconTheme.cpp
     ${OPT_SRC_DIR}/UI/IconTheme.h
     ${OPT_SRC_DIR}/UI/VmcListWidget.cpp
-    ${OPT_SRC_DIR}/UI/VmcListWidget.h
+    ${OPT_SRC_DIR}/UI/VmcRenameDialog.cpp
 )
 
 if(WIN32)

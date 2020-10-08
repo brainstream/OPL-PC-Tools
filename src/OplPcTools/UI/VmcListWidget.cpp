@@ -19,73 +19,96 @@
 #include <QPixmap>
 #include <QAbstractItemModel>
 #include <QShortcut>
+#include <QMessageBox>
+#include <QCheckBox>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcListWidget.h>
+#include <OplPcTools/UI/VmcRenameDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
-namespace {
-
-class VmcTreeModel final : public QAbstractItemModel
+class VmcListWidget::VmcTreeModel final : public QAbstractItemModel
 {
 public:
-    VmcTreeModel();
+    explicit VmcTreeModel(QObject * _parent);
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
+    QModelIndex index(const QUuid & _uuid) const;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
     QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
+    const Vmc * vmc(const QModelIndex & _index);
 
 private:
     void onLibraryLoaded();
+    void onVmcAboutToBeDeleted(const QUuid & _uuid);
+    void onVmcDeleted(const QUuid & _uuid);
+    void updateRecord(const QUuid & _uuid);
 
 private:
     QPixmap m_icon;
     VmcManager & mr_vmcs;
 };
 
-} // namespace
-
-VmcTreeModel::VmcTreeModel():
+VmcListWidget::VmcTreeModel::VmcTreeModel(QObject * _parent):
+    QAbstractItemModel(_parent),
     m_icon(":/images/vmc"),
     mr_vmcs(Application::instance().library().vmcs())
 {
     connect(&Application::instance().library(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
+    connect(&mr_vmcs, &VmcManager::vmcRenamed, this, &VmcTreeModel::updateRecord);
+    connect(&mr_vmcs, &VmcManager::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
+    connect(&mr_vmcs, &VmcManager::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
 }
 
-void VmcTreeModel::onLibraryLoaded()
+void VmcListWidget::VmcTreeModel::onLibraryLoaded()
 {
     beginResetModel();
     endResetModel();
 }
 
-QModelIndex VmcTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
+QModelIndex VmcListWidget::VmcTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
 {
     Q_UNUSED(_parent);
     return createIndex(_row, _column);
 }
 
-QModelIndex VmcTreeModel::parent(const QModelIndex & _child) const
+QModelIndex VmcListWidget::VmcTreeModel::index(const QUuid & _uuid) const
+{
+    int count = mr_vmcs.count();
+    for(int i = 0; i < count; ++i)
+    {
+        const Vmc * vmc = mr_vmcs[i];
+        if(vmc->uuid() == _uuid)
+        {
+            return createIndex(i, 0), createIndex(i, 1);
+        }
+    }
+    return QModelIndex();
+}
+
+QModelIndex VmcListWidget::VmcTreeModel::parent(const QModelIndex & _child) const
 {
     Q_UNUSED(_child);
     return QModelIndex();
 }
 
-int VmcTreeModel::rowCount(const QModelIndex & _parent) const
+int VmcListWidget::VmcTreeModel::rowCount(const QModelIndex & _parent) const
 {
     return _parent.isValid() ? 0 : mr_vmcs.count();
 }
 
-int VmcTreeModel::columnCount(const QModelIndex & _parent) const
+int VmcListWidget::VmcTreeModel::columnCount(const QModelIndex & _parent) const
 {
     Q_UNUSED(_parent);
     return 2;
 }
 
-QVariant VmcTreeModel::data(const QModelIndex & _index, int _role) const
+QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role) const
 {
     const Vmc * vmc = mr_vmcs[_index.row()];
     if(_index.column() == 0)
@@ -119,7 +142,7 @@ QVariant VmcTreeModel::data(const QModelIndex & _index, int _role) const
     return QVariant();
 }
 
-QVariant VmcTreeModel::headerData(int _section, Qt::Orientation _orientation, int _role) const
+QVariant VmcListWidget::VmcTreeModel::headerData(int _section, Qt::Orientation _orientation, int _role) const
 {
     Q_UNUSED(_orientation);
     if(_role == Qt::DisplayRole)
@@ -135,6 +158,35 @@ QVariant VmcTreeModel::headerData(int _section, Qt::Orientation _orientation, in
     return QVariant();
 }
 
+const Vmc * VmcListWidget::VmcTreeModel::vmc(const QModelIndex & _index)
+{
+    if(_index.isValid() && _index.row() < mr_vmcs.count())
+        return mr_vmcs[_index.row()];
+    return nullptr;
+}
+
+void VmcListWidget::VmcTreeModel::updateRecord(const QUuid & _uuid)
+{
+    QModelIndex start_index = index(_uuid);
+    if(start_index.isValid())
+    {
+        QModelIndex end_index = createIndex(start_index.row(), 1);
+        emit dataChanged(start_index, end_index);
+    }
+}
+
+void VmcListWidget::VmcTreeModel::onVmcAboutToBeDeleted(const QUuid & _uuid)
+{
+    QModelIndex start_index = index(_uuid);
+    if(start_index.isValid())
+        beginRemoveRows(QModelIndex(), start_index.row(), start_index.row());
+}
+
+void VmcListWidget::VmcTreeModel::onVmcDeleted(const QUuid & _uuid)
+{
+    Q_UNUSED(_uuid);
+    endRemoveRows();
+}
 
 VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     QWidget(_parent)
@@ -144,17 +196,24 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_btn_create_vmc->setDefaultAction(mp_action_create_vmc);
     mp_btn_delete_vmc->setDefaultAction(mp_action_delete_vmc);
     mp_btn_rename_vmc->setDefaultAction(mp_action_rename_vmc);
-    VmcTreeModel * model = new VmcTreeModel();
+    mp_model = new VmcTreeModel(this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    mp_proxy_model->setSourceModel(model);
+    mp_proxy_model->setSourceModel(mp_model);
     mp_proxy_model->setDynamicSortFilter(true);
     mp_tree_vmcs->setModel(mp_proxy_model);
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    activateItemControls(nullptr);
     connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcListWidget::setIconSize);
+    connect(mp_action_rename_vmc, &QAction::triggered, this, &VmcListWidget::renameVmc);
+    connect(mp_tree_vmcs->selectionModel(), &QItemSelectionModel::selectionChanged,
+        [this](QItemSelection, QItemSelection) { onVmcSelected(); });
+    connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
+    if(Application::instance().library().vmcs().count() > 0)
+        mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
 }
 
 void VmcListWidget::setupShortcuts()
@@ -177,4 +236,75 @@ void VmcListWidget::setIconSize()
     size.setWidth(Settings::instance().iconSize());
     size.setHeight(size.width());
     mp_tree_vmcs->setIconSize(size);
+}
+
+void VmcListWidget::renameVmc()
+{
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
+    if(vmc)
+    {
+        VmcRenameDialog dlg(vmc->title(), this);
+        if(dlg.exec() == QDialog::Accepted)
+        {
+            try
+            {
+                Application::instance().library().vmcs().renameVmc(vmc->uuid(), dlg.name());
+            }
+            catch(const Exception & exception)
+            {
+                Application::instance().showErrorMessage(exception.message());
+            }
+            catch(...)
+            {
+                Application::instance().showErrorMessage();
+            }
+        }
+    }
+}
+
+void VmcListWidget::onVmcSelected()
+{
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
+    activateItemControls(vmc);
+}
+
+void VmcListWidget::activateItemControls(const Vmc * _vmc)
+{
+    bool disabled = _vmc == nullptr;
+    mp_action_rename_vmc->setDisabled(disabled);
+    mp_action_delete_vmc->setDisabled(disabled);
+}
+
+void VmcListWidget::deleteVmc()
+{
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
+    if(!vmc) return;
+    Settings & settings = Settings::instance();
+    if(settings.confirmVmcDeletion())
+    {
+        QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
+        QMessageBox message_box(QMessageBox::Question, tr("Delete VMC"),
+            QString("%1\n%2")
+                .arg(tr("Are you sure you want to delete this VMC?"))
+                .arg(vmc->title()),
+            QMessageBox::Yes | QMessageBox::No);
+        message_box.setDefaultButton(QMessageBox::Yes);
+        message_box.setCheckBox(checkbox);
+        if(message_box.exec() != QMessageBox::Yes)
+            return;
+        if(checkbox->isChecked())
+            settings.setConfirmGameDeletion(false);
+    }
+    try
+    {
+        Application::instance().library().vmcs().deleteVmc(vmc->uuid());
+    }
+    catch(Exception & exception)
+    {
+        Application::instance().showErrorMessage(exception.message());
+    }
+    catch(...)
+    {
+        Application::instance().showErrorMessage();
+    }
 }

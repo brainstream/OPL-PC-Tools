@@ -65,8 +65,8 @@ public:
     ~GameRenameDialog() override;
     QString name() const;
 
-private slots:
-    void nameChanged(const QString & _name);
+private:
+    void onNameChanged(const QString & _name);
 
 private:
     Validator * mp_validator;

@@ -16,6 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/File.h>
 #include <OplPcTools/VmcManager.h>
 #include <QVector>
 
@@ -40,8 +41,9 @@ VmcManager::~VmcManager()
 
 bool VmcManager::load(const QDir & _base_directory)
 {
+    mp_vmcs->clear();
     QString vmc_dir_path = _base_directory.absoluteFilePath("VMC");
-    QDir directory = QDir(vmc_dir_path);
+    m_directory = QDir(vmc_dir_path);
     QFileInfo fi(vmc_dir_path);
     if(fi.exists())
     {
@@ -52,10 +54,10 @@ bool VmcManager::load(const QDir & _base_directory)
     {
         return true;
     }
-    for(const QString & filename : directory.entryList({ "*.bin" }, QDir::Files | QDir::Readable))
+    for(const QString & filename : m_directory.entryList({ "*.bin" }, QDir::Files | QDir::Readable))
     {
         QString title = filename.left(filename.lastIndexOf("."));
-        QFileInfo file(directory.absoluteFilePath(filename));
+        QFileInfo file(m_directory.absoluteFilePath(filename));
         VmcSize size = VmcSize::_8M;
         switch(file.size() / (1024 * 1024)) // FIXME: read VMC
         {
@@ -94,4 +96,57 @@ const int VmcManager::count() const
 const Vmc * VmcManager::operator[](int _index) const
 {
     return isLoaded() && count() > _index && _index >= 0 ? (*mp_vmcs)[_index] : nullptr;
+}
+
+const Vmc * VmcManager::operator[](const QUuid & _uuid) const
+{
+    return findVmc(_uuid);
+}
+
+void VmcManager::renameVmc(const QUuid & _uuid, const QString & _title)
+{
+    validateFilename(_title);
+    Vmc * vmc = findVmc(_uuid);
+    if(vmc == nullptr || vmc->title() == _title)
+        return;
+    QString old_title = vmc->title();
+    QString src = makeFilename(old_title);
+    QString dest = makeFilename(_title);
+    renameFile(src, dest);
+    vmc->setTitle(_title);
+    emit vmcRenamed(_uuid);
+}
+
+QString VmcManager::makeFilename(const QString & _vmc_title) const
+{
+    return m_directory.absoluteFilePath(_vmc_title + ".bin");
+}
+
+Vmc * VmcManager::findVmc(const QUuid & _uuid) const
+{
+    for(Vmc * vmc : *mp_vmcs)
+    {
+        if(vmc->uuid() == _uuid)
+            return vmc;
+    }
+    return nullptr;
+}
+
+void VmcManager::deleteVmc(const QUuid & _uuid)
+{
+    for(int i = 0; i < mp_vmcs->size(); ++i)
+    {
+        Vmc * vmc = mp_vmcs->value(i);
+        if(vmc->uuid() == _uuid)
+        {
+            if(QFile::remove(makeFilename(vmc->title())))
+            {
+                emit vmcAboutToBeDeleted(_uuid);
+                mp_vmcs->removeAt(i);
+                delete vmc;
+                emit vmcDeleted(_uuid);
+            }
+            return;
+        }
+    }
 }

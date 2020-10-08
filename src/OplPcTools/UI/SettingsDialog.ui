@@ -63,6 +63,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="mp_checkbox_confirm_vmc_deletion">
+         <property name="text">
+          <string>Confirm the removal of a VMC</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="mp_spacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -184,9 +191,12 @@
   <tabstop>mp_checkbox_check_new_versions</tabstop>
   <tabstop>mp_checkbox_confirm_game_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_picture_deletion</tabstop>
+  <tabstop>mp_checkbox_confirm_vmc_deletion</tabstop>
   <tabstop>mp_checkbox_donot_splitup</tabstop>
   <tabstop>mp_checkobx_move_iso</tabstop>
   <tabstop>mp_checkbox_add_id</tabstop>
+  <tabstop>mp_combobox_icon_theme</tabstop>
+  <tabstop>mp_spinbox_icon_size</tabstop>
   <tabstop>mp_tabs</tabstop>
  </tabstops>
  <resources/>

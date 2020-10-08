@@ -460,7 +460,7 @@
     <name>GameRenameDialog</name>
     <message>
         <location filename="../UI/GameRenameDialog.ui" line="14"/>
-        <location filename="../../../build/ui_GameRenameDialog.h" line="73"/>
+        <location filename="../../../build/ui_GameRenameDialog.h" line="70"/>
         <source>Game Name</source>
         <translation>Nome do jogo</translation>
     </message>
@@ -838,6 +838,24 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::VmcListWidget</name>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="285"/>
+        <source>Do not ask again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="286"/>
+        <source>Delete VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="288"/>
+        <source>Are you sure you want to delete this VMC?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UlConfigGameInstaller</name>
     <message>
         <location filename="../UlConfigGameInstaller.cpp" line="42"/>
@@ -901,12 +919,12 @@
         <translation>Desfazendo...</translation>
     </message>
     <message>
-        <location filename="../UI/GameRenameDialog.cpp" line="33"/>
+        <location filename="../UI/GameRenameDialog.cpp" line="32"/>
         <source>Length exceeded by %1 byte(s)</source>
         <translation>O tamanho excedeu por %1 byte(s)</translation>
     </message>
     <message>
-        <location filename="../UI/GameRenameDialog.cpp" line="38"/>
+        <location filename="../UI/GameRenameDialog.cpp" line="37"/>
         <source>%1 byte(s) left</source>
         <translation>%1 byte(s) restante</translation>
     </message>
@@ -952,7 +970,7 @@
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameStorage.cpp" line="111"/>
+        <location filename="../File.cpp" line="42"/>
         <source>Name must not contain following symbols: </source>
         <translation>O nome não pode conter os seguintes símbolos: </translation>
     </message>
@@ -972,42 +990,42 @@
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="106"/>
+        <location filename="../UI/VmcListWidget.cpp" line="129"/>
         <source>8 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="108"/>
+        <location filename="../UI/VmcListWidget.cpp" line="131"/>
         <source>16 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="110"/>
+        <location filename="../UI/VmcListWidget.cpp" line="133"/>
         <source>32 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="112"/>
+        <location filename="../UI/VmcListWidget.cpp" line="135"/>
         <source>64 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="114"/>
+        <location filename="../UI/VmcListWidget.cpp" line="137"/>
         <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="116"/>
+        <location filename="../UI/VmcListWidget.cpp" line="139"/>
         <source>256 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="130"/>
+        <location filename="../UI/VmcListWidget.cpp" line="153"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="132"/>
+        <location filename="../UI/VmcListWidget.cpp" line="155"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1016,91 +1034,97 @@
     <name>SettingsDialog</name>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="14"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="192"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="201"/>
         <source>Settings</source>
         <translation>Configurações</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="27"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="198"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="208"/>
         <source>Main</source>
         <translation>Principal</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="47"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="195"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="204"/>
         <source>Check for app updates</source>
         <translation>Verificar por atualizações</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="40"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="194"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="203"/>
         <source>Validate ul.cfg</source>
         <translation>Validar ul.cfg</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="33"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="193"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="202"/>
         <source>Open recently used collection</source>
         <translation>Abrir coleção recentemente usada</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="54"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="196"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="205"/>
         <source>Confirm the removal of a game</source>
         <translation>Confirme a remoção de um jogo</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="61"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="197"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="206"/>
         <source>Confirm the removal of a picture</source>
         <translation>Confirme a remoção de uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="82"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="203"/>
+        <location filename="../UI/SettingsDialog.ui" line="68"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="207"/>
+        <source>Confirm the removal of a VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="89"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="213"/>
         <source>Installation</source>
         <translation>Instalação</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="88"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="199"/>
+        <location filename="../UI/SettingsDialog.ui" line="95"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="209"/>
         <source>Default behaviour</source>
         <translation>Comportamento padrão</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="94"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="200"/>
+        <location filename="../UI/SettingsDialog.ui" line="101"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="210"/>
         <source>Write ISO in a single file</source>
         <translation>Salvar ISO em um único arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="101"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="201"/>
+        <location filename="../UI/SettingsDialog.ui" line="108"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="211"/>
         <source>Move ISO instead of copy</source>
         <translation>Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="108"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="202"/>
+        <location filename="../UI/SettingsDialog.ui" line="115"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="212"/>
         <source>Add a game ID to a filename</source>
         <translation>Adicionar um ID de jogo ao um arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="132"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="206"/>
+        <location filename="../UI/SettingsDialog.ui" line="139"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="216"/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="138"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="204"/>
+        <location filename="../UI/SettingsDialog.ui" line="145"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="214"/>
         <source>Icon Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="148"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="205"/>
+        <location filename="../UI/SettingsDialog.ui" line="155"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="215"/>
         <source>List Icon Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1153,6 +1177,15 @@
         <location filename="../UI/VmcListWidget.ui" line="163"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="175"/>
         <source>Create VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VmcRenameDialog</name>
+    <message>
+        <location filename="../UI/VmcRenameDialog.ui" line="14"/>
+        <location filename="../../../build/ui_VmcRenameDialog.h" line="70"/>
+        <source>VMC Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

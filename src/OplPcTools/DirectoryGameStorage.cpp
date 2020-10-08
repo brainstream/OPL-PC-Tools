@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <QVector>
-#include <OplPcTools/Exception.h>
+#include <OplPcTools/File.h>
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/Device.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
@@ -69,7 +69,9 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
 
 bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _title)
 {
-    validateTitle(_title);
+    if(_game.title() == _title)
+        return true;
+    validateFilename(_title);
     QDir directory(m_base_directory);
     if(!directory.cd(_game.mediaType() == MediaType::CD ? cd_directory : dvd_directory))
         return false;
@@ -100,16 +102,6 @@ QString DirectoryGameStorage::makeIsoFilename(const QString & _title, const QStr
 QString DirectoryGameStorage::makeIsoFilename(const QString & _title)
 {
     return _title + ".iso";
-}
-
-void DirectoryGameStorage::validateTitle(const QString & _title)
-{
-    static const QString disallowed_characters("<>:\"/\\|?*");
-    for(const QChar & ch : disallowed_characters)
-    {
-       if(_title.contains(ch))
-           throw ValidationException(QObject::tr("Name must not contain following symbols: ") + disallowed_characters);
-    }
 }
 
 QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const QString & _id)

@@ -21,6 +21,7 @@
 
 #include "ui_VmcListWidget.h"
 #include <QSortFilterProxyModel>
+#include <OplPcTools/Vmc.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -28,14 +29,24 @@ namespace UI {
 
 class VmcListWidget: public QWidget, private Ui::VmcListWidget
 {
+    Q_OBJECT
+
 public:
     explicit VmcListWidget(QWidget * _parent = nullptr);
 
 private:
     void setupShortcuts();
     void setIconSize();
+    void renameVmc();
+    void deleteVmc();
 
 private:
+    void onVmcSelected();
+    void activateItemControls(const Vmc * _vmc);
+
+private:
+    class VmcTreeModel;
+    VmcTreeModel * mp_model;
     QSortFilterProxyModel * mp_proxy_model;
 };
 

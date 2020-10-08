@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameRenameDialog</class>
- <widget class="QDialog" name="GameRenameDialog">
+ <class>VmcRenameDialog</class>
+ <widget class="QDialog" name="VmcRenameDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>130</height>
+    <width>418</width>
+    <height>148</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Game Name</string>
+   <string>VMC Name</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLineEdit" name="mp_edit_name">
-     <property name="maxLength">
-      <number>250</number>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="mp_edit_name"/>
    </item>
    <item>
-    <widget class="QLabel" name="mp_label_message">
+    <widget class="QLabel" name="mp_label_error_message">
      <property name="text">
-      <string/>
+      <string notr="true"/>
      </property>
     </widget>
    </item>
@@ -56,6 +52,9 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mp_edit_name</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

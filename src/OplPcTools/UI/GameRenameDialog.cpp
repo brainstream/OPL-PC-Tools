@@ -17,9 +17,8 @@
  ***********************************************************************************************/
 
 #include <QPushButton>
+#include <OplPcTools/File.h>
 #include <OplPcTools/UlConfigGameStorage.h>
-#include <OplPcTools/DirectoryGameStorage.h>
-#include <OplPcTools/Exception.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 
 using namespace OplPcTools;
@@ -55,7 +54,7 @@ bool GameRenameDialog::FilenameValidator::validate(const QString & _name)
     m_is_invalid = false;
     try
     {
-        DirectoryGameStorage::validateTitle(_name);
+        validateFilename(_name);
     }
     catch(const ValidationException & _exception)
     {
@@ -80,6 +79,9 @@ GameRenameDialog::GameRenameDialog(const QString & _initial_name,
     else
         mp_validator = new UlConfigNameValidator();
     setupUi(this);
+    connect(mp_edit_name, &QLineEdit::textChanged, this, &GameRenameDialog::onNameChanged);
+    connect(mp_button_box, &QDialogButtonBox::accepted, this, &GameRenameDialog::accept);
+    connect(mp_button_box, &QDialogButtonBox::rejected, this, &GameRenameDialog::reject);
     mp_edit_name->setText(_initial_name);
     mp_edit_name->selectAll();
 }
@@ -94,7 +96,7 @@ QString GameRenameDialog::name() const
     return mp_edit_name->text();
 }
 
-void GameRenameDialog::nameChanged(const QString & _name)
+void GameRenameDialog::onNameChanged(const QString & _name)
 {
     mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(!mp_validator->validate(_name));
     mp_label_message->setText(mp_validator->message());

@@ -26,6 +26,7 @@ namespace Key {
 const QString reopen_last_session("Settings/ReopenLastSession");
 const QString confirm_game_deletion("Settings/ConfirmGameDeletion");
 const QString confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
+const QString confirm_vmc_deletion("Settings/ConfirmVmcDeletion");
 const QString split_up_iso("Settings/SplitUpISO");
 const QString move_iso("Settings/MoveISO");
 const QString rename_iso("Settings/RenameISO");
@@ -76,6 +77,16 @@ bool Settings::confirmPixmapDeletion() const
 void Settings::setConfirmPixmapDeletion(bool _value)
 {
     mp_settings->setValue(Key::confirm_pixmap_deletion, _value);
+}
+
+bool Settings::confirmVmcDeletion() const
+{
+    return mp_settings->value(Key::confirm_vmc_deletion, true).toBool();
+}
+
+void Settings::setConfirmVmcDeletion(bool _value)
+{
+    mp_settings->setValue(Key::confirm_vmc_deletion, _value);
 }
 
 bool Settings::splitUpIso() const

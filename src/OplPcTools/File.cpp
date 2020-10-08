@@ -16,68 +16,30 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMC__
-#define __OPLPCTOOLS_VMC__
+#include <OplPcTools/File.h>
 
-#include <QUuid>
-#include <QString>
+namespace {
+
+const QString g_disallowed_characters("<>:\"/\\|?*");
+
+} // namespace
 
 namespace OplPcTools {
 
-enum class VmcSize
+bool isFilenameValid(const QString & _filename)
 {
-    _8M   = 8,
-    _16M  = 16,
-    _32M  = 32,
-    _64M  = 64,
-    _128M = 128,
-    _256M = 256
-};
-
-class Vmc final
-{
-public:
-    inline Vmc(const QString & _title, VmcSize _size);
-    Vmc(const Vmc &) = default;
-    ~Vmc() = default;
-    inline const QUuid & uuid() const;
-    inline const QString & title() const;
-    inline void setTitle(const QString & _title);
-    inline VmcSize size() const;
-
-private:
-    QUuid m_uuid;
-    QString m_title;
-    VmcSize m_size;
-};
-
-Vmc::Vmc(const QString & _title, VmcSize _size) :
-    m_uuid(QUuid::createUuid()),
-    m_title(_title),
-    m_size(_size)
-{
+    for(const QChar & chr : _filename)
+    {
+        if(g_disallowed_characters.contains(chr))
+            return false;
+    }
+    return true;
 }
 
-const QUuid & Vmc::uuid() const
+void validateFilename(const QString & _filename)
 {
-    return m_uuid;
-}
-
-const QString & Vmc::title() const
-{
-    return m_title;
-}
-
-void Vmc::setTitle(const QString & _title)
-{
-    m_title = _title;
-}
-
-VmcSize Vmc::size() const
-{
-    return m_size;
+    if(!isFilenameValid(_filename))
+        throw ValidationException(QObject::tr("Name must not contain following symbols: ") + g_disallowed_characters);
 }
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMC__

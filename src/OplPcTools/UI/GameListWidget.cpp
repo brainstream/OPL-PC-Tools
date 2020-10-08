@@ -231,9 +231,9 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_restore_iso, &QAction::triggered, this, &GameListWidget::showIsoRestorer);
     connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameListWidget::showTreeContextMenu);
-    connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { gameSelected(); });
-    connect(mp_game_manager, &GameManager::gameAdded, this, &GameListWidget::gameAdded);
-    connect(mp_game_manager, &GameManager::gameRenamed, this, &GameListWidget::gameRenamed);
+    connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { onGameSelected(); });
+    connect(mp_game_manager, &GameManager::gameAdded, this, &GameListWidget::onGameAdded);
+    connect(mp_game_manager, &GameManager::gameRenamed, this, &GameListWidget::onGameRenamed);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     setIconSize();
     onLibraryLoaded();
@@ -274,7 +274,7 @@ void GameListWidget::onLibraryLoaded()
         const QDir directory (Application::instance().library().directory());
         delete mp_game_art_manager;
         mp_game_art_manager = new GameArtManager(directory, this);
-        connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameListWidget::gameArtChanged);
+        connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameListWidget::onGameArtChanged);
         mp_game_art_manager->addCacheType(GameArtType::Icon);
         mp_game_art_manager->addCacheType(GameArtType::Front);
         mp_model->setArtManager(*mp_game_art_manager);
@@ -282,7 +282,7 @@ void GameListWidget::onLibraryLoaded()
         if(mp_game_manager->count() > 0)
             mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
         activateCollectionControls(true);
-        gameSelected();
+        onGameSelected();
     }
     catch(const Exception & exception)
     {
@@ -294,7 +294,7 @@ void GameListWidget::onLibraryLoaded()
     }
 }
 
-void GameListWidget::gameAdded(const QString & _id)
+void GameListWidget::onGameAdded(const QString & _id)
 {
     Q_UNUSED(_id)
     QModelIndex index = mp_tree_games->currentIndex();
@@ -303,14 +303,14 @@ void GameListWidget::gameAdded(const QString & _id)
     mp_tree_games->setCurrentIndex(index);
 }
 
-void GameListWidget::gameRenamed(const QString & _id)
+void GameListWidget::onGameRenamed(const QString & _id)
 {
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->id() == _id)
-        gameSelected();
+        onGameSelected();
 }
 
-void GameListWidget::gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
+void GameListWidget::onGameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
 {
     if(_type != GameArtType::Front)
         return;
@@ -319,7 +319,7 @@ void GameListWidget::gameArtChanged(const QString & _game_id, GameArtType _type,
         mp_label_cover->setPixmap(_pixmap ? *_pixmap : m_default_cover);
 }
 
-void GameListWidget::gameSelected()
+void GameListWidget::onGameSelected()
 {
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)

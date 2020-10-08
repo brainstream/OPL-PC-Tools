@@ -51,10 +51,10 @@ private:
     void showGameDetails();
     void showGameInstaller();
     void deleteGame();
-    void gameAdded(const QString & _id);
-    void gameRenamed(const QString & _id);
-    void gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
-    void gameSelected();
+    void onGameAdded(const QString & _id);
+    void onGameRenamed(const QString & _id);
+    void onGameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
+    void onGameSelected();
     void showIsoRestorer();
 
 private:

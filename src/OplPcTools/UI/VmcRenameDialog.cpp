@@ -16,68 +16,40 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMC__
-#define __OPLPCTOOLS_VMC__
+#include <QPushButton>
+#include <OplPcTools/File.h>
+#include <OplPcTools/UI/VmcRenameDialog.h>
 
-#include <QUuid>
-#include <QString>
+using namespace OplPcTools::UI;
 
-namespace OplPcTools {
-
-enum class VmcSize
+VmcRenameDialog::VmcRenameDialog(const QString & _name, QWidget * _parent /*= nullptr*/) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    _8M   = 8,
-    _16M  = 16,
-    _32M  = 32,
-    _64M  = 64,
-    _128M = 128,
-    _256M = 256
-};
-
-class Vmc final
-{
-public:
-    inline Vmc(const QString & _title, VmcSize _size);
-    Vmc(const Vmc &) = default;
-    ~Vmc() = default;
-    inline const QUuid & uuid() const;
-    inline const QString & title() const;
-    inline void setTitle(const QString & _title);
-    inline VmcSize size() const;
-
-private:
-    QUuid m_uuid;
-    QString m_title;
-    VmcSize m_size;
-};
-
-Vmc::Vmc(const QString & _title, VmcSize _size) :
-    m_uuid(QUuid::createUuid()),
-    m_title(_title),
-    m_size(_size)
-{
+    setupUi(this);
+    connect(mp_edit_name, &QLineEdit::textChanged, this, &VmcRenameDialog::onNameChanged);
+    connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcRenameDialog::accept);
+    connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcRenameDialog::reject);
+    mp_edit_name->setText(_name);
+    mp_edit_name->selectAll();
+    mp_edit_name->setFocus();
 }
 
-const QUuid & Vmc::uuid() const
+QString VmcRenameDialog::name() const
 {
-    return m_uuid;
+    return mp_edit_name->text();
 }
 
-const QString & Vmc::title() const
+void VmcRenameDialog::onNameChanged(const QString & _name)
 {
-    return m_title;
+    QString error_message;
+    try
+    {
+        validateFilename(_name);
+    }
+    catch(const Exception & exception)
+    {
+        error_message = exception.message();
+    }
+    mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(!error_message.isEmpty());
+    mp_label_error_message->setText(error_message);
 }
-
-void Vmc::setTitle(const QString & _title)
-{
-    m_title = _title;
-}
-
-VmcSize Vmc::size() const
-{
-    return m_size;
-}
-
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMC__

@@ -16,68 +16,27 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMC__
-#define __OPLPCTOOLS_VMC__
+#ifndef __OPLPCTOOLS_VMCRENAMEDIALOG__
+#define __OPLPCTOOLS_VMCRENAMEDIALOG__
 
-#include <QUuid>
-#include <QString>
+#include "ui_VmcRenameDialog.h"
 
 namespace OplPcTools {
+namespace UI {
 
-enum class VmcSize
+class VmcRenameDialog : public QDialog, private Ui::VmcRenameDialog
 {
-    _8M   = 8,
-    _16M  = 16,
-    _32M  = 32,
-    _64M  = 64,
-    _128M = 128,
-    _256M = 256
-};
+    Q_OBJECT
 
-class Vmc final
-{
 public:
-    inline Vmc(const QString & _title, VmcSize _size);
-    Vmc(const Vmc &) = default;
-    ~Vmc() = default;
-    inline const QUuid & uuid() const;
-    inline const QString & title() const;
-    inline void setTitle(const QString & _title);
-    inline VmcSize size() const;
+    explicit VmcRenameDialog(const QString & _name, QWidget * _parent = nullptr);
+    QString name() const;
 
 private:
-    QUuid m_uuid;
-    QString m_title;
-    VmcSize m_size;
+    void onNameChanged(const QString & _name);
 };
 
-Vmc::Vmc(const QString & _title, VmcSize _size) :
-    m_uuid(QUuid::createUuid()),
-    m_title(_title),
-    m_size(_size)
-{
-}
-
-const QUuid & Vmc::uuid() const
-{
-    return m_uuid;
-}
-
-const QString & Vmc::title() const
-{
-    return m_title;
-}
-
-void Vmc::setTitle(const QString & _title)
-{
-    m_title = _title;
-}
-
-VmcSize Vmc::size() const
-{
-    return m_size;
-}
-
+} // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMC__
+#endif // __OPLPCTOOLS_VMCRENAMEDIALOG__

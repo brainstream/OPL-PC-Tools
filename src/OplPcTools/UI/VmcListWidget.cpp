@@ -40,7 +40,6 @@ public:
     int rowCount(const QModelIndex & _parent) const override;
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
-    QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
     const Vmc * vmc(const QModelIndex & _index);
 
 private:
@@ -139,21 +138,9 @@ QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role
             return QString(QObject::tr("256 MiB"));
         }
     }
-    return QVariant();
-}
-
-QVariant VmcListWidget::VmcTreeModel::headerData(int _section, Qt::Orientation _orientation, int _role) const
-{
-    Q_UNUSED(_orientation);
-    if(_role == Qt::DisplayRole)
+    else if(_role == Qt::TextAlignmentRole)
     {
-        switch (_section)
-        {
-        case 0:
-            return QObject::tr("Name");
-        case 1:
-            return QObject::tr("Size");
-        }
+        return QVariant(Qt::AlignRight | Qt::AlignCenter);
     }
     return QVariant();
 }
@@ -209,7 +196,6 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_context_menu->addAction(mp_action_delete_vmc);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_create_vmc);
-    mp_tree_vmcs->setContextMenuPolicy(Qt::CustomContextMenu);
     activateItemControls(nullptr);
     connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);

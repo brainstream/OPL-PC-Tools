@@ -193,6 +193,9 @@
      </item>
      <item>
       <widget class="QTreeView" name="mp_tree_games">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">::item {
 	padding: 2px 0;

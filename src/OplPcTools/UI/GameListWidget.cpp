@@ -217,7 +217,6 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_context_menu->addAction(mp_action_delete);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_install);
-    mp_tree_games->setContextMenuPolicy(Qt::CustomContextMenu);
     activateCollectionControls(false);
     activateItemControls(nullptr);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);

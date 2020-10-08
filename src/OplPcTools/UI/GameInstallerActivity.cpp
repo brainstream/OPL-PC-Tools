@@ -279,6 +279,8 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     progress_indicator_option.rect = _option.rect;
     progress_indicator_option.rect.setWidth(progress_indicator_option.rect.width() * progress_bar_option.progress / g_progressbar_max_value);
     progress_indicator_option.fontMetrics = _option.fontMetrics;
+    progress_indicator_option.palette.setColor(QPalette::Highlight,
+        progress_indicator_option.palette.color(QPalette::Highlight).darker(150));
     QStyle * style = QApplication::style();
     style->drawPrimitive(QStyle::PE_IndicatorProgressChunk, &progress_indicator_option, _painter);
     style->drawControl(QStyle::CE_ProgressBarLabel, &progress_bar_option, _painter);

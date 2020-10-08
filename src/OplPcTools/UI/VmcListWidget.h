@@ -43,11 +43,13 @@ private:
 private:
     void onVmcSelected();
     void activateItemControls(const Vmc * _vmc);
+    void showTreeContextMenu(const QPoint & _point);
 
 private:
     class VmcTreeModel;
     VmcTreeModel * mp_model;
     QSortFilterProxyModel * mp_proxy_model;
+    QMenu * mp_context_menu;
 };
 
 

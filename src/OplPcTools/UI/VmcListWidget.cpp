@@ -204,6 +204,12 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->setModel(mp_proxy_model);
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    mp_context_menu = new QMenu(this);
+    mp_context_menu->addAction(mp_action_rename_vmc);
+    mp_context_menu->addAction(mp_action_delete_vmc);
+    mp_context_menu->addSeparator();
+    mp_context_menu->addAction(mp_action_create_vmc);
+    mp_tree_vmcs->setContextMenuPolicy(Qt::CustomContextMenu);
     activateItemControls(nullptr);
     connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
@@ -212,6 +218,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_tree_vmcs->selectionModel(), &QItemSelectionModel::selectionChanged,
         [this](QItemSelection, QItemSelection) { onVmcSelected(); });
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
+    connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
     if(Application::instance().library().vmcs().count() > 0)
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
 }
@@ -307,4 +314,10 @@ void VmcListWidget::deleteVmc()
     {
         Application::instance().showErrorMessage();
     }
+}
+
+void VmcListWidget::showTreeContextMenu(const QPoint & _point)
+{
+    if(Application::instance().library().vmcs().isLoaded())
+        mp_context_menu->exec(mp_tree_vmcs->mapToGlobal(_point));
 }

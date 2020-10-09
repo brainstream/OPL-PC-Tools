@@ -93,6 +93,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/SettingsDialog.h
     ${OPT_SRC_DIR}/UI/VmcListWidget.h
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.h
+    ${OPT_SRC_DIR}/UI/VmcCreateDialog.h
 )
 
 set(OPT_SRC_UI
@@ -108,6 +109,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
     ${OPT_SRC_DIR}/UI/SettingsDialog.ui
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.ui
+    ${OPT_SRC_DIR}/UI/VmcCreateDialog.ui
 )
 
 set(OPT_SRC_RES
@@ -126,6 +128,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/Exception.h
     ${OPT_SRC_DIR}/File.h
     ${OPT_SRC_DIR}/File.cpp
+    ${OPT_SRC_DIR}/FilenameValidator.cpp
+    ${OPT_SRC_DIR}/FilenameValidator.h
     ${OPT_SRC_DIR}/Maybe.h
     ${OPT_SRC_DIR}/BigEndian.h
     ${OPT_SRC_DIR}/DeviceSource.h
@@ -176,6 +180,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/IconTheme.h
     ${OPT_SRC_DIR}/UI/VmcListWidget.cpp
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.cpp
+    ${OPT_SRC_DIR}/UI/VmcCreateDialog.cpp
 )
 
 if(WIN32)

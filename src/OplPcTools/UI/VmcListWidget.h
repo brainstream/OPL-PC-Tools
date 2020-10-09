@@ -39,6 +39,7 @@ private:
     void setIconSize();
     void renameVmc();
     void deleteVmc();
+    void createVmc();
 
 private:
     void onVmcSelected();

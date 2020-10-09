@@ -26,6 +26,7 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
+#include <OplPcTools/UI/VmcCreateDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -44,6 +45,7 @@ public:
 
 private:
     void onLibraryLoaded();
+    void onVmcAdded(const QUuid & _uuid);
     void onVmcAboutToBeDeleted(const QUuid & _uuid);
     void onVmcDeleted(const QUuid & _uuid);
     void updateRecord(const QUuid & _uuid);
@@ -59,6 +61,7 @@ VmcListWidget::VmcTreeModel::VmcTreeModel(QObject * _parent):
     mr_vmcs(Application::instance().library().vmcs())
 {
     connect(&Application::instance().library(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
+    connect(&mr_vmcs, &VmcManager::vmcAdded, this, &VmcTreeModel::onVmcAdded);
     connect(&mr_vmcs, &VmcManager::vmcRenamed, this, &VmcTreeModel::updateRecord);
     connect(&mr_vmcs, &VmcManager::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
     connect(&mr_vmcs, &VmcManager::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
@@ -84,7 +87,7 @@ QModelIndex VmcListWidget::VmcTreeModel::index(const QUuid & _uuid) const
         const Vmc * vmc = mr_vmcs[i];
         if(vmc->uuid() == _uuid)
         {
-            return createIndex(i, 0), createIndex(i, 1);
+            return createIndex(i, 0);
         }
     }
     return QModelIndex();
@@ -152,6 +155,14 @@ const Vmc * VmcListWidget::VmcTreeModel::vmc(const QModelIndex & _index)
     return nullptr;
 }
 
+void VmcListWidget::VmcTreeModel::onVmcAdded(const QUuid & _uuid)
+{
+    Q_UNUSED(_uuid);
+    int count = mr_vmcs.count() - 1;
+    beginInsertRows(QModelIndex(), count, count);
+    endInsertRows();
+}
+
 void VmcListWidget::VmcTreeModel::updateRecord(const QUuid & _uuid)
 {
     QModelIndex start_index = index(_uuid);
@@ -186,6 +197,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_model = new VmcTreeModel(this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    mp_proxy_model->setSortCaseSensitivity(Qt::CaseInsensitive);
     mp_proxy_model->setSourceModel(mp_model);
     mp_proxy_model->setDynamicSortFilter(true);
     mp_tree_vmcs->setModel(mp_proxy_model);
@@ -204,9 +216,11 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_tree_vmcs->selectionModel(), &QItemSelectionModel::selectionChanged,
         [this](QItemSelection, QItemSelection) { onVmcSelected(); });
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
+    connect(mp_action_create_vmc, &QAction::triggered, this, &VmcListWidget::createVmc);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
     if(Application::instance().library().vmcs().count() > 0)
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
+    mp_proxy_model->sort(0, Qt::AscendingOrder);
 }
 
 void VmcListWidget::setupShortcuts()
@@ -300,6 +314,12 @@ void VmcListWidget::deleteVmc()
     {
         Application::instance().showErrorMessage();
     }
+}
+
+void VmcListWidget::createVmc()
+{
+    VmcCreateDialog dlg(this);
+    dlg.exec();
 }
 
 void VmcListWidget::showTreeContextMenu(const QPoint & _point)

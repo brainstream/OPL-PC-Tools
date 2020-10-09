@@ -16,28 +16,27 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/FilenameValidator.h>
-#include <OplPcTools/File.h>
+#ifndef __OPLPCTOOLS_VMCCREATEDIALOG__
+#define __OPLPCTOOLS_VMCCREATEDIALOG__
+
+#include "ui_VmcCreateDialog.h"
 
 namespace OplPcTools {
+namespace UI {
 
-bool isFilenameValid(const QString & _filename)
+class VmcCreateDialog : public QDialog, private Ui::VmcCreateDialog
 {
-    for(const QChar & chr : _filename)
-    {
-        if(FilenameValidator::s_disallowed_characters.contains(chr))
-            return false;
-    }
-    return true;
-}
+    Q_OBJECT
 
-void validateFilename(const QString & _filename)
-{
-    if(!isFilenameValid(_filename))
-        throw ValidationException(QString("%1: %2")
-            .arg(QObject::tr("Name must not contain following symbols")
-            .arg(FilenameValidator::s_disallowed_characters)
-        ));
-}
+public:
+    explicit VmcCreateDialog(QWidget * _parent = nullptr);
 
+private:
+    void create();
+    void onFilenameChanged();
+};
+
+} // namespace UI
 } // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_VMCCREATEDIALOG__

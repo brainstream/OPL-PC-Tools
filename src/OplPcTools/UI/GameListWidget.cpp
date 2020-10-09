@@ -202,6 +202,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_model = new GameTreeModel(this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    mp_proxy_model->setSortCaseSensitivity(Qt::CaseInsensitive);
     mp_proxy_model->setSourceModel(mp_model);
     mp_proxy_model->setDynamicSortFilter(true);
     mp_tree_games->setModel(mp_proxy_model);

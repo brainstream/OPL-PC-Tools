@@ -103,6 +103,32 @@ const Vmc * VmcManager::operator[](const QUuid & _uuid) const
     return findVmc(_uuid);
 }
 
+const Vmc * VmcManager::createVmc(const QString & _title, VmcSize _size)
+{
+    for(const Vmc * vmc: *mp_vmcs)
+    {
+        if(_title == vmc->title())
+            throw Exception(tr("VMC with name \"%1\" already exists").arg(_title));
+    }
+    validateFilename(_title);
+    QFile file(makeFilename(_title));
+    openFile(file, QFile::WriteOnly);
+
+    // FIXME: THE TEST DATA
+    //
+    QByteArray buffer(1024 * 1024, '\0');
+    for(int i = 0; i < static_cast<int>(_size); ++i)
+        file.write(buffer);
+    file.close();
+    //
+    // END OF THE TEST DATA
+
+    Vmc * vmc = new Vmc(_title, _size);
+    mp_vmcs->append(vmc);
+    emit vmcAdded(vmc->uuid());
+    return vmc;
+}
+
 void VmcManager::renameVmc(const QUuid & _uuid, const QString & _title)
 {
     validateFilename(_title);

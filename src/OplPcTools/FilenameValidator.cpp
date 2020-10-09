@@ -17,27 +17,24 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/FilenameValidator.h>
-#include <OplPcTools/File.h>
 
-namespace OplPcTools {
+using namespace OplPcTools;
 
-bool isFilenameValid(const QString & _filename)
+const QString FilenameValidator::s_disallowed_characters("<>:\"/\\|?*");
+
+FilenameValidator::FilenameValidator(QObject * _parent /*= nullptr*/) :
+    QValidator(_parent)
 {
-    for(const QChar & chr : _filename)
+}
+
+QValidator::State FilenameValidator::validate(QString & _input, int & _pos) const
+{
+    Q_UNUSED(_pos);
+    int size = _input.size();
+    for(int i = 0; i < size; ++i)
     {
-        if(FilenameValidator::s_disallowed_characters.contains(chr))
-            return false;
+        if(s_disallowed_characters.contains(_input[i]))
+            _input[i] = '_';
     }
-    return true;
+    return QValidator::Acceptable;
 }
-
-void validateFilename(const QString & _filename)
-{
-    if(!isFilenameValid(_filename))
-        throw ValidationException(QString("%1: %2")
-            .arg(QObject::tr("Name must not contain following symbols")
-            .arg(FilenameValidator::s_disallowed_characters)
-        ));
-}
-
-} // namespace OplPcTools

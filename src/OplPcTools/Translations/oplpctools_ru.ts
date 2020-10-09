@@ -763,22 +763,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="333"/>
+        <location filename="../UI/GameListWidget.cpp" line="334"/>
         <source>Directory</source>
         <translation type="unfinished">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="401"/>
+        <location filename="../UI/GameListWidget.cpp" line="402"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="402"/>
+        <location filename="../UI/GameListWidget.cpp" line="403"/>
         <source>Delete Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="404"/>
+        <location filename="../UI/GameListWidget.cpp" line="405"/>
         <source>Are you sure you want to delete this game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -838,19 +838,52 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::VmcCreateDialog</name>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="32"/>
+        <source>8 Mebibytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="33"/>
+        <source>16 Mebibytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="34"/>
+        <source>32 Mebibytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="35"/>
+        <source>64 Mebibytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="36"/>
+        <source>128 Mebibytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="37"/>
+        <source>256 Mebibytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="278"/>
+        <location filename="../UI/VmcListWidget.cpp" line="292"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="279"/>
+        <location filename="../UI/VmcListWidget.cpp" line="293"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="281"/>
+        <location filename="../UI/VmcListWidget.cpp" line="295"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -889,6 +922,14 @@
         <location filename="../UlConfigGameStorage.cpp" line="234"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Не могу найти игру &quot;%1&quot; в файле конфигурации</translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::VmcManager</name>
+    <message>
+        <location filename="../VmcManager.cpp" line="111"/>
+        <source>VMC with name &quot;%1&quot; already exists</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -970,11 +1011,6 @@
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="42"/>
-        <source>Name must not contain following symbols: </source>
-        <translation>Имя не должно содержать следующих символов: </translation>
-    </message>
-    <message>
         <location filename="../Game.h" line="58"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Без названия&gt;</translation>
@@ -990,33 +1026,38 @@
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="128"/>
+        <location filename="../UI/VmcListWidget.cpp" line="131"/>
         <source>8 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="130"/>
+        <location filename="../UI/VmcListWidget.cpp" line="133"/>
         <source>16 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="132"/>
+        <location filename="../UI/VmcListWidget.cpp" line="135"/>
         <source>32 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="134"/>
+        <location filename="../UI/VmcListWidget.cpp" line="137"/>
         <source>64 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="136"/>
+        <location filename="../UI/VmcListWidget.cpp" line="139"/>
         <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="138"/>
+        <location filename="../UI/VmcListWidget.cpp" line="141"/>
         <source>256 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../File.cpp" line="38"/>
+        <source>Name must not contain following symbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1120,52 +1161,73 @@
     </message>
 </context>
 <context>
+    <name>VmcCreateDialog</name>
+    <message>
+        <location filename="../UI/VmcCreateDialog.ui" line="14"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="97"/>
+        <source>Create VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.ui" line="25"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="98"/>
+        <source>Title</source>
+        <translation type="unfinished">Название</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.ui" line="42"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="99"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VmcListWidget</name>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="14"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="174"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="175"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="128"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="187"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="188"/>
         <source>Filter</source>
         <translation type="unfinished">Фильтр</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="166"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="175"/>
+        <location filename="../UI/VmcListWidget.ui" line="169"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="176"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="181"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="179"/>
+        <location filename="../UI/VmcListWidget.ui" line="184"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="180"/>
         <source>Delete</source>
         <translation type="unfinished">Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="196"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="183"/>
+        <location filename="../UI/VmcListWidget.ui" line="199"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="184"/>
         <source>Rename</source>
         <translation type="unfinished">Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="184"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="181"/>
+        <location filename="../UI/VmcListWidget.ui" line="187"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="182"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="199"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="185"/>
+        <location filename="../UI/VmcListWidget.ui" line="202"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="186"/>
         <source>Rename VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="169"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="177"/>
+        <location filename="../UI/VmcListWidget.ui" line="172"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="178"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>

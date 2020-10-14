@@ -37,13 +37,12 @@ protected:
 public:
     ~Application() override;
     void showMainWindow();
-    void showMessage(const QString & _title, const QString & _message);
-    void showMessage(const QString & _message);
-    void showErrorMessage();
-    void showErrorMessage(const QString & _message);
-    bool pushActivity(Intent & _intent);
 
-    static Application & instance();
+    static void showMessage(const QString & _title, const QString & _message);
+    static void showMessage(const QString & _message);
+    static void showErrorMessage();
+    static void showErrorMessage(const QString & _message);
+    static bool pushActivity(Intent & _intent);
 
 private:
     MainWindow * ensureMainWindow();

@@ -91,11 +91,6 @@ Application::~Application()
     delete mp_main_window;
 }
 
-Application & Application::instance()
-{
-    return *gp_application;
-}
-
 void Application::showMainWindow()
 {
     ensureMainWindow()->show();
@@ -110,12 +105,12 @@ MainWindow * Application::ensureMainWindow()
 
 void Application::showMessage(const QString & _title, const QString & _message)
 {
-    QMessageBox::information(ensureMainWindow(), _title, _message);
+    QMessageBox::information(gp_application->ensureMainWindow(), _title, _message);
 }
 
 void Application::showMessage(const QString & _message)
 {
-    auto main_window = ensureMainWindow();
+    auto main_window = gp_application->ensureMainWindow();
     QMessageBox::information(main_window, main_window->windowTitle(), _message);
 }
 
@@ -126,12 +121,12 @@ void Application::showErrorMessage()
 
 void Application::showErrorMessage(const QString & _message)
 {
-    QMessageBox::critical(ensureMainWindow(), tr("Error"), _message);
+    QMessageBox::critical(gp_application->ensureMainWindow(), tr("Error"), _message);
 }
 
 bool Application::pushActivity(Intent & _intent)
 {
-    return ensureMainWindow()->pushActivity(_intent);
+    return gp_application->ensureMainWindow()->pushActivity(_intent);
 }
 
 int main(int _argc, char * _argv[])

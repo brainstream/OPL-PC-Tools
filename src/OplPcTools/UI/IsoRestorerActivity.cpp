@@ -156,7 +156,7 @@ void IsoRestorerActivity::onRollbackStarted()
 void IsoRestorerActivity::onException(QString _message)
 {
     mp_label_status->setText(_message);
-    Application::instance().showErrorMessage(_message);
+    Application::showErrorMessage(_message);
 }
 
 void IsoRestorerActivity::onThreadFinished()

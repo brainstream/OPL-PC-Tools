@@ -286,11 +286,11 @@ void GameListWidget::onLibraryLoaded()
     }
     catch(const Exception & exception)
     {
-        Application::instance().showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        Application::instance().showErrorMessage();
+        Application::showErrorMessage();
     }
 }
 
@@ -355,11 +355,11 @@ void GameListWidget::renameGame()
             }
             catch(const Exception & exception)
             {
-                Application::instance().showErrorMessage(exception.message());
+                Application::showErrorMessage(exception.message());
             }
             catch(...)
             {
-                Application::instance().showErrorMessage();
+                Application::showErrorMessage();
             }
         }
     }
@@ -371,7 +371,7 @@ void GameListWidget::showGameDetails()
     if(game)
     {
         QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_manager, *mp_game_art_manager, game->id());
-        Application::instance().pushActivity(*intent);
+        Application::pushActivity(*intent);
     }
 }
 
@@ -381,14 +381,14 @@ void GameListWidget::showIsoRestorer()
     if(game && game->installationType() == GameInstallationType::UlConfig)
     {
         QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(*mp_game_manager, game->id());
-        Application::instance().pushActivity(*intent);
+        Application::pushActivity(*intent);
     }
 }
 
 void GameListWidget::showGameInstaller()
 {
     QSharedPointer<Intent> intent = GameInstallerActivity::createIntent(*mp_game_manager);
-    Application::instance().pushActivity(*intent);
+    Application::pushActivity(*intent);
 }
 
 void GameListWidget::deleteGame()
@@ -419,10 +419,10 @@ void GameListWidget::deleteGame()
     }
     catch(Exception & exception)
     {
-        Application::instance().showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        Application::instance().showErrorMessage();
+        Application::showErrorMessage();
     }
 }

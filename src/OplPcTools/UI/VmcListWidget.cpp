@@ -260,11 +260,11 @@ void VmcListWidget::renameVmc()
             }
             catch(const Exception & exception)
             {
-                Application::instance().showErrorMessage(exception.message());
+                Application::showErrorMessage(exception.message());
             }
             catch(...)
             {
-                Application::instance().showErrorMessage();
+                Application::showErrorMessage();
             }
         }
     }
@@ -309,11 +309,11 @@ void VmcListWidget::deleteVmc()
     }
     catch(Exception & exception)
     {
-        Application::instance().showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        Application::instance().showErrorMessage();
+        Application::showErrorMessage();
     }
 }
 

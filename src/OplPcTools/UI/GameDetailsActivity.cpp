@@ -192,11 +192,11 @@ void GameDetailsActivity::renameGame()
     }
     catch(const Exception & exception)
     {
-        Application::instance().showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        Application::instance().showErrorMessage();
+        Application::showErrorMessage();
     }
 }
 
@@ -224,7 +224,7 @@ void GameDetailsActivity::changeGameArt()
                 dirpath = dirpaths.first();
         }
         QString filename = QFileDialog::getOpenFileName(
-            Application::instance().activeWindow(),
+            Application::activeWindow(),
             tr("Choose a Picture"), dirpath,
             tr("Pictures") + " (*.png *.jpg *.jpeg *.bmp)");
         if(filename.isEmpty())
@@ -236,11 +236,11 @@ void GameDetailsActivity::changeGameArt()
     }
     catch(const Exception & exception)
     {
-        Application::instance().showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        Application::instance().showErrorMessage();
+        Application::showErrorMessage();
     }
 }
 
@@ -272,11 +272,11 @@ void GameDetailsActivity::deleteGameArt()
     }
     catch(const Exception & exception)
     {
-        Application::instance().showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        Application::instance().showErrorMessage();
+        Application::showErrorMessage();
     }
 }
 

@@ -641,12 +641,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="124"/>
+        <location filename="../UI/Application.cpp" line="119"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="129"/>
+        <location filename="../UI/Application.cpp" line="124"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>

@@ -428,7 +428,7 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
     }
     else
     {
-        Application::instance().showErrorMessage(tr("Invalid file format"));
+        Application::showErrorMessage(tr("Invalid file format"));
     }
 }
 
@@ -646,7 +646,7 @@ void GameInstallerActivity::threadFinished()
     mp_btn_back->setDisabled(false);
     mp_btn_cancel->setDisabled(true);
     setOverallProgressUnknownStatus(false, g_progressbar_max_value);
-    Application::instance().showMessage(tr("Done"), tr("Installation complete"));
+    Application::showMessage(tr("Done"), tr("Installation complete"));
 }
 
 bool GameInstallerActivity::startTask()

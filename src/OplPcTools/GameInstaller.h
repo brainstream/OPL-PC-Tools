@@ -21,7 +21,7 @@
 
 #include <QObject>
 #include <QStringList>
-#include <OplPcTools/GameManager.h>
+#include <OplPcTools/Game.h>
 #include <OplPcTools/Device.h>
 
 namespace OplPcTools {

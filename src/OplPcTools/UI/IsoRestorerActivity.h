@@ -22,7 +22,7 @@
 #include <QThread>
 #include <QWidget>
 #include <QSharedPointer>
-#include <OplPcTools/GameManager.h>
+#include <OplPcTools/Game.h>
 #include <OplPcTools/UI/Intent.h>
 #include "ui_IsoRestorerActivity.h"
 

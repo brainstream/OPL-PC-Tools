@@ -16,47 +16,48 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCMANAGER__
-#define __OPLPCTOOLS_VMCMANAGER__
+#ifndef __OPLPCTOOLS_GAMEMCOLLECTION__
+#define __OPLPCTOOLS_GAMEMCOLLECTION__
 
-#include <OplPcTools/Vmc.h>
-#include <QDir>
 #include <QObject>
+#include <QDir>
+#include <OplPcTools/Game.h>
+#include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/DirectoryGameStorage.h>
 
 namespace OplPcTools {
 
-
-class VmcManager final : public QObject
+class GameCollection final : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit VmcManager(QObject * _parent = nullptr);
-    ~VmcManager() override;
-    const Vmc * operator[](int _index) const;
-    const Vmc * operator[](const QUuid & _uuid) const;
-    bool load(const QDir & _base_directory);
+    explicit GameCollection(QObject * _parent = nullptr);
+    ~GameCollection() override;
+    void load(const QDir & _directory);
     bool isLoaded() const;
-    const int count() const;
-    const Vmc * createVmc(const QString & _title, VmcSize _size);
-    void renameVmc(const QUuid & _uuid, const QString & _title);
-    void deleteVmc(const QUuid & _uuid);
+    const Game * findGame(const QString & _id) const;
+    int count() const;
+    const Game * operator [](int _index) const;
+    void addGame(const Game & _game);
+    void renameGame(const Game & _game, const QString & _title);
+    void deleteGame(const Game & _game);
 
 signals:
-    void vmcAdded(const QUuid & _uuid);
-    void vmcRenamed(const QUuid & _uuid);
-    void vmcAboutToBeDeleted(const QUuid & _uuid);
-    void vmcDeleted(const QUuid & _uuid);
+    void gameAboutToBeDeleted(const QString _game_id);
+    void gameDeleted(const QString & _game_id);
+    void gameAdded(const QString & _game_id);
+    void gameRenamed(const QString & _game_id);
 
 private:
-    QString makeFilename(const QString & _vmc_title) const;
-    Vmc * findVmc(const QUuid & _uuid) const;
+    GameStorage & storage(GameInstallationType _installation_type) const;
 
 private:
-    QDir m_directory;
-    QVector<Vmc *> * mp_vmcs;
+    QString m_directory;
+    UlConfigGameStorage * mp_ul_conf_storage;
+    DirectoryGameStorage * mp_dir_storage;
 };
 
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMCMANAGER__
+#endif // __OPLPCTOOLS_GAMEMCOLLECTION__

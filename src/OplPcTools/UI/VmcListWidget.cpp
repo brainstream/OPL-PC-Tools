@@ -57,12 +57,12 @@ VmcListWidget::VmcTreeModel::VmcTreeModel(QObject * _parent):
     QAbstractItemModel(_parent),
     m_icon(":/images/vmc")
 {
-    VmcManager * vmc_manager = &Library::instance().vmcs();
+    VmcCollection * vmc_manager = &Library::instance().vmcs();
     connect(&Library::instance(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
-    connect(vmc_manager, &VmcManager::vmcAdded, this, &VmcTreeModel::onVmcAdded);
-    connect(vmc_manager, &VmcManager::vmcRenamed, this, &VmcTreeModel::updateRecord);
-    connect(vmc_manager, &VmcManager::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
-    connect(vmc_manager, &VmcManager::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
+    connect(vmc_manager, &VmcCollection::vmcAdded, this, &VmcTreeModel::onVmcAdded);
+    connect(vmc_manager, &VmcCollection::vmcRenamed, this, &VmcTreeModel::updateRecord);
+    connect(vmc_manager, &VmcCollection::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
+    connect(vmc_manager, &VmcCollection::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
 }
 
 void VmcListWidget::VmcTreeModel::onLibraryLoaded()
@@ -79,7 +79,7 @@ QModelIndex VmcListWidget::VmcTreeModel::index(int _row, int _column, const QMod
 
 QModelIndex VmcListWidget::VmcTreeModel::index(const QUuid & _uuid) const
 {
-    VmcManager & vmc_man = Library::instance().vmcs();
+    VmcCollection & vmc_man = Library::instance().vmcs();
     int count = vmc_man.count();
     for(int i = 0; i < count; ++i)
     {
@@ -149,7 +149,7 @@ QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role
 
 const Vmc * VmcListWidget::VmcTreeModel::vmc(const QModelIndex & _index)
 {
-    VmcManager & vmc_man = Library::instance().vmcs();
+    VmcCollection & vmc_man = Library::instance().vmcs();
     if(_index.isValid() && _index.row() < vmc_man.count())
         return vmc_man[_index.row()];
     return nullptr;

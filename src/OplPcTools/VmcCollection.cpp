@@ -16,19 +16,19 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/File.h>
-#include <OplPcTools/VmcManager.h>
 #include <QVector>
+#include <OplPcTools/File.h>
+#include <OplPcTools/VmcCollection.h>
 
 using namespace OplPcTools;
 
-VmcManager::VmcManager(QObject * _parent /*= nullptr*/) :
+VmcCollection::VmcCollection(QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     mp_vmcs(new QVector<Vmc *>)
 {
 }
 
-VmcManager::~VmcManager()
+VmcCollection::~VmcCollection()
 {
     if(mp_vmcs)
     {
@@ -39,7 +39,7 @@ VmcManager::~VmcManager()
 }
 
 
-bool VmcManager::load(const QDir & _base_directory)
+bool VmcCollection::load(const QDir & _base_directory)
 {
     mp_vmcs->clear();
     QString vmc_dir_path = _base_directory.absoluteFilePath("VMC");
@@ -83,27 +83,27 @@ bool VmcManager::load(const QDir & _base_directory)
 }
 
 
-bool VmcManager::isLoaded() const
+bool VmcCollection::isLoaded() const
 {
     return mp_vmcs != nullptr;
 }
 
-const int VmcManager::count() const
+const int VmcCollection::count() const
 {
     return isLoaded() ? mp_vmcs->size() : 0;
 }
 
-const Vmc * VmcManager::operator[](int _index) const
+const Vmc * VmcCollection::operator[](int _index) const
 {
     return isLoaded() && count() > _index && _index >= 0 ? (*mp_vmcs)[_index] : nullptr;
 }
 
-const Vmc * VmcManager::operator[](const QUuid & _uuid) const
+const Vmc * VmcCollection::operator[](const QUuid & _uuid) const
 {
     return findVmc(_uuid);
 }
 
-const Vmc * VmcManager::createVmc(const QString & _title, VmcSize _size)
+const Vmc * VmcCollection::createVmc(const QString & _title, VmcSize _size)
 {
     for(const Vmc * vmc: *mp_vmcs)
     {
@@ -129,7 +129,7 @@ const Vmc * VmcManager::createVmc(const QString & _title, VmcSize _size)
     return vmc;
 }
 
-void VmcManager::renameVmc(const QUuid & _uuid, const QString & _title)
+void VmcCollection::renameVmc(const QUuid & _uuid, const QString & _title)
 {
     validateFilename(_title);
     Vmc * vmc = findVmc(_uuid);
@@ -143,12 +143,12 @@ void VmcManager::renameVmc(const QUuid & _uuid, const QString & _title)
     emit vmcRenamed(_uuid);
 }
 
-QString VmcManager::makeFilename(const QString & _vmc_title) const
+QString VmcCollection::makeFilename(const QString & _vmc_title) const
 {
     return m_directory.absoluteFilePath(_vmc_title + ".bin");
 }
 
-Vmc * VmcManager::findVmc(const QUuid & _uuid) const
+Vmc * VmcCollection::findVmc(const QUuid & _uuid) const
 {
     for(Vmc * vmc : *mp_vmcs)
     {
@@ -158,7 +158,7 @@ Vmc * VmcManager::findVmc(const QUuid & _uuid) const
     return nullptr;
 }
 
-void VmcManager::deleteVmc(const QUuid & _uuid)
+void VmcCollection::deleteVmc(const QUuid & _uuid)
 {
     for(int i = 0; i < mp_vmcs->size(); ++i)
     {

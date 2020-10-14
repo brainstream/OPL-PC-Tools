@@ -23,8 +23,8 @@ using namespace OplPcTools;
 Library::Library() :
     QObject(nullptr)
 {
-    mp_games = new GameManager(this);
-    mp_vmcs = new VmcManager(this);
+    mp_games = new GameCollection(this);
+    mp_vmcs = new VmcCollection(this);
 }
 
 void Library::load(const QDir & _directory)

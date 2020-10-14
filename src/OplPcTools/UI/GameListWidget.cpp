@@ -54,7 +54,7 @@ private:
 
 private:
     const QPixmap m_default_icon;
-    const GameManager & mr_game_manager;
+    const GameCollection & mr_game_manager;
     GameArtManager * mp_art_manager;
     int m_row_count;
 };
@@ -68,10 +68,10 @@ GameListWidget::GameTreeModel::GameTreeModel(QObject * _parent /*= nullptr*/) :
     m_row_count(mr_game_manager.count())
 {
     connect(&Library::instance(), &Library::loaded, this, &GameListWidget::GameTreeModel::onLibraryLoaded);
-    connect(&mr_game_manager, &GameManager::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
-    connect(&mr_game_manager, &GameManager::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
-    connect(&mr_game_manager, &GameManager::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
-    connect(&mr_game_manager, &GameManager::gameDeleted, this, &GameListWidget::GameTreeModel::onGameDeleted);
+    connect(&mr_game_manager, &GameCollection::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
+    connect(&mr_game_manager, &GameCollection::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
+    connect(&mr_game_manager, &GameCollection::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
+    connect(&mr_game_manager, &GameCollection::gameDeleted, this, &GameListWidget::GameTreeModel::onGameDeleted);
 }
 
 void GameListWidget::GameTreeModel::onLibraryLoaded()
@@ -218,8 +218,8 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
     connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(&Library::instance(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
-    connect(&Library::instance().games(), &GameManager::gameAdded, this, &GameListWidget::onGameAdded);
-    connect(&Library::instance().games(), &GameManager::gameRenamed, this, &GameListWidget::onGameRenamed);
+    connect(&Library::instance().games(), &GameCollection::gameAdded, this, &GameListWidget::onGameAdded);
+    connect(&Library::instance().games(), &GameCollection::gameRenamed, this, &GameListWidget::onGameRenamed);
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);

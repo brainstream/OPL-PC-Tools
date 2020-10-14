@@ -598,16 +598,16 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::GameManager</name>
+    <name>OplPcTools::GameCollection</name>
     <message>
-        <location filename="../GameManager.cpp" line="110"/>
+        <location filename="../GameCollection.cpp" line="110"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation>Incapaz de renomear o jogo de &quot;%1&quot; para &quot;%2&quot;</translation>
+        <translation type="unfinished">Incapaz de renomear o jogo de &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../GameManager.cpp" line="116"/>
+        <location filename="../GameCollection.cpp" line="116"/>
         <source>Unable to delete game &quot;%1&quot;</source>
-        <translation>Incapaz de deletar o jogo &quot;%1&quot;</translation>
+        <translation type="unfinished">Incapaz de deletar o jogo &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -925,9 +925,9 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::VmcManager</name>
+    <name>OplPcTools::VmcCollection</name>
     <message>
-        <location filename="../VmcManager.cpp" line="111"/>
+        <location filename="../VmcCollection.cpp" line="111"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1006,7 +1006,7 @@
         <translation>O tamanho maximo da imagem é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../GameManager.cpp" line="95"/>
+        <location filename="../GameCollection.cpp" line="95"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>

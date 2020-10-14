@@ -20,9 +20,9 @@
 #define __OPLPCTOOLS_LIBRARY__
 
 #include <QObject>
-#include <OplPcTools/GameManager.h>
+#include <OplPcTools/GameCollection.h>
+#include <OplPcTools/VmcCollection.h>
 #include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/VmcManager.h>
 
 namespace OplPcTools {
 
@@ -37,8 +37,8 @@ public:
     inline const QString & directory() const;
     void load(const QDir & _directory);
     inline bool isLoaded() const;
-    inline GameManager & games() const;
-    inline VmcManager & vmcs() const;
+    inline GameCollection & games() const;
+    inline VmcCollection & vmcs() const;
 
 public:
     static Library & instance();
@@ -50,8 +50,8 @@ signals:
 private:
     static Library * sp_instance;
     QString m_directory;
-    GameManager * mp_games;
-    VmcManager * mp_vmcs;
+    GameCollection * mp_games;
+    VmcCollection * mp_vmcs;
 };
 
 const QString & Library::directory() const
@@ -64,12 +64,12 @@ inline bool Library::isLoaded() const
     return !m_directory.isEmpty();
 }
 
-GameManager & Library::games() const
+GameCollection & Library::games() const
 {
     return *mp_games;
 }
 
-VmcManager & Library::vmcs() const
+VmcCollection & Library::vmcs() const
 {
     return *mp_vmcs;
 }

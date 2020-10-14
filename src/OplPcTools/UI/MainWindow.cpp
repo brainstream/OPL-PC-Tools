@@ -23,7 +23,7 @@
 #include <QUrl>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
-#include <OplPcTools/UI/Application.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/AboutDialog.h>
@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     setupUpdater();
     QSettings settings;
     restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
-    connect(&Application::instance().library(), &Library::loaded, this, &MainWindow::onLibraryLoaded);
+    connect(&Library::instance(), &Library::loaded, this, &MainWindow::onLibraryLoaded);
     connect(mp_action_open_library, &QAction::triggered, this, &MainWindow::openLibrary);
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
     connect(mp_action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
@@ -143,7 +143,7 @@ void MainWindow::tryOpenRecentLibrary()
     if(!value.isValid()) return;
     QDir dir(value.toString());
     if(!dir.exists()) return;
-    Application::instance().library().load(dir);
+    Library::instance().load(dir);
 }
 
 void MainWindow::openLibrary()
@@ -154,7 +154,7 @@ void MainWindow::openLibrary()
     if(choosen_dirpath.isEmpty()) return;
     if(choosen_dirpath != dirpath)
         settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
-    Application::instance().library().load(QDir(choosen_dirpath));
+    Library::instance().load(QDir(choosen_dirpath));
 }
 
 void MainWindow::showAboutDialog()

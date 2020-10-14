@@ -18,7 +18,6 @@
 
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
-#include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/IconTheme.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 

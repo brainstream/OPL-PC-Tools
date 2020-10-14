@@ -20,8 +20,8 @@
 
 using namespace OplPcTools;
 
-Library::Library(QObject * _parent /*= nullptr*/) :
-    QObject(_parent)
+Library::Library() :
+    QObject(nullptr)
 {
     mp_games = new GameManager(this);
     mp_vmcs = new VmcManager(this);
@@ -36,4 +36,8 @@ void Library::load(const QDir & _directory)
     emit loaded();
 }
 
-
+Library & Library::instance()
+{
+    static Library * library = new Library();
+    return *library;
+}

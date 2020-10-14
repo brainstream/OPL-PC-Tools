@@ -21,7 +21,7 @@
 #include <QFileDialog>
 #include <QAbstractItemModel>
 #include <OplPcTools/Settings.h>
-#include <OplPcTools/GameManager.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
@@ -63,11 +63,11 @@ private:
 GameListWidget::GameTreeModel::GameTreeModel(QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
     m_default_icon(QPixmap(":/images/no-icon")),
-    mr_game_manager(Application::instance().library().games()),
+    mr_game_manager(Library::instance().games()),
     mp_art_manager(nullptr),
     m_row_count(mr_game_manager.count())
 {
-    connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::GameTreeModel::onLibraryLoaded);
+    connect(&Library::instance(), &Library::loaded, this, &GameListWidget::GameTreeModel::onLibraryLoaded);
     connect(&mr_game_manager, &GameManager::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
     connect(&mr_game_manager, &GameManager::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
     connect(&mr_game_manager, &GameManager::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
@@ -192,7 +192,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_proxy_model(nullptr)
 {
     setupUi(this);
-    mp_game_manager = &Application::instance().library().games();
+    mp_game_manager = &Library::instance().games();
     QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText())
@@ -222,7 +222,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     activateItemControls(nullptr);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
     connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
-    connect(&Application::instance().library(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
+    connect(&Library::instance(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
     connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
@@ -271,7 +271,7 @@ void GameListWidget::onLibraryLoaded()
 {
     try
     {
-        const QDir directory (Application::instance().library().directory());
+        const QDir directory (Library::instance().directory());
         delete mp_game_art_manager;
         mp_game_art_manager = new GameArtManager(directory, this);
         connect(mp_game_art_manager, &GameArtManager::artChanged, this, &GameListWidget::onGameArtChanged);

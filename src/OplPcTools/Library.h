@@ -30,13 +30,18 @@ class Library final : public QObject
 {
     Q_OBJECT
 
+private:
+    Library();
+
 public:
-    explicit Library(QObject * _parent = nullptr);
     inline const QString & directory() const;
     void load(const QDir & _directory);
     inline bool isLoaded() const;
     inline GameManager & games() const;
     inline VmcManager & vmcs() const;
+
+public:
+    static Library & instance();
 
 signals:
     void loading();

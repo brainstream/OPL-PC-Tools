@@ -18,8 +18,8 @@
 
 #include <QPushButton>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/FilenameValidator.h>
-#include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
 
 using namespace OplPcTools::UI;
@@ -46,7 +46,7 @@ void VmcCreateDialog::create()
 {
     try
     {
-        Application::instance().library().vmcs().createVmc(
+        Library::instance().vmcs().createVmc(
             mp_edit_title->text(),
             static_cast<VmcSize>(mp_combobox_size->currentData().toInt())
         );

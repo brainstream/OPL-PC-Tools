@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
@@ -58,9 +59,9 @@ private:
 VmcListWidget::VmcTreeModel::VmcTreeModel(QObject * _parent):
     QAbstractItemModel(_parent),
     m_icon(":/images/vmc"),
-    mr_vmcs(Application::instance().library().vmcs())
+    mr_vmcs(Library::instance().vmcs())
 {
-    connect(&Application::instance().library(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
+    connect(&Library::instance(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
     connect(&mr_vmcs, &VmcManager::vmcAdded, this, &VmcTreeModel::onVmcAdded);
     connect(&mr_vmcs, &VmcManager::vmcRenamed, this, &VmcTreeModel::updateRecord);
     connect(&mr_vmcs, &VmcManager::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
@@ -218,7 +219,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
     connect(mp_action_create_vmc, &QAction::triggered, this, &VmcListWidget::createVmc);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
-    if(Application::instance().library().vmcs().count() > 0)
+    if(Library::instance().vmcs().count() > 0)
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
     mp_proxy_model->sort(0, Qt::AscendingOrder);
 }
@@ -255,7 +256,7 @@ void VmcListWidget::renameVmc()
         {
             try
             {
-                Application::instance().library().vmcs().renameVmc(vmc->uuid(), dlg.name());
+                Library::instance().vmcs().renameVmc(vmc->uuid(), dlg.name());
             }
             catch(const Exception & exception)
             {
@@ -304,7 +305,7 @@ void VmcListWidget::deleteVmc()
     }
     try
     {
-        Application::instance().library().vmcs().deleteVmc(vmc->uuid());
+        Library::instance().vmcs().deleteVmc(vmc->uuid());
     }
     catch(Exception & exception)
     {
@@ -324,6 +325,6 @@ void VmcListWidget::createVmc()
 
 void VmcListWidget::showTreeContextMenu(const QPoint & _point)
 {
-    if(Application::instance().library().vmcs().isLoaded())
+    if(Library::instance().vmcs().isLoaded())
         mp_context_menu->exec(mp_tree_vmcs->mapToGlobal(_point));
 }

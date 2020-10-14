@@ -641,12 +641,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="125"/>
+        <location filename="../UI/Application.cpp" line="124"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="130"/>
+        <location filename="../UI/Application.cpp" line="129"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -873,17 +873,17 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="292"/>
+        <location filename="../UI/VmcListWidget.cpp" line="293"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="293"/>
+        <location filename="../UI/VmcListWidget.cpp" line="294"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="295"/>
+        <location filename="../UI/VmcListWidget.cpp" line="296"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1026,32 +1026,32 @@
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="131"/>
+        <location filename="../UI/VmcListWidget.cpp" line="132"/>
         <source>8 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="133"/>
+        <location filename="../UI/VmcListWidget.cpp" line="134"/>
         <source>16 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="135"/>
+        <location filename="../UI/VmcListWidget.cpp" line="136"/>
         <source>32 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="137"/>
+        <location filename="../UI/VmcListWidget.cpp" line="138"/>
         <source>64 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="139"/>
+        <location filename="../UI/VmcListWidget.cpp" line="140"/>
         <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="141"/>
+        <location filename="../UI/VmcListWidget.cpp" line="142"/>
         <source>256 MiB</source>
         <translation type="unfinished"></translation>
     </message>

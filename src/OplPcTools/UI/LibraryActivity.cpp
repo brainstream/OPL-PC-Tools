@@ -1,4 +1,4 @@
-#include <OplPcTools/UI/Application.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/LibraryActivity.h>
 
 using namespace OplPcTools::UI;
@@ -26,13 +26,13 @@ LibraryActivity::LibraryActivity(QWidget * _parent) :
 {
     setupUi(this);
     mp_tabs->setCurrentIndex(0);
-    connect(&Application::instance().library(), &Library::loaded, this, &LibraryActivity::onLibraryLoaded);
+    connect(&Library::instance(), &Library::loaded, this, &LibraryActivity::onLibraryLoaded);
     onLibraryLoaded();
 }
 
 void LibraryActivity::onLibraryLoaded()
 {
-    mp_label_path->setText(Application::instance().library().directory());
+    mp_label_path->setText(Library::instance().directory());
 }
 
 QSharedPointer<Intent> LibraryActivity::createIntent()

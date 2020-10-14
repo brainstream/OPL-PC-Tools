@@ -25,7 +25,7 @@
 #include <QWidget>
 #include <QMenu>
 #include <QSortFilterProxyModel>
-#include <OplPcTools/GameManager.h>
+#include <OplPcTools/Game.h>
 #include <OplPcTools/GameArtManager.h>
 #include "ui_GameListWidget.h"
 
@@ -42,6 +42,7 @@ public:
     explicit GameListWidget(QWidget * _parent = nullptr);
 
 private:
+    void setupShortcuts();
     void setIconSize();
     void activateCollectionControls(bool _activate);
     void activateItemControls(const Game * _selected_game);
@@ -58,7 +59,6 @@ private:
     void showIsoRestorer();
 
 private:
-    GameManager * mp_game_manager;
     GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
     QMenu * mp_context_menu;

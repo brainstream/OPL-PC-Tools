@@ -29,7 +29,7 @@ class IsoRestorer final : public QObject
     Q_OBJECT
 
 public:
-    IsoRestorer(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QObject * _parent = nullptr);
+    IsoRestorer(const Game & _game, const QString & _iso_filepath, QObject * _parent = nullptr);
     bool restore();
 
 signals:
@@ -42,7 +42,6 @@ private:
 
 private:
     const Game & mr_game;
-    const QString m_game_dirpath;
     const QString m_iso_filepath;
 };
 

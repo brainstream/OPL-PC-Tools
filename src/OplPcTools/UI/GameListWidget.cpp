@@ -185,18 +185,13 @@ void GameListWidget::GameTreeModel::setArtManager(GameArtManager & _manager)
 
 GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     QWidget(_parent),
-    mp_game_manager(nullptr),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
     mp_context_menu(nullptr),
     mp_proxy_model(nullptr)
 {
     setupUi(this);
-    mp_game_manager = &Library::instance().games();
-    QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
-    mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
-        .arg(mp_edit_filter->placeholderText())
-        .arg(filter_shortcut->key().toString()));
+    setupShortcuts();
     m_default_cover = QPixmap(":/images/no-image")
         .scaled(mp_label_cover->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     mp_model = new GameTreeModel(this);
@@ -223,7 +218,8 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
     connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(&Library::instance(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
-    connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
+    connect(&Library::instance().games(), &GameManager::gameAdded, this, &GameListWidget::onGameAdded);
+    connect(&Library::instance().games(), &GameManager::gameRenamed, this, &GameListWidget::onGameRenamed);
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
@@ -232,11 +228,18 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameListWidget::showTreeContextMenu);
     connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { onGameSelected(); });
-    connect(mp_game_manager, &GameManager::gameAdded, this, &GameListWidget::onGameAdded);
-    connect(mp_game_manager, &GameManager::gameRenamed, this, &GameListWidget::onGameRenamed);
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     setIconSize();
     onLibraryLoaded();
+}
+
+void GameListWidget::setupShortcuts()
+{
+    QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
+        .arg(mp_edit_filter->placeholderText())
+        .arg(filter_shortcut->key().toString()));
+    connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
 }
 
 void GameListWidget::setIconSize()
@@ -249,7 +252,7 @@ void GameListWidget::setIconSize()
 
 void GameListWidget::showTreeContextMenu(const QPoint & _point)
 {
-    if(mp_game_manager->isLoaded())
+    if(Library::instance().games().isLoaded())
         mp_context_menu->exec(mp_tree_games->mapToGlobal(_point));
 }
 
@@ -279,7 +282,7 @@ void GameListWidget::onLibraryLoaded()
         mp_game_art_manager->addCacheType(GameArtType::Front);
         mp_model->setArtManager(*mp_game_art_manager);
         mp_proxy_model->sort(0, Qt::AscendingOrder);
-        if(mp_game_manager->count() > 0)
+        if(Library::instance().games().count() > 0)
             mp_tree_games->setCurrentIndex(mp_proxy_model->index(0, 0));
         activateCollectionControls(true);
         onGameSelected();
@@ -351,7 +354,7 @@ void GameListWidget::renameGame()
         {
             try
             {
-                mp_game_manager->renameGame(*game, dlg.name());
+                Library::instance().games().renameGame(*game, dlg.name());
             }
             catch(const Exception & exception)
             {
@@ -370,7 +373,7 @@ void GameListWidget::showGameDetails()
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
-        QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_manager, *mp_game_art_manager, game->id());
+        QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_art_manager, game->id());
         Application::pushActivity(*intent);
     }
 }
@@ -380,14 +383,14 @@ void GameListWidget::showIsoRestorer()
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->installationType() == GameInstallationType::UlConfig)
     {
-        QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(*mp_game_manager, game->id());
+        QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->id());
         Application::pushActivity(*intent);
     }
 }
 
 void GameListWidget::showGameInstaller()
 {
-    QSharedPointer<Intent> intent = GameInstallerActivity::createIntent(*mp_game_manager);
+    QSharedPointer<Intent> intent = GameInstallerActivity::createIntent();
     Application::pushActivity(*intent);
 }
 
@@ -414,7 +417,7 @@ void GameListWidget::deleteGame()
     }
     try
     {
-        mp_game_manager->deleteGame(*game);
+        Library::instance().games().deleteGame(*game);
         mp_game_art_manager->clearArts(id);
     }
     catch(Exception & exception)

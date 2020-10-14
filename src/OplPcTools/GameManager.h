@@ -36,7 +36,6 @@ public:
     ~GameManager() override;
     void load(const QDir & _directory);
     bool isLoaded() const;
-    const QString & directory() const;
     const Game * findGame(const QString & _id) const;
     int count() const;
     const Game * operator [](int _index) const;

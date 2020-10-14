@@ -24,7 +24,7 @@
 #include <QMenu>
 #include <QAction>
 #include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/GameManager.h>
+#include <OplPcTools/Game.h>
 #include <OplPcTools/GameArtManager.h>
 #include "ui_GameDetailsActivity.h"
 
@@ -36,10 +36,10 @@ class GameDetailsActivity : public Activity, private Ui::GameDetailsActivity
     Q_OBJECT
 
 public:
-    explicit GameDetailsActivity(GameManager & _game_manager, GameArtManager & _art_manager, QWidget * _parent = nullptr);
+    explicit GameDetailsActivity(GameArtManager & _art_manager, QWidget * _parent = nullptr);
     void setGameId(const QString & _id);
 
-    static QSharedPointer<Intent> createIntent(GameManager & _game_manager, GameArtManager & _art_manager, const QString & _game_id);
+    static QSharedPointer<Intent> createIntent(GameArtManager & _art_manager, const QString & _game_id);
 
 private:
     void setupShortcuts();
@@ -54,7 +54,6 @@ private slots:
     void deleteGameArt();
 
 private:
-    GameManager & mr_game_manager;
     GameArtManager & mr_art_manager;
     const Game * mp_game;
     QMenu * mp_item_context_menu;

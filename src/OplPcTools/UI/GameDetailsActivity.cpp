@@ -25,6 +25,7 @@
 #include <QCheckBox>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
@@ -39,8 +40,7 @@ static const char * g_settings_key_cover_dir = "PixmapDirectory";
 class GameDetailsActivityIntent : public Intent
 {
 public:
-    GameDetailsActivityIntent(GameManager & _game_manager, GameArtManager & _art_manager, const QString & _game_id) :
-        mr_game_manager(_game_manager),
+    GameDetailsActivityIntent(GameArtManager & _art_manager, const QString & _game_id) :
         mr_art_manager(_art_manager),
         m_game_id(_game_id)
     {
@@ -48,7 +48,7 @@ public:
 
     Activity * createActivity(QWidget * _parent) override
     {
-        GameDetailsActivity * widget = new GameDetailsActivity(mr_game_manager, mr_art_manager, _parent);
+        GameDetailsActivity * widget = new GameDetailsActivity(mr_art_manager, _parent);
         widget->setGameId(m_game_id);
         return widget;
     }
@@ -59,7 +59,6 @@ public:
     }
 
 private:
-    GameManager & mr_game_manager;
     GameArtManager & mr_art_manager;
     const QString m_game_id;
 };
@@ -135,9 +134,8 @@ QVariant ArtListItem::data(int _role) const
     }
 }
 
-GameDetailsActivity::GameDetailsActivity(GameManager & _game_manager, OplPcTools::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
+GameDetailsActivity::GameDetailsActivity(OplPcTools::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
-    mr_game_manager(_game_manager),
     mr_art_manager(_art_manager),
     mp_game(nullptr),
     mp_item_context_menu(nullptr)
@@ -157,10 +155,9 @@ GameDetailsActivity::GameDetailsActivity(GameManager & _game_manager, OplPcTools
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
 }
 
-QSharedPointer<Intent> GameDetailsActivity::createIntent(GameManager & _game_manager,
-    OplPcTools::GameArtManager & _art_manager, const QString & _game_id)
+QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::GameArtManager & _art_manager, const QString & _game_id)
 {
-    return QSharedPointer<Intent>(new GameDetailsActivityIntent(_game_manager, _art_manager, _game_id));
+    return QSharedPointer<Intent>(new GameDetailsActivityIntent(_art_manager, _game_id));
 }
 
 void GameDetailsActivity::setupShortcuts()
@@ -187,7 +184,7 @@ void GameDetailsActivity::renameGame()
         return;
     try
     {
-        mr_game_manager.renameGame(*mp_game, dlg.name());
+        Library::instance().games().renameGame(*mp_game, dlg.name());
         mp_label_title->setText(dlg.name());
     }
     catch(const Exception & exception)
@@ -282,7 +279,7 @@ void GameDetailsActivity::deleteGameArt()
 
 void GameDetailsActivity::setGameId(const QString & _id)
 {
-    mp_game = mr_game_manager.findGame(_id);
+    mp_game = Library::instance().games().findGame(_id);
     initGameControls();
 }
 

@@ -20,10 +20,9 @@
 
 using namespace OplPcTools;
 
-GameInstaller::GameInstaller(Device & _device, GameManager & _manager, QObject * _parent /*= nullptr*/) :
+GameInstaller::GameInstaller(Device & _device, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    mr_device(_device),
-    mr_manager(_manager)
+    mr_device(_device)
 {
 }
 

@@ -71,23 +71,15 @@ enum class GameInstallationStatus
 class GameInstallerActivityIntent : public Intent
 {
 public:
-    explicit GameInstallerActivityIntent(GameManager & _game_manager) :
-        mr_game_manager(_game_manager)
-    {
-    }
-
     Activity * createActivity(QWidget * _parent) override
     {
-        return new GameInstallerActivity(mr_game_manager, _parent);
+        return new GameInstallerActivity(_parent);
     }
 
     QString activityClass() const override
     {
         return "GameInstaller";
     }
-
-private:
-    GameManager & mr_game_manager;
 };
 
 class TaskListItem : public QTreeWidgetItem
@@ -286,9 +278,8 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     style->drawControl(QStyle::CE_ProgressBarLabel, &progress_bar_option, _painter);
 }
 
-GameInstallerActivity::GameInstallerActivity(GameManager & _game_manager, QWidget * _parent /*= nullptr*/) :
+GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
-    mr_game_manager(_game_manager),
     mp_working_thread(nullptr),
     mp_installer(nullptr),
     m_processing_task_index(0),
@@ -341,9 +332,9 @@ void GameInstallerActivity::close()
         deleteLater();
 }
 
-QSharedPointer<Intent> GameInstallerActivity::createIntent(GameManager & _game_manager)
+QSharedPointer<Intent> GameInstallerActivity::createIntent()
 {
-    return QSharedPointer<Intent>(new GameInstallerActivityIntent(_game_manager));
+    return QSharedPointer<Intent>(new GameInstallerActivityIntent());
 }
 
 void GameInstallerActivity::taskSelectionChanged()
@@ -666,11 +657,11 @@ bool GameInstallerActivity::startTask()
         item->setMediaType(MediaType::Unknown);
     if(item->isSplittingUpEnabled())
     {
-        mp_installer = new UlConfigGameInstaller(item->device(), mr_game_manager, this);
+        mp_installer = new UlConfigGameInstaller(item->device(), this);
     }
     else
     {
-        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), mr_game_manager, this);
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;

@@ -69,11 +69,6 @@ bool GameManager::isLoaded() const
     return !m_directory.isEmpty();
 }
 
-const QString & GameManager::directory() const
-{
-    return m_directory;
-}
-
 int GameManager::count() const
 {
     return mp_ul_conf_storage->count() + mp_dir_storage->count();

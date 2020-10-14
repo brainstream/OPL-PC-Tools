@@ -34,8 +34,8 @@ class GameInstallerActivity : public Activity, private Ui::GameInstallerActivity
     Q_OBJECT
 
 public:
-    explicit GameInstallerActivity(GameManager & _game_manager, QWidget * _parent = nullptr);
-    static QSharedPointer<Intent> createIntent(GameManager & _game_manager);
+    explicit GameInstallerActivity(QWidget * _parent = nullptr);
+    static QSharedPointer<Intent> createIntent();
 
 protected:
     void dragEnterEvent(QDragEnterEvent * _event) override;
@@ -70,7 +70,6 @@ private:
     void cancel();
 
 private:
-    GameManager & mr_game_manager;
     LambdaThread * mp_working_thread;
     GameInstaller * mp_installer;
     quint32 m_processing_task_index;

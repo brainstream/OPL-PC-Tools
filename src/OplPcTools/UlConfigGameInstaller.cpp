@@ -20,12 +20,13 @@
 #include <QDir>
 #include <QThread>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
 
 using namespace OplPcTools;
 
-UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, GameManager & _manager, QObject * _parent) :
-    GameInstaller(_device, _manager, _parent),
+UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, QObject * _parent) :
+    GameInstaller(_device, _parent),
     mp_game(nullptr)
 {
 }
@@ -52,7 +53,7 @@ bool UlConfigGameInstaller::install()
     const ssize_t read_part_size = 4194304;
     quint64 processed_bytes = 0;
     unsigned int write_operation = 0;
-    QDir dest_dir(mr_manager.directory());
+    QDir dest_dir(Library::instance().directory());
     QByteArray bytes(read_part_size, Qt::Initialization::Uninitialized);
     mr_device.seek(0);
     quint8 part_count = 0;
@@ -139,6 +140,6 @@ void UlConfigGameInstaller::rollback()
 void UlConfigGameInstaller::registerGame()
 {
     emit registrationStarted();
-    mr_manager.addGame(*mp_game);
+    Library::instance().games().addGame(*mp_game);
     emit registrationFinished();
 }

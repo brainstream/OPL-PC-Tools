@@ -34,10 +34,10 @@ class IsoRestorerActivity : public Activity, private Ui::IsoRestorerActivity
     Q_OBJECT
 
 public:
-    IsoRestorerActivity(GameManager & _game_manager, const QString & _game_id, QWidget * _parent = nullptr);
+    explicit IsoRestorerActivity(const QString & _game_id, QWidget * _parent = nullptr);
     bool onAttach() override;
 
-    static QSharedPointer<Intent> createIntent(GameManager & _game_manager, const QString & _game_id);
+    static QSharedPointer<Intent> createIntent(const QString & _game_id);
 
 private:
     void restore(const Game & _game, const QString & _destination);
@@ -51,7 +51,6 @@ private slots:
 
 private:
     static const quint32 s_progress_max = 1000;
-    GameManager & mr_game_manager;
     const QString m_game_id;
     QThread * mp_working_thread;
     QString m_finish_status;

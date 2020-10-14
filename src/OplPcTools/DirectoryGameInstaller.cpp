@@ -19,12 +19,13 @@
 #include <QStorageInfo>
 #include <QThread>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
 
 using namespace OplPcTools;
 
-DirectoryGameInstaller::DirectoryGameInstaller(Device & _device, GameManager & _manager, QObject * _parent /*= nullptr*/) :
-    GameInstaller(_device, _manager, _parent),
+DirectoryGameInstaller::DirectoryGameInstaller(Device & _device, QObject * _parent /*= nullptr*/) :
+    GameInstaller(_device, _parent),
     m_move_file(false),
     m_rename_file(false),
     mp_game(nullptr)
@@ -47,7 +48,7 @@ bool DirectoryGameInstaller::install()
     mp_game = new Game(mr_device.gameId(), GameInstallationType::Directory);
     mp_game->setMediaType(deviceMediaType());
     mp_game->setTitle(mr_device.title());
-    QDir dest_dir(mr_manager.directory());
+    QDir dest_dir(Library::instance().directory());
     QString dest_subdir = mp_game->mediaType() == MediaType::CD ?
         DirectoryGameStorage::cd_directory : DirectoryGameStorage::dvd_directory;
     if(!dest_dir.cd(dest_subdir))
@@ -154,6 +155,6 @@ void DirectoryGameInstaller::rollback(const QString & _dest)
 void DirectoryGameInstaller::registerGame()
 {
     emit registrationStarted();
-    mr_manager.addGame(*mp_game);
+    Library::instance().games().addGame(*mp_game);
     emit registrationFinished();
 }

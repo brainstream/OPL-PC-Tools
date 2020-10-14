@@ -16,8 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QPixmap>
-#include <QAbstractItemModel>
 #include <QShortcut>
 #include <QMessageBox>
 #include <QCheckBox>
@@ -25,9 +23,9 @@
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
-#include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
+#include <OplPcTools/UI/VmcListWidget.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -53,19 +51,18 @@ private:
 
 private:
     QPixmap m_icon;
-    VmcManager & mr_vmcs;
 };
 
 VmcListWidget::VmcTreeModel::VmcTreeModel(QObject * _parent):
     QAbstractItemModel(_parent),
-    m_icon(":/images/vmc"),
-    mr_vmcs(Library::instance().vmcs())
+    m_icon(":/images/vmc")
 {
+    VmcManager * vmc_manager = &Library::instance().vmcs();
     connect(&Library::instance(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
-    connect(&mr_vmcs, &VmcManager::vmcAdded, this, &VmcTreeModel::onVmcAdded);
-    connect(&mr_vmcs, &VmcManager::vmcRenamed, this, &VmcTreeModel::updateRecord);
-    connect(&mr_vmcs, &VmcManager::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
-    connect(&mr_vmcs, &VmcManager::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
+    connect(vmc_manager, &VmcManager::vmcAdded, this, &VmcTreeModel::onVmcAdded);
+    connect(vmc_manager, &VmcManager::vmcRenamed, this, &VmcTreeModel::updateRecord);
+    connect(vmc_manager, &VmcManager::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
+    connect(vmc_manager, &VmcManager::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
 }
 
 void VmcListWidget::VmcTreeModel::onLibraryLoaded()
@@ -82,10 +79,11 @@ QModelIndex VmcListWidget::VmcTreeModel::index(int _row, int _column, const QMod
 
 QModelIndex VmcListWidget::VmcTreeModel::index(const QUuid & _uuid) const
 {
-    int count = mr_vmcs.count();
+    VmcManager & vmc_man = Library::instance().vmcs();
+    int count = vmc_man.count();
     for(int i = 0; i < count; ++i)
     {
-        const Vmc * vmc = mr_vmcs[i];
+        const Vmc * vmc = vmc_man[i];
         if(vmc->uuid() == _uuid)
         {
             return createIndex(i, 0);
@@ -102,7 +100,7 @@ QModelIndex VmcListWidget::VmcTreeModel::parent(const QModelIndex & _child) cons
 
 int VmcListWidget::VmcTreeModel::rowCount(const QModelIndex & _parent) const
 {
-    return _parent.isValid() ? 0 : mr_vmcs.count();
+    return _parent.isValid() ? 0 : Library::instance().vmcs().count();
 }
 
 int VmcListWidget::VmcTreeModel::columnCount(const QModelIndex & _parent) const
@@ -113,7 +111,7 @@ int VmcListWidget::VmcTreeModel::columnCount(const QModelIndex & _parent) const
 
 QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role) const
 {
-    const Vmc * vmc = mr_vmcs[_index.row()];
+    const Vmc * vmc = Library::instance().vmcs()[_index.row()];
     if(_index.column() == 0)
     {
         switch (_role)
@@ -151,15 +149,16 @@ QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role
 
 const Vmc * VmcListWidget::VmcTreeModel::vmc(const QModelIndex & _index)
 {
-    if(_index.isValid() && _index.row() < mr_vmcs.count())
-        return mr_vmcs[_index.row()];
+    VmcManager & vmc_man = Library::instance().vmcs();
+    if(_index.isValid() && _index.row() < vmc_man.count())
+        return vmc_man[_index.row()];
     return nullptr;
 }
 
 void VmcListWidget::VmcTreeModel::onVmcAdded(const QUuid & _uuid)
 {
     Q_UNUSED(_uuid);
-    int count = mr_vmcs.count() - 1;
+    int count = Library::instance().vmcs().count() - 1;
     beginInsertRows(QModelIndex(), count, count);
     endInsertRows();
 }

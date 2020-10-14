@@ -19,16 +19,16 @@
 #include <QFile>
 #include <QDir>
 #include <QThread>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/IsoRestorer.h>
 
 using namespace OplPcTools;
 
-IsoRestorer::IsoRestorer(const Game & _game, const QString & _game_dirpath, const QString & _iso_filepath, QObject * _parent /*= nullptr*/) :
+IsoRestorer::IsoRestorer(const Game & _game, const QString & _iso_filepath, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     mr_game(_game),
-    m_game_dirpath(_game_dirpath),
     m_iso_filepath(_iso_filepath)
 {
 }
@@ -40,7 +40,7 @@ bool IsoRestorer::restore()
         throw IOException(tr("Unable to open file to write: \"%1\"").arg(m_iso_filepath));
     QStringList filenames;
     filenames.reserve(mr_game.partCount());
-    QDir games_dir(m_game_dirpath);
+    QDir games_dir(Library::instance().directory());
     quint64 all_files_total_size = 0;
     for(quint8 part = 0; part < mr_game.partCount(); ++part)
     {

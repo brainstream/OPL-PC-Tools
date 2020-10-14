@@ -162,6 +162,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameInstaller.cpp
     ${OPT_SRC_DIR}/DirectoryGameInstaller.cpp
     ${OPT_SRC_DIR}/Updater.cpp
+    ${OPT_SRC_DIR}/GameConfiguration.h
+    ${OPT_SRC_DIR}/GameConfiguration.cpp
     ${OPT_SRC_DIR}/UlConfigGameInstaller.cpp
     ${OPT_SRC_DIR}/UI/Application.cpp
     ${OPT_SRC_DIR}/UI/Intent.h

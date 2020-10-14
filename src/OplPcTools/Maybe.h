@@ -144,6 +144,12 @@ private:
     ValueType * mp_value;
 };
 
+template<typename T>
+Maybe<T> maybe(const T & _value)
+{
+    return Maybe<T>(_value);
+}
+
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_MAYBE__

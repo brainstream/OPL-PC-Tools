@@ -106,39 +106,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="199"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="517"/>
-        <source>GSM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="217"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="518"/>
-        <source>VMODE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="230"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="519"/>
-        <source>H-POS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="262"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="520"/>
-        <source>V-POS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="294"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="521"/>
-        <source>FMV Skip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameDetailsActivity.ui" line="316"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="522"/>
         <source>Modes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="383"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="531"/>
+        <source>Virtual Memory Card #1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -147,6 +123,12 @@
         <location filename="../../../build/ui_GameDetailsActivity.h" line="532"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="534"/>
         <source>Create VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="425"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="533"/>
+        <source>Virtual Memory Card #2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -168,15 +150,39 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="383"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="531"/>
-        <source>VMC #1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameDetailsActivity.ui" line="180"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="516"/>
         <source>Get from the Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="199"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="517"/>
+        <source>Graphic Synthesiser Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="217"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="518"/>
+        <source>Video Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="230"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="519"/>
+        <source>Horizontal Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="262"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="520"/>
+        <source>Vertical Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="294"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="521"/>
+        <source>Skip Full Motion Videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -192,14 +198,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="343"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="526"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="336"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="525"/>
         <source>Mode 3 ― Unhook Syscalls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="336"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="525"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="343"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="526"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -216,21 +222,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="371"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="530"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="364"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="529"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="364"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="529"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="371"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="530"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="425"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="533"/>
-        <source>VMC #2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

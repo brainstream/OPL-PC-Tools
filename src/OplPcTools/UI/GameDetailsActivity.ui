@@ -102,7 +102,7 @@
       <enum>QTabWidget::South</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mp_tab_arts">
       <attribute name="title">
@@ -196,7 +196,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string>GSM</string>
+          <string>Graphic Synthesiser Mode</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -214,7 +214,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>VMODE</string>
+             <string>Video Mode</string>
             </property>
            </widget>
           </item>
@@ -227,7 +227,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>H-POS</string>
+             <string>Horizontal Position</string>
             </property>
            </widget>
           </item>
@@ -259,7 +259,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>V-POS</string>
+             <string>Vertical Position</string>
             </property>
            </widget>
           </item>
@@ -291,7 +291,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>FMV Skip</string>
+             <string>Skip Full Motion Videos</string>
             </property>
            </widget>
           </item>
@@ -331,16 +331,16 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_4">
+             <widget class="QCheckBox" name="checkBox_3">
               <property name="text">
-               <string>Mode 4 ― 0 PSS Mode</string>
+               <string>Mode 3 ― Unhook Syscalls</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_3">
+             <widget class="QCheckBox" name="checkBox_4">
               <property name="text">
-               <string>Mode 3 ― Unhook Syscalls</string>
+               <string>Mode 4 ― 0 PSS Mode</string>
               </property>
              </widget>
             </item>
@@ -359,16 +359,16 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_8">
+             <widget class="QCheckBox" name="checkBox_7">
               <property name="text">
-               <string>Mode 8 ― Hide DEV9 Module</string>
+               <string>Mode 7 ― High Module Storage</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_7">
+             <widget class="QCheckBox" name="checkBox_8">
               <property name="text">
-               <string>Mode 7 ― High Module Storage</string>
+               <string>Mode 8 ― Hide DEV9 Module</string>
               </property>
              </widget>
             </item>
@@ -380,7 +380,7 @@
            <item>
             <widget class="QGroupBox" name="groupBox_4">
              <property name="title">
-              <string>VMC #1</string>
+              <string>Virtual Memory Card #1</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -422,7 +422,7 @@
            <item>
             <widget class="QGroupBox" name="groupBox_2">
              <property name="title">
-              <string>VMC #2</string>
+              <string>Virtual Memory Card #2</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -568,7 +568,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>mp_btn_close</tabstop>
   <tabstop>mp_btn_rename_game</tabstop>
   <tabstop>mp_tabs</tabstop>
   <tabstop>lineEdit_4</tabstop>
@@ -581,12 +580,12 @@
   <tabstop>checkBox_9</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_4</tabstop>
   <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_4</tabstop>
   <tabstop>checkBox_5</tabstop>
   <tabstop>checkBox_6</tabstop>
-  <tabstop>checkBox_8</tabstop>
   <tabstop>checkBox_7</tabstop>
+  <tabstop>checkBox_8</tabstop>
   <tabstop>groupBox_4</tabstop>
   <tabstop>comboBox_2</tabstop>
   <tabstop>pushButton_4</tabstop>
@@ -596,6 +595,7 @@
   <tabstop>pushButton</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>mp_list_arts</tabstop>
+  <tabstop>mp_btn_close</tabstop>
  </tabstops>
  <resources/>
  <connections>

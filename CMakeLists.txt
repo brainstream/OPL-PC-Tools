@@ -1,5 +1,5 @@
 ################################################################################################
-# Copyright © 2017-2019 Sergey Smolyannikov aka brainstream                                    #
+# Copyright © 2017-2020 Sergey Smolyannikov aka brainstream                                    #
 #                                                                                              #
 # This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.   #
 #                                                                                              #
@@ -36,7 +36,7 @@ set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_SKIP_BUILD_RPATH ON)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message("Application will be built in the Debug configuration")
+    message(STATUS "Application will be built in the Debug configuration")
     set(CMAKE_VERBOSE_MAKEFILE ON)
 endif()
 
@@ -47,13 +47,11 @@ endif()
 set(QT5_DIR "" CACHE PATH "Provides a path to search Qt5 installation")
 find_package(Qt5Core HINTS ${QT5_DIR})
 if(Qt5Core_FOUND)
-    message("Qt version: ${Qt5Core_VERSION_STRING}")
+    message(STATUS "Qt version: ${Qt5Core_VERSION_STRING}")
 else()
     message(FATAL_ERROR "ERROR: Qt not found. Please specify a path to Qt installation using the QT5_DIR variable.")
 endif()
-find_package(Qt5Widgets REQUIRED HINTS ${QT5_DIR})
-find_package(Qt5Network REQUIRED HINTS ${QT5_DIR})
-find_package(Qt5LinguistTools REQUIRED HINTS ${QT5_DIR})
+find_package(Qt5 COMPONENTS Widgets Network LinguistTools REQUIRED HINTS ${QT5_DIR})
 
 #######################
 # Sources

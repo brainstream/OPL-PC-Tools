@@ -16,6 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QStyle>
 #include <QMessageBox>
 #include <QSettings>
 #include <QFileDialog>

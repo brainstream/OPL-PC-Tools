@@ -486,8 +486,8 @@
   </layout>
   <action name="mp_action_edit">
    <property name="icon">
-    <iconset theme="oplpct-edit">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/edit</normaloff>:/images/edit</iconset>
    </property>
    <property name="text">
     <string>Edit</string>
@@ -501,8 +501,8 @@
   </action>
   <action name="mp_action_delete">
    <property name="icon">
-    <iconset theme="oplpct-delete">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -516,8 +516,8 @@
   </action>
   <action name="mp_action_install">
    <property name="icon">
-    <iconset theme="oplpct-add">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/add</normaloff>:/images/add</iconset>
    </property>
    <property name="text">
     <string>Install</string>
@@ -531,8 +531,8 @@
   </action>
   <action name="mp_action_rename">
    <property name="icon">
-    <iconset theme="oplpct-rename">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/rename</normaloff>:/images/rename</iconset>
    </property>
    <property name="text">
     <string>Rename</string>
@@ -546,8 +546,8 @@
   </action>
   <action name="mp_action_restore_iso">
    <property name="icon">
-    <iconset theme="oplpct-restore">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/restore</normaloff>:/images/restore</iconset>
    </property>
    <property name="text">
     <string>Restore ISO</string>
@@ -566,6 +566,8 @@
   <tabstop>mp_edit_filter</tabstop>
   <tabstop>mp_tree_games</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

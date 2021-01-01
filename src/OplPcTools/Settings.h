@@ -50,13 +50,10 @@ public:
     void setCheckNewVersion(bool _value);
     bool validateUlCfg() const;
     void setValidateUlCfg(bool _value);
-    QString iconTheme() const;
-    void setIconTheme(const QString & _theme);
     quint32 iconSize() const;
     void setIconSize(quint32 _size);
 
 signals:
-    void iconThemeChanged();
     void iconSizeChanged();
 
 private:

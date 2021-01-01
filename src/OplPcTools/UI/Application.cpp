@@ -65,19 +65,6 @@ QTranslator * setupTranslator(const QString & _base_name)
     return nullptr;
 }
 
-void setupIconTheme()
-{
-    QDir app_directory(gp_application->applicationDirPath());
-    QStringList iconSearchPaths {
-        app_directory.absoluteFilePath("icons"),
-        app_directory.absoluteFilePath("../icons"),
-    };
-    for(const QString & location : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
-        iconSearchPaths << QDir(location).absoluteFilePath("icons");
-    QIcon::setThemeSearchPaths(iconSearchPaths);
-    QIcon::setThemeName(Settings::instance().iconTheme());
-}
-
 } // namespace
 
 Application::Application(int & _argc, char ** _argv) :
@@ -136,7 +123,6 @@ int main(int _argc, char * _argv[])
     gp_application->setApplicationName(APPLICATION_NAME);
     gp_application->setApplicationVersion(APPLICATION_VERSION);
     gp_application->setOrganizationName("brainstream");
-    setupIconTheme();
     QTranslator * translator = setupTranslator(gp_application->applicationName());
     QTranslator * qt_translator = setupTranslator("qtbase");
     QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::LibraryActivity::createIntent();

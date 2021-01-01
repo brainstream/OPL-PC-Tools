@@ -37,7 +37,8 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="oplpct-back"/>
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/back</normaloff>:/images/back</iconset>
        </property>
       </widget>
      </item>
@@ -60,8 +61,8 @@
         <string>&amp;Install</string>
        </property>
        <property name="icon">
-        <iconset theme="oplpct-start">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/start</normaloff>:/images/start</iconset>
        </property>
       </widget>
      </item>
@@ -156,8 +157,8 @@
              <string>&amp;Add Image</string>
             </property>
             <property name="icon">
-             <iconset theme="oplpct-add">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../Resources/Resources.qrc">
+              <normaloff>:/images/add</normaloff>:/images/add</iconset>
             </property>
            </widget>
           </item>
@@ -167,8 +168,8 @@
              <string>Add &amp;Disc</string>
             </property>
             <property name="icon">
-             <iconset theme="oplpct-disc">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../Resources/Resources.qrc">
+              <normaloff>:/images/disc</normaloff>:/images/disc</iconset>
             </property>
            </widget>
           </item>
@@ -191,8 +192,8 @@
              <string>Remove</string>
             </property>
             <property name="icon">
-             <iconset theme="oplpct-delete">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../Resources/Resources.qrc">
+              <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
             </property>
            </widget>
           </item>
@@ -202,8 +203,8 @@
              <string>Rename</string>
             </property>
             <property name="icon">
-             <iconset theme="oplpct-rename">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../Resources/Resources.qrc">
+              <normaloff>:/images/rename</normaloff>:/images/rename</iconset>
             </property>
            </widget>
           </item>
@@ -410,10 +411,10 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>mp_btn_back</tabstop>
-  <tabstop>mp_btn_install</tabstop>
-  <tabstop>mp_btn_cancel</tabstop>
-  <tabstop>mp_tree_tasks</tabstop>
+  <tabstop>mp_btn_add_image</tabstop>
+  <tabstop>mp_btn_add_disc</tabstop>
+  <tabstop>mp_btn_remove</tabstop>
+  <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_radio_mtauto</tabstop>
   <tabstop>mp_radio_mtdvd</tabstop>
   <tabstop>mp_radio_mtcd</tabstop>
@@ -421,11 +422,13 @@
   <tabstop>mp_radio_dnot_split_up</tabstop>
   <tabstop>mp_checkbox_move</tabstop>
   <tabstop>mp_checkbox_rename</tabstop>
-  <tabstop>mp_btn_add_image</tabstop>
-  <tabstop>mp_btn_add_disc</tabstop>
-  <tabstop>mp_btn_remove</tabstop>
-  <tabstop>mp_btn_rename</tabstop>
+  <tabstop>mp_btn_back</tabstop>
+  <tabstop>mp_btn_install</tabstop>
+  <tabstop>mp_btn_cancel</tabstop>
+  <tabstop>mp_tree_tasks</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -18,7 +18,6 @@
 
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
-#include <OplPcTools/UI/IconTheme.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;
@@ -41,8 +40,6 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
         mp_checkbox_check_new_versions->setChecked(settings.checkNewVersion());
     else
         mp_checkbox_check_new_versions->setEnabled(false);
-    mp_combobox_icon_theme->insertItems(0, loadIconThemes());
-    mp_combobox_icon_theme->setCurrentText(QIcon::themeName());
     mp_spinbox_icon_size->setValue(settings.iconSize());
     mp_tabs->setCurrentIndex(0);
 }
@@ -59,9 +56,7 @@ void SettingsDialog::accept()
     settings.setMoveIso(mp_checkobx_move_iso->isChecked());
     settings.setValidateUlCfg(mp_checkbox_validate_ulcfg->isChecked());
     settings.setCheckNewVersion(mp_checkbox_check_new_versions->isEnabled() && mp_checkbox_check_new_versions->isChecked());
-    settings.setIconTheme(mp_combobox_icon_theme->currentText());
     settings.setIconSize(mp_spinbox_icon_size->value());
-    QIcon::setThemeName(mp_combobox_icon_theme->currentText());
     settings.flush();
     QDialog::accept();
 }

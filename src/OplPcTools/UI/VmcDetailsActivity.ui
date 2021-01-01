@@ -40,7 +40,8 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="oplpct-back"/>
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/back</normaloff>:/images/back</iconset>
        </property>
       </widget>
      </item>
@@ -177,7 +178,9 @@
   <tabstop>mp_btn_fs_back</tabstop>
   <tabstop>mp_edit_fs_path</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>mp_btn_close</sender>

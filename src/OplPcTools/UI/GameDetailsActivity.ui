@@ -40,7 +40,8 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="oplpct-back"/>
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/back</normaloff>:/images/back</iconset>
        </property>
       </widget>
      </item>
@@ -88,8 +89,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="oplpct-rename">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/rename</normaloff>:/images/rename</iconset>
        </property>
       </widget>
      </item>
@@ -197,8 +198,8 @@
             <string>Get from the Game</string>
            </property>
            <property name="icon">
-            <iconset theme="oplpct-restore">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset resource="../Resources/Resources.qrc">
+             <normaloff>:/images/restore</normaloff>:/images/restore</iconset>
            </property>
           </widget>
          </item>
@@ -428,8 +429,8 @@
                  <string>Create VMC</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="oplpct-add">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset resource="../Resources/Resources.qrc">
+                  <normaloff>:/images/add</normaloff>:/images/add</iconset>
                 </property>
                </widget>
               </item>
@@ -470,8 +471,8 @@
                  <string>Create VMC</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="oplpct-add">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset resource="../Resources/Resources.qrc">
+                  <normaloff>:/images/add</normaloff>:/images/add</iconset>
                 </property>
                </widget>
               </item>
@@ -529,8 +530,8 @@
             <string>Delete Configuration</string>
            </property>
            <property name="icon">
-            <iconset theme="oplpct-delete">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset resource="../Resources/Resources.qrc">
+             <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
            </property>
            <property name="shortcut">
             <string>Del</string>
@@ -543,8 +544,8 @@
             <string>Save Configuration</string>
            </property>
            <property name="icon">
-            <iconset theme="oplpct-save">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset resource="../Resources/Resources.qrc">
+             <normaloff>:/images/save</normaloff>:/images/save</iconset>
            </property>
            <property name="shortcut">
             <string>Ctrl+S</string>
@@ -560,8 +561,8 @@
   </layout>
   <action name="mp_action_change_art">
    <property name="icon">
-    <iconset>
-     <normaloff>:/icons/document-edit</normaloff>:/icons/document-edit</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/edit</normaloff>:/images/edit</iconset>
    </property>
    <property name="text">
     <string>Change Picture...</string>
@@ -569,8 +570,8 @@
   </action>
   <action name="mp_action_delete_art">
    <property name="icon">
-    <iconset>
-     <normaloff>:/icons/edit-delete</normaloff>:/icons/edit-delete</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
    </property>
    <property name="text">
     <string>Delete Picture</string>
@@ -614,7 +615,9 @@
   <tabstop>mp_list_arts</tabstop>
   <tabstop>mp_btn_close</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>mp_btn_rename_game</sender>

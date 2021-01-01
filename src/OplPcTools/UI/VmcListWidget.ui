@@ -165,8 +165,8 @@
   </layout>
   <action name="mp_action_create_vmc">
    <property name="icon">
-    <iconset theme="oplpct-add">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/add</normaloff>:/images/add</iconset>
    </property>
    <property name="text">
     <string>Create</string>
@@ -180,8 +180,8 @@
   </action>
   <action name="mp_action_delete_vmc">
    <property name="icon">
-    <iconset theme="oplpct-delete">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -195,8 +195,8 @@
   </action>
   <action name="mp_action_rename_vmc">
    <property name="icon">
-    <iconset theme="oplpct-rename">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/rename</normaloff>:/images/rename</iconset>
    </property>
    <property name="text">
     <string>Rename</string>
@@ -216,6 +216,8 @@
   <tabstop>mp_edit_filter</tabstop>
   <tabstop>mp_tree_vmcs</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

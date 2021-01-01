@@ -32,7 +32,6 @@ const QString move_iso("Settings/MoveISO");
 const QString rename_iso("Settings/RenameISO");
 const QString check_new_version("Settings/CheckNewVersion");
 const QString validate_ul_cfg("Settings/ValidateUlCfg");
-const QString icon_theme("Settings/IconTheme");
 const QString icon_size("Settings/IconSize");
 
 } // namespace Key
@@ -137,20 +136,6 @@ bool Settings::validateUlCfg() const
 void Settings::setValidateUlCfg(bool _value)
 {
     mp_settings->setValue(Key::validate_ul_cfg, _value);
-}
-
-QString Settings::iconTheme() const
-{
-    return mp_settings->value(Key::icon_theme, "Tango").toString();
-}
-
-void Settings::setIconTheme(const QString & _theme)
-{
-    if(iconTheme() != _theme)
-    {
-        mp_settings->setValue(Key::icon_theme, _theme);
-        emit iconThemeChanged();
-    }
 }
 
 quint32 Settings::iconSize() const

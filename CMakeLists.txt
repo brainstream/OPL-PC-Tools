@@ -180,8 +180,6 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.cpp
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.cpp
     ${OPT_SRC_DIR}/UI/SettingsDialog.cpp
-    ${OPT_SRC_DIR}/UI/IconTheme.cpp
-    ${OPT_SRC_DIR}/UI/IconTheme.h
     ${OPT_SRC_DIR}/UI/VmcListWidget.cpp
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.cpp
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.cpp

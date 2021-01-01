@@ -40,7 +40,8 @@
         <string>Back</string>
        </property>
        <property name="icon">
-        <iconset theme="oplpct-back"/>
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/back</normaloff>:/images/back</iconset>
        </property>
       </widget>
      </item>
@@ -123,6 +124,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

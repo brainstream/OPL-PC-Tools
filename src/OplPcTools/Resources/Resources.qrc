@@ -6,5 +6,16 @@
         <file alias="vmc">images/vmc.png</file>
         <file alias="folder">images/folder.svg</file>
         <file alias="file">images/file.svg</file>
+        <file alias="add">images/add.svg</file>
+        <file alias="back">images/back.svg</file>
+        <file alias="delete">images/delete.svg</file>
+        <file alias="disc">images/disc.svg</file>
+        <file alias="edit">images/edit.svg</file>
+        <file alias="load">images/load.svg</file>
+        <file alias="reload">images/reload.svg</file>
+        <file alias="rename">images/rename.svg</file>
+        <file alias="restore">images/restore.svg</file>
+        <file alias="start">images/start.svg</file>
+        <file alias="save">images/save.svg</file>
     </qresource>
 </RCC>

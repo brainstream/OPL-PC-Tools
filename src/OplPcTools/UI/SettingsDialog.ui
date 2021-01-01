@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="mp_tabs">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mp_tab_main">
       <attribute name="title">
@@ -140,23 +140,13 @@
       </attribute>
       <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0">
-        <widget class="QLabel" name="mp_label_icon_theme">
-         <property name="text">
-          <string>Icon Theme</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="mp_combobox_icon_theme"/>
-       </item>
-       <item row="1" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>List Icon Size</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="0" column="1">
         <widget class="QSpinBox" name="mp_spinbox_icon_size">
          <property name="minimum">
           <number>16</number>
@@ -195,7 +185,6 @@
   <tabstop>mp_checkbox_donot_splitup</tabstop>
   <tabstop>mp_checkobx_move_iso</tabstop>
   <tabstop>mp_checkbox_add_id</tabstop>
-  <tabstop>mp_combobox_icon_theme</tabstop>
   <tabstop>mp_spinbox_icon_size</tabstop>
   <tabstop>mp_tabs</tabstop>
  </tabstops>

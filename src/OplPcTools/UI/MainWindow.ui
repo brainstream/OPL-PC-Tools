@@ -236,8 +236,8 @@ color: rgb(56, 56, 56);</string>
   </widget>
   <action name="mp_action_settings">
    <property name="icon">
-    <iconset theme="oplpct-edit">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/edit</normaloff>:/images/edit</iconset>
    </property>
    <property name="text">
     <string>&amp;Settings...</string>
@@ -264,8 +264,8 @@ color: rgb(56, 56, 56);</string>
   </action>
   <action name="mp_action_open_library">
    <property name="icon">
-    <iconset theme="oplpct-load">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/load</normaloff>:/images/load</iconset>
    </property>
    <property name="text">
     <string>&amp;Open Library...</string>

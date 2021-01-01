@@ -27,6 +27,7 @@
 #include <OplPcTools/UI/VmcCreateDialog.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
+#include <OplPcTools/UI/VmcPropertiesDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -207,6 +208,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_context_menu = new QMenu(this);
     mp_context_menu->addAction(mp_action_rename_vmc);
     mp_context_menu->addAction(mp_action_delete_vmc);
+    mp_context_menu->addAction(mp_action_properties);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_create_vmc);
     activateItemControls(nullptr);
@@ -218,6 +220,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
         [this](QItemSelection, QItemSelection) { onVmcSelected(); });
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
     connect(mp_action_create_vmc, &QAction::triggered, this, &VmcListWidget::createVmc);
+    connect(mp_action_properties, &QAction::triggered, this, &VmcListWidget::showVmcProperties);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
     connect(mp_tree_vmcs, &QTreeView::doubleClicked, this, &VmcListWidget::onTreeViewDoubleClicked);
     if(Library::instance().vmcs().count() > 0)
@@ -282,6 +285,7 @@ void VmcListWidget::activateItemControls(const Vmc * _vmc)
     bool disabled = _vmc == nullptr;
     mp_action_rename_vmc->setDisabled(disabled);
     mp_action_delete_vmc->setDisabled(disabled);
+    mp_action_properties->setDisabled(disabled);
 }
 
 void VmcListWidget::deleteVmc()
@@ -315,6 +319,16 @@ void VmcListWidget::deleteVmc()
     catch(...)
     {
         Application::showErrorMessage();
+    }
+}
+
+void VmcListWidget::showVmcProperties()
+{
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
+    if(vmc)
+    {
+        VmcPropertiesDialog dlg(*vmc, this);
+        dlg.exec();
     }
 }
 

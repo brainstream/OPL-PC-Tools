@@ -899,18 +899,26 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="294"/>
+        <location filename="../UI/VmcListWidget.cpp" line="298"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="295"/>
+        <location filename="../UI/VmcListWidget.cpp" line="299"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="297"/>
+        <location filename="../UI/VmcListWidget.cpp" line="301"/>
         <source>Are you sure you want to delete this VMC?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::VmcPropertiesDialog</name>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="81"/>
+        <source>Unable to read VMC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1052,32 +1060,32 @@
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="131"/>
+        <location filename="../UI/VmcListWidget.cpp" line="132"/>
         <source>8 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="133"/>
+        <location filename="../UI/VmcListWidget.cpp" line="134"/>
         <source>16 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="135"/>
+        <location filename="../UI/VmcListWidget.cpp" line="136"/>
         <source>32 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="137"/>
+        <location filename="../UI/VmcListWidget.cpp" line="138"/>
         <source>64 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="139"/>
+        <location filename="../UI/VmcListWidget.cpp" line="140"/>
         <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="141"/>
+        <location filename="../UI/VmcListWidget.cpp" line="142"/>
         <source>256 MiB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1262,50 +1270,185 @@
     <name>VmcListWidget</name>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="14"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="161"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="167"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="128"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="174"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="181"/>
         <source>Filter</source>
         <translation type="unfinished">Фильтр</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="172"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="162"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="168"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="187"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="166"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="172"/>
         <source>Delete</source>
         <translation type="unfinished">Удалить</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="202"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="170"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="176"/>
         <source>Rename</source>
         <translation type="unfinished">Переименовать</translation>
     </message>
     <message>
+        <location filename="../UI/VmcListWidget.ui" line="217"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="180"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../UI/VmcListWidget.ui" line="190"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="168"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="174"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="205"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="172"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="178"/>
         <source>Rename VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="175"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="164"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="170"/>
         <source>Create VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VmcPropertiesDialog</name>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="14"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="384"/>
+        <source>VMC Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="38"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="385"/>
+        <source>Magic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="58"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="386"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="78"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="387"/>
+        <source>Page Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="98"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="388"/>
+        <source>Cluster Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="118"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="389"/>
+        <source>Pages per Cluster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="138"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="390"/>
+        <source>Pages per Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="158"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="391"/>
+        <source>Clusters per Card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="178"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="392"/>
+        <source>Alloc Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="198"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="393"/>
+        <source>Alloc End</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="218"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="394"/>
+        <source>Root Directory Cluster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="238"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="395"/>
+        <source>Backup Block #1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="258"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="396"/>
+        <source>Backup Block #2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="278"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="397"/>
+        <source>Card Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="298"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="398"/>
+        <source>Card Flags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="318"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="399"/>
+        <source>FAT Entries per Cluster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="338"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="400"/>
+        <source>Clusters per Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="358"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="401"/>
+        <source>Card Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="378"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="402"/>
+        <source>Max Allocatable Clusters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="398"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="403"/>
+        <source>Bad Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="421"/>
+        <location filename="../../../build/ui_VmcPropertiesDialog.h" line="404"/>
+        <source>IFC List</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -44,9 +44,10 @@ private:
     void showErrorMessage(const QString & _message = QString());
     void hideErrorMessage();
     void loadVmcFS();
-    void setupFSView();
+    void setupView();
     void navigate(const QString & _path);
     void onFsListItemDoubleClicked(const QModelIndex & _index);
+    void onFsBackButtonClick();
 
 private:
     const Vmc & mr_vmc;

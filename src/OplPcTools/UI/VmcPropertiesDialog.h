@@ -16,47 +16,22 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCLISTWIDGET__
-#define __OPLPCTOOLS_VMCLISTWIDGET__
+#ifndef __OPLPCTOOLS_VMCPROPERTIESDIALOG__
+#define __OPLPCTOOLS_VMCPROPERTIESDIALOG__
 
-#include "ui_VmcListWidget.h"
-#include <QSortFilterProxyModel>
 #include <OplPcTools/Vmc.h>
+#include "ui_VmcPropertiesDialog.h"
 
-namespace OplPcTools {
-namespace UI {
+namespace OplPcTools::UI {
 
-
-class VmcListWidget: public QWidget, private Ui::VmcListWidget
+class VmcPropertiesDialog : public QDialog, private Ui::VmcPropertiesDialog
 {
     Q_OBJECT
 
 public:
-    explicit VmcListWidget(QWidget * _parent = nullptr);
-
-private:
-    void setupShortcuts();
-    void setIconSize();
-    void renameVmc();
-    void deleteVmc();
-    void createVmc();
-
-private:
-    void onVmcSelected();
-    void activateItemControls(const Vmc * _vmc);
-    void showTreeContextMenu(const QPoint & _point);
-    void onTreeViewDoubleClicked(const QModelIndex & _index);
-    void showVmcProperties();
-
-private:
-    class VmcTreeModel;
-    VmcTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QMenu * mp_context_menu;
+    explicit VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent = nullptr);
 };
 
+} // namespace OplPcTools::UI
 
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCLISTWIDGET__
+#endif // __OPLPCTOOLS_VMCPROPERTIESDIALOG__

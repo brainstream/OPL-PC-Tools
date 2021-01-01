@@ -244,7 +244,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     mp_label_vmc_title->setText(mr_vmc.title());
     loadVmcFS();
     if(m_fs_ptr)
-        setupFSView();
+        setupView();
 }
 
 void VmcDetailsActivity::showErrorMessage(const QString & _message /*= QString()*/)
@@ -274,10 +274,10 @@ void VmcDetailsActivity::loadVmcFS()
     }
 }
 
-void VmcDetailsActivity::setupFSView()
+void VmcDetailsActivity::setupView()
 {
     mp_model = new VmcFileSystemViewModel(this);
-    navigate("/");
+    navigate(QString::fromLatin1(&VmcFS::path_separator, 1));
     mp_tree_fs->setModel(mp_model);
     QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
     header_model->setHorizontalHeaderLabels({ tr("Name"), tr("Size") });
@@ -286,6 +286,7 @@ void VmcDetailsActivity::setupFSView()
     mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
     connect(mp_tree_fs, &QTreeView::doubleClicked, this, &VmcDetailsActivity::onFsListItemDoubleClicked);
+    connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
 }
 
 void VmcDetailsActivity::navigate(const QString & _path)
@@ -296,7 +297,7 @@ void VmcDetailsActivity::navigate(const QString & _path)
         QList<VmcEntryInfo> items = m_fs_ptr->enumerateEntries(_path);
         mp_model->setItems(items);
         mp_edit_fs_path->setText(_path);
-        mp_btn_fs_back->setDisabled(_path.isEmpty() || _path == "/");
+        mp_btn_fs_back->setDisabled(_path.isEmpty() || (_path.size() == 1 && _path[0] == VmcFS::path_separator));
     }
     catch(const Exception &_exception)
     {
@@ -315,9 +316,21 @@ void VmcDetailsActivity::onFsListItemDoubleClicked(const QModelIndex & _index)
         return;
     if(item->is_directory)
     {
-        QString path = mp_edit_fs_path->text() + item->name + '/';
+        QString path = mp_edit_fs_path->text() + item->name + VmcFS::path_separator;
         navigate(path);
     }
+}
+
+void VmcDetailsActivity::onFsBackButtonClick()
+{
+    QStringList parts = mp_edit_fs_path->text().split(VmcFS::path_separator, QString::SkipEmptyParts);
+    if(parts.count() == 0)
+        return;
+    parts.removeLast();
+    QString path = QString(VmcFS::path_separator) + parts.join(VmcFS::path_separator);
+    if(parts.count() > 0)
+        path += VmcFS::path_separator;
+    navigate(path);
 }
 
 QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)

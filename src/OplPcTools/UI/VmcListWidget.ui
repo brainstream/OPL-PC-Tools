@@ -208,6 +208,15 @@
     <string notr="true">F2</string>
    </property>
   </action>
+  <action name="mp_action_properties">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/edit</normaloff>:/images/edit</iconset>
+   </property>
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>mp_btn_rename_vmc</tabstop>

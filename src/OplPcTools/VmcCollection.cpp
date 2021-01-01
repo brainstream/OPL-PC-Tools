@@ -77,7 +77,7 @@ bool VmcCollection::load(const QDir & _base_directory)
             size = VmcSize::_256M;
             break;
         }
-        mp_vmcs->append(new Vmc(title, size));
+        mp_vmcs->append(new Vmc(file.absoluteFilePath(), title, size));
     }
     return true;
 }
@@ -111,7 +111,8 @@ const Vmc * VmcCollection::createVmc(const QString & _title, VmcSize _size)
             throw Exception(tr("VMC with name \"%1\" already exists").arg(_title));
     }
     validateFilename(_title);
-    QFile file(makeFilename(_title));
+    QString vmc_filename = makeFilename(_title);
+    QFile file(vmc_filename);
     openFile(file, QFile::WriteOnly);
 
     // FIXME: THE TEST DATA
@@ -123,7 +124,7 @@ const Vmc * VmcCollection::createVmc(const QString & _title, VmcSize _size)
     //
     // END OF THE TEST DATA
 
-    Vmc * vmc = new Vmc(_title, _size);
+    Vmc * vmc = new Vmc(vmc_filename, _title, _size);
     mp_vmcs->append(vmc);
     emit vmcAdded(vmc->uuid());
     return vmc;

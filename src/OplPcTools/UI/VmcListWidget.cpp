@@ -26,6 +26,7 @@
 #include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
 #include <OplPcTools/UI/VmcListWidget.h>
+#include <OplPcTools/UI/VmcDetailsActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -218,6 +219,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
     connect(mp_action_create_vmc, &QAction::triggered, this, &VmcListWidget::createVmc);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
+    connect(mp_tree_vmcs, &QTreeView::doubleClicked, this, &VmcListWidget::onTreeViewDoubleClicked);
     if(Library::instance().vmcs().count() > 0)
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
     mp_proxy_model->sort(0, Qt::AscendingOrder);
@@ -326,4 +328,14 @@ void VmcListWidget::showTreeContextMenu(const QPoint & _point)
 {
     if(Library::instance().vmcs().isLoaded())
         mp_context_menu->exec(mp_tree_vmcs->mapToGlobal(_point));
+}
+
+void VmcListWidget::onTreeViewDoubleClicked(const QModelIndex & _index)
+{
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(_index));
+    if(vmc)
+    {
+        auto intent = VmcDetailsActivity::createIntent(*vmc);
+        Application::pushActivity(*intent);
+    }
 }

@@ -121,7 +121,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="mp_layout">
      <item>
       <widget class="QLineEdit" name="mp_edit_filter">
        <property name="placeholderText">

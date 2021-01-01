@@ -37,22 +37,26 @@ enum class VmcSize
 class Vmc final
 {
 public:
-    inline Vmc(const QString & _title, VmcSize _size);
+    inline Vmc(const QString & _filepath, const QString & _title, VmcSize _size);
     Vmc(const Vmc &) = default;
     ~Vmc() = default;
     inline const QUuid & uuid() const;
+    inline const QString & filepath() const;
+    inline void setFilepath(const QString & _filepath);
     inline const QString & title() const;
     inline void setTitle(const QString & _title);
     inline VmcSize size() const;
 
 private:
     QUuid m_uuid;
+    QString m_filepath;
     QString m_title;
     VmcSize m_size;
 };
 
-Vmc::Vmc(const QString & _title, VmcSize _size) :
+Vmc::Vmc(const QString & _filepath, const QString & _title, VmcSize _size) :
     m_uuid(QUuid::createUuid()),
+    m_filepath(_filepath),
     m_title(_title),
     m_size(_size)
 {
@@ -61,6 +65,16 @@ Vmc::Vmc(const QString & _title, VmcSize _size) :
 const QUuid & Vmc::uuid() const
 {
     return m_uuid;
+}
+
+const QString & Vmc::filepath() const
+{
+    return m_filepath;
+}
+
+void Vmc::setFilepath(const QString & _filepath)
+{
+    m_filepath = _filepath;
 }
 
 const QString & Vmc::title() const

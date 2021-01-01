@@ -16,54 +16,44 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QIcon>
-#include <QDir>
-#include <QSet>
-#include <QSettings>
-#include <OplPcTools/UI/IconTheme.h>
+#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
 
-namespace {
+#include <OplPcTools/Vmc.h>
+#include <OplPcTools/VmcFS.h>
+#include <OplPcTools/UI/Activity.h>
+#include <OplPcTools/UI/Intent.h>
+#include "ui_VmcDetailsActivity.h"
 
-QString tryReadIconTheme(const QDir _dir)
+namespace OplPcTools::UI {
+
+class VmcFileSystemViewModel;
+
+class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
 {
-    QString filename = _dir.absoluteFilePath("index.theme");
-    if(!QFile::exists(filename))
-        return QString();
-    QSettings settings(filename, QSettings::IniFormat);
-    return settings.value("Icon Theme/Name", QString()).toString();
-}
+    Q_OBJECT
 
-QStringList scanIconThemes(const QDir & _dir)
-{
-    QStringList result;
-    if(!_dir.exists())
-        return result;
-    for(const QString & theme_dir : _dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
-    {
-        QString theme = tryReadIconTheme(_dir.absoluteFilePath(theme_dir));
-        if(!theme.isEmpty())
-            result << theme;
-    }
-    return result;
-}
+public:
+    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
 
-} // namespace
 
-namespace OplPcTools {
-namespace UI {
+public:
+    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
 
-QStringList loadIconThemes()
-{
-    QSet<QString> theme_set;
-    for(const QString & path : QIcon::themeSearchPaths())
-    {
-        for(const QString & theme : scanIconThemes(path))
-            theme_set.insert(theme);
-    }
-    QStringList result(theme_set.begin(), theme_set.end());
-    std::sort(result.begin(), result.end());
-    return result;
-}
+private:
+    void showErrorMessage(const QString & _message = QString());
+    void hideErrorMessage();
+    void loadVmcFS();
+    void setupFSView();
+    void navigate(const QString & _path);
+    void onFsListItemDoubleClicked(const QModelIndex & _index);
 
-} // namespace UI
-} // namespace OplPcTools
+private:
+    const Vmc & mr_vmc;
+    QSharedPointer<VmcFS> m_fs_ptr;
+    VmcFileSystemViewModel * mp_model;
+};
+
+} // namespace OplPcTools::UI
+
+#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__

@@ -92,6 +92,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/VmcListWidget.h
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.h
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.h
+    ${OPT_SRC_DIR}/UI/VmcDetailsActivity.h
 )
 
 set(OPT_SRC_UI
@@ -108,6 +109,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/SettingsDialog.ui
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.ui
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.ui
+    ${OPT_SRC_DIR}/UI/VmcDetailsActivity.ui
 )
 
 set(OPT_SRC_RES
@@ -157,6 +159,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameArtManager.cpp
     ${OPT_SRC_DIR}/Vmc.h
     ${OPT_SRC_DIR}/VmcCollection.cpp
+    ${OPT_SRC_DIR}/VmcFS.h
+    ${OPT_SRC_DIR}/VmcFS.cpp
     ${OPT_SRC_DIR}/GameInstaller.cpp
     ${OPT_SRC_DIR}/DirectoryGameInstaller.cpp
     ${OPT_SRC_DIR}/Updater.cpp
@@ -181,6 +185,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/VmcListWidget.cpp
     ${OPT_SRC_DIR}/UI/VmcRenameDialog.cpp
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.cpp
+    ${OPT_SRC_DIR}/UI/VmcDetailsActivity.cpp
 )
 
 if(WIN32)

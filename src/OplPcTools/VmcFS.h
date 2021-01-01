@@ -16,46 +16,92 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCLISTWIDGET__
-#define __OPLPCTOOLS_VMCLISTWIDGET__
+#ifndef __OPLPCTOOLS_VMCFS__
+#define __OPLPCTOOLS_VMCFS__
 
-#include "ui_VmcListWidget.h"
-#include <QSortFilterProxyModel>
-#include <OplPcTools/Vmc.h>
+#include <QString>
+#include <QSharedPointer>
+#include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
-namespace UI {
 
+DECLARE_EXCEPTION(VmcFSException)
 
-class VmcListWidget: public QWidget, private Ui::VmcListWidget
+struct VmcInfo final
 {
-    Q_OBJECT
-
-public:
-    explicit VmcListWidget(QWidget * _parent = nullptr);
-
-private:
-    void setupShortcuts();
-    void setIconSize();
-    void renameVmc();
-    void deleteVmc();
-    void createVmc();
-
-private:
-    void onVmcSelected();
-    void activateItemControls(const Vmc * _vmc);
-    void showTreeContextMenu(const QPoint & _point);
-    void onTreeViewDoubleClicked(const QModelIndex & _index);
-
-private:
-    class VmcTreeModel;
-    VmcTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QMenu * mp_context_menu;
+    QString magic;
+    QString version;
+    int16_t pagesize;
+    uint16_t pages_per_cluster;
+    uint16_t pages_per_block;
+    uint32_t clusters_per_card;
+    uint32_t alloc_offset;
+    uint32_t alloc_end;
+    uint32_t rootdir_cluster;
+    uint32_t backup_block1;
+    uint32_t backup_block2;
+    uint32_t ifc_ptr_list[32];
+    int32_t bad_block_list[32];
+    uint8_t cardtype;
+    uint8_t cardflags;
+    uint32_t cluster_size;
+    uint32_t fat_entries_per_cluster;
+    uint32_t clusters_per_block;
+    int32_t cardform;
+    uint32_t max_allocatable_clusters;
 };
 
+struct VmcEntryInfo
+{
+    QString name;
+    bool is_directory;
+    uint32_t size;
+};
 
-} // namespace UI
+class VmcFile final
+{
+    Q_DISABLE_COPY(VmcFile)
+
+public:
+    struct Private;
+
+public:
+    explicit VmcFile(Private * _private);
+    ~VmcFile();
+    const QString & name() const;
+    uint32_t size() const;
+    bool seek(uint32_t _pos);
+    int64_t read(char * _buffer, int64_t _max_size);
+
+private:
+    Private * mp_private;
+};
+
+class VmcFS final
+{
+    Q_DISABLE_COPY(VmcFS)
+
+protected:
+    VmcFS();
+
+public:
+    class Private;
+
+public:
+    ~VmcFS();
+    const VmcInfo * info() const;
+    QList<VmcEntryInfo> enumerateEntries(const QString & _path);
+    QSharedPointer<VmcFile> openFile(const QString & _path);
+
+    static QSharedPointer<VmcFS> load(const QString & _filepath);
+    static QString concatPaths(const QString & _base, const QString &  _part);
+public:
+    static const char path_separator;
+
+private:
+    Private * mp_private;
+};
+
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMCLISTWIDGET__
+#endif // __OPLPCTOOLS_VMCFS__

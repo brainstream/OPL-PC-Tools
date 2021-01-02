@@ -68,188 +68,191 @@
     </message>
 </context>
 <context>
+    <name>GameArtsWidget</name>
+    <message>
+        <location filename="../UI/GameArtsWidget.ui" line="70"/>
+        <location filename="../../../build/ui_GameArtsWidget.h" line="72"/>
+        <source>Change Picture...</source>
+        <translation type="unfinished">Изменить картинку...</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.ui" line="79"/>
+        <location filename="../../../build/ui_GameArtsWidget.h" line="73"/>
+        <source>Delete Picture</source>
+        <translation type="unfinished">Удалить картинку</translation>
+    </message>
+</context>
+<context>
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="479"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="446"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="86"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="481"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="448"/>
         <source>Rename...</source>
         <translation>Переименовть...</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="109"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="484"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="451"/>
         <source>Pictures</source>
         <translation type="unfinished">Картинки</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="162"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="514"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="128"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="481"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="191"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="486"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="157"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="453"/>
         <source>Game ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="177"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="485"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="143"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="452"/>
         <source>Custom ELF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="334"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="493"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="300"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="460"/>
         <source>Modes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="401"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="502"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="367"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="469"/>
         <source>Virtual Memory Card #1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="429"/>
-        <location filename="../UI/GameDetailsActivity.ui" line="471"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="503"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="505"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="395"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="437"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="470"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="472"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="443"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="504"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="409"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="471"/>
         <source>Virtual Memory Card #2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="530"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="506"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="496"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="473"/>
         <source>Delete Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="537"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="508"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="503"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="475"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="544"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="510"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="510"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="477"/>
         <source>Save Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="198"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="487"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="164"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="454"/>
         <source>Get from the Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="217"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="488"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="183"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="455"/>
         <source>Graphic Synthesiser Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="235"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="489"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="201"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="456"/>
         <source>Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="248"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="490"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="214"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="457"/>
         <source>Horizontal Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="280"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="491"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="246"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="458"/>
         <source>Vertical Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="312"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="492"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="278"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="459"/>
         <source>Skip Full Motion Videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="340"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="494"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="306"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="461"/>
         <source>Mode 1 ― Accurate Reads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="347"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="495"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="313"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="462"/>
         <source>Mode 2 ― Synchronous Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="354"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="496"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="320"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="463"/>
         <source>Mode 3 ― Unhook Syscalls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="361"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="497"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="327"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="464"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="368"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="498"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="334"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="465"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="375"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="499"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="341"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="466"/>
         <source>Mode 6 ― Disable IGR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="382"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="500"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="348"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="467"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="389"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="501"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="355"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="468"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="551"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="512"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="517"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="479"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="568"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="477"/>
-        <source>Change Picture...</source>
-        <translation>Изменить картинку...</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="577"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="478"/>
-        <source>Delete Picture</source>
-        <translation>Удалить картинку</translation>
     </message>
 </context>
 <context>
@@ -660,71 +663,71 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::UI::GameDetailsActivity</name>
+    <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="225"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="179"/>
         <source>Choose a Picture</source>
-        <translation>Выберать картинку</translation>
+        <translation type="unfinished">Выберать картинку</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="226"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="180"/>
         <source>Pictures</source>
-        <translation>Картинки</translation>
+        <translation type="unfinished">Картинки</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="253"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="207"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="254"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="208"/>
         <source>Delete Picture</source>
         <translation type="unfinished">Удалить картинку</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="256"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="210"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="295"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="139"/>
         <source>Icon</source>
-        <translation>Иконка</translation>
+        <translation type="unfinished">Иконка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="296"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="140"/>
         <source>Front Cover</source>
-        <translation>Передняя обложка</translation>
+        <translation type="unfinished">Передняя обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="297"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="141"/>
         <source>Back Cover</source>
-        <translation>Задняя обложка</translation>
+        <translation type="unfinished">Задняя обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="298"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="142"/>
         <source>Spine Cover</source>
-        <translation>Боковая обложка</translation>
+        <translation type="unfinished">Боковая обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="143"/>
         <source>Screenshot #1</source>
-        <translation>Скриншот №1</translation>
+        <translation type="unfinished">Скриншот №1</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="300"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="144"/>
         <source>Screenshot #2</source>
-        <translation>Скриншот №2</translation>
+        <translation type="unfinished">Скриншот №2</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="301"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="145"/>
         <source>Background</source>
-        <translation>Фоновое изображение</translation>
+        <translation type="unfinished">Фоновое изображение</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.cpp" line="302"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="146"/>
         <source>Logo</source>
-        <translation>Логотип</translation>
+        <translation type="unfinished">Логотип</translation>
     </message>
 </context>
 <context>

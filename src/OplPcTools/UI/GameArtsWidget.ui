@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameArtsWidget</class>
+ <widget class="QWidget" name="GameArtsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>762</width>
+    <height>495</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QListWidget" name="mp_list_arts">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="movement">
+      <enum>QListView::Static</enum>
+     </property>
+     <property name="flow">
+      <enum>QListView::LeftToRight</enum>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
+     </property>
+     <property name="spacing">
+      <number>20</number>
+     </property>
+     <property name="viewMode">
+      <enum>QListView::IconMode</enum>
+     </property>
+     <property name="selectionRectVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+  <action name="mp_action_change_art">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/edit</normaloff>:/images/edit</iconset>
+   </property>
+   <property name="text">
+    <string>Change Picture...</string>
+   </property>
+  </action>
+  <action name="mp_action_delete_art">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Picture</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>mp_list_arts</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>mp_list_arts</sender>
+   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
+   <receiver>GameArtsWidget</receiver>
+   <slot>changeGameArt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>312</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>renameGame()</slot>
+  <slot>changeGameArt()</slot>
+ </slots>
+</ui>

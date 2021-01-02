@@ -16,37 +16,37 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMEDETAILSACTIVITY__
-#define __OPLPCTOOLS_GAMEDETAILSACTIVITY__
+#ifndef __OPLPCTOOLS_GAMEARTSWIDGET__
+#define __OPLPCTOOLS_GAMEARTSWIDGET__
 
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
+#include <QWidget>
+#include <QMenu>
 #include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameDetailsActivity.h"
+#include "ui_GameArtsWidget.h"
 
-namespace OplPcTools {
-namespace UI {
+namespace OplPcTools::UI {
 
-class GameDetailsActivity : public Activity, private Ui::GameDetailsActivity
+class GameArtsWidget : public QWidget, private Ui::GameArtsWidget
 {
     Q_OBJECT
 
 public:
-    explicit GameDetailsActivity(const QString _game_id, GameArtManager & _art_manager, QWidget * _parent = nullptr);
-    static QSharedPointer<Intent> createIntent(GameArtManager & _art_manager, const QString & _game_id);
+    GameArtsWidget(const QString & _game_id, GameArtManager & _art_manager, QWidget * _parent = nullptr);
 
 private:
     void setupShortcuts();
-    void initControls();
-    void renameGame();
+    void initGameArts();
+    void addArtListItem(GameArtType _type, const QString & _text);
+    void showItemContextMenu(const QPoint & _point);
+    void changeGameArt();
+    void deleteGameArt();
 
 private:
     GameArtManager & mr_art_manager;
-    const Game * mp_game;
+    const QString m_game_id;
+    QMenu * mp_item_context_menu;
 };
 
-} // namespace UI
-} // namespace OplPcTools
+} // namespace OplPcTools::UI
 
-#endif // __OPLPCTOOLS_GAMEDETAILSACTIVITY__
+#endif // __OPLPCTOOLS_GAMEARTSWIDGET__

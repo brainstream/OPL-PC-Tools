@@ -83,6 +83,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/GameListWidget.h
     ${OPT_SRC_DIR}/UI/MainWindow.h
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.h
+    ${OPT_SRC_DIR}/UI/GameArtsWidget.h
     ${OPT_SRC_DIR}/UI/ClickableLabel.h
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.h
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.h
@@ -101,6 +102,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/LibraryActivity.ui
     ${OPT_SRC_DIR}/UI/GameListWidget.ui
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.ui
+    ${OPT_SRC_DIR}/UI/GameArtsWidget.ui
     ${OPT_SRC_DIR}/UI/AboutDialog.ui
     ${OPT_SRC_DIR}/UI/GameRenameDialog.ui
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.ui
@@ -176,6 +178,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/LibraryActivity.cpp
     ${OPT_SRC_DIR}/UI/GameListWidget.cpp
     ${OPT_SRC_DIR}/UI/GameDetailsActivity.cpp
+    ${OPT_SRC_DIR}/UI/GameArtsWidget.cpp
     ${OPT_SRC_DIR}/UI/MainWindow.cpp
     ${OPT_SRC_DIR}/UI/GameRenameDialog.cpp
     ${OPT_SRC_DIR}/UI/IsoRestorerActivity.cpp

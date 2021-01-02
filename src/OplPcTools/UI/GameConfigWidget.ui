@@ -27,37 +27,37 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QGridLayout" name="gridLayout_2">
+    <layout class="QGridLayout" name="mp_layout_4">
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_4">
+      <widget class="QLineEdit" name="mp_edit_game_id">
        <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="mp_label_elf">
        <property name="text">
         <string>Custom ELF</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="mp_edit_elf">
        <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="mp_label_game_id">
        <property name="text">
         <string>Game ID</string>
        </property>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="mp_btn_id_from_game">
        <property name="text">
         <string>Get from the Game</string>
        </property>
@@ -70,109 +70,64 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="mp_layout_2">
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Delete Configuration</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resources/Resources.qrc">
-         <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Del</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="text">
-        <string>Save Configuration</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resources/Resources.qrc">
-         <normaloff>:/images/save</normaloff>:/images/save</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+S</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QGroupBox" name="groupBox_6">
+      <widget class="QGroupBox" name="mp_groupbox_modes">
        <property name="title">
         <string>Modes</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QCheckBox" name="checkBox">
+         <widget class="QCheckBox" name="mp_checkbox_mode_1">
           <property name="text">
            <string>Mode 1 ― Accurate Reads</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_2">
+         <widget class="QCheckBox" name="mp_checkbox_mode_2">
           <property name="text">
            <string>Mode 2 ― Synchronous Mode</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_3">
+         <widget class="QCheckBox" name="mp_checkbox_mode_3">
           <property name="text">
            <string>Mode 3 ― Unhook Syscalls</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_4">
+         <widget class="QCheckBox" name="mp_checkbox_mode_4">
           <property name="text">
            <string>Mode 4 ― 0 PSS Mode</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_5">
+         <widget class="QCheckBox" name="mp_checkbox_mode_5">
           <property name="text">
            <string>Mode 5 ― Emulate DVD-DL</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_6">
+         <widget class="QCheckBox" name="mp_checkbox_mode_6">
           <property name="text">
            <string>Mode 6 ― Disable IGR</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_7">
+         <widget class="QCheckBox" name="mp_checkbox_mode_7">
           <property name="text">
            <string>Mode 7 ― High Module Storage</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_8">
+         <widget class="QCheckBox" name="mp_checkbox_mode_8">
           <property name="text">
            <string>Mode 8 ― Hide DEV9 Module</string>
           </property>
@@ -182,9 +137,9 @@
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="mp_layout_3">
        <item>
-        <widget class="QGroupBox" name="groupBox_4">
+        <widget class="QGroupBox" name="mp_groupbox_vmc1">
          <property name="title">
           <string>Virtual Memory Card #1</string>
          </property>
@@ -196,7 +151,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QComboBox" name="comboBox_2">
+           <widget class="QComboBox" name="mp_combo_vmc1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>2</horstretch>
@@ -209,10 +164,19 @@
               <height>0</height>
              </size>
             </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAlphabetically</enum>
+            </property>
+            <property name="duplicatesEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="mp_btn_create_vmc1">
             <property name="text">
              <string>Create VMC</string>
             </property>
@@ -226,7 +190,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="mp_groupbox_vmc2">
          <property name="title">
           <string>Virtual Memory Card #2</string>
          </property>
@@ -238,7 +202,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QComboBox" name="comboBox_3">
+           <widget class="QComboBox" name="mp_combo_vmc2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>2</horstretch>
@@ -251,10 +215,19 @@
               <height>0</height>
              </size>
             </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAlphabetically</enum>
+            </property>
+            <property name="duplicatesEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="mp_btn_create_vmc2">
             <property name="text">
              <string>Create VMC</string>
             </property>
@@ -268,7 +241,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
+        <spacer name="mp_spacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -285,7 +258,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_3">
+    <widget class="QGroupBox" name="mp_groupbox_gsm">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>5</horstretch>
@@ -303,7 +276,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="mp_label_video_mode">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -316,7 +289,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="mp_label_hpos">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -329,7 +302,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSpinBox" name="spinBox">
+       <widget class="QSpinBox" name="mp_spinbox_hpos">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -348,7 +321,7 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="mp_label_vpos">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -361,7 +334,7 @@
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QSpinBox" name="spinBox_2">
+       <widget class="QSpinBox" name="mp_spinbox_vpos">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -380,7 +353,7 @@
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QCheckBox" name="checkBox_9">
+       <widget class="QCheckBox" name="mp_checkbox_skip_fmv">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -393,7 +366,7 @@
        </widget>
       </item>
       <item row="0" column="1" colspan="4">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="mp_combo_video_mode">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -406,7 +379,7 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
+    <spacer name="mp_spacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -417,6 +390,51 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="mp_layout">
+     <item>
+      <spacer name="mp_spacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_clear">
+       <property name="text">
+        <string>Clear Configuration</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Del</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_save">
+       <property name="text">
+        <string>Save Configuration</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/save</normaloff>:/images/save</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+S</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

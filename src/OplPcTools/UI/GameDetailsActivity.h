@@ -38,7 +38,6 @@ public:
 
 private:
     void setupShortcuts();
-    void initControls();
     void renameGame();
 
 private:

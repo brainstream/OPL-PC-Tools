@@ -19,6 +19,9 @@
 #ifndef __OPLPCTOOLS_GAMECONFIGWIDGET__
 #define __OPLPCTOOLS_GAMECONFIGWIDGET__
 
+#include <QUuid>
+#include <OplPcTools/Game.h>
+#include <OplPcTools/VmcCollection.h>
 #include "ui_GameConfigWidget.h"
 
 namespace OplPcTools::UI {
@@ -28,7 +31,24 @@ class GameConfigWidget : public QWidget, private Ui::GameConfigWidget
     Q_OBJECT
 
 public:
-    explicit GameConfigWidget(QWidget * _parent = nullptr);
+    explicit GameConfigWidget(const Game & _game, QWidget * _parent = nullptr);
+
+private:
+    void initVmcComboboxes();
+    void sortVmcComboboxes();
+    void onVmcAdded(const QUuid & _id);
+    void onVmcDeleted(const QUuid & _id);
+    void deleteVmcComboboxItem(QComboBox * _combobox, const QUuid & _id);
+    int getVmcComboboxItemIndex(QComboBox * _combobox, const QUuid & _id) const;
+    void onVmcRenamed(const QUuid & _id);
+    void renameVmcComboboxItem(QComboBox * _combobox, const QUuid & _id, const QString & _title);
+    void createVmc1();
+    void createVmc2();
+    const OplPcTools::Vmc * createVmc();
+
+private:
+    VmcCollection & mr_vmcs;
+    const Game & mr_game;
 };
 
 } // namespace OplPcTools::UI

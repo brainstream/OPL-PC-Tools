@@ -46,7 +46,7 @@ void VmcCreateDialog::create()
 {
     try
     {
-        Library::instance().vmcs().createVmc(
+        mp_created_vmc = Library::instance().vmcs().createVmc(
             mp_edit_title->text(),
             static_cast<VmcSize>(mp_combobox_size->currentData().toInt())
         );

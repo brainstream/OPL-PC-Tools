@@ -58,7 +58,7 @@ private:
 } // namespace
 
 
-GameDetailsActivity::GameDetailsActivity(const QString _game_id, OplPcTools::GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
+GameDetailsActivity::GameDetailsActivity(const QString _game_id, GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_art_manager(_art_manager),
     mp_game(Library::instance().games().findGame(_game_id))
@@ -66,14 +66,18 @@ GameDetailsActivity::GameDetailsActivity(const QString _game_id, OplPcTools::Gam
     setupUi(this);
     setupShortcuts();
     mp_tabs->setCurrentIndex(0);
-    mp_tab_arts->layout()->addWidget(new GameArtsWidget(_game_id, _art_manager, this));
-    mp_tab_config->layout()->addWidget(new GameConfigWidget(this));
+    if(mp_game)
+    {
+        mp_tab_arts->layout()->addWidget(new GameArtsWidget(_game_id, _art_manager, this));
+        mp_tab_config->layout()->addWidget(new GameConfigWidget(*mp_game, this));
+        mp_label_title->setText(mp_game->title());
+    }
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsActivity::close);
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
-    initControls();
+    connect(mp_btn_rename_game, &QPushButton::clicked, this, &GameDetailsActivity::renameGame);
 }
 
-QSharedPointer<Intent> GameDetailsActivity::createIntent(OplPcTools::GameArtManager & _art_manager, const QString & _game_id)
+QSharedPointer<Intent> GameDetailsActivity::createIntent(GameArtManager & _art_manager, const QString & _game_id)
 {
     return QSharedPointer<Intent>(new GameDetailsActivityIntent(_art_manager, _game_id));
 }
@@ -107,14 +111,4 @@ void GameDetailsActivity::renameGame()
     {
         Application::showErrorMessage();
     }
-}
-
-void GameDetailsActivity::initControls()
-{
-    if(mp_game == nullptr)
-    {
-        mp_label_title->clear();
-        return;
-    }
-    mp_label_title->setText(mp_game->title());
 }

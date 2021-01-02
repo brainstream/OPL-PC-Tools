@@ -195,7 +195,7 @@ QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) con
             if(item->is_directory)
                 // TODO: https://doc.qt.io/archives/qq/qq19-plurals.html
                 // return tr("%n item(s)", "", item.size);
-                return tr("<directory>");
+                return QObject::tr("<directory>");
             return makeBytesDisplayString(item->size);
         }
         break;

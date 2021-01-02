@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_VMCCREATEDIALOG__
 #define __OPLPCTOOLS_VMCCREATEDIALOG__
 
+#include <OplPcTools/Vmc.h>
 #include "ui_VmcCreateDialog.h"
 
 namespace OplPcTools {
@@ -31,9 +32,17 @@ class VmcCreateDialog : public QDialog, private Ui::VmcCreateDialog
 public:
     explicit VmcCreateDialog(QWidget * _parent = nullptr);
 
+    const Vmc * createdVmc() const
+    {
+        return mp_created_vmc;
+    }
+
 private:
     void create();
     void onFilenameChanged();
+
+private:
+    const Vmc * mp_created_vmc;
 };
 
 } // namespace UI

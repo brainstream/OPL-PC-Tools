@@ -122,6 +122,7 @@ GameArtsWidget::GameArtsWidget(const QString & _game_id, OplPcTools::GameArtMana
     connect(mp_list_arts, &QListWidget::customContextMenuRequested, this, &GameArtsWidget::showItemContextMenu);
     connect(mp_action_change_art, &QAction::triggered, this, &GameArtsWidget::changeGameArt);
     connect(mp_action_delete_art, &QAction::triggered, this, &GameArtsWidget::deleteGameArt);
+    connect(mp_list_arts, &QListWidget::itemDoubleClicked, [this](QListWidgetItem *){ changeGameArt(); });
 }
 
 void GameArtsWidget::setupShortcuts()

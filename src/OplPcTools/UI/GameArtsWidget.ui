@@ -86,26 +86,5 @@
  <resources>
   <include location="../Resources/Resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>mp_list_arts</sender>
-   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
-   <receiver>GameArtsWidget</receiver>
-   <slot>changeGameArt()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>312</x>
-     <y>303</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>415</x>
-     <y>287</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>renameGame()</slot>
-  <slot>changeGameArt()</slot>
- </slots>
+ <connections/>
 </ui>

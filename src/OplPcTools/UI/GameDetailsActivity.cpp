@@ -22,6 +22,7 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameArtsWidget.h>
+#include <OplPcTools/UI/GameConfigWidget.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 
 using namespace OplPcTools;
@@ -66,6 +67,7 @@ GameDetailsActivity::GameDetailsActivity(const QString _game_id, OplPcTools::Gam
     setupShortcuts();
     mp_tabs->setCurrentIndex(0);
     mp_tab_arts->layout()->addWidget(new GameArtsWidget(_game_id, _art_manager, this));
+    mp_tab_config->layout()->addWidget(new GameConfigWidget(this));
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsActivity::close);
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
     initControls();

@@ -216,7 +216,6 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     activateCollectionControls(false);
     activateItemControls(nullptr);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
-    connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(&Library::instance(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
     connect(&Library::instance().games(), &GameCollection::gameAdded, this, &GameListWidget::onGameAdded);
     connect(&Library::instance().games(), &GameCollection::gameRenamed, this, &GameListWidget::onGameRenamed);

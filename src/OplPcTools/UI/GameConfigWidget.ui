@@ -28,35 +28,48 @@
    </property>
    <item>
     <layout class="QGridLayout" name="mp_layout_4">
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mp_edit_game_id">
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="mp_label_elf">
-       <property name="text">
-        <string>Custom ELF</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
+     <item row="4" column="1">
       <widget class="QLineEdit" name="mp_edit_elf">
        <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="0" column="0" colspan="3">
+      <layout class="QHBoxLayout" name="mp_layout_5">
+       <item>
+        <widget class="QLabel" name="mp_label_opl_version">
+         <property name="text">
+          <string>OPL Version</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="mp_combo_opl_version"/>
+       </item>
+       <item>
+        <spacer name="mp_spacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
       <widget class="QLabel" name="mp_label_game_id">
        <property name="text">
         <string>Game ID</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="3" column="2">
       <widget class="QPushButton" name="mp_btn_id_from_game">
        <property name="text">
         <string>Get from the Game</string>
@@ -64,6 +77,27 @@
        <property name="icon">
         <iconset resource="../Resources/Resources.qrc">
          <normaloff>:/images/restore</normaloff>:/images/restore</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="mp_edit_game_id">
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="mp_label_elf">
+       <property name="text">
+        <string>Custom ELF</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="3">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -139,17 +173,62 @@
      <item>
       <layout class="QVBoxLayout" name="mp_layout_3">
        <item>
-        <widget class="QGroupBox" name="mp_groupbox_vmc1">
+        <widget class="QGroupBox" name="mp_groupbox_vmc0">
          <property name="title">
           <string>Virtual Memory Card #1</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
          </property>
          <property name="checked">
           <bool>false</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QComboBox" name="mp_combo_vmc0">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>2</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAlphabetically</enum>
+            </property>
+            <property name="duplicatesEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="mp_btn_create_vmc0">
+            <property name="text">
+             <string>Create VMC</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources/Resources.qrc">
+              <normaloff>:/images/add</normaloff>:/images/add</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="mp_groupbox_vmc1">
+         <property name="title">
+          <string>Virtual Memory Card #2</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QComboBox" name="mp_combo_vmc1">
             <property name="sizePolicy">
@@ -177,57 +256,6 @@
           </item>
           <item>
            <widget class="QPushButton" name="mp_btn_create_vmc1">
-            <property name="text">
-             <string>Create VMC</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../Resources/Resources.qrc">
-              <normaloff>:/images/add</normaloff>:/images/add</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="mp_groupbox_vmc2">
-         <property name="title">
-          <string>Virtual Memory Card #2</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QComboBox" name="mp_combo_vmc2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>2</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::InsertAlphabetically</enum>
-            </property>
-            <property name="duplicatesEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="mp_btn_create_vmc2">
             <property name="text">
              <string>Create VMC</string>
             </property>

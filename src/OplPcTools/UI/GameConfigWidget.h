@@ -21,6 +21,7 @@
 
 #include <QUuid>
 #include <OplPcTools/Game.h>
+#include <OplPcTools/GameConfiguration.h>
 #include <OplPcTools/VmcCollection.h>
 #include "ui_GameConfigWidget.h"
 
@@ -34,21 +35,32 @@ public:
     explicit GameConfigWidget(const Game & _game, QWidget * _parent = nullptr);
 
 private:
-    void initVmcComboboxes();
-    void sortVmcComboboxes();
+    bool loadConfiguration();
+    void initControls();
+    void sortVmcComboBoxes();
+    void setVmcComboBoxValue(QComboBox * _combobox, const QString & _value);
+    void fillVideoModeComboBox();
+    void addVideoModeToComboBox(const GameVideoModeItem & _item);
+    void onOplVerstionChanged();
     void onVmcAdded(const QUuid & _id);
     void onVmcDeleted(const QUuid & _id);
-    void deleteVmcComboboxItem(QComboBox * _combobox, const QUuid & _id);
-    int getVmcComboboxItemIndex(QComboBox * _combobox, const QUuid & _id) const;
+    void deleteVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id);
+    int getVmcComboBoxItemIndex(QComboBox * _combobox, const QUuid & _id) const;
     void onVmcRenamed(const QUuid & _id);
-    void renameVmcComboboxItem(QComboBox * _combobox, const QUuid & _id, const QString & _title);
+    void renameVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id, const QString & _title);
+    void createVmc0();
     void createVmc1();
-    void createVmc2();
     const OplPcTools::Vmc * createVmc();
+    void fillGameIdFromGame();
+    void clear();
+    void save();
 
 private:
     VmcCollection & mr_vmcs;
     const Game & mr_game;
+    QSharedPointer<GameConfiguration> m_config_ptr;
+    int m_opl_version;
+
 };
 
 } // namespace OplPcTools::UI

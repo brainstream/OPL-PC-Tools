@@ -86,153 +86,159 @@
     <name>GameConfigWidget</name>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="14"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="352"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="382"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="41"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="353"/>
+        <location filename="../UI/GameConfigWidget.ui" line="93"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="386"/>
         <source>Custom ELF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="55"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="354"/>
+        <location filename="../UI/GameConfigWidget.ui" line="68"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="384"/>
         <source>Game ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="62"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="355"/>
+        <location filename="../UI/GameConfigWidget.ui" line="43"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="383"/>
+        <source>OPL Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="75"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="385"/>
         <source>Get from the Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="419"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="376"/>
+        <location filename="../UI/GameConfigWidget.ui" line="447"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="407"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="426"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="378"/>
+        <location filename="../UI/GameConfigWidget.ui" line="454"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="409"/>
         <source>Save Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="433"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="380"/>
+        <location filename="../UI/GameConfigWidget.ui" line="461"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="411"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="77"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="356"/>
+        <location filename="../UI/GameConfigWidget.ui" line="111"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="387"/>
         <source>Modes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="83"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="357"/>
+        <location filename="../UI/GameConfigWidget.ui" line="117"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="388"/>
         <source>Mode 1 ― Accurate Reads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="90"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="358"/>
+        <location filename="../UI/GameConfigWidget.ui" line="124"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="389"/>
         <source>Mode 2 ― Synchronous Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="97"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="359"/>
+        <location filename="../UI/GameConfigWidget.ui" line="131"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="390"/>
         <source>Mode 3 ― Unhook Syscalls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="104"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="360"/>
+        <location filename="../UI/GameConfigWidget.ui" line="138"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="391"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="111"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="361"/>
+        <location filename="../UI/GameConfigWidget.ui" line="145"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="392"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="118"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="362"/>
+        <location filename="../UI/GameConfigWidget.ui" line="152"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="393"/>
         <source>Mode 6 ― Disable IGR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="125"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="363"/>
+        <location filename="../UI/GameConfigWidget.ui" line="159"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="394"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="132"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="364"/>
+        <location filename="../UI/GameConfigWidget.ui" line="166"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="395"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="144"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="365"/>
+        <location filename="../UI/GameConfigWidget.ui" line="178"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="396"/>
         <source>Virtual Memory Card #1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="181"/>
-        <location filename="../UI/GameConfigWidget.ui" line="232"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="366"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="368"/>
+        <location filename="../UI/GameConfigWidget.ui" line="212"/>
+        <location filename="../UI/GameConfigWidget.ui" line="260"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="397"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="399"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="195"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="367"/>
+        <location filename="../UI/GameConfigWidget.ui" line="226"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="398"/>
         <source>Virtual Memory Card #2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="269"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="369"/>
+        <location filename="../UI/GameConfigWidget.ui" line="297"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="400"/>
         <source>Graphic Synthesiser Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="287"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="370"/>
+        <location filename="../UI/GameConfigWidget.ui" line="315"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="401"/>
         <source>Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="300"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="371"/>
+        <location filename="../UI/GameConfigWidget.ui" line="328"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="402"/>
         <source>Horizontal Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="332"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="372"/>
+        <location filename="../UI/GameConfigWidget.ui" line="360"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="403"/>
         <source>Vertical Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="364"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="373"/>
+        <location filename="../UI/GameConfigWidget.ui" line="392"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="404"/>
         <source>Skip Full Motion Videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="412"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="374"/>
+        <location filename="../UI/GameConfigWidget.ui" line="440"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="405"/>
         <source>Clear Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -775,22 +781,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="337"/>
+        <location filename="../UI/GameListWidget.cpp" line="336"/>
         <source>Directory</source>
         <translation type="unfinished">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="405"/>
+        <location filename="../UI/GameListWidget.cpp" line="404"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="406"/>
+        <location filename="../UI/GameListWidget.cpp" line="405"/>
         <source>Delete Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="408"/>
+        <location filename="../UI/GameListWidget.cpp" line="407"/>
         <source>Are you sure you want to delete this game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -903,17 +909,17 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="298"/>
+        <location filename="../UI/VmcListWidget.cpp" line="297"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="299"/>
+        <location filename="../UI/VmcListWidget.cpp" line="298"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="301"/>
+        <location filename="../UI/VmcListWidget.cpp" line="300"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>

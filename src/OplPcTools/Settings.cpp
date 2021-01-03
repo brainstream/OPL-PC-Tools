@@ -33,6 +33,7 @@ const QString rename_iso("Settings/RenameISO");
 const QString check_new_version("Settings/CheckNewVersion");
 const QString validate_ul_cfg("Settings/ValidateUlCfg");
 const QString icon_size("Settings/IconSize");
+const QString config_version("Settings/ConfigVersion");
 
 } // namespace Key
 } // namespace
@@ -150,6 +151,16 @@ void Settings::setIconSize(quint32 _size)
         mp_settings->setValue(Key::icon_size, _size);
         emit iconSizeChanged();
     }
+}
+
+int Settings::configVersion() const
+{
+    return mp_settings->value(Key::config_version, 0).toInt();
+}
+
+void Settings::setConfigVersion(int _version)
+{
+    mp_settings->setValue(Key::config_version, _version);
 }
 
 Settings & Settings::instance()

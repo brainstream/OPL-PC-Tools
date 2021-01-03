@@ -212,7 +212,6 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_create_vmc);
     activateItemControls(nullptr);
-    connect(&Settings::instance(), SIGNAL(iconThemeChanged()), this, SLOT(update()));
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcListWidget::setIconSize);
     connect(mp_action_rename_vmc, &QAction::triggered, this, &VmcListWidget::renameVmc);

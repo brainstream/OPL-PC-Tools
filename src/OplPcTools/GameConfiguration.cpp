@@ -17,8 +17,10 @@
  ***********************************************************************************************/
 
 #include <QSet>
+#include <QDir>
 #include <OplPcTools/Maybe.h>
 #include <OplPcTools/GameConfiguration.h>
+#include <OplPcTools/File.h>
 
 using namespace OplPcTools;
 
@@ -62,6 +64,62 @@ Maybe<QPair<QStringRef, QStringRef>> readKeyValue(const QString & _line)
 
 } // namespace
 
+GameVideoMode_v093::GameVideoMode_v093():
+    ntsc({ 0, GameVideoMode::NTSC }),
+    ntsc_non_interlaced({ 1, GameVideoMode::NTSC_Non_Interlaced }),
+    pal({ 2, GameVideoMode::PAL }),
+    pal_non_interlaced({ 3, GameVideoMode::PAL_Non_Interlaced }),
+    pal_60hz({ 4, GameVideoMode::PAL_60Hz }),
+    pal_60hz_non_interlaced({ 5, GameVideoMode::PAL_60Hz_Non_Interlaced }),
+    ps1_ntsc_hdtv_480p_60hz({ 6, GameVideoMode::PS1_NTSC_HDTV_480p_60Hz }),
+    ps1_pal_hdtv_576p_50hz({ 7, GameVideoMode::PS1_PAL_HDTV_576p_50Hz }),
+    hdtv_480p_60hz({ 8, GameVideoMode::HDTV_480p_60Hz }),
+    hdtv_576p_50hz({ 9, GameVideoMode::HDTV_576p_50Hz }),
+    hdtv_720p_60hz({ 10, GameVideoMode::HDTV_720p_60Hz }),
+    hdtv_1080i_60hz({ 11, GameVideoMode::HDTV_1080i_60Hz }),
+    hdtv_1080i_60hz_non_interlaced({ 12, GameVideoMode::HDTV_1080i_60Hz_Non_Interlaced }),
+    hdtv_1080p_60hz({ 13, GameVideoMode::HDTV_1080p_60Hz }),
+    vga_640x480p_60hz({ 14, GameVideoMode::VGA_640x480p_60Hz }),
+    vga_640x480p_72hz({ 15, GameVideoMode::VGA_640x480p_72Hz }),
+    vga_640x480p_75hz({ 16, GameVideoMode::VGA_640x480p_75Hz }),
+    vga_640x480p_85hz({ 17, GameVideoMode::VGA_640x480p_85Hz }),
+    vga_640x480i_60hz({ 18, GameVideoMode::VGA_640x480i_60Hz })
+{
+}
+
+GameVideoMode_v100::GameVideoMode_v100():
+    ntsc({ 0, GameVideoMode::NTSC }),
+    ntsc_non_interlaced({ 1, GameVideoMode::NTSC_Non_Interlaced }),
+    pal({ 2, GameVideoMode::PAL }),
+    pal_non_interlaced({ 3, GameVideoMode::PAL_Non_Interlaced }),
+    pal_60hz({ 4, GameVideoMode::PAL_60Hz }),
+    pal_60hz_non_interlaced({ 5, GameVideoMode::PAL_60Hz_Non_Interlaced }),
+    ps1_ntsc_hdtv_480p_60hz({ 6, GameVideoMode::PS1_NTSC_HDTV_480p_60Hz }),
+    ps1_pal_hdtv_576p_50hz({ 7, GameVideoMode::PS1_PAL_HDTV_576p_50Hz }),
+    hdtv_480p_60hz({ 8, GameVideoMode::HDTV_480p_60Hz }),
+    hdtv_576p_50hz({ 9, GameVideoMode::HDTV_576p_50Hz }),
+    hdtv_720p_60hz({ 10, GameVideoMode::HDTV_720p_60Hz }),
+    hdtv_1080i_60hz({ 11, GameVideoMode::HDTV_1080i_60Hz }),
+    hdtv_1080i_60hz_non_interlaced({ 12, GameVideoMode::HDTV_1080i_60Hz_Non_Interlaced }),
+    vga_640x480p_60hz({ 13, GameVideoMode::VGA_640x480p_60Hz }),
+    vga_640x480p_72hz({ 14, GameVideoMode::VGA_640x480p_72Hz }),
+    vga_640x480p_75hz({ 15, GameVideoMode::VGA_640x480p_75Hz }),
+    vga_640x480p_85hz({ 16, GameVideoMode::VGA_640x480p_85Hz }),
+    vga_640x960i_60hz({ 17, GameVideoMode::VGA_640x960i_60Hz }),
+    vga_800x600p_56hz({ 18, GameVideoMode::VGA_800x600p_56Hz }),
+    vga_800x600p_60hz({ 19, GameVideoMode::VGA_800x600p_60Hz }),
+    vga_800x600p_72hz({ 20, GameVideoMode::VGA_800x600p_72Hz }),
+    vga_800x600p_75hz({ 21, GameVideoMode::VGA_800x600p_75Hz }),
+    vga_800x600p_85hz({ 22, GameVideoMode::VGA_800x600p_85Hz }),
+    vga_1024x768p_60hz({ 23, GameVideoMode::VGA_1024x768p_60Hz }),
+    vga_1024x768p_70hz({ 24, GameVideoMode::VGA_1024x768p_70Hz }),
+    vga_1024x768p_75hz({ 25, GameVideoMode::VGA_1024x768p_75Hz }),
+    vga_1024x768p_85hz({ 26, GameVideoMode::VGA_1024x768p_85Hz }),
+    vga_1280x1024p_60hz({ 27, GameVideoMode::VGA_1280x1024p_60Hz }),
+    vga_1280x1024p_75hz({ 28, GameVideoMode::VGA_1280x1024p_75Hz })
+{
+}
+
 GameConfiguration::GameConfiguration(const QString & _filename) :
     m_filename(_filename),
     m_is_mode_1_enabled(false),
@@ -75,25 +133,33 @@ GameConfiguration::GameConfiguration(const QString & _filename) :
     m_is_gsm_enabled(false),
     m_gsm_x_offset(0),
     m_gsm_y_offset(0),
-    m_gsm_video_mode(GameVideoMode::NTSC),
+    m_gsm_video_mode(-1),
     m_gsm_skip_fmv(false)
 {
+}
+
+QString GameConfiguration::makeFilename(const QString & _library_path, const QString & _game_id)
+{
+    QDir dir((_library_path.endsWith(QDir::separator()) ? _library_path : _library_path + QDir::separator()) + "CFG");
+    return dir.absoluteFilePath(_game_id + ".cfg");
 }
 
 QSharedPointer<GameConfiguration> GameConfiguration::load(const QString & _filename)
 {
     GameConfiguration * config = new GameConfiguration(_filename);
     QFile file(_filename);
-    file.open(QFile::ReadOnly | QFile::Text); // TODO: openFile
-
-    for(;;)
+    if(file.exists())
     {
-        QByteArray bytes = file.readLine();
-        if(bytes.isNull())
-            break;
-        auto kv = readKeyValue(QString::fromLatin1(bytes));
-        if(kv.hasValue())
-            config->parse(kv->first, kv->second);
+        openFile(file, QFile::ReadOnly | QFile::Text);
+        for(;;)
+        {
+            QByteArray bytes = file.readLine();
+            if(bytes.isNull())
+                break;
+            auto kv = readKeyValue(QString::fromLatin1(bytes));
+            if(kv.hasValue())
+                config->parse(kv->first, kv->second);
+        }
     }
     return QSharedPointer<GameConfiguration>(config);
 }
@@ -115,7 +181,7 @@ void GameConfiguration::parse(const QStringRef & _key, const QStringRef & _value
     else if(Key::enable_gsm.compare(_key) == 0)
         m_is_gsm_enabled = _value.toInt() == 1;
     else if(Key::gsm_v_mode.compare(_key) == 0)
-        m_gsm_video_mode = static_cast<GameVideoMode>(_value.toInt());
+        m_gsm_video_mode = _value.toInt();
     else if(Key::gsm_x_offset.compare(_key) == 0)
         m_gsm_x_offset = _value.toInt();
     else if(Key::gsm_y_offset.compare(_key) == 0)

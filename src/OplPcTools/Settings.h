@@ -52,6 +52,8 @@ public:
     void setValidateUlCfg(bool _value);
     quint32 iconSize() const;
     void setIconSize(quint32 _size);
+    int configVersion() const;
+    void setConfigVersion(int _version);
 
 signals:
     void iconSizeChanged();

@@ -40,6 +40,7 @@ private:
     void renameVmc();
     void deleteVmc();
     void createVmc();
+    void exportFiles();
 
 private:
     void onVmcSelected();

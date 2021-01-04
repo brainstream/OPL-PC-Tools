@@ -30,7 +30,7 @@ namespace {
 
 namespace SettingsKey {
 
-static const QString config_version("OplCfgVersion");
+const QString config_version("OplCfgVersion");
 
 } // namespace SettingsKey
 

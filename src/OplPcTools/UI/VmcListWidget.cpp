@@ -19,8 +19,12 @@
 #include <QShortcut>
 #include <QMessageBox>
 #include <QCheckBox>
+#include <QSettings>
+#include <QStandardPaths>
+#include <QFileDialog>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
@@ -31,6 +35,77 @@
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
+
+namespace {
+
+namespace SettingsKey {
+
+const QString export_dir("VmcExportDir");
+
+} // namespace SettingsKey
+
+class VmcExporter final
+{
+public:
+    explicit VmcExporter(const Vmc & _vmc);
+    void exportTo(const QString _dir);
+
+private:
+    void exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory);
+    void exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory);
+
+private:
+    const QString m_vmc_file;
+};
+
+} // namespace
+
+VmcExporter::VmcExporter(const Vmc & _vmc) :
+    m_vmc_file(_vmc.filepath())
+{
+}
+
+void VmcExporter::exportTo(const QString _dir)
+{
+    QSharedPointer<VmcFS> fs = VmcFS::load(m_vmc_file);
+    exportDirectory(*fs, "/", _dir);
+}
+
+void VmcExporter::exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory)
+{
+    QDir dir(_dest_directory);
+    if(!dir.exists() && !QDir().mkpath(dir.path()))
+        throw Exception(QObject::tr("Unable to create directory \"%1\"").arg(dir.path()));
+    QList<VmcEntryInfo> entries = _fs.enumerateEntries(_vmc_dir);
+    for(const VmcEntryInfo & entry : entries)
+    {
+        QString next_vmc_entry = VmcFS::concatPaths(_vmc_dir, entry.name);
+        if(entry.is_directory)
+        {
+            QString next_directory = dir.absoluteFilePath(entry.name);
+            exportDirectory(_fs, next_vmc_entry, next_directory);
+        }
+        else
+            exportFile(_fs, next_vmc_entry, _dest_directory);
+    }
+}
+
+void VmcExporter::exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory)
+{
+    QSharedPointer<VmcFile> file = _fs.openFile(_vmc_file);
+    if(!file)
+        throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
+
+    char * buffer = new char[file->size()];
+    int64_t size = file->read(buffer, file->size());
+    if(size > 0)
+    {
+        QFile out(QDir(_dest_directory).absoluteFilePath(file->name()));
+        openFile(out, QIODevice::Truncate | QIODevice::WriteOnly);
+        out.write(buffer, size);
+    }
+    delete [] buffer;
+}
 
 class VmcListWidget::VmcTreeModel final : public QAbstractItemModel
 {
@@ -196,6 +271,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_btn_create_vmc->setDefaultAction(mp_action_create_vmc);
     mp_btn_delete_vmc->setDefaultAction(mp_action_delete_vmc);
     mp_btn_rename_vmc->setDefaultAction(mp_action_rename_vmc);
+    mp_btn_export->setDefaultAction(mp_action_export);
     mp_model = new VmcTreeModel(this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -206,6 +282,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_context_menu = new QMenu(this);
+    mp_context_menu->addAction(mp_action_export);
     mp_context_menu->addAction(mp_action_rename_vmc);
     mp_context_menu->addAction(mp_action_delete_vmc);
     mp_context_menu->addAction(mp_action_properties);
@@ -220,6 +297,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
     connect(mp_action_create_vmc, &QAction::triggered, this, &VmcListWidget::createVmc);
     connect(mp_action_properties, &QAction::triggered, this, &VmcListWidget::showVmcProperties);
+    connect(mp_action_export, &QAction::triggered, this, &VmcListWidget::exportFiles);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
     connect(mp_tree_vmcs, &QTreeView::doubleClicked, this, &VmcListWidget::onTreeViewDoubleClicked);
     if(Library::instance().vmcs().count() > 0)
@@ -285,6 +363,7 @@ void VmcListWidget::activateItemControls(const Vmc * _vmc)
     mp_action_rename_vmc->setDisabled(disabled);
     mp_action_delete_vmc->setDisabled(disabled);
     mp_action_properties->setDisabled(disabled);
+    mp_action_export->setDisabled(disabled);
 }
 
 void VmcListWidget::deleteVmc()
@@ -350,5 +429,31 @@ void VmcListWidget::onTreeViewDoubleClicked(const QModelIndex & _index)
     {
         auto intent = VmcDetailsActivity::createIntent(*vmc);
         Application::pushActivity(*intent);
+    }
+}
+
+void VmcListWidget::exportFiles()
+{
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
+    if(!vmc)
+    {
+        return;
+    }
+    QSettings settings;
+    QString directory = settings.value(SettingsKey::export_dir).toString();
+    if(directory.isEmpty())
+        directory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    directory = QFileDialog::getExistingDirectory(this, tr("Select directory"), directory);
+    if(directory.isEmpty())
+        return;
+    settings.setValue(SettingsKey::export_dir, directory);
+    try
+    {
+        VmcExporter exporter(*vmc);
+        exporter.exportTo(directory);
+    }
+    catch(const Exception & _exception)
+    {
+        Application::showErrorMessage(_exception.message());
     }
 }

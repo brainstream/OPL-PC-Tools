@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>935</width>
-    <height>586</height>
+    <height>645</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,7 +95,7 @@
       </widget>
      </item>
      <item row="1" column="0" colspan="3">
-      <widget class="Line" name="line">
+      <widget class="Line" name="mp_line">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -287,120 +287,175 @@
    </item>
    <item>
     <widget class="QGroupBox" name="mp_groupbox_gsm">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>5</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="title">
       <string>Graphic Synthesiser Mode</string>
      </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="mp_label_video_mode">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Video Mode</string>
-        </property>
-       </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <layout class="QVBoxLayout" name="mp_layout_6">
+        <item>
+         <widget class="QRadioButton" name="mp_radio_disable_gsm">
+          <property name="text">
+           <string>Disbale</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="mp_radio_enable_gsm">
+          <property name="text">
+           <string>Enable</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="mp_radio_use_global_gsm">
+          <property name="text">
+           <string>Use Global Settings</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="mp_spacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="mp_label_hpos">
+      <item>
+       <widget class="QGroupBox" name="mp_groupbox_gsm_settings">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>5</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="text">
-         <string>Horizontal Position</string>
+        <property name="title">
+         <string>Settings</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="mp_spinbox_hpos">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+        <property name="checkable">
+         <bool>false</bool>
         </property>
-        <property name="minimum">
-         <number>-10000</number>
+        <property name="checked">
+         <bool>false</bool>
         </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-        <property name="singleStep">
-         <number>0</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="mp_label_vpos">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Vertical Position</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QSpinBox" name="mp_spinbox_vpos">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimum">
-         <number>-10000</number>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-        <property name="singleStep">
-         <number>0</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QCheckBox" name="mp_checkbox_skip_fmv">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Skip Full Motion Videos</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="4">
-       <widget class="QComboBox" name="mp_combo_video_mode">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="mp_layout_7">
+           <item>
+            <widget class="QLabel" name="mp_label_video_mode">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Video Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="mp_combo_video_mode">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="mp_checkbox_skip_fmv">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Skip Full Motion Videos</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="mp_layout_8">
+           <item>
+            <widget class="QLabel" name="mp_label_hpos">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Horizontal Position</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="mp_spinbox_hpos">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-10000</number>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="mp_label_vpos">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Vertical Position</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="mp_spinbox_vpos">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-10000</number>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -466,6 +521,33 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mp_combo_opl_version</tabstop>
+  <tabstop>mp_edit_game_id</tabstop>
+  <tabstop>mp_btn_id_from_game</tabstop>
+  <tabstop>mp_edit_elf</tabstop>
+  <tabstop>mp_checkbox_mode_1</tabstop>
+  <tabstop>mp_checkbox_mode_2</tabstop>
+  <tabstop>mp_checkbox_mode_3</tabstop>
+  <tabstop>mp_checkbox_mode_4</tabstop>
+  <tabstop>mp_checkbox_mode_5</tabstop>
+  <tabstop>mp_checkbox_mode_6</tabstop>
+  <tabstop>mp_checkbox_mode_7</tabstop>
+  <tabstop>mp_checkbox_mode_8</tabstop>
+  <tabstop>mp_combo_vmc0</tabstop>
+  <tabstop>mp_btn_create_vmc0</tabstop>
+  <tabstop>mp_combo_vmc1</tabstop>
+  <tabstop>mp_btn_create_vmc1</tabstop>
+  <tabstop>mp_radio_disable_gsm</tabstop>
+  <tabstop>mp_radio_enable_gsm</tabstop>
+  <tabstop>mp_radio_use_global_gsm</tabstop>
+  <tabstop>mp_combo_video_mode</tabstop>
+  <tabstop>mp_checkbox_skip_fmv</tabstop>
+  <tabstop>mp_spinbox_hpos</tabstop>
+  <tabstop>mp_spinbox_vpos</tabstop>
+  <tabstop>mp_btn_clear</tabstop>
+  <tabstop>mp_btn_save</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources/Resources.qrc"/>
  </resources>

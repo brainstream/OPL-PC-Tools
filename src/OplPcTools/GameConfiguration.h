@@ -159,6 +159,8 @@ public:
     inline void setVmc1(const QString & _vmc);
     inline bool isGsmEnabled() const;
     inline void setGsmEnabled(bool _enabled);
+    inline bool isGlobalGsmEnabled() const;
+    inline void setGlobalGsmEnabled(bool _enabled);
     inline int gsmXOffset() const;
     inline void setXOffset(int _offset);
     inline int gsmYOffset() const;
@@ -191,6 +193,7 @@ private:
     int m_gsm_y_offset;
     int m_gsm_video_mode;
     bool m_gsm_skip_fmv;
+    bool m_is_global_gsm_enabled;
 };
 
 const QString & GameConfiguration::gameId() const
@@ -321,6 +324,16 @@ bool GameConfiguration::isGsmEnabled() const
 void GameConfiguration::setGsmEnabled(bool _enabled)
 {
     m_is_gsm_enabled = _enabled;
+}
+
+bool GameConfiguration::isGlobalGsmEnabled() const
+{
+    return m_is_global_gsm_enabled;
+}
+
+void GameConfiguration::setGlobalGsmEnabled(bool _enabled)
+{
+    m_is_global_gsm_enabled = _enabled;
 }
 
 int GameConfiguration::gsmXOffset() const

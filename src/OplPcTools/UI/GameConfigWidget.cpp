@@ -128,24 +128,25 @@ GameConfigWidget::GameConfigWidget(const Game & _game, QWidget * _parent /*= nul
     m_opl_version(getConfigVersionFromSettings(OPL_093))
 {
     setupUi(this);
-    if(loadConfiguration())
-    {
-        initControls();
-        void (QComboBox::*opl_version_changed)(int) = &QComboBox::currentIndexChanged;
-        connect(mp_combo_opl_version, opl_version_changed, [this](int) { onOplVerstionChanged(); });
-        connect(&mr_vmcs, &VmcCollection::vmcAdded, this, &GameConfigWidget::onVmcAdded);
-        connect(&mr_vmcs, &VmcCollection::vmcDeleted, this, &GameConfigWidget::onVmcDeleted);
-        connect(&mr_vmcs, &VmcCollection::vmcRenamed, this, &GameConfigWidget::onVmcRenamed);
-        connect(mp_btn_create_vmc0, &QPushButton::clicked, this, &GameConfigWidget::createVmc0);
-        connect(mp_btn_create_vmc1, &QPushButton::clicked, this, &GameConfigWidget::createVmc1);
-        connect(mp_btn_id_from_game, &QPushButton::clicked, this, &GameConfigWidget::fillGameIdFromGame);
-        connect(mp_btn_clear, &QPushButton::clicked, this, &GameConfigWidget::clear);
-        connect(mp_btn_save, &QPushButton::clicked, this, &GameConfigWidget::save);
-    }
-    else
+    if(!loadConfiguration())
     {
         setDisabled(true);
+        return;
     }
+    initControls();
+    void (QComboBox::*opl_version_changed)(int) = &QComboBox::currentIndexChanged;
+    connect(mp_combo_opl_version, opl_version_changed, [this](int) { onOplVerstionChanged(); });
+    connect(mp_radio_disable_gsm, &QRadioButton::toggled, [this](bool) { onGsmStateChanged(); });
+    connect(mp_radio_enable_gsm, &QRadioButton::toggled, [this](bool) { onGsmStateChanged(); });
+    connect(mp_radio_use_global_gsm, &QRadioButton::toggled, [this](bool) { onGsmStateChanged(); });
+    connect(&mr_vmcs, &VmcCollection::vmcAdded, this, &GameConfigWidget::onVmcAdded);
+    connect(&mr_vmcs, &VmcCollection::vmcDeleted, this, &GameConfigWidget::onVmcDeleted);
+    connect(&mr_vmcs, &VmcCollection::vmcRenamed, this, &GameConfigWidget::onVmcRenamed);
+    connect(mp_btn_create_vmc0, &QPushButton::clicked, this, &GameConfigWidget::createVmc0);
+    connect(mp_btn_create_vmc1, &QPushButton::clicked, this, &GameConfigWidget::createVmc1);
+    connect(mp_btn_id_from_game, &QPushButton::clicked, this, &GameConfigWidget::fillGameIdFromGame);
+    connect(mp_btn_clear, &QPushButton::clicked, this, &GameConfigWidget::clear);
+    connect(mp_btn_save, &QPushButton::clicked, this, &GameConfigWidget::save);
 }
 
 bool GameConfigWidget::loadConfiguration()
@@ -198,8 +199,41 @@ void GameConfigWidget::initControls()
     mp_checkbox_skip_fmv->setChecked(m_config_ptr->gsmSkipFmv());
     mp_spinbox_hpos->setValue(m_config_ptr->gsmXOffset());
     mp_spinbox_vpos->setValue(m_config_ptr->gsmYOffset());
-    fillVideoModeComboBox();
+    reinitOplVersionSensitiveControls();
+    if(m_config_ptr->isGsmEnabled())
+    {
+        if(m_config_ptr->isGlobalGsmEnabled())
+        {
+            if(mp_radio_use_global_gsm->isEnabled())
+                mp_radio_use_global_gsm->setChecked(true);
+            else
+                mp_radio_disable_gsm->setChecked(true);
+        }
+        else
+        {
+            mp_radio_enable_gsm->setChecked(true);
+        }
+    }
+    else
+    {
+        mp_radio_disable_gsm->setChecked(true);
+    }
     mp_combo_video_mode->setCurrentIndex(m_config_ptr->gsmVideoMode());
+    onGsmStateChanged();
+}
+
+void GameConfigWidget::reinitOplVersionSensitiveControls()
+{
+    fillVideoModeComboBox();
+    if(m_opl_version == OPL_093)
+    {
+        mp_radio_disable_gsm->setChecked(true);
+        mp_radio_use_global_gsm->setEnabled(false);
+    }
+    else
+    {
+        mp_radio_use_global_gsm->setEnabled(true);
+    }
 }
 
 void GameConfigWidget::sortVmcComboBoxes()
@@ -297,7 +331,14 @@ void GameConfigWidget::onOplVerstionChanged()
 {
     m_opl_version = mp_combo_opl_version->currentData().toInt();
     Settings::instance().setConfigVersion(m_opl_version);
-    fillVideoModeComboBox();
+    reinitOplVersionSensitiveControls();
+}
+
+void GameConfigWidget::onGsmStateChanged()
+{
+    bool enabled = mp_radio_enable_gsm->isChecked();
+    bool use_global_gsm = mp_radio_use_global_gsm->isChecked();
+    mp_groupbox_gsm_settings->setEnabled(enabled && !use_global_gsm);
 }
 
 void GameConfigWidget::onVmcAdded(const QUuid & _id)
@@ -399,6 +440,7 @@ void GameConfigWidget::clear()
     mp_checkbox_skip_fmv->setChecked(false);
     mp_spinbox_hpos->clear();
     mp_spinbox_vpos->clear();
+    mp_radio_disable_gsm->setChecked(true);
     save();
 }
 
@@ -417,7 +459,10 @@ void GameConfigWidget::save()
     m_config_ptr->setVideoMode(mp_combo_video_mode->currentIndex());
     m_config_ptr->setVmc0(mp_combo_vmc0->currentText());
     m_config_ptr->setVmc1(mp_combo_vmc1->currentText());
-    m_config_ptr->setGsmEnabled(mp_groupbox_gsm->isChecked());
+    bool is_gsm_enabled = mp_groupbox_gsm->isChecked();
+    bool is_gsm_global_enabled = mp_radio_use_global_gsm->isChecked();
+    m_config_ptr->setGsmEnabled(is_gsm_enabled || is_gsm_global_enabled);
+    m_config_ptr->setGlobalGsmEnabled(is_gsm_global_enabled);
     m_config_ptr->setSkipFmv(mp_checkbox_skip_fmv->isChecked());
     m_config_ptr->setXOffset(mp_spinbox_hpos->value());
     m_config_ptr->setYOffset(mp_spinbox_vpos->value());

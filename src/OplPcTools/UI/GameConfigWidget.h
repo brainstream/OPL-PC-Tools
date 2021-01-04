@@ -37,11 +37,13 @@ public:
 private:
     bool loadConfiguration();
     void initControls();
+    void reinitOplVersionSensitiveControls();
     void sortVmcComboBoxes();
     void setVmcComboBoxValue(QComboBox * _combobox, const QString & _value);
     void fillVideoModeComboBox();
     void addVideoModeToComboBox(const GameVideoModeItem & _item);
     void onOplVerstionChanged();
+    void onGsmStateChanged();
     void onVmcAdded(const QUuid & _id);
     void onVmcDeleted(const QUuid & _id);
     void deleteVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id);

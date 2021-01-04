@@ -46,6 +46,7 @@ const QString gsm_v_mode("$GSMVMode");
 const QString gsm_x_offset("$GSMXOffset");
 const QString gsm_y_offset("$GSMYOffset");
 const QString gsm_skip_videos("$GSMSkipVideos");
+const QString gsm_source("$GSMSource");
 const QString game_id("$DNAS");
 const QString custom_elf("$AltStartup");
 const QString vmc_0("$VMC_0");
@@ -134,7 +135,8 @@ GameConfiguration::GameConfiguration(const QString & _filename) :
     m_gsm_x_offset(0),
     m_gsm_y_offset(0),
     m_gsm_video_mode(-1),
-    m_gsm_skip_fmv(false)
+    m_gsm_skip_fmv(false),
+    m_is_global_gsm_enabled(false)
 {
 }
 
@@ -180,6 +182,8 @@ void GameConfiguration::parse(const QStringRef & _key, const QStringRef & _value
     }
     else if(Key::enable_gsm.compare(_key) == 0)
         m_is_gsm_enabled = _value.toInt() == 1;
+    else if(Key::gsm_source.compare(_key) == 0)
+        m_is_global_gsm_enabled = _value.toInt() == 0 ? true : false;
     else if(Key::gsm_v_mode.compare(_key) == 0)
         m_gsm_video_mode = _value.toInt();
     else if(Key::gsm_x_offset.compare(_key) == 0)
@@ -202,8 +206,8 @@ void GameConfiguration::save()
 {
     QFile src_file(m_filename);
     QFile tmp_file(m_filename + ".tmp");
-    src_file.open(QFile::ReadOnly | QFile::Text); // TODO: openFile
-    tmp_file.open(QFile::WriteOnly | QFile::Truncate | QFile::Text); // TODO: openFile
+    src_file.open(QFile::ReadOnly | QFile::Text);
+    openFile(tmp_file, QFile::WriteOnly | QFile::Truncate | QFile::Text);
     QSet<QString> written_keys;
     for(;;)
     {
@@ -229,6 +233,7 @@ void GameConfiguration::save()
     };
     write_if_not_written(Key::compatibility);
     write_if_not_written(Key::enable_gsm);
+    write_if_not_written(Key::gsm_source);
     write_if_not_written(Key::gsm_v_mode);
     write_if_not_written(Key::gsm_x_offset);
     write_if_not_written(Key::gsm_y_offset);
@@ -261,6 +266,8 @@ bool GameConfiguration::write(QFile & _file, const QString & _key) const
     }
     else if(Key::enable_gsm.compare(_key) == 0)
         value = m_is_gsm_enabled ? "1" : "0";
+    else if(Key::gsm_source.compare(_key) == 0)
+        value = m_is_global_gsm_enabled ? "0" : "1";
     else if(Key::gsm_v_mode.compare(_key) == 0)
         value = QString::number(static_cast<int>(m_gsm_video_mode));
     else if(Key::gsm_x_offset.compare(_key) == 0)

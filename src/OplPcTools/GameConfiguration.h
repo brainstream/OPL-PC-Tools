@@ -169,6 +169,8 @@ public:
     inline void setVideoMode(int _index);
     inline bool gsmSkipFmv() const;
     inline void setSkipFmv(bool _skip);
+    inline bool isEmulationFieldFlippingEnabledd() const;
+    inline void setEmulationFieldFlippingEnabledd(bool _enabled);
 
 private:
     void parse(const QStringRef & _key, const QStringRef & _value);
@@ -193,6 +195,7 @@ private:
     int m_gsm_y_offset;
     int m_gsm_video_mode;
     bool m_gsm_skip_fmv;
+    bool m_gsm_emulate_field_flipping;
     bool m_is_global_gsm_enabled;
 };
 
@@ -374,6 +377,16 @@ bool GameConfiguration::gsmSkipFmv() const
 void GameConfiguration::setSkipFmv(bool _skip)
 {
     m_gsm_skip_fmv = _skip;
+}
+
+bool GameConfiguration::isEmulationFieldFlippingEnabledd() const
+{
+    return m_gsm_emulate_field_flipping;
+}
+
+void GameConfiguration::setEmulationFieldFlippingEnabledd(bool _enabled)
+{
+    m_gsm_emulate_field_flipping = _enabled;
 }
 
 } // namespace OplPcTools

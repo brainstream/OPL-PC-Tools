@@ -226,6 +226,7 @@ void GameConfigWidget::initControls()
         mp_radio_disable_gsm->setChecked(true);
     }
     mp_combo_video_mode->setCurrentIndex(m_config_ptr->gsmVideoMode());
+    mp_checkbox_emulate_field_flipping->setChecked(m_config_ptr->isEmulationFieldFlippingEnabledd());
     onGsmStateChanged();
 }
 
@@ -236,10 +237,13 @@ void GameConfigWidget::reinitOplVersionSensitiveControls()
     {
         mp_radio_disable_gsm->setChecked(true);
         mp_radio_use_global_gsm->setEnabled(false);
+        mp_checkbox_emulate_field_flipping->setChecked(false);
+        mp_checkbox_emulate_field_flipping->setEnabled(false);
     }
     else
     {
         mp_radio_use_global_gsm->setEnabled(true);
+        mp_checkbox_emulate_field_flipping->setEnabled(true);
     }
 }
 
@@ -445,6 +449,7 @@ void GameConfigWidget::clear()
     mp_combo_vmc1->setCurrentIndex(-1);
     mp_groupbox_gsm->setChecked(false);
     mp_checkbox_skip_fmv->setChecked(false);
+    mp_checkbox_emulate_field_flipping->setChecked(false);
     mp_spinbox_hpos->clear();
     mp_spinbox_vpos->clear();
     mp_radio_disable_gsm->setChecked(true);
@@ -471,6 +476,7 @@ void GameConfigWidget::save()
     m_config_ptr->setGsmEnabled(is_gsm_enabled || is_gsm_global_enabled);
     m_config_ptr->setGlobalGsmEnabled(is_gsm_global_enabled);
     m_config_ptr->setSkipFmv(mp_checkbox_skip_fmv->isChecked());
+    m_config_ptr->setEmulationFieldFlippingEnabledd(mp_checkbox_emulate_field_flipping->isChecked());
     m_config_ptr->setXOffset(mp_spinbox_hpos->value());
     m_config_ptr->setYOffset(mp_spinbox_vpos->value());
     m_config_ptr->save();

@@ -455,6 +455,13 @@
            </item>
           </layout>
          </item>
+         <item>
+          <widget class="QCheckBox" name="mp_checkbox_emulate_field_flipping">
+           <property name="text">
+            <string>Emulate FIELD Flipping</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -545,6 +552,7 @@
   <tabstop>mp_checkbox_skip_fmv</tabstop>
   <tabstop>mp_spinbox_hpos</tabstop>
   <tabstop>mp_spinbox_vpos</tabstop>
+  <tabstop>mp_checkbox_emulate_field_flipping</tabstop>
   <tabstop>mp_btn_clear</tabstop>
   <tabstop>mp_btn_save</tabstop>
  </tabstops>

@@ -46,6 +46,7 @@ const QString gsm_v_mode("$GSMVMode");
 const QString gsm_x_offset("$GSMXOffset");
 const QString gsm_y_offset("$GSMYOffset");
 const QString gsm_skip_videos("$GSMSkipVideos");
+const QString gsm_emulate_field_flipping("$GSMFIELDFix");
 const QString gsm_source("$GSMSource");
 const QString game_id("$DNAS");
 const QString custom_elf("$AltStartup");
@@ -136,7 +137,8 @@ GameConfiguration::GameConfiguration(const QString & _filename) :
     m_gsm_y_offset(0),
     m_gsm_video_mode(-1),
     m_gsm_skip_fmv(false),
-    m_is_global_gsm_enabled(false)
+    m_is_global_gsm_enabled(false),
+    m_gsm_emulate_field_flipping(false)
 {
 }
 
@@ -192,6 +194,8 @@ void GameConfiguration::parse(const QStringRef & _key, const QStringRef & _value
         m_gsm_y_offset = _value.toInt();
     else if(Key::gsm_skip_videos.compare(_key) == 0)
         m_gsm_skip_fmv = _value.toInt() == 1;
+    else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
+        m_gsm_emulate_field_flipping = _value.toInt() == 1;
     else if(Key::game_id.compare(_key) == 0)
         m_game_id = _value.toString();
     else if(Key::custom_elf.compare(_key) == 0)
@@ -238,6 +242,7 @@ void GameConfiguration::save()
     write_if_not_written(Key::gsm_x_offset);
     write_if_not_written(Key::gsm_y_offset);
     write_if_not_written(Key::gsm_skip_videos);
+    write_if_not_written(Key::gsm_emulate_field_flipping);
     write_if_not_written(Key::game_id);
     write_if_not_written(Key::custom_elf);
     write_if_not_written(Key::vmc_0);
@@ -276,6 +281,8 @@ bool GameConfiguration::write(QFile & _file, const QString & _key) const
         value = QString::number(m_gsm_y_offset);
     else if(Key::gsm_skip_videos.compare(_key) == 0)
         value = m_gsm_skip_fmv ? "1" : "0";
+    else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
+        value = m_gsm_emulate_field_flipping ? "1" : "0";
     else if(Key::game_id.compare(_key) == 0)
         value = m_game_id;
     else if(Key::custom_elf.compare(_key) == 0)

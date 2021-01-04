@@ -16,8 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QSettings>
 #include <OplPcTools/Exception.h>
-#include <OplPcTools/Settings.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
@@ -28,6 +28,12 @@ using namespace OplPcTools::UI;
 
 namespace {
 
+namespace SettingsKey {
+
+static const QString config_version("OplCfgVersion");
+
+} // namespace SettingsKey
+
 enum OplVersion: int
 {
     OPL_093,
@@ -36,7 +42,8 @@ enum OplVersion: int
 
 int getConfigVersionFromSettings(int _defualt)
 {
-    int version = Settings::instance().configVersion();
+    QSettings settings;
+    int version =  settings.value(SettingsKey::config_version, -1).toInt();
     switch(version)
     {
     case OPL_093:
@@ -330,7 +337,7 @@ void GameConfigWidget::addVideoModeToComboBox(const GameVideoModeItem & _item)
 void GameConfigWidget::onOplVerstionChanged()
 {
     m_opl_version = mp_combo_opl_version->currentData().toInt();
-    Settings::instance().setConfigVersion(m_opl_version);
+    QSettings().setValue(SettingsKey::config_version, m_opl_version);
     reinitOplVersionSensitiveControls();
 }
 

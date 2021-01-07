@@ -291,11 +291,12 @@ void VmcFormatter::writeFAT()
     const uint32_t fat_cluster_count = static_cast<uint32_t>(std::ceil(static_cast<double>(fat_entry_count) / pointers_per_cluster));
     const uint32_t ifc_cluster_count = static_cast<uint32_t>(std::ceil(static_cast<double>(fat_cluster_count) / pointers_per_cluster));
     const uint32_t ifcs_size_in_bytes = ifc_cluster_count * mp_sb->cluster_size;
+    const uint32_t fat_start_cluster_index = mp_sb->clusters_per_block + ifc_cluster_count;
+    // IFCs
+    //
     QScopedArrayPointer<char> ifc_clusters_raw(new char[ifcs_size_in_bytes]);
     std::memset(ifc_clusters_raw.data(), 0, ifcs_size_in_bytes);
     uint32_t * ifcs = reinterpret_cast<uint32_t *>(ifc_clusters_raw.data());
-    const uint32_t fat_start_cluster_index = mp_sb->clusters_per_block + ifc_cluster_count + 1;
-    // IFCs
     for(uint32_t i = 0; i < fat_cluster_count; ++i)
     {
         ifcs[i] = fat_start_cluster_index + i;
@@ -303,11 +304,11 @@ void VmcFormatter::writeFAT()
     m_file.seek(mp_sb->clusters_per_block * mp_sb->cluster_size);
     m_file.write(ifc_clusters_raw.data(), ifcs_size_in_bytes);
     ifc_clusters_raw.reset();
-    QScopedPointer<char> fat_cluster_raw(new char[mp_sb->cluster_size]);
     // FATs
     //
+    QScopedPointer<char> fat_cluster_raw(new char[mp_sb->cluster_size]);
     FATEntry fat_entry;
-    fat_entry.flag = 0x80; // TODO: flags
+    fat_entry.flag = 0x7F; // TODO: flags
     fat_entry.cluster = 0xFFFFFF;
     for(uint32_t i = 0; i < mp_sb->fat_entries_per_cluster; ++i)
     {
@@ -322,6 +323,7 @@ void VmcFormatter::writeFAT()
     {
         m_file.write(fat_cluster_raw.data(), (fat_entry_count % mp_sb->fat_entries_per_cluster) * sizeof(FATEntry));
     }
+    fat_cluster_raw.reset();
     // Root directory
     //
     writeRootDirectory();

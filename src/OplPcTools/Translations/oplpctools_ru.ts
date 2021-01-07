@@ -1170,22 +1170,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="509"/>
+        <location filename="../VmcFS.cpp" line="511"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="572"/>
+        <location filename="../VmcFS.cpp" line="574"/>
         <source>Path not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="658"/>
+        <location filename="../VmcFS.cpp" line="660"/>
         <source>File not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="660"/>
+        <location filename="../VmcFS.cpp" line="662"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation type="unfinished"></translation>
     </message>

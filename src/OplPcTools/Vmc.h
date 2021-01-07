@@ -30,8 +30,7 @@ enum class VmcSize
     _16M  = 16,
     _32M  = 32,
     _64M  = 64,
-    _128M = 128,
-    _256M = 256
+    _128M = 128
 };
 
 class Vmc final

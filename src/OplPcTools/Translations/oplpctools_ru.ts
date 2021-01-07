@@ -912,11 +912,6 @@
         <source>128 Mebibytes</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="37"/>
-        <source>256 Mebibytes</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
@@ -939,22 +934,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="376"/>
+        <location filename="../UI/VmcListWidget.cpp" line="374"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="377"/>
+        <location filename="../UI/VmcListWidget.cpp" line="375"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="379"/>
+        <location filename="../UI/VmcListWidget.cpp" line="377"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="446"/>
+        <location filename="../UI/VmcListWidget.cpp" line="444"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1006,7 +1001,7 @@
 <context>
     <name>OplPcTools::VmcCollection</name>
     <message>
-        <location filename="../VmcCollection.cpp" line="111"/>
+        <location filename="../VmcCollection.cpp" line="109"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1140,11 +1135,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="217"/>
-        <source>256 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../File.cpp" line="38"/>
         <source>Name must not contain following symbols</source>
         <translation type="unfinished"></translation>
@@ -1175,22 +1165,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="321"/>
+        <location filename="../VmcFS.cpp" line="214"/>
+        <source>VMC size must be greater than or equal to 8 Mib and less than or equal to 128 Mib.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../VmcFS.cpp" line="509"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="384"/>
+        <location filename="../VmcFS.cpp" line="572"/>
         <source>Path not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="470"/>
+        <location filename="../VmcFS.cpp" line="658"/>
         <source>File not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="472"/>
+        <location filename="../VmcFS.cpp" line="660"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation type="unfinished"></translation>
     </message>

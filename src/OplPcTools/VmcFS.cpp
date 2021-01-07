@@ -27,11 +27,11 @@
 //   ┃ ┃
 //   ┃ ┃    Lists of FAT clusters. Every value points to a FAT.
 //   ┃ ┃    ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
-//   ┃ ┗━━━━┥25F│260│261│262│263│264│265│266│267│268│269│26A│26B│26C│26D│...│35E│
+//   ┃ ┗━━━━┥261│262│263│264│265│266│267│268│269│26A│26B│26C│26D│26E│26F│...│360│
 //   ┃      └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
-//   ┃      ┌─┬─┬─┬─┬─┬─┬─┬─┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬───┬───┐
-//   ┗━━━━━━┥8│9│A│B│C│D│E│F│10│11│12│13│14│15│16│17│18│19│1A│1B│...│25E│
-//          └┰┴─┴─┴─┴─┴─┴─┴─┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴───┴───┘
+//   ┃      ┌─┬─┬─┬─┬─┬─┬─┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬───┬───┐
+//   ┗━━━━━━┥F│A│B│C│E│E│F│10│11│12│13│14│15│16│17│18│19│1A│1B│1C│...│260│
+//          └┰┴─┴─┴─┴─┴─┴─┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴───┴───┘
 //           ┃
 //           ┃   FAT. The cluster numbers are relative to the alloc_offset.
 //           ┃   ┌──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬───┐
@@ -51,10 +51,13 @@
 // ================================================================================================
 
 #include <cstring>
+#include <cmath>
 #include <functional>
 #include <optional>
 #include <QRegExp>
 #include <QScopedPointer>
+#include <QDateTime>
+#include <QTimeZone>
 #include <OplPcTools/File.h>
 #include <OplPcTools/VmcFS.h>
 
@@ -64,6 +67,9 @@
 using namespace OplPcTools;
 
 namespace {
+
+const char * g_vmc_magic = "Sony PS2 Memory Card Format ";
+const char * g_vmc_version = "1.2.0.0";
 
 struct VmcSuperblock final
 {                                      // OFFSET:  (DEC)  (HEX)
@@ -166,7 +172,194 @@ struct EntryInfo
     }
 };
 
+class VmcFormatter final
+{
+public:
+    static void format(const QString & _filename, uint8_t _size_mib);
+
+private:
+    VmcFormatter(const QString & _filename, uint8_t _size_mib);
+    ~VmcFormatter();
+    void format();
+    void clearFile();
+    void initSuperblock();
+    void writeSuperblock();
+    void writeFAT();
+    void writeRootDirectory();
+
+private:
+    VmcSuperblock * mp_sb;
+    QFile m_file;
+    uint8_t m_size_mib;
+};
+
 } // namespace
+
+VmcFormatter::VmcFormatter(const QString & _filename, uint8_t _size_mib) :
+    mp_sb(new VmcSuperblock { }),
+    m_file(_filename),
+    m_size_mib(_size_mib)
+{
+}
+
+VmcFormatter::~VmcFormatter()
+{
+    delete mp_sb;
+}
+
+void VmcFormatter::format(const QString & _filename, uint8_t _size_mib)
+{
+    if(_size_mib < 8 || _size_mib > 128)
+    {
+        throw ValidationException(QObject::tr(
+            "VMC size must be greater than or equal to 8 Mib and less than or equal to 128 Mib."
+        ));
+    }
+    VmcFormatter(_filename, _size_mib).format();
+}
+
+void VmcFormatter::format()
+{
+    openFile(m_file, QIODevice::WriteOnly | QIODevice::NewOnly);
+    clearFile();
+    initSuperblock();
+    writeSuperblock();
+    writeFAT();
+}
+
+void VmcFormatter::clearFile()
+{
+    m_file.seek(0);
+    const size_t buffer_size = 1024 * 1024;
+    QScopedArrayPointer<char> buffer(new char[buffer_size]);
+    std::memset(buffer.data(), -1, buffer_size);
+    for(int i = 0; i < m_size_mib; ++i)
+    {
+        m_file.write(buffer.data(), buffer_size);
+    }
+}
+
+void VmcFormatter::initSuperblock()
+{
+    const uint32_t card_size_in_bytes = m_size_mib * 1024 * 1024;
+    mp_sb->pagesize = 512;
+    mp_sb->pages_per_cluster = 2;
+    mp_sb->clusters_per_block = 8;
+    mp_sb->cluster_size = mp_sb->pagesize * mp_sb->pages_per_cluster;
+    mp_sb->pages_per_block = mp_sb->clusters_per_block * mp_sb->pages_per_cluster;
+    mp_sb->clusters_per_card = card_size_in_bytes / mp_sb->cluster_size;
+    const uint32_t pointers_per_cluster = mp_sb->cluster_size / sizeof(uint32_t);
+    mp_sb->fat_entries_per_cluster = pointers_per_cluster;
+    const uint32_t blocks_per_card = mp_sb->clusters_per_card / mp_sb->clusters_per_block;
+    mp_sb->backup_block1 = blocks_per_card - 1;
+    mp_sb->backup_block2 = blocks_per_card - 2;
+    mp_sb->cardtype = 2;
+    mp_sb->cardflags = 0x2b;
+    mp_sb->cardform = 1;
+    mp_sb->rootdir_cluster = mp_sb->rootdir_cluster2 = 0;
+    mp_sb->unknown5 = -1;
+    std::strcpy(mp_sb->magic, g_vmc_magic);
+    std::strcpy(mp_sb->version, g_vmc_version);
+    std::memset(mp_sb->bad_block_list, -1, sizeof(VmcSuperblock::bad_block_list));
+    const uint32_t available_cluster_count = mp_sb->clusters_per_card - mp_sb->clusters_per_block * 3; // superblock and 2 backups
+    const uint32_t fat_list_count = static_cast<uint32_t>(std::ceil(
+        static_cast<double>(available_cluster_count) / (pointers_per_cluster + 1 + 1.0d / pointers_per_cluster)
+    ));
+    const uint32_t ifc_list_count = static_cast<uint32_t>(
+        std::ceil(static_cast<double>(fat_list_count) / pointers_per_cluster)
+    );
+    for(uint32_t i = 0; i < ifc_list_count; ++i)
+    {
+        mp_sb->ifc_ptr_list[i] = mp_sb->clusters_per_block + i; // IFCs are placed next to the superblock
+    }
+    mp_sb->alloc_offset = mp_sb->clusters_per_block + fat_list_count + ifc_list_count;
+    mp_sb->alloc_end = mp_sb->clusters_per_card - 2 * mp_sb->clusters_per_block; // 2 backup blocks at the end of the card
+    mp_sb->max_allocatable_clusters = available_cluster_count - fat_list_count - ifc_list_count;
+}
+
+void VmcFormatter::writeSuperblock()
+{
+    m_file.seek(0);
+    const char * buffer = reinterpret_cast<const char *>(mp_sb);
+    m_file.write(buffer, sizeof(VmcSuperblock));
+}
+
+void VmcFormatter::writeFAT()
+{
+    const uint32_t fat_entry_count = mp_sb->max_allocatable_clusters;
+    const uint32_t pointers_per_cluster = mp_sb->fat_entries_per_cluster;
+    const uint32_t fat_cluster_count = static_cast<uint32_t>(std::ceil(static_cast<double>(fat_entry_count) / pointers_per_cluster));
+    const uint32_t ifc_cluster_count = static_cast<uint32_t>(std::ceil(static_cast<double>(fat_cluster_count) / pointers_per_cluster));
+    const uint32_t ifcs_size_in_bytes = ifc_cluster_count * mp_sb->cluster_size;
+    QScopedArrayPointer<char> ifc_clusters_raw(new char[ifcs_size_in_bytes]);
+    std::memset(ifc_clusters_raw.data(), 0, ifcs_size_in_bytes);
+    uint32_t * ifcs = reinterpret_cast<uint32_t *>(ifc_clusters_raw.data());
+    const uint32_t fat_start_cluster_index = mp_sb->clusters_per_block + ifc_cluster_count + 1;
+    // IFCs
+    for(uint32_t i = 0; i < fat_cluster_count; ++i)
+    {
+        ifcs[i] = fat_start_cluster_index + i;
+    }
+    m_file.seek(mp_sb->clusters_per_block * mp_sb->cluster_size);
+    m_file.write(ifc_clusters_raw.data(), ifcs_size_in_bytes);
+    ifc_clusters_raw.reset();
+    QScopedPointer<char> fat_cluster_raw(new char[mp_sb->cluster_size]);
+    // FATs
+    //
+    FATEntry fat_entry;
+    fat_entry.flag = 0x80; // TODO: flags
+    fat_entry.cluster = 0xFFFFFF;
+    for(uint32_t i = 0; i < mp_sb->fat_entries_per_cluster; ++i)
+    {
+        memcpy(&fat_cluster_raw.data()[sizeof(FATEntry) * i], &fat_entry, sizeof(FATEntry));
+    }
+    m_file.seek(fat_start_cluster_index * mp_sb->cluster_size);
+    for(uint32_t i = 0; i < fat_entry_count / mp_sb->fat_entries_per_cluster; ++i)
+    {
+        m_file.write(fat_cluster_raw.data(), mp_sb->cluster_size);
+    }
+    if(fat_entry_count % mp_sb->fat_entries_per_cluster)
+    {
+        m_file.write(fat_cluster_raw.data(), (fat_entry_count % mp_sb->fat_entries_per_cluster) * sizeof(FATEntry));
+    }
+    // Root directory
+    //
+    writeRootDirectory();
+    fat_entry.flag = 0xFF; // TODO: flags
+    m_file.seek(fat_start_cluster_index * mp_sb->cluster_size);
+    m_file.write(reinterpret_cast<char *>(&fat_entry), sizeof(FATEntry));
+}
+
+void VmcFormatter::writeRootDirectory()
+{
+    QDateTime japanTime = QDateTime::currentDateTimeUtc().toTimeZone(QTimeZone(9 * 60 * 60));
+    FSDateTime dt = { };
+    dt.year = japanTime.date().year();
+    dt.month = japanTime.date().month();
+    dt.day  = japanTime.date().day();
+    dt.hour = japanTime.time().hour();
+    dt.min = japanTime.time().minute();
+    dt.sec = japanTime.time().second();
+    FSEntry entries[2];
+    std::memset(entries, 0, sizeof(entries));
+    for(int i = 0; i < 2; ++i)
+    {
+        entries[i].attr = 0;
+        entries[i].mode = EM_READ | EM_WRITE | EM_EXECUTE | EM_DIRECTORY | EM_EXISTS;
+        entries[i].cluster = mp_sb->rootdir_cluster;
+        entries[i].unused = 0;
+        entries[i].length = 2;
+        entries[i].created = dt;
+        entries[i].dir_entry = 0;
+        entries[i].modified = dt;
+        entries[i].name[0] = '.';
+    }
+    entries[0].name[1] = '\0';
+    entries[1].name[1] = '.';
+    entries[1].name[2] = '\0';
+    m_file.seek((mp_sb->alloc_offset + mp_sb->rootdir_cluster) * mp_sb->cluster_size);
+    m_file.write(reinterpret_cast<const char *>(entries), sizeof(entries));
+}
 
 
 class VmcFS::Private final
@@ -175,6 +368,7 @@ public:
     explicit Private(const QString & _filepath);
     ~Private();
     void load();
+    void create(uint8_t _size_mib);
     const VmcInfo * info() const;
     QList<VmcEntryInfo> enumerateEntries(const QString & _path);
     void exportEntry(const QString & _vmc_path, const QString & _dest_path);
@@ -196,8 +390,6 @@ private:
     QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
 
 private:
-    static const char * s_magic;
-    static const char * s_version;
     QFile m_file;
     VmcInfo * mp_info;
     FATEntry * mp_fat;
@@ -212,10 +404,6 @@ struct VmcFile::Private
     uint32_t position;
     QList<uint32_t> clusters;
 };
-
-const char * VmcFS::Private::s_magic = "Sony PS2 Memory Card Format ";
-
-const char * VmcFS::Private::s_version = "1.2.0.0";
 
 VmcFS::Private::Private(const QString & _filepath) :
     m_file(_filepath),
@@ -300,7 +488,7 @@ void VmcFS::Private::validateSuperblock(const VmcSuperblock & _sb) const
 {
     QRegExp version_regex("^1\\.[012]\\.0\\.0$");
     if(
-       std::strncmp(s_magic, _sb.magic, strlen(s_magic)) != 0 ||
+       std::strncmp(g_vmc_magic, _sb.magic, strlen(g_vmc_magic)) != 0 ||
        !version_regex.exactMatch(_sb.version) ||
        _sb.pagesize != 512 ||
        (_sb.cluster_size != 1024 && _sb.cluster_size != 512) ||
@@ -583,6 +771,11 @@ QSharedPointer<VmcFS> VmcFS::load(const QString & _filepath)
     VmcFS * fs = new VmcFS();
     fs->mp_private = fs_private;
     return QSharedPointer<VmcFS>(fs);
+}
+
+void VmcFS::create(const QString & _filepath, uint8_t _size_mib)
+{
+    VmcFormatter::format(_filepath, _size_mib);
 }
 
 QList<VmcEntryInfo> VmcFS::enumerateEntries(const QString & _path)

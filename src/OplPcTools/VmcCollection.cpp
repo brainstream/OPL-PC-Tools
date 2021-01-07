@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <QVector>
+#include <OplPcTools/VmcFS.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/VmcCollection.h>
 
@@ -73,9 +74,6 @@ bool VmcCollection::load(const QDir & _base_directory)
         case 128:
             size = VmcSize::_128M;
             break;
-        case 256:
-            size = VmcSize::_256M;
-            break;
         }
         mp_vmcs->append(new Vmc(file.absoluteFilePath(), title, size));
     }
@@ -112,18 +110,8 @@ const Vmc * VmcCollection::createVmc(const QString & _title, VmcSize _size)
     }
     validateFilename(_title);
     QString vmc_filename = makeFilename(_title);
-    QFile file(vmc_filename);
-    openFile(file, QFile::WriteOnly);
-
-    // FIXME: THE TEST DATA
-    //
-    QByteArray buffer(1024 * 1024, '\0');
-    for(int i = 0; i < static_cast<int>(_size); ++i)
-        file.write(buffer);
-    file.close();
-    //
-    // END OF THE TEST DATA
-
+    quint8 size = static_cast<quint8>(_size); // TODO: remove VmcSize.
+    VmcFS::create(vmc_filename, size);
     Vmc * vmc = new Vmc(vmc_filename, _title, _size);
     mp_vmcs->append(vmc);
     emit vmcAdded(vmc->uuid());

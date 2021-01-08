@@ -111,20 +111,6 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
         if(_config.is_mode_8_enabled) mode |= GM_Mode8;
         value = QString::number(mode);
     }
-    else if(Key::enable_gsm.compare(_key) == 0)
-        value = _config.is_gsm_enabled ? "1" : "0";
-    else if(Key::gsm_source.compare(_key) == 0)
-        value = _config.is_global_gsm_enabled ? "0" : "1";
-    else if(Key::gsm_v_mode.compare(_key) == 0)
-        value = QString::number(static_cast<int>(_config.gsm_video_mode));
-    else if(Key::gsm_x_offset.compare(_key) == 0)
-        value = QString::number(_config.gsm_x_offset);
-    else if(Key::gsm_y_offset.compare(_key) == 0)
-        value = QString::number(_config.gsm_y_offset);
-    else if(Key::gsm_skip_videos.compare(_key) == 0)
-        value = _config.is_gsm_skip_fmv_enabled ? "1" : "0";
-    else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
-        value = _config.is_gsm_emulate_field_flipping_enabled ? "1" : "0";
     else if(Key::game_id.compare(_key) == 0)
         value = _config.game_id;
     else if(Key::custom_elf.compare(_key) == 0)
@@ -135,6 +121,38 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
         value = _config.vmc1;
     else if(Key::config_source.compare(_key) == 0)
         value = "1";
+    else if(Key::enable_gsm.compare(_key) == 0)
+        value = _config.is_gsm_enabled ? "1" : "0";
+    else if(Key::gsm_source.compare(_key) == 0)
+    {
+        if(_config.is_gsm_enabled)
+            value = _config.is_global_gsm_enabled ? "0" : "1";
+    }
+    else if(Key::gsm_v_mode.compare(_key) == 0)
+    {
+        if(_config.is_gsm_enabled)
+            value = QString::number(static_cast<int>(_config.gsm_video_mode));
+    }
+    else if(Key::gsm_x_offset.compare(_key) == 0)
+    {
+        if(_config.is_gsm_enabled)
+            value = QString::number(_config.gsm_x_offset);
+    }
+    else if(Key::gsm_y_offset.compare(_key) == 0)
+    {
+        if(_config.is_gsm_enabled)
+            value = QString::number(_config.gsm_y_offset);
+    }
+    else if(Key::gsm_skip_videos.compare(_key) == 0)
+    {
+        if(_config.is_gsm_enabled)
+            value = _config.is_gsm_skip_fmv_enabled ? "1" : "0";
+    }
+    else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
+    {
+        if(_config.is_gsm_enabled)
+            value = _config.is_gsm_emulate_field_flipping_enabled ? "1" : "0";
+    }
     else
         return false;
     _file.write(QString("%1=%2\n").arg(_key).arg(value).toLatin1());
@@ -195,8 +213,6 @@ QSharedPointer<GameConfiguration> GameConfiguration::load(const QString & _filen
     }
     return config;
 }
-
-
 
 void GameConfiguration::save(const GameConfiguration & _config, const QString & _filename)
 {

@@ -109,7 +109,8 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
         if(_config.is_mode_6_enabled) mode |= GM_Mode6;
         if(_config.is_mode_7_enabled) mode |= GM_Mode7;
         if(_config.is_mode_8_enabled) mode |= GM_Mode8;
-        value = QString::number(mode);
+        if(mode)
+            value = QString::number(mode);
     }
     else if(Key::game_id.compare(_key) == 0)
         value = _config.game_id;
@@ -155,7 +156,8 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
     }
     else
         return false;
-    _file.write(QString("%1=%2\n").arg(_key).arg(value).toLatin1());
+    if(!value.isEmpty())
+        _file.write(QString("%1=%2\n").arg(_key).arg(value).toLatin1());
     return true;
 }
 

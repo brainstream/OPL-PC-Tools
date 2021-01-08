@@ -889,27 +889,27 @@
     <name>OplPcTools::UI::VmcCreateDialog</name>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="32"/>
-        <source>8 Mebibytes</source>
+        <source>8 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="33"/>
-        <source>16 Mebibytes</source>
+        <source>16 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="34"/>
-        <source>32 Mebibytes</source>
+        <source>32 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="35"/>
-        <source>64 Mebibytes</source>
+        <source>64 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="36"/>
-        <source>128 Mebibytes</source>
+        <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

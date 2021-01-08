@@ -34,92 +34,86 @@ const QString config_version("OplCfgVersion");
 
 } // namespace SettingsKey
 
-enum OplVersion: int
-{
-    OPL_093,
-    OPL_100
-};
-
-int getConfigVersionFromSettings(int _defualt)
+GameConfigurationVersion getConfigVersionFromSettings(GameConfigurationVersion _defualt)
 {
     QSettings settings;
     int version =  settings.value(SettingsKey::config_version, -1).toInt();
     switch(version)
     {
-    case OPL_093:
-        return OPL_093;
-    case OPL_100:
-        return OPL_100;
+    case static_cast<int>(GameConfigurationVersion::OPLv093):
+        return GameConfigurationVersion::OPLv093;
+    case static_cast<int>(GameConfigurationVersion::OPLv100):
+        return GameConfigurationVersion::OPLv100;
     default:
         return _defualt;
     }
 }
 
-QString gameVideoModeToString(GameVideoMode mode)
+QString gameVideoModeToString(VideoMode mode)
 {
     switch(mode)
     {
-    case GameVideoMode::NTSC:
+    case VideoMode::NTSC:
         return "NTSC";
-    case GameVideoMode::NTSC_Non_Interlaced:
+    case VideoMode::NTSC_Non_Interlaced:
         return "NTSC Non-Interlaced";
-    case GameVideoMode::PAL:
+    case VideoMode::PAL:
         return "PAL";
-    case GameVideoMode::PAL_Non_Interlaced:
+    case VideoMode::PAL_Non_Interlaced:
         return "PAL Non-Interlaced";
-    case GameVideoMode::PAL_60Hz:
+    case VideoMode::PAL_60Hz:
         return "PAL @60Hz";
-    case GameVideoMode::PAL_60Hz_Non_Interlaced:
+    case VideoMode::PAL_60Hz_Non_Interlaced:
         return "PAL @60Hz Non-Interlaced";
-    case GameVideoMode::PS1_NTSC_HDTV_480p_60Hz:
+    case VideoMode::PS1_NTSC_HDTV_480p_60Hz:
         return "PS1 NTSC (HDTV 480p @60Hz)";
-    case GameVideoMode::PS1_PAL_HDTV_576p_50Hz:
+    case VideoMode::PS1_PAL_HDTV_576p_50Hz:
         return "PS1 PAL (HDTV 576p @50Hz)";
-    case GameVideoMode::HDTV_480p_60Hz:
+    case VideoMode::HDTV_480p_60Hz:
         return "HDTV 480p @60Hz";
-    case GameVideoMode::HDTV_576p_50Hz:
+    case VideoMode::HDTV_576p_50Hz:
         return "HDTV 576p @50Hz";
-    case GameVideoMode::HDTV_720p_60Hz:
+    case VideoMode::HDTV_720p_60Hz:
         return "HDTV 720p @60Hz";
-    case GameVideoMode::HDTV_1080i_60Hz:
+    case VideoMode::HDTV_1080i_60Hz:
         return "HDTV 1080i @60Hz";
-    case GameVideoMode::HDTV_1080i_60Hz_Non_Interlaced:
+    case VideoMode::HDTV_1080i_60Hz_Non_Interlaced:
         return "HDTV 1080i @60Hz Non-Interlaced";
-    case GameVideoMode::HDTV_1080p_60Hz:
+    case VideoMode::HDTV_1080p_60Hz:
         return "HDTV 1080p @60Hz";
-    case GameVideoMode::VGA_640x480p_60Hz:
+    case VideoMode::VGA_640x480p_60Hz:
         return "VGA 640x480p @60Hz";
-    case GameVideoMode::VGA_640x480p_72Hz:
+    case VideoMode::VGA_640x480p_72Hz:
         return "VGA 640x480p @72Hz";
-    case GameVideoMode::VGA_640x480p_75Hz:
+    case VideoMode::VGA_640x480p_75Hz:
         return "VGA 640x480p @75Hz";
-    case GameVideoMode::VGA_640x480p_85Hz:
+    case VideoMode::VGA_640x480p_85Hz:
         return "VGA 640x480p @85Hz";
-    case GameVideoMode::VGA_640x480i_60Hz:
+    case VideoMode::VGA_640x480i_60Hz:
         return "VGA 640x480i @60Hz";
-    case GameVideoMode::VGA_640x960i_60Hz:
+    case VideoMode::VGA_640x960i_60Hz:
         return "VGA 640x960i @60Hz";
-    case GameVideoMode::VGA_800x600p_56Hz:
+    case VideoMode::VGA_800x600p_56Hz:
         return "VGA 800x600p @56Hz";
-    case GameVideoMode::VGA_800x600p_60Hz:
+    case VideoMode::VGA_800x600p_60Hz:
         return "VGA 800x600p @60Hz";
-    case GameVideoMode::VGA_800x600p_72Hz:
+    case VideoMode::VGA_800x600p_72Hz:
         return "VGA 800x600p @72Hz";
-    case GameVideoMode::VGA_800x600p_75Hz:
+    case VideoMode::VGA_800x600p_75Hz:
         return "VGA 800x600p @75Hz";
-    case GameVideoMode::VGA_800x600p_85Hz:
+    case VideoMode::VGA_800x600p_85Hz:
         return "VGA 800x600p @85Hz";
-    case GameVideoMode::VGA_1024x768p_60Hz:
+    case VideoMode::VGA_1024x768p_60Hz:
         return "VGA 1024x768p @60Hz";
-    case GameVideoMode::VGA_1024x768p_70Hz:
+    case VideoMode::VGA_1024x768p_70Hz:
         return "VGA 1024x768p @70Hz";
-    case GameVideoMode::VGA_1024x768p_75Hz:
+    case VideoMode::VGA_1024x768p_75Hz:
         return "VGA 1024x768p @75Hz";
-    case GameVideoMode::VGA_1024x768p_85Hz:
+    case VideoMode::VGA_1024x768p_85Hz:
         return "VGA 1024x768p @85Hz";
-    case GameVideoMode::VGA_1280x1024p_60Hz:
+    case VideoMode::VGA_1280x1024p_60Hz:
         return "VGA 1280x1024p @60Hz";
-    case GameVideoMode::VGA_1280x1024p_75Hz:
+    case VideoMode::VGA_1280x1024p_75Hz:
         return "VGA 1280x1024p @75Hz";
     default:
         return "<UNKNOWN>";
@@ -132,7 +126,7 @@ GameConfigWidget::GameConfigWidget(const Game & _game, QWidget * _parent /*= nul
     QWidget( _parent),
     mr_vmcs(Library::instance().vmcs()),
     mr_game(_game),
-    m_opl_version(getConfigVersionFromSettings(OPL_093))
+    m_config_version(getConfigVersionFromSettings(GameConfigurationVersion::OPLv100))
 {
     setupUi(this);
     if(!loadConfiguration())
@@ -177,9 +171,9 @@ bool GameConfigWidget::loadConfiguration()
 
 void GameConfigWidget::initControls()
 {
-    mp_combo_opl_version->addItem("≤ 9.3.0", OPL_093);
-    mp_combo_opl_version->addItem("≥ 1.0.0", OPL_100);
-    mp_combo_opl_version->setCurrentIndex(m_opl_version == OPL_093 ? 0 : 1);
+    mp_combo_opl_version->addItem("≤ 9.3.0", static_cast<int>(GameConfigurationVersion::OPLv093));
+    mp_combo_opl_version->addItem("≥ 1.0.0", static_cast<int>(GameConfigurationVersion::OPLv100));
+    mp_combo_opl_version->setCurrentIndex(m_config_version == GameConfigurationVersion::OPLv093 ? 0 : 1);
     mp_combo_vmc0->addItem("", QUuid(nullptr));
     mp_combo_vmc1->addItem("", QUuid(nullptr));
     int count = mr_vmcs.count();
@@ -190,27 +184,27 @@ void GameConfigWidget::initControls()
         mp_combo_vmc1->addItem(vmc->title(), vmc->uuid());
     }
     sortVmcComboBoxes();
-    setVmcComboBoxValue(mp_combo_vmc0, m_config_ptr->vmc0());
-    setVmcComboBoxValue(mp_combo_vmc1, m_config_ptr->vmc1());
-    mp_edit_elf->setText(m_config_ptr->customElf());
-    mp_edit_game_id->setText(m_config_ptr->gameId());
-    mp_checkbox_mode_1->setChecked(m_config_ptr->isMode1Enalbed());
-    mp_checkbox_mode_2->setChecked(m_config_ptr->isMode2Enalbed());
-    mp_checkbox_mode_3->setChecked(m_config_ptr->isMode3Enalbed());
-    mp_checkbox_mode_4->setChecked(m_config_ptr->isMode4Enalbed());
-    mp_checkbox_mode_5->setChecked(m_config_ptr->isMode5Enalbed());
-    mp_checkbox_mode_6->setChecked(m_config_ptr->isMode6Enalbed());
-    mp_checkbox_mode_7->setChecked(m_config_ptr->isMode7Enalbed());
-    mp_checkbox_mode_8->setChecked(m_config_ptr->isMode8Enalbed());
-    mp_groupbox_gsm->setChecked(m_config_ptr->isGsmEnabled());
-    mp_checkbox_skip_fmv->setChecked(m_config_ptr->gsmSkipFmv());
-    mp_spinbox_hpos->setValue(m_config_ptr->gsmXOffset());
-    mp_spinbox_vpos->setValue(m_config_ptr->gsmYOffset());
-    mp_checkbox_emulate_field_flipping->setChecked(m_config_ptr->isEmulationFieldFlippingEnabledd());
+    setVmcComboBoxValue(mp_combo_vmc0, m_config_ptr->vmc0);
+    setVmcComboBoxValue(mp_combo_vmc1, m_config_ptr->vmc1);
+    mp_edit_elf->setText(m_config_ptr->custom_elf);
+    mp_edit_game_id->setText(m_config_ptr->game_id);
+    mp_checkbox_mode_1->setChecked(m_config_ptr->is_mode_1_enabled);
+    mp_checkbox_mode_2->setChecked(m_config_ptr->is_mode_2_enabled);
+    mp_checkbox_mode_3->setChecked(m_config_ptr->is_mode_3_enabled);
+    mp_checkbox_mode_4->setChecked(m_config_ptr->is_mode_4_enabled);
+    mp_checkbox_mode_5->setChecked(m_config_ptr->is_mode_5_enabled);
+    mp_checkbox_mode_6->setChecked(m_config_ptr->is_mode_6_enabled);
+    mp_checkbox_mode_7->setChecked(m_config_ptr->is_mode_7_enabled);
+    mp_checkbox_mode_8->setChecked(m_config_ptr->is_mode_8_enabled);
+    mp_groupbox_gsm->setChecked(m_config_ptr->is_gsm_enabled);
+    mp_checkbox_skip_fmv->setChecked(m_config_ptr->is_gsm_skip_fmv_enabled);
+    mp_spinbox_hpos->setValue(m_config_ptr->gsm_x_offset);
+    mp_spinbox_vpos->setValue(m_config_ptr->gsm_y_offset);
+    mp_checkbox_emulate_field_flipping->setChecked(m_config_ptr->is_gsm_emulate_field_flipping_enabled);
     reinitOplVersionSensitiveControls();
-    if(m_config_ptr->isGsmEnabled())
+    if(m_config_ptr->is_gsm_enabled)
     {
-        if(m_config_ptr->isGlobalGsmEnabled())
+        if(m_config_ptr->is_global_gsm_enabled)
         {
             if(mp_radio_use_global_gsm->isEnabled())
                 mp_radio_use_global_gsm->setChecked(true);
@@ -226,16 +220,17 @@ void GameConfigWidget::initControls()
     {
         mp_radio_disable_gsm->setChecked(true);
     }
-    mp_combo_video_mode->setCurrentIndex(m_config_ptr->gsmVideoMode());
+    mp_combo_video_mode->setCurrentIndex(m_config_ptr->gsm_video_mode);
     onGsmStateChanged();
 }
 
 void GameConfigWidget::reinitOplVersionSensitiveControls()
 {
     fillVideoModeComboBox();
-    if(m_opl_version == OPL_093)
+    if(m_config_version == GameConfigurationVersion::OPLv093)
     {
-        mp_radio_disable_gsm->setChecked(true);
+        if(mp_radio_use_global_gsm->isChecked())
+            mp_radio_disable_gsm->setChecked(true);
         mp_radio_use_global_gsm->setEnabled(false);
         mp_checkbox_emulate_field_flipping->setEnabled(false);
     }
@@ -272,75 +267,18 @@ void GameConfigWidget::fillVideoModeComboBox()
 {
     int index = mp_combo_video_mode->currentIndex();
     mp_combo_video_mode->clear();
-    if(m_opl_version == OPL_093)
-    {
-        GameVideoMode_v093 mode;
-        addVideoModeToComboBox(mode.ntsc);
-        addVideoModeToComboBox(mode.ntsc_non_interlaced);
-        addVideoModeToComboBox(mode.pal);
-        addVideoModeToComboBox(mode.pal_non_interlaced);
-        addVideoModeToComboBox(mode.pal_60hz);
-        addVideoModeToComboBox(mode.pal_60hz_non_interlaced);
-        addVideoModeToComboBox(mode.ps1_ntsc_hdtv_480p_60hz);
-        addVideoModeToComboBox(mode.ps1_pal_hdtv_576p_50hz);
-        addVideoModeToComboBox(mode.hdtv_480p_60hz);
-        addVideoModeToComboBox(mode.hdtv_576p_50hz);
-        addVideoModeToComboBox(mode.hdtv_720p_60hz);
-        addVideoModeToComboBox(mode.hdtv_1080i_60hz);
-        addVideoModeToComboBox(mode.hdtv_1080i_60hz_non_interlaced);
-        addVideoModeToComboBox(mode.hdtv_1080p_60hz);
-        addVideoModeToComboBox(mode.vga_640x480p_60hz);
-        addVideoModeToComboBox(mode.vga_640x480p_72hz);
-        addVideoModeToComboBox(mode.vga_640x480p_75hz);
-        addVideoModeToComboBox(mode.vga_640x480p_85hz);
-        addVideoModeToComboBox(mode.vga_640x480i_60hz);
-    }
-    else
-    {
-        GameVideoMode_v100 mode;
-        addVideoModeToComboBox(mode.ntsc);
-        addVideoModeToComboBox(mode.ntsc_non_interlaced);
-        addVideoModeToComboBox(mode.pal);
-        addVideoModeToComboBox(mode.pal_non_interlaced);
-        addVideoModeToComboBox(mode.pal_60hz);
-        addVideoModeToComboBox(mode.pal_60hz_non_interlaced);
-        addVideoModeToComboBox(mode.ps1_ntsc_hdtv_480p_60hz);
-        addVideoModeToComboBox(mode.ps1_pal_hdtv_576p_50hz);
-        addVideoModeToComboBox(mode.hdtv_480p_60hz);
-        addVideoModeToComboBox(mode.hdtv_576p_50hz);
-        addVideoModeToComboBox(mode.hdtv_720p_60hz);
-        addVideoModeToComboBox(mode.hdtv_1080i_60hz);
-        addVideoModeToComboBox(mode.hdtv_1080i_60hz_non_interlaced);
-        addVideoModeToComboBox(mode.vga_640x480p_60hz);
-        addVideoModeToComboBox(mode.vga_640x480p_72hz);
-        addVideoModeToComboBox(mode.vga_640x480p_75hz);
-        addVideoModeToComboBox(mode.vga_640x480p_85hz);
-        addVideoModeToComboBox(mode.vga_640x960i_60hz);
-        addVideoModeToComboBox(mode.vga_800x600p_56hz);
-        addVideoModeToComboBox(mode.vga_800x600p_60hz);
-        addVideoModeToComboBox(mode.vga_800x600p_72hz);
-        addVideoModeToComboBox(mode.vga_800x600p_75hz);
-        addVideoModeToComboBox(mode.vga_800x600p_85hz);
-        addVideoModeToComboBox(mode.vga_1024x768p_60hz);
-        addVideoModeToComboBox(mode.vga_1024x768p_70hz);
-        addVideoModeToComboBox(mode.vga_1024x768p_75hz);
-        addVideoModeToComboBox(mode.vga_1024x768p_85hz);
-        addVideoModeToComboBox(mode.vga_1280x1024p_60hz);
-        addVideoModeToComboBox(mode.vga_1280x1024p_75hz);
-    }
+    QVector<VideoMode> modes = GameConfiguration::supportedVideoModes(m_config_version);
+    for(int i = 0; i < modes.size(); ++i)
+        mp_combo_video_mode->addItem(gameVideoModeToString(modes[i]), i);
     if(index >= 0)
         mp_combo_video_mode->setCurrentIndex(index);
 }
 
-void GameConfigWidget::addVideoModeToComboBox(const GameVideoModeItem & _item)
-{
-    mp_combo_video_mode->addItem(gameVideoModeToString(_item.mode), _item.index);
-}
-
 void GameConfigWidget::onOplVerstionChanged()
 {
-    m_opl_version = mp_combo_opl_version->currentData().toInt();
-    QSettings().setValue(SettingsKey::config_version, m_opl_version);
+    int conf_version = mp_combo_opl_version->currentData().toInt();
+    m_config_version = static_cast<GameConfigurationVersion>(conf_version);
+    QSettings().setValue(SettingsKey::config_version, conf_version);
     reinitOplVersionSensitiveControls();
 }
 
@@ -457,26 +395,26 @@ void GameConfigWidget::clear()
 
 void GameConfigWidget::save()
 {
-    m_config_ptr->setCustomElf(mp_edit_elf->text());
-    m_config_ptr->setGameId(mp_edit_game_id->text());
-    m_config_ptr->setMode1Enabled(mp_checkbox_mode_1->isChecked());
-    m_config_ptr->setMode2Enabled(mp_checkbox_mode_2->isChecked());
-    m_config_ptr->setMode3Enabled(mp_checkbox_mode_3->isChecked());
-    m_config_ptr->setMode4Enabled(mp_checkbox_mode_4->isChecked());
-    m_config_ptr->setMode5Enabled(mp_checkbox_mode_5->isChecked());
-    m_config_ptr->setMode6Enabled(mp_checkbox_mode_6->isChecked());
-    m_config_ptr->setMode7Enabled(mp_checkbox_mode_7->isChecked());
-    m_config_ptr->setMode8Enabled(mp_checkbox_mode_8->isChecked());
-    m_config_ptr->setVideoMode(mp_combo_video_mode->currentIndex());
-    m_config_ptr->setVmc0(mp_combo_vmc0->currentText());
-    m_config_ptr->setVmc1(mp_combo_vmc1->currentText());
+    m_config_ptr->custom_elf = mp_edit_elf->text();
+    m_config_ptr->game_id = mp_edit_game_id->text();
+    m_config_ptr->is_mode_1_enabled = mp_checkbox_mode_1->isChecked();
+    m_config_ptr->is_mode_2_enabled = mp_checkbox_mode_2->isChecked();
+    m_config_ptr->is_mode_3_enabled = mp_checkbox_mode_3->isChecked();
+    m_config_ptr->is_mode_4_enabled = mp_checkbox_mode_4->isChecked();
+    m_config_ptr->is_mode_5_enabled = mp_checkbox_mode_5->isChecked();
+    m_config_ptr->is_mode_6_enabled = mp_checkbox_mode_6->isChecked();
+    m_config_ptr->is_mode_7_enabled = mp_checkbox_mode_7->isChecked();
+    m_config_ptr->is_mode_8_enabled = mp_checkbox_mode_8->isChecked();
+    m_config_ptr->gsm_video_mode = mp_combo_video_mode->currentIndex();
+    m_config_ptr->vmc0 = mp_combo_vmc0->currentText();
+    m_config_ptr->vmc1 = mp_combo_vmc1->currentText();
     bool is_gsm_enabled = mp_radio_enable_gsm->isChecked();
     bool is_gsm_global_enabled = mp_radio_use_global_gsm->isChecked();
-    m_config_ptr->setGsmEnabled(is_gsm_enabled || is_gsm_global_enabled);
-    m_config_ptr->setGlobalGsmEnabled(is_gsm_global_enabled);
-    m_config_ptr->setSkipFmv(mp_checkbox_skip_fmv->isChecked());
-    m_config_ptr->setEmulationFieldFlippingEnabledd(mp_checkbox_emulate_field_flipping->isChecked());
-    m_config_ptr->setXOffset(mp_spinbox_hpos->value());
-    m_config_ptr->setYOffset(mp_spinbox_vpos->value());
-    m_config_ptr->save();
+    m_config_ptr->is_gsm_enabled = is_gsm_enabled || is_gsm_global_enabled;
+    m_config_ptr->is_global_gsm_enabled = is_gsm_global_enabled;
+    m_config_ptr->is_gsm_skip_fmv_enabled = mp_checkbox_skip_fmv->isChecked();
+    m_config_ptr->is_gsm_emulate_field_flipping_enabled = mp_checkbox_emulate_field_flipping->isChecked();
+    m_config_ptr->gsm_x_offset = mp_spinbox_hpos->value();
+    m_config_ptr->gsm_y_offset = mp_spinbox_vpos->value();
+    m_config_ptr->save(*m_config_ptr, GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id()));
 }

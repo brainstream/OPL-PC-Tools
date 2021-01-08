@@ -16,54 +16,46 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECONFIGWIDGET__
-#define __OPLPCTOOLS_GAMECONFIGWIDGET__
+#ifndef __OPLPCTOOLS_GAMEVIDEOMODE__
+#define __OPLPCTOOLS_GAMEVIDEOMODE__
 
-#include <QUuid>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/GameConfiguration.h>
-#include <OplPcTools/VmcCollection.h>
-#include "ui_GameConfigWidget.h"
+namespace OplPcTools {
 
-namespace OplPcTools::UI {
-
-class GameConfigWidget : public QWidget, private Ui::GameConfigWidget
+enum class VideoMode: int
 {
-    Q_OBJECT
-
-public:
-    explicit GameConfigWidget(const Game & _game, QWidget * _parent = nullptr);
-
-private:
-    bool loadConfiguration();
-    void initControls();
-    void reinitOplVersionSensitiveControls();
-    void sortVmcComboBoxes();
-    void setVmcComboBoxValue(QComboBox * _combobox, const QString & _value);
-    void fillVideoModeComboBox();
-    void onOplVerstionChanged();
-    void onGsmStateChanged();
-    void onVmcAdded(const QUuid & _id);
-    void onVmcDeleted(const QUuid & _id);
-    void deleteVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id);
-    int getVmcComboBoxItemIndex(QComboBox * _combobox, const QUuid & _id) const;
-    void onVmcRenamed(const QUuid & _id);
-    void renameVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id, const QString & _title);
-    void createVmc0();
-    void createVmc1();
-    const OplPcTools::Vmc * createVmc();
-    void fillGameIdFromGame();
-    void clear();
-    void save();
-
-private:
-    VmcCollection & mr_vmcs;
-    const Game & mr_game;
-    QSharedPointer<GameConfiguration> m_config_ptr;
-    GameConfigurationVersion m_config_version;
-
+    NTSC,
+    NTSC_Non_Interlaced,
+    PAL,
+    PAL_Non_Interlaced,
+    PAL_60Hz,
+    PAL_60Hz_Non_Interlaced,
+    PS1_NTSC_HDTV_480p_60Hz,
+    PS1_PAL_HDTV_576p_50Hz,
+    HDTV_480p_60Hz,
+    HDTV_576p_50Hz,
+    HDTV_720p_60Hz,
+    HDTV_1080i_60Hz,
+    HDTV_1080i_60Hz_Non_Interlaced,
+    HDTV_1080p_60Hz,
+    VGA_640x480p_60Hz,
+    VGA_640x480p_72Hz,
+    VGA_640x480p_75Hz,
+    VGA_640x480p_85Hz,
+    VGA_640x480i_60Hz,
+    VGA_640x960i_60Hz,
+    VGA_800x600p_56Hz,
+    VGA_800x600p_60Hz,
+    VGA_800x600p_72Hz,
+    VGA_800x600p_75Hz,
+    VGA_800x600p_85Hz,
+    VGA_1024x768p_60Hz,
+    VGA_1024x768p_70Hz,
+    VGA_1024x768p_75Hz,
+    VGA_1024x768p_85Hz,
+    VGA_1280x1024p_60Hz,
+    VGA_1280x1024p_75Hz
 };
 
-} // namespace OplPcTools::UI
+} // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMECONFIGWIDGET__
+#endif // __OPLPCTOOLS_GAMEVIDEOMODE__

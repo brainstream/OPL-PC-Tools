@@ -29,11 +29,11 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
 {
     setupUi(this);
     mp_edit_title->setValidator(new FilenameValidator(this));
-    mp_combobox_size->addItem(tr("8 Mebibytes"), static_cast<int>(VmcSize::_8M));
-    mp_combobox_size->addItem(tr("16 Mebibytes"), static_cast<int>(VmcSize::_16M));
-    mp_combobox_size->addItem(tr("32 Mebibytes"), static_cast<int>(VmcSize::_32M));
-    mp_combobox_size->addItem(tr("64 Mebibytes"), static_cast<int>(VmcSize::_64M));
-    mp_combobox_size->addItem(tr("128 Mebibytes"), static_cast<int>(VmcSize::_128M));
+    mp_combobox_size->addItem(tr("8 MiB"), static_cast<int>(VmcSize::_8M));
+    mp_combobox_size->addItem(tr("16 MiB"), static_cast<int>(VmcSize::_16M));
+    mp_combobox_size->addItem(tr("32 MiB"), static_cast<int>(VmcSize::_32M));
+    mp_combobox_size->addItem(tr("64 MiB"), static_cast<int>(VmcSize::_64M));
+    mp_combobox_size->addItem(tr("128 MiB"), static_cast<int>(VmcSize::_128M));
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcCreateDialog::create);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcCreateDialog::reject);
     connect(mp_edit_title, &QLineEdit::textChanged, this, &VmcCreateDialog::onFilenameChanged);

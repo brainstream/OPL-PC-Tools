@@ -934,22 +934,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="374"/>
+        <location filename="../UI/VmcListWidget.cpp" line="362"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="375"/>
+        <location filename="../UI/VmcListWidget.cpp" line="363"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="377"/>
+        <location filename="../UI/VmcListWidget.cpp" line="365"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="444"/>
+        <location filename="../UI/VmcListWidget.cpp" line="432"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1001,7 +1001,7 @@
 <context>
     <name>OplPcTools::VmcCollection</name>
     <message>
-        <location filename="../VmcCollection.cpp" line="109"/>
+        <location filename="../VmcCollection.cpp" line="94"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1107,31 +1107,6 @@
     <message>
         <location filename="../UI/VmcListWidget.cpp" line="97"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.cpp" line="207"/>
-        <source>8 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.cpp" line="209"/>
-        <source>16 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.cpp" line="211"/>
-        <source>32 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.cpp" line="213"/>
-        <source>64 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.cpp" line="215"/>
-        <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

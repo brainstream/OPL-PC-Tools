@@ -24,19 +24,10 @@
 
 namespace OplPcTools {
 
-enum class VmcSize
-{
-    _8M   = 8,
-    _16M  = 16,
-    _32M  = 32,
-    _64M  = 64,
-    _128M = 128
-};
-
 class Vmc final
 {
 public:
-    inline Vmc(const QString & _filepath, const QString & _title, VmcSize _size);
+    inline Vmc(const QString & _filepath, const QString & _title, uint32_t _size_mib);
     Vmc(const Vmc &) = default;
     ~Vmc() = default;
     inline const QUuid & uuid() const;
@@ -44,20 +35,20 @@ public:
     inline void setFilepath(const QString & _filepath);
     inline const QString & title() const;
     inline void setTitle(const QString & _title);
-    inline VmcSize size() const;
+    inline uint32_t size() const;
 
 private:
     QUuid m_uuid;
     QString m_filepath;
     QString m_title;
-    VmcSize m_size;
+    uint32_t m_size_mib;
 };
 
-Vmc::Vmc(const QString & _filepath, const QString & _title, VmcSize _size) :
+Vmc::Vmc(const QString & _filepath, const QString & _title, uint32_t _size_mib) :
     m_uuid(QUuid::createUuid()),
     m_filepath(_filepath),
     m_title(_title),
-    m_size(_size)
+    m_size_mib(_size_mib)
 {
 }
 
@@ -86,9 +77,9 @@ void Vmc::setTitle(const QString & _title)
     m_title = _title;
 }
 
-VmcSize Vmc::size() const
+uint32_t Vmc::size() const
 {
-    return m_size;
+    return m_size_mib;
 }
 
 } // namespace OplPcTools

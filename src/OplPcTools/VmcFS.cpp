@@ -175,10 +175,10 @@ struct EntryInfo
 class VmcFormatter final
 {
 public:
-    static void format(const QString & _filename, uint8_t _size_mib);
+    static void format(const QString & _filename, uint32_t _size_mib);
 
 private:
-    VmcFormatter(const QString & _filename, uint8_t _size_mib);
+    VmcFormatter(const QString & _filename, uint32_t _size_mib);
     ~VmcFormatter();
     void format();
     void clearFile();
@@ -190,12 +190,12 @@ private:
 private:
     VmcSuperblock * mp_sb;
     QFile m_file;
-    uint8_t m_size_mib;
+    uint32_t m_size_mib;
 };
 
 } // namespace
 
-VmcFormatter::VmcFormatter(const QString & _filename, uint8_t _size_mib) :
+VmcFormatter::VmcFormatter(const QString & _filename, uint32_t _size_mib) :
     mp_sb(new VmcSuperblock { }),
     m_file(_filename),
     m_size_mib(_size_mib)
@@ -207,7 +207,7 @@ VmcFormatter::~VmcFormatter()
     delete mp_sb;
 }
 
-void VmcFormatter::format(const QString & _filename, uint8_t _size_mib)
+void VmcFormatter::format(const QString & _filename, uint32_t _size_mib)
 {
     if(_size_mib < 8 || _size_mib > 128)
     {
@@ -775,7 +775,7 @@ QSharedPointer<VmcFS> VmcFS::load(const QString & _filepath)
     return QSharedPointer<VmcFS>(fs);
 }
 
-void VmcFS::create(const QString & _filepath, uint8_t _size_mib)
+void VmcFS::create(const QString & _filepath, uint32_t _size_mib)
 {
     VmcFormatter::format(_filepath, _size_mib);
 }

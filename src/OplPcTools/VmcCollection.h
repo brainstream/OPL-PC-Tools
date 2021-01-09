@@ -38,7 +38,7 @@ public:
     bool load(const QDir & _base_directory);
     bool isLoaded() const;
     const int count() const;
-    const Vmc * createVmc(const QString & _title, VmcSize _size);
+    const Vmc * createVmc(const QString & _title, uint32_t _size_mib);
     void renameVmc(const QUuid & _uuid, const QString & _title);
     void deleteVmc(const QUuid & _uuid);
 

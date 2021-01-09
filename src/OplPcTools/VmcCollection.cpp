@@ -59,22 +59,7 @@ bool VmcCollection::load(const QDir & _base_directory)
     {
         QString title = filename.left(filename.lastIndexOf("."));
         QFileInfo file(m_directory.absoluteFilePath(filename));
-        VmcSize size = VmcSize::_8M;
-        switch(file.size() / (1024 * 1024)) // FIXME: read VMC
-        {
-        case 16:
-            size = VmcSize::_16M;
-            break;
-        case 32:
-            size = VmcSize::_32M;
-            break;
-        case 64:
-            size = VmcSize::_64M;
-            break;
-        case 128:
-            size = VmcSize::_128M;
-            break;
-        }
+        uint32_t size = file.size() / (1024 * 1024);
         mp_vmcs->append(new Vmc(file.absoluteFilePath(), title, size));
     }
     return true;
@@ -101,7 +86,7 @@ const Vmc * VmcCollection::operator[](const QUuid & _uuid) const
     return findVmc(_uuid);
 }
 
-const Vmc * VmcCollection::createVmc(const QString & _title, VmcSize _size)
+const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
 {
     for(const Vmc * vmc: *mp_vmcs)
     {
@@ -110,9 +95,8 @@ const Vmc * VmcCollection::createVmc(const QString & _title, VmcSize _size)
     }
     validateFilename(_title);
     QString vmc_filename = makeFilename(_title);
-    quint8 size = static_cast<quint8>(_size); // TODO: remove VmcSize.
-    VmcFS::create(vmc_filename, size);
-    Vmc * vmc = new Vmc(vmc_filename, _title, _size);
+    VmcFS::create(vmc_filename, _size_mib);
+    Vmc * vmc = new Vmc(vmc_filename, _title, _size_mib);
     mp_vmcs->append(vmc);
     emit vmcAdded(vmc->uuid());
     return vmc;

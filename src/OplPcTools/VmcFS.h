@@ -94,7 +94,7 @@ public:
     QSharedPointer<VmcFile> openFile(const QString & _path);
 
     static QSharedPointer<VmcFS> load(const QString & _filepath);
-    static void create(const QString & _filepath, uint8_t _size_mib);
+    static void create(const QString & _filepath, uint32_t _size_mib);
     static QString concatPaths(const QString & _base, const QString &  _part);
 
 public:

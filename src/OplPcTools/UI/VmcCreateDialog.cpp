@@ -33,11 +33,11 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
     setWindowFlag(Qt::WindowCloseButtonHint, false);
     setupUi(this);
     mp_edit_title->setValidator(new FilenameValidator(this));
-    mp_combobox_size->addItem(tr("8 MiB"), static_cast<int>(VmcSize::_8M));
-    mp_combobox_size->addItem(tr("16 MiB"), static_cast<int>(VmcSize::_16M));
-    mp_combobox_size->addItem(tr("32 MiB"), static_cast<int>(VmcSize::_32M));
-    mp_combobox_size->addItem(tr("64 MiB"), static_cast<int>(VmcSize::_64M));
-    mp_combobox_size->addItem(tr("128 MiB"), static_cast<int>(VmcSize::_128M));
+    mp_combobox_size->addItem(tr("8 MiB"), 8);
+    mp_combobox_size->addItem(tr("16 MiB"), 16);
+    mp_combobox_size->addItem(tr("32 MiB"), 32);
+    mp_combobox_size->addItem(tr("64 MiB"), 64);
+    mp_combobox_size->addItem(tr("128 MiB"), 128);
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcCreateDialog::create);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcCreateDialog::reject);
     connect(mp_edit_title, &QLineEdit::textChanged, this, &VmcCreateDialog::setSaveButtonState);
@@ -52,9 +52,7 @@ void VmcCreateDialog::create()
     setProgressVisibility();
     LambdaThread * thread = new LambdaThread([this]() {
         mp_created_vmc = Library::instance().vmcs().createVmc(
-            mp_edit_title->text(),
-            static_cast<VmcSize>(mp_combobox_size->currentData().toInt())
-        );
+            mp_edit_title->text(), mp_combobox_size->currentData().toUInt());
         m_is_in_progress = false;
         accept();
     }, this);

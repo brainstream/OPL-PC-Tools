@@ -916,17 +916,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="256"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="254"/>
         <source>An unknown error has occurred</source>
         <translation type="unfinished">Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="287"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="287"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -934,22 +934,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="362"/>
+        <location filename="../UI/VmcListWidget.cpp" line="369"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="363"/>
+        <location filename="../UI/VmcListWidget.cpp" line="370"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="365"/>
+        <location filename="../UI/VmcListWidget.cpp" line="372"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="432"/>
+        <location filename="../UI/VmcListWidget.cpp" line="440"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1100,12 +1100,12 @@
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="78"/>
+        <location filename="../UI/VmcListWidget.cpp" line="80"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="97"/>
+        <location filename="../UI/VmcListWidget.cpp" line="99"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1135,7 +1135,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="202"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="200"/>
         <source>&lt;directory&gt;</source>
         <translation type="unfinished"></translation>
     </message>

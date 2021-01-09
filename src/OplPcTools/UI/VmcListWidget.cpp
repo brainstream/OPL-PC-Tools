@@ -16,6 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QDebug>
+
 #include <QShortcut>
 #include <QMessageBox>
 #include <QCheckBox>
@@ -287,9 +289,13 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_action_export, &QAction::triggered, this, &VmcListWidget::exportFiles);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
     connect(mp_tree_vmcs, &QTreeView::doubleClicked, this, &VmcListWidget::onTreeViewDoubleClicked);
+    connect(mp_model, &VmcListWidget::VmcTreeModel::rowsInserted, [this](const QModelIndex parent, int, int last_row) {
+        mp_tree_vmcs->setCurrentIndex(mp_proxy_model->mapFromSource(mp_model->index(last_row, 0, parent)));
+    });
     if(Library::instance().vmcs().count() > 0)
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
     mp_proxy_model->sort(0, Qt::AscendingOrder);
+    mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
 }
 
 void VmcListWidget::setupShortcuts()
@@ -354,7 +360,8 @@ void VmcListWidget::activateItemControls(const Vmc * _vmc)
 
 void VmcListWidget::deleteVmc()
 {
-    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
+    QModelIndex selected_index = mp_tree_vmcs->currentIndex();
+    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(selected_index));
     if(!vmc) return;
     Settings & settings = Settings::instance();
     if(settings.confirmVmcDeletion())
@@ -371,6 +378,7 @@ void VmcListWidget::deleteVmc()
             return;
         if(checkbox->isChecked())
             settings.setConfirmGameDeletion(false);
+        mp_tree_vmcs->setCurrentIndex(selected_index);
     }
     try
     {

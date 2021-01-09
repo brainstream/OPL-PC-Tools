@@ -254,6 +254,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
 {
     setupUi(this);
     setupShortcuts();
+    setIconSize();
     mp_btn_create_vmc->setDefaultAction(mp_action_create_vmc);
     mp_btn_delete_vmc->setDefaultAction(mp_action_delete_vmc);
     mp_btn_rename_vmc->setDefaultAction(mp_action_rename_vmc);
@@ -302,7 +303,6 @@ void VmcListWidget::setupShortcuts()
         .arg(mp_edit_filter->placeholderText())
         .arg(shortcut->key().toString()));
     connect(shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
-    setIconSize();
 }
 
 void VmcListWidget::setIconSize()

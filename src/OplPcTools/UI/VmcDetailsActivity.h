@@ -45,6 +45,7 @@ private:
     void hideErrorMessage();
     void loadVmcFS();
     void setupView();
+    void setIconSize();
     void navigate(const QString & _path);
     void onFsListItemDoubleClicked(const QModelIndex & _index);
     void onFsBackButtonClick();

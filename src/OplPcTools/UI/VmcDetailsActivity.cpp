@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <QStandardItemModel>
+#include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 
 using namespace OplPcTools;
@@ -287,6 +288,16 @@ void VmcDetailsActivity::setupView()
     mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
     connect(mp_tree_fs, &QTreeView::doubleClicked, this, &VmcDetailsActivity::onFsListItemDoubleClicked);
     connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
+    connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
+    setIconSize();
+}
+
+void VmcDetailsActivity::setIconSize()
+{
+    QSize size;
+    size.setWidth(Settings::instance().iconSize());
+    size.setHeight(size.width());
+    mp_tree_fs->setIconSize(size);
 }
 
 void VmcDetailsActivity::navigate(const QString & _path)

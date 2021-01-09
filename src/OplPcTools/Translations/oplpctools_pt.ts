@@ -916,17 +916,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="252"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="253"/>
         <source>An unknown error has occurred</source>
         <translation type="unfinished">Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="283"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="284"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="283"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="284"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1115,27 +1115,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="62"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="63"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="65"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="66"/>
         <source>KiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="68"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="69"/>
         <source>MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="71"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="72"/>
         <source>GiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="198"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="199"/>
         <source>&lt;directory&gt;</source>
         <translation type="unfinished"></translation>
     </message>

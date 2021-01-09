@@ -277,25 +277,25 @@
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="119"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="118"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="86"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="121"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="85"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="120"/>
         <source>Rename...</source>
         <translation>Переименовть...</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="109"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="108"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="123"/>
         <source>Pictures</source>
         <translation type="unfinished">Картинки</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="128"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="125"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="127"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -916,17 +916,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="253"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="256"/>
         <source>An unknown error has occurred</source>
         <translation type="unfinished">Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="284"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="287"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="284"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="287"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1115,27 +1115,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="63"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="66"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="66"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="69"/>
         <source>KiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="69"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="72"/>
         <source>MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="72"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="75"/>
         <source>GiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="199"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="202"/>
         <source>&lt;directory&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1289,17 +1289,23 @@
     <name>VmcDetailsActivity</name>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="14"/>
-        <location filename="../../../build/ui_VmcDetailsActivity.h" line="155"/>
+        <location filename="../../../build/ui_VmcDetailsActivity.h" line="167"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="40"/>
-        <location filename="../UI/VmcDetailsActivity.ui" line="92"/>
-        <location filename="../../../build/ui_VmcDetailsActivity.h" line="156"/>
-        <location filename="../../../build/ui_VmcDetailsActivity.h" line="159"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="103"/>
+        <location filename="../../../build/ui_VmcDetailsActivity.h" line="168"/>
+        <location filename="../../../build/ui_VmcDetailsActivity.h" line="173"/>
         <source>Back</source>
         <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="76"/>
+        <location filename="../../../build/ui_VmcDetailsActivity.h" line="170"/>
+        <source>Rename...</source>
+        <translation type="unfinished">Переименовть...</translation>
     </message>
 </context>
 <context>

@@ -18,6 +18,9 @@
 
 #include <QStandardItemModel>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/UI/Application.h>
+#include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 
 using namespace OplPcTools;
@@ -289,6 +292,8 @@ void VmcDetailsActivity::setupView()
     connect(mp_tree_fs, &QTreeView::doubleClicked, this, &VmcDetailsActivity::onFsListItemDoubleClicked);
     connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
+    connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
+    connect(mp_label_vmc_title, &ClickableLabel::clicked, this, &VmcDetailsActivity::renameVmc);
     setIconSize();
 }
 
@@ -347,4 +352,24 @@ void VmcDetailsActivity::onFsBackButtonClick()
 QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)
 {
     return QSharedPointer<Intent>(new VmcDetailsActivityIntent(_vmc));
+}
+
+void VmcDetailsActivity::renameVmc()
+{
+    VmcRenameDialog dlg(mr_vmc.title(), this);
+    if(dlg.exec() != QDialog::Accepted)
+        return;
+    try
+    {
+        Library::instance().vmcs().renameVmc(mr_vmc.uuid(), dlg.name());
+        mp_label_vmc_title->setText(dlg.name());
+    }
+    catch(const Exception & _exception)
+    {
+        Application::showErrorMessage(_exception.message());
+    }
+    catch(...)
+    {
+        Application::showErrorMessage();
+    }
 }

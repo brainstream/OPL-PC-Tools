@@ -46,7 +46,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="mp_label_vmc_title">
+      <widget class="OplPcTools::UI::ClickableLabel" name="mp_label_vmc_title">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -66,7 +66,18 @@
         </font>
        </property>
        <property name="text">
-        <string/>
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="mp_btn_rename">
+       <property name="toolTip">
+        <string>Rename...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/rename</normaloff>:/images/rename</iconset>
        </property>
       </widget>
      </item>
@@ -172,9 +183,17 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OplPcTools::UI::ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">OplPcTools/UI/ClickableLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>mp_tree_fs</tabstop>
   <tabstop>mp_btn_close</tabstop>
+  <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_fs_back</tabstop>
   <tabstop>mp_edit_fs_path</tabstop>
  </tabstops>

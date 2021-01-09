@@ -37,12 +37,17 @@ public:
         return mp_created_vmc;
     }
 
+protected:
+    void closeEvent(QCloseEvent * _event) override;
+
 private:
     void create();
-    void onFilenameChanged();
+    void setProgressVisibility();
+    void setSaveButtonState();
 
 private:
     const Vmc * mp_created_vmc;
+    bool m_is_in_progress;
 };
 
 } // namespace UI

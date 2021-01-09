@@ -17,16 +17,20 @@
  ***********************************************************************************************/
 
 #include <QPushButton>
+#include <QCloseEvent>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/FilenameValidator.h>
+#include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
 
 using namespace OplPcTools::UI;
 
 VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
-    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
+    m_is_in_progress(false)
 {
+    setWindowFlag(Qt::WindowCloseButtonHint, false);
     setupUi(this);
     mp_edit_title->setValidator(new FilenameValidator(this));
     mp_combobox_size->addItem(tr("8 MiB"), static_cast<int>(VmcSize::_8M));
@@ -36,29 +40,49 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
     mp_combobox_size->addItem(tr("128 MiB"), static_cast<int>(VmcSize::_128M));
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcCreateDialog::create);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcCreateDialog::reject);
-    connect(mp_edit_title, &QLineEdit::textChanged, this, &VmcCreateDialog::onFilenameChanged);
-    onFilenameChanged();
+    connect(mp_edit_title, &QLineEdit::textChanged, this, &VmcCreateDialog::setSaveButtonState);
+    setProgressVisibility();
+    setSaveButtonState();
+    adjustSize();
 }
-
 
 void VmcCreateDialog::create()
 {
-    try
-    {
+    m_is_in_progress = true;
+    setProgressVisibility();
+    LambdaThread * thread = new LambdaThread([this]() {
         mp_created_vmc = Library::instance().vmcs().createVmc(
             mp_edit_title->text(),
             static_cast<VmcSize>(mp_combobox_size->currentData().toInt())
         );
+        m_is_in_progress = false;
         accept();
-    }
-    catch(const Exception & exception)
-    {
-        mp_label_error_message->setText(exception.message());
-    }
+    }, this);
+    connect(thread, &LambdaThread::exception, [this](const QString & message) {
+        m_is_in_progress = false;
+        setProgressVisibility();
+        mp_label_error_message->setText(message);
+    });
+    connect(thread, &LambdaThread::finished, thread, &LambdaThread::deleteLater);
+    thread->start();
 }
 
-void VmcCreateDialog::onFilenameChanged()
+void VmcCreateDialog::setProgressVisibility()
+{
+    mp_widget_main->setHidden(m_is_in_progress);
+    mp_widget_progress->setVisible(m_is_in_progress);
+}
+
+void VmcCreateDialog::setSaveButtonState()
 {
     QString filename = mp_edit_title->text().trimmed();
     mp_button_box->button(QDialogButtonBox::Save)->setDisabled(filename.isEmpty());
+}
+
+void VmcCreateDialog::closeEvent(QCloseEvent * _event)
+{
+    if(m_is_in_progress)
+        _event->ignore();
+    else
+        QDialog::closeEvent(_event);
 }

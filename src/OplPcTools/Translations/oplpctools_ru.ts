@@ -888,27 +888,27 @@
 <context>
     <name>OplPcTools::UI::VmcCreateDialog</name>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="32"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="36"/>
         <source>8 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="33"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="37"/>
         <source>16 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="34"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="38"/>
         <source>32 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="35"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
         <source>64 MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="36"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
         <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1287,20 +1287,26 @@
     <name>VmcCreateDialog</name>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="14"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="97"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="136"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.ui" line="25"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="98"/>
+        <location filename="../UI/VmcCreateDialog.ui" line="28"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="137"/>
         <source>Title</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.ui" line="42"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="99"/>
+        <location filename="../UI/VmcCreateDialog.ui" line="51"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="138"/>
         <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.ui" line="114"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="140"/>
+        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -27,6 +27,7 @@
 #include <OplPcTools/Library.h>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/MainWindow.h>
+#include <OplPcTools/UI/LibraryActivity.h>
 #include <OplPcTools/UI/AboutDialog.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
@@ -131,6 +132,8 @@ bool MainWindow::pushActivity(Intent & _intent)
 
 void MainWindow::onLibraryLoaded()
 {
+    QSharedPointer<OplPcTools::UI::Intent> intent = OplPcTools::UI::LibraryActivity::createIntent();
+    pushActivity(*intent);
     mp_stacked_widget->show();
     mp_widget_open_library->hide();
 }
@@ -155,7 +158,16 @@ void MainWindow::openLibrary()
     if(choosen_dirpath.isEmpty()) return;
     if(choosen_dirpath != dirpath)
         settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
+    closeAllActivities();
     Library::instance().load(QDir(choosen_dirpath));
+}
+
+void MainWindow::closeAllActivities()
+{
+    mp_activities->clear();
+    delete mp_stacked_widget;
+    mp_stacked_widget = new QStackedWidget(this);
+    mp_layout_stacked_widget->addWidget(mp_stacked_widget);
 }
 
 void MainWindow::showAboutDialog()

@@ -175,7 +175,7 @@ color: rgb(56, 56, 56);</string>
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="mp_layout">
+     <layout class="QVBoxLayout" name="mp_layout_stacked_widget">
       <property name="leftMargin">
        <number>9</number>
       </property>

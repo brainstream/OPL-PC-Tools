@@ -905,7 +905,7 @@
 <context>
     <name>OplPcTools::UI::MainWindow</name>
     <message>
-        <location filename="../UI/MainWindow.cpp" line="154"/>
+        <location filename="../UI/MainWindow.cpp" line="157"/>
         <source>Choose the OPL root directory</source>
         <translation type="unfinished">Escolha a raiz da pasta do OPL</translation>
     </message>

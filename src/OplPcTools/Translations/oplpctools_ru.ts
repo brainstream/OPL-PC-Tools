@@ -1205,6 +1205,12 @@
         <translation>Основные</translation>
     </message>
     <message>
+        <location filename="../UI/SettingsDialog.ui" line="33"/>
+        <location filename="../../../build/ui_SettingsDialog.h" line="188"/>
+        <source>Open the recently used library at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../UI/SettingsDialog.ui" line="47"/>
         <location filename="../../../build/ui_SettingsDialog.h" line="190"/>
         <source>Check for app updates</source>
@@ -1215,12 +1221,6 @@
         <location filename="../../../build/ui_SettingsDialog.h" line="189"/>
         <source>Validate ul.cfg</source>
         <translation>Валидировать ul.cfg</translation>
-    </message>
-    <message>
-        <location filename="../UI/SettingsDialog.ui" line="33"/>
-        <location filename="../../../build/ui_SettingsDialog.h" line="188"/>
-        <source>Open recently used collection</source>
-        <translation>Открывать недавно использованную коллекцию</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="54"/>

@@ -30,7 +30,7 @@
        <item>
         <widget class="QCheckBox" name="mp_checkbx_reopen_last_catalog">
          <property name="text">
-          <string>Open recently used collection</string>
+          <string>Open the recently used library at startup</string>
          </property>
         </widget>
        </item>

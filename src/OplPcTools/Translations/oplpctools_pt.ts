@@ -784,19 +784,29 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="431"/>
-        <source>Configuration saved successfully</source>
+        <location filename="../UI/GameConfigWidget.cpp" line="382"/>
+        <source>Configuration cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="438"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="412"/>
+        <source>Configuration saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="445"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="439"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="446"/>
         <source>Are you sure you want to delete file?
 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="450"/>
+        <source>Configuration file does not exist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

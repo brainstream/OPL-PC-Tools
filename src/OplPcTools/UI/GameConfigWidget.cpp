@@ -374,6 +374,16 @@ void GameConfigWidget::fillGameIdFromGame()
 
 void GameConfigWidget::clear()
 {
+    clearForm();
+    QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
+    if(QFile::exists(filename))
+        saveAs(filename);
+    QToolTip::showText(mapToGlobal(mp_btn_clear->pos() - QPoint(0, 50)),
+        tr("Configuration cleared"), this, QRect(), 3000);
+}
+
+void GameConfigWidget::clearForm()
+{
     mp_edit_elf->clear();
     mp_edit_game_id->clear();
     mp_checkbox_mode_1->setChecked(false);
@@ -393,14 +403,13 @@ void GameConfigWidget::clear()
     mp_spinbox_hpos->clear();
     mp_spinbox_vpos->clear();
     mp_radio_disable_gsm->setChecked(true);
-    QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
-    if(QFile::exists(filename))
-        saveAs(filename);
 }
 
 void GameConfigWidget::save()
 {
     saveAs(GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id()));
+    QToolTip::showText(mapToGlobal(mp_btn_save->pos() - QPoint(0, 50)),
+        tr("Configuration saved"), this, QRect(), 3000);
 }
 
 void GameConfigWidget::saveAs(const QString & _filename)
@@ -427,8 +436,6 @@ void GameConfigWidget::saveAs(const QString & _filename)
     m_config_ptr->gsm_x_offset = mp_spinbox_hpos->value();
     m_config_ptr->gsm_y_offset = mp_spinbox_vpos->value();
     m_config_ptr->save(*m_config_ptr, _filename);
-    QToolTip::showText(mapToGlobal(mp_btn_save->pos() - QPoint(0, 50)),
-        tr("Configuration saved successfully"), this, QRect(), 3000);
 }
 
 void GameConfigWidget::remove()
@@ -439,8 +446,10 @@ void GameConfigWidget::remove()
         tr("Are you sure you want to delete file?\n%1").arg(filename),
         QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
     {
+        QToolTip::showText(mapToGlobal(mp_btn_delete->pos() - QPoint(0, 50)),
+            tr("Configuration file does not exist"), this, QRect(), 3000);
         return;
     }
     config.remove();
-    clear();
+    clearForm();
 }

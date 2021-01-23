@@ -54,6 +54,7 @@ private:
     const OplPcTools::Vmc * createVmc();
     void fillGameIdFromGame();
     void clear();
+    void clearForm();
     void save();
     void saveAs(const QString & _filename);
     void remove();

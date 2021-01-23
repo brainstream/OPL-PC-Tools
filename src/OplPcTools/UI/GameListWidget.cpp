@@ -22,6 +22,7 @@
 #include <QAbstractItemModel>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/GameConfiguration.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
@@ -418,6 +419,9 @@ void GameListWidget::deleteGame()
     {
         Library::instance().games().deleteGame(*game);
         mp_game_art_manager->clearArts(id);
+        QFile config(GameConfiguration::makeFilename(Library::instance().directory(), id));
+        if(config.exists())
+            config.remove();
     }
     catch(Exception & exception)
     {

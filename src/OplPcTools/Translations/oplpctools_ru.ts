@@ -811,22 +811,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="336"/>
+        <location filename="../UI/GameListWidget.cpp" line="337"/>
         <source>Directory</source>
         <translation type="unfinished">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="404"/>
+        <location filename="../UI/GameListWidget.cpp" line="405"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="405"/>
+        <location filename="../UI/GameListWidget.cpp" line="406"/>
         <source>Delete Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="407"/>
+        <location filename="../UI/GameListWidget.cpp" line="408"/>
         <source>Are you sure you want to delete this game?</source>
         <translation type="unfinished"></translation>
     </message>

@@ -941,17 +941,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
         <source>An unknown error has occurred</source>
         <translation type="unfinished">Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1160,7 +1160,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="201"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="202"/>
         <source>&lt;directory&gt;</source>
         <translation type="unfinished"></translation>
     </message>

@@ -195,11 +195,14 @@ QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) con
         }
         break;
     case COL_SIZE:
-        if(_role == Qt::DisplayRole)
+        switch(_role)
         {
+        case Qt::DisplayRole:
             if(item->is_directory)
                 return QObject::tr("<directory>");
             return makeBytesDisplayString(item->size);
+        case Qt::TextAlignmentRole:
+            return static_cast<int>(Qt::AlignRight | Qt::AlignVCenter);
         }
         break;
     }
@@ -297,6 +300,7 @@ void VmcDetailsActivity::setupView()
     mp_tree_fs->setModel(mp_model);
     QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
     header_model->setHorizontalHeaderLabels({ tr("Name"), tr("Size") });
+    header_model->horizontalHeaderItem(1)->setTextAlignment(Qt::AlignRight);
     mp_tree_fs->header()->setModel(header_model);
     mp_tree_fs->header()->setStretchLastSection(false);
     mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);

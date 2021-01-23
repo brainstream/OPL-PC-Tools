@@ -224,7 +224,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
     connect(mp_action_install, &QAction::triggered, this, &GameListWidget::showGameInstaller);
     connect(mp_action_restore_iso, &QAction::triggered, this, &GameListWidget::showIsoRestorer);
-    connect(mp_tree_games, &QTreeView::doubleClicked, [this](const QModelIndex &) { showGameDetails(); });
+    connect(mp_tree_games, &QTreeView::activated, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameListWidget::showTreeContextMenu);
     connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { onGameSelected(); });
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);

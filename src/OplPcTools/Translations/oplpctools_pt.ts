@@ -916,17 +916,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="254"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
         <source>An unknown error has occurred</source>
         <translation type="unfinished">Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -934,22 +934,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="369"/>
+        <location filename="../UI/VmcListWidget.cpp" line="363"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="370"/>
+        <location filename="../UI/VmcListWidget.cpp" line="364"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="372"/>
+        <location filename="../UI/VmcListWidget.cpp" line="366"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="440"/>
+        <location filename="../UI/VmcListWidget.cpp" line="434"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1100,12 +1100,12 @@
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="80"/>
+        <location filename="../UI/VmcListWidget.cpp" line="78"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="99"/>
+        <location filename="../UI/VmcListWidget.cpp" line="97"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1115,27 +1115,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="66"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="67"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="69"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="70"/>
         <source>KiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="72"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="73"/>
         <source>MiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="75"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="76"/>
         <source>GiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="200"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="201"/>
         <source>&lt;directory&gt;</source>
         <translation type="unfinished"></translation>
     </message>

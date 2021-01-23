@@ -46,7 +46,7 @@ private:
     void onVmcSelected();
     void activateItemControls(const Vmc * _vmc);
     void showTreeContextMenu(const QPoint & _point);
-    void onTreeViewDoubleClicked(const QModelIndex & _index);
+    void onTreeViewItemActivated(const QModelIndex & _index);
     void showVmcProperties();
 
 private:

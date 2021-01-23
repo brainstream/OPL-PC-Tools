@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <QStandardItemModel>
+#include <QShortcut>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
@@ -242,11 +243,24 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     mp_model(nullptr)
 {
     setupUi(this);
+    setupShortcuts();
     hideErrorMessage();
     mp_label_vmc_title->setText(mr_vmc.title());
     loadVmcFS();
     if(m_fs_ptr)
         setupView();
+}
+
+void VmcDetailsActivity::setupShortcuts()
+{
+    QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
+    connect(shortcut, &QShortcut::activated, this, &VmcDetailsActivity::close);
+    shortcut = new QShortcut(QKeySequence("Esc"), this);
+    connect(shortcut, &QShortcut::activated, this, &VmcDetailsActivity::close);
+    shortcut = new QShortcut(QKeySequence(Qt::ALT | Qt::Key_Left), this);
+    connect(shortcut, &QShortcut::activated, mp_btn_fs_back, &QToolButton::click);
+    shortcut = new QShortcut(QKeySequence(Qt::Key_PageUp), this);
+    connect(shortcut, &QShortcut::activated, mp_btn_fs_back, &QToolButton::click);
 }
 
 void VmcDetailsActivity::showErrorMessage(const QString & _message /*= QString()*/)
@@ -287,7 +301,7 @@ void VmcDetailsActivity::setupView()
     mp_tree_fs->header()->setStretchLastSection(false);
     mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
-    connect(mp_tree_fs, &QTreeView::doubleClicked, this, &VmcDetailsActivity::onFsListItemDoubleClicked);
+    connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
     connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
     connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
@@ -323,7 +337,7 @@ void VmcDetailsActivity::navigate(const QString & _path)
     }
 }
 
-void VmcDetailsActivity::onFsListItemDoubleClicked(const QModelIndex & _index)
+void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
 {
     const VmcEntryInfo * item = mp_model->item(_index);
     if(item == nullptr)

@@ -16,8 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QDebug>
-
 #include <QShortcut>
 #include <QMessageBox>
 #include <QCheckBox>
@@ -271,9 +269,9 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_tree_vmcs->header()->setStretchLastSection(false);
     mp_tree_vmcs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_context_menu = new QMenu(this);
-    mp_context_menu->addAction(mp_action_export);
     mp_context_menu->addAction(mp_action_rename_vmc);
     mp_context_menu->addAction(mp_action_delete_vmc);
+    mp_context_menu->addAction(mp_action_export);
     mp_context_menu->addAction(mp_action_properties);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_create_vmc);
@@ -288,7 +286,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_action_properties, &QAction::triggered, this, &VmcListWidget::showVmcProperties);
     connect(mp_action_export, &QAction::triggered, this, &VmcListWidget::exportFiles);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
-    connect(mp_tree_vmcs, &QTreeView::doubleClicked, this, &VmcListWidget::onTreeViewDoubleClicked);
+    connect(mp_tree_vmcs, &QTreeView::activated, this, &VmcListWidget::onTreeViewItemActivated);
     connect(mp_model, &VmcListWidget::VmcTreeModel::rowsInserted, [this](const QModelIndex parent, int, int last_row) {
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->mapFromSource(mp_model->index(last_row, 0, parent)));
     });
@@ -300,11 +298,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
 
 void VmcListWidget::setupShortcuts()
 {
-    QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
-    connect(shortcut, &QShortcut::activated, this, &VmcListWidget::close);
-    shortcut = new QShortcut(QKeySequence("Esc"), this);
-    connect(shortcut, &QShortcut::activated, this, &VmcListWidget::close);
-    shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    QShortcut * shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText())
         .arg(shortcut->key().toString()));
@@ -416,7 +410,7 @@ void VmcListWidget::showTreeContextMenu(const QPoint & _point)
         mp_context_menu->exec(mp_tree_vmcs->mapToGlobal(_point));
 }
 
-void VmcListWidget::onTreeViewDoubleClicked(const QModelIndex & _index)
+void VmcListWidget::onTreeViewItemActivated(const QModelIndex & _index)
 {
     const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(_index));
     if(vmc)

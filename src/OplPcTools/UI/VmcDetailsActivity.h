@@ -41,13 +41,14 @@ public:
     static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
 
 private:
+    void setupShortcuts();
     void showErrorMessage(const QString & _message = QString());
     void hideErrorMessage();
     void loadVmcFS();
     void setupView();
     void setIconSize();
     void navigate(const QString & _path);
-    void onFsListItemDoubleClicked(const QModelIndex & _index);
+    void onFsListItemActivated(const QModelIndex & _index);
     void onFsBackButtonClick();
     void renameVmc();
 

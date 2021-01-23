@@ -43,7 +43,12 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
     connect(mp_edit_title, &QLineEdit::textChanged, this, &VmcCreateDialog::setSaveButtonState);
     setProgressVisibility();
     setSaveButtonState();
-    adjustSize();
+}
+
+void VmcCreateDialog::setTitle(const QString & _title)
+{
+    mp_edit_title->setText(_title);
+    mp_edit_title->selectAll();
 }
 
 void VmcCreateDialog::create()
@@ -69,6 +74,7 @@ void VmcCreateDialog::setProgressVisibility()
 {
     mp_widget_main->setHidden(m_is_in_progress);
     mp_widget_progress->setVisible(m_is_in_progress);
+    adjustSize();
 }
 
 void VmcCreateDialog::setSaveButtonState()

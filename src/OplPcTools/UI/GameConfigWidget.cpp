@@ -360,6 +360,7 @@ void GameConfigWidget::createVmc1()
 const Vmc * GameConfigWidget::createVmc()
 {
     VmcCreateDialog dlg(this);
+    dlg.setTitle(mr_game.title());
     if(dlg.exec() == QDialog::Accepted)
     {
         return dlg.createdVmc();

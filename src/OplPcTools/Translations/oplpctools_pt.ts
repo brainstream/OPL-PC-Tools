@@ -784,28 +784,28 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="382"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="383"/>
         <source>Configuration cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="412"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="413"/>
         <source>Configuration saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="445"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="446"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="446"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="447"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="450"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
         <source>Configuration file does not exist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1297,19 +1297,19 @@
     <name>VmcCreateDialog</name>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="14"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="136"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="137"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="28"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="137"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="138"/>
         <source>Title</source>
         <translation type="unfinished">Título</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="51"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="138"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="139"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>

@@ -32,6 +32,8 @@ class VmcCreateDialog : public QDialog, private Ui::VmcCreateDialog
 public:
     explicit VmcCreateDialog(QWidget * _parent = nullptr);
 
+    void setTitle(const QString & _title);
+
     const Vmc * createdVmc() const
     {
         return mp_created_vmc;

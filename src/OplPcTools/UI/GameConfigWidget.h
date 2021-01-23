@@ -55,6 +55,8 @@ private:
     void fillGameIdFromGame();
     void clear();
     void save();
+    void saveAs(const QString & _filename);
+    void remove();
 
 private:
     VmcCollection & mr_vmcs;

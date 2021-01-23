@@ -17,6 +17,8 @@
  ***********************************************************************************************/
 
 #include <QSettings>
+#include <QMessageBox>
+#include <QToolTip>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
@@ -148,6 +150,7 @@ GameConfigWidget::GameConfigWidget(const Game & _game, QWidget * _parent /*= nul
     connect(mp_btn_id_from_game, &QPushButton::clicked, this, &GameConfigWidget::fillGameIdFromGame);
     connect(mp_btn_clear, &QPushButton::clicked, this, &GameConfigWidget::clear);
     connect(mp_btn_save, &QPushButton::clicked, this, &GameConfigWidget::save);
+    connect(mp_btn_delete, &QPushButton::clicked, this, &GameConfigWidget::remove);
 }
 
 bool GameConfigWidget::loadConfiguration()
@@ -390,10 +393,17 @@ void GameConfigWidget::clear()
     mp_spinbox_hpos->clear();
     mp_spinbox_vpos->clear();
     mp_radio_disable_gsm->setChecked(true);
-    save();
+    QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
+    if(QFile::exists(filename))
+        saveAs(filename);
 }
 
 void GameConfigWidget::save()
+{
+    saveAs(GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id()));
+}
+
+void GameConfigWidget::saveAs(const QString & _filename)
 {
     m_config_ptr->custom_elf = mp_edit_elf->text();
     m_config_ptr->game_id = mp_edit_game_id->text();
@@ -416,5 +426,21 @@ void GameConfigWidget::save()
     m_config_ptr->is_gsm_emulate_field_flipping_enabled = mp_checkbox_emulate_field_flipping->isChecked();
     m_config_ptr->gsm_x_offset = mp_spinbox_hpos->value();
     m_config_ptr->gsm_y_offset = mp_spinbox_vpos->value();
-    m_config_ptr->save(*m_config_ptr, GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id()));
+    m_config_ptr->save(*m_config_ptr, _filename);
+    QToolTip::showText(mapToGlobal(mp_btn_save->pos() - QPoint(0, 50)),
+        tr("Configuration saved successfully"), this, QRect(), 3000);
+}
+
+void GameConfigWidget::remove()
+{
+    QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
+    QFile config(filename);
+    if(!config.exists() || QMessageBox::question(this, tr("Confirmation"),
+        tr("Are you sure you want to delete file?\n%1").arg(filename),
+        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+    {
+        return;
+    }
+    config.remove();
+    clear();
 }

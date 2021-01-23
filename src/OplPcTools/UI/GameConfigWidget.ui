@@ -497,13 +497,24 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mp_btn_clear">
+      <widget class="QPushButton" name="mp_btn_delete">
        <property name="text">
-        <string>Clear Configuration</string>
+        <string>&amp;Delete Configuration</string>
        </property>
        <property name="icon">
         <iconset resource="../Resources/Resources.qrc">
          <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_clear">
+       <property name="text">
+        <string>&amp;Clear Configuration</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/restore</normaloff>:/images/restore</iconset>
        </property>
        <property name="shortcut">
         <string>Del</string>
@@ -513,7 +524,7 @@
      <item>
       <widget class="QPushButton" name="mp_btn_save">
        <property name="text">
-        <string>Save Configuration</string>
+        <string>&amp;Save Configuration</string>
        </property>
        <property name="icon">
         <iconset resource="../Resources/Resources.qrc">
@@ -553,6 +564,7 @@
   <tabstop>mp_spinbox_hpos</tabstop>
   <tabstop>mp_spinbox_vpos</tabstop>
   <tabstop>mp_checkbox_emulate_field_flipping</tabstop>
+  <tabstop>mp_btn_delete</tabstop>
   <tabstop>mp_btn_clear</tabstop>
   <tabstop>mp_btn_save</tabstop>
  </tabstops>

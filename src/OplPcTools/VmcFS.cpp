@@ -209,11 +209,13 @@ VmcFormatter::~VmcFormatter()
 
 void VmcFormatter::format(const QString & _filename, uint32_t _size_mib)
 {
-    if(_size_mib < 8 || _size_mib > 128)
+    if(_size_mib < VmcFS::min_size_mib || _size_mib > VmcFS::max_size_mib)
     {
-        throw ValidationException(QObject::tr(
-            "VMC size must be greater than or equal to 8 Mib and less than or equal to 128 Mib."
-        ));
+        throw ValidationException(
+            QObject::tr("VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib")
+                .arg(VmcFS::min_size_mib)
+                .arg(VmcFS::max_size_mib)
+        );
     }
     VmcFormatter(_filename, _size_mib).format();
 }
@@ -734,6 +736,8 @@ int64_t VmcFile::read(char * _buffer, int64_t _max_size)
 }
 
 const char VmcFS::path_separator = '/';
+const uint32_t VmcFS::min_size_mib = 8;
+const uint32_t VmcFS::max_size_mib = 2048;
 
 VmcFS::VmcFS() { }
 

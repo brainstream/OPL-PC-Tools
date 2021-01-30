@@ -955,6 +955,26 @@
         <source>128 MiB</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
+        <source>256 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
+        <source>512 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
+        <source>1024 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcCreateDialog.cpp" line="44"/>
+        <source>2048 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
@@ -1180,11 +1200,6 @@
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="202"/>
         <source>&lt;directory&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../VmcFS.cpp" line="214"/>
-        <source>VMC size must be greater than or equal to 8 Mib and less than or equal to 128 Mib.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -99,6 +99,8 @@ public:
 
 public:
     static const char path_separator;
+    static const uint32_t min_size_mib;
+    static const uint32_t max_size_mib;
 
 private:
     Private * mp_private;

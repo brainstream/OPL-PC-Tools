@@ -27,6 +27,7 @@ namespace OplPcTools {
 class Uuid final
 {
 public:
+    inline Uuid();
     inline explicit Uuid(const QUuid & _quuid);
     Uuid(const Uuid & _uuid) = default;
     ~Uuid() = default;
@@ -43,6 +44,10 @@ public:
 private:
     QUuid m_quuid;
 };
+
+Uuid::Uuid()
+{
+}
 
 Uuid::Uuid(const QUuid & _quuid) :
     m_quuid(_quuid)

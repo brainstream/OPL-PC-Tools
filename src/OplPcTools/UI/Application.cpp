@@ -22,6 +22,7 @@
 #include <QStandardPaths>
 #include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/Uuid.h>
 #include <OplPcTools/UI/Application.h>
 
 using namespace OplPcTools;
@@ -118,6 +119,7 @@ bool Application::pushActivity(Intent & _intent)
 
 int main(int _argc, char * _argv[])
 {
+    qRegisterMetaType<Uuid>("Uuid");
     QApplication::setDesktopSettingsAware(true);
     gp_application = new PrivateApplication(_argc, _argv);
     gp_application->setApplicationName(APPLICATION_NAME);

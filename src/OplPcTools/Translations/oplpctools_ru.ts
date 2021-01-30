@@ -703,12 +703,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="106"/>
+        <location filename="../UI/Application.cpp" line="108"/>
         <source>Something went wrong</source>
         <translation>Что-то пошло не так</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="111"/>
+        <location filename="../UI/Application.cpp" line="113"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>

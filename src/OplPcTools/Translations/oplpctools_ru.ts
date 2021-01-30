@@ -1203,22 +1203,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="511"/>
+        <location filename="../VmcFS.cpp" line="215"/>
+        <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../VmcFS.cpp" line="513"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="574"/>
+        <location filename="../VmcFS.cpp" line="576"/>
         <source>Path not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="660"/>
+        <location filename="../VmcFS.cpp" line="662"/>
         <source>File not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="662"/>
+        <location filename="../VmcFS.cpp" line="664"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1320,25 +1325,25 @@
     <name>VmcCreateDialog</name>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="14"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="137"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="138"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="28"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="138"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="139"/>
         <source>Title</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="51"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="139"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="140"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.ui" line="114"/>
-        <location filename="../../../build/ui_VmcCreateDialog.h" line="140"/>
+        <location filename="../UI/VmcCreateDialog.ui" line="120"/>
+        <location filename="../../../build/ui_VmcCreateDialog.h" line="141"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>

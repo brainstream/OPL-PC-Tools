@@ -737,7 +737,7 @@ int64_t VmcFile::read(char * _buffer, int64_t _max_size)
 
 const char VmcFS::path_separator = '/';
 const uint32_t VmcFS::min_size_mib = 8;
-const uint32_t VmcFS::max_size_mib = 2048;
+const uint32_t VmcFS::max_size_mib = 512;
 
 VmcFS::VmcFS() { }
 

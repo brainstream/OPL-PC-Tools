@@ -40,8 +40,6 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
     mp_combobox_size->addItem(tr("128 MiB"), 128);
     mp_combobox_size->addItem(tr("256 MiB"), 256);
     mp_combobox_size->addItem(tr("512 MiB"), 512);
-    mp_combobox_size->addItem(tr("1024 MiB"), 1024);
-    mp_combobox_size->addItem(tr("2048 MiB"), 2048);
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcCreateDialog::create);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcCreateDialog::reject);
     connect(mp_edit_title, &QLineEdit::textChanged, this, &VmcCreateDialog::setSaveButtonState);

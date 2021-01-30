@@ -94,6 +94,12 @@
       </property>
       <item>
        <widget class="QProgressBar" name="mp_progress_bar">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximum">
          <number>0</number>
         </property>

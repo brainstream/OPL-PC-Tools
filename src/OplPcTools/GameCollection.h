@@ -42,6 +42,7 @@ public:
     void addGame(const Game & _game);
     void renameGame(const Game & _game, const QString & _title);
     void deleteGame(const Game & _game);
+    const bool contains(const QString & _game_id) const;
 
 signals:
     void gameAboutToBeDeleted(const Uuid & _uuid);

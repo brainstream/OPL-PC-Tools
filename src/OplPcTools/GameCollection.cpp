@@ -115,3 +115,13 @@ void GameCollection::deleteGame(const Game & _game)
     if(!storage(_game.installationType()).deleteGame(_game.uuid()))
         throw Exception(tr("Unable to delete game \"%1\"").arg(_game.title()));
 }
+
+const bool GameCollection::contains(const QString & _game_id) const
+{
+    for(int i = count() - 1; i >= 0; --i)
+    {
+        if((*this)[i]->id() == _game_id)
+            return true;
+    }
+    return false;
+}

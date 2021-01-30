@@ -665,6 +665,14 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::GameInstaller</name>
+    <message>
+        <location filename="../GameInstaller.cpp" line="35"/>
+        <source>Game with ID %1 is already installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::IsoRestorer</name>
     <message>
         <location filename="../IsoRestorer.cpp" line="40"/>

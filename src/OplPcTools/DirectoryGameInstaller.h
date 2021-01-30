@@ -35,8 +35,10 @@ public:
     inline bool isOptionMoveFileSet() const;
     inline void setOptionRenameFile(bool _value);
     inline bool isOptionRenameFileSet() const;
-    bool install() override;
     inline const Game * installedGame() const override;
+
+protected:
+    bool performInstallation() override;
 
 private:
     bool copyDeviceTo(const QString & _dest);

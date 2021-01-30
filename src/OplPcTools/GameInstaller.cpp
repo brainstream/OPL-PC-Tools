@@ -16,6 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
 #include <OplPcTools/GameInstaller.h>
 
 using namespace OplPcTools;
@@ -24,6 +26,15 @@ GameInstaller::GameInstaller(Device & _device, QObject * _parent /*= nullptr*/) 
     QObject(_parent),
     mr_device(_device)
 {
+}
+
+bool GameInstaller::install()
+{
+    if(Library::instance().games().contains(mr_device.gameId()))
+    {
+        throw ValidationException(tr("Game with ID %1 is already installed").arg(mr_device.gameId()));
+    }
+    return performInstallation();
 }
 
 MediaType GameInstaller::deviceMediaType() const

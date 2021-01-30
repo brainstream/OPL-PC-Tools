@@ -36,7 +36,7 @@ UlConfigGameInstaller::~UlConfigGameInstaller()
     delete mp_game;
 }
 
-bool UlConfigGameInstaller::install()
+bool UlConfigGameInstaller::performInstallation()
 {
     if(!mr_device.open())
     {

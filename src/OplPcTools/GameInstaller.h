@@ -32,7 +32,7 @@ class GameInstaller : public QObject
 
 public:
     explicit GameInstaller(Device & _device, QObject * _parent = nullptr);
-    virtual bool install() = 0;
+    bool install();
     virtual const Game * installedGame() const = 0;
 
 signals:
@@ -43,6 +43,7 @@ signals:
     void rollbackFinished();
 
 protected:
+    virtual bool performInstallation() = 0;
     MediaType deviceMediaType() const;  
 
 protected:

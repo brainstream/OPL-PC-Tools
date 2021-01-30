@@ -37,7 +37,7 @@ DirectoryGameInstaller::~DirectoryGameInstaller()
     delete mp_game;
 }
 
-bool DirectoryGameInstaller::install()
+bool DirectoryGameInstaller::performInstallation()
 {
     if(m_move_file && mr_device.isReadOnly())
     {

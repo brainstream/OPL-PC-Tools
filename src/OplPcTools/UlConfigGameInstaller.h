@@ -30,8 +30,10 @@ class UlConfigGameInstaller : public GameInstaller
 public:
     explicit UlConfigGameInstaller(Device & _device,QObject * _parent = nullptr);
     ~UlConfigGameInstaller() override;
-    bool install() override;
     inline const Game * installedGame() const override;
+
+protected:
+    bool performInstallation() override;
 
 private:
     void rollback();

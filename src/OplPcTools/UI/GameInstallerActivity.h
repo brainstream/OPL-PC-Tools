@@ -26,8 +26,7 @@
 #include <OplPcTools/UI/Intent.h>
 #include "ui_GameInstallerActivity.h"
 
-namespace OplPcTools {
-namespace UI {
+namespace OplPcTools::UI {
 
 class GameInstallerActivity : public Activity, private Ui::GameInstallerActivity
 {
@@ -56,7 +55,7 @@ private:
     void renameOptionChanged();
     void moveOptionChanged();
     void install();
-    bool startTask();
+    bool startNextTask();
     void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
     void rollbackStarted();
     void rollbackFinished();
@@ -76,7 +75,6 @@ private:
     bool m_is_canceled;
 };
 
-} // namespace UI
-} // namespace OplPcTools
+} // namespace OplPcTools::UI
 
 #endif // __OPLPCTOOLS_GAMEINSTALLERACTIVITY__

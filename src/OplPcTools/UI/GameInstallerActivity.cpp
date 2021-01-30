@@ -401,14 +401,14 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
         mp_tree_tasks->setCurrentItem(existingTask);
         return;
     }
-    DeviceSource * source = nullptr;
+    QSharedPointer<DeviceSource> source;
     if(_file_path.endsWith(g_iso_ext))
-        source = new Iso9660DeviceSource(_file_path);
+        source.reset(new Iso9660DeviceSource(_file_path));
     else if(_file_path.endsWith(g_bin_ext))
-        source = new BinCueDeviceSource(_file_path);
+        source.reset(new BinCueDeviceSource(_file_path));
     else if(_file_path.endsWith(g_nrg_ext))
-        source = new NrgDeviceSource(_file_path);
-    QSharedPointer<Device> device(new Device(QSharedPointer<DeviceSource>(source)));
+        source.reset(new NrgDeviceSource(_file_path));
+    QSharedPointer<Device> device(new Device(source));
     if(device->init())
     {
         device->setTitle(file_info.completeBaseName());
@@ -562,7 +562,7 @@ void GameInstallerActivity::install()
     mp_btn_cancel->setDisabled(false);
     m_processing_task_index = 0;
     mp_progressbar_overall->setMaximum(g_progressbar_max_value);
-    startTask();
+    startNextTask();
 }
 
 void GameInstallerActivity::installProgress(quint64 _total_bytes, quint64 _processed_bytes)
@@ -630,7 +630,7 @@ void GameInstallerActivity::threadFinished()
 {
     ++m_processing_task_index;
     mp_working_thread = nullptr;
-    if(startTask())
+    if(startNextTask())
     {
         return;
     }
@@ -640,7 +640,7 @@ void GameInstallerActivity::threadFinished()
     Application::showMessage(tr("Done"), tr("Installation complete"));
 }
 
-bool GameInstallerActivity::startTask()
+bool GameInstallerActivity::startNextTask()
 {
     delete mp_installer;
     mp_installer = nullptr;

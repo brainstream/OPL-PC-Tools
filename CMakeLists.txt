@@ -138,6 +138,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/FilenameValidator.h
     ${OPT_SRC_DIR}/Maybe.h
     ${OPT_SRC_DIR}/BigEndian.h
+    ${OPT_SRC_DIR}/Uuid.h
     ${OPT_SRC_DIR}/DeviceSource.h
     ${OPT_SRC_DIR}/Iso9660DeviceSource.h
     ${OPT_SRC_DIR}/BinCueDeviceSource.h
@@ -195,6 +196,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.cpp
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.cpp
 )
+
+source_group("OPL PC Tools" ${OPT_SRC_DIR})
 
 if(WIN32)
     list(APPEND OPT_SRC

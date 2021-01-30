@@ -846,22 +846,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="337"/>
+        <location filename="../UI/GameListWidget.cpp" line="347"/>
         <source>Directory</source>
         <translation type="unfinished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="405"/>
+        <location filename="../UI/GameListWidget.cpp" line="415"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="406"/>
+        <location filename="../UI/GameListWidget.cpp" line="416"/>
         <source>Delete Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="408"/>
+        <location filename="../UI/GameListWidget.cpp" line="418"/>
         <source>Are you sure you want to delete this game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1120,7 +1120,7 @@
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>
     <message>
-        <location filename="../Game.h" line="58"/>
+        <location filename="../Game.h" line="62"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Sem título&gt;</translation>
     </message>

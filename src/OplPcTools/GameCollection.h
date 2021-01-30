@@ -36,7 +36,7 @@ public:
     ~GameCollection() override;
     void load(const QDir & _directory);
     bool isLoaded() const;
-    const Game * findGame(const QString & _id) const;
+    const Game * findGame(const Uuid & _uuid) const;
     int count() const;
     const Game * operator [](int _index) const;
     void addGame(const Game & _game);
@@ -44,10 +44,10 @@ public:
     void deleteGame(const Game & _game);
 
 signals:
-    void gameAboutToBeDeleted(const QString _game_id);
-    void gameDeleted(const QString & _game_id);
-    void gameAdded(const QString & _game_id);
-    void gameRenamed(const QString & _game_id);
+    void gameAboutToBeDeleted(const Uuid & _uuid);
+    void gameDeleted(const Uuid & _uuid);
+    void gameAdded(const Uuid & _uuid);
+    void gameRenamed(const Uuid & _uuid);
 
 private:
     GameStorage & storage(GameInstallationType _installation_type) const;

@@ -33,15 +33,15 @@ namespace {
 class GameDetailsActivityIntent : public Intent
 {
 public:
-    GameDetailsActivityIntent(GameArtManager & _art_manager, const QString & _game_id) :
+    GameDetailsActivityIntent(GameArtManager & _art_manager, const Uuid & _game_uuid) :
         mr_art_manager(_art_manager),
-        m_game_id(_game_id)
+        m_game_uuid(_game_uuid)
     {
     }
 
     Activity * createActivity(QWidget * _parent) override
     {
-        GameDetailsActivity * widget = new GameDetailsActivity(m_game_id, mr_art_manager, _parent);
+        GameDetailsActivity * widget = new GameDetailsActivity(m_game_uuid, mr_art_manager, _parent);
         return widget;
     }
 
@@ -52,23 +52,23 @@ public:
 
 private:
     GameArtManager & mr_art_manager;
-    const QString m_game_id;
+    const Uuid m_game_uuid;
 };
 
 } // namespace
 
 
-GameDetailsActivity::GameDetailsActivity(const QString _game_id, GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
+GameDetailsActivity::GameDetailsActivity(const Uuid _game_uuid, GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_art_manager(_art_manager),
-    mp_game(Library::instance().games().findGame(_game_id))
+    mp_game(Library::instance().games().findGame(_game_uuid))
 {
     setupUi(this);
     setupShortcuts();
     mp_tabs->setCurrentIndex(0);
     if(mp_game)
     {
-        mp_tab_arts->layout()->addWidget(new GameArtsWidget(_game_id, _art_manager, this));
+        mp_tab_arts->layout()->addWidget(new GameArtsWidget(mp_game->id(), _art_manager, this));
         mp_tab_config->layout()->addWidget(new GameConfigWidget(*mp_game, this));
         mp_label_title->setText(mp_game->title());
     }
@@ -77,9 +77,9 @@ GameDetailsActivity::GameDetailsActivity(const QString _game_id, GameArtManager 
     connect(mp_btn_rename_game, &QPushButton::clicked, this, &GameDetailsActivity::renameGame);
 }
 
-QSharedPointer<Intent> GameDetailsActivity::createIntent(GameArtManager & _art_manager, const QString & _game_id)
+QSharedPointer<Intent> GameDetailsActivity::createIntent(GameArtManager & _art_manager, const Uuid & _game_uuid)
 {
-    return QSharedPointer<Intent>(new GameDetailsActivityIntent(_art_manager, _game_id));
+    return QSharedPointer<Intent>(new GameDetailsActivityIntent(_art_manager, _game_uuid));
 }
 
 void GameDetailsActivity::setupShortcuts()

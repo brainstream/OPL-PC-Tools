@@ -183,8 +183,8 @@ void GameConfigWidget::initControls()
     for(int i = 0; i < count; ++i)
     {
         const Vmc * vmc = mr_vmcs[i];
-        mp_combo_vmc0->addItem(vmc->title(), vmc->uuid());
-        mp_combo_vmc1->addItem(vmc->title(), vmc->uuid());
+        mp_combo_vmc0->addItem(vmc->title(), vmc->uuid().quuid());
+        mp_combo_vmc1->addItem(vmc->title(), vmc->uuid().quuid());
     }
     sortVmcComboBoxes();
     setVmcComboBoxValue(mp_combo_vmc0, m_config_ptr->vmc0);
@@ -292,38 +292,38 @@ void GameConfigWidget::onGsmStateChanged()
     mp_groupbox_gsm_settings->setEnabled(enabled && !use_global_gsm);
 }
 
-void GameConfigWidget::onVmcAdded(const QUuid & _id)
+void GameConfigWidget::onVmcAdded(const Uuid & _id)
 {
     const Vmc * vmc = mr_vmcs[_id];
-    mp_combo_vmc0->addItem(vmc->title(), vmc->uuid());
-    mp_combo_vmc1->addItem(vmc->title(), vmc->uuid());
+    mp_combo_vmc0->addItem(vmc->title(), vmc->uuid().quuid());
+    mp_combo_vmc1->addItem(vmc->title(), vmc->uuid().quuid());
     sortVmcComboBoxes();
 }
 
-void GameConfigWidget::onVmcDeleted(const QUuid & _id)
+void GameConfigWidget::onVmcDeleted(const Uuid & _id)
 {
     deleteVmcComboBoxItem(mp_combo_vmc0, _id);
     deleteVmcComboBoxItem(mp_combo_vmc1, _id);
 }
 
-void GameConfigWidget::deleteVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id)
+void GameConfigWidget::deleteVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id)
 {
     int index = getVmcComboBoxItemIndex(_combobox, _id);
     if(index >= 0) _combobox->removeItem(index);
 }
 
-int GameConfigWidget::getVmcComboBoxItemIndex(QComboBox * _combobox, const QUuid & _id) const
+int GameConfigWidget::getVmcComboBoxItemIndex(QComboBox * _combobox, const Uuid & _id) const
 {
     int count = _combobox->count();
     for(int i = 0; i < count; ++i)
     {
-        if(_combobox->itemData(i).toUuid() == _id)
+        if(_id == _combobox->itemData(i).toUuid())
             return i;
     }
     return -1;
 }
 
-void GameConfigWidget::onVmcRenamed(const QUuid & _id)
+void GameConfigWidget::onVmcRenamed(const Uuid & _id)
 {
     const Vmc * vmc = mr_vmcs[_id];
     renameVmcComboBoxItem(mp_combo_vmc0, _id, vmc->title());
@@ -331,7 +331,7 @@ void GameConfigWidget::onVmcRenamed(const QUuid & _id)
     sortVmcComboBoxes();
 }
 
-void GameConfigWidget::renameVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id, const QString & _title)
+void GameConfigWidget::renameVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id, const QString & _title)
 {
     int index = getVmcComboBoxItemIndex(_combobox, _id);
     if(index >= 0) _combobox->setItemText(index, _title);

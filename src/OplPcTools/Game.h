@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QObject>
+#include <OplPcTools/Uuid.h>
 #include <OplPcTools/MediaType.h>
 #include <OplPcTools/GameInstallationType.h>
 
@@ -32,6 +33,7 @@ public:
     inline Game(const QString & _id, GameInstallationType _type);
     Game(const Game &) = default;
     Game & operator = (const Game &) = default;
+    inline const Uuid & uuid() const;
     inline const QString & id() const;
     inline void setTitle(const QString & _title);
     inline const QString & title() const;
@@ -42,7 +44,8 @@ public:
     inline GameInstallationType installationType() const;
 
 private:
-    QString m_id;
+    const Uuid m_uuid;
+    const QString m_id;
     QString m_title;
     MediaType m_media_type;
     quint8 m_part_count;
@@ -50,12 +53,18 @@ private:
 };
 
 Game::Game(const QString & _id, GameInstallationType _type) :
+    m_uuid(Uuid::createUuid()),
     m_id(_id),
     m_media_type(MediaType::Unknown),
     m_part_count(1),
     m_installation_type(_type)
 {
     m_title = QObject::tr("<Untitled>");
+}
+
+const Uuid & Game::uuid() const
+{
+    return m_uuid;
 }
 
 const QString & Game::id() const

@@ -81,7 +81,7 @@ const Vmc * VmcCollection::operator[](int _index) const
     return isLoaded() && count() > _index && _index >= 0 ? (*mp_vmcs)[_index] : nullptr;
 }
 
-const Vmc * VmcCollection::operator[](const QUuid & _uuid) const
+const Vmc * VmcCollection::operator[](const Uuid & _uuid) const
 {
     return findVmc(_uuid);
 }
@@ -102,7 +102,7 @@ const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
     return vmc;
 }
 
-void VmcCollection::renameVmc(const QUuid & _uuid, const QString & _title)
+void VmcCollection::renameVmc(const Uuid & _uuid, const QString & _title)
 {
     validateFilename(_title);
     Vmc * vmc = findVmc(_uuid);
@@ -121,7 +121,7 @@ QString VmcCollection::makeFilename(const QString & _vmc_title) const
     return m_directory.absoluteFilePath(_vmc_title + ".bin");
 }
 
-Vmc * VmcCollection::findVmc(const QUuid & _uuid) const
+Vmc * VmcCollection::findVmc(const Uuid & _uuid) const
 {
     for(Vmc * vmc : *mp_vmcs)
     {
@@ -131,7 +131,7 @@ Vmc * VmcCollection::findVmc(const QUuid & _uuid) const
     return nullptr;
 }
 
-void VmcCollection::deleteVmc(const QUuid & _uuid)
+void VmcCollection::deleteVmc(const Uuid & _uuid)
 {
     for(int i = 0; i < mp_vmcs->size(); ++i)
     {

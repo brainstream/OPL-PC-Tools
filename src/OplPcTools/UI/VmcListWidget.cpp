@@ -112,7 +112,7 @@ class VmcListWidget::VmcTreeModel final : public QAbstractItemModel
 public:
     explicit VmcTreeModel(QObject * _parent);
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
-    QModelIndex index(const QUuid & _uuid) const;
+    QModelIndex index(const Uuid & _uuid) const;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
     int columnCount(const QModelIndex & _parent) const override;
@@ -121,10 +121,10 @@ public:
 
 private:
     void onLibraryLoaded();
-    void onVmcAdded(const QUuid & _uuid);
-    void onVmcAboutToBeDeleted(const QUuid & _uuid);
-    void onVmcDeleted(const QUuid & _uuid);
-    void updateRecord(const QUuid & _uuid);
+    void onVmcAdded(const Uuid & _uuid);
+    void onVmcAboutToBeDeleted(const Uuid & _uuid);
+    void onVmcDeleted(const Uuid & _uuid);
+    void updateRecord(const Uuid & _uuid);
 
 private:
     QPixmap m_icon;
@@ -154,7 +154,7 @@ QModelIndex VmcListWidget::VmcTreeModel::index(int _row, int _column, const QMod
     return createIndex(_row, _column);
 }
 
-QModelIndex VmcListWidget::VmcTreeModel::index(const QUuid & _uuid) const
+QModelIndex VmcListWidget::VmcTreeModel::index(const Uuid & _uuid) const
 {
     VmcCollection & vmc_man = Library::instance().vmcs();
     int count = vmc_man.count();
@@ -218,7 +218,7 @@ const Vmc * VmcListWidget::VmcTreeModel::vmc(const QModelIndex & _index)
     return nullptr;
 }
 
-void VmcListWidget::VmcTreeModel::onVmcAdded(const QUuid & _uuid)
+void VmcListWidget::VmcTreeModel::onVmcAdded(const Uuid & _uuid)
 {
     Q_UNUSED(_uuid);
     int count = Library::instance().vmcs().count() - 1;
@@ -226,7 +226,7 @@ void VmcListWidget::VmcTreeModel::onVmcAdded(const QUuid & _uuid)
     endInsertRows();
 }
 
-void VmcListWidget::VmcTreeModel::updateRecord(const QUuid & _uuid)
+void VmcListWidget::VmcTreeModel::updateRecord(const Uuid & _uuid)
 {
     QModelIndex start_index = index(_uuid);
     if(start_index.isValid())
@@ -236,14 +236,14 @@ void VmcListWidget::VmcTreeModel::updateRecord(const QUuid & _uuid)
     }
 }
 
-void VmcListWidget::VmcTreeModel::onVmcAboutToBeDeleted(const QUuid & _uuid)
+void VmcListWidget::VmcTreeModel::onVmcAboutToBeDeleted(const Uuid & _uuid)
 {
     QModelIndex start_index = index(_uuid);
     if(start_index.isValid())
         beginRemoveRows(QModelIndex(), start_index.row(), start_index.row());
 }
 
-void VmcListWidget::VmcTreeModel::onVmcDeleted(const QUuid & _uuid)
+void VmcListWidget::VmcTreeModel::onVmcDeleted(const Uuid & _uuid)
 {
     Q_UNUSED(_uuid);
     endRemoveRows();

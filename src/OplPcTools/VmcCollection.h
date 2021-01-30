@@ -34,23 +34,23 @@ public:
     explicit VmcCollection(QObject * _parent = nullptr);
     ~VmcCollection() override;
     const Vmc * operator[](int _index) const;
-    const Vmc * operator[](const QUuid & _uuid) const;
+    const Vmc * operator[](const Uuid & _uuid) const;
     bool load(const QDir & _base_directory);
     bool isLoaded() const;
     const int count() const;
     const Vmc * createVmc(const QString & _title, uint32_t _size_mib);
-    void renameVmc(const QUuid & _uuid, const QString & _title);
-    void deleteVmc(const QUuid & _uuid);
+    void renameVmc(const Uuid & _uuid, const QString & _title);
+    void deleteVmc(const Uuid & _uuid);
 
 signals:
-    void vmcAdded(const QUuid & _uuid);
-    void vmcRenamed(const QUuid & _uuid);
-    void vmcAboutToBeDeleted(const QUuid & _uuid);
-    void vmcDeleted(const QUuid & _uuid);
+    void vmcAdded(const Uuid & _uuid);
+    void vmcRenamed(const Uuid & _uuid);
+    void vmcAboutToBeDeleted(const Uuid & _uuid);
+    void vmcDeleted(const Uuid & _uuid);
 
 private:
     QString makeFilename(const QString & _vmc_title) const;
-    Vmc * findVmc(const QUuid & _uuid) const;
+    Vmc * findVmc(const Uuid & _uuid) const;
 
 private:
     QDir m_directory;

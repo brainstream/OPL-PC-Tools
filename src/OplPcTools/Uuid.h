@@ -16,36 +16,75 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMEDETAILSACTIVITY__
-#define __OPLPCTOOLS_GAMEDETAILSACTIVITY__
+#ifndef __OPLPCTOOLS_UUID__
+#define __OPLPCTOOLS_UUID__
 
-#include <QSharedPointer>
-#include <OplPcTools/Game.h>
-#include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_GameDetailsActivity.h"
+#include <QUuid>
 
 namespace OplPcTools {
-namespace UI {
 
-class GameDetailsActivity : public Activity, private Ui::GameDetailsActivity
+/// This class is similar to QUuid, but without implicit type conversion.
+class Uuid final
 {
-    Q_OBJECT
-
 public:
-    explicit GameDetailsActivity(const Uuid _game_uuid, GameArtManager & _art_manager, QWidget * _parent = nullptr);
-    static QSharedPointer<Intent> createIntent(GameArtManager & _art_manager, const Uuid & _game_uuid);
+    inline explicit Uuid(const QUuid & _quuid);
+    Uuid(const Uuid & _uuid) = default;
+    ~Uuid() = default;
+    Uuid & operator = (const Uuid &) = default;
+    inline Uuid & operator = (const QUuid & _quuid);
+    inline bool operator == (const QUuid & _quuid) const;
+    inline bool operator == (const Uuid & _uuid) const;
+    inline bool operator != (const QUuid & _quuid) const;
+    inline bool operator != (const Uuid & _uuid) const;
+    inline const QUuid & quuid() const;
+
+    inline static Uuid createUuid();
 
 private:
-    void setupShortcuts();
-    void renameGame();
-
-private:
-    GameArtManager & mr_art_manager;
-    const Game * mp_game;
+    QUuid m_quuid;
 };
 
-} // namespace UI
+Uuid::Uuid(const QUuid & _quuid) :
+    m_quuid(_quuid)
+{
+}
+
+Uuid & Uuid::operator = (const QUuid & _quuid)
+{
+    m_quuid = _quuid;
+    return *this;
+}
+
+bool Uuid::operator == (const QUuid & _quuid) const
+{
+    return m_quuid == _quuid;
+}
+
+bool Uuid::operator == (const Uuid & _uuid) const
+{
+    return m_quuid == _uuid.m_quuid;
+}
+
+bool Uuid::operator != (const QUuid & _quuid) const
+{
+    return m_quuid != _quuid;
+}
+
+bool Uuid::operator != (const Uuid & _uuid) const
+{
+    return m_quuid != _uuid.m_quuid;
+}
+
+const QUuid & Uuid::quuid() const
+{
+    return m_quuid;
+}
+
+Uuid Uuid::createUuid()
+{
+    return Uuid(QUuid::createUuid());
+}
+
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_GAMEDETAILSACTIVITY__
+#endif // __OPLPCTOOLS_UUID__

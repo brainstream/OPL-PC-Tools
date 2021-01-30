@@ -19,8 +19,8 @@
 #ifndef __OPLPCTOOLS_VMC__
 #define __OPLPCTOOLS_VMC__
 
-#include <QUuid>
 #include <QString>
+#include <OplPcTools/Uuid.h>
 
 namespace OplPcTools {
 
@@ -30,7 +30,7 @@ public:
     inline Vmc(const QString & _filepath, const QString & _title, uint32_t _size_mib);
     Vmc(const Vmc &) = default;
     ~Vmc() = default;
-    inline const QUuid & uuid() const;
+    inline const Uuid & uuid() const;
     inline const QString & filepath() const;
     inline void setFilepath(const QString & _filepath);
     inline const QString & title() const;
@@ -38,21 +38,21 @@ public:
     inline uint32_t size() const;
 
 private:
-    QUuid m_uuid;
+    const Uuid m_uuid;
     QString m_filepath;
     QString m_title;
     uint32_t m_size_mib;
 };
 
 Vmc::Vmc(const QString & _filepath, const QString & _title, uint32_t _size_mib) :
-    m_uuid(QUuid::createUuid()),
+    m_uuid(Uuid::createUuid()),
     m_filepath(_filepath),
     m_title(_title),
     m_size_mib(_size_mib)
 {
 }
 
-const QUuid & Vmc::uuid() const
+const Uuid & Vmc::uuid() const
 {
     return m_uuid;
 }

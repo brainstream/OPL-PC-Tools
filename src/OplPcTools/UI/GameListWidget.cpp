@@ -47,10 +47,11 @@ public:
 
 private:
     void onLibraryLoaded();
-    void onGameAdded(const QString & _id);
-    void onGameAboutToBeDeleted(const QString & _id);
-    void onGameDeleted(const QString & _id);
-    void updateRecord(const QString & _id);
+    void onGameAdded(const Uuid & _uuid);
+    void onGameAboutToBeDeleted(const Uuid & _uuid);
+    void onGameDeleted(const Uuid & _uuid);
+    void updateRecord(const Uuid & _uuid);
+    void updateRecords(const QString & _game_id);
     void gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
 
 private:
@@ -82,20 +83,20 @@ void GameListWidget::GameTreeModel::onLibraryLoaded()
     endResetModel();
 }
 
-void GameListWidget::GameTreeModel::onGameAdded(const QString & _id)
+void GameListWidget::GameTreeModel::onGameAdded(const Uuid & _uuid)
 {
-    Q_UNUSED(_id);
+    Q_UNUSED(_uuid);
     beginInsertRows(QModelIndex(), m_row_count, m_row_count);
     ++m_row_count;
     endInsertRows();
 }
 
-void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const QString & _id)
+void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const Uuid & _uuid)
 {
     for(int i = 0; i < m_row_count; ++i)
     {
         const Game * game = mr_game_manager[i];
-        if(game->id() == _id)
+        if(game->uuid() == _uuid)
         {
             beginRemoveRows(QModelIndex(), i, i);
             return;
@@ -103,20 +104,19 @@ void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const QString & _id)
     }
 }
 
-void GameListWidget::GameTreeModel::onGameDeleted(const QString & _id)
+void GameListWidget::GameTreeModel::onGameDeleted(const Uuid & _uuid)
 {
-    Q_UNUSED(_id);
+    Q_UNUSED(_uuid);
     m_row_count = mr_game_manager.count();
     endRemoveRows();
 }
 
-void GameListWidget::GameTreeModel::updateRecord(const QString & _id)
+void GameListWidget::GameTreeModel::updateRecord(const Uuid & _uuid)
 {
     int count = mr_game_manager.count();
     for(int i = 0; i < count; ++i)
     {
-        const Game * game = mr_game_manager[i];
-        if(game->id() == _id)
+        if(mr_game_manager[i]->uuid() == _uuid)
         {
             emit dataChanged(createIndex(i, 0), createIndex(i, 0));
             return;
@@ -124,11 +124,21 @@ void GameListWidget::GameTreeModel::updateRecord(const QString & _id)
     }
 }
 
+void GameListWidget::GameTreeModel::updateRecords(const QString & _game_id)
+{
+    int count = mr_game_manager.count();
+    for(int i = 0; i < count; ++i)
+    {
+        if(mr_game_manager[i]->id() == _game_id)
+            emit dataChanged(createIndex(i, 0), createIndex(i, 0));
+    }
+}
+
 void GameListWidget::GameTreeModel::gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
 {
     Q_UNUSED(_pixmap)
     if(_type == GameArtType::Icon)
-        updateRecord(_game_id);
+        updateRecords(_game_id);
 }
 
 QModelIndex GameListWidget::GameTreeModel::index(int _row, int _column, const QModelIndex & _parent) const
@@ -297,19 +307,19 @@ void GameListWidget::onLibraryLoaded()
     }
 }
 
-void GameListWidget::onGameAdded(const QString & _id)
+void GameListWidget::onGameAdded(const Uuid & _uuid)
 {
-    Q_UNUSED(_id)
+    Q_UNUSED(_uuid)
     QModelIndex index = mp_tree_games->currentIndex();
     if(!index.isValid())
         index = mp_proxy_model->index(0, 0);
     mp_tree_games->setCurrentIndex(index);
 }
 
-void GameListWidget::onGameRenamed(const QString & _id)
+void GameListWidget::onGameRenamed(const Uuid & _uuid)
 {
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
-    if(game && game->id() == _id)
+    if(game && game->uuid() == _uuid)
         onGameSelected();
 }
 
@@ -373,7 +383,7 @@ void GameListWidget::showGameDetails()
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game)
     {
-        QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_art_manager, game->id());
+        QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_art_manager, game->uuid());
         Application::pushActivity(*intent);
     }
 }
@@ -383,7 +393,7 @@ void GameListWidget::showIsoRestorer()
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->installationType() == GameInstallationType::UlConfig)
     {
-        QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->id());
+        QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->uuid());
         Application::pushActivity(*intent);
     }
 }

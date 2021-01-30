@@ -82,16 +82,16 @@ const Game * GameCollection::operator [](int _index) const
     return game;
 }
 
-const Game * GameCollection::findGame(const QString & _id) const
+const Game * GameCollection::findGame(const Uuid & _uuid) const
 {
-    const Game * game = mp_ul_conf_storage->findGame(_id);
-    if(!game) game = mp_dir_storage->findGame(_id);
+    const Game * game = mp_ul_conf_storage->findGame(_uuid);
+    if(!game) game = mp_dir_storage->findGame(_uuid);
     return game;
 }
 
 void GameCollection::addGame(const Game & _game)
 {
-    if(findGame(_game.id()))
+    if(findGame(_game.uuid()))
         throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id()));
     storage(_game.installationType()).registerGame(_game);
 }
@@ -106,12 +106,12 @@ GameStorage & GameCollection::storage(GameInstallationType _installation_type) c
 
 void GameCollection::renameGame(const Game & _game, const QString & _title)
 {
-    if(!storage(_game.installationType()).renameGame(_game.id(), _title))
+    if(!storage(_game.installationType()).renameGame(_game.uuid(), _title))
         throw Exception(tr("Unable to rename game \"%1\" to \"%2\"").arg(_game.title()).arg(_title));
 }
 
 void GameCollection::deleteGame(const Game & _game)
 {
-    if(!storage(_game.installationType()).deleteGame(_game.id()))
+    if(!storage(_game.installationType()).deleteGame(_game.uuid()))
         throw Exception(tr("Unable to delete game \"%1\"").arg(_game.title()));
 }

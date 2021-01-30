@@ -34,13 +34,13 @@ public:
     explicit GameStorage(QObject * _parent = nullptr);
     virtual ~GameStorage();
     const Game * operator [](int _index) const;
-    const Game * findGame(const QString & _id) const;
+    const Game * findGame(const Uuid & _uuid) const;
     bool load(const QDir & _directory);
     int count() const;
-    bool renameGame(const QString & _id, const QString & _title);
+    bool renameGame(const Uuid & _uuid, const QString & _title);
     bool renameGame(const int _index, const QString & _title);
     bool registerGame(const Game & _game);
-    bool deleteGame(const QString & _id);
+    bool deleteGame(const Uuid & _uuid);
 
     virtual GameInstallationType installationType() const = 0;
 
@@ -51,15 +51,15 @@ public:
 
 signals:
     void loaded();
-    void gameRegistered(const QString & _game_id);
-    void gameRenamed(const QString & _game_id);
-    void gameAboutToBeDeleted(const QString & _game_id);
-    void gameDeleted(const QString & _game_id);
+    void gameRegistered(const Uuid & _uuid);
+    void gameRenamed(const Uuid & _uuid);
+    void gameAboutToBeDeleted(const Uuid & _uuid);
+    void gameDeleted(const Uuid & _uuid);
 
 
 protected:
-    Game * createGame(const QString & _id);
-    Game * findNonConstGame(const QString & _id) const;
+    Game * createGame(const QString & _game_id);
+    Game * findNonConstGame(const Uuid & _uuid) const;
     Game * gameAt(int _index) const;
 
     virtual bool performLoading(const QDir & _directory) = 0;

@@ -39,14 +39,14 @@ static const char * iso_recover_dir = "ISORecoverDirectory";
 class IsoRestorerActivityIntent : public Intent
 {
 public:
-    explicit IsoRestorerActivityIntent(const QString & _game_id) :
-        m_game_id(_game_id)
+    explicit IsoRestorerActivityIntent(const Uuid & _game_uuid) :
+        m_game_uuid(_game_uuid)
     {
     }
 
     Activity * createActivity(QWidget * _parent) override
     {
-        IsoRestorerActivity * widget = new IsoRestorerActivity(m_game_id, _parent);
+        IsoRestorerActivity * widget = new IsoRestorerActivity(m_game_uuid, _parent);
         return widget;
     }
 
@@ -56,14 +56,14 @@ public:
     }
 
 private:
-    const QString m_game_id;
+    const Uuid m_game_uuid;
 };
 
 } // namespace
 
-IsoRestorerActivity::IsoRestorerActivity(const QString & _game_id, QWidget * _parent /*= nullptr*/) :
+IsoRestorerActivity::IsoRestorerActivity(const Uuid & _game_uuid, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
-    m_game_id(_game_id),
+    m_game_uuid(_game_uuid),
     mp_working_thread(nullptr)
 {
     setupUi(this);
@@ -72,14 +72,14 @@ IsoRestorerActivity::IsoRestorerActivity(const QString & _game_id, QWidget * _pa
     connect(mp_btn_back, &QPushButton::clicked, this, &IsoRestorerActivity::deleteLater);
 }
 
-QSharedPointer<Intent> IsoRestorerActivity::createIntent(const QString & _game_id)
+QSharedPointer<Intent> IsoRestorerActivity::createIntent(const Uuid & _game_uuid)
 {
-    return QSharedPointer<Intent>(new IsoRestorerActivityIntent(_game_id));
+    return QSharedPointer<Intent>(new IsoRestorerActivityIntent(_game_uuid));
 }
 
 bool IsoRestorerActivity::onAttach()
 {
-    const Game * game = Library::instance().games().findGame(m_game_id);
+    const Game * game = Library::instance().games().findGame(m_game_uuid);
     if(!game)
         return false;
     mp_label_title->setText(game->title());

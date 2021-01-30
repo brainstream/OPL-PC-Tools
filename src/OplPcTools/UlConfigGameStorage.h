@@ -32,7 +32,7 @@ public:
     GameInstallationType installationType() const override;
 
     static void validateTitle(const QString & _title);
-    static QString makePartFilename(const QString & _id, const QString & _name, quint8 _part);
+    static QString makePartFilename(const QString & _game_id, const QString & _name, quint8 _part);
 
 public:
     static const quint16 max_name_length = 32;
@@ -44,7 +44,7 @@ protected:
     bool performDeletion(const Game & _game) override;
 
 private:
-    void deleteGameConfig(const QString _id);
+    void deleteGameConfig(const QString _game_id);
     void deletePartFiles(const Game & _game);
 
 private:

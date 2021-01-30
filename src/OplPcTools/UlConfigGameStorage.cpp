@@ -206,10 +206,10 @@ bool UlConfigGameStorage::performRegistration(const Game & _game)
     return true;
 }
 
-QString UlConfigGameStorage::makePartFilename(const QString & _id, const QString & _name, quint8 _part)
+QString UlConfigGameStorage::makePartFilename(const QString & _game_id, const QString & _name, quint8 _part)
 {
     QString crc = QString("%1").arg(crc32(_name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
-    return QString("ul.%1.%2.%3").arg(crc).arg(_id).arg(_part, 2, 10, QChar('0'));
+    return QString("ul.%1.%2.%3").arg(crc).arg(_game_id).arg(_part, 2, 10, QChar('0'));
 }
 
 void UlConfigGameStorage::validateTitle(const QString & _title)
@@ -225,13 +225,13 @@ bool UlConfigGameStorage::performDeletion(const Game & _game)
     return true;
 }
 
-void UlConfigGameStorage::deleteGameConfig(const QString _id)
+void UlConfigGameStorage::deleteGameConfig(const QString _game_id)
 {
     QFile config(m_config_filepath);
     openFile(config, QIODevice::ReadOnly);
-    size_t offset = findRecordOffset(config, _id);
+    size_t offset = findRecordOffset(config, _game_id);
     if(!~offset)
-        throw ValidationException(tr("Unable to locate Game \"%1\" in the config file").arg(_id));
+        throw ValidationException(tr("Unable to locate Game \"%1\" in the config file").arg(_game_id));
     QFile temp_file(m_config_filepath + ".tmp");
     openFile(temp_file, QIODevice::WriteOnly | QIODevice::Truncate);
     if(offset > 0)

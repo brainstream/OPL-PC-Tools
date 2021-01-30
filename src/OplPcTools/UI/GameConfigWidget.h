@@ -19,7 +19,6 @@
 #ifndef __OPLPCTOOLS_GAMECONFIGWIDGET__
 #define __OPLPCTOOLS_GAMECONFIGWIDGET__
 
-#include <QUuid>
 #include <OplPcTools/Game.h>
 #include <OplPcTools/GameConfiguration.h>
 #include <OplPcTools/VmcCollection.h>
@@ -43,12 +42,12 @@ private:
     void fillVideoModeComboBox();
     void onOplVerstionChanged();
     void onGsmStateChanged();
-    void onVmcAdded(const QUuid & _id);
-    void onVmcDeleted(const QUuid & _id);
-    void deleteVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id);
-    int getVmcComboBoxItemIndex(QComboBox * _combobox, const QUuid & _id) const;
-    void onVmcRenamed(const QUuid & _id);
-    void renameVmcComboBoxItem(QComboBox * _combobox, const QUuid & _id, const QString & _title);
+    void onVmcAdded(const Uuid & _id);
+    void onVmcDeleted(const Uuid & _id);
+    void deleteVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id);
+    int getVmcComboBoxItemIndex(QComboBox * _combobox, const Uuid & _id) const;
+    void onVmcRenamed(const Uuid & _id);
+    void renameVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id, const QString & _title);
     void createVmc0();
     void createVmc1();
     const OplPcTools::Vmc * createVmc();

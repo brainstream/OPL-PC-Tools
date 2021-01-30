@@ -48,17 +48,17 @@ Game * GameStorage::gameAt(int _index) const
     return m_games[_index];
 }
 
-const Game * GameStorage::findGame(const QString & _id) const
+const Game * GameStorage::findGame(const Uuid & _uuid) const
 {
-    return findNonConstGame(_id);
+    return findNonConstGame(_uuid);
 }
 
-Game * GameStorage::findNonConstGame(const QString & _id) const
+Game * GameStorage::findNonConstGame(const Uuid & _uuid) const
 {
     int count = m_games.count();
     for(int i = 0; i < count; ++i)
     {
-        if(_id == m_games[i]->id())
+        if(_uuid == m_games[i]->uuid())
             return m_games[i];
     }
     return nullptr;
@@ -80,16 +80,16 @@ int GameStorage::count() const
     return m_games.count();
 }
 
-Game * GameStorage::createGame(const QString & _id)
+Game * GameStorage::createGame(const QString & _game_id)
 {
-    Game * game = new Game(_id, installationType());
+    Game * game = new Game(_game_id, installationType());
     m_games.append(game);
     return game;
 }
 
-bool GameStorage::renameGame(const QString & _id, const QString & _title)
+bool GameStorage::renameGame(const Uuid & _uuid, const QString & _title)
 {
-    return renameGame(findNonConstGame(_id), _title);
+    return renameGame(findNonConstGame(_uuid), _title);
 }
 
 bool GameStorage::renameGame(const int _index, const QString & _title)
@@ -102,7 +102,7 @@ bool GameStorage::renameGame(Game * _game, const QString & _title)
     if(_game && performRenaming(*_game, _title))
     {
         _game->setTitle(_title);
-        emit gameRenamed(_game->id());
+        emit gameRenamed(_game->uuid());
         return true;
     }
     return false;
@@ -114,7 +114,7 @@ bool GameStorage::registerGame(const Game & _game)
     {
         Game * game = new Game(_game);
         m_games.append(game);
-        emit gameRegistered(game->id());
+        emit gameRegistered(game->uuid());
         return true;
     }
     return false;
@@ -126,19 +126,19 @@ void GameStorage::validateId(const QString & _id)
         throw ValidationException(QObject::tr("Maximum image name length is %1 bytes").arg(max_id_length));
 }
 
-bool GameStorage::deleteGame(const QString & _id)
+bool GameStorage::deleteGame(const Uuid & _uuid)
 {
     for(int i = m_games.count() - 1; i >= 0; --i)
     {
         Game * game = m_games.at(i);
-        if(game->id() == _id)
+        if(game->uuid() == _uuid)
         {
             if(performDeletion(*game))
             {
-                emit gameAboutToBeDeleted(_id);
+                emit gameAboutToBeDeleted(_uuid);
                 m_games.remove(i);
                 delete game;
-                emit gameDeleted(_id);
+                emit gameDeleted(_uuid);
                 return true;
             }
             break;

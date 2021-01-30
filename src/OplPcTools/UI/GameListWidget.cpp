@@ -427,11 +427,16 @@ void GameListWidget::deleteGame()
     }
     try
     {
-        Library::instance().games().deleteGame(*game);
-        mp_game_art_manager->clearArts(id);
-        QFile config(GameConfiguration::makeFilename(Library::instance().directory(), id));
-        if(config.exists())
-            config.remove();
+        GameCollection & game_collection = Library::instance().games();
+        const QString game_id = game->id();
+        game_collection.deleteGame(*game);
+        if(!game_collection.contains(game_id))
+        {
+            mp_game_art_manager->clearArts(id);
+            QFile config(GameConfiguration::makeFilename(Library::instance().directory(), id));
+            if(config.exists())
+                config.remove();
+        }
     }
     catch(Exception & exception)
     {

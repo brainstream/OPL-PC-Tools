@@ -636,17 +636,17 @@
 <context>
     <name>OplPcTools::DirectoryGameInstaller</name>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="44"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="45"/>
         <source>It is impossible to move the file &quot;%1&quot;. Probably it is read-only or not an ISO image.</source>
         <translation>Невозможно переместить файл &quot;%1&quot;. Возможно, этот файл доступен только для чтения или не является образом ISO.</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="69"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="70"/>
         <source>Unable to open device to read: &quot;%1&quot;</source>
         <translation>Не могу открыть устройство для чтения: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="102"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="103"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
@@ -1002,22 +1002,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="364"/>
+        <location filename="../UI/VmcListWidget.cpp" line="363"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="365"/>
+        <location filename="../UI/VmcListWidget.cpp" line="364"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="367"/>
+        <location filename="../UI/VmcListWidget.cpp" line="366"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="432"/>
+        <location filename="../UI/VmcListWidget.cpp" line="431"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,27 +1033,22 @@
 <context>
     <name>OplPcTools::UlConfigGameInstaller</name>
     <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="43"/>
+        <location filename="../UlConfigGameInstaller.cpp" line="44"/>
         <source>Unable to open device file to read: &quot;%1&quot;</source>
         <translation>Не могу открыть файл устройства для чтения: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="67"/>
+        <location filename="../UlConfigGameInstaller.cpp" line="68"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="72"/>
-        <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation>Не могу открыть файл для записи: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="82"/>
+        <location filename="../UlConfigGameInstaller.cpp" line="87"/>
         <source>An error occurred during reading the source medium</source>
         <translation>Во время чтения источника данных произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="90"/>
+        <location filename="../UlConfigGameInstaller.cpp" line="95"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
@@ -1163,7 +1158,7 @@
         <translation>Не могу открыть файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="36"/>
+        <location filename="../File.h" line="38"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
@@ -1178,7 +1173,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="38"/>
+        <location filename="../File.cpp" line="39"/>
+        <source>Unable to open file &quot;%1&quot; to write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../File.cpp" line="56"/>
         <source>Name must not contain following symbols</source>
         <translation type="unfinished"></translation>
     </message>

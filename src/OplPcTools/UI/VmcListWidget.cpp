@@ -96,7 +96,6 @@ void VmcExporter::exportFile(VmcFS & _fs, const QString & _vmc_file, const QStri
     QSharedPointer<VmcFile> file = _fs.openFile(_vmc_file);
     if(!file)
         throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
-
     char * buffer = new char[file->size()];
     int64_t size = file->read(buffer, file->size());
     if(size > 0)

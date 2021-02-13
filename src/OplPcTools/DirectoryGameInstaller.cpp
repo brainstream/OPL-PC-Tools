@@ -19,6 +19,7 @@
 #include <QStorageInfo>
 #include <QThread>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
 
@@ -100,8 +101,7 @@ bool DirectoryGameInstaller::copyDeviceTo(const QString & _dest)
     QFile dest(_dest);
     if(dest.exists())
         throw IOException(tr("File already exists: \"%1\"").arg(dest.fileName()));
-    if(!dest.open(QIODevice::WriteOnly))
-        throw IOException(tr("Unable to open file to write: \"%1\"").arg(dest.fileName()));
+    openFileToDirectWrite(dest);
     const quint64 iso_size = mr_device.size();
     mr_device.seek(0);
     for(quint64 total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)

@@ -20,6 +20,7 @@
 #include <QDir>
 #include <QThread>
 #include <OplPcTools/Exception.h>
+#include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
 
@@ -66,10 +67,14 @@ bool UlConfigGameInstaller::performInstallation()
             rollback();
             throw IOException(tr("File already exists: \"%1\"").arg(part.fileName()));
         }
-        if(!part.open(QIODevice::WriteOnly))
+        try
+        {
+            openFileToDirectWrite(part);
+        }
+        catch(...)
         {
             rollback();
-            throw IOException(tr("Unable to open file to write: \"%1\"").arg(part.fileName()));
+            throw;
         }
         m_written_parts.append(part.fileName());
         for(quint64 total_read_bytes = 0; total_read_bytes < part_size;)

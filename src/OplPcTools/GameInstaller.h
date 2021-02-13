@@ -44,7 +44,7 @@ signals:
 
 protected:
     virtual bool performInstallation() = 0;
-    MediaType deviceMediaType() const;  
+    MediaType deviceMediaType() const;
 
 protected:
     Device & mr_device;

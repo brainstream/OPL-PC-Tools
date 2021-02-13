@@ -16,10 +16,28 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#ifdef __linux
+#   include <fcntl.h>
+#endif
+
 #include <OplPcTools/FilenameValidator.h>
 #include <OplPcTools/File.h>
 
 namespace OplPcTools {
+
+void openFileToDirectWrite(QFile & _file)
+{
+#ifdef __linux
+    int oflags = O_DIRECT | O_WRONLY | O_CREAT;
+    const char * filename = _file.fileName().toLocal8Bit();
+    int fd = open(filename, oflags);
+    bool result = fd >= 0 && _file.open(fd, QIODevice::WriteOnly, QFile::AutoCloseHandle);
+#else
+    bool result = _file.open(QIODevice::WriteOnly);
+#endif
+    if(!result)
+        throw IOException(QObject::tr("Unable to open file \"%1\" to write").arg(_file.fileName()));
+}
 
 bool isFilenameValid(const QString & _filename)
 {

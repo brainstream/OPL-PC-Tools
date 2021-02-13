@@ -30,6 +30,8 @@ inline void openFile(QFile & _file, QIODevice::OpenMode _flags)
         throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
 }
 
+void openFileToDirectWrite(QFile & _file);
+
 inline void renameFile(const QString & _old_filename, const QString & _new_filename)
 {
     if(!QFile::rename(_old_filename, _new_filename))

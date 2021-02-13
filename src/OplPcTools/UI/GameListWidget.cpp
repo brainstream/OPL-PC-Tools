@@ -16,6 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <QLinkedList>
 #include <QShortcut>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -28,6 +29,7 @@
 #include <OplPcTools/UI/IsoRestorerActivity.h>
 #include <OplPcTools/UI/GameInstallerActivity.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
+#include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/UI/GameListWidget.h>
 
 using namespace OplPcTools;
@@ -46,77 +48,77 @@ public:
     void setArtManager(GameArtManager & _manager);
 
 private:
+    void updateUuids();
     void onLibraryLoaded();
     void onGameAdded(const Uuid & _uuid);
     void onGameAboutToBeDeleted(const Uuid & _uuid);
     void onGameDeleted(const Uuid & _uuid);
     void updateRecord(const Uuid & _uuid);
     void updateRecords(const QString & _game_id);
-    void gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
+    void onGameArtChanged(const QString & _game_id, GameArtType _type);
 
 private:
     const QPixmap m_default_icon;
-    const GameCollection & mr_game_manager;
+    const GameCollection & mr_game_collection;
     GameArtManager * mp_art_manager;
-    int m_row_count;
+    QVector<Uuid> m_uuids;
 };
 
 
 GameListWidget::GameTreeModel::GameTreeModel(QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
     m_default_icon(QPixmap(":/images/no-icon")),
-    mr_game_manager(Library::instance().games()),
-    mp_art_manager(nullptr),
-    m_row_count(mr_game_manager.count())
+    mr_game_collection(Library::instance().games()),
+    mp_art_manager(nullptr)
 {
+    updateUuids();
     connect(&Library::instance(), &Library::loaded, this, &GameListWidget::GameTreeModel::onLibraryLoaded);
-    connect(&mr_game_manager, &GameCollection::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
-    connect(&mr_game_manager, &GameCollection::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
-    connect(&mr_game_manager, &GameCollection::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
-    connect(&mr_game_manager, &GameCollection::gameDeleted, this, &GameListWidget::GameTreeModel::onGameDeleted);
+    connect(&mr_game_collection, &GameCollection::gameRenamed, this, &GameListWidget::GameTreeModel::updateRecord);
+    connect(&mr_game_collection, &GameCollection::gameAdded, this, &GameListWidget::GameTreeModel::onGameAdded);
+    connect(&mr_game_collection, &GameCollection::gameAboutToBeDeleted, this, &GameListWidget::GameTreeModel::onGameAboutToBeDeleted);
+}
+
+void GameListWidget::GameTreeModel::updateUuids()
+{
+    m_uuids.resize(mr_game_collection.count());
+    for(int i = m_uuids.size() - 1; i >= 0; --i)
+        m_uuids[i] = mr_game_collection[i]->uuid();
 }
 
 void GameListWidget::GameTreeModel::onLibraryLoaded()
 {
     beginResetModel();
-    m_row_count = mr_game_manager.count();
+    updateUuids();
     endResetModel();
 }
 
 void GameListWidget::GameTreeModel::onGameAdded(const Uuid & _uuid)
 {
-    Q_UNUSED(_uuid);
-    beginInsertRows(QModelIndex(), m_row_count, m_row_count);
-    ++m_row_count;
+    int row_number = m_uuids.size();
+    beginInsertRows(QModelIndex(), row_number, row_number);
+    m_uuids.append(_uuid);
     endInsertRows();
 }
 
 void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const Uuid & _uuid)
-{
-    for(int i = 0; i < m_row_count; ++i)
+{   
+    for(int i = m_uuids.size() - 1; i >= 0; --i)
     {
-        const Game * game = mr_game_manager[i];
-        if(game->uuid() == _uuid)
+        if(m_uuids[i] == _uuid)
         {
             beginRemoveRows(QModelIndex(), i, i);
             return;
         }
     }
-}
-
-void GameListWidget::GameTreeModel::onGameDeleted(const Uuid & _uuid)
-{
-    Q_UNUSED(_uuid);
-    m_row_count = mr_game_manager.count();
+    m_uuids.removeOne(_uuid);
     endRemoveRows();
 }
 
 void GameListWidget::GameTreeModel::updateRecord(const Uuid & _uuid)
 {
-    int count = mr_game_manager.count();
-    for(int i = 0; i < count; ++i)
+    for(int i = m_uuids.size() - 1; i >= 0; --i)
     {
-        if(mr_game_manager[i]->uuid() == _uuid)
+        if(m_uuids[i] == _uuid)
         {
             emit dataChanged(createIndex(i, 0), createIndex(i, 0));
             return;
@@ -126,17 +128,22 @@ void GameListWidget::GameTreeModel::updateRecord(const Uuid & _uuid)
 
 void GameListWidget::GameTreeModel::updateRecords(const QString & _game_id)
 {
-    int count = mr_game_manager.count();
-    for(int i = 0; i < count; ++i)
+    QLinkedList<Uuid> uuids;
+    for(int i = mr_game_collection.count() - 1; i >= 0; --i)
     {
-        if(mr_game_manager[i]->id() == _game_id)
+        const Game * game = mr_game_collection[i];
+        if(game && game->id() == _game_id)
+            uuids.append(game->uuid());
+    }
+    for(int i = m_uuids.size() - 1; i >= 0; --i)
+    {
+        if(uuids.contains(m_uuids[i]))
             emit dataChanged(createIndex(i, 0), createIndex(i, 0));
     }
 }
 
-void GameListWidget::GameTreeModel::gameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
+void GameListWidget::GameTreeModel::onGameArtChanged(const QString & _game_id, GameArtType _type)
 {
-    Q_UNUSED(_pixmap)
     if(_type == GameArtType::Icon)
         updateRecords(_game_id);
 }
@@ -157,7 +164,7 @@ int GameListWidget::GameTreeModel::rowCount(const QModelIndex & _parent) const
 {
     if(_parent.isValid())
         return 0;
-    return m_row_count;
+    return m_uuids.size();
 }
 
 int GameListWidget::GameTreeModel::columnCount(const QModelIndex & _parent) const
@@ -171,11 +178,12 @@ QVariant GameListWidget::GameTreeModel::data(const QModelIndex & _index, int _ro
     switch(_role)
     {
     case Qt::DisplayRole:
-        return mr_game_manager[_index.row()]->title();
+        return mr_game_collection.findGame(m_uuids[_index.row()])->title();
     case Qt::DecorationRole:
         if(mp_art_manager)
         {
-            QPixmap icon = mp_art_manager->load(mr_game_manager[_index.row()]->id(), GameArtType::Icon);
+            const Game * game = mr_game_collection.findGame(m_uuids[_index.row()]);
+            QPixmap icon = mp_art_manager->load(game->id(), GameArtType::Icon);
             return QIcon(icon.isNull() ? m_default_icon : icon);
         }
         break;
@@ -185,13 +193,13 @@ QVariant GameListWidget::GameTreeModel::data(const QModelIndex & _index, int _ro
 
 const Game * GameListWidget::GameTreeModel::game(const QModelIndex & _index) const
 {
-    return _index.isValid() ? mr_game_manager[_index.row()] : nullptr;
+    return _index.isValid() ? mr_game_collection.findGame(m_uuids[_index.row()]) : nullptr;
 }
 
 void GameListWidget::GameTreeModel::setArtManager(GameArtManager & _manager)
 {
     mp_art_manager = &_manager;
-    connect(mp_art_manager, &GameArtManager::artChanged, this, &GameTreeModel::gameArtChanged);
+    connect(mp_art_manager, &GameArtManager::artChanged, this, &GameTreeModel::onGameArtChanged);
 }
 
 GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
@@ -323,13 +331,16 @@ void GameListWidget::onGameRenamed(const Uuid & _uuid)
         onGameSelected();
 }
 
-void GameListWidget::onGameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap)
+void GameListWidget::onGameArtChanged(const QString & _game_id, GameArtType _type)
 {
     if(_type != GameArtType::Front)
         return;
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(game && game->id() == _game_id)
-        mp_label_cover->setPixmap(_pixmap ? *_pixmap : m_default_cover);
+    {
+        QPixmap pixmap = mp_game_art_manager->load(_game_id, GameArtType::Front);
+        mp_label_cover->setPixmap(pixmap.isNull() ? m_default_cover : pixmap);
+    }
 }
 
 void GameListWidget::onGameSelected()
@@ -408,7 +419,6 @@ void GameListWidget::deleteGame()
 {
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
     if(!game) return;
-    const QString id = game->id();
     Settings & settings = Settings::instance();
     if(settings.confirmGameDeletion())
     {
@@ -425,25 +435,26 @@ void GameListWidget::deleteGame()
         if(checkbox->isChecked())
             settings.setConfirmGameDeletion(false);
     }
-    try
-    {
+    startBusyThread([this, game]() {
         GameCollection & game_collection = Library::instance().games();
         const QString game_id = game->id();
         game_collection.deleteGame(*game);
         if(!game_collection.contains(game_id))
         {
-            mp_game_art_manager->clearArts(id);
-            QFile config(GameConfiguration::makeFilename(Library::instance().directory(), id));
+            mp_game_art_manager->clearArts(game_id);
+            QFile config(GameConfiguration::makeFilename(Library::instance().directory(), game_id));
             if(config.exists())
                 config.remove();
         }
-    }
-    catch(Exception & exception)
-    {
-        Application::showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        Application::showErrorMessage();
-    }
+    });
+}
+
+void GameListWidget::startBusyThread(std::function<void()> _lambda)
+{
+    BusySmartThread * thread = new BusySmartThread(_lambda, this);
+    connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
+    connect(thread, &BusySmartThread::exception, [](const QString message) {
+        Application::showErrorMessage(message);
+    });
+    thread->start();
 }

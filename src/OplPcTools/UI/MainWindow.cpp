@@ -22,14 +22,17 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 #include <QUrl>
+#include <OplPcTools/Exception.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/ApplicationInfo.h>
+#include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/LibraryActivity.h>
 #include <OplPcTools/UI/AboutDialog.h>
 #include <OplPcTools/UI/SettingsDialog.h>
+#include <OplPcTools/UI/BusySmartThread.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -147,7 +150,7 @@ void MainWindow::tryOpenRecentLibrary()
     if(!value.isValid()) return;
     QDir dir(value.toString());
     if(!dir.exists()) return;
-    Library::instance().load(dir);
+    loadLibrary(dir);
 }
 
 void MainWindow::openLibrary()
@@ -159,7 +162,20 @@ void MainWindow::openLibrary()
     if(choosen_dirpath != dirpath)
         settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
     closeAllActivities();
-    Library::instance().load(QDir(choosen_dirpath));
+    loadLibrary(choosen_dirpath);
+}
+
+void MainWindow::loadLibrary(const QDir & _directory)
+{
+    BusySmartThread * thread = new BusySmartThread([_directory]() {
+        Library::instance().load(_directory);
+    }, this);
+    connect(thread, &BusySmartThread::exception, [this](const QString & message) {
+        mp_widget_open_library->show();
+        Application::showErrorMessage(message);
+    });
+    connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
+    thread->start();
 }
 
 void MainWindow::closeAllActivities()
@@ -168,6 +184,7 @@ void MainWindow::closeAllActivities()
     delete mp_stacked_widget;
     mp_stacked_widget = new QStackedWidget(this);
     mp_layout_stacked_widget->addWidget(mp_stacked_widget);
+    mp_stacked_widget->hide();
 }
 
 void MainWindow::showAboutDialog()

@@ -96,6 +96,8 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.h
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.h
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.h
+    ${OPT_SRC_DIR}/UI/BusyDialog.h
+    ${OPT_SRC_DIR}/UI/BusySmartThread.h
 )
 
 set(OPT_SRC_UI
@@ -116,6 +118,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.ui
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.ui
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.ui
+    ${OPT_SRC_DIR}/UI/BusyDialog.ui
 )
 
 set(OPT_SRC_RES
@@ -195,6 +198,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.cpp
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.cpp
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.cpp
+    ${OPT_SRC_DIR}/UI/BusyDialog.cpp
+    ${OPT_SRC_DIR}/UI/BusySmartThread.cpp
 )
 
 source_group("OPL PC Tools" ${OPT_SRC_DIR})

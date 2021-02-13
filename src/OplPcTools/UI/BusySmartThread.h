@@ -16,58 +16,42 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_LAMBDATHREAD__
-#define __OPLPCTOOLS_LAMBDATHREAD__
+#ifndef __BUSYSMARTTHREAD_LIBRARY__
+#define __BUSYSMARTTHREAD_LIBRARY__
 
-#include <functional>
-#include <QThread>
-#include <OplPcTools/Exception.h>
+#include <QTimer>
+#include <OplPcTools/UI/BusyDialog.h>
+#include <OplPcTools/UI/LambdaThread.h>
 
-namespace OplPcTools {
-namespace UI {
+namespace OplPcTools::UI {
 
-class LambdaThread : public QThread
+class BusySmartThread : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
-        QThread(_parent),
-        m_lambda(_lambda)
-    {
-        setObjectName("LambdaThread");
-    }
-
-
-protected:
-    void run() override
-    {
-        try
-        {
-            m_lambda();
-        }
-        catch(const OplPcTools::Exception & ex)
-        {
-            emit exception(ex.message());
-        }
-        catch(const std::exception & err)
-        {
-            emit exception(QString::fromStdString(err.what()));
-        }
-        catch(...)
-        {
-            emit exception(tr("An unknown error has occurred"));
-        }
-    }
+    BusySmartThread(std::function<void()> _lambda, QWidget * _parent_widget);
+    ~BusySmartThread() override;
+    void setSpinnerDisplayTimeout(uint32_t _timeout_ms);
+    void start();
 
 signals:
     void exception(QString _message);
+    void finished();
 
 private:
-    std::function<void()> m_lambda;
+    void showBusyDialog();
+    void destroyBusyDialog();
+    void finish();
+
+private:
+    uint32_t m_spinner_display_timeout;
+    QWidget * mp_parent_widget;
+    BusyDialog * mp_dialog;
+    LambdaThread * mp_thread;
+    QTimer * mp_timer;
 };
 
-} // namespace UI
-} // namespace OplPcTools
+} // namespace OplPcTools::UI
 
-#endif // __OPLPCTOOLS_LAMBDATHREAD__
+#endif // __BUSYSMARTTHREAD_LIBRARY__

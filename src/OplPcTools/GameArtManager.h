@@ -59,7 +59,7 @@ public:
     QPixmap setArt(const QString & _game_id, GameArtType _type, const QString & _filepath);
 
 signals:
-    void artChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
+    void artChanged(const QString & _game_id, GameArtType _type);
 
 private:
     void initArtProperties();

@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_GAMELISTWIDGET__
 #define __OPLPCTOOLS_GAMELISTWIDGET__
 
+#include <functional>
 #include <QSharedPointer>
 #include <QDir>
 #include <QPixmap>
@@ -52,9 +53,10 @@ private:
     void showGameDetails();
     void showGameInstaller();
     void deleteGame();
+    void startBusyThread(std::function<void()> _lambda);
     void onGameAdded(const Uuid & _uuid);
     void onGameRenamed(const Uuid & _uuid);
-    void onGameArtChanged(const QString & _game_id, GameArtType _type, const QPixmap * _pixmap);
+    void onGameArtChanged(const QString & _game_id, GameArtType _type);
     void onGameSelected();
     void showIsoRestorer();
 

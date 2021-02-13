@@ -40,6 +40,7 @@ private:
     void showItemContextMenu(const QPoint & _point);
     void changeGameArt();
     void deleteGameArt();
+    void startBusySmartThread(std::function<void()> _lambda);
 
 private:
     GameArtManager & mr_art_manager;

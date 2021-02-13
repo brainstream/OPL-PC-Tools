@@ -16,58 +16,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_LAMBDATHREAD__
-#define __OPLPCTOOLS_LAMBDATHREAD__
+#include <OplPcTools/UI/BusyDialog.h>
 
-#include <functional>
-#include <QThread>
-#include <OplPcTools/Exception.h>
+using namespace OplPcTools::UI;
 
-namespace OplPcTools {
-namespace UI {
-
-class LambdaThread : public QThread
+BusyDialog::BusyDialog(QWidget * _parent /*= nullptr*/) :
+    QDialog(_parent, Qt::FramelessWindowHint | Qt::Dialog)
 {
-    Q_OBJECT
-
-public:
-    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
-        QThread(_parent),
-        m_lambda(_lambda)
-    {
-        setObjectName("LambdaThread");
-    }
-
-
-protected:
-    void run() override
-    {
-        try
-        {
-            m_lambda();
-        }
-        catch(const OplPcTools::Exception & ex)
-        {
-            emit exception(ex.message());
-        }
-        catch(const std::exception & err)
-        {
-            emit exception(QString::fromStdString(err.what()));
-        }
-        catch(...)
-        {
-            emit exception(tr("An unknown error has occurred"));
-        }
-    }
-
-signals:
-    void exception(QString _message);
-
-private:
-    std::function<void()> m_lambda;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_LAMBDATHREAD__
+    setupUi(this);
+}

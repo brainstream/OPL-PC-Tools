@@ -27,6 +27,7 @@
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameArtsWidget.h>
+#include <OplPcTools/UI/BusySmartThread.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -162,73 +163,64 @@ void GameArtsWidget::showItemContextMenu(const QPoint & _point)
 
 void GameArtsWidget::changeGameArt()
 {
-    try
+    ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
+    if(item == nullptr)
+        return;
+    QSettings settings;
+    QString dirpath = settings.value(g_settings_key_cover_dir).toString();
+    if(dirpath.isEmpty())
     {
-        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
-        if(item == nullptr)
-            return;
-        QSettings settings;
-        QString dirpath = settings.value(g_settings_key_cover_dir).toString();
-        if(dirpath.isEmpty())
-        {
-            QStringList dirpaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
-            if(!dirpaths.isEmpty())
-                dirpath = dirpaths.first();
-        }
-        QString filename = QFileDialog::getOpenFileName(
-            Application::activeWindow(),
-            tr("Choose a Picture"), dirpath,
-            tr("Pictures") + " (*.png *.jpg *.jpeg *.bmp)");
-        if(filename.isEmpty())
-            return;
-        settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
+        QStringList dirpaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
+        if(!dirpaths.isEmpty())
+            dirpath = dirpaths.first();
+    }
+    QString filename = QFileDialog::getOpenFileName(
+        Application::activeWindow(),
+        tr("Choose a Picture"), dirpath,
+        tr("Pictures") + " (*.png *.jpg *.jpeg *.bmp)");
+    if(filename.isEmpty())
+        return;
+    settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
+    startBusySmartThread([this, item, filename]() {
         QPixmap pixmap = mr_art_manager.setArt(m_game_id, item->type(), filename);
         item->setPixmap(pixmap);
         mp_list_arts->doItemsLayout();
-    }
-    catch(const Exception & exception)
-    {
-        Application::showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        Application::showErrorMessage();
-    }
+    });
+}
+
+void GameArtsWidget::startBusySmartThread(std::function<void()> _lambda)
+{
+    BusySmartThread * thread = new BusySmartThread(_lambda, this);
+    connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
+    connect(thread, &BusySmartThread::exception, [](const QString & message) {
+        Application::showErrorMessage(message);
+    });
+    thread->start();
 }
 
 void GameArtsWidget::deleteGameArt()
 {
-    try
+    ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
+    if(item == nullptr || !item->hasPixmap()) return;
+    Settings & settings = Settings::instance();
+    if(settings.confirmPixmapDeletion())
     {
-        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
-        if(item == nullptr || !item->hasPixmap()) return;
-        Settings & settings = Settings::instance();
-        if(settings.confirmPixmapDeletion())
-        {
-            QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
-            QMessageBox message_box(QMessageBox::Question, tr("Delete Picture"),
-                QString("%1\n%2")
-                    .arg(tr("Are you sure you want to delete this picture?"))
-                    .arg(item->text()),
-                QMessageBox::Yes | QMessageBox::No);
-            message_box.setDefaultButton(QMessageBox::Yes);
-            message_box.setCheckBox(checkbox);
-            if(message_box.exec() != QMessageBox::Yes)
-                return;
-            if(checkbox->isChecked())
-                settings.setConfirmPixmapDeletion(false);
-        }
+        QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
+        QMessageBox message_box(QMessageBox::Question, tr("Delete Picture"),
+            QString("%1\n%2")
+                .arg(tr("Are you sure you want to delete this picture?"))
+                .arg(item->text()),
+            QMessageBox::Yes | QMessageBox::No);
+        message_box.setDefaultButton(QMessageBox::Yes);
+        message_box.setCheckBox(checkbox);
+        if(message_box.exec() != QMessageBox::Yes)
+            return;
+        if(checkbox->isChecked())
+            settings.setConfirmPixmapDeletion(false);
+    }
+    startBusySmartThread([this, item]() {
         mr_art_manager.deleteArt(m_game_id, item->type());
         item->setPixmap(QPixmap());
         mp_list_arts->doItemsLayout();
-    }
-    catch(const Exception & exception)
-    {
-        Application::showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        Application::showErrorMessage();
-    }
+    });
 }
-

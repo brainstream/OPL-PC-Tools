@@ -31,6 +31,7 @@
 #include <OplPcTools/UI/VmcCreateDialog.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
+#include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
 
 using namespace OplPcTools;
@@ -423,25 +424,26 @@ void VmcListWidget::onTreeViewItemActivated(const QModelIndex & _index)
 void VmcListWidget::exportFiles()
 {
     const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
-    if(!vmc)
-    {
-        return;
-    }
+    if(!vmc) return;
     QSettings settings;
     QString directory = settings.value(SettingsKey::export_dir).toString();
     if(directory.isEmpty())
         directory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     directory = QFileDialog::getExistingDirectory(this, tr("Select directory"), directory);
-    if(directory.isEmpty())
-        return;
+    if(directory.isEmpty()) return;
     settings.setValue(SettingsKey::export_dir, directory);
-    try
-    {
-        VmcExporter exporter(*vmc);
-        exporter.exportTo(directory);
-    }
-    catch(const Exception & _exception)
-    {
-        Application::showErrorMessage(_exception.message());
-    }
+    startSmartThread([vmc, directory]() {
+        VmcExporter(*vmc).exportTo(directory);
+    });
+}
+
+void VmcListWidget::startSmartThread(std::function<void()> _lambda)
+{
+    BusySmartThread * thread = new BusySmartThread(_lambda, this);
+    connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
+    connect(thread, &BusySmartThread::exception, [](const QString & message) {
+        Application::showErrorMessage(message);
+    });
+    thread->setSpinnerDisplayTimeout(0);
+    thread->start();
 }

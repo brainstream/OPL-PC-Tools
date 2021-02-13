@@ -16,58 +16,62 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_LAMBDATHREAD__
-#define __OPLPCTOOLS_LAMBDATHREAD__
+#include <OplPcTools/UI/BusySmartThread.h>
 
-#include <functional>
-#include <QThread>
-#include <OplPcTools/Exception.h>
+using namespace OplPcTools::UI;
 
-namespace OplPcTools {
-namespace UI {
-
-class LambdaThread : public QThread
+BusySmartThread::BusySmartThread(std::function<void()> _lambda, QWidget * _parent_widget) :
+    QObject(_parent_widget),
+    m_spinner_display_timeout(700),
+    mp_parent_widget(_parent_widget),
+    mp_dialog(nullptr)
 {
-    Q_OBJECT
+    mp_thread = new LambdaThread(_lambda, this);
+    mp_timer = new QTimer(this);
+    mp_timer->setSingleShot(true);
+    connect(mp_thread, &LambdaThread::exception, this, &BusySmartThread::exception);
+    connect(mp_thread, &LambdaThread::finished, this, &BusySmartThread::finish);
+    connect(mp_timer, &QTimer::timeout, this, &BusySmartThread::showBusyDialog);
+}
 
-public:
-    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
-        QThread(_parent),
-        m_lambda(_lambda)
+BusySmartThread::~BusySmartThread()
+{
+    destroyBusyDialog();
+}
+
+void BusySmartThread::destroyBusyDialog()
+{
+    if(mp_dialog)
     {
-        setObjectName("LambdaThread");
+        mp_dialog->hide();
+        delete mp_dialog;
+        mp_dialog = nullptr;
     }
+}
 
+void BusySmartThread::setSpinnerDisplayTimeout(uint32_t _timeout_ms)
+{
+    m_spinner_display_timeout = _timeout_ms;
+}
 
-protected:
-    void run() override
-    {
-        try
-        {
-            m_lambda();
-        }
-        catch(const OplPcTools::Exception & ex)
-        {
-            emit exception(ex.message());
-        }
-        catch(const std::exception & err)
-        {
-            emit exception(QString::fromStdString(err.what()));
-        }
-        catch(...)
-        {
-            emit exception(tr("An unknown error has occurred"));
-        }
-    }
+void BusySmartThread::start()
+{
+    mp_timer->setInterval(m_spinner_display_timeout);
+    mp_timer->start();
+    mp_thread->start();
+}
 
-signals:
-    void exception(QString _message);
+void BusySmartThread::finish()
+{
+    mp_timer->stop();
+    destroyBusyDialog();
+    emit finished();
+}
 
-private:
-    std::function<void()> m_lambda;
-};
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_LAMBDATHREAD__
+void BusySmartThread::showBusyDialog()
+{
+    if(mp_dialog)
+        return;
+    mp_dialog = new BusyDialog(mp_parent_widget);
+    mp_dialog->show();
+}

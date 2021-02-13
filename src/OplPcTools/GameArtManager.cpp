@@ -165,7 +165,7 @@ void GameArtManager::deleteArt(const QString & _game_id, GameArtType _type)
     }
     if(changed)
     {
-        emit artChanged(_game_id, _type, nullptr);
+        emit artChanged(_game_id, _type);
     }
 }
 
@@ -193,6 +193,6 @@ QPixmap GameArtManager::setArt(const QString & _game_id, GameArtType _type, cons
         throw IOException(QObject::tr("Unable to save file \"%1\"").arg(filename));
     if(m_cached_types & _type)
         cacheArt(_game_id, _type, pixmap);
-    emit artChanged(_game_id, _type, &pixmap);
+    emit artChanged(_game_id, _type);
     return pixmap;
 }

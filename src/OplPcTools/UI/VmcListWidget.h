@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_VMCLISTWIDGET__
 #define __OPLPCTOOLS_VMCLISTWIDGET__
 
+#include <functional>
 #include "ui_VmcListWidget.h"
 #include <QSortFilterProxyModel>
 #include <OplPcTools/Vmc.h>
@@ -48,6 +49,7 @@ private:
     void showTreeContextMenu(const QPoint & _point);
     void onTreeViewItemActivated(const QModelIndex & _index);
     void showVmcProperties();
+    void startSmartThread(std::function<void()> _lambda);
 
 private:
     class VmcTreeModel;

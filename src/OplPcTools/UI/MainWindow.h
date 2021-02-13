@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_MAINWINDOW__
 #define __OPLPCTOOLS_MAINWINDOW__
 
+#include <QDir>
 #include <QMainWindow>
 #include <OplPcTools/UI/Intent.h>
 #include "ui_MainWindow.h"
@@ -42,6 +43,7 @@ protected:
 private:
     void tryOpenRecentLibrary();
     void openLibrary();
+    void loadLibrary(const QDir & _directory);
     void closeAllActivities();
     void onLibraryLoaded();
     void showAboutDialog();

@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_GAMECONFIGWIDGET__
 #define __OPLPCTOOLS_GAMECONFIGWIDGET__
 
+#include <functional>
 #include <OplPcTools/Game.h>
 #include <OplPcTools/GameConfiguration.h>
 #include <OplPcTools/VmcCollection.h>
@@ -57,6 +58,7 @@ private:
     void save();
     void saveAs(const QString & _filename);
     void remove();
+    void startSmartThread(std::function<void()> _lambda);
 
 private:
     VmcCollection & mr_vmcs;

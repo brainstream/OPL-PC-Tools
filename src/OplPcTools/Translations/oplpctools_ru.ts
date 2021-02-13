@@ -41,6 +41,21 @@
     </message>
 </context>
 <context>
+    <name>BusyDialog</name>
+    <message>
+        <location filename="../UI/BusyDialog.ui" line="14"/>
+        <location filename="../../../build/ui_BusyDialog.h" line="58"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/BusyDialog.ui" line="36"/>
+        <location filename="../../../build/ui_BusyDialog.h" line="59"/>
+        <source>Pocessing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChooseOpticalDiscDialog</name>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="14"/>
@@ -703,12 +718,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="107"/>
+        <location filename="../UI/Application.cpp" line="108"/>
         <source>Something went wrong</source>
         <translation>Что-то пошло не так</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="112"/>
+        <location filename="../UI/Application.cpp" line="113"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
@@ -724,12 +739,12 @@
 <context>
     <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="180"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="179"/>
         <source>Choose a Picture</source>
         <translation type="unfinished">Выберать картинку</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="181"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="180"/>
         <source>Pictures</source>
         <translation type="unfinished">Картинки</translation>
     </message>
@@ -749,42 +764,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="140"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="141"/>
         <source>Icon</source>
         <translation type="unfinished">Иконка</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="141"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="142"/>
         <source>Front Cover</source>
         <translation type="unfinished">Передняя обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="142"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="143"/>
         <source>Back Cover</source>
         <translation type="unfinished">Задняя обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="143"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="144"/>
         <source>Spine Cover</source>
         <translation type="unfinished">Боковая обложка</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="144"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="145"/>
         <source>Screenshot #1</source>
         <translation type="unfinished">Скриншот №1</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="145"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="146"/>
         <source>Screenshot #2</source>
         <translation type="unfinished">Скриншот №2</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="146"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="147"/>
         <source>Background</source>
         <translation type="unfinished">Фоновое изображение</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="147"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="148"/>
         <source>Logo</source>
         <translation type="unfinished">Логотип</translation>
     </message>
@@ -792,28 +807,28 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="383"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="384"/>
         <source>Configuration cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="413"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="414"/>
         <source>Configuration saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="446"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="450"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="447"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="455"/>
         <source>Configuration file does not exist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -854,22 +869,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="347"/>
+        <location filename="../UI/GameListWidget.cpp" line="358"/>
         <source>Directory</source>
         <translation type="unfinished">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="415"/>
+        <location filename="../UI/GameListWidget.cpp" line="425"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="416"/>
+        <location filename="../UI/GameListWidget.cpp" line="426"/>
         <source>Delete Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="418"/>
+        <location filename="../UI/GameListWidget.cpp" line="428"/>
         <source>Are you sure you want to delete this game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -915,7 +930,7 @@
 <context>
     <name>OplPcTools::UI::LambdaThread</name>
     <message>
-        <location filename="../UI/LambdaThread.h" line="58"/>
+        <location filename="../UI/LambdaThread.h" line="59"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
@@ -923,7 +938,7 @@
 <context>
     <name>OplPcTools::UI::MainWindow</name>
     <message>
-        <location filename="../UI/MainWindow.cpp" line="157"/>
+        <location filename="../UI/MainWindow.cpp" line="160"/>
         <source>Choose the OPL root directory</source>
         <translation type="unfinished">Выбор корневого каталога OPL</translation>
     </message>
@@ -965,16 +980,6 @@
         <source>512 MiB</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
-        <source>1024 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="44"/>
-        <source>2048 MiB</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
@@ -997,22 +1002,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="363"/>
+        <location filename="../UI/VmcListWidget.cpp" line="364"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="364"/>
+        <location filename="../UI/VmcListWidget.cpp" line="365"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="366"/>
+        <location filename="../UI/VmcListWidget.cpp" line="367"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="434"/>
+        <location filename="../UI/VmcListWidget.cpp" line="432"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,12 +1168,12 @@
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="78"/>
+        <location filename="../UI/VmcListWidget.cpp" line="79"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="97"/>
+        <location filename="../UI/VmcListWidget.cpp" line="98"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>

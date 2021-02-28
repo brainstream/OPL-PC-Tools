@@ -47,7 +47,6 @@ private:
     void showTreeContextMenu(const QPoint & _point);
     void onTreeViewItemActivated(const QModelIndex & _index);
     void showVmcProperties();
-//    void startSmartThread(std::function<void()> _lambda);
 
 private:
     class VmcTreeModel;

@@ -36,6 +36,7 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _destination
 {
     try
     {
+        m_action = Action::Skip;
         QSharedPointer<VmcFS> fs = VmcFS::load(_vmc.filepath());
         exportDirectory(*fs, "/", _destination_dir);
     }

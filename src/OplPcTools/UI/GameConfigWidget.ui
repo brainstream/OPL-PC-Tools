@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -516,9 +516,6 @@
         <iconset resource="../Resources/Resources.qrc">
          <normaloff>:/images/restore</normaloff>:/images/restore</iconset>
        </property>
-       <property name="shortcut">
-        <string>Del</string>
-       </property>
       </widget>
      </item>
      <item>
@@ -529,9 +526,6 @@
        <property name="icon">
         <iconset resource="../Resources/Resources.qrc">
          <normaloff>:/images/save</normaloff>:/images/save</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+S</string>
        </property>
       </widget>
      </item>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Game Name</string>
+   <string>Game Title</string>
   </property>
   <property name="modal">
    <bool>true</bool>

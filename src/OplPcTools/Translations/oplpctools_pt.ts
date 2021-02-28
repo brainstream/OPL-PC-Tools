@@ -43,12 +43,6 @@
 <context>
     <name>BusyDialog</name>
     <message>
-        <location filename="../UI/BusyDialog.ui" line="14"/>
-        <location filename="../../../build/ui_BusyDialog.h" line="58"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/BusyDialog.ui" line="36"/>
         <location filename="../../../build/ui_BusyDialog.h" line="59"/>
         <source>Pocessing...</source>
@@ -98,92 +92,7 @@
     </message>
 </context>
 <context>
-    <name>GameCollectionActivity</name>
-    <message>
-        <source>Filter</source>
-        <translation type="vanished">Filtro</translation>
-    </message>
-    <message>
-        <source>Icons Size</source>
-        <translation type="vanished">Tamanho dos ícones</translation>
-    </message>
-    <message>
-        <source>ID:</source>
-        <translation type="vanished">ID:</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="vanished">Tipo:</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Fonte:</translation>
-    </message>
-    <message>
-        <source>Parts:</source>
-        <translation type="vanished">Partes:</translation>
-    </message>
-    <message>
-        <source>Edit game</source>
-        <translation type="vanished">Editar jogo</translation>
-    </message>
-    <message>
-        <source>Delete game</source>
-        <translation type="vanished">Apagar jogo</translation>
-    </message>
-    <message>
-        <source>Install game</source>
-        <translation type="vanished">Instalar jogo</translation>
-    </message>
-    <message>
-        <source>Reload collection</source>
-        <translation type="vanished">Atualizar coleção</translation>
-    </message>
-    <message>
-        <source>Open collection</source>
-        <translation type="vanished">Abrir coleção</translation>
-    </message>
-    <message>
-        <source>Rename game</source>
-        <translation type="vanished">Renomear jogo</translation>
-    </message>
-    <message>
-        <source>Restore ISO</source>
-        <translation type="vanished">Restaurar ISO</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Editar</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Apagar</translation>
-    </message>
-    <message>
-        <source>Install</source>
-        <translation type="vanished">Instalar</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="vanished">Atualizar</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Abrir</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="vanished">Renomear</translation>
-    </message>
-</context>
-<context>
     <name>GameConfigWidget</name>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="14"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="472"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="43"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="473"/>
@@ -355,21 +264,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="520"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="503"/>
-        <source>Del</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="527"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="505"/>
+        <location filename="../UI/GameConfigWidget.ui" line="524"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="502"/>
         <source>&amp;Save Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="534"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="507"/>
-        <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -398,14 +295,6 @@
         <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Picture...</source>
-        <translation type="vanished">Mudar imagem...</translation>
-    </message>
-    <message>
-        <source>Delete Picture</source>
-        <translation type="vanished">Apagar imagem</translation>
     </message>
 </context>
 <context>
@@ -617,8 +506,8 @@
     <message>
         <location filename="../UI/GameRenameDialog.ui" line="14"/>
         <location filename="../../../build/ui_GameRenameDialog.h" line="70"/>
-        <source>Game Name</source>
-        <translation>Nome do jogo</translation>
+        <source>Game Title</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -632,12 +521,6 @@
 </context>
 <context>
     <name>LibraryActivity</name>
-    <message>
-        <location filename="../UI/LibraryActivity.ui" line="14"/>
-        <location filename="../../../build/ui_LibraryActivity.h" line="86"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../UI/LibraryActivity.ui" line="43"/>
         <location filename="../../../build/ui_LibraryActivity.h" line="87"/>
@@ -691,21 +574,15 @@
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="243"/>
-        <location filename="../../../build/ui_MainWindow.h" line="199"/>
+        <location filename="../../../build/ui_MainWindow.h" line="202"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Configurações...</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="251"/>
-        <location filename="../../../build/ui_MainWindow.h" line="200"/>
+        <location filename="../../../build/ui_MainWindow.h" line="203"/>
         <source>&amp;About...</source>
         <translation>&amp;Sobre...</translation>
-    </message>
-    <message>
-        <location filename="../UI/MainWindow.ui" line="254"/>
-        <location filename="../../../build/ui_MainWindow.h" line="202"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="259"/>
@@ -736,10 +613,6 @@
         <location filename="../DirectoryGameInstaller.cpp" line="103"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>O arquivo já existe: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation type="vanished">Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../DirectoryGameInstaller.cpp" line="114"/>
@@ -891,31 +764,6 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::UI::GameCollectionActivity</name>
-    <message>
-        <source>Choose the OPL root directory</source>
-        <translation type="vanished">Escolha a raiz da pasta do OPL</translation>
-    </message>
-    <message>
-        <source>Directory</source>
-        <translation type="vanished">Pasta</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show again</source>
-        <translation type="vanished">Não mostrar novamente</translation>
-    </message>
-    <message>
-        <source>Remove Game</source>
-        <translation type="vanished">Remover jogo</translation>
-    </message>
-    <message>
-        <source>The %1 will be deleted.
-Continue?</source>
-        <translation type="vanished">%1 Vai ser apagado.
-Tem certeza?</translation>
-    </message>
-</context>
-<context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="384"/>
@@ -942,63 +790,6 @@ Tem certeza?</translation>
         <location filename="../UI/GameConfigWidget.cpp" line="455"/>
         <source>Configuration file does not exist</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OplPcTools::UI::GameDetailsActivity</name>
-    <message>
-        <source>Choose a Picture</source>
-        <translation type="vanished">Escolha uma imagem</translation>
-    </message>
-    <message>
-        <source>Pictures</source>
-        <translation type="vanished">Imagens</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show again</source>
-        <translation type="vanished">Não mostrar novamente</translation>
-    </message>
-    <message>
-        <source>Remove Picture</source>
-        <translation type="vanished">Remover imagem</translation>
-    </message>
-    <message>
-        <source>The %1 will be deleted.
-Continue?</source>
-        <translation type="vanished">%1 Vai ser apagado.
-Tem certeza?</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation type="vanished">Ícone</translation>
-    </message>
-    <message>
-        <source>Front Cover</source>
-        <translation type="vanished">Capa da frente</translation>
-    </message>
-    <message>
-        <source>Back Cover</source>
-        <translation type="vanished">Capa de trás</translation>
-    </message>
-    <message>
-        <source>Spine Cover</source>
-        <translation type="vanished">Capa do lado</translation>
-    </message>
-    <message>
-        <source>Screenshot #1</source>
-        <translation type="vanished">Captura de tela #1</translation>
-    </message>
-    <message>
-        <source>Screenshot #2</source>
-        <translation type="vanished">Captura de tela #2</translation>
-    </message>
-    <message>
-        <source>Background</source>
-        <translation type="vanished">Plano de fundo</translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation type="vanished">Logo</translation>
     </message>
 </context>
 <context>
@@ -1158,8 +949,8 @@ Tem certeza?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
+        <source>Title</source>
+        <translation type="unfinished">Título</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
@@ -1230,10 +1021,6 @@ Tem certeza?</translation>
         <location filename="../UlConfigGameInstaller.cpp" line="68"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>O arquivo já existe: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation type="vanished">Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UlConfigGameInstaller.cpp" line="87"/>
@@ -1341,10 +1128,6 @@ Tem certeza?</translation>
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>
     <message>
-        <source>Name must not contain following symbols: </source>
-        <translation type="vanished">O nome não pode conter os seguintes símbolos: </translation>
-    </message>
-    <message>
         <location filename="../Game.h" line="62"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Sem título&gt;</translation>
@@ -1421,12 +1204,12 @@ Tem certeza?</translation>
     </message>
     <message>
         <location filename="../File.cpp" line="39"/>
-        <source>Unable to open file &quot;%1&quot; to write</source>
-        <translation type="unfinished"></translation>
+        <source>Unable to open file to write: &quot;%1&quot;</source>
+        <translation type="unfinished">Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../File.cpp" line="56"/>
-        <source>Name must not contain following symbols</source>
+        <source>The following characters are not allowed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1461,10 +1244,6 @@ Tem certeza?</translation>
         <location filename="../../../build/ui_SettingsDialog.h" line="189"/>
         <source>Validate ul.cfg</source>
         <translation>Validar ul.cfg</translation>
-    </message>
-    <message>
-        <source>Open recently used collection</source>
-        <translation type="vanished">Abrir coleção recentemente usada</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="54"/>
@@ -1557,12 +1336,6 @@ Tem certeza?</translation>
 <context>
     <name>VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="14"/>
-        <location filename="../../../build/ui_VmcDetailsActivity.h" line="167"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="40"/>
         <location filename="../UI/VmcDetailsActivity.ui" line="103"/>
         <location filename="../../../build/ui_VmcDetailsActivity.h" line="168"/>
@@ -1580,69 +1353,57 @@ Tem certeza?</translation>
 <context>
     <name>VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="14"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="185"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/VmcListWidget.ui" line="153"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="203"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="206"/>
         <source>Filter</source>
         <translation type="unfinished">Filtro</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="197"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="186"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="192"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="200"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="188"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="194"/>
         <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="212"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="190"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="196"/>
         <source>Delete</source>
         <translation type="unfinished">Apagar</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="215"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="192"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="198"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="227"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="194"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="200"/>
         <source>Rename</source>
         <translation type="unfinished">Renomear</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="230"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="196"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="202"/>
         <source>Rename VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="242"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="198"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="204"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="251"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="199"/>
-        <source>Export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/VmcListWidget.ui" line="254"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="201"/>
-        <source>Ctrl+E</source>
+        <location filename="../../../build/ui_VmcListWidget.h" line="205"/>
+        <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1780,7 +1541,7 @@ Tem certeza?</translation>
     <message>
         <location filename="../UI/VmcRenameDialog.ui" line="14"/>
         <location filename="../../../build/ui_VmcRenameDialog.h" line="70"/>
-        <source>VMC Name</source>
+        <source>VMC Title</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

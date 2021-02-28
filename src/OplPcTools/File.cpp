@@ -36,7 +36,7 @@ void openFileToDirectWrite(QFile & _file)
     bool result = _file.open(QIODevice::WriteOnly);
 #endif
     if(!result)
-        throw IOException(QObject::tr("Unable to open file \"%1\" to write").arg(_file.fileName()));
+        throw IOException(QObject::tr("Unable to open file to write: \"%1\"").arg(_file.fileName()));
 }
 
 bool isFilenameValid(const QString & _filename)
@@ -53,9 +53,9 @@ void validateFilename(const QString & _filename)
 {
     if(!isFilenameValid(_filename))
         throw ValidationException(QString("%1: %2")
-            .arg(QObject::tr("Name must not contain following symbols")
+            .arg(QObject::tr("The following characters are not allowed"))
             .arg(FilenameValidator::s_disallowed_characters)
-        ));
+        );
 }
 
 } // namespace OplPcTools

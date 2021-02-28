@@ -299,7 +299,7 @@ void VmcDetailsActivity::setupView()
     navigate(QString::fromLatin1(&VmcFS::path_separator, 1));
     mp_tree_fs->setModel(mp_model);
     QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
-    header_model->setHorizontalHeaderLabels({ tr("Name"), tr("Size") });
+    header_model->setHorizontalHeaderLabels({ tr("Title"), tr("Size") });
     header_model->horizontalHeaderItem(1)->setTextAlignment(Qt::AlignRight);
     mp_tree_fs->header()->setModel(header_model);
     mp_tree_fs->header()->setStretchLastSection(false);

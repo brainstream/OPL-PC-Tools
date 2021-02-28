@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
@@ -241,6 +241,9 @@
    <property name="text">
     <string>Properties</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="mp_action_export">
    <property name="icon">
@@ -251,7 +254,7 @@
     <string>Export</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E</string>
+    <string notr="true">Ctrl+E</string>
    </property>
   </action>
  </widget>

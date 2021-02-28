@@ -24,88 +24,26 @@
 #include <QFileDialog>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Exception.h>
-#include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
-#include <OplPcTools/UI/BusySmartThread.h>
+#include <OplPcTools/UI/VmcExportThread.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
-
 namespace SettingsKey {
 
 const QString export_dir("VmcExportDir");
 
 } // namespace SettingsKey
-
-class VmcExporter final
-{
-public:
-    explicit VmcExporter(const Vmc & _vmc);
-    void exportTo(const QString _dir);
-
-private:
-    void exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory);
-    void exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory);
-
-private:
-    const QString m_vmc_file;
-};
-
 } // namespace
 
-VmcExporter::VmcExporter(const Vmc & _vmc) :
-    m_vmc_file(_vmc.filepath())
-{
-}
-
-void VmcExporter::exportTo(const QString _dir)
-{
-    QSharedPointer<VmcFS> fs = VmcFS::load(m_vmc_file);
-    exportDirectory(*fs, "/", _dir);
-}
-
-void VmcExporter::exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory)
-{
-    QDir dir(_dest_directory);
-    if(!dir.exists() && !QDir().mkpath(dir.path()))
-        throw Exception(QObject::tr("Unable to create directory \"%1\"").arg(dir.path()));
-    QList<VmcEntryInfo> entries = _fs.enumerateEntries(_vmc_dir);
-    for(const VmcEntryInfo & entry : entries)
-    {
-        QString next_vmc_entry = VmcFS::concatPaths(_vmc_dir, entry.name);
-        if(entry.is_directory)
-        {
-            QString next_directory = dir.absoluteFilePath(entry.name);
-            exportDirectory(_fs, next_vmc_entry, next_directory);
-        }
-        else
-            exportFile(_fs, next_vmc_entry, _dest_directory);
-    }
-}
-
-void VmcExporter::exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory)
-{
-    QSharedPointer<VmcFile> file = _fs.openFile(_vmc_file);
-    if(!file)
-        throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
-    char * buffer = new char[file->size()];
-    int64_t size = file->read(buffer, file->size());
-    if(size > 0)
-    {
-        QFile out(QDir(_dest_directory).absoluteFilePath(file->name()));
-        openFile(out, QIODevice::Truncate | QIODevice::WriteOnly);
-        out.write(buffer, size);
-    }
-    delete [] buffer;
-}
 
 class VmcListWidget::VmcTreeModel final : public QAbstractItemModel
 {
@@ -431,18 +369,10 @@ void VmcListWidget::exportFiles()
     directory = QFileDialog::getExistingDirectory(this, tr("Select directory"), directory);
     if(directory.isEmpty()) return;
     settings.setValue(SettingsKey::export_dir, directory);
-    startSmartThread([vmc, directory]() {
-        VmcExporter(*vmc).exportTo(directory);
-    });
-}
-
-void VmcListWidget::startSmartThread(std::function<void()> _lambda)
-{
-    BusySmartThread * thread = new BusySmartThread(_lambda, this);
-    connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
-    connect(thread, &BusySmartThread::exception, [](const QString & message) {
+    VmcExportThread * thread = new VmcExportThread(this);
+    connect(thread, &VmcExportThread::finished, thread, &VmcExportThread::deleteLater);
+    connect(thread, &VmcExportThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);
     });
-    thread->setSpinnerDisplayTimeout(0);
-    thread->start();
+    thread->start(*vmc, directory);
 }

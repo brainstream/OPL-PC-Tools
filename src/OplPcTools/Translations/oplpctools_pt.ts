@@ -651,11 +651,6 @@
         <translation>O arquivo já existe: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="104"/>
-        <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation>Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
-    </message>
-    <message>
         <location filename="../DirectoryGameInstaller.cpp" line="114"/>
         <source>An error occurred during reading the source medium</source>
         <translation>Um erro ocorreu durante a leitura da fonte</translation>
@@ -1000,24 +995,45 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::VmcExportThread</name>
+    <message>
+        <location filename="../UI/VmcExportThread.cpp" line="156"/>
+        <source>Overwrite confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::VmcExportThreadWorker</name>
+    <message>
+        <location filename="../UI/VmcExportThread.cpp" line="48"/>
+        <source>An unknown error occurred while exporting VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExportThread.cpp" line="85"/>
+        <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="363"/>
+        <location filename="../UI/VmcListWidget.cpp" line="301"/>
         <source>Do not ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="364"/>
+        <location filename="../UI/VmcListWidget.cpp" line="302"/>
         <source>Delete VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="366"/>
+        <location filename="../UI/VmcListWidget.cpp" line="304"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="431"/>
+        <location filename="../UI/VmcListWidget.cpp" line="369"/>
         <source>Select directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,16 +1179,6 @@
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="79"/>
-        <source>Unable to create directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.cpp" line="98"/>
-        <source>Unable to open VMC file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../File.cpp" line="39"/>
         <source>Unable to open file &quot;%1&quot; to write</source>
         <translation type="unfinished"></translation>
@@ -1230,6 +1236,16 @@
     <message>
         <location filename="../VmcFS.cpp" line="664"/>
         <source>&quot;%1&quot; is not a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExportThread.cpp" line="59"/>
+        <source>Unable to create directory &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExportThread.cpp" line="82"/>
+        <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

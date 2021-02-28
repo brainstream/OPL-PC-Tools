@@ -16,46 +16,68 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCLISTWIDGET__
-#define __OPLPCTOOLS_VMCLISTWIDGET__
+#ifndef __OPLPCTOOLS_VMCEXPORTTHREAD__
+#define __OPLPCTOOLS_VMCEXPORTTHREAD__
 
-#include <functional>
-#include "ui_VmcListWidget.h"
-#include <QSortFilterProxyModel>
+#include <optional>
+#include <QWidget>
+#include <QEventLoop>
 #include <OplPcTools/Vmc.h>
+#include <OplPcTools/VmcFS.h>
 
 namespace OplPcTools::UI {
 
-class VmcListWidget: public QWidget, private Ui::VmcListWidget
+
+class VmcExportThreadWorker : public QObject
+{
+    Q_OBJECT
+
+    enum class Action { Overwrite, Skip, Cancel };
+
+public:
+    VmcExportThreadWorker();
+    void start(const Vmc & _vmc, const QString & _destination_dir);
+    void setAnswer(bool _answer);
+    void cancel();
+
+private:
+    void exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory);
+    void exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory);
+    Action getAction(const QString & _question);
+
+signals:
+    void askQuestion(const QString & _question);
+    void finished();
+    void exception(const QString & _message);
+
+private:
+    QEventLoop * mp_loop;
+    Action m_action;
+};
+
+
+class VmcExportThread : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit VmcListWidget(QWidget * _parent = nullptr);
+    explicit VmcExportThread(QWidget * _parent_widget);
+    void start(const Vmc & _vmc, const QString & _destination_dir);
+
+signals:
+    void finished();
+    void exception(const QString & _message);
 
 private:
-    void setupShortcuts();
-    void setIconSize();
-    void renameVmc();
-    void deleteVmc();
-    void createVmc();
-    void exportFiles();
+    void askQuestion(const QString & _question);
 
 private:
-    void onVmcSelected();
-    void activateItemControls(const Vmc * _vmc);
-    void showTreeContextMenu(const QPoint & _point);
-    void onTreeViewItemActivated(const QModelIndex & _index);
-    void showVmcProperties();
-//    void startSmartThread(std::function<void()> _lambda);
-
-private:
-    class VmcTreeModel;
-    VmcTreeModel * mp_model;
-    QSortFilterProxyModel * mp_proxy_model;
-    QMenu * mp_context_menu;
+    QWidget * mp_parent_widget;
+    std::optional<bool> m_default_answer;
+    VmcExportThreadWorker * mp_worker;
 };
+
 
 } // namespace OplPcTools::UI
 
-#endif // __OPLPCTOOLS_VMCLISTWIDGET__
+#endif // __OPLPCTOOLS_VMCEXPORTTHREAD__

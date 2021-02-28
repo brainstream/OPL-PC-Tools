@@ -96,6 +96,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.h
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.h
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.h
+    ${OPT_SRC_DIR}/UI/VmcExportThread.h
     ${OPT_SRC_DIR}/UI/BusyDialog.h
     ${OPT_SRC_DIR}/UI/BusySmartThread.h
 )
@@ -198,6 +199,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/VmcCreateDialog.cpp
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.cpp
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.cpp
+    ${OPT_SRC_DIR}/UI/VmcExportThread.cpp
     ${OPT_SRC_DIR}/UI/BusyDialog.cpp
     ${OPT_SRC_DIR}/UI/BusySmartThread.cpp
 )

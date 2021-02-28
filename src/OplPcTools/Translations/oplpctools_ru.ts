@@ -88,13 +88,92 @@
         <location filename="../UI/GameArtsWidget.ui" line="70"/>
         <location filename="../../../build/ui_GameArtsWidget.h" line="71"/>
         <source>Change Picture...</source>
-        <translation type="unfinished">Изменить картинку...</translation>
+        <translation type="unfinished">Изменить изображение...</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.ui" line="79"/>
         <location filename="../../../build/ui_GameArtsWidget.h" line="72"/>
         <source>Delete Picture</source>
-        <translation type="unfinished">Удалить картинку</translation>
+        <translation type="unfinished">Удалить изображение</translation>
+    </message>
+</context>
+<context>
+    <name>GameCollectionActivity</name>
+    <message>
+        <source>Filter</source>
+        <translation type="vanished">Фильтр</translation>
+    </message>
+    <message>
+        <source>Icons Size</source>
+        <translation type="vanished">Размер иконки</translation>
+    </message>
+    <message>
+        <source>ID:</source>
+        <translation type="vanished">ID:</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="vanished">Тип:</translation>
+    </message>
+    <message>
+        <source>Source:</source>
+        <translation type="vanished">Источник:</translation>
+    </message>
+    <message>
+        <source>Parts:</source>
+        <translation type="vanished">Частей:</translation>
+    </message>
+    <message>
+        <source>Edit game</source>
+        <translation type="vanished">Редактировать игру</translation>
+    </message>
+    <message>
+        <source>Delete game</source>
+        <translation type="vanished">Удалить игру</translation>
+    </message>
+    <message>
+        <source>Install game</source>
+        <translation type="vanished">Установить игру</translation>
+    </message>
+    <message>
+        <source>Reload collection</source>
+        <translation type="vanished">Перезагрузить коллекцию</translation>
+    </message>
+    <message>
+        <source>Open collection</source>
+        <translation type="vanished">Открыть коллекцию</translation>
+    </message>
+    <message>
+        <source>Rename game</source>
+        <translation type="vanished">Переименовать игру</translation>
+    </message>
+    <message>
+        <source>Restore ISO</source>
+        <translation type="vanished">Восстановить ISO</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="vanished">Редактировать</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="vanished">Удалить</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation type="vanished">Установить</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="vanished">Перезагрузить</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="vanished">Открыть</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="vanished">Переименовать</translation>
     </message>
 </context>
 <context>
@@ -106,9 +185,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="93"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="476"/>
-        <source>Custom ELF</source>
+        <location filename="../UI/GameConfigWidget.ui" line="43"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="473"/>
+        <source>OPL Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -118,69 +197,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="43"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="473"/>
-        <source>OPL Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameConfigWidget.ui" line="75"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="475"/>
         <source>Get from the Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="291"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="490"/>
-        <source>Graphic Synthesiser Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="299"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="491"/>
-        <source>Disbale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="306"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="492"/>
-        <source>Enable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="313"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="493"/>
-        <source>Use Global Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="461"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="499"/>
-        <source>Emulate FIELD Flipping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="502"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="500"/>
-        <source>&amp;Delete Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="513"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="501"/>
-        <source>&amp;Clear Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="520"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="503"/>
-        <source>Del</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="534"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="507"/>
-        <source>Ctrl+S</source>
+        <location filename="../UI/GameConfigWidget.ui" line="93"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="476"/>
+        <source>Custom ELF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -258,6 +283,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../UI/GameConfigWidget.ui" line="291"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="490"/>
+        <source>Graphic Synthesiser Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="299"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="491"/>
+        <source>Disbale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="306"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="492"/>
+        <source>Enable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="313"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="493"/>
+        <source>Use Global Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../UI/GameConfigWidget.ui" line="341"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="494"/>
         <source>Settings</source>
@@ -267,6 +316,12 @@
         <location filename="../UI/GameConfigWidget.ui" line="361"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="495"/>
         <source>Video Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="384"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="496"/>
+        <source>Skip Full Motion Videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -282,15 +337,39 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../UI/GameConfigWidget.ui" line="461"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="499"/>
+        <source>Emulate FIELD Flipping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="502"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="500"/>
+        <source>&amp;Delete Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="513"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="501"/>
+        <source>&amp;Clear Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="520"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="503"/>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../UI/GameConfigWidget.ui" line="527"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="505"/>
         <source>&amp;Save Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="384"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="496"/>
-        <source>Skip Full Motion Videos</source>
+        <location filename="../UI/GameConfigWidget.ui" line="534"/>
+        <location filename="../../../build/ui_GameConfigWidget.h" line="507"/>
+        <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -312,13 +391,21 @@
         <location filename="../UI/GameDetailsActivity.ui" line="108"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="123"/>
         <source>Pictures</source>
-        <translation type="unfinished">Картинки</translation>
+        <translation type="unfinished">Изображения</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="127"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Picture...</source>
+        <translation type="vanished">Изменить изображение...</translation>
+    </message>
+    <message>
+        <source>Delete Picture</source>
+        <translation type="vanished">Удалить изображение</translation>
     </message>
 </context>
 <context>
@@ -651,6 +738,10 @@
         <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
+        <source>Unable to open file to write: &quot;%1&quot;</source>
+        <translation type="vanished">Не могу открыть файл для записи: &quot;%1&quot;</translation>
+    </message>
+    <message>
         <location filename="../DirectoryGameInstaller.cpp" line="114"/>
         <source>An error occurred during reading the source medium</source>
         <translation>Во время чтения источника данных возникла ошибка</translation>
@@ -666,12 +757,12 @@
     <message>
         <location filename="../GameCollection.cpp" line="110"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished">Не могу переименовать игру &quot;%1&quot; в &quot;%2&quot;</translation>
+        <translation>Не могу переименовать игру &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
         <location filename="../GameCollection.cpp" line="116"/>
         <source>Unable to delete game &quot;%1&quot;</source>
-        <translation type="unfinished">Не могу удалить игру &quot;%1&quot;</translation>
+        <translation>Не могу удалить игру &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -734,31 +825,6 @@
 <context>
     <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="179"/>
-        <source>Choose a Picture</source>
-        <translation type="unfinished">Выберать картинку</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="180"/>
-        <source>Pictures</source>
-        <translation type="unfinished">Картинки</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="208"/>
-        <source>Do not ask again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="209"/>
-        <source>Delete Picture</source>
-        <translation type="unfinished">Удалить картинку</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="211"/>
-        <source>Are you sure you want to delete this picture?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameArtsWidget.cpp" line="141"/>
         <source>Icon</source>
         <translation type="unfinished">Иконка</translation>
@@ -798,6 +864,56 @@
         <source>Logo</source>
         <translation type="unfinished">Логотип</translation>
     </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="179"/>
+        <source>Choose a Picture</source>
+        <translation type="unfinished">Выбор изображения</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="180"/>
+        <source>Pictures</source>
+        <translation type="unfinished">Изображения</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="208"/>
+        <source>Do not ask again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="209"/>
+        <source>Delete Picture</source>
+        <translation type="unfinished">Удалить изображение</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="211"/>
+        <source>Are you sure you want to delete this picture?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::GameCollectionActivity</name>
+    <message>
+        <source>Choose the OPL root directory</source>
+        <translation type="vanished">Выбор корневого каталога OPL</translation>
+    </message>
+    <message>
+        <source>Directory</source>
+        <translation type="vanished">Каталог</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show again</source>
+        <translation type="vanished">Не показывать снова</translation>
+    </message>
+    <message>
+        <source>Remove Game</source>
+        <translation type="vanished">Удалить игру</translation>
+    </message>
+    <message>
+        <source>The %1 will be deleted.
+Continue?</source>
+        <translation type="vanished">Игра %1 будет удалена.
+Продолжить?</translation>
+    </message>
 </context>
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
@@ -826,6 +942,63 @@
         <location filename="../UI/GameConfigWidget.cpp" line="455"/>
         <source>Configuration file does not exist</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::GameDetailsActivity</name>
+    <message>
+        <source>Choose a Picture</source>
+        <translation type="vanished">Выбрать изображение</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation type="vanished">Изображения</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show again</source>
+        <translation type="vanished">Не показывать снова</translation>
+    </message>
+    <message>
+        <source>Remove Picture</source>
+        <translation type="vanished">Удалить изображение</translation>
+    </message>
+    <message>
+        <source>The %1 will be deleted.
+Continue?</source>
+        <translation type="vanished">Изображение %1 будет удалена.
+Продолжить?</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="vanished">Иконка</translation>
+    </message>
+    <message>
+        <source>Front Cover</source>
+        <translation type="vanished">Передняя обложка</translation>
+    </message>
+    <message>
+        <source>Back Cover</source>
+        <translation type="vanished">Задняя обложка</translation>
+    </message>
+    <message>
+        <source>Spine Cover</source>
+        <translation type="vanished">Боковая обложка</translation>
+    </message>
+    <message>
+        <source>Screenshot #1</source>
+        <translation type="vanished">Скриншот №1</translation>
+    </message>
+    <message>
+        <source>Screenshot #2</source>
+        <translation type="vanished">Скриншот №2</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="vanished">Фоновое изображение</translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="vanished">Логотип</translation>
     </message>
 </context>
 <context>
@@ -997,7 +1170,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="156"/>
+        <location filename="../UI/VmcExportThread.cpp" line="157"/>
         <source>Overwrite confirmation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1005,12 +1178,12 @@
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="48"/>
+        <location filename="../UI/VmcExportThread.cpp" line="49"/>
         <source>An unknown error occurred while exporting VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="85"/>
+        <location filename="../UI/VmcExportThread.cpp" line="86"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1057,6 +1230,10 @@
         <location filename="../UlConfigGameInstaller.cpp" line="68"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Unable to open file to write: &quot;%1&quot;</source>
+        <translation type="vanished">Не могу открыть файл для записи: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UlConfigGameInstaller.cpp" line="87"/>
@@ -1164,6 +1341,10 @@
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
     <message>
+        <source>Name must not contain following symbols: </source>
+        <translation type="vanished">Имя не должно содержать следующих символов: </translation>
+    </message>
+    <message>
         <location filename="../Game.h" line="62"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Без названия&gt;</translation>
@@ -1179,13 +1360,13 @@
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="39"/>
-        <source>Unable to open file &quot;%1&quot; to write</source>
+        <location filename="../UI/VmcExportThread.cpp" line="60"/>
+        <source>Unable to create directory &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="56"/>
-        <source>Name must not contain following symbols</source>
+        <location filename="../UI/VmcExportThread.cpp" line="83"/>
+        <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1239,13 +1420,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="59"/>
-        <source>Unable to create directory &quot;%1&quot;</source>
+        <location filename="../File.cpp" line="39"/>
+        <source>Unable to open file &quot;%1&quot; to write</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="82"/>
-        <source>Unable to open VMC file &quot;%1&quot;</source>
+        <location filename="../File.cpp" line="56"/>
+        <source>Name must not contain following symbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1280,6 +1461,10 @@
         <location filename="../../../build/ui_SettingsDialog.h" line="189"/>
         <source>Validate ul.cfg</source>
         <translation>Валидировать ul.cfg</translation>
+    </message>
+    <message>
+        <source>Open recently used collection</source>
+        <translation type="vanished">Открывать последнюю коллекцию</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="54"/>
@@ -1333,7 +1518,7 @@
         <location filename="../UI/SettingsDialog.ui" line="139"/>
         <location filename="../../../build/ui_SettingsDialog.h" line="201"/>
         <source>Appearance</source>
-        <translation>Внешний вид</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="145"/>
@@ -1413,16 +1598,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../UI/VmcListWidget.ui" line="200"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="188"/>
+        <source>Create VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../UI/VmcListWidget.ui" line="212"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="190"/>
         <source>Delete</source>
         <translation type="unfinished">Удалить</translation>
     </message>
     <message>
+        <location filename="../UI/VmcListWidget.ui" line="215"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="192"/>
+        <source>Delete VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../UI/VmcListWidget.ui" line="227"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="194"/>
         <source>Rename</source>
         <translation type="unfinished">Переименовать</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.ui" line="230"/>
+        <location filename="../../../build/ui_VmcListWidget.h" line="196"/>
+        <source>Rename VMC</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="242"/>
@@ -1440,24 +1643,6 @@
         <location filename="../UI/VmcListWidget.ui" line="254"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="201"/>
         <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.ui" line="215"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="192"/>
-        <source>Delete VMC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.ui" line="230"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="196"/>
-        <source>Rename VMC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.ui" line="200"/>
-        <location filename="../../../build/ui_VmcListWidget.h" line="188"/>
-        <source>Create VMC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -223,7 +223,6 @@ set(TRANSLATIONS
 qt5_create_translation(QM_FILES
     ${OPT_SRC}
     ${TRANSLATIONS}
-    OPTIONS "-no-obsolete"
 )
 
 #######################

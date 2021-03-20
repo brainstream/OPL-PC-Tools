@@ -139,7 +139,7 @@ QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role
     }
     else if(_role == Qt::DisplayRole)
     {
-        return QString("%1 MiB").arg(vmc->size());
+        return QObject::tr("%1 MiB").arg(vmc->size());
     }
     else if(_role == Qt::TextAlignmentRole)
     {

@@ -1225,6 +1225,11 @@
         <source>The following characters are not allowed</source>
         <translation>Следующие символы запрещены</translation>
     </message>
+    <message>
+        <location filename="../UI/VmcListWidget.cpp" line="142"/>
+        <source>%1 MiB</source>
+        <translation>%1 МиБ</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

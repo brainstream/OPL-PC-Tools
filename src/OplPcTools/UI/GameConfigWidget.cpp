@@ -459,18 +459,18 @@ void GameConfigWidget::saveAs(const QString & _filename)
 
 void GameConfigWidget::remove()
 {
-    startSmartThread([this]() {
-        QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
-        QFile config(filename);
-        if(!config.exists() || QMessageBox::question(this, tr("Confirmation"),
-            tr("Are you sure you want to delete file?\n%1").arg(filename),
-            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-        {
-            QToolTip::showText(mapToGlobal(mp_btn_delete->pos() - QPoint(0, 50)),
-                tr("Configuration file does not exist"), this, QRect(), 3000);
-            return;
-        }
-        config.remove();
+    QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
+    QFile config(filename);
+    if(!config.exists() || QMessageBox::question(this, tr("Confirmation"),
+        tr("Are you sure you want to delete file?\n%1").arg(filename),
+        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+    {
+        QToolTip::showText(mapToGlobal(mp_btn_delete->pos() - QPoint(0, 50)),
+            tr("Configuration file does not exist"), this, QRect(), 3000);
+        return;
+    }
+    startSmartThread([this, filename]() {
+        QFile::remove(filename);
         clearForm();
     });
 }

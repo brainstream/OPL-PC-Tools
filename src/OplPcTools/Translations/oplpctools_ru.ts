@@ -788,19 +788,19 @@
         <translation>Конфигурация сохранена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="464"/>
         <source>Confirmation</source>
         <translation>Подтверждение</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="466"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation>Вы уверены, что хотите удалить файл?
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="470"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="469"/>
         <source>Configuration file does not exist</source>
         <translation>Конфигурационный файл не существует</translation>
     </message>

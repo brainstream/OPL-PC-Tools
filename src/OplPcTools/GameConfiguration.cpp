@@ -223,7 +223,7 @@ void GameConfiguration::save(const GameConfiguration & _config, const QString & 
     src_file.open(QFile::ReadOnly | QFile::Text);
     openFile(tmp_file, QFile::WriteOnly | QFile::Truncate | QFile::Text);
     QSet<QString> written_keys;
-    for(;;)
+    for(; src_file.isOpen(); )
     {
         const QByteArray bytes = src_file.readLine();
         if(bytes.isNull())

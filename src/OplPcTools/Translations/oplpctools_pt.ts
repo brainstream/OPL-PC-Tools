@@ -142,12 +142,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="138"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="481"/>
-        <source>Mode 4 ― 0 PSS Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameConfigWidget.ui" line="145"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="482"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
@@ -157,18 +151,6 @@
         <location filename="../UI/GameConfigWidget.ui" line="152"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="483"/>
         <source>Mode 6 ― Disable IGR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="159"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="484"/>
-        <source>Mode 7 ― High Module Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="166"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="485"/>
-        <source>Mode 8 ― Hide DEV9 Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -766,28 +748,58 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="384"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="240"/>
+        <source>Mode 4 ― 0 PSS Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="242"/>
+        <source>Mode 7 ― High Module Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="244"/>
+        <source>Mode 8 ― Hide DEV9 Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="251"/>
+        <source>Mode 4 ― Skip Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="253"/>
+        <source>Mode 7 ― Deprecated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="255"/>
+        <source>Mode 8 ― Deprecated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="399"/>
         <source>Configuration cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="414"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="429"/>
         <source>Configuration saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="450"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="466"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="455"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="470"/>
         <source>Configuration file does not exist</source>
         <translation type="unfinished"></translation>
     </message>

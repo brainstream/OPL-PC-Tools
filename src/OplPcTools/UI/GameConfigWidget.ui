@@ -135,7 +135,7 @@
         <item>
          <widget class="QCheckBox" name="mp_checkbox_mode_4">
           <property name="text">
-           <string>Mode 4 ― 0 PSS Mode</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -156,14 +156,14 @@
         <item>
          <widget class="QCheckBox" name="mp_checkbox_mode_7">
           <property name="text">
-           <string>Mode 7 ― High Module Storage</string>
+           <string/>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="mp_checkbox_mode_8">
           <property name="text">
-           <string>Mode 8 ― Hide DEV9 Module</string>
+           <string/>
           </property>
          </widget>
         </item>

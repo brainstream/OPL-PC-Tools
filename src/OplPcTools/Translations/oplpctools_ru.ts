@@ -142,12 +142,6 @@
         <translation>Режим 3 ― Разблокировать системные вызовы</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="138"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="481"/>
-        <source>Mode 4 ― 0 PSS Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameConfigWidget.ui" line="145"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="482"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
@@ -158,18 +152,6 @@
         <location filename="../../../build/ui_GameConfigWidget.h" line="483"/>
         <source>Mode 6 ― Disable IGR</source>
         <translation>Режим 6 ― Отключить использование IGR</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="159"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="484"/>
-        <source>Mode 7 ― High Module Storage</source>
-        <translation>Режим 7 ― Высокий модуль хранения</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConfigWidget.ui" line="166"/>
-        <location filename="../../../build/ui_GameConfigWidget.h" line="485"/>
-        <source>Mode 8 ― Hide DEV9 Module</source>
-        <translation>Режим 8 ― Скрывать модули Dev9</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="178"/>
@@ -195,7 +177,7 @@
         <location filename="../UI/GameConfigWidget.ui" line="291"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="490"/>
         <source>Graphic Synthesiser Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим графического синтезатора</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="299"/>
@@ -766,29 +748,59 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="384"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="240"/>
+        <source>Mode 4 ― 0 PSS Mode</source>
+        <translation>Режим 7 ― Режим 0 PPS</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="242"/>
+        <source>Mode 7 ― High Module Storage</source>
+        <translation>Режим 7 ― Высокий модуль хранения</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="244"/>
+        <source>Mode 8 ― Hide DEV9 Module</source>
+        <translation>Режим 8 ― Скрывать модули Dev9</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="251"/>
+        <source>Mode 4 ― Skip Videos</source>
+        <translation>Режим 4 ― Пропуск видео</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="253"/>
+        <source>Mode 7 ― Deprecated</source>
+        <translation>Режим 7 ― Устарело</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="255"/>
+        <source>Mode 8 ― Deprecated</source>
+        <translation>Режим 8 ― Устарело</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.cpp" line="399"/>
         <source>Configuration cleared</source>
         <translation>Конфигурация очищена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="414"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="429"/>
         <source>Configuration saved</source>
         <translation>Конфигурация сохранена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="450"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
         <source>Confirmation</source>
         <translation>Подтверждение</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="466"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation>Вы уверены, что хотите удалить файл?
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="455"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="470"/>
         <source>Configuration file does not exist</source>
         <translation>Конфигурационный файл не существует</translation>
     </message>

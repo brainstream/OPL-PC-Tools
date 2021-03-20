@@ -237,11 +237,26 @@ void GameConfigWidget::reinitOplVersionSensitiveControls()
             mp_radio_disable_gsm->setChecked(true);
         mp_radio_use_global_gsm->setEnabled(false);
         mp_checkbox_emulate_field_flipping->setEnabled(false);
+        mp_checkbox_mode_4->setText(tr("Mode 4 ― 0 PSS Mode"));
+        mp_checkbox_mode_7->setEnabled(true);
+        mp_checkbox_mode_7->setText(tr("Mode 7 ― High Module Storage"));
+        mp_checkbox_mode_8->setEnabled(true);
+        mp_checkbox_mode_8->setText(tr("Mode 8 ― Hide DEV9 Module"));
+        mp_checkbox_skip_fmv->setEnabled(true);
     }
     else
     {
         mp_radio_use_global_gsm->setEnabled(true);
         mp_checkbox_emulate_field_flipping->setEnabled(true);
+        mp_checkbox_mode_4->setText(tr("Mode 4 ― Skip Videos"));
+        mp_checkbox_mode_7->setChecked(false);
+        mp_checkbox_mode_7->setText(tr("Mode 7 ― Deprecated"));
+        mp_checkbox_mode_7->setDisabled(true);
+        mp_checkbox_mode_8->setText(tr("Mode 8 ― Deprecated"));
+        mp_checkbox_mode_8->setChecked(false);
+        mp_checkbox_mode_8->setDisabled(true);
+        mp_checkbox_skip_fmv->setChecked(false);
+        mp_checkbox_skip_fmv->setDisabled(true);
     }
 }
 

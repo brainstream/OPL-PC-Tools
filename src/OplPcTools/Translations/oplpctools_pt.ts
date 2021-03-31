@@ -25,7 +25,7 @@
         <location filename="../UI/AboutDialog.ui" line="129"/>
         <location filename="../../../build/ui_AboutDialog.h" line="157"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Sergey Smolyannikov&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Todos os direitos reservados %1 © Sergey Smolyannikov&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt;Todos os direitos reservados %1 © Sergey Smolyannikov&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt; &lt;/p&gt; &lt;p&gt;Tradução para português por Matheus Machado&lt;br/&gt;&lt;a href=&quot;mailto:matheusmachado708@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;matheusmachado708@gmail.com&lt;/span&gt;&lt;/a&gt; &lt;/p&gt;   &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="158"/>
@@ -46,7 +46,7 @@
         <location filename="../UI/BusyDialog.ui" line="36"/>
         <location filename="../../../build/ui_BusyDialog.h" line="59"/>
         <source>Pocessing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Processando...</translation>
     </message>
 </context>
 <context>
@@ -82,13 +82,13 @@
         <location filename="../UI/GameArtsWidget.ui" line="70"/>
         <location filename="../../../build/ui_GameArtsWidget.h" line="71"/>
         <source>Change Picture...</source>
-        <translation type="unfinished">Mudar imagem...</translation>
+        <translation>Mudar imagem...</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.ui" line="79"/>
         <location filename="../../../build/ui_GameArtsWidget.h" line="72"/>
         <source>Delete Picture</source>
-        <translation type="unfinished">Apagar imagem</translation>
+        <translation>Apagar imagem</translation>
     </message>
 </context>
 <context>
@@ -97,67 +97,67 @@
         <location filename="../UI/GameConfigWidget.ui" line="43"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="473"/>
         <source>OPL Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão do OPL</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="68"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="474"/>
         <source>Game ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do jogo</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="75"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="475"/>
         <source>Get from the Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificar automaticamente</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="93"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="476"/>
         <source>Custom ELF</source>
-        <translation type="unfinished"></translation>
+        <translation>ELF personalizado</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="111"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="477"/>
         <source>Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>Modos</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="117"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="478"/>
         <source>Mode 1 ― Accurate Reads</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 1 - Leituras mais acuradas</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="124"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="479"/>
         <source>Mode 2 ― Synchronous Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 2 - Modo Síncrono</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="131"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="480"/>
         <source>Mode 3 ― Unhook Syscalls</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 3 - Desligar Syscalls</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="145"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="482"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 5 - Emular DVD-DL</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="152"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="483"/>
         <source>Mode 6 ― Disable IGR</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 6 - Desativar IGR</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="178"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="486"/>
         <source>Virtual Memory Card #1</source>
-        <translation type="unfinished"></translation>
+        <translation>Memory Card Virtual (VMC) #1</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="212"/>
@@ -165,91 +165,91 @@
         <location filename="../../../build/ui_GameConfigWidget.h" line="487"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="489"/>
         <source>Create VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar VMC</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="226"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="488"/>
         <source>Virtual Memory Card #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Memory Card Virtual (VMC) #2</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="291"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="490"/>
         <source>Graphic Synthesiser Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de sintetizador gráfico (GSM)</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="299"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="491"/>
         <source>Disbale</source>
-        <translation type="unfinished"></translation>
+        <translation>Desativado</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="306"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="492"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ativado</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="313"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="493"/>
         <source>Use Global Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Usando Configuração Globais</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="341"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="494"/>
         <source>Settings</source>
-        <translation type="unfinished">Configurações</translation>
+        <translation>Configurações</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="361"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="495"/>
         <source>Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de Video</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="384"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="496"/>
         <source>Skip Full Motion Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Pular CGs</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="401"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="497"/>
         <source>Horizontal Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição Horizontal</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="433"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="498"/>
         <source>Vertical Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição Vertical</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="461"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="499"/>
         <source>Emulate FIELD Flipping</source>
-        <translation type="unfinished"></translation>
+        <translation>Emular inversão de FIELD</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="502"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="500"/>
         <source>&amp;Delete Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deletar Configurações</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="513"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="501"/>
         <source>&amp;Clear Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Resetar Configurações</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="524"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="502"/>
         <source>&amp;Save Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salvar Configurações</translation>
     </message>
 </context>
 <context>
@@ -270,13 +270,13 @@
         <location filename="../UI/GameDetailsActivity.ui" line="108"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="123"/>
         <source>Pictures</source>
-        <translation type="unfinished">Imagens</translation>
+        <translation>Imagens</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="127"/>
         <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações</translation>
     </message>
 </context>
 <context>
@@ -402,85 +402,85 @@
         <location filename="../UI/GameListWidget.ui" line="187"/>
         <location filename="../../../build/ui_GameListWidget.h" line="381"/>
         <source>Filter</source>
-        <translation type="unfinished">Filtro</translation>
+        <translation>Filtrar</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="387"/>
         <location filename="../../../build/ui_GameListWidget.h" line="382"/>
         <source>ID:</source>
-        <translation type="unfinished">ID:</translation>
+        <translation>ID:</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="407"/>
         <location filename="../../../build/ui_GameListWidget.h" line="383"/>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="427"/>
         <location filename="../../../build/ui_GameListWidget.h" line="384"/>
         <source>Source:</source>
-        <translation type="unfinished">Fonte:</translation>
+        <translation>Fonte:</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="447"/>
         <location filename="../../../build/ui_GameListWidget.h" line="385"/>
         <source>Parts:</source>
-        <translation type="unfinished">Partes:</translation>
+        <translation>Partes:</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="493"/>
         <location filename="../../../build/ui_GameListWidget.h" line="363"/>
         <source>Edit</source>
-        <translation type="unfinished">Editar</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="496"/>
         <location filename="../../../build/ui_GameListWidget.h" line="365"/>
         <source>Edit game</source>
-        <translation type="unfinished">Editar jogo</translation>
+        <translation>Editar jogo</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="508"/>
         <location filename="../../../build/ui_GameListWidget.h" line="367"/>
         <source>Delete</source>
-        <translation type="unfinished">Apagar</translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="511"/>
         <location filename="../../../build/ui_GameListWidget.h" line="369"/>
         <source>Delete game</source>
-        <translation type="unfinished">Apagar jogo</translation>
+        <translation>Apagar jogo</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="523"/>
         <location filename="../../../build/ui_GameListWidget.h" line="371"/>
         <source>Install</source>
-        <translation type="unfinished">Instalar</translation>
+        <translation>Instalar</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="526"/>
         <location filename="../../../build/ui_GameListWidget.h" line="373"/>
         <source>Install game</source>
-        <translation type="unfinished">Instalar jogo</translation>
+        <translation>Instalar jogo</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="538"/>
         <location filename="../../../build/ui_GameListWidget.h" line="375"/>
         <source>Rename</source>
-        <translation type="unfinished">Renomear</translation>
+        <translation>Renomear</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="541"/>
         <location filename="../../../build/ui_GameListWidget.h" line="377"/>
         <source>Rename game</source>
-        <translation type="unfinished">Renomear jogo</translation>
+        <translation>Renomear jogo</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="553"/>
         <location filename="../../../build/ui_GameListWidget.h" line="379"/>
         <source>Restore ISO</source>
-        <translation type="unfinished">Restaurar ISO</translation>
+        <translation>Restaurar ISO</translation>
     </message>
 </context>
 <context>
@@ -489,7 +489,7 @@
         <location filename="../UI/GameRenameDialog.ui" line="14"/>
         <location filename="../../../build/ui_GameRenameDialog.h" line="70"/>
         <source>Game Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titulo do jogo</translation>
     </message>
 </context>
 <context>
@@ -507,13 +507,13 @@
         <location filename="../UI/LibraryActivity.ui" line="43"/>
         <location filename="../../../build/ui_LibraryActivity.h" line="87"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../UI/LibraryActivity.ui" line="52"/>
         <location filename="../../../build/ui_LibraryActivity.h" line="88"/>
         <source>Virtual Memory Cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Memory Cards Virtuais (VMCs)</translation>
     </message>
 </context>
 <context>
@@ -552,7 +552,7 @@
         <location filename="../UI/MainWindow.ui" line="229"/>
         <location filename="../../../build/ui_MainWindow.h" line="211"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Arquivo</translation>
     </message>
     <message>
         <location filename="../UI/MainWindow.ui" line="243"/>
@@ -576,7 +576,7 @@
         <location filename="../UI/MainWindow.ui" line="271"/>
         <location filename="../../../build/ui_MainWindow.h" line="205"/>
         <source>&amp;Open Library...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Abrir pasta do OPL...</translation>
     </message>
 </context>
 <context>
@@ -625,7 +625,7 @@
     <message>
         <location filename="../GameInstaller.cpp" line="35"/>
         <source>Game with ID %1 is already installed</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogo com o ID %1 já está instalado</translation>
     </message>
 </context>
 <context>
@@ -682,67 +682,67 @@
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="141"/>
         <source>Icon</source>
-        <translation type="unfinished">Ícone</translation>
+        <translation>Ícone</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="142"/>
         <source>Front Cover</source>
-        <translation type="unfinished">Capa da frente</translation>
+        <translation>Capa da frente</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="143"/>
         <source>Back Cover</source>
-        <translation type="unfinished">Capa de trás</translation>
+        <translation>Capa de trás</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="144"/>
         <source>Spine Cover</source>
-        <translation type="unfinished">Capa do lado</translation>
+        <translation>Capa do lado</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="145"/>
         <source>Screenshot #1</source>
-        <translation type="unfinished">Captura de tela #1</translation>
+        <translation>Captura de tela #1</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="146"/>
         <source>Screenshot #2</source>
-        <translation type="unfinished">Captura de tela #2</translation>
+        <translation>Captura de tela #2</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="147"/>
         <source>Background</source>
-        <translation type="unfinished">Plano de fundo</translation>
+        <translation>Plano de fundo</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="148"/>
         <source>Logo</source>
-        <translation type="unfinished">Logo</translation>
+        <translation>Logo</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="179"/>
         <source>Choose a Picture</source>
-        <translation type="unfinished">Escolha uma imagem</translation>
+        <translation>Escolha uma imagem</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="180"/>
         <source>Pictures</source>
-        <translation type="unfinished">Imagens</translation>
+        <translation>Imagens</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="208"/>
         <source>Do not ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>Não pedir de novo</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="209"/>
         <source>Delete Picture</source>
-        <translation type="unfinished">Apagar imagem</translation>
+        <translation>Apagar imagem</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.cpp" line="211"/>
         <source>Are you sure you want to delete this picture?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
 </context>
 <context>
@@ -750,58 +750,59 @@
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="240"/>
         <source>Mode 4 ― 0 PSS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 4 - Modo 0 PSS</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="242"/>
         <source>Mode 7 ― High Module Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 7 - Armazenamento de módulos em alta memoria</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="244"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 9 - Esconder módulos DEV9</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="251"/>
         <source>Mode 4 ― Skip Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 4 - Pular vídeos</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="253"/>
         <source>Mode 7 ― Deprecated</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 7 ― Obsoleto</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="255"/>
         <source>Mode 8 ― Deprecated</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo 8 ― Obsoleto</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="399"/>
         <source>Configuration cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações resetadas</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="429"/>
         <source>Configuration saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações salvas</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="464"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmação</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="465"/>
         <source>Are you sure you want to delete file?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tem certeza que quer apagar este arquivo?
+%1</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.cpp" line="469"/>
         <source>Configuration file does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo de configurações não existe</translation>
     </message>
 </context>
 <context>
@@ -842,22 +843,22 @@
     <message>
         <location filename="../UI/GameListWidget.cpp" line="358"/>
         <source>Directory</source>
-        <translation type="unfinished">Pasta</translation>
+        <translation>Pasta</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.cpp" line="425"/>
         <source>Do not ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>Não pedir de novo</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.cpp" line="426"/>
         <source>Delete Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Deletar jogo</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.cpp" line="428"/>
         <source>Are you sure you want to delete this game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
 </context>
 <context>
@@ -911,7 +912,7 @@
     <message>
         <location filename="../UI/MainWindow.cpp" line="160"/>
         <source>Choose the OPL root directory</source>
-        <translation type="unfinished">Escolha a raiz da pasta do OPL</translation>
+        <translation>Escolha a raiz da pasta do OPL</translation>
     </message>
 </context>
 <context>
@@ -919,37 +920,37 @@
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="36"/>
         <source>8 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>8 MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="37"/>
         <source>16 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>16 MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="38"/>
         <source>32 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>32 MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
         <source>64 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>64 MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
         <source>128 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>128 MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
         <source>256 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>256 MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
         <source>512 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>512 MiB</translation>
     </message>
 </context>
 <context>
@@ -957,17 +958,17 @@
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
         <source>An unknown error has occurred</source>
-        <translation type="unfinished">Um erro desconhecido aconteceu</translation>
+        <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
         <source>Title</source>
-        <translation type="unfinished">Título</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
 </context>
 <context>
@@ -975,7 +976,7 @@
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="157"/>
         <source>Overwrite confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sobrescrever confirmação</translation>
     </message>
 </context>
 <context>
@@ -983,12 +984,12 @@
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="49"/>
         <source>An unknown error occurred while exporting VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Um erro desconhecido aconteceu enquanto exportando o VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="86"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
     </message>
 </context>
 <context>
@@ -996,22 +997,22 @@
     <message>
         <location filename="../UI/VmcListWidget.cpp" line="301"/>
         <source>Do not ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>Não pedir de novo</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.cpp" line="302"/>
         <source>Delete VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Deletar VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.cpp" line="304"/>
         <source>Are you sure you want to delete this VMC?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tem certeza que quer apagar este VMC?</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.cpp" line="369"/>
         <source>Select directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecione a pasta</translation>
     </message>
 </context>
 <context>
@@ -1019,7 +1020,7 @@
     <message>
         <location filename="../UI/VmcPropertiesDialog.cpp" line="81"/>
         <source>Unable to read VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossível ler o VMC</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1059,7 @@
     <message>
         <location filename="../VmcCollection.cpp" line="94"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Já existe um VMC com o nome &quot;%1&quot; </translation>
     </message>
 </context>
 <context>
@@ -1157,77 +1158,77 @@
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="60"/>
         <source>Unable to create directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível criar a pasta &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="83"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível abrir o VMC  &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="67"/>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation>bytes</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="70"/>
         <source>KiB</source>
-        <translation type="unfinished"></translation>
+        <translation>KiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="73"/>
         <source>MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>MiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="76"/>
         <source>GiB</source>
-        <translation type="unfinished"></translation>
+        <translation>GiB</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="202"/>
         <source>&lt;directory&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;pasta&gt;</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="215"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
-        <translation type="unfinished"></translation>
+        <translation>O tamanho do VMC deve estar entre %1 MiB e %2 MiB</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="513"/>
         <source>The VMC is corrupted or not formatted correctly</source>
-        <translation type="unfinished"></translation>
+        <translation>O VMC está corrompido ou não foi formatado corretamente</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="576"/>
         <source>Path not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Local não encontrado</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="662"/>
         <source>File not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo não encontrado</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="664"/>
         <source>&quot;%1&quot; is not a file</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>
     <message>
         <location filename="../File.cpp" line="39"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation type="unfinished">Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
+        <translation>Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../File.cpp" line="56"/>
         <source>The following characters are not allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>Os seguintes caracteres não são permitidos</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.cpp" line="142"/>
         <source>%1 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 MiB</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1249,7 @@
         <location filename="../UI/SettingsDialog.ui" line="33"/>
         <location filename="../../../build/ui_SettingsDialog.h" line="188"/>
         <source>Open the recently used library at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir a pasta do OPL usada recentemente quando iniciar</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="47"/>
@@ -1278,7 +1279,7 @@
         <location filename="../UI/SettingsDialog.ui" line="68"/>
         <location filename="../../../build/ui_SettingsDialog.h" line="193"/>
         <source>Confirm the removal of a VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirme a remoção de um VMC</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="89"/>
@@ -1314,13 +1315,13 @@
         <location filename="../UI/SettingsDialog.ui" line="139"/>
         <location filename="../../../build/ui_SettingsDialog.h" line="201"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparência</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="145"/>
         <location filename="../../../build/ui_SettingsDialog.h" line="200"/>
         <source>List Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho dos ícones na listagem</translation>
     </message>
 </context>
 <context>
@@ -1329,25 +1330,25 @@
         <location filename="../UI/VmcCreateDialog.ui" line="14"/>
         <location filename="../../../build/ui_VmcCreateDialog.h" line="138"/>
         <source>Create VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="28"/>
         <location filename="../../../build/ui_VmcCreateDialog.h" line="139"/>
         <source>Title</source>
-        <translation type="unfinished">Título</translation>
+        <translation>Título do VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="51"/>
         <location filename="../../../build/ui_VmcCreateDialog.h" line="140"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="120"/>
         <location filename="../../../build/ui_VmcCreateDialog.h" line="141"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Espera um pouquinho...</translation>
     </message>
 </context>
 <context>
@@ -1358,13 +1359,13 @@
         <location filename="../../../build/ui_VmcDetailsActivity.h" line="168"/>
         <location filename="../../../build/ui_VmcDetailsActivity.h" line="173"/>
         <source>Back</source>
-        <translation type="unfinished">Voltar</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="76"/>
         <location filename="../../../build/ui_VmcDetailsActivity.h" line="170"/>
         <source>Rename...</source>
-        <translation type="unfinished">Renomear...</translation>
+        <translation>Renomear...</translation>
     </message>
 </context>
 <context>
@@ -1373,55 +1374,55 @@
         <location filename="../UI/VmcListWidget.ui" line="153"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="206"/>
         <source>Filter</source>
-        <translation type="unfinished">Filtro</translation>
+        <translation>Filtro</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="197"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="192"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="200"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="194"/>
         <source>Create VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="212"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="196"/>
         <source>Delete</source>
-        <translation type="unfinished">Apagar</translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="215"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="198"/>
         <source>Delete VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Deletar VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="227"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="200"/>
         <source>Rename</source>
-        <translation type="unfinished">Renomear</translation>
+        <translation>Renomear</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="230"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="202"/>
         <source>Rename VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Renomear VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="242"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="204"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriedades</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="254"/>
         <location filename="../../../build/ui_VmcListWidget.h" line="205"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar</translation>
     </message>
 </context>
 <context>
@@ -1430,127 +1431,127 @@
         <location filename="../UI/VmcPropertiesDialog.ui" line="14"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="384"/>
         <source>VMC Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriedades do VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="38"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="385"/>
         <source>Magic</source>
-        <translation type="unfinished"></translation>
+        <translation>Número Magico</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="58"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="386"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="78"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="387"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho da página da memoria</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="98"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="388"/>
         <source>Cluster Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho do cluster</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="118"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="389"/>
         <source>Pages per Cluster</source>
-        <translation type="unfinished"></translation>
+        <translation>Páginas por cluster</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="138"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="390"/>
         <source>Pages per Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Páginas por bloco</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="158"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="391"/>
         <source>Clusters per Card</source>
-        <translation type="unfinished"></translation>
+        <translation>Clusters no memory card</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="178"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="392"/>
         <source>Alloc Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset de alocação</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="198"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="393"/>
         <source>Alloc End</source>
-        <translation type="unfinished"></translation>
+        <translation>Final da alocação</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="218"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="394"/>
         <source>Root Directory Cluster</source>
-        <translation type="unfinished"></translation>
+        <translation>Cluster do diretório raiz</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="238"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="395"/>
         <source>Backup Block #1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloco de backup #1</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="258"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="396"/>
         <source>Backup Block #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloco de backup #2</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="278"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="397"/>
         <source>Card Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo do cartão de memoria</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="298"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="398"/>
         <source>Card Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flags no cartão de memoria</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="318"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="399"/>
         <source>FAT Entries per Cluster</source>
-        <translation type="unfinished"></translation>
+        <translation>Entradas FAT por cluster</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="338"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="400"/>
         <source>Clusters per Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Clusters por bloco</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="358"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="401"/>
         <source>Card Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato do cartão de memoria</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="378"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="402"/>
         <source>Max Allocatable Clusters</source>
-        <translation type="unfinished"></translation>
+        <translation>Número máximo de clusters alocáveis</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="398"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="403"/>
         <source>Bad Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocos defeituosos</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="421"/>
         <location filename="../../../build/ui_VmcPropertiesDialog.h" line="404"/>
         <source>IFC List</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista IFC</translation>
     </message>
 </context>
 <context>
@@ -1559,7 +1560,7 @@
         <location filename="../UI/VmcRenameDialog.ui" line="14"/>
         <location filename="../../../build/ui_VmcRenameDialog.h" line="70"/>
         <source>VMC Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do VMC</translation>
     </message>
 </context>
 </TS>

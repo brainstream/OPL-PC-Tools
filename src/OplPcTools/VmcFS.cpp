@@ -260,8 +260,8 @@ void VmcFormatter::initSuperblock()
     mp_sb->cardform = 1;
     mp_sb->rootdir_cluster = mp_sb->rootdir_cluster2 = 0;
     mp_sb->unknown5 = -1;
-    std::strcpy(mp_sb->magic, g_vmc_magic);
-    std::strcpy(mp_sb->version, g_vmc_version);
+    std::strncpy(mp_sb->magic, g_vmc_magic, sizeof(mp_sb->magic));
+    std::strncpy(mp_sb->version, g_vmc_version, sizeof(mp_sb->version));
     std::memset(mp_sb->bad_block_list, -1, sizeof(VmcSuperblock::bad_block_list));
     const uint32_t available_cluster_count = mp_sb->clusters_per_card - mp_sb->clusters_per_block * 3; // superblock and 2 backups
     const uint32_t fat_list_count = static_cast<uint32_t>(std::ceil(

@@ -94,12 +94,18 @@ const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
             throw Exception(tr("VMC with name \"%1\" already exists").arg(_title));
     }
     validateFilename(_title);
+    ensureDirectoryExists();
     QString vmc_filename = makeFilename(_title);
     VmcFS::create(vmc_filename, _size_mib);
     Vmc * vmc = new Vmc(vmc_filename, _title, _size_mib);
     mp_vmcs->append(vmc);
     emit vmcAdded(vmc->uuid());
     return vmc;
+}
+
+void VmcCollection::ensureDirectoryExists()
+{
+    m_directory.mkpath(".");
 }
 
 void VmcCollection::renameVmc(const Uuid & _uuid, const QString & _title)

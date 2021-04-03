@@ -49,6 +49,7 @@ signals:
     void vmcDeleted(const Uuid & _uuid);
 
 private:
+    void ensureDirectoryExists();
     QString makeFilename(const QString & _vmc_title) const;
     Vmc * findVmc(const Uuid & _uuid) const;
 

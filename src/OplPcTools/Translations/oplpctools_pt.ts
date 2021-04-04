@@ -1049,7 +1049,7 @@
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="234"/>
+        <location filename="../UlConfigGameStorage.cpp" line="236"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Incapaz de localizar o jogo &quot;%1&quot; no arquivo de configuração</translation>
     </message>
@@ -1110,23 +1110,23 @@
         <translation>%1 está corrompido</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="185"/>
+        <location filename="../UlConfigGameStorage.cpp" line="187"/>
         <source>Config record was not found</source>
         <translation>A configuração salva não foi encontrada</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="192"/>
-        <location filename="../UlConfigGameStorage.cpp" line="205"/>
+        <location filename="../UlConfigGameStorage.cpp" line="194"/>
+        <location filename="../UlConfigGameStorage.cpp" line="207"/>
         <source>An error occurred while writing data to file</source>
         <translation>Um erro aconteceu enquanto escrevia dados no arquivo</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="218"/>
+        <location filename="../UlConfigGameStorage.cpp" line="220"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>O tamanho maximo do nome é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="249"/>
+        <location filename="../UlConfigGameStorage.cpp" line="251"/>
         <source>Unable to backup config file</source>
         <translation>Incapaz de fazer backup do arquivo de configuração</translation>
     </message>

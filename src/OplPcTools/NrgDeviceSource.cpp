@@ -97,12 +97,12 @@ bool NrgDeviceSource::NrgImage::open()
         return false;
     for(;;)
     {
-        Chunk header;
+        Chunk header = { };
         if(!readChunkHeader(offset, &header))
             return false;
-        if(std::strcmp("END!", header.id) == 0)
+        if(std::strncmp("END!", header.id, sizeof(header.id)) == 0)
             break;
-        if(std::strcmp("DAOX", header.id) == 0)
+        if(std::strncmp("DAOX", header.id, sizeof(header.id)) == 0)
         {
             m_track_location = getTrackLocation(offset);
             return true;
@@ -119,7 +119,7 @@ quint64 NrgDeviceSource::NrgImage::readFirstChunkOffset()
     Ner5 ner5;
     if(m_file.read(reinterpret_cast<char *>(&ner5), sizeof(Ner5)) != sizeof(Ner5))
         return INVALID_OFFSET;
-    if(std::strcmp("NER5", ner5.id) != 0)
+    if(std::strncmp("NER5", ner5.id, sizeof(ner5.id)) != 0)
         return INVALID_OFFSET;
     return ner5.offset_of_first_chunk.toIntLE();
 }

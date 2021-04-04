@@ -30,7 +30,7 @@ void openFileToDirectWrite(QFile & _file)
 #ifdef __linux
     int oflags = O_DIRECT | O_WRONLY | O_CREAT;
     const char * filename = _file.fileName().toLocal8Bit();
-    int fd = open(filename, oflags);
+    int fd = open(filename, oflags, 0664);
     bool result = fd >= 0 && _file.open(fd, QIODevice::WriteOnly, QFile::AutoCloseHandle);
 #else
     bool result = _file.open(QIODevice::WriteOnly);

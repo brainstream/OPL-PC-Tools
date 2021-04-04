@@ -60,42 +60,44 @@ bool UlConfigGameInstaller::performInstallation()
     quint8 part_count = 0;
     for(bool unexpected_finish = false; !unexpected_finish && processed_bytes < iso_size; ++part_count)
     {
-        QString part_filename = UlConfigGameStorage::makePartFilename(mp_game->id(), mp_game->title(), part_count);
-        QFile part(dest_dir.absoluteFilePath(part_filename));
-        if(part.exists())
+        QString part_filename = dest_dir.absoluteFilePath(
+            UlConfigGameStorage::makePartFilename(mp_game->id(), mp_game->title(), part_count));
+        if(QFile::exists(part_filename))
         {
             rollback();
-            throw IOException(tr("File already exists: \"%1\"").arg(part.fileName()));
+            throw IOException(tr("File already exists: \"%1\"").arg(part_filename));
         }
+        QSharedPointer<QFile> part;
         try
         {
-            openFileToDirectWrite(part);
+            part = openFileToSyncWrite(part_filename);
         }
         catch(...)
         {
             rollback();
             throw;
         }
-        m_written_parts.append(part.fileName());
+        m_written_parts.append(part->fileName());
         for(quint64 total_read_bytes = 0; total_read_bytes < part_size;)
         {
             qint64 read_bytes = mr_device.read(bytes);
             if(read_bytes < 0)
             {
-                part.close();
+                part->close();
                 rollback();
                 throw IOException(tr("An error occurred during reading the source medium"));
             }
             else if(read_bytes > 0)
             {
-                if(part.write(bytes.constData(), read_bytes) != read_bytes)
+                quint64 written_bytes = part->write(bytes.constData(), read_bytes);
+                if(written_bytes != read_bytes)
                 {
-                    part.close();
+                    part->close();
                     rollback();
-                    throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(part.fileName()));
+                    throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(part->fileName()));
                 }
                 if(++write_operation % 5 == 0)
-                    part.flush();
+                    part->flush();
                 total_read_bytes += read_bytes;
                 processed_bytes += read_bytes;
             }

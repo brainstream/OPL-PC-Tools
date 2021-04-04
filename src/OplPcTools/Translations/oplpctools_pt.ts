@@ -592,17 +592,17 @@
         <translation>Incapaz de abrir o dispositivo para leitura: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="103"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="102"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>O arquivo já existe: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="114"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="113"/>
         <source>An error occurred during reading the source medium</source>
         <translation>Um erro ocorreu durante a leitura da fonte</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="122"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="121"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
@@ -1036,12 +1036,12 @@
         <translation>O arquivo já existe: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="87"/>
+        <location filename="../UlConfigGameInstaller.cpp" line="88"/>
         <source>An error occurred during reading the source medium</source>
         <translation>Um erro ocorreu durante a leitura da fonte</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameInstaller.cpp" line="95"/>
+        <location filename="../UlConfigGameInstaller.cpp" line="97"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
@@ -1146,12 +1146,12 @@
         <translation>&lt;Sem título&gt;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="30"/>
+        <location filename="../File.h" line="31"/>
         <source>Unable to open file &quot;%1&quot;</source>
         <translation>Não foi possível abrir o arquivo &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="38"/>
+        <location filename="../File.h" line="39"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
@@ -1216,12 +1216,12 @@
         <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="39"/>
+        <location filename="../File.cpp" line="65"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="56"/>
+        <location filename="../File.cpp" line="83"/>
         <source>The following characters are not allowed</source>
         <translation>Os seguintes caracteres não são permitidos</translation>
     </message>

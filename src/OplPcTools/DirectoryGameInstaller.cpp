@@ -98,10 +98,9 @@ bool DirectoryGameInstaller::copyDeviceTo(const QString & _dest)
 {
     const ssize_t read_size = 4194304;
     QByteArray bytes(read_size, Qt::Initialization::Uninitialized);
-    QFile dest(_dest);
-    if(dest.exists())
-        throw IOException(tr("File already exists: \"%1\"").arg(dest.fileName()));
-    openFileToDirectWrite(dest);
+    if(QFile::exists(_dest))
+        throw IOException(tr("File already exists: \"%1\"").arg(_dest));
+    QSharedPointer<QFile> dest = openFileToSyncWrite(_dest);
     const quint64 iso_size = mr_device.size();
     mr_device.seek(0);
     for(quint64 total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)
@@ -109,20 +108,20 @@ bool DirectoryGameInstaller::copyDeviceTo(const QString & _dest)
         qint64 read_bytes = mr_device.read(bytes);
         if(read_bytes < 0)
         {
-            dest.close();
+            dest->close();
             rollback(_dest);
             throw IOException(tr("An error occurred during reading the source medium"));
         }
         else if(read_bytes > 0)
         {
-            if(dest.write(bytes.constData(), read_bytes) != read_bytes)
+            if(dest->write(bytes.constData(), read_bytes) != read_bytes)
             {
-                dest.close();
+                dest->close();
                 rollback(_dest);
-                throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(dest.fileName()));
+                throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(dest->fileName()));
             }
             if(++write_operation % 5 == 0)
-                dest.flush();
+                dest->flush();
             total_read_bytes += read_bytes;
             emit progress(iso_size, total_read_bytes);
         }

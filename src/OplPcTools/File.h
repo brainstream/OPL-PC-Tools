@@ -20,6 +20,7 @@
 #define __OPLPCTOOLS_FILE__
 
 #include <QFile>
+#include <QSharedPointer>
 #include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
@@ -30,7 +31,7 @@ inline void openFile(QFile & _file, QIODevice::OpenMode _flags)
         throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
 }
 
-void openFileToDirectWrite(QFile & _file);
+QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename);
 
 inline void renameFile(const QString & _old_filename, const QString & _new_filename)
 {

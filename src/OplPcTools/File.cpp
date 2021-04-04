@@ -23,20 +23,47 @@
 #include <OplPcTools/FilenameValidator.h>
 #include <OplPcTools/File.h>
 
+namespace {
+
+#ifdef __linux
+class SynchronouslyWritableFile : public QFile
+{
+public:
+    explicit SynchronouslyWritableFile(const QString & _filename) :
+        QFile(_filename)
+    {
+        m_filename = QFile::fileName();
+    }
+
+    QString fileName() const override
+    {
+        return m_filename;
+    }
+
+private:
+    QString m_filename;
+};
+#else
+typedef QFile SynchronouslyWritableFile;
+#endif
+
+} // namespace {
+
 namespace OplPcTools {
 
-void openFileToDirectWrite(QFile & _file)
+QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename)
 {
+    QSharedPointer<QFile> file = QSharedPointer<QFile>(new SynchronouslyWritableFile(_filename));
+    QIODevice::OpenMode mode = QIODevice::WriteOnly | QIODevice::Truncate;
 #ifdef __linux
-    int oflags = O_DIRECT | O_WRONLY | O_CREAT;
-    const char * filename = _file.fileName().toLocal8Bit();
-    int fd = open(filename, oflags, 0664);
-    bool result = fd >= 0 && _file.open(fd, QIODevice::WriteOnly, QFile::AutoCloseHandle);
+    int fd = open(_filename.toLocal8Bit(), O_SYNC | O_RDWR | O_CREAT, 0664);
+    bool result = fd >= 0 && file->open(fd, mode, QFile::AutoCloseHandle);
 #else
-    bool result = _file.open(QIODevice::WriteOnly);
+    bool result = file->open(mode);
 #endif
     if(!result)
-        throw IOException(QObject::tr("Unable to open file to write: \"%1\"").arg(_file.fileName()));
+        throw IOException(QObject::tr("Unable to open file to write: \"%1\"").arg(_filename));
+    return file;
 }
 
 bool isFilenameValid(const QString & _filename)

@@ -54,7 +54,7 @@ namespace OplPcTools {
 QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename)
 {
     QSharedPointer<QFile> file = QSharedPointer<QFile>(new SynchronouslyWritableFile(_filename));
-    QIODevice::OpenMode mode = QIODevice::WriteOnly | QIODevice::Truncate;
+    QIODevice::OpenMode mode = QIODevice::WriteOnly;
 #ifdef __linux
     int fd = open(_filename.toLocal8Bit(), O_SYNC | O_RDWR | O_CREAT, 0664);
     bool result = fd >= 0 && file->open(fd, mode, QFile::AutoCloseHandle);

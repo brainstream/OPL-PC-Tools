@@ -220,6 +220,7 @@ void GameConfiguration::save(const GameConfiguration & _config, const QString & 
 {
     QFile src_file(_filename);
     QFile tmp_file(_filename + ".tmp");
+    QFileInfo(tmp_file).absoluteDir().mkpath(".");
     src_file.open(QFile::ReadOnly | QFile::Text);
     openFile(tmp_file, QFile::WriteOnly | QFile::Truncate | QFile::Text);
     QSet<QString> written_keys;

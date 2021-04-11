@@ -151,7 +151,7 @@ enum FSEntryMode
 struct FATEntry
 {
     uint32_t cluster: 24;
-    uint8_t flag: 8;
+    uint32_t flag: 8;
 } __attribute__((packed));
 
 

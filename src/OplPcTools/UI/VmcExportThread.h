@@ -25,7 +25,8 @@
 #include <OplPcTools/Vmc.h>
 #include <OplPcTools/VmcFS.h>
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 
 class VmcExportThreadWorker : public QObject
@@ -78,6 +79,7 @@ private:
 };
 
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_VMCEXPORTTHREAD__

@@ -30,7 +30,9 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
     m_is_in_progress(false)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))
     setWindowFlag(Qt::WindowCloseButtonHint, false);
+#endif
     setupUi(this);
     mp_edit_title->setValidator(new FilenameValidator(this));
     mp_combobox_size->addItem(tr("8 MiB"), 8);

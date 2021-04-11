@@ -25,7 +25,9 @@
 #include <OplPcTools/UI/Intent.h>
 #include "ui_VmcDetailsActivity.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
+
 
 class VmcFileSystemViewModel;
 
@@ -58,6 +60,8 @@ private:
     VmcFileSystemViewModel * mp_model;
 };
 
-} // namespace OplPcTools::UI
+
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__

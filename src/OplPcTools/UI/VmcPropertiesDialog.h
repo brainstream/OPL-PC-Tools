@@ -22,7 +22,9 @@
 #include <OplPcTools/Vmc.h>
 #include "ui_VmcPropertiesDialog.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
+
 
 class VmcPropertiesDialog : public QDialog, private Ui::VmcPropertiesDialog
 {
@@ -32,6 +34,8 @@ public:
     explicit VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent = nullptr);
 };
 
-} // namespace OplPcTools::UI
+
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_VMCPROPERTIESDIALOG__

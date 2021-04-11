@@ -23,7 +23,8 @@
 #include <OplPcTools/UI/BusyDialog.h>
 #include <OplPcTools/UI/LambdaThread.h>
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class BusySmartThread : public QObject
 {
@@ -52,6 +53,7 @@ private:
     QTimer * mp_timer;
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __BUSYSMARTTHREAD_LIBRARY__

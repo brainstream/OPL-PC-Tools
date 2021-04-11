@@ -25,7 +25,8 @@
 #include <OplPcTools/VmcCollection.h>
 #include "ui_GameConfigWidget.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class GameConfigWidget : public QWidget, private Ui::GameConfigWidget
 {
@@ -68,6 +69,7 @@ private:
 
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAMECONFIGWIDGET__

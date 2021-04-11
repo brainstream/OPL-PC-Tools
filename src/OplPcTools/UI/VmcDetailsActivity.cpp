@@ -134,7 +134,7 @@ void VmcFileSystemViewModel::setItems(const QList<VmcEntryInfo> & _items)
     beginResetModel();
     m_items = _items;
     m_item_indices.resize(_items.size());
-    for(int i = 0; i < m_item_indices.size(); ++i)
+    for(size_t i = 0; i < m_item_indices.size(); ++i)
         m_item_indices[i] = i;
     unsafeSort();
     endResetModel();
@@ -150,7 +150,7 @@ void VmcFileSystemViewModel::clear()
 
 const VmcEntryInfo * VmcFileSystemViewModel::item(const QModelIndex & _index) const
 {
-    if(_index.isValid() & _index.row() < m_items.size() && _index.row() >= 0)
+    if(_index.isValid() && _index.row() < m_items.size() && _index.row() >= 0)
         return &m_items[m_item_indices[_index.row()]];
     return nullptr;
 }
@@ -163,6 +163,7 @@ QModelIndex VmcFileSystemViewModel::index(int _row, int _column, const QModelInd
 
 QModelIndex VmcFileSystemViewModel::parent(const QModelIndex & _child) const
 {
+    Q_UNUSED(_child)
     return QModelIndex();
 }
 
@@ -175,6 +176,7 @@ int VmcFileSystemViewModel::rowCount(const QModelIndex & _parent) const
 
 int VmcFileSystemViewModel::columnCount(const QModelIndex & _parent) const
 {
+    Q_UNUSED(_parent)
     return column_count;
 }
 

@@ -19,12 +19,14 @@
 #ifndef __OPLPCTOOLS_GAMEARTSWIDGET__
 #define __OPLPCTOOLS_GAMEARTSWIDGET__
 
+#include <functional>
 #include <QWidget>
 #include <QMenu>
 #include <OplPcTools/GameArtManager.h>
 #include "ui_GameArtsWidget.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class GameArtsWidget : public QWidget, private Ui::GameArtsWidget
 {
@@ -48,6 +50,7 @@ private:
     QMenu * mp_item_context_menu;
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAMEARTSWIDGET__

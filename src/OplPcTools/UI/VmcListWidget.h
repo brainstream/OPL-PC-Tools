@@ -24,7 +24,9 @@
 #include <QSortFilterProxyModel>
 #include <OplPcTools/Vmc.h>
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
+
 
 class VmcListWidget: public QWidget, private Ui::VmcListWidget
 {
@@ -55,6 +57,7 @@ private:
     QMenu * mp_context_menu;
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_VMCLISTWIDGET__

@@ -222,7 +222,7 @@ void VmcFormatter::format(const QString & _filename, uint32_t _size_mib)
 
 void VmcFormatter::format()
 {
-    openFile(m_file, QIODevice::WriteOnly | QIODevice::NewOnly);
+    openFile(m_file, QIODevice::WriteOnly | QIODevice::Truncate);
     clearFile();
     initSuperblock();
     writeSuperblock();
@@ -235,7 +235,7 @@ void VmcFormatter::clearFile()
     const size_t buffer_size = 1024 * 1024;
     QScopedArrayPointer<char> buffer(new char[buffer_size]);
     std::memset(buffer.data(), -1, buffer_size);
-    for(int i = 0; i < m_size_mib; ++i)
+    for(uint32_t i = 0; i < m_size_mib; ++i)
     {
         m_file.write(buffer.data(), buffer_size);
     }
@@ -265,7 +265,7 @@ void VmcFormatter::initSuperblock()
     std::memset(mp_sb->bad_block_list, -1, sizeof(VmcSuperblock::bad_block_list));
     const uint32_t available_cluster_count = mp_sb->clusters_per_card - mp_sb->clusters_per_block * 3; // superblock and 2 backups
     const uint32_t fat_list_count = static_cast<uint32_t>(std::ceil(
-        static_cast<double>(available_cluster_count) / (pointers_per_cluster + 1 + 1.0d / pointers_per_cluster)
+        static_cast<double>(available_cluster_count) / (pointers_per_cluster + 1 + double(1.0) / pointers_per_cluster)
     ));
     const uint32_t ifc_list_count = static_cast<uint32_t>(
         std::ceil(static_cast<double>(fat_list_count) / pointers_per_cluster)
@@ -674,7 +674,8 @@ QSharedPointer<VmcFile> VmcFS::Private::openFile(const QString & _path)
 int64_t VmcFS::Private::readFile(VmcFile::Private & _file, char * _buffer, uint32_t _max_size)
 {
     const uint32_t start_cluster_index = _file.position / mp_info->cluster_size;
-    if(_file.position >= _file.size || start_cluster_index >= _file.clusters.size())
+    const uint32_t cluster_count = static_cast<uint32_t>(_file.clusters.size());
+    if(_file.position >= _file.size || start_cluster_index >= cluster_count)
         return -1;
     uint32_t position_in_cluster = _file.position % mp_info->cluster_size;
     uint32_t position_in_file = _file.position;

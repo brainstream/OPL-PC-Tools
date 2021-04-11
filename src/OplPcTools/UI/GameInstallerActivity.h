@@ -26,7 +26,9 @@
 #include <OplPcTools/UI/Intent.h>
 #include "ui_GameInstallerActivity.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
+
 
 class GameInstallerActivity : public Activity, private Ui::GameInstallerActivity
 {
@@ -75,6 +77,8 @@ private:
     bool m_is_canceled;
 };
 
-} // namespace OplPcTools::UI
+
+} //namespace UI
+} // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAMEINSTALLERACTIVITY__

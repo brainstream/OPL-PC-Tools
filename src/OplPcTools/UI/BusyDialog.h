@@ -21,7 +21,8 @@
 
 #include "ui_BusyDialog.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class BusyDialog : public QDialog, private Ui::BusyDialog
 {
@@ -31,6 +32,7 @@ public:
     explicit BusyDialog(QWidget * _parent = nullptr);
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools
 
 #endif // __BUSYDIALOG_LIBRARY__

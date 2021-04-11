@@ -25,9 +25,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 else()
     message(FATAL_ERROR "GNU g++ is required")
 endif()
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    # Static linking for easy debugging
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+    message("Static linking with GCC is enabled")
+endif()
+
 set(OPT_EXE_NAME "oplpctools")
 set(OPT_VERSION_MAJOR  3)
 set(OPT_VERSION_MINOR  0)

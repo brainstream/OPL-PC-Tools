@@ -309,7 +309,7 @@ void VmcListWidget::deleteVmc()
         if(message_box.exec() != QMessageBox::Yes)
             return;
         if(checkbox->isChecked())
-            settings.setConfirmGameDeletion(false);
+            settings.setConfirmVmcDeletion(false);
         mp_tree_vmcs->setCurrentIndex(selected_index);
     }
     try

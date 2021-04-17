@@ -918,37 +918,37 @@
 <context>
     <name>OplPcTools::UI::VmcCreateDialog</name>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="36"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="38"/>
         <source>8 MiB</source>
         <translation>8 MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="37"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
         <source>16 MiB</source>
         <translation>16 MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="38"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
         <source>32 MiB</source>
         <translation>32 MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
         <source>64 MiB</source>
         <translation>64 MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
         <source>128 MiB</source>
         <translation>128 MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
         <source>256 MiB</source>
         <translation>256 MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="44"/>
         <source>512 MiB</source>
         <translation>512 MiB</translation>
     </message>
@@ -956,17 +956,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="273"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="304"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="302"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="304"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
@@ -1186,7 +1186,7 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="202"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="204"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>

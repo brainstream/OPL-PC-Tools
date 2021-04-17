@@ -59,18 +59,21 @@ void VmcCreateDialog::create()
 {
     m_is_in_progress = true;
     setProgressVisibility();
-    LambdaThread * thread = new LambdaThread([this]() {
-        mp_created_vmc = Library::instance().vmcs().createVmc(
-            mp_edit_title->text(), mp_combobox_size->currentData().toUInt());
-        m_is_in_progress = false;
-        accept();
+    QString title = mp_edit_title->text();
+    uint32_t size = mp_combobox_size->currentData().toUInt();
+    LambdaThread * thread = new LambdaThread([this, title, size]() {
+        mp_created_vmc = Library::instance().vmcs().createVmc(title, size);
     }, this);
     connect(thread, &LambdaThread::exception, [this](const QString & message) {
         m_is_in_progress = false;
         setProgressVisibility();
         mp_label_error_message->setText(message);
     });
-    connect(thread, &LambdaThread::finished, thread, &LambdaThread::deleteLater);
+    connect(thread, &LambdaThread::finished, this, &VmcCreateDialog::accept);
+    connect(thread, &LambdaThread::finished, [this, thread]() {
+        thread->deleteLater();
+        m_is_in_progress = false;
+    });
     thread->start();
 }
 

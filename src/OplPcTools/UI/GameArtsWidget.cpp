@@ -184,13 +184,13 @@ void GameArtsWidget::changeGameArt()
     startBusySmartThread([this, item, filename]() {
         QPixmap pixmap = mr_art_manager.setArt(m_game_id, item->type(), filename);
         item->setPixmap(pixmap);
-        mp_list_arts->doItemsLayout();
     });
 }
 
 void GameArtsWidget::startBusySmartThread(std::function<void()> _lambda)
 {
     BusySmartThread * thread = new BusySmartThread(_lambda, this);
+    connect(thread, &BusySmartThread::finished, mp_list_arts, &QListWidget::doItemsLayout);
     connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
     connect(thread, &BusySmartThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);
@@ -221,6 +221,5 @@ void GameArtsWidget::deleteGameArt()
     startBusySmartThread([this, item]() {
         mr_art_manager.deleteArt(m_game_id, item->type());
         item->setPixmap(QPixmap());
-        mp_list_arts->doItemsLayout();
     });
 }

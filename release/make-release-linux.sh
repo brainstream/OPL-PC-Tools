@@ -65,6 +65,7 @@ WORKING_DIR="${CURRENT_DIR}/release-linux-${VERSION}-${ARCH}"
 BUILD_DIR="${WORKING_DIR}/build"
 OUT_DIR="${WORKING_DIR}/${EXE_NAME}"
 OUT_BIN_DIR="${OUT_DIR}/bin"
+OUT_IMAGES_DIR="${OUT_DIR}/images"
 
 pushd ${CURRENT_DIR}
 
@@ -87,10 +88,10 @@ cd "${WORKING_DIR}"
 cp -v "${BUILD_DIR}/${EXE_NAME}" "${OUT_BIN_DIR}"
 cp -v "${BUILD_DIR}"/*.qm "${OUT_BIN_DIR}"
 cp -v "${SRC_DIR}/LICENSE.txt" "${OUT_DIR}"
-cp -vr "${SRC_DIR}/icons" "${OUT_DIR}"
-cp -v "${SRC_DIR}/src/OplPcTools/Resources/images/application.png" "${OUT_DIR}/icons/icon.png"
 cp -v "${ASSETS_DIR}/linux/"* "${OUT_DIR}"
 chmod +x "${OUT_DIR}/${EXE_NAME}.sh"
+mkdir "${OUT_IMAGES_DIR}"
+cp "${SRC_DIR}/src/OplPcTools/Resources/images/application.png" "${OUT_IMAGES_DIR}/icon.png"
 
 echo Copying Qt translations
 for tr in "${OUT_BIN_DIR}"/*.qm; do

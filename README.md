@@ -1,6 +1,6 @@
 # OPL PC Tools
 
-Desktop tools for working with [Open PS2 Loader](https://github.com/ifcaro/Open-PS2-Loader) storages. Written in Qt and running on Linux and MS Window (XP and higher).
+Desktop tools for working with [Open PS2 Loader](https://github.com/ifcaro/Open-PS2-Loader) storages. Written in Qt and can be run on Linux and MS Window (XP and higher).
 
 With OPL PC Tools you can:
 

@@ -175,6 +175,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameArtManager.cpp
     ${OPT_SRC_DIR}/Vmc.h
     ${OPT_SRC_DIR}/VmcCollection.cpp
+    ${OPT_SRC_DIR}/VmcPath.h
     ${OPT_SRC_DIR}/VmcFS.h
     ${OPT_SRC_DIR}/VmcFS.cpp
     ${OPT_SRC_DIR}/GameInstaller.cpp

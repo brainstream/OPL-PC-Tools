@@ -38,7 +38,7 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _destination
     {
         m_action = Action::Skip;
         QSharedPointer<VmcFS> fs = VmcFS::load(_vmc.filepath());
-        exportDirectory(*fs, "/", _destination_dir);
+        exportDirectory(*fs, VmcPath::root(), _destination_dir);
     }
     catch(const Exception & _exception)
     {
@@ -51,7 +51,7 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _destination
     emit finished();
 }
 
-void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory)
+void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const VmcPath & _vmc_dir, const QString & _dest_directory)
 {
     if(m_action == Action::Cancel)
         return;
@@ -61,7 +61,7 @@ void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const QString & _vmc_di
     QList<VmcEntryInfo> entries = _fs.enumerateEntries(_vmc_dir);
     for(const VmcEntryInfo & entry : entries)
     {
-        QString next_vmc_entry = VmcFS::concatPaths(_vmc_dir, entry.name);
+        VmcPath next_vmc_entry = _vmc_dir + entry.name;
         if(entry.is_directory)
         {
             QString next_directory = dir.absoluteFilePath(entry.name);
@@ -76,7 +76,7 @@ void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const QString & _vmc_di
     }
 }
 
-void VmcExportThreadWorker::exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory)
+void VmcExportThreadWorker::exportFile(VmcFS & _fs, const VmcPath & _vmc_file, const QString & _dest_directory)
 {
     QSharedPointer<VmcFile> file = _fs.openFile(_vmc_file);
     if(!file)

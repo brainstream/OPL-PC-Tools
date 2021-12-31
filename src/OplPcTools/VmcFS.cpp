@@ -374,9 +374,9 @@ public:
     void load();
     void create(uint8_t _size_mib);
     const VmcInfo * info() const;
-    QList<VmcEntryInfo> enumerateEntries(const QString & _path);
-    void exportEntry(const QString & _vmc_path, const QString & _dest_path);
-    QSharedPointer<VmcFile> openFile(const QString & _path);
+    QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path);
+    void exportEntry(const VmcPath & _vmc_path, const QString & _dest_path);
+    QSharedPointer<VmcFile> openFile(const VmcPath & _path);
     int64_t readFile(VmcFile::Private & _file, char * _buffer, uint32_t _max_size);
 
 private:
@@ -387,7 +387,7 @@ private:
     void validateSuperblock(const VmcSuperblock & _sb) const;
     void throwNotFormatted() const;
     void readFAT();
-    std::optional<EntryInfo> resolvePath(const QString & _path);
+    std::optional<EntryInfo> resolvePath(const VmcPath & _path);
     EntryInfo getRootEntry();
     inline EntryInfo map(const FSEntry & _fs_entry) const;
     void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback);
@@ -559,7 +559,7 @@ void VmcFS::Private::readFAT()
     m_fat_size = fat_size;
 }
 
-QList<VmcEntryInfo> VmcFS::Private::enumerateEntries(const QString & _path)
+QList<VmcEntryInfo> VmcFS::Private::enumerateEntries(const VmcPath & _path)
 {
     std::optional<EntryInfo> entry = resolvePath(_path);
     QList<VmcEntryInfo> result;
@@ -578,11 +578,10 @@ QList<VmcEntryInfo> VmcFS::Private::enumerateEntries(const QString & _path)
     return result;
 }
 
-std::optional<EntryInfo> VmcFS::Private::resolvePath(const QString & _path)
+std::optional<EntryInfo> VmcFS::Private::resolvePath(const VmcPath & _path)
 {
-    QStringList path_parts = _path.split(VmcFS::path_separator, QString::SkipEmptyParts);
     EntryInfo entry = getRootEntry();
-    for(const QString & path_part : path_parts)
+    for(const QString & path_part : _path.parts())
     {
         bool matched = false;
         enumerateEntries(entry, [&](const EntryInfo & next_entry) -> bool {
@@ -655,7 +654,7 @@ QList<uint32_t> VmcFS::Private::getEntryClusters(const EntryInfo & _entry) const
     return result;
 }
 
-QSharedPointer<VmcFile> VmcFS::Private::openFile(const QString & _path)
+QSharedPointer<VmcFile> VmcFS::Private::openFile(const VmcPath & _path)
 {
     std::optional<EntryInfo> entry = resolvePath(_path);
     if(!entry.has_value())
@@ -736,7 +735,6 @@ int64_t VmcFile::read(char * _buffer, int64_t _max_size)
     return mp_private->fs->readFile(*this->mp_private, _buffer, _max_size);
 }
 
-const char VmcFS::path_separator = '/';
 const uint32_t VmcFS::min_size_mib = 8;
 const uint32_t VmcFS::max_size_mib = 512;
 
@@ -750,17 +748,6 @@ VmcFS::~VmcFS()
 const VmcInfo * VmcFS::info() const
 {
     return mp_private->info();
-}
-
-QString VmcFS::concatPaths(const QString & _base, const QString &  _part)
-{
-    QStringList parts = _base.split(path_separator, QString::SkipEmptyParts);
-    parts.append(_part.split(path_separator, QString::SkipEmptyParts));
-    QString path(path_separator);
-    path.append(parts.join(path_separator));
-    if(_part.endsWith(path_separator))
-        path.append(path_separator);
-    return path;
 }
 
 QSharedPointer<VmcFS> VmcFS::load(const QString & _filepath)
@@ -785,12 +772,12 @@ void VmcFS::create(const QString & _filepath, uint32_t _size_mib)
     VmcFormatter::format(_filepath, _size_mib);
 }
 
-QList<VmcEntryInfo> VmcFS::enumerateEntries(const QString & _path)
+QList<VmcEntryInfo> VmcFS::enumerateEntries(const VmcPath & _path)
 {
     return mp_private->enumerateEntries(_path);
 }
 
-QSharedPointer<VmcFile> VmcFS::openFile(const QString & _path)
+QSharedPointer<VmcFile> VmcFS::openFile(const VmcPath & _path)
 {
     return mp_private->openFile(_path);
 }

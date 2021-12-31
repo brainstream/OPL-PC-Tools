@@ -42,8 +42,8 @@ public:
     void cancel();
 
 private:
-    void exportDirectory(VmcFS & _fs, const QString & _vmc_dir, const QString & _dest_directory);
-    void exportFile(VmcFS & _fs, const QString & _vmc_file, const QString & _dest_directory);
+    void exportDirectory(VmcFS & _fs, const VmcPath & _vmc_dir, const QString & _dest_directory);
+    void exportFile(VmcFS & _fs, const VmcPath & _vmc_file, const QString & _dest_directory);
     Action getAction(const QString & _question);
 
 signals:

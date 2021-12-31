@@ -1206,12 +1206,12 @@
         <translation>Local não encontrado</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="662"/>
+        <location filename="../VmcFS.cpp" line="661"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="664"/>
+        <location filename="../VmcFS.cpp" line="663"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>

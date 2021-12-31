@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QSharedPointer>
+#include <OplPcTools/VmcPath.h>
 #include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
@@ -90,15 +91,13 @@ public:
 public:
     ~VmcFS();
     const VmcInfo * info() const;
-    QList<VmcEntryInfo> enumerateEntries(const QString & _path);
-    QSharedPointer<VmcFile> openFile(const QString & _path);
+    QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path);
+    QSharedPointer<VmcFile> openFile(const VmcPath & _path);
 
     static QSharedPointer<VmcFS> load(const QString & _filepath);
     static void create(const QString & _filepath, uint32_t _size_mib);
-    static QString concatPaths(const QString & _base, const QString &  _part);
 
 public:
-    static const char path_separator;
     static const uint32_t min_size_mib;
     static const uint32_t max_size_mib;
 

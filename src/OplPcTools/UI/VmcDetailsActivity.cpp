@@ -298,7 +298,7 @@ void VmcDetailsActivity::loadVmcFS()
 void VmcDetailsActivity::setupView()
 {
     mp_model = new VmcFileSystemViewModel(this);
-    navigate(QString::fromLatin1(&VmcFS::path_separator, 1));
+    navigate(VmcPath::root());
     mp_tree_fs->setModel(mp_model);
     QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
     header_model->setHorizontalHeaderLabels({ tr("Title"), tr("Size") });
@@ -323,7 +323,7 @@ void VmcDetailsActivity::setIconSize()
     mp_tree_fs->setIconSize(size);
 }
 
-void VmcDetailsActivity::navigate(const QString & _path)
+void VmcDetailsActivity::navigate(const VmcPath & _path)
 {
     hideErrorMessage();
     try
@@ -331,7 +331,7 @@ void VmcDetailsActivity::navigate(const QString & _path)
         QList<VmcEntryInfo> items = m_fs_ptr->enumerateEntries(_path);
         mp_model->setItems(items);
         mp_edit_fs_path->setText(_path);
-        mp_btn_fs_back->setDisabled(_path.isEmpty() || (_path.size() == 1 && _path[0] == VmcFS::path_separator));
+        mp_btn_fs_back->setDisabled(_path.isRoot());
     }
     catch(const Exception &_exception)
     {
@@ -350,21 +350,15 @@ void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
         return;
     if(item->is_directory)
     {
-        QString path = mp_edit_fs_path->text() + item->name + VmcFS::path_separator;
-        navigate(path);
+        navigate(VmcPath(mp_edit_fs_path->text(), item->name));
     }
 }
 
 void VmcDetailsActivity::onFsBackButtonClick()
 {
-    QStringList parts = mp_edit_fs_path->text().split(VmcFS::path_separator, QString::SkipEmptyParts);
-    if(parts.count() == 0)
-        return;
-    parts.removeLast();
-    QString path = QString(VmcFS::path_separator) + parts.join(VmcFS::path_separator);
-    if(parts.count() > 0)
-        path += VmcFS::path_separator;
-    navigate(path);
+    VmcPath path = VmcPath(mp_edit_fs_path->text());
+    if(!path.isRoot())
+        navigate(path.up());
 }
 
 QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)

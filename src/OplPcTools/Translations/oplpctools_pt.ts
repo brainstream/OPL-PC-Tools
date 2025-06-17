@@ -188,7 +188,7 @@
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="299"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="491"/>
-        <source>Disbale</source>
+        <source>Disable</source>
         <translation>Desativado</translation>
     </message>
     <message>

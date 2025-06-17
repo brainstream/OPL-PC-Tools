@@ -18,6 +18,12 @@
 
 #include <functional>
 #include <QFile>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QTemporaryFile>
+#include <QImageReader>
+#include <QUrl>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/GameArtManager.h>
 
@@ -31,10 +37,12 @@ struct GameArtManager::GameArtProperties
 
 GameArtManager::GameArtManager(const QDir & _base_directory, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    m_cached_types(0)
+    m_cached_types(),
+    mp_network_manager(nullptr)
 {
     m_directory_path = _base_directory.absoluteFilePath("ART");
     initArtProperties();
+    mp_network_manager = new QNetworkAccessManager(this);
 }
 
 GameArtManager::~GameArtManager()
@@ -195,4 +203,173 @@ QPixmap GameArtManager::setArt(const QString & _game_id, GameArtType _type, cons
         cacheArt(_game_id, _type, pixmap);
     emit artChanged(_game_id, _type);
     return pixmap;
+}
+
+void GameArtManager::downloadArt(const QString & _game_id, GameArtType _type)
+{
+    const GameArtProperties * props = m_art_props[_type];
+    QString url = QString("https://ia903209.us.archive.org/view_archive.php?archive=/34/items/ps2-opl-cover-art-set/PS2_OPL_ART_kira.7z&file=ART/%1%2.png")
+        .arg(_game_id)
+        .arg(props->suffix);
+    
+    QNetworkRequest request{QUrl(url)};
+    request.setHeader(QNetworkRequest::UserAgentHeader, "OPL PC Tools");
+    
+    QNetworkReply * reply = mp_network_manager->get(request);
+    
+    emit downloadStarted(_game_id, _type);
+    
+    connect(reply, &QNetworkReply::downloadProgress, [this, _game_id, _type](qint64 received, qint64 total) {
+        emit downloadProgress(_game_id, _type, received, total);
+    });
+    
+    connect(reply, &QNetworkReply::finished, [this, reply, _game_id, _type]() {
+        reply->deleteLater();
+        
+        bool success = false;
+        if(reply->error() == QNetworkReply::NoError)
+        {
+            QByteArray data = reply->readAll();
+            if(!data.isEmpty())
+            {
+                // Create temporary file to validate the image
+                QTemporaryFile temp_file;
+                if(temp_file.open())
+                {
+                    temp_file.write(data);
+                    temp_file.flush();
+                    
+                    // Validate that it's a PNG image
+                    QImageReader reader(temp_file.fileName());
+                    if(reader.canRead() && reader.format().toLower() == "png")
+                    {
+                        // Load the image as a pixmap
+                        QPixmap pixmap(temp_file.fileName());
+                        if(!pixmap.isNull())
+                        {
+                            // Scale to appropriate size
+                            const GameArtProperties * props = m_art_props[_type];
+                            if(pixmap.size() != props->size)
+                                pixmap = pixmap.scaled(props->size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                            
+                            // Save to ART directory
+                            QDir dir(m_directory_path);
+                            if(!dir.exists())
+                                dir.mkpath(".");
+                            
+                            QString filename = dir.absoluteFilePath(_game_id + props->suffix + ".png");
+                            if(pixmap.save(filename))
+                            {
+                                if(m_cached_types & _type)
+                                    cacheArt(_game_id, _type, pixmap);
+                                emit artChanged(_game_id, _type);
+                                success = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        emit downloadCompleted(_game_id, _type, success);
+        
+        // Check if this was part of a bulk download
+        if(m_bulk_downloads.contains(_game_id))
+        {
+            QSet<GameArtType> & remaining = m_bulk_downloads[_game_id];
+            remaining.remove(_type);
+            
+            if(success)
+                m_bulk_download_successful[_game_id]++;
+            
+            if(remaining.isEmpty())
+            {
+                // All downloads completed
+                int successful = m_bulk_download_successful[_game_id];
+                int total = m_bulk_download_total[_game_id];
+                emit allDownloadsCompleted(_game_id, successful, total);
+                
+                // Clean up
+                m_bulk_downloads.remove(_game_id);
+                m_bulk_download_successful.remove(_game_id);
+                m_bulk_download_total.remove(_game_id);
+            }
+        }
+    });
+}
+
+void GameArtManager::downloadAllArt(const QString & _game_id, bool _skip_existing)
+{
+    QSet<GameArtType> allArtTypes = {
+        GameArtType::Icon,
+        GameArtType::Front,
+        GameArtType::Back,
+        GameArtType::Spine,
+        GameArtType::Screenshot1,
+        GameArtType::Screenshot2,
+        GameArtType::Background,
+        GameArtType::Logo
+    };
+    
+    QSet<GameArtType> artTypesToDownload;
+    
+    if(_skip_existing)
+    {
+        // Only download missing artwork
+        for(GameArtType artType : allArtTypes)
+        {
+            if(!hasArt(_game_id, artType))
+            {
+                artTypesToDownload.insert(artType);
+            }
+        }
+    }
+    else
+    {
+        // Download all artwork (replace existing)
+        artTypesToDownload = allArtTypes;
+    }
+    
+    if(artTypesToDownload.isEmpty())
+    {
+        // No artwork to download, emit completion immediately
+        emit allDownloadsCompleted(_game_id, 0, 0);
+        return;
+    }
+    
+    // Initialize bulk download tracking
+    m_bulk_downloads[_game_id] = artTypesToDownload;
+    m_bulk_download_successful[_game_id] = 0;
+    m_bulk_download_total[_game_id] = artTypesToDownload.size();
+    
+    // Start downloading selected artwork types
+    for(GameArtType artType : artTypesToDownload)
+    {
+        downloadArt(_game_id, artType);
+    }
+}
+
+bool GameArtManager::isBulkDownloadActive(const QString & _game_id) const
+{
+    return m_bulk_downloads.contains(_game_id);
+}
+
+bool GameArtManager::hasArt(const QString & _game_id, GameArtType _type) const
+{
+    // Check if artwork file exists on disk
+    QDir dir(m_directory_path);
+    if(!dir.exists())
+        return false;
+    
+    static const QStringList exts { ".png", ".jpeg", ".jpg", ".bmp" };
+    const QString sfx = m_art_props[_type]->suffix;
+    
+    for(const QString & ext : exts)
+    {
+        QFile file(dir.absoluteFilePath(_game_id + sfx + ext));
+        if(file.exists())
+            return true;
+    }
+    
+    return false;
 }

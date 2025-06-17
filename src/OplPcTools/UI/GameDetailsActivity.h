@@ -39,6 +39,8 @@ public:
 private:
     void setupShortcuts();
     void renameGame();
+    void downloadAllArtwork();
+    void onAllDownloadsCompleted(const QString & _game_id, int _successful, int _total);
 
 private:
     GameArtManager & mr_art_manager;

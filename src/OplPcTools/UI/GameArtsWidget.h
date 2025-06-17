@@ -42,12 +42,19 @@ private:
     void showItemContextMenu(const QPoint & _point);
     void changeGameArt();
     void deleteGameArt();
+    void downloadGameArt();
+    void onDownloadStarted(const QString & _game_id, GameArtType _type);
+    void onDownloadProgress(const QString & _game_id, GameArtType _type, qint64 _received, qint64 _total);
+    void onDownloadCompleted(const QString & _game_id, GameArtType _type, bool _success);
+    QString getArtTypeName(GameArtType _type) const;
+    bool isBulkDownload(const QString & _game_id) const;
     void startBusySmartThread(std::function<void()> _lambda);
 
 private:
     GameArtManager & mr_art_manager;
     const QString m_game_id;
     QMenu * mp_item_context_menu;
+    GameArtType m_downloading_type;
 };
 
 } // namespace UI

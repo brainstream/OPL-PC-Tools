@@ -71,6 +71,29 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="mp_btn_download_all_art">
+       <property name="minimumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Download All Artwork</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/download</normaloff>:/images/download</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="mp_btn_rename_game">
        <property name="minimumSize">
         <size>
@@ -140,6 +163,7 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>mp_btn_download_all_art</tabstop>
   <tabstop>mp_btn_rename_game</tabstop>
   <tabstop>mp_tabs</tabstop>
   <tabstop>mp_btn_close</tabstop>

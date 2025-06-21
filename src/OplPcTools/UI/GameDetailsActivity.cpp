@@ -1,5 +1,5 @@
 /***********************************************************************************************
- * Copyright © 2017-2021 Sergey Smolyannikov aka brainstream                                   *
+ * Copyright © 2017-2025 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -11,7 +11,7 @@
  * without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  *
  * See the GNU General Public License for more details.                                        *
  *                                                                                             *
- * You should have received a copy of the GNU General Public License along with MailUnit.      *
+ * You should have received a copy of the GNU General Public License along with OPL PC Tools   *
  * If not, see <http://www.gnu.org/licenses/>.                                                 *
  *                                                                                             *
  ***********************************************************************************************/
@@ -69,15 +69,15 @@ GameDetailsActivity::GameDetailsActivity(const Uuid _game_uuid, GameArtManager &
     mp_tabs->setCurrentIndex(0);
     if(mp_game)
     {
-        mp_tab_arts->layout()->addWidget(new GameArtsWidget(mp_game->id(), _art_manager, this));
-        mp_tab_config->layout()->addWidget(new GameConfigWidget(*mp_game, this));
+        GameArtsWidget * game_art_widget = new GameArtsWidget(mp_game->id(), _art_manager, this);
+        mp_tab_arts->layout()->addWidget(game_art_widget);
+        mp_tab_config->layout()->addWidget( new GameConfigWidget(*mp_game, this));
         mp_label_title->setText(mp_game->title());
+        connect(mp_btn_download_all_art, &QPushButton::clicked, game_art_widget, &GameArtsWidget::downloadAllGameArts);
     }
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsActivity::close);
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
-    connect(mp_btn_download_all_art, &QPushButton::clicked, this, &GameDetailsActivity::downloadAllArtwork);
     connect(mp_btn_rename_game, &QPushButton::clicked, this, &GameDetailsActivity::renameGame);
-    connect(&mr_art_manager, &GameArtManager::allDownloadsCompleted, this, &GameDetailsActivity::onAllDownloadsCompleted);
 }
 
 QSharedPointer<Intent> GameDetailsActivity::createIntent(GameArtManager & _art_manager, const Uuid & _game_uuid)
@@ -114,58 +114,4 @@ void GameDetailsActivity::renameGame()
     {
         Application::showErrorMessage();
     }
-}
-
-void GameDetailsActivity::downloadAllArtwork()
-{
-    if(mp_game == nullptr) return;
-    
-    // Show confirmation dialog
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle(tr("Download artwork"));
-    
-    QPushButton *downloadAllBtn = msgBox.addButton(tr("Replace existing"), QMessageBox::ActionRole);
-    QPushButton *downloadMissingBtn = msgBox.addButton(tr("Missing only"), QMessageBox::ActionRole);
-    QPushButton *cancelBtn = msgBox.addButton(QMessageBox::Cancel);
-    
-    msgBox.setDefaultButton(downloadMissingBtn);
-    
-    msgBox.exec();
-    
-    if(msgBox.clickedButton() == downloadAllBtn)
-    {
-        // Download all artwork (replace existing)
-        mr_art_manager.downloadAllArt(mp_game->id(), false);
-    }
-    else if(msgBox.clickedButton() == downloadMissingBtn)
-    {
-        // Download only missing artwork
-        mr_art_manager.downloadAllArt(mp_game->id(), true);
-    }
-    // If cancel was clicked, do nothing
-}
-
-void GameDetailsActivity::onAllDownloadsCompleted(const QString & _game_id, int _successful, int _total)
-{
-    if(mp_game == nullptr || _game_id != mp_game->id()) return;
-    
-    QString message;
-    if(_total == 0)
-    {
-        message = tr("All artwork already exists for this game.");
-    }
-    else if(_successful == _total)
-    {
-        message = tr("Successfully downloaded all %1 artwork images.").arg(_successful);
-    }
-    else if(_successful > 0)
-    {
-        message = tr("Downloaded %1 of %2 artwork images. Some images were not found at archive.org.").arg(_successful).arg(_total);
-    }
-    else
-    {
-        message = tr("No artwork was found for this game at archive.org.");
-    }
-    
-    Application::showMessage(tr("Download Complete"), message);
 }

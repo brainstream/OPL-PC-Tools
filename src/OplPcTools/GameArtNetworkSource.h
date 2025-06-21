@@ -16,39 +16,69 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
-#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#pragma once
 
-#include <OplPcTools/GameInstaller.h>
+#include <OplPcTools/GameArt.h>
+#include <OplPcTools/GameArtSource.h>
+#include <QNetworkReply>
+#include <QObject>
 
 namespace OplPcTools {
 
-class UlConfigGameInstaller : public GameInstaller
+struct GameArtNetworkTask
+{
+    quint32 task_id;
+    QString game_id;
+    GameArtType art_type;
+    GameArtProperties art_properties;
+};
+
+class GameArtNetworkSource : public QObject, public GameArtSource
 {
     Q_OBJECT
 
 public:
-    explicit UlConfigGameInstaller(Device & _device,QObject * _parent = nullptr);
-    ~UlConfigGameInstaller() override;
-    inline const Game * installedGame() const override;
+    GameArtNetworkSource(const GameArtNetworkTask & _task, QNetworkReply * _reply, QObject * _parent);
+    const QPixmap & pixmap() const override { return m_pixmap; }
 
-protected:
-    bool performInstallation() override;
+signals:
+    void ready();
+    void error(const QString & _message);
+    void complete();
+
+private slots:
+    void onReplyFinished();
+    void onReplyError(QNetworkReply::NetworkError _error);
 
 private:
-    void rollback();
-    void registerGame();
+    void emitError();
 
 private:
-    QStringList m_written_parts;
-    Game * mp_game;
+    const GameArtNetworkTask m_task;
+    QNetworkReply * mp_reply;
+    QPixmap m_pixmap;
 };
 
-const Game * UlConfigGameInstaller::installedGame() const
+class GameArtDownloader : public QObject
 {
-    return mp_game;
-}
+    Q_OBJECT
+
+public:
+    explicit GameArtDownloader(QObject * _parent);
+    quint32 downloadArts(const QString & _game_id, QList<GameArtType> _types);
+
+signals:
+    void downloadComplete(
+        const OplPcTools::GameArtNetworkTask & _task,
+        const OplPcTools::GameArtNetworkSource & _source);
+    void taskComplete(quint32 _task_id, const QStringList & _errors);
+
+private:
+    QString makeUrl(const QString & _game_id, GameArtType _type) const;
+
+private:
+    quint32 m_next_task_id;
+    QMap<GameArtType, GameArtProperties> m_game_art_props;
+};
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__

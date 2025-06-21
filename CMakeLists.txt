@@ -1,5 +1,5 @@
 ################################################################################################
-# Copyright © 2017-2021 Sergey Smolyannikov aka brainstream                                    #
+# Copyright © 2017-2025 Sergey Smolyannikov aka brainstream                                    #
 #                                                                                              #
 # This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.   #
 #                                                                                              #
@@ -11,7 +11,7 @@
 # without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   #
 # See the GNU General Public License for more details.                                         #
 #                                                                                              #
-# You should have received a copy of the GNU General Public License along with MailUnit.       #
+# You should have received a copy of the GNU General Public License along with OPL PC Tools.   #
 # If not, see <http://www.gnu.org/licenses/>.                                                  #
 #                                                                                              #
 ################################################################################################
@@ -80,6 +80,9 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/GameInstaller.h
     ${OPT_SRC_DIR}/DirectoryGameInstaller.h
     ${OPT_SRC_DIR}/Updater.h
+    ${OPT_SRC_DIR}/GameArtSource.h
+    ${OPT_SRC_DIR}/GameArtFileSource.h
+    ${OPT_SRC_DIR}/GameArtNetworkSource.h
     ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/UlConfigGameInstaller.h
     ${OPT_SRC_DIR}/UI/AboutDialog.h
@@ -184,6 +187,9 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameConfiguration.h
     ${OPT_SRC_DIR}/VideoMode.h
     ${OPT_SRC_DIR}/GameConfiguration.cpp
+    ${OPT_SRC_DIR}//GameArt.h
+    ${OPT_SRC_DIR}//GameArt.cpp
+    ${OPT_SRC_DIR}/GameArtNetworkSource.cpp
     ${OPT_SRC_DIR}/UlConfigGameInstaller.cpp
     ${OPT_SRC_DIR}/UI/Application.cpp
     ${OPT_SRC_DIR}/UI/Intent.h

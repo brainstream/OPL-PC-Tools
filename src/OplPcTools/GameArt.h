@@ -16,39 +16,38 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
-#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#pragma once
 
-#include <OplPcTools/GameInstaller.h>
+#include <QString>
+#include <QSize>
+#include <QMap>
 
 namespace OplPcTools {
 
-class UlConfigGameInstaller : public GameInstaller
+enum class GameArtType
 {
-    Q_OBJECT
-
-public:
-    explicit UlConfigGameInstaller(Device & _device,QObject * _parent = nullptr);
-    ~UlConfigGameInstaller() override;
-    inline const Game * installedGame() const override;
-
-protected:
-    bool performInstallation() override;
-
-private:
-    void rollback();
-    void registerGame();
-
-private:
-    QStringList m_written_parts;
-    Game * mp_game;
+    Icon         = 0x1,
+    Front        = 0x2,
+    Back         = 0x4,
+    Spine        = 0x8,
+    Screenshot1  = 0x10,
+    Screenshot2  = 0x20,
+    Background   = 0x40,
+    Logo         = 0x80
 };
 
-const Game * UlConfigGameInstaller::installedGame() const
+inline uint qHash(GameArtType _game_art_type, uint _seed = 0) noexcept
 {
-    return mp_game;
+    return ::qHash(static_cast<int>(_game_art_type), _seed);
 }
 
-} // namespace OplPcTools
+struct GameArtProperties
+{
+    QString suffix;
+    QString name;
+    QSize size;
+};
 
-#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+QMap<GameArtType, GameArtProperties> makeGameArtProperies();
+
+} // namespace OplPcTools

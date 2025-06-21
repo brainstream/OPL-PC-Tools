@@ -16,39 +16,20 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
-#define __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__
+#pragma once
 
-#include <OplPcTools/GameInstaller.h>
+#include <OplPcTools/GameArtSource.h>
 
 namespace OplPcTools {
 
-class UlConfigGameInstaller : public GameInstaller
+class GameArtFileSource : public GameArtSource
 {
-    Q_OBJECT
-
 public:
-    explicit UlConfigGameInstaller(Device & _device,QObject * _parent = nullptr);
-    ~UlConfigGameInstaller() override;
-    inline const Game * installedGame() const override;
-
-protected:
-    bool performInstallation() override;
+    explicit GameArtFileSource(const QString & _filepath) : m_pixmap(_filepath) { }
+    const QPixmap & pixmap() const override { return m_pixmap; }
 
 private:
-    void rollback();
-    void registerGame();
-
-private:
-    QStringList m_written_parts;
-    Game * mp_game;
+    const QPixmap m_pixmap;
 };
 
-const Game * UlConfigGameInstaller::installedGame() const
-{
-    return mp_game;
-}
-
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ULCONFIGGAMEINSTALLER__

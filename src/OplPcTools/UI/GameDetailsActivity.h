@@ -1,5 +1,5 @@
 /***********************************************************************************************
- * Copyright © 2017-2021 Sergey Smolyannikov aka brainstream                                   *
+ * Copyright © 2017-2025 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -11,7 +11,7 @@
  * without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  *
  * See the GNU General Public License for more details.                                        *
  *                                                                                             *
- * You should have received a copy of the GNU General Public License along with MailUnit.      *
+ * You should have received a copy of the GNU General Public License along with OPL PC Tools   *
  * If not, see <http://www.gnu.org/licenses/>.                                                 *
  *                                                                                             *
  ***********************************************************************************************/
@@ -39,8 +39,6 @@ public:
 private:
     void setupShortcuts();
     void renameGame();
-    void downloadAllArtwork();
-    void onAllDownloadsCompleted(const QString & _game_id, int _successful, int _total);
 
 private:
     GameArtManager & mr_art_manager;

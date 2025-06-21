@@ -1,5 +1,5 @@
 /***********************************************************************************************
- * Copyright © 2017-2021 Sergey Smolyannikov aka brainstream                                   *
+ * Copyright © 2017-2025 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -11,7 +11,7 @@
  * without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  *
  * See the GNU General Public License for more details.                                        *
  *                                                                                             *
- * You should have received a copy of the GNU General Public License along with MailUnit.      *
+ * You should have received a copy of the GNU General Public License along with OPL PC Tools   *
  * If not, see <http://www.gnu.org/licenses/>.                                                 *
  *                                                                                             *
  ***********************************************************************************************/
@@ -23,9 +23,12 @@
 #include <QFileDialog>
 #include <QCheckBox>
 #include <QApplication>
+#include <QPushButton>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/GameArtFileSource.h>
+#include <OplPcTools/GameArtNetworkSource.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameArtsWidget.h>
 #include <OplPcTools/UI/BusySmartThread.h>
@@ -53,6 +56,17 @@ private:
     QPixmap m_pixmap;
     bool m_has_pixmap;
 };
+
+ArtListItem * findListItemOfType(QListWidget & _list, GameArtType _type)
+{
+    for(int i = 0; i < _list.count(); ++i)
+    {
+        ArtListItem * item = static_cast<ArtListItem *>(_list.item(i));
+        if(item && item->type() == _type)
+            return item;
+    }
+    return nullptr;
+}
 
 } // namespace
 
@@ -112,8 +126,7 @@ GameArtsWidget::GameArtsWidget(const QString & _game_id, OplPcTools::GameArtMana
     QWidget(_parent),
     mr_art_manager(_art_manager),
     m_game_id(_game_id),
-    mp_item_context_menu(nullptr),
-    m_downloading_type(GameArtType::Icon)
+    mp_item_context_menu(nullptr)
 {
     setupUi(this);
     setupShortcuts();
@@ -127,10 +140,8 @@ GameArtsWidget::GameArtsWidget(const QString & _game_id, OplPcTools::GameArtMana
     connect(mp_action_change_art, &QAction::triggered, this, &GameArtsWidget::changeGameArt);
     connect(mp_action_download_art, &QAction::triggered, this, &GameArtsWidget::downloadGameArt);
     connect(mp_action_delete_art, &QAction::triggered, this, &GameArtsWidget::deleteGameArt);
-    connect(mp_list_arts, &QListWidget::itemDoubleClicked, [this](QListWidgetItem *){ changeGameArt(); });
-    connect(&mr_art_manager, &GameArtManager::downloadStarted, this, &GameArtsWidget::onDownloadStarted);
-    connect(&mr_art_manager, &GameArtManager::downloadProgress, this, &GameArtsWidget::onDownloadProgress);
-    connect(&mr_art_manager, &GameArtManager::downloadCompleted, this, &GameArtsWidget::onDownloadCompleted);
+    connect(mp_list_arts, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem *){ changeGameArt(); });
+    connect(&mr_art_manager, &GameArtManager::artChanged, this, &GameArtsWidget::onArtChanged);
 }
 
 void GameArtsWidget::setupShortcuts()
@@ -145,14 +156,9 @@ void GameArtsWidget::setupShortcuts()
 
 void GameArtsWidget::initGameArts()
 {
-    addArtListItem(GameArtType::Icon, tr("Icon"));
-    addArtListItem(GameArtType::Front, tr("Front Cover"));
-    addArtListItem(GameArtType::Back, tr("Back Cover"));
-    addArtListItem(GameArtType::Spine, tr("Spine Cover"));
-    addArtListItem(GameArtType::Screenshot1, tr("Screenshot #1"));
-    addArtListItem(GameArtType::Screenshot2, tr("Screenshot #2"));
-    addArtListItem(GameArtType::Background, tr("Background"));
-    addArtListItem(GameArtType::Logo, tr("Logo"));
+    auto properties = makeGameArtProperies();
+    for(auto it = properties.constKeyValueBegin(); it != properties.constKeyValueEnd(); ++it)
+        addArtListItem(it->first, it->second.name);
 }
 
 void GameArtsWidget::addArtListItem(GameArtType _type, const QString & _text)
@@ -166,6 +172,16 @@ void GameArtsWidget::showItemContextMenu(const QPoint & _point)
     if(item == nullptr) return;
     mp_action_delete_art->setEnabled(item->hasPixmap());
     mp_item_context_menu->exec(mp_list_arts->mapToGlobal(_point));
+}
+
+void GameArtsWidget::onArtChanged(const QString & _game_id, GameArtType _type)
+{
+    if(_game_id == m_game_id)
+    {
+        ArtListItem * item = findListItemOfType(*mp_list_arts, _type);
+        item->setPixmap(mr_art_manager.load(_game_id, _type));
+        mp_list_arts->doItemsLayout();
+    }
 }
 
 void GameArtsWidget::changeGameArt()
@@ -189,8 +205,7 @@ void GameArtsWidget::changeGameArt()
         return;
     settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
     startBusySmartThread([this, item, filename]() {
-        QPixmap pixmap = mr_art_manager.setArt(m_game_id, item->type(), filename);
-        item->setPixmap(pixmap);
+        mr_art_manager.setArt(m_game_id, item->type(), GameArtFileSource(filename));
     });
 }
 
@@ -227,131 +242,75 @@ void GameArtsWidget::deleteGameArt()
     }
     startBusySmartThread([this, item]() {
         mr_art_manager.deleteArt(m_game_id, item->type());
-        item->setPixmap(QPixmap());
     });
+}
+
+void GameArtsWidget::downloadAllGameArts()
+{
+    QList<GameArtType> art_types;
+    {
+        QMessageBox question_box(this);
+        question_box.setWindowTitle(tr("Download Pictures"));
+        QPushButton * download_all_btn = question_box.addButton(tr("Replace existing"), QMessageBox::ActionRole);
+        QPushButton * download_missing_btn = question_box.addButton(tr("Missing only"), QMessageBox::ActionRole);
+        question_box.addButton(QMessageBox::Cancel);
+        question_box.setDefaultButton(download_missing_btn);
+        question_box.exec();
+        if(question_box.clickedButton() == download_all_btn)
+        {
+            art_types =
+            {
+                GameArtType::Icon,
+                GameArtType::Front,
+                GameArtType::Back,
+                GameArtType::Spine,
+                GameArtType::Screenshot1,
+                GameArtType::Screenshot2,
+                GameArtType::Background,
+                GameArtType::Logo
+            };
+        }
+        else if(question_box.clickedButton() == download_missing_btn)
+        {
+            for(int i = 0; i < mp_list_arts->count(); ++i)
+            {
+                ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
+                if(item && !item->hasPixmap())
+                    art_types.append(item->type());
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+    downloadGameArts(art_types);
+}
+
+void GameArtsWidget::downloadGameArts(const QList<GameArtType> & _types)
+{
+    GameArtDownloader * downloader = new GameArtDownloader(this);
+    BusyDialog * dialog = new BusyDialog(this);
+    connect(downloader, &GameArtDownloader::taskComplete, this, [=](quint32, const QStringList & __errors) {
+       downloader->deleteLater();
+       dialog->hide();
+       dialog->deleteLater();
+       if(!__errors.isEmpty())
+           Application::showErrorMessage(__errors.join("\n\n"));
+    });
+    connect(downloader, &GameArtDownloader::downloadComplete, this, [this](
+        const OplPcTools::GameArtNetworkTask & __task,
+        const OplPcTools::GameArtNetworkSource & __source
+    ) {
+        mr_art_manager.setArt(m_game_id, __task.art_type, __source);
+    });
+    downloader->downloadArts(m_game_id, _types);
+    dialog->open();
 }
 
 void GameArtsWidget::downloadGameArt()
 {
     ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
-    if(item == nullptr)
-        return;
-    
-    m_downloading_type = item->type();
-    mr_art_manager.downloadArt(m_game_id, item->type());
-}
-
-void GameArtsWidget::onDownloadStarted(const QString & _game_id, GameArtType _type)
-{
-    if(_game_id != m_game_id)
-        return;
-    
-    QString artTypeName = getArtTypeName(_type).toLower();
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    
-    // Find the item and update its tooltip to show download status
-    for(int i = 0; i < mp_list_arts->count(); ++i)
-    {
-        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
-        if(item && item->type() == _type)
-        {
-            item->setToolTip(tr("Downloading %1...").arg(artTypeName));
-            break;
-        }
-    }
-}
-
-void GameArtsWidget::onDownloadProgress(const QString & _game_id, GameArtType _type, qint64 _received, qint64 _total)
-{
-    if(_game_id != m_game_id || _type != m_downloading_type)
-        return;
-    
-    QString artTypeName = getArtTypeName(_type).toLower();
-    QString progressText;
-    
-    if(_total > 0)
-    {
-        int percentage = (int)((_received * 100) / _total);
-        progressText = tr("Downloading %1... %2%").arg(artTypeName).arg(percentage);
-    }
-    else
-    {
-        progressText = tr("Downloading %1...").arg(artTypeName);
-    }
-    
-    // Find the item and update its tooltip
-    for(int i = 0; i < mp_list_arts->count(); ++i)
-    {
-        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
-        if(item && item->type() == _type)
-        {
-            item->setToolTip(progressText);
-            break;
-        }
-    }
-}
-
-void GameArtsWidget::onDownloadCompleted(const QString & _game_id, GameArtType _type, bool _success)
-{
-    if(_game_id != m_game_id)
-        return;
-    
-    QApplication::restoreOverrideCursor();
-    
-    // Clear tooltip
-    for(int i = 0; i < mp_list_arts->count(); ++i)
-    {
-        ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
-        if(item && item->type() == _type)
-        {
-            item->setToolTip("");
-            break;
-        }
-    }
-    
-    if(_success)
-    {
-        // Find the item and refresh its pixmap
-        for(int i = 0; i < mp_list_arts->count(); ++i)
-        {
-            ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
-            if(item && item->type() == _type)
-            {
-                QPixmap pixmap = mr_art_manager.load(m_game_id, _type);
-                item->setPixmap(pixmap);
-                mp_list_arts->doItemsLayout();
-                break;
-            }
-        }
-    }
-    else
-    {
-        // Only show individual error messages if this is NOT a bulk download
-        if(!isBulkDownload(_game_id))
-        {
-            QString artTypeName = getArtTypeName(_type).toLower();
-            Application::showErrorMessage(tr("No %1 available for this game at archive.org").arg(artTypeName));
-        }
-    }
-}
-
-QString GameArtsWidget::getArtTypeName(GameArtType _type) const
-{
-    switch(_type)
-    {
-        case GameArtType::Icon: return tr("icon");
-        case GameArtType::Front: return tr("front cover");
-        case GameArtType::Back: return tr("back cover");
-        case GameArtType::Spine: return tr("spine cover");
-        case GameArtType::Screenshot1: return tr("screenshot #1");
-        case GameArtType::Screenshot2: return tr("screenshot #2");
-        case GameArtType::Background: return tr("background");
-        case GameArtType::Logo: return tr("logo");
-        default: return tr("artwork");
-    }
-}
-
-bool GameArtsWidget::isBulkDownload(const QString & _game_id) const
-{
-    return mr_art_manager.isBulkDownloadActive(_game_id);
+    if(item == nullptr) return;
+    downloadGameArts({ item->type() });
 }

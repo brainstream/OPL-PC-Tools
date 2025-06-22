@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <QVector>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -136,14 +136,15 @@ void ReleaseParser::parse(const QByteArray & _json)
 
 Maybe<Version> ReleaseParser::parseVersionTag(const QString & _tag_name) const
 {
-    QRegExp regex("(\\d+)\\.(\\d+)");
-    if(!regex.exactMatch(_tag_name))
+    static QRegularExpression regex("(\\d+)\\.(\\d+)");
+    QRegularExpressionMatch match = regex.match(_tag_name);
+    if(!match.hasMatch())
         return nullptr;
     bool parsed = false;
-    quint16 major = regex.cap(1).toUShort(&parsed);
+    quint16 major = match.captured(1).toUShort(&parsed);
     if(!parsed)
         return nullptr;
-    quint16 minor = regex.cap(2).toUShort(&parsed);
+    quint16 minor = match.captured(2).toUShort(&parsed);
     if(!parsed)
         return nullptr;
     return Version(major, minor);
@@ -151,17 +152,18 @@ Maybe<Version> ReleaseParser::parseVersionTag(const QString & _tag_name) const
 
 void ReleaseParser::parseAssets(QJsonArray & _jassets, Release & _release)
 {
-    QRegExp name_regex(".*_(.*)_\\d+\\.\\d+_([^\\.]*).*");
+    static QRegularExpression name_regex(".*_(.*)_\\d+\\.\\d+_([^\\.]*).*");
     for(QJsonValueRef jasset_ref : _jassets)
     {
         Asset asset = { };
         QJsonObject jasset = jasset_ref.toObject();
         QString name = jasset["name"].toString();
-        if(!name_regex.exactMatch(name))
+        QRegularExpressionMatch match = name_regex.match(name);
+        if(!match.hasMatch())
             continue;
         asset.url = jasset["browser_download_url"].toString();
-        QString platform = name_regex.cap(1);
-        QString arch = name_regex.cap(2);
+        QString platform = match.captured(1);
+        QString arch = match.captured(2);
         if(platform.compare("linux", Qt::CaseInsensitive) == 0)
             asset.platform = Platform::Linux;
         else if(platform.compare("windows", Qt::CaseInsensitive) == 0)

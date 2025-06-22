@@ -54,8 +54,7 @@
 #include <cmath>
 #include <functional>
 #include <optional>
-#include <QRegExp>
-#include <QScopedPointer>
+#include <QRegularExpression>
 #include <QDateTime>
 #include <QTimeZone>
 #include <OplPcTools/File.h>
@@ -490,10 +489,10 @@ void VmcFS::Private::read(quint64 _offset, char * _buffer, uint32_t _size)
 
 void VmcFS::Private::validateSuperblock(const VmcSuperblock & _sb) const
 {
-    QRegExp version_regex("^1\\.[012]\\.0\\.0$");
+    static QRegularExpression version_regex("^1\\.[012]\\.0\\.0$");
     if(
        std::strncmp(g_vmc_magic, _sb.magic, strlen(g_vmc_magic)) != 0 ||
-       !version_regex.exactMatch(_sb.version) ||
+       !version_regex.match(_sb.version).hasMatch() ||
        _sb.pagesize != 512 ||
        (_sb.cluster_size != 1024 && _sb.cluster_size != 512) ||
        _sb.pages_per_cluster != _sb.cluster_size / _sb.pagesize ||
@@ -549,13 +548,13 @@ void VmcFS::Private::readFAT()
         ++valid_fat_ptr_count;
     }
     uint32_t fat_size= valid_fat_ptr_count * entries_per_cluster;
-    QScopedArrayPointer<FATEntry> fat_tmp(new FATEntry[fat_size]);
+    std::unique_ptr<FATEntry> fat_tmp(new FATEntry[fat_size]);
     for(size_t i = 0; i < valid_fat_ptr_count; ++i)
     {
-        char * address = reinterpret_cast<char *>(fat_tmp.data()) + (mp_info->cluster_size * i);
+        char * address = reinterpret_cast<char *>(fat_tmp.get()) + (mp_info->cluster_size * i);
         readCluster(fat_ptrs[i], true, address);
     }
-    mp_fat = fat_tmp.take();
+    mp_fat = fat_tmp.release();
     m_fat_size = fat_size;
 }
 

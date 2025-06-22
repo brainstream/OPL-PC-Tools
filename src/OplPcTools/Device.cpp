@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QFileInfo>
 #include <OplPcTools/Device.h>
 
@@ -250,11 +250,12 @@ bool Iso9660::parseConfig(DeviceSource & _source, const FileRecord * _file_recor
 
 bool Iso9660::readGameId(const QByteArray & _config)
 {
-    QRegExp regexp("BOOT2\\s*=\\s*cdrom0:\\\\(.*);1", Qt::CaseInsensitive);
+    static QRegularExpression regexp("BOOT2\\s*=\\s*cdrom0:\\\\(.*);1", QRegularExpression::CaseInsensitiveOption);
     QString data_string = QString::fromUtf8(_config);
-    if(regexp.indexIn(data_string) >= 0)
+    QRegularExpressionMatch match = regexp.match(data_string);
+    if(match.hasMatch())
     {
-        m_game_id = regexp.cap(1);
+        m_game_id = match.captured(1);
         return !m_game_id.isEmpty();
     }
     return false;

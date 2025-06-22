@@ -57,7 +57,7 @@ const QString config_source("$ConfigSource");
 
 } // namespace Key
 
-void parse(const QStringRef & _key, const QStringRef & _value, GameConfiguration & _config)
+void parse(const QString & _key, const QString & _value, GameConfiguration & _config)
 {
     if(Key::compatibility.compare(_key) == 0)
     {
@@ -86,13 +86,13 @@ void parse(const QStringRef & _key, const QStringRef & _value, GameConfiguration
     else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
         _config.is_gsm_emulate_field_flipping_enabled = _value.toInt() == 1;
     else if(Key::game_id.compare(_key) == 0)
-        _config.game_id = _value.toString();
+        _config.game_id = _value;
     else if(Key::custom_elf.compare(_key) == 0)
-        _config.custom_elf = _value.toString();
+        _config.custom_elf = _value;
     else if(Key::vmc_0.compare(_key) == 0)
-        _config.vmc0 = _value.toString();
+        _config.vmc0 = _value;
     else if(Key::vmc_1.compare(_key) == 0)
-        _config.vmc1 = _value.toString();
+        _config.vmc1 = _value;
 }
 
 bool write(QFile & _file, const GameConfiguration & _config, const QString & _key)
@@ -161,12 +161,12 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
     return true;
 }
 
-Maybe<QPair<QStringRef, QStringRef>> readKeyValue(const QString & _line)
+Maybe<QPair<QString, QString>> readKeyValue(const QString & _line)
 {
     int eq_index = _line.indexOf('=');
     if(eq_index > 0)
-        return maybe(qMakePair(_line.leftRef(eq_index), _line.rightRef(_line.length() - eq_index - 1).trimmed()));
-    return Maybe<QPair<QStringRef, QStringRef>>();
+        return maybe(qMakePair(_line.left(eq_index), _line.right(_line.length() - eq_index - 1).trimmed()));
+    return Maybe<QPair<QString, QString>>();
 }
 
 } // namespace
@@ -232,7 +232,7 @@ void GameConfiguration::save(const GameConfiguration & _config, const QString & 
         auto kv = readKeyValue(QString::fromLatin1(bytes));
         if(kv.hasValue())
         {
-            const QString key = kv->first.toString();
+            const QString key = kv->first;
             if(write(tmp_file, _config, key))
             {
                 written_keys.insert(key);

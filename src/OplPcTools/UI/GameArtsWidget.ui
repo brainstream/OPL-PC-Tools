@@ -85,6 +85,9 @@
      <normaloff>:/images/download</normaloff>:/images/download</iconset>
    </property>
    <property name="text">
+    <string>Download Picture...</string>
+   </property>
+   <property name="toolTip">
     <string>Download Picture</string>
    </property>
   </action>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -41,11 +41,8 @@
    </item>
    <item>
     <widget class="QProgressBar" name="mp_progress_bar">
-     <property name="maximum">
-      <number>0</number>
-     </property>
-     <property name="value">
-      <number>0</number>
+     <property name="format">
+      <string>%p% (%v of %m downloaded)</string>
      </property>
     </widget>
    </item>

@@ -248,41 +248,42 @@ void GameArtsWidget::deleteGameArt()
 
 void GameArtsWidget::downloadAllGameArts()
 {
-    QList<GameArtType> art_types;
+    QList<GameArtType> art_types =
     {
-        QMessageBox question_box(this);
-        question_box.setWindowTitle(tr("Download Pictures"));
-        QPushButton * download_all_btn = question_box.addButton(tr("Replace existing"), QMessageBox::ActionRole);
-        QPushButton * download_missing_btn = question_box.addButton(tr("Missing only"), QMessageBox::ActionRole);
-        question_box.addButton(QMessageBox::Cancel);
-        question_box.setDefaultButton(download_missing_btn);
-        question_box.exec();
-        if(question_box.clickedButton() == download_all_btn)
+        GameArtType::Icon,
+        GameArtType::Front,
+        GameArtType::Back,
+        GameArtType::Spine,
+        GameArtType::Screenshot1,
+        GameArtType::Screenshot2,
+        GameArtType::Background,
+        GameArtType::Logo
+    };
+    {
+        QList<GameArtType> existent_art_types;
+        for(int i = 0; i < mp_list_arts->count(); ++i)
         {
-            art_types =
-            {
-                GameArtType::Icon,
-                GameArtType::Front,
-                GameArtType::Back,
-                GameArtType::Spine,
-                GameArtType::Screenshot1,
-                GameArtType::Screenshot2,
-                GameArtType::Background,
-                GameArtType::Logo
-            };
+            ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
+            if(item && item->hasPixmap())
+                existent_art_types.append(item->type());
         }
-        else if(question_box.clickedButton() == download_missing_btn)
+        if(!existent_art_types.empty())
         {
-            for(int i = 0; i < mp_list_arts->count(); ++i)
+            QMessageBox::StandardButton replace = QMessageBox::question(
+                this,
+                tr("Download Pictures"),
+                tr("Do you want to replace existing pictures?"),
+                QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                QMessageBox::No);
+            if(replace == QMessageBox::No)
             {
-                ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
-                if(item && !item->hasPixmap())
-                    art_types.append(item->type());
+                foreach(GameArtType existent, existent_art_types)
+                    art_types.removeOne(existent);
             }
-        }
-        else
-        {
-            return;
+            else if(replace != QMessageBox::Yes)
+            {
+                return;
+            }
         }
     }
     downloadGameArts(art_types);
@@ -290,8 +291,11 @@ void GameArtsWidget::downloadAllGameArts()
 
 void GameArtsWidget::downloadGameArts(const QList<GameArtType> & _types)
 {
-    QSharedPointer<Intent> intent = GameArtDownloaderActivity::createIntent(mr_art_manager, m_game_id, _types);
-    Application::pushActivity(*intent);
+    if(!_types.empty())
+    {
+        QSharedPointer<Intent> intent = GameArtDownloaderActivity::createIntent(mr_art_manager, m_game_id, _types);
+        Application::pushActivity(*intent);
+    }
 }
 
 void GameArtsWidget::downloadGameArt()

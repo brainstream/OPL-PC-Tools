@@ -43,14 +43,14 @@
 <context>
     <name>ArtDownloaderActivity</name>
     <message>
-        <location filename="../UI/GameArtDownloaderActivity.ui" line="14"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="67"/>
-        <source>Form</source>
+        <location filename="../UI/GameArtDownloaderActivity.ui" line="45"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="66"/>
+        <source>%p% (%v of %m downloaded)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameArtDownloaderActivity.ui" line="55"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="68"/>
+        <location filename="../UI/GameArtDownloaderActivity.ui" line="52"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="67"/>
         <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -106,10 +106,16 @@
         <translation>Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.ui" line="88"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtsWidget.h" line="79"/>
+        <location filename="../UI/GameArtsWidget.ui" line="91"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtsWidget.h" line="81"/>
         <source>Download Picture</source>
         <translation>Baixar imagem</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.ui" line="88"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtsWidget.h" line="79"/>
+        <source>Download Picture...</source>
+        <translation>Baixar imagem...</translation>
     </message>
 </context>
 <context>
@@ -277,31 +283,31 @@
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="130"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="129"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="85"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="132"/>
-        <source>Download All Artwork</source>
-        <translation>Baixar todas as imagens</translation>
+        <location filename="../UI/GameDetailsActivity.ui" line="84"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="131"/>
+        <source>Download All Pictures...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="108"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="136"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="107"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="135"/>
         <source>Rename...</source>
         <translation>Renomear...</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="131"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="139"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="130"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="138"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="150"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="140"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="149"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameDetailsActivity.h" line="139"/>
         <source>Configuration</source>
         <translation>Configurações</translation>
     </message>
@@ -638,7 +644,7 @@
     <name>OplPcTools::GameArtNetworkSource</name>
     <message>
         <location filename="../GameArtNetworkSource.cpp" line="62"/>
-        <source>Unable to load image: %1%2%3</source>
+        <source>Unable to download picture: %1%2%3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -740,18 +746,13 @@
         <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="254"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="274"/>
         <source>Download Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="255"/>
-        <source>Replace existing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="256"/>
-        <source>Missing only</source>
+        <location filename="../UI/GameArtsWidget.cpp" line="275"/>
+        <source>Do you want to replace existing pictures?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1243,42 +1244,42 @@
     <message>
         <location filename="../GameArt.cpp" line="32"/>
         <source>Icon</source>
-        <translation type="unfinished">Ícone</translation>
+        <translation>Ícone</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="40"/>
         <source>Front Cover</source>
-        <translation type="unfinished">Capa da frente</translation>
+        <translation>Capa da frente</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="48"/>
         <source>Back Cover</source>
-        <translation type="unfinished">Capa de trás</translation>
+        <translation>Capa de trás</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="56"/>
         <source>Spine Cover</source>
-        <translation type="unfinished">Capa do lado</translation>
+        <translation>Capa do lado</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="64"/>
         <source>Screenshot #1</source>
-        <translation type="unfinished">Captura de tela #1</translation>
+        <translation>Captura de tela #1</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="72"/>
         <source>Screenshot #2</source>
-        <translation type="unfinished">Captura de tela #2</translation>
+        <translation>Captura de tela #2</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="80"/>
         <source>Background</source>
-        <translation type="unfinished">Plano de fundo</translation>
+        <translation>Plano de fundo</translation>
     </message>
     <message>
         <location filename="../GameArt.cpp" line="88"/>
         <source>Logo</source>
-        <translation type="unfinished">Logo</translation>
+        <translation>Logo</translation>
     </message>
 </context>
 <context>

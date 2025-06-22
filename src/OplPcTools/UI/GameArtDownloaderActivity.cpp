@@ -66,6 +66,11 @@ GameArtDownloaderActivity::GameArtDownloaderActivity(
     Activity(_parent)
 {
     setupUi(this);
+    if(_art_types.empty())
+    {
+        deleteLater();
+        return;
+    }
     mp_progress_bar->setMinimum(0);
     mp_progress_bar->setMaximum(_art_types.count());
     mp_progress_bar->setValue(0);

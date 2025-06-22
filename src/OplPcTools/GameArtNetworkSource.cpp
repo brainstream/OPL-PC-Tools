@@ -59,7 +59,7 @@ void GameArtNetworkSource::emitError()
 {
     QString additional_message = mp_reply->errorString();
     QString delimiter = additional_message.isEmpty() ? "" : ". ";
-    emit error(tr("Unable to load image: %1%2%3").arg(m_task.art_properties.name, delimiter, additional_message));
+    emit error(tr("Unable to download picture: %1%2%3").arg(m_task.art_properties.name, delimiter, additional_message));
 }
 
 void GameArtNetworkSource::onReplyError(QNetworkReply::NetworkError)

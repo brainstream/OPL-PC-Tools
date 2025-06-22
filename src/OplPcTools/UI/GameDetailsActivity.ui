@@ -61,7 +61,6 @@
        </property>
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -82,7 +81,7 @@
         <enum>Qt::TabFocus</enum>
        </property>
        <property name="toolTip">
-        <string>Download All Artwork</string>
+        <string>Download All Pictures...</string>
        </property>
        <property name="text">
         <string/>

@@ -80,15 +80,21 @@
     <name>GameArtsWidget</name>
     <message>
         <location filename="../UI/GameArtsWidget.ui" line="70"/>
-        <location filename="../../../build/ui_GameArtsWidget.h" line="71"/>
+        <location filename="../../../build/ui_GameArtsWidget.h" line="77"/>
         <source>Change Picture...</source>
         <translation>Mudar imagem...</translation>
     </message>
     <message>
         <location filename="../UI/GameArtsWidget.ui" line="79"/>
-        <location filename="../../../build/ui_GameArtsWidget.h" line="72"/>
+        <location filename="../../../build/ui_GameArtsWidget.h" line="78"/>
         <source>Delete Picture</source>
         <translation>Apagar imagem</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.ui" line="88"/>
+        <location filename="../../../build/ui_GameArtsWidget.h" line="79"/>
+        <source>Download Picture</source>
+        <translation>Baixar imagem</translation>
     </message>
 </context>
 <context>
@@ -182,7 +188,7 @@
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="299"/>
         <location filename="../../../build/ui_GameConfigWidget.h" line="491"/>
-        <source>Disbale</source>
+        <source>Disable</source>
         <translation>Desativado</translation>
     </message>
     <message>
@@ -256,25 +262,31 @@
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="118"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="130"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="85"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="120"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="132"/>
+        <source>Download All Artwork</source>
+        <translation>Baixar todas as imagens</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="108"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="136"/>
         <source>Rename...</source>
         <translation>Renomear...</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="108"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="123"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="131"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="139"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameDetailsActivity.ui" line="127"/>
-        <location filename="../../../build/ui_GameDetailsActivity.h" line="124"/>
+        <location filename="../UI/GameDetailsActivity.ui" line="150"/>
+        <location filename="../../../build/ui_GameDetailsActivity.h" line="140"/>
         <source>Configuration</source>
         <translation>Configurações</translation>
     </message>
@@ -680,69 +692,130 @@
 <context>
     <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="141"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="148"/>
         <source>Icon</source>
         <translation>Ícone</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="142"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="149"/>
         <source>Front Cover</source>
         <translation>Capa da frente</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="143"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="150"/>
         <source>Back Cover</source>
         <translation>Capa de trás</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="144"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="151"/>
         <source>Spine Cover</source>
         <translation>Capa do lado</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="145"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="152"/>
         <source>Screenshot #1</source>
         <translation>Captura de tela #1</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="146"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="153"/>
         <source>Screenshot #2</source>
         <translation>Captura de tela #2</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="147"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="154"/>
         <source>Background</source>
         <translation>Plano de fundo</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="148"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="155"/>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="179"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="186"/>
         <source>Choose a Picture</source>
         <translation>Escolha uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="180"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="187"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="208"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="215"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="209"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="216"/>
         <source>Delete Picture</source>
         <translation>Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="211"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="218"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>Tem certeza que quer apagar esta imagem?</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="258"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="279"/>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="275"/>
+        <source>Downloading %1... %2%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="333"/>
+        <source>No %1 available for this game at archive.org</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="342"/>
+        <source>icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="343"/>
+        <source>front cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="344"/>
+        <source>back cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="345"/>
+        <source>spine cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="346"/>
+        <source>screenshot #1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="347"/>
+        <source>screenshot #2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="348"/>
+        <source>background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="349"/>
+        <source>logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtsWidget.cpp" line="350"/>
+        <source>artwork</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -803,6 +876,49 @@
         <location filename="../UI/GameConfigWidget.cpp" line="469"/>
         <source>Configuration file does not exist</source>
         <translation>Arquivo de configurações não existe</translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::GameDetailsActivity</name>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="125"/>
+        <source>Download artwork</source>
+        <translation>Baixar imagens</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="127"/>
+        <source>Replace existing</source>
+        <translation>Substituir existentes</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="128"/>
+        <source>Missing only</source>
+        <translation>Apenas ausentes</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="155"/>
+        <source>All artwork already exists for this game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="159"/>
+        <source>Successfully downloaded all %1 artwork images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="163"/>
+        <source>Downloaded %1 of %2 artwork images. Some images were not found at archive.org.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="167"/>
+        <source>No artwork was found for this game at archive.org.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.cpp" line="170"/>
+        <source>Download Complete</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1100,7 +1216,7 @@
         <translation>%1 byte(s) restante</translation>
     </message>
     <message>
-        <location filename="../GameArtManager.cpp" line="193"/>
+        <location filename="../GameArtManager.cpp" line="201"/>
         <source>Unable to save file &quot;%1&quot;</source>
         <translation>Incapaz de salvar o arquivo &quot;%1&quot;</translation>
     </message>

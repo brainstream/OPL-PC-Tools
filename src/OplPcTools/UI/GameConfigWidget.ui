@@ -296,7 +296,7 @@
         <item>
          <widget class="QRadioButton" name="mp_radio_disable_gsm">
           <property name="text">
-           <string>Disbale</string>
+           <string>Disable</string>
           </property>
          </widget>
         </item>

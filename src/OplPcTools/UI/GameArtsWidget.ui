@@ -79,6 +79,15 @@
     <string>Delete Picture</string>
    </property>
   </action>
+  <action name="mp_action_download_art">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/download</normaloff>:/images/download</iconset>
+   </property>
+   <property name="text">
+    <string>Download Picture</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>mp_list_arts</tabstop>

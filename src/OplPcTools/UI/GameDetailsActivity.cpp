@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <QShortcut>
+#include <QMessageBox>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
@@ -74,7 +75,9 @@ GameDetailsActivity::GameDetailsActivity(const Uuid _game_uuid, GameArtManager &
     }
     connect(mp_btn_close, &QPushButton::clicked, this, &GameDetailsActivity::close);
     connect(mp_label_title, &ClickableLabel::clicked, this, &GameDetailsActivity::renameGame);
+    connect(mp_btn_download_all_art, &QPushButton::clicked, this, &GameDetailsActivity::downloadAllArtwork);
     connect(mp_btn_rename_game, &QPushButton::clicked, this, &GameDetailsActivity::renameGame);
+    connect(&mr_art_manager, &GameArtManager::allDownloadsCompleted, this, &GameDetailsActivity::onAllDownloadsCompleted);
 }
 
 QSharedPointer<Intent> GameDetailsActivity::createIntent(GameArtManager & _art_manager, const Uuid & _game_uuid)
@@ -111,4 +114,58 @@ void GameDetailsActivity::renameGame()
     {
         Application::showErrorMessage();
     }
+}
+
+void GameDetailsActivity::downloadAllArtwork()
+{
+    if(mp_game == nullptr) return;
+    
+    // Show confirmation dialog
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle(tr("Download artwork"));
+    
+    QPushButton *downloadAllBtn = msgBox.addButton(tr("Replace existing"), QMessageBox::ActionRole);
+    QPushButton *downloadMissingBtn = msgBox.addButton(tr("Missing only"), QMessageBox::ActionRole);
+    QPushButton *cancelBtn = msgBox.addButton(QMessageBox::Cancel);
+    
+    msgBox.setDefaultButton(downloadMissingBtn);
+    
+    msgBox.exec();
+    
+    if(msgBox.clickedButton() == downloadAllBtn)
+    {
+        // Download all artwork (replace existing)
+        mr_art_manager.downloadAllArt(mp_game->id(), false);
+    }
+    else if(msgBox.clickedButton() == downloadMissingBtn)
+    {
+        // Download only missing artwork
+        mr_art_manager.downloadAllArt(mp_game->id(), true);
+    }
+    // If cancel was clicked, do nothing
+}
+
+void GameDetailsActivity::onAllDownloadsCompleted(const QString & _game_id, int _successful, int _total)
+{
+    if(mp_game == nullptr || _game_id != mp_game->id()) return;
+    
+    QString message;
+    if(_total == 0)
+    {
+        message = tr("All artwork already exists for this game.");
+    }
+    else if(_successful == _total)
+    {
+        message = tr("Successfully downloaded all %1 artwork images.").arg(_successful);
+    }
+    else if(_successful > 0)
+    {
+        message = tr("Downloaded %1 of %2 artwork images. Some images were not found at archive.org.").arg(_successful).arg(_total);
+    }
+    else
+    {
+        message = tr("No artwork was found for this game at archive.org.");
+    }
+    
+    Application::showMessage(tr("Download Complete"), message);
 }

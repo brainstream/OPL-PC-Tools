@@ -17,5 +17,6 @@
         <file alias="restore">images/restore.svg</file>
         <file alias="start">images/start.svg</file>
         <file alias="save">images/save.svg</file>
+        <file alias="download">images/download.svg</file>
     </qresource>
 </RCC>

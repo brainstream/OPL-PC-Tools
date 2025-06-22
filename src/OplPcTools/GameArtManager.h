@@ -22,8 +22,11 @@
 #include <QDir>
 #include <QPixmap>
 #include <QMap>
+#include <QSet>
 #include <QSize>
 #include <QObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <OplPcTools/Maybe.h>
 
 namespace OplPcTools {
@@ -57,9 +60,17 @@ public:
     void deleteArt(const QString & _game_id, GameArtType _type);
     void clearArts(const QString & _game_id);
     QPixmap setArt(const QString & _game_id, GameArtType _type, const QString & _filepath);
+    void downloadArt(const QString & _game_id, GameArtType _type);
+    void downloadAllArt(const QString & _game_id, bool _skip_existing = false);
+    bool isBulkDownloadActive(const QString & _game_id) const;
+    bool hasArt(const QString & _game_id, GameArtType _type) const;
 
 signals:
     void artChanged(const QString & _game_id, GameArtType _type);
+    void downloadStarted(const QString & _game_id, GameArtType _type);
+    void downloadProgress(const QString & _game_id, GameArtType _type, qint64 _received, qint64 _total);
+    void downloadCompleted(const QString & _game_id, GameArtType _type, bool _success);
+    void allDownloadsCompleted(const QString & _game_id, int _successful, int _total);
 
 private:
     void initArtProperties();
@@ -72,7 +83,17 @@ private:
     CacheMap m_cache;
     QFlags<GameArtType> m_cached_types;
     QMap<GameArtType, GameArtProperties *> m_art_props;
+    QNetworkAccessManager * mp_network_manager;
+    QMap<QString, QSet<GameArtType>> m_bulk_downloads;
+    QMap<QString, int> m_bulk_download_successful;
+    QMap<QString, int> m_bulk_download_total;
 };
+
+// Hash function for GameArtType to enable QSet usage
+inline uint qHash(GameArtType key, uint seed = 0) noexcept
+{
+    return ::qHash(static_cast<int>(key), seed);
+}
 
 } // namespace OplPcTools
 

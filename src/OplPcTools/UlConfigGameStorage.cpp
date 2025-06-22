@@ -55,7 +55,7 @@ RawConfigRecord::RawConfigRecord(const Game & _game)
     this->pad[4] = 0x08; // To be like USBA
 }
 
-size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _result = nullptr)
+size_t findRecordOffset(QFile & _file, const QString & _id)
 {
     const QByteArray image_qbytes = (g_image_prefix + _id).toLatin1();
     const char * image_bytes = image_qbytes.constData();
@@ -67,11 +67,7 @@ size_t findRecordOffset(QFile & _file, const QString & _id, RawConfigRecord * _r
             break;
         RawConfigRecord * record = reinterpret_cast<RawConfigRecord *>(record_bytes);
         if(strncmp(image_bytes, record->image, image_qbytes.length()) == 0)
-        {
-            if(_result)
-                memcpy(_result, &record, sizeof(RawConfigRecord));
             return offset;
-        }
         offset += sizeof(RawConfigRecord);
     }
     return ~0;

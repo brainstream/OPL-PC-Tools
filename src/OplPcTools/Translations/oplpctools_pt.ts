@@ -852,22 +852,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="358"/>
+        <location filename="../UI/GameListWidget.cpp" line="357"/>
         <source>Directory</source>
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="425"/>
+        <location filename="../UI/GameListWidget.cpp" line="424"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="426"/>
+        <location filename="../UI/GameListWidget.cpp" line="425"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="428"/>
+        <location filename="../UI/GameListWidget.cpp" line="427"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
@@ -1060,7 +1060,7 @@
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="236"/>
+        <location filename="../UlConfigGameStorage.cpp" line="232"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Incapaz de localizar o jogo &quot;%1&quot; no arquivo de configuração</translation>
     </message>
@@ -1116,28 +1116,28 @@
         <translation>Incapaz de salvar o arquivo &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="121"/>
+        <location filename="../UlConfigGameStorage.cpp" line="117"/>
         <source>%1 is corrupted</source>
         <translation>%1 está corrompido</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="187"/>
+        <location filename="../UlConfigGameStorage.cpp" line="183"/>
         <source>Config record was not found</source>
         <translation>A configuração salva não foi encontrada</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="194"/>
-        <location filename="../UlConfigGameStorage.cpp" line="207"/>
+        <location filename="../UlConfigGameStorage.cpp" line="190"/>
+        <location filename="../UlConfigGameStorage.cpp" line="203"/>
         <source>An error occurred while writing data to file</source>
         <translation>Um erro aconteceu enquanto escrevia dados no arquivo</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="220"/>
+        <location filename="../UlConfigGameStorage.cpp" line="216"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>O tamanho maximo do nome é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="251"/>
+        <location filename="../UlConfigGameStorage.cpp" line="247"/>
         <source>Unable to backup config file</source>
         <translation>Incapaz de fazer backup do arquivo de configuração</translation>
     </message>

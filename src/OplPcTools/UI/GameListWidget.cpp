@@ -16,7 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QLinkedList>
 #include <QShortcut>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -101,7 +100,7 @@ void GameListWidget::GameTreeModel::onGameAdded(const Uuid & _uuid)
 }
 
 void GameListWidget::GameTreeModel::onGameAboutToBeDeleted(const Uuid & _uuid)
-{   
+{
     for(int i = m_uuids.size() - 1; i >= 0; --i)
     {
         if(m_uuids[i] == _uuid)
@@ -128,16 +127,16 @@ void GameListWidget::GameTreeModel::updateRecord(const Uuid & _uuid)
 
 void GameListWidget::GameTreeModel::updateRecords(const QString & _game_id)
 {
-    QLinkedList<Uuid> uuids;
+    std::list<Uuid> uuids;
     for(int i = mr_game_collection.count() - 1; i >= 0; --i)
     {
         const Game * game = mr_game_collection[i];
         if(game && game->id() == _game_id)
-            uuids.append(game->uuid());
+            uuids.push_back(game->uuid());
     }
     for(int i = m_uuids.size() - 1; i >= 0; --i)
     {
-        if(uuids.contains(m_uuids[i]))
+        if(std::find(uuids.begin(), uuids.end(), m_uuids[i]) != uuids.end())
             emit dataChanged(createIndex(i, 0), createIndex(i, 0));
     }
 }

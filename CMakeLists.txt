@@ -80,8 +80,6 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/GameInstaller.h
     ${OPT_SRC_DIR}/DirectoryGameInstaller.h
     ${OPT_SRC_DIR}/Updater.h
-    ${OPT_SRC_DIR}/GameArtSource.h
-    ${OPT_SRC_DIR}/GameArtFileSource.h
     ${OPT_SRC_DIR}/GameArtNetworkSource.h
     ${OPT_SRC_DIR}/UI/Application.h
     ${OPT_SRC_DIR}/UlConfigGameInstaller.h
@@ -191,6 +189,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameConfiguration.cpp
     ${OPT_SRC_DIR}//GameArt.h
     ${OPT_SRC_DIR}//GameArt.cpp
+    ${OPT_SRC_DIR}/GameArtSource.h
+    ${OPT_SRC_DIR}/GameArtFileSource.h
     ${OPT_SRC_DIR}/GameArtNetworkSource.cpp
     ${OPT_SRC_DIR}/UlConfigGameInstaller.cpp
     ${OPT_SRC_DIR}/UI/Application.cpp

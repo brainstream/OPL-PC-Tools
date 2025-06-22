@@ -41,6 +41,21 @@
     </message>
 </context>
 <context>
+    <name>ArtDownloaderActivity</name>
+    <message>
+        <location filename="../UI/GameArtDownloaderActivity.ui" line="14"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="67"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameArtDownloaderActivity.ui" line="55"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="68"/>
+        <source>Downloading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BusyDialog</name>
     <message>
         <location filename="../UI/BusyDialog.ui" line="36"/>
@@ -700,42 +715,42 @@
 <context>
     <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="202"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="203"/>
         <source>Choose a Picture</source>
         <translation>Escolha uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="203"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="204"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="230"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="231"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="231"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="232"/>
         <source>Delete Picture</source>
         <translation>Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="233"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="234"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="253"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="254"/>
         <source>Download Pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="254"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="255"/>
         <source>Replace existing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="255"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="256"/>
         <source>Missing only</source>
         <translation type="unfinished"></translation>
     </message>

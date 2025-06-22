@@ -107,6 +107,7 @@ set(OPT_SRC_MOC
     ${OPT_SRC_DIR}/UI/VmcExportThread.h
     ${OPT_SRC_DIR}/UI/BusyDialog.h
     ${OPT_SRC_DIR}/UI/BusySmartThread.h
+    ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.h
 )
 
 set(OPT_SRC_UI
@@ -128,6 +129,7 @@ set(OPT_SRC_UI
     ${OPT_SRC_DIR}/UI/VmcDetailsActivity.ui
     ${OPT_SRC_DIR}/UI/VmcPropertiesDialog.ui
     ${OPT_SRC_DIR}/UI/BusyDialog.ui
+    ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.ui
 )
 
 set(OPT_SRC_RES
@@ -214,6 +216,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/VmcExportThread.cpp
     ${OPT_SRC_DIR}/UI/BusyDialog.cpp
     ${OPT_SRC_DIR}/UI/BusySmartThread.cpp
+    ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.cpp
 )
 
 if(WIN32)

@@ -32,6 +32,7 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameArtsWidget.h>
 #include <OplPcTools/UI/BusySmartThread.h>
+#include <OplPcTools/UI/GameArtDownloaderActivity.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -289,23 +290,8 @@ void GameArtsWidget::downloadAllGameArts()
 
 void GameArtsWidget::downloadGameArts(const QList<GameArtType> & _types)
 {
-    GameArtDownloader * downloader = new GameArtDownloader(this);
-    BusyDialog * dialog = new BusyDialog(this);
-    connect(downloader, &GameArtDownloader::taskComplete, this, [=](quint32, const QStringList & __errors) {
-       downloader->deleteLater();
-       dialog->hide();
-       dialog->deleteLater();
-       if(!__errors.isEmpty())
-           Application::showErrorMessage(__errors.join("\n\n"));
-    });
-    connect(downloader, &GameArtDownloader::downloadComplete, this, [this](
-        const OplPcTools::GameArtNetworkTask & __task,
-        const OplPcTools::GameArtNetworkSource & __source
-    ) {
-        mr_art_manager.setArt(m_game_id, __task.art_type, __source);
-    });
-    downloader->downloadArts(m_game_id, _types);
-    dialog->open();
+    QSharedPointer<Intent> intent = GameArtDownloaderActivity::createIntent(mr_art_manager, m_game_id, _types);
+    Application::pushActivity(*intent);
 }
 
 void GameArtsWidget::downloadGameArt()

@@ -44,13 +44,13 @@
     <name>ArtDownloaderActivity</name>
     <message>
         <location filename="../UI/GameArtDownloaderActivity.ui" line="45"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="66"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="74"/>
         <source>%p% (%v of %m downloaded)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/GameArtDownloaderActivity.ui" line="52"/>
-        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="67"/>
+        <location filename="../../../build/Destop_Qt5-Debug/ui_GameArtDownloaderActivity.h" line="75"/>
         <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -643,7 +643,7 @@
 <context>
     <name>OplPcTools::GameArtNetworkSource</name>
     <message>
-        <location filename="../GameArtNetworkSource.cpp" line="62"/>
+        <location filename="../GameArtNetworkSource.cpp" line="82"/>
         <source>Unable to download picture: %1%2%3</source>
         <translation type="unfinished"></translation>
     </message>

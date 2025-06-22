@@ -24,6 +24,24 @@
 
 using namespace OplPcTools;
 
+GameArtDownloaderTask::GameArtDownloaderTask(quint64 _id, QNetworkAccessManager * _network) :
+    QObject(_network),
+    m_id(_id),
+    mp_network(_network)
+{
+    connect(_network, &QObject::destroyed, this, [this]() { mp_network = nullptr; });
+}
+
+void GameArtDownloaderTask::cancel()
+{
+    if(mp_network)
+    {
+        QList<QNetworkReply *> replies = mp_network->findChildren<QNetworkReply *>();
+        foreach(QNetworkReply * reply, replies)
+            reply->abort();
+    }
+}
+
 GameArtNetworkSource::GameArtNetworkSource(
     const GameArtNetworkTask & _task,
     QNetworkReply * _reply,
@@ -50,21 +68,23 @@ void GameArtNetworkSource::onReplyFinished()
     }
     else
     {
-        emitError();
+        emitError(false);
     }
     emit complete();
 }
 
-void GameArtNetworkSource::emitError()
+void GameArtNetworkSource::emitError(bool _canceled)
 {
     QString additional_message = mp_reply->errorString();
     QString delimiter = additional_message.isEmpty() ? "" : ". ";
-    emit error(tr("Unable to download picture: %1%2%3").arg(m_task.art_properties.name, delimiter, additional_message));
+    emit error(
+        _canceled,
+        tr("Unable to download picture: %1%2%3").arg(m_task.art_properties.name, delimiter, additional_message));
 }
 
-void GameArtNetworkSource::onReplyError(QNetworkReply::NetworkError)
+void GameArtNetworkSource::onReplyError(QNetworkReply::NetworkError _error)
 {
-    emitError();
+    emitError(_error == QNetworkReply::OperationCanceledError);
     emit complete();
 }
 
@@ -75,7 +95,7 @@ GameArtDownloader::GameArtDownloader(QObject * _parent) :
 {
 }
 
-quint32 GameArtDownloader::downloadArts(const QString & _game_id, QList<GameArtType> _types)
+GameArtDownloaderTask * GameArtDownloader::downloadArts(const QString & _game_id, QList<GameArtType> _types)
 {
     const quint32 task_id = m_next_task_id++;
     struct DownloadContext
@@ -91,6 +111,7 @@ quint32 GameArtDownloader::downloadArts(const QString & _game_id, QList<GameArtT
     foreach(GameArtType type, _types)
         context->errors[type] = QString();
     QNetworkAccessManager * network = new QNetworkAccessManager(this);
+    GameArtDownloaderTask * task = new GameArtDownloaderTask(task_id, network);
     foreach(GameArtType type, _types)
     {
         GameArtNetworkTask task
@@ -118,8 +139,11 @@ quint32 GameArtDownloader::downloadArts(const QString & _game_id, QList<GameArtT
                 delete context;
             }
         });
-        connect(src, &GameArtNetworkSource::error, this, [context, task](const QString & __message) {
-            context->errors[task.art_type] = __message;
+        connect(src, &GameArtNetworkSource::error, this, [context, task](bool __canceled, const QString & __message) {
+            if(!__canceled)
+            {
+                context->errors[task.art_type] = __message;
+            }
         });
         connect(src, &GameArtNetworkSource::ready, this, [this, task, src]() {
             emit downloadComplete(task, *src);
@@ -128,7 +152,7 @@ quint32 GameArtDownloader::downloadArts(const QString & _game_id, QList<GameArtT
 #ifdef __clang_analyzer__
     [[clang::suppress]] // Potential leak of memory pointed to by 'context' [clang-analyzer-cplusplus.NewDeleteLeaks]
 #endif
-    return task_id;
+    return task;
 }
 
 QString GameArtDownloader::makeUrl(const QString & _game_id, GameArtType _type) const

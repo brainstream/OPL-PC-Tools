@@ -88,7 +88,8 @@ GameArtDownloaderActivity::GameArtDownloaderActivity(
         _art_manager.setArt(_game_id, __task.art_type, __source);
         mp_progress_bar->setValue(mp_progress_bar->value() + 1);
     });
-    downloader->downloadArts(_game_id, _art_types);
+    GameArtDownloaderTask * task = downloader->downloadArts(_game_id, _art_types);
+    connect(mp_button_box, &QDialogButtonBox::rejected, task, &GameArtDownloaderTask::cancel);
 }
 
 QSharedPointer<Intent> GameArtDownloaderActivity::createIntent(

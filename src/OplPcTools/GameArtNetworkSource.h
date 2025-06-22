@@ -43,7 +43,7 @@ public:
 
 signals:
     void ready();
-    void error(const QString & _message);
+    void error(bool _canceled, const QString & _message);
     void complete();
 
 private slots:
@@ -51,12 +51,28 @@ private slots:
     void onReplyError(QNetworkReply::NetworkError _error);
 
 private:
-    void emitError();
+    void emitError(bool _canceled);
 
 private:
     const GameArtNetworkTask m_task;
     QNetworkReply * mp_reply;
     QPixmap m_pixmap;
+};
+
+class GameArtDownloaderTask : public QObject
+{
+    Q_OBJECT
+
+public:
+    GameArtDownloaderTask(quint64 _id, QNetworkAccessManager * _network);
+    quint64 id() const { return m_id; }
+
+public slots:
+    void cancel();
+
+private:
+    const quint64 m_id;
+    QNetworkAccessManager * mp_network;
 };
 
 class GameArtDownloader : public QObject
@@ -65,7 +81,7 @@ class GameArtDownloader : public QObject
 
 public:
     explicit GameArtDownloader(QObject * _parent);
-    quint32 downloadArts(const QString & _game_id, QList<GameArtType> _types);
+    GameArtDownloaderTask * downloadArts(const QString & _game_id, QList<GameArtType> _types);
 
 signals:
     void downloadComplete(

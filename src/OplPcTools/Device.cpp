@@ -309,6 +309,8 @@ const QString Device::filepath() const
 
 bool Device::init()
 {
+    if(!m_source_ptr)
+        return false;
     if(m_source_ptr->isOpen())
         m_source_ptr->seek(0);
     else if(!m_source_ptr->open())

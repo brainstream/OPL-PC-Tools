@@ -216,8 +216,6 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/BusySmartThread.cpp
 )
 
-source_group("OPL PC Tools" ${OPT_SRC_DIR})
-
 if(WIN32)
     list(APPEND OPT_SRC
         ${OPT_SRC_DIR}/Resources/Resources.rc)

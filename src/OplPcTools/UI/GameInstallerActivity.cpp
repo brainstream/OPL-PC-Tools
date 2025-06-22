@@ -160,8 +160,9 @@ QVariant TaskListItem::data(int _column, int _role) const
         return QObject::tr("Registration...");
     case GameInstallationStatus::RollingBack:
         return QObject::tr("Rolling back...");
+    default:
+        return QVariant();
     }
-    return QVariant();
 }
 
 Device & TaskListItem::device()
@@ -402,11 +403,11 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
         return;
     }
     QSharedPointer<DeviceSource> source;
-    if(_file_path.endsWith(g_iso_ext))
+    if(_file_path.endsWith(g_iso_ext, Qt::CaseInsensitive))
         source.reset(new Iso9660DeviceSource(_file_path));
-    else if(_file_path.endsWith(g_bin_ext))
+    else if(_file_path.endsWith(g_bin_ext, Qt::CaseInsensitive))
         source.reset(new BinCueDeviceSource(_file_path));
-    else if(_file_path.endsWith(g_nrg_ext))
+    else if(_file_path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
         source.reset(new NrgDeviceSource(_file_path));
     QSharedPointer<Device> device(new Device(source));
     if(device->init())
@@ -444,7 +445,10 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
     for(const QUrl & url : _event->mimeData()->urls())
     {
         QString path = url.path();
-        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext) || path.endsWith(g_nrg_ext))
+        if(
+            path.endsWith(g_iso_ext, Qt::CaseInsensitive) ||
+            path.endsWith(g_bin_ext, Qt::CaseInsensitive) ||
+            path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
         {
             _event->accept();
             return;
@@ -458,8 +462,13 @@ void GameInstallerActivity::dropEvent(QDropEvent * _event)
     for(const QUrl & url : _event->mimeData()->urls())
     {
         QString path = url.toLocalFile();
-        if(path.endsWith(g_iso_ext) || path.endsWith(g_bin_ext) || path.endsWith(g_nrg_ext))
+        if(
+            path.endsWith(g_iso_ext, Qt::CaseInsensitive) ||
+            path.endsWith(g_bin_ext, Qt::CaseInsensitive) ||
+            path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
+        {
             addDiscImage(path);
+        }
     }
 }
 

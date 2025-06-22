@@ -700,42 +700,42 @@
 <context>
     <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="205"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="202"/>
         <source>Choose a Picture</source>
         <translation>Escolha uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="206"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="203"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="233"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="230"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="234"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="231"/>
         <source>Delete Picture</source>
         <translation>Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="236"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="233"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="256"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="253"/>
         <source>Download Pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="257"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="254"/>
         <source>Replace existing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="258"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="255"/>
         <source>Missing only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -803,32 +803,32 @@
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="380"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="381"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
         <translation>Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="385"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="386"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="422"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="423"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="597"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="606"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="640"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="649"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="640"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="649"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>

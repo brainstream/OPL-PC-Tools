@@ -46,6 +46,8 @@ protected:
 private:
     void deleteGameConfig(const QString _game_id);
     void deletePartFiles(const Game & _game);
+    void renamePartFiles(const Game & _game, const QString & _title);
+    void undoRenamePartFiles(const Game & _game, const QString & _title) noexcept;
 
 private:
     QString m_config_filepath;

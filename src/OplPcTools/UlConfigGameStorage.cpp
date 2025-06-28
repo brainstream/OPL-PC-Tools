@@ -30,7 +30,7 @@ using namespace OplPcTools;
 
 namespace {
 
-const QString g_image_prefix("ul.");
+const char g_image_prefix[] = "ul.";
 
 struct RawConfigRecord
 {
@@ -45,10 +45,11 @@ struct RawConfigRecord
 RawConfigRecord::RawConfigRecord(const Game & _game)
 {
     memset(this, 0, sizeof(RawConfigRecord));
-    QByteArray name_bytes = _game.title().toUtf8();
-    QByteArray image_bytes = _game.id().toLatin1();
-    memcpy(this->image, g_image_prefix.toLatin1().constData(), g_image_prefix.size());
-    memcpy(&this->image[g_image_prefix.size()], image_bytes.constData(), image_bytes.size());
+    const QByteArray name_bytes = _game.title().toUtf8();
+    const QByteArray image_bytes = _game.id().toLatin1();
+    const size_t prefix_length = std::strlen(g_image_prefix);
+    memcpy(this->image, g_image_prefix, prefix_length);
+    memcpy(&this->image[prefix_length], image_bytes.constData(), image_bytes.size());
     memcpy(this->name , name_bytes.constData(), name_bytes.size());
     this->media = _game.mediaType() == MediaType::DVD ? MT_DVD : MT_CD;
     this->parts = _game.partCount();
@@ -140,6 +141,7 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
     const size_t record_size = sizeof(RawConfigRecord);
     if(settings.validateUlCfg() && file.size() % record_size != 0)
         throwUlCorrupted();
+    const size_t prefix_length = std::strlen(g_image_prefix);
     char * buffer = new char[record_size];
     for(;;)
     {
@@ -147,8 +149,9 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
         if(read_bytes < record_size)
             break;
         RawConfigRecord * raw_record = reinterpret_cast<RawConfigRecord *>(buffer);
-        Game * game = createGame(QString::fromLatin1(&raw_record->image[g_image_prefix.size()],
-            strlen(raw_record->image) - g_image_prefix.size()));
+        Game * game = createGame(QString::fromLatin1(
+            &raw_record->image[prefix_length],
+            strlen(raw_record->image) - prefix_length));
         if(raw_record->name[max_name_length - 1] == '\0')
             game->setTitle(QString::fromUtf8(raw_record->name, strlen(raw_record->name)));
         else
@@ -186,9 +189,45 @@ bool UlConfigGameStorage::performRenaming(const Game & _game, const QString & _t
     memset(&data, 0, sizeof(RawConfigRecord::name));
     QByteArray name_bytes = _title.toUtf8();
     strncpy(data, name_bytes.constData(), name_bytes.size());
-    if(file.write(data, sizeof(data)) != sizeof(data))
-        throw IOException(QObject::tr("An error occurred while writing data to file"));
+    try
+    {
+        renamePartFiles(_game, _title);
+        if(file.write(data, sizeof(data)) != sizeof(data))
+            throw IOException(QObject::tr("An error occurred while writing data to file"));
+    }
+    catch(...)
+    {
+        undoRenamePartFiles(_game, _title);
+        throw;
+    }
     return true;
+}
+
+void UlConfigGameStorage::renamePartFiles(const Game & _game, const QString & _title)
+{
+    QDir root_dir(m_config_filepath);
+    root_dir.cdUp();
+    for(int part = 0; part < _game.partCount(); ++part)
+    {
+        QString old_path = root_dir.absoluteFilePath(makePartFilename(_game.id(), _game.title(), part));
+        QString new_path = root_dir.absoluteFilePath(makePartFilename(_game.id(), _title, part));
+        renameFile(old_path, new_path);
+    }
+}
+
+void UlConfigGameStorage::undoRenamePartFiles(const Game & _game, const QString & _title) noexcept
+{
+    QDir root_dir(m_config_filepath);
+    root_dir.cdUp();
+    for(int part = 0; part < _game.partCount(); ++part)
+    {
+        QString old_path = root_dir.absoluteFilePath(makePartFilename(_game.id(), _title, part));
+        if(QFile::exists(old_path))
+        {
+            QString new_path = root_dir.absoluteFilePath(makePartFilename(_game.id(), _game.title(), part));
+            QFile::rename(old_path, new_path);
+        }
+    }
 }
 
 bool UlConfigGameStorage::performRegistration(const Game & _game)
@@ -207,7 +246,7 @@ bool UlConfigGameStorage::performRegistration(const Game & _game)
 QString UlConfigGameStorage::makePartFilename(const QString & _game_id, const QString & _name, quint8 _part)
 {
     QString crc = QString("%1").arg(crc32(_name.toUtf8().constData()), 8, 16, QChar('0')).toUpper();
-    return QString("ul.%1.%2.%3").arg(crc).arg(_game_id).arg(_part, 2, 10, QChar('0'));
+    return QString("ul.%1.%2.%3").arg(crc, _game_id).arg(_part, 2, 10, QChar('0'));
 }
 
 void UlConfigGameStorage::validateTitle(const QString & _title)

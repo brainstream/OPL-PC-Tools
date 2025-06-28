@@ -294,7 +294,7 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     mp_btn_install->setDisabled(true);
     connect(mp_btn_back, &QPushButton::clicked, this, &GameInstallerActivity::close);
     connect(mp_tree_tasks, &QTreeWidget::itemSelectionChanged, this, &GameInstallerActivity::taskSelectionChanged);
-    connect(mp_btn_add_image, &QPushButton::clicked, [this]() { addDiscImage(); });
+    connect(mp_btn_add_image, &QPushButton::clicked, this, [this]() { addDiscImage(); });
     connect(mp_btn_add_disc, &QPushButton::clicked, this, &GameInstallerActivity::addDisc);
     connect(mp_btn_remove, &QPushButton::clicked, this, &GameInstallerActivity::removeGame);
     connect(mp_btn_rename, &QPushButton::clicked, this, &GameInstallerActivity::renameGame);
@@ -322,9 +322,9 @@ void GameInstallerActivity::setupShortcuts()
     shortcut = new QShortcut(QKeySequence("Del"), this);
     connect(shortcut, &QShortcut::activated, this, &GameInstallerActivity::removeGame);
     shortcut = new QShortcut(QKeySequence("Ins"), this);
-    connect(shortcut, &QShortcut::activated, [this]() { addDiscImage(); });
+    connect(shortcut, &QShortcut::activated, this, [this]() { addDiscImage(); });
     shortcut = new QShortcut(QKeySequence("Shift+Ins"), this);
-    connect(shortcut, &QShortcut::activated, [this]() { addDisc(); });
+    connect(shortcut, &QShortcut::activated, this, [this]() { addDisc(); });
 }
 
 void GameInstallerActivity::close()
@@ -379,14 +379,12 @@ void GameInstallerActivity::addDiscImage()
 {
     QSettings settings;
     QString filter = tr("All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)")
-            .arg(g_iso_ext)
-            .arg(g_bin_ext)
-            .arg(g_nrg_ext);
+        .arg(g_iso_ext, g_bin_ext, g_nrg_ext);
     QString iso_dir = settings.value(SettingsKey::iso_dir).toString();
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(files.isEmpty()) return;
     settings.setValue(SettingsKey::iso_dir, QFileInfo(files[0]).absolutePath());
-    for(const QString & file : files)
+    foreach(const QString & file, files)
     {
         addDiscImage(file);
     }
@@ -442,7 +440,7 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
         _event->ignore();
         return;
     }
-    for(const QUrl & url : _event->mimeData()->urls())
+    foreach(const QUrl & url, _event->mimeData()->urls())
     {
         QString path = url.path();
         if(
@@ -459,7 +457,7 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
 
 void GameInstallerActivity::dropEvent(QDropEvent * _event)
 {
-    for(const QUrl & url : _event->mimeData()->urls())
+    foreach(const QUrl & url, _event->mimeData()->urls())
     {
         QString path = url.toLocalFile();
         if(

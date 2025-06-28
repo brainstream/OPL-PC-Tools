@@ -59,7 +59,7 @@ void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const VmcPath & _vmc_di
     if(!dir.exists() && !QDir().mkpath(dir.path()))
         throw Exception(QObject::tr("Unable to create directory \"%1\"").arg(dir.path()));
     QList<VmcEntryInfo> entries = _fs.enumerateEntries(_vmc_dir);
-    for(const VmcEntryInfo & entry : entries)
+    foreach(const VmcEntryInfo & entry, entries)
     {
         VmcPath next_vmc_entry = _vmc_dir + entry.name;
         if(entry.is_directory)
@@ -129,7 +129,7 @@ void VmcExportThread::start(const Vmc & _vmc, const QString & _destination_dir)
     QThread * thread = new QThread(this);
     BusyDialog * busy_dialog = new BusyDialog(mp_parent_widget);
     mp_worker = new VmcExportThreadWorker();
-    connect(thread, &QThread::started, [this, &_vmc, &_destination_dir]() {
+    connect(thread, &QThread::started, this, [this, &_vmc, &_destination_dir]() {
         mp_worker->start(_vmc, _destination_dir);
     });
     connect(thread, &QThread::finished, this, &VmcExportThread::finished);

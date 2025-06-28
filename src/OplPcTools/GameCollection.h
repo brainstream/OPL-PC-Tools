@@ -45,10 +45,10 @@ public:
     const bool contains(const QString & _game_id) const;
 
 signals:
-    void gameAboutToBeDeleted(const Uuid & _uuid);
-    void gameDeleted(const Uuid & _uuid);
-    void gameAdded(const Uuid & _uuid);
-    void gameRenamed(const Uuid & _uuid);
+    void gameAboutToBeDeleted(const OplPcTools::Uuid & _uuid);
+    void gameDeleted(const OplPcTools::Uuid & _uuid);
+    void gameAdded(const OplPcTools::Uuid & _uuid);
+    void gameRenamed(const OplPcTools::Uuid & _uuid);
 
 private:
     GameStorage & storage(GameInstallationType _installation_type) const;

@@ -33,7 +33,7 @@ VmcCollection::~VmcCollection()
 {
     if(mp_vmcs)
     {
-        for(const Vmc * vmc: *mp_vmcs)
+        foreach(const Vmc * vmc, *mp_vmcs)
             delete vmc;
     }
     delete mp_vmcs;
@@ -55,7 +55,7 @@ bool VmcCollection::load(const QDir & _base_directory)
     {
         return true;
     }
-    for(const QString & filename : m_directory.entryList({ "*.bin" }, QDir::Files | QDir::Readable))
+    foreach(const QString & filename, m_directory.entryList({ "*.bin" }, QDir::Files | QDir::Readable))
     {
         QString title = filename.left(filename.lastIndexOf("."));
         QFileInfo file(m_directory.absoluteFilePath(filename));
@@ -88,7 +88,7 @@ const Vmc * VmcCollection::operator[](const Uuid & _uuid) const
 
 const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
 {
-    for(const Vmc * vmc: *mp_vmcs)
+    foreach(const Vmc * vmc, *mp_vmcs)
     {
         if(_title == vmc->title())
             throw Exception(tr("VMC with name \"%1\" already exists").arg(_title));
@@ -129,7 +129,7 @@ QString VmcCollection::makeFilename(const QString & _vmc_title) const
 
 Vmc * VmcCollection::findVmc(const Uuid & _uuid) const
 {
-    for(Vmc * vmc : *mp_vmcs)
+    foreach(Vmc * vmc, *mp_vmcs)
     {
         if(vmc->uuid() == _uuid)
             return vmc;

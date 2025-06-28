@@ -107,9 +107,9 @@ void GameArtManager::deleteArt(const QString & _game_id, GameArtType _type)
     Maybe<GameCache> & game_cache = m_cache[_game_id];
     if(game_cache.hasValue())
         game_cache->remove(_type);
-    QStringList file_filter { QString("%1%2.*").arg(_game_id).arg(m_art_props[_type].suffix) };
+    QStringList file_filter { QString("%1%2.*").arg(_game_id, m_art_props[_type].suffix) };
     bool changed = false;
-    for(const QFileInfo & file_info : QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
+    foreach(const QFileInfo & file_info, QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
     {
         if(QFile::remove(file_info.absoluteFilePath()))
             changed = true;
@@ -124,7 +124,7 @@ void GameArtManager::clearArts(const QString & _game_id)
 {
     m_cache.remove(_game_id);
     QStringList file_filter { _game_id + "*.*" };
-    for(const QFileInfo & file_info : QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
+    foreach(const QFileInfo & file_info, QDir(m_directory_path).entryInfoList(file_filter, QDir::Files))
         QFile::remove(file_info.absoluteFilePath());
 }
 

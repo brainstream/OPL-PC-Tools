@@ -109,7 +109,7 @@ ReleaseParser::ReleaseParser()
 
 ReleaseParser::~ReleaseParser()
 {
-    for(const Release * release : m_releases)
+    foreach(const Release * release, m_releases)
         delete release;
 }
 
@@ -117,7 +117,7 @@ void ReleaseParser::parse(const QByteArray & _json)
 {
     QJsonDocument jdoc = QJsonDocument::fromJson(_json);
     QJsonArray jroot = jdoc.array();
-    for(QJsonValueRef jrelease_ref : jroot)
+    foreach(const QJsonValue & jrelease_ref, jroot)
     {
         QJsonObject jrelease = jrelease_ref.toObject();
         Maybe<Version> version = parseVersionTag(jrelease["tag_name"].toString());
@@ -209,7 +209,7 @@ void Updater::checkForUpdate()
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
     config.setProtocol(QSsl::TlsV1_2OrLater);
     request.setSslConfiguration(config);
-    connect(network, &QNetworkAccessManager::finished, [this, network](QNetworkReply * reply) {
+    connect(network, &QNetworkAccessManager::finished, this, [this, network](QNetworkReply * reply) {
         if(reply->error() == QNetworkReply::NoError)
         {
             readUpdates(reply->readAll());

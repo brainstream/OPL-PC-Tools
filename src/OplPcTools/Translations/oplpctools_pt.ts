@@ -645,17 +645,17 @@
         <translation>Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="234"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="233"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="274"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="272"/>
         <source>Download Pictures</source>
         <translation>Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="275"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="273"/>
         <source>Do you want to replace existing pictures?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -728,27 +728,27 @@
         <translation>Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="386"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="384"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="423"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="421"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="606"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="604"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="649"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="647"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="649"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="647"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -756,22 +756,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="357"/>
+        <location filename="../UI/GameListWidget.cpp" line="361"/>
         <source>Directory</source>
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="424"/>
+        <location filename="../UI/GameListWidget.cpp" line="428"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="425"/>
+        <location filename="../UI/GameListWidget.cpp" line="429"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="427"/>
+        <location filename="../UI/GameListWidget.cpp" line="431"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
@@ -910,22 +910,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="301"/>
+        <location filename="../UI/VmcListWidget.cpp" line="304"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="302"/>
+        <location filename="../UI/VmcListWidget.cpp" line="305"/>
         <source>Delete VMC</source>
         <translation>Deletar VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="304"/>
+        <location filename="../UI/VmcListWidget.cpp" line="306"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation>Tem certeza que quer apagar este VMC?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="369"/>
+        <location filename="../UI/VmcListWidget.cpp" line="370"/>
         <source>Select directory</source>
         <translation>Selecione a pasta</translation>
     </message>
@@ -964,7 +964,7 @@
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="232"/>
+        <location filename="../UlConfigGameStorage.cpp" line="271"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Incapaz de localizar o jogo &quot;%1&quot; no arquivo de configuração</translation>
     </message>
@@ -1020,28 +1020,28 @@
         <translation>Incapaz de salvar o arquivo &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="117"/>
+        <location filename="../UlConfigGameStorage.cpp" line="118"/>
         <source>%1 is corrupted</source>
         <translation>%1 está corrompido</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="183"/>
+        <location filename="../UlConfigGameStorage.cpp" line="186"/>
         <source>Config record was not found</source>
         <translation>A configuração salva não foi encontrada</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="190"/>
-        <location filename="../UlConfigGameStorage.cpp" line="203"/>
+        <location filename="../UlConfigGameStorage.cpp" line="196"/>
+        <location filename="../UlConfigGameStorage.cpp" line="242"/>
         <source>An error occurred while writing data to file</source>
         <translation>Um erro aconteceu enquanto escrevia dados no arquivo</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="216"/>
+        <location filename="../UlConfigGameStorage.cpp" line="255"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>O tamanho maximo do nome é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="247"/>
+        <location filename="../UlConfigGameStorage.cpp" line="286"/>
         <source>Unable to backup config file</source>
         <translation>Incapaz de fazer backup do arquivo de configuração</translation>
     </message>

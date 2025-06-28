@@ -19,7 +19,6 @@
 #ifndef __OPLPCTOOLS_VMCLISTWIDGET__
 #define __OPLPCTOOLS_VMCLISTWIDGET__
 
-#include <functional>
 #include "ui_VmcListWidget.h"
 #include <QSortFilterProxyModel>
 #include <OplPcTools/Vmc.h>

@@ -79,9 +79,9 @@ bool isFilenameValid(const QString & _filename)
 void validateFilename(const QString & _filename)
 {
     if(!isFilenameValid(_filename))
-        throw ValidationException(QString("%1: %2")
-            .arg(QObject::tr("The following characters are not allowed"))
-            .arg(FilenameValidator::s_disallowed_characters)
+        throw ValidationException(QString("%1: %2").arg(
+            QObject::tr("The following characters are not allowed"),
+            FilenameValidator::s_disallowed_characters)
         );
 }
 

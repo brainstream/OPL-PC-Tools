@@ -36,7 +36,7 @@ QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename);
 inline void renameFile(const QString & _old_filename, const QString & _new_filename)
 {
     if(!QFile::rename(_old_filename, _new_filename))
-        throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename).arg(_new_filename));
+        throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename, _new_filename));
 }
 
 bool isFilenameValid(const QString & _filename);

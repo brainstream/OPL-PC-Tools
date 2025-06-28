@@ -182,6 +182,7 @@ QVariant GameListWidget::GameTreeModel::data(const QModelIndex & _index, int _ro
         if(mp_art_manager)
         {
             const Game * game = mr_game_collection.findGame(m_uuids[_index.row()]);
+            if(!game) return QVariant();
             QPixmap icon = mp_art_manager->load(game->id(), GameArtType::Icon);
             return QIcon(icon.isNull() ? m_default_icon : icon);
         }
@@ -242,9 +243,13 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
     connect(mp_action_install, &QAction::triggered, this, &GameListWidget::showGameInstaller);
     connect(mp_action_restore_iso, &QAction::triggered, this, &GameListWidget::showIsoRestorer);
-    connect(mp_tree_games, &QTreeView::activated, [this](const QModelIndex &) { showGameDetails(); });
+    connect(mp_tree_games, &QTreeView::activated, this, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameListWidget::showTreeContextMenu);
-    connect(mp_tree_games->selectionModel(), &QItemSelectionModel::selectionChanged, [this](QItemSelection, QItemSelection) { onGameSelected(); });
+    connect(
+        mp_tree_games->selectionModel(),
+        &QItemSelectionModel::selectionChanged,
+        this,
+        [this](QItemSelection, QItemSelection) { onGameSelected(); });
     connect(mp_edit_filter, &QLineEdit::textChanged, mp_proxy_model, &QSortFilterProxyModel::setFilterFixedString);
     setIconSize();
     onLibraryLoaded();
@@ -254,9 +259,8 @@ void GameListWidget::setupShortcuts()
 {
     QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
-        .arg(mp_edit_filter->placeholderText())
-        .arg(filter_shortcut->key().toString()));
-    connect(filter_shortcut, &QShortcut::activated, [this]() { mp_edit_filter->setFocus(); });
+        .arg(mp_edit_filter->placeholderText(), filter_shortcut->key().toString()));
+    connect(filter_shortcut, &QShortcut::activated, this, [this]() { mp_edit_filter->setFocus(); });
 }
 
 void GameListWidget::setIconSize()
@@ -424,8 +428,7 @@ void GameListWidget::deleteGame()
         QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
         QMessageBox message_box(QMessageBox::Question, tr("Delete Game"),
             QString("%1\n%2")
-                .arg(tr("Are you sure you want to delete this game?"))
-                .arg(game->title()),
+                .arg(tr("Are you sure you want to delete this game?"), game->title()),
             QMessageBox::Yes | QMessageBox::No);
         message_box.setDefaultButton(QMessageBox::Yes);
         message_box.setCheckBox(checkbox);

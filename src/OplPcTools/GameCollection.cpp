@@ -107,7 +107,7 @@ GameStorage & GameCollection::storage(GameInstallationType _installation_type) c
 void GameCollection::renameGame(const Game & _game, const QString & _title)
 {
     if(!storage(_game.installationType()).renameGame(_game.uuid(), _title))
-        throw Exception(tr("Unable to rename game \"%1\" to \"%2\"").arg(_game.title()).arg(_title));
+        throw Exception(tr("Unable to rename game \"%1\" to \"%2\"").arg(_game.title(), _title));
 }
 
 void GameCollection::deleteGame(const Game & _game)

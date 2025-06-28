@@ -136,7 +136,7 @@ void UlConfigGameInstaller::rollback()
     if(mr_device.isOpen())
         mr_device.close();
     emit rollbackStarted();
-    for(const QString & path : m_written_parts)
+    foreach(const QString & path, m_written_parts)
         QFile::remove(path);
     m_written_parts.clear();
     delete mp_game;

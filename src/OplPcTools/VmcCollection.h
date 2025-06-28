@@ -43,10 +43,10 @@ public:
     void deleteVmc(const Uuid & _uuid);
 
 signals:
-    void vmcAdded(const Uuid & _uuid);
-    void vmcRenamed(const Uuid & _uuid);
-    void vmcAboutToBeDeleted(const Uuid & _uuid);
-    void vmcDeleted(const Uuid & _uuid);
+    void vmcAdded(const OplPcTools::Uuid & _uuid);
+    void vmcRenamed(const OplPcTools::Uuid & _uuid);
+    void vmcAboutToBeDeleted(const OplPcTools::Uuid & _uuid);
+    void vmcDeleted(const OplPcTools::Uuid & _uuid);
 
 private:
     void ensureDirectoryExists();

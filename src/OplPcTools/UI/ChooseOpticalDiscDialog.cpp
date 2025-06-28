@@ -96,7 +96,7 @@ void InitializationThread::run()
     try
     {
         QList<DeviceName> devices = loadDriveList();
-        for(const DeviceName & device_name : devices)
+        foreach(const DeviceName & device_name, devices)
         {
             DeviceDisplayData display_data;
             display_data.device = QSharedPointer<Device>(new Device(
@@ -194,7 +194,7 @@ QList<QSharedPointer<Device> > ChooseOpticalDiscDialog::devices() const
 {
     QList<QSharedPointer<Device>> result;
     QModelIndexList indexes = mp_tree_devices->selectionModel()->selectedRows();
-    for(const QModelIndex & index : indexes)
+    foreach(const QModelIndex & index, indexes)
     {
         DeviceListItem * item = static_cast<DeviceListItem *>(mp_tree_devices->topLevelItem(index.row()));
         result.append(item->device());

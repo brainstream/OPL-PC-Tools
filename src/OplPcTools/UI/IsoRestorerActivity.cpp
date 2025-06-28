@@ -121,7 +121,7 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
     connect(restorer, &IsoRestorer::rollbackStarted, this, &IsoRestorerActivity::onRollbackStarted);
     mp_progress_bar->setMinimum(0);
     mp_progress_bar->setMaximum(s_progress_max);
-    mp_label_status->setText(tr("Restoring '%1' to '%2'...").arg(_game.title()).arg(_destination));
+    mp_label_status->setText(tr("Restoring '%1' to '%2'...").arg(_game.title(), _destination));
     mp_working_thread->start(QThread::HighestPriority);
 }
 

@@ -51,10 +51,10 @@ public:
 
 signals:
     void loaded();
-    void gameRegistered(const Uuid & _uuid);
-    void gameRenamed(const Uuid & _uuid);
-    void gameAboutToBeDeleted(const Uuid & _uuid);
-    void gameDeleted(const Uuid & _uuid);
+    void gameRegistered(const OplPcTools::Uuid & _uuid);
+    void gameRenamed(const OplPcTools::Uuid & _uuid);
+    void gameAboutToBeDeleted(const OplPcTools::Uuid & _uuid);
+    void gameDeleted(const OplPcTools::Uuid & _uuid);
 
 
 protected:

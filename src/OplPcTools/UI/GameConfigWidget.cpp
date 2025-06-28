@@ -33,7 +33,7 @@ namespace {
 
 namespace SettingsKey {
 
-const QString config_version("OplCfgVersion");
+const char config_version[] = "OplCfgVersion";
 
 } // namespace SettingsKey
 
@@ -139,10 +139,10 @@ GameConfigWidget::GameConfigWidget(const Game & _game, QWidget * _parent /*= nul
     }
     initControls();
     void (QComboBox::*opl_version_changed)(int) = &QComboBox::currentIndexChanged;
-    connect(mp_combo_opl_version, opl_version_changed, [this](int) { onOplVerstionChanged(); });
-    connect(mp_radio_disable_gsm, &QRadioButton::toggled, [this](bool) { onGsmStateChanged(); });
-    connect(mp_radio_enable_gsm, &QRadioButton::toggled, [this](bool) { onGsmStateChanged(); });
-    connect(mp_radio_use_global_gsm, &QRadioButton::toggled, [this](bool) { onGsmStateChanged(); });
+    connect(mp_combo_opl_version, opl_version_changed, this, [this](int) { onOplVerstionChanged(); });
+    connect(mp_radio_disable_gsm, &QRadioButton::toggled, this, [this](bool) { onGsmStateChanged(); });
+    connect(mp_radio_enable_gsm, &QRadioButton::toggled, this, [this](bool) { onGsmStateChanged(); });
+    connect(mp_radio_use_global_gsm, &QRadioButton::toggled, this, [this](bool) { onGsmStateChanged(); });
     connect(&mr_vmcs, &VmcCollection::vmcAdded, this, &GameConfigWidget::onVmcAdded);
     connect(&mr_vmcs, &VmcCollection::vmcDeleted, this, &GameConfigWidget::onVmcDeleted);
     connect(&mr_vmcs, &VmcCollection::vmcRenamed, this, &GameConfigWidget::onVmcRenamed);

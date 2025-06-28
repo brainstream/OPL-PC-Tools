@@ -220,7 +220,7 @@ bool Iso9660::readConfig(DeviceSource & _source)
     QByteArray buffer(data_length, Qt::Uninitialized);
     if(_source.read(buffer) <= 0)
         return false;
-    const char * data_ptr = buffer.constData();
+    const char * data_ptr;
     bool result = false;
     for(int32_t processed = 0; processed < data_length;)
     {

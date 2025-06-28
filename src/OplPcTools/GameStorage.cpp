@@ -33,7 +33,7 @@ GameStorage::~GameStorage()
 
 void GameStorage::clear()
 {
-    for(Game * game : m_games)
+    foreach(Game * game, m_games)
         delete game;
     m_games.clear();
 }

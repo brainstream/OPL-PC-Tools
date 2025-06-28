@@ -621,7 +621,7 @@ void VmcFS::Private::enumerateEntries(const EntryInfo & _dir, std::function<bool
     QList<uint32_t> clusters = getEntryClusters(_dir);
     QScopedArrayPointer<FSEntry> entries(new FSEntry[entry_count_per_cluster]);
     uint32_t read_count = 0;
-    for(uint32_t cluster : clusters)
+    foreach(uint32_t cluster, clusters)
     {
         readCluster(cluster, false, reinterpret_cast<char *>(entries.data()));
         for(size_t i = 0; i < entry_count_per_cluster; ++i)

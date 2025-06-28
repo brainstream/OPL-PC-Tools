@@ -80,13 +80,13 @@ void MainWindow::setupUpdater()
     if(!Settings::instance().checkNewVersion())
         return;
     Updater * updater = new Updater(this);
-    connect(updater, &Updater::updateAvailable, [this, updater]() {
+    connect(updater, &Updater::updateAvailable, this, [this, updater]() {
         const Update * update = updater->latestUpdate();
         mp_label_update->setText(QString("Version %1.%2 is available")
             .arg(update->version.major())
             .arg(update->version.minor()));
         QString url = update->html_url;
-        connect(mp_btn_update_download, &QToolButton::clicked, [this, url]() {
+        connect(mp_btn_update_download, &QToolButton::clicked, this, [this, url]() {
             mp_widget_update->hide();
             QDesktopServices::openUrl(url);
         });
@@ -120,7 +120,7 @@ bool MainWindow::pushActivity(Intent & _intent)
     if(activity->onAttach())
     {
         mp_activities->insert(activity_class, activity);
-        connect(activity, &Activity::destroyed, [this, activity_class]() {
+        connect(activity, &Activity::destroyed, this, [this, activity_class]() {
             if(mp_activities)
                 mp_activities->remove(activity_class);
         });
@@ -170,7 +170,7 @@ void MainWindow::loadLibrary(const QDir & _directory)
     BusySmartThread * thread = new BusySmartThread([_directory]() {
         Library::instance().load(_directory);
     }, this);
-    connect(thread, &BusySmartThread::exception, [this](const QString & message) {
+    connect(thread, &BusySmartThread::exception, this, [this](const QString & message) {
         mp_widget_open_library->show();
         Application::showErrorMessage(message);
     });

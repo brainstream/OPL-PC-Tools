@@ -23,16 +23,16 @@ using namespace OplPcTools;
 namespace {
 namespace Key {
 
-const QString reopen_last_session("Settings/ReopenLastSession");
-const QString confirm_game_deletion("Settings/ConfirmGameDeletion");
-const QString confirm_pixmap_deletion("Settings/ConfirmPixmapDeletion");
-const QString confirm_vmc_deletion("Settings/ConfirmVmcDeletion");
-const QString split_up_iso("Settings/SplitUpISO");
-const QString move_iso("Settings/MoveISO");
-const QString rename_iso("Settings/RenameISO");
-const QString check_new_version("Settings/CheckNewVersion");
-const QString validate_ul_cfg("Settings/ValidateUlCfg");
-const QString icon_size("Settings/IconSize");
+static const char reopen_last_session[] = "Settings/ReopenLastSession";
+static const char confirm_game_deletion[] = "Settings/ConfirmGameDeletion";
+static const char confirm_pixmap_deletion[] = "Settings/ConfirmPixmapDeletion";
+static const char confirm_vmc_deletion[] = "Settings/ConfirmVmcDeletion";
+static const char split_up_iso[] = "Settings/SplitUpISO";
+static const char move_iso[] = "Settings/MoveISO";
+static const char rename_iso[] = "Settings/RenameISO";
+static const char check_new_version[] = "Settings/CheckNewVersion";
+static const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
+static const char icon_size[] = "Settings/IconSize";
 
 } // namespace Key
 } // namespace

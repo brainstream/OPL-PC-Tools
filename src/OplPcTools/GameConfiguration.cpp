@@ -41,25 +41,25 @@ enum GameMode : quint8
 
 namespace Key {
 
-const QString compatibility("$Compatibility");
-const QString enable_gsm("$EnableGSM");
-const QString gsm_v_mode("$GSMVMode");
-const QString gsm_x_offset("$GSMXOffset");
-const QString gsm_y_offset("$GSMYOffset");
-const QString gsm_skip_videos("$GSMSkipVideos");
-const QString gsm_emulate_field_flipping("$GSMFIELDFix");
-const QString gsm_source("$GSMSource");
-const QString game_id("$DNAS");
-const QString custom_elf("$AltStartup");
-const QString vmc_0("$VMC_0");
-const QString vmc_1("$VMC_1");
-const QString config_source("$ConfigSource");
+static const char compatibility[] = "$Compatibility";
+static const char enable_gsm[] = "$EnableGSM";
+static const char gsm_v_mode[] = "$GSMVMode";
+static const char gsm_x_offset[] = "$GSMXOffset";
+static const char gsm_y_offset[] = "$GSMYOffset";
+static const char gsm_skip_videos[] = "$GSMSkipVideos";
+static const char gsm_emulate_field_flipping[] = "$GSMFIELDFix";
+static const char gsm_source[] = "$GSMSource";
+static const char game_id[] = "$DNAS";
+static const char custom_elf[] = "$AltStartup";
+static const char vmc_0[] = "$VMC_0";
+static const char vmc_1[] = "$VMC_1";
+static const char config_source[] = "$ConfigSource";
 
 } // namespace Key
 
 void parse(const QString & _key, const QString & _value, GameConfiguration & _config)
 {
-    if(Key::compatibility.compare(_key) == 0)
+    if(_key.compare(Key::compatibility) == 0)
     {
         quint16 modes = _value.toUShort();
         _config.is_mode_1_enabled = modes & GM_Mode1;
@@ -71,34 +71,34 @@ void parse(const QString & _key, const QString & _value, GameConfiguration & _co
         _config.is_mode_7_enabled = modes & GM_Mode7;
         _config.is_mode_8_enabled = modes & GM_Mode8;
     }
-    else if(Key::enable_gsm.compare(_key) == 0)
+    else if(_key.compare(Key::enable_gsm) == 0)
         _config.is_gsm_enabled = _value.toInt() == 1;
-    else if(Key::gsm_source.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_source) == 0)
         _config.is_global_gsm_enabled = _value.toInt() == 0 ? true : false;
-    else if(Key::gsm_v_mode.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_v_mode) == 0)
         _config.gsm_video_mode = _value.toInt();
-    else if(Key::gsm_x_offset.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_x_offset) == 0)
         _config.gsm_x_offset = _value.toInt();
-    else if(Key::gsm_y_offset.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_y_offset) == 0)
         _config.gsm_y_offset = _value.toInt();
-    else if(Key::gsm_skip_videos.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_skip_videos) == 0)
         _config.is_gsm_skip_fmv_enabled = _value.toInt() == 1;
-    else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_emulate_field_flipping) == 0)
         _config.is_gsm_emulate_field_flipping_enabled = _value.toInt() == 1;
-    else if(Key::game_id.compare(_key) == 0)
+    else if(_key.compare(Key::game_id) == 0)
         _config.game_id = _value;
-    else if(Key::custom_elf.compare(_key) == 0)
+    else if(_key.compare(Key::custom_elf) == 0)
         _config.custom_elf = _value;
-    else if(Key::vmc_0.compare(_key) == 0)
+    else if(_key.compare(Key::vmc_0) == 0)
         _config.vmc0 = _value;
-    else if(Key::vmc_1.compare(_key) == 0)
+    else if(_key.compare(Key::vmc_1) == 0)
         _config.vmc1 = _value;
 }
 
 bool write(QFile & _file, const GameConfiguration & _config, const QString & _key)
 {
     QString value;
-    if(Key::compatibility.compare(_key) == 0)
+    if(_key.compare(Key::compatibility) == 0)
     {
         quint8 mode = 0;
         if(_config.is_mode_1_enabled) mode |= GM_Mode1;
@@ -112,44 +112,44 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
         if(mode)
             value = QString::number(mode);
     }
-    else if(Key::game_id.compare(_key) == 0)
+    else if(_key.compare(Key::game_id) == 0)
         value = _config.game_id;
-    else if(Key::custom_elf.compare(_key) == 0)
+    else if(_key.compare(Key::custom_elf) == 0)
         value = _config.custom_elf;
-    else if(Key::vmc_0.compare(_key) == 0)
+    else if(_key.compare(Key::vmc_0) == 0)
         value = _config.vmc0;
-    else if(Key::vmc_1.compare(_key) == 0)
+    else if(_key.compare(Key::vmc_1) == 0)
         value = _config.vmc1;
-    else if(Key::config_source.compare(_key) == 0)
+    else if(_key.compare(Key::config_source) == 0)
         value = "1";
-    else if(Key::enable_gsm.compare(_key) == 0)
+    else if(_key.compare(Key::enable_gsm) == 0)
         value = _config.is_gsm_enabled ? "1" : "0";
-    else if(Key::gsm_source.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_source) == 0)
     {
         if(_config.is_gsm_enabled)
             value = _config.is_global_gsm_enabled ? "0" : "1";
     }
-    else if(Key::gsm_v_mode.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_v_mode) == 0)
     {
         if(_config.is_gsm_enabled)
             value = QString::number(static_cast<int>(_config.gsm_video_mode));
     }
-    else if(Key::gsm_x_offset.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_x_offset) == 0)
     {
         if(_config.is_gsm_enabled)
             value = QString::number(_config.gsm_x_offset);
     }
-    else if(Key::gsm_y_offset.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_y_offset) == 0)
     {
         if(_config.is_gsm_enabled)
             value = QString::number(_config.gsm_y_offset);
     }
-    else if(Key::gsm_skip_videos.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_skip_videos) == 0)
     {
         if(_config.is_gsm_enabled)
             value = _config.is_gsm_skip_fmv_enabled ? "1" : "0";
     }
-    else if(Key::gsm_emulate_field_flipping.compare(_key) == 0)
+    else if(_key.compare(Key::gsm_emulate_field_flipping) == 0)
     {
         if(_config.is_gsm_enabled)
             value = _config.is_gsm_emulate_field_flipping_enabled ? "1" : "0";
@@ -157,7 +157,7 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
     else
         return false;
     if(!value.isEmpty())
-        _file.write(QString("%1=%2\n").arg(_key).arg(value).toLatin1());
+        _file.write(QString("%1=%2\n").arg(_key, value).toLatin1());
     return true;
 }
 

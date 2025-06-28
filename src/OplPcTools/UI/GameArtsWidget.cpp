@@ -230,9 +230,7 @@ void GameArtsWidget::deleteGameArt()
     {
         QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
         QMessageBox message_box(QMessageBox::Question, tr("Delete Picture"),
-            QString("%1\n%2")
-                .arg(tr("Are you sure you want to delete this picture?"))
-                .arg(item->text()),
+            QString("%1\n%2").arg(tr("Are you sure you want to delete this picture?"), item->text()),
             QMessageBox::Yes | QMessageBox::No);
         message_box.setDefaultButton(QMessageBox::Yes);
         message_box.setCheckBox(checkbox);

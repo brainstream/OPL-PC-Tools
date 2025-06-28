@@ -50,7 +50,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
     QDir base_directory(m_base_directory);
     if(!base_directory.cd(_media_type == MediaType::CD ? cd_directory : dvd_directory))
         return;
-    for(const QString & iso : base_directory.entryList({ "*.iso" }))
+    foreach(const QString & iso, base_directory.entryList({ "*.iso" }))
     {
         Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(base_directory.absoluteFilePath(iso))));
         if(!image.init())
@@ -96,7 +96,7 @@ bool DirectoryGameStorage::performRegistration(const Game & _game)
 
 QString DirectoryGameStorage::makeIsoFilename(const QString & _title, const QString & _id)
 {
-    return QString("%1.%2.iso").arg(_id).arg(_title);
+    return QString("%1.%2.iso").arg(_id, _title);
 }
 
 QString DirectoryGameStorage::makeIsoFilename(const QString & _title)
@@ -106,7 +106,7 @@ QString DirectoryGameStorage::makeIsoFilename(const QString & _title)
 
 QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const QString & _id)
 {
-    return QString("%1.%2.iso").arg(_id).arg(_title);
+    return QString("%1.%2.iso").arg(_id, _title);
 }
 
 bool DirectoryGameStorage::performDeletion(const Game & _game)

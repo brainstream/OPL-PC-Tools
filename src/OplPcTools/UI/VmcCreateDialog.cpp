@@ -64,13 +64,13 @@ void VmcCreateDialog::create()
     LambdaThread * thread = new LambdaThread([this, title, size]() {
         mp_created_vmc = Library::instance().vmcs().createVmc(title, size);
     }, this);
-    connect(thread, &LambdaThread::exception, [this](const QString & message) {
+    connect(thread, &LambdaThread::exception, this, [this](const QString & message) {
         m_is_in_progress = false;
         setProgressVisibility();
         mp_label_error_message->setText(message);
     });
     connect(thread, &LambdaThread::finished, this, &VmcCreateDialog::accept);
-    connect(thread, &LambdaThread::finished, [this, thread]() {
+    connect(thread, &LambdaThread::finished, this, [this, thread]() {
         thread->deleteLater();
         m_is_in_progress = false;
     });

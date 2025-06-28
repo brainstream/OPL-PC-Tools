@@ -32,7 +32,7 @@ class Game final
 public:
     inline Game(const QString & _id, GameInstallationType _type);
     Game(const Game &) = default;
-    Game & operator = (const Game &) = default;
+    Game & operator = (const Game &) = delete;
     inline const Uuid & uuid() const;
     inline const QString & id() const;
     inline void setTitle(const QString & _title);

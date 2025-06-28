@@ -46,7 +46,7 @@ QTranslator * setupTranslator(const QString & _base_name)
 {
     QString locale = QLocale::system().name();
     locale.truncate(locale.lastIndexOf('_'));
-    const QString filename = QString("%1_%2.qm").arg(_base_name).arg(locale);
+    const QString filename = QString("%1_%2.qm").arg(_base_name, locale);
     QString filepath = QDir(gp_application->applicationDirPath()).absoluteFilePath(filename);
     if(!QFile::exists(filepath))
     {
@@ -120,8 +120,8 @@ bool Application::pushActivity(Intent & _intent)
 
 int main(int _argc, char * _argv[])
 {
-    qRegisterMetaType<Uuid>("Uuid");
-    qRegisterMetaType<GameArtType>("GameArtType");
+    qRegisterMetaType<Uuid>("OplPcTools::Uuid");
+    qRegisterMetaType<GameArtType>("OplPcTools::GameArtType");
     QApplication::setDesktopSettingsAware(true);
     gp_application = new PrivateApplication(_argc, _argv);
     gp_application->setApplicationName(APPLICATION_NAME);

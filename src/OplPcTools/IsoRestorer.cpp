@@ -23,6 +23,7 @@
 #include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/IsoRestorer.h>
+#include <OplPcTools/File.h>
 
 using namespace OplPcTools;
 
@@ -36,15 +37,15 @@ IsoRestorer::IsoRestorer(const Game & _game, const QString & _iso_filepath, QObj
 bool IsoRestorer::restore()
 {
     QFile iso(m_iso_filepath);
-    if(!iso.open(QIODevice::WriteOnly | QIODevice::Truncate))
-        throw IOException(tr("Unable to open file to write: \"%1\"").arg(m_iso_filepath));
+    openFile(iso, QIODevice::WriteOnly | QIODevice::Truncate);
     QStringList filenames;
     filenames.reserve(mr_game.partCount());
     QDir games_dir(Library::instance().directory());
     quint64 all_files_total_size = 0;
     for(quint8 part = 0; part < mr_game.partCount(); ++part)
     {
-        QString filename = games_dir.absoluteFilePath(UlConfigGameStorage::makePartFilename(mr_game.id(), mr_game.title(), part));
+        QString filename = games_dir.absoluteFilePath(
+            UlConfigGameStorage::makePartFilename(mr_game.id(), mr_game.title(), part));
         filenames.append(filename);
         QFileInfo file_info(filename);
         if(!file_info.exists())
@@ -60,8 +61,7 @@ bool IsoRestorer::restore()
     for(const QString & filename : filenames)
     {
         QFile file(filename);
-        if(!file.open(QIODevice::ReadOnly))
-            throw IOException(tr("Unable to open file to read: \"%1\"").arg(filename));
+        openFile(file, QIODevice::ReadOnly);
         for(int i = 0; ; ++i)
         {
             if(QThread::currentThread()->isInterruptionRequested())
@@ -69,26 +69,33 @@ bool IsoRestorer::restore()
                 rollback();
                 return false;
             }
-            qint64 read_bytes = file.read(buffer.data(), batch_size);
+            qint64 read_bytes = 0;
+            try
+            {
+                read_bytes = readFile(file, buffer.data(), batch_size);
+            }
+            catch(...)
+            {
+                rollback();
+                throw;
+            }
             if(read_bytes > 0)
             {
-                qint64 write_bytes = iso.write(buffer.constData(), read_bytes);
-                if(write_bytes <= 0)
+                try
+                {
+                    qint64 write_bytes = writeFile(iso, buffer.constData(), read_bytes);
+                    total_write_bytes += write_bytes;
+                }
+                catch(...)
                 {
                     rollback();
-                    throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(m_iso_filepath));
+                    throw;
                 }
-                total_write_bytes += write_bytes;
                 if(i % 5 == 0 || total_write_bytes == all_files_total_size)
                 {
                     iso.flush();
                 }
                 emit progress(all_files_total_size, total_write_bytes);
-            }
-            else if(read_bytes < 0)
-            {
-                rollback();
-                throw IOException(tr("Unable to read the file: \"%1\"").arg(filename));
             }
             if(read_bytes == 0 || read_bytes < batch_size)
             {

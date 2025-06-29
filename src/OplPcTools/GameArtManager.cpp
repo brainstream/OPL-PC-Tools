@@ -22,12 +22,14 @@
 
 using namespace OplPcTools;
 
+const char GameArtManager::art_directory[] = "ART";
+
 GameArtManager::GameArtManager(const QDir & _base_directory, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     m_cached_types(),
     m_art_props(makeGameArtProperies())
 {
-    m_directory_path = _base_directory.absoluteFilePath("ART");
+    m_directory_path = _base_directory.absoluteFilePath(art_directory);
 }
 
 void GameArtManager::addCacheType(GameArtType _type)
@@ -139,7 +141,7 @@ void GameArtManager::setArt(const QString & _game_id, GameArtType _type, const G
     QDir dir(m_directory_path);
     if(!dir.exists())
         dir.mkpath(".");
-    QString filename = dir.absoluteFilePath(_game_id + props.suffix + ".png");
+    QString filename = dir.absoluteFilePath(makeArtFilename(_game_id, props));
     if(!pixmap.save(filename))
         throw IOException(QObject::tr("Unable to save file \"%1\"").arg(filename));
     if(m_cached_types & _type)

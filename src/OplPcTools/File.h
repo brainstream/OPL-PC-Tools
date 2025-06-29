@@ -39,6 +39,22 @@ inline void renameFile(const QString & _old_filename, const QString & _new_filen
         throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename, _new_filename));
 }
 
+inline qint64 writeFile(QFile & _file, const char * _data, qint64 _length)
+{
+    qint64 write_bytes = _file.write(_data, _length);
+    if(write_bytes <= 0)
+        throw IOException(QObject::tr("Unable to write a data into the file: \"%1\"").arg(_file.fileName()));
+    return write_bytes;
+}
+
+inline qint64 readFile(QFile & _file, char * _buffer, qint64 _length)
+{
+    qint64 read_bytes = _file.read(_buffer, _length);
+    if(read_bytes < 0)
+        throw IOException(QObject::tr("Unable to read the file: \"%1\"").arg(_file.fileName()));
+    return read_bytes;
+}
+
 bool isFilenameValid(const QString & _filename);
 
 void validateFilename(const QString & _filename);

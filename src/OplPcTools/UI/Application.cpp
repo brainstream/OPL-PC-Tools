@@ -24,6 +24,7 @@
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Uuid.h>
 #include <OplPcTools/GameArtManager.h>
+#include <OplPcTools/GameImporter.h>
 #include <OplPcTools/UI/Application.h>
 
 using namespace OplPcTools;
@@ -122,6 +123,7 @@ int main(int _argc, char * _argv[])
 {
     qRegisterMetaType<Uuid>("OplPcTools::Uuid");
     qRegisterMetaType<GameArtType>("OplPcTools::GameArtType");
+    qRegisterMetaType<GameImportPorgress>("OplPcTools::GameImportPorgress");
     QApplication::setDesktopSettingsAware(true);
     gp_application = new PrivateApplication(_argc, _argv);
     gp_application->setApplicationName(APPLICATION_NAME);

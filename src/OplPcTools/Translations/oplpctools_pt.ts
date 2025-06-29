@@ -79,6 +79,14 @@
     </message>
 </context>
 <context>
+    <name>ChooseUlGamesDialog</name>
+    <message>
+        <location filename="../UI/ChooseUlGamesDialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameArtsWidget</name>
     <message>
         <location filename="../UI/GameArtsWidget.ui" line="70"/>
@@ -264,6 +272,19 @@
     </message>
 </context>
 <context>
+    <name>GameImporterActivity</name>
+    <message>
+        <location filename="../UI/GameImporterActivity.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.ui" line="40"/>
+        <source>Back</source>
+        <translation type="unfinished">Voltar</translation>
+    </message>
+</context>
+<context>
     <name>GameInstallerActivity</name>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="37"/>
@@ -364,74 +385,89 @@
 <context>
     <name>GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="187"/>
+        <location filename="../UI/GameListWidget.ui" line="212"/>
         <source>Filter</source>
         <translation>Filtrar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="387"/>
+        <location filename="../UI/GameListWidget.ui" line="411"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="407"/>
+        <location filename="../UI/GameListWidget.ui" line="431"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="427"/>
+        <location filename="../UI/GameListWidget.ui" line="451"/>
         <source>Source:</source>
         <translation>Fonte:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="447"/>
+        <location filename="../UI/GameListWidget.ui" line="471"/>
         <source>Parts:</source>
         <translation>Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="493"/>
+        <location filename="../UI/GameListWidget.ui" line="517"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="496"/>
+        <location filename="../UI/GameListWidget.ui" line="520"/>
         <source>Edit game</source>
         <translation>Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="508"/>
+        <location filename="../UI/GameListWidget.ui" line="532"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="511"/>
+        <location filename="../UI/GameListWidget.ui" line="535"/>
         <source>Delete game</source>
         <translation>Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="523"/>
+        <location filename="../UI/GameListWidget.ui" line="547"/>
         <source>Install</source>
         <translation>Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="526"/>
+        <location filename="../UI/GameListWidget.ui" line="550"/>
         <source>Install game</source>
         <translation>Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="538"/>
+        <location filename="../UI/GameListWidget.ui" line="562"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="541"/>
+        <location filename="../UI/GameListWidget.ui" line="565"/>
         <source>Rename game</source>
         <translation>Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="553"/>
+        <location filename="../UI/GameListWidget.ui" line="577"/>
         <source>Restore ISO</source>
         <translation>Restaurar ISO</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="589"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="592"/>
+        <source>Import game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="595"/>
+        <source>Ctrl+I</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -566,6 +602,19 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::GameImporter</name>
+    <message>
+        <location filename="../GameImporter.cpp" line="65"/>
+        <source>File &quot;%1&quot; does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../GameImporter.cpp" line="70"/>
+        <source>File &quot;%1&quot; already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::GameInstaller</name>
     <message>
         <location filename="../GameInstaller.cpp" line="35"/>
@@ -576,40 +625,20 @@
 <context>
     <name>OplPcTools::IsoRestorer</name>
     <message>
-        <location filename="../IsoRestorer.cpp" line="40"/>
-        <source>Unable to open file to write: &quot;%1&quot;</source>
-        <translation>Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../IsoRestorer.cpp" line="53"/>
+        <location filename="../IsoRestorer.cpp" line="54"/>
         <source>File not found: &quot;%1&quot;</source>
         <translation>Arquivo não encontrado: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../IsoRestorer.cpp" line="64"/>
-        <source>Unable to open file to read: &quot;%1&quot;</source>
-        <translation>Incapaz de abrir arquivo para leitura: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../IsoRestorer.cpp" line="79"/>
-        <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation>Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../IsoRestorer.cpp" line="91"/>
-        <source>Unable to read the file: &quot;%1&quot;</source>
-        <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="108"/>
+        <location filename="../UI/Application.cpp" line="109"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="113"/>
+        <location filename="../UI/Application.cpp" line="114"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -721,6 +750,24 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::GameImporterActivity</name>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="101"/>
+        <source>Select OPL Game Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="108"/>
+        <source>Unable to open game storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="124"/>
+        <source>Unable to read game from the storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="381"/>
@@ -756,22 +803,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="361"/>
+        <location filename="../UI/GameListWidget.cpp" line="365"/>
         <source>Directory</source>
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="428"/>
+        <location filename="../UI/GameListWidget.cpp" line="438"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="429"/>
+        <location filename="../UI/GameListWidget.cpp" line="439"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="431"/>
+        <location filename="../UI/GameListWidget.cpp" line="441"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
@@ -1015,7 +1062,7 @@
         <translation>%1 byte(s) restante</translation>
     </message>
     <message>
-        <location filename="../GameArtManager.cpp" line="144"/>
+        <location filename="../GameArtManager.cpp" line="146"/>
         <source>Unable to save file &quot;%1&quot;</source>
         <translation>Incapaz de salvar o arquivo &quot;%1&quot;</translation>
     </message>
@@ -1069,6 +1116,16 @@
         <location filename="../File.h" line="39"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <location filename="../File.h" line="46"/>
+        <source>Unable to write a data into the file: &quot;%1&quot;</source>
+        <translation type="unfinished">Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../File.h" line="54"/>
+        <source>Unable to read the file: &quot;%1&quot;</source>
+        <translation type="unfinished">Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="60"/>

@@ -16,55 +16,37 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMEARTMANAGER__
-#define __OPLPCTOOLS_GAMEARTMANAGER__
+#pragma once
 
-#include <QDir>
-#include <OplPcTools/Maybe.h>
-#include <OplPcTools/GameArt.h>
-#include <OplPcTools/GameArtSource.h>
+#include "ui_GameImporterActivity.h"
+#include <OplPcTools/UI/Activity.h>
+#include <OplPcTools/UI/Intent.h>
+#include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/GameArtManager.h>
 
-namespace OplPcTools {
+namespace OplPcTools::UI {
 
-class GameArtManager final : public QObject
+class GameImporterActivity : public Activity, private Ui::GameImporterActivity
 {
     Q_OBJECT
 
-    using GameCache = QMap<GameArtType, Maybe<QPixmap>>;
-    using CacheMap = QMap<QString, Maybe<GameCache>>;
+private:
+    class WorkerThread;
 
 public:
-    explicit GameArtManager(const QDir & _base_directory, QObject * _parent = nullptr);
-    void addCacheType(GameArtType _type);
-    void removeCacheType(GameArtType _type, bool _clear_cache);
-    QPixmap load(const QString & _game_id, GameArtType _type);
-    void deleteArt(const QString & _game_id, GameArtType _type);
-    void clearArts(const QString & _game_id);
-    void setArt(const QString & _game_id, GameArtType _type, const GameArtSource & _source);
-
-    static QString makeArtFilename(const QString & _game_id, const GameArtProperties & _porperties)
-    {
-        return _game_id + _porperties.suffix + ".png";
-    }
-
-public:
-    static const char art_directory[];
-
-signals:
-    void artChanged(const QString & _game_id, GameArtType _type);
+    explicit GameImporterActivity(GameArtManager & _art_manager, QWidget * _parent = nullptr);
+    bool onAttach() override;
+    static QSharedPointer<Intent> createIntent(GameArtManager & _art_manager);
 
 private:
-    void clearCache(GameArtType _type);
-    Maybe<QPixmap> findInCache(const QString & _game_id, GameArtType _type) const;
-    void cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap);
+    void setBusyUIState(bool _is_busy);
+
+private slots:
+    void onThreadFinished();
 
 private:
-    QString m_directory_path;
-    CacheMap m_cache;
-    QFlags<GameArtType> m_cached_types;
-    QMap<GameArtType, GameArtProperties> m_art_props;
+    GameArtManager & mr_art_manager;
+    WorkerThread * mp_thread;
 };
 
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_GAMEARTMANAGER__
+} // namespace OplPcTools::UI

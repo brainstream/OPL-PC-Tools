@@ -16,55 +16,28 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMEARTMANAGER__
-#define __OPLPCTOOLS_GAMEARTMANAGER__
+#pragma once
 
-#include <QDir>
-#include <OplPcTools/Maybe.h>
-#include <OplPcTools/GameArt.h>
-#include <OplPcTools/GameArtSource.h>
+#include "ui_ChooseUlGamesDialog.h"
+#include <OplPcTools/UlConfigGameStorage.h>
+#include <QSet>
 
-namespace OplPcTools {
+namespace OplPcTools::UI {
 
-class GameArtManager final : public QObject
+class ChooseUlGamesDialog : public QDialog, private Ui::ChooseUlGamesDialog
 {
     Q_OBJECT
 
-    using GameCache = QMap<GameArtType, Maybe<QPixmap>>;
-    using CacheMap = QMap<QString, Maybe<GameCache>>;
-
 public:
-    explicit GameArtManager(const QDir & _base_directory, QObject * _parent = nullptr);
-    void addCacheType(GameArtType _type);
-    void removeCacheType(GameArtType _type, bool _clear_cache);
-    QPixmap load(const QString & _game_id, GameArtType _type);
-    void deleteArt(const QString & _game_id, GameArtType _type);
-    void clearArts(const QString & _game_id);
-    void setArt(const QString & _game_id, GameArtType _type, const GameArtSource & _source);
-
-    static QString makeArtFilename(const QString & _game_id, const GameArtProperties & _porperties)
-    {
-        return _game_id + _porperties.suffix + ".png";
-    }
-
-public:
-    static const char art_directory[];
-
-signals:
-    void artChanged(const QString & _game_id, GameArtType _type);
+    explicit ChooseUlGamesDialog(const UlConfigGameStorage & _storage, QWidget * _parent = nullptr);
+    QSet<Uuid> selectedGameIds() const { return m_selected_games; }
 
 private:
-    void clearCache(GameArtType _type);
-    Maybe<QPixmap> findInCache(const QString & _game_id, GameArtType _type) const;
-    void cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap);
+    void updateUiState();
+    void onListItemChanged(QListWidgetItem * _item);
 
 private:
-    QString m_directory_path;
-    CacheMap m_cache;
-    QFlags<GameArtType> m_cached_types;
-    QMap<GameArtType, GameArtProperties> m_art_props;
+    QSet<Uuid> m_selected_games;
 };
 
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_GAMEARTMANAGER__
+} // namespace OplPcTools::UI

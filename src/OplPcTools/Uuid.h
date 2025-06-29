@@ -90,6 +90,11 @@ Uuid Uuid::createUuid()
     return Uuid(QUuid::createUuid());
 }
 
+inline uint qHash(Uuid _uuid, uint _seed = 0) noexcept
+{
+    return ::qHash(_uuid.quuid(), _seed);
+}
+
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_UUID__

@@ -28,7 +28,7 @@ class UlConfigGameInstaller : public GameInstaller
     Q_OBJECT
 
 public:
-    explicit UlConfigGameInstaller(Device & _device,QObject * _parent = nullptr);
+    explicit UlConfigGameInstaller(Device & _device, QObject * _parent = nullptr);
     ~UlConfigGameInstaller() override;
     inline const Game * installedGame() const override;
 

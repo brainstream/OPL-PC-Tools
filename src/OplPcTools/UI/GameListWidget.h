@@ -51,6 +51,7 @@ private:
     void onLibraryLoaded();
     void renameGame();
     void showGameDetails();
+    void showGameImporter();
     void showGameInstaller();
     void deleteGame();
     void startBusyThread(std::function<void()> _lambda);

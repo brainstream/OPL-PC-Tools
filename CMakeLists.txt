@@ -146,6 +146,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/GameInstallationType.h
     ${OPT_SRC_DIR}/GameInstaller.cpp
     ${OPT_SRC_DIR}/GameInstaller.h
+    ${OPT_SRC_DIR}/GameImporter.h
+    ${OPT_SRC_DIR}/GameImporter.cpp
     ${OPT_SRC_DIR}/GameStorage.cpp
     ${OPT_SRC_DIR}/GameStorage.h
     ${OPT_SRC_DIR}/Iso9660DeviceSource.h
@@ -176,6 +178,9 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.cpp
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.h
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
+    ${OPT_SRC_DIR}/UI/ChooseUlGamesDialog.h
+    ${OPT_SRC_DIR}/UI/ChooseUlGamesDialog.cpp
+    ${OPT_SRC_DIR}/UI/ChooseUlGamesDialog.ui
     ${OPT_SRC_DIR}/UI/ClickableLabel.h
     ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.cpp
     ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.h
@@ -192,6 +197,9 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.cpp
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.h
     ${OPT_SRC_DIR}/UI/GameInstallerActivity.ui
+    ${OPT_SRC_DIR}/UI/GameImporterActivity.h
+    ${OPT_SRC_DIR}/UI/GameImporterActivity.cpp
+    ${OPT_SRC_DIR}/UI/GameImporterActivity.ui
     ${OPT_SRC_DIR}/UI/GameListWidget.cpp
     ${OPT_SRC_DIR}/UI/GameListWidget.h
     ${OPT_SRC_DIR}/UI/GameListWidget.ui
@@ -243,6 +251,7 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/VmcFS.cpp
     ${OPT_SRC_DIR}/VmcFS.h
     ${OPT_SRC_DIR}/VmcPath.h
+
 )
 
 if(WIN32)

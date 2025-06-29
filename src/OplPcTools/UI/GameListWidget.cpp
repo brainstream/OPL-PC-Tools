@@ -26,6 +26,7 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
+#include <OplPcTools/UI/GameImporterActivity.h>
 #include <OplPcTools/UI/GameInstallerActivity.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
@@ -224,6 +225,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_btn_edit->setDefaultAction(mp_action_edit);
     mp_btn_delete->setDefaultAction(mp_action_delete);
     mp_btn_install->setDefaultAction(mp_action_install);
+    mp_btn_import->setDefaultAction(mp_action_import);
     mp_btn_resore_iso->setDefaultAction(mp_action_restore_iso);
     mp_context_menu = new QMenu(this);
     mp_context_menu->addAction(mp_action_rename);
@@ -231,6 +233,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_context_menu->addAction(mp_action_restore_iso);
     mp_context_menu->addAction(mp_action_delete);
     mp_context_menu->addSeparator();
+    mp_context_menu->addAction(mp_action_import);
     mp_context_menu->addAction(mp_action_install);
     activateCollectionControls(false);
     activateItemControls(nullptr);
@@ -241,6 +244,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
+    connect(mp_action_import, &QAction::triggered, this, &GameListWidget::showGameImporter);
     connect(mp_action_install, &QAction::triggered, this, &GameListWidget::showGameInstaller);
     connect(mp_action_restore_iso, &QAction::triggered, this, &GameListWidget::showIsoRestorer);
     connect(mp_tree_games, &QTreeView::activated, this, [this](const QModelIndex &) { showGameDetails(); });
@@ -410,6 +414,12 @@ void GameListWidget::showIsoRestorer()
         QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->uuid());
         Application::pushActivity(*intent);
     }
+}
+
+void GameListWidget::showGameImporter()
+{
+    QSharedPointer<Intent> intent = GameImporterActivity::createIntent(*mp_game_art_manager);
+    Application::pushActivity(*intent);
 }
 
 void GameListWidget::showGameInstaller()

@@ -185,8 +185,8 @@ GameConfiguration::GameConfiguration() :
     gsm_y_offset(0),
     gsm_video_mode(-1),
     is_gsm_skip_fmv_enabled(false),
-    is_global_gsm_enabled(false),
-    is_gsm_emulate_field_flipping_enabled(false)
+    is_gsm_emulate_field_flipping_enabled(false),
+    is_global_gsm_enabled(false)
 {
 }
 

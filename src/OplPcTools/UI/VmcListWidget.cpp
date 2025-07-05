@@ -240,7 +240,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
 
 void VmcListWidget::setupShortcuts()
 {
-    QShortcut * shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    QShortcut * shortcut = new QShortcut(QKeySequence(static_cast<int>(Qt::CTRL) | static_cast<int>(Qt::Key_F)), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText(), shortcut->key().toString()));
     connect(shortcut, &QShortcut::activated, this, [this]() { mp_edit_filter->setFocus(); });

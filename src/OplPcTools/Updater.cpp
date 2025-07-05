@@ -186,8 +186,8 @@ const QVector<const Release *> ReleaseParser::releases() const
 }
 
 Updater::Updater(QObject * _parent /*= nullptr*/) :
-    m_current_version(Version(_OPLPCTOOLS_VERSION_MAJOR, _OPLPCTOOLS_VERSION_MINOR)),
-    QObject(_parent)
+    QObject(_parent),
+    m_current_version(Version(_OPLPCTOOLS_VERSION_MAJOR, _OPLPCTOOLS_VERSION_MINOR))
 {
 }
 

@@ -617,7 +617,7 @@ void GameInstallerActivity::registrationStarted()
 {
     static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index))->
         setStatus(GameInstallationStatus::Registration);
-    if(m_processing_task_index + 1 == mp_tree_tasks->topLevelItemCount())
+    if(m_processing_task_index + 1 == static_cast<quint32>(mp_tree_tasks->topLevelItemCount()))
         setOverallProgressUnknownStatus(true);
 }
 
@@ -702,7 +702,7 @@ void GameInstallerActivity::cancel()
         m_is_canceled = true;
         mp_btn_cancel->setDisabled(true);
         mp_working_thread->requestInterruption();
-        for(int i = mp_tree_tasks->topLevelItemCount() - 1; i > m_processing_task_index; --i)
+        for(quint32 i = mp_tree_tasks->topLevelItemCount() - 1; i > m_processing_task_index; --i)
         {
             setTaskError(canceledErrorMessage(), i);
         }

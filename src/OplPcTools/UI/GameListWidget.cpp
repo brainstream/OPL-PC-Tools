@@ -178,7 +178,13 @@ QVariant GameListWidget::GameTreeModel::data(const QModelIndex & _index, int _ro
     switch(_role)
     {
     case Qt::DisplayRole:
-        return mr_game_collection.findGame(m_uuids[_index.row()])->title();
+    {
+        const Game * game = mr_game_collection.findGame(m_uuids[_index.row()]);
+        if(game)
+            return game->title();
+        else
+            return QVariant();
+    }
     case Qt::DecorationRole:
         if(mp_art_manager)
         {
@@ -261,7 +267,8 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
 
 void GameListWidget::setupShortcuts()
 {
-    QShortcut * filter_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    QShortcut * filter_shortcut = new QShortcut(
+        QKeySequence(static_cast<int>(Qt::CTRL) | static_cast<int>(Qt::Key_F)), this);
     mp_edit_filter->setPlaceholderText(QString("%1 (%2)")
         .arg(mp_edit_filter->placeholderText(), filter_shortcut->key().toString()));
     connect(filter_shortcut, &QShortcut::activated, this, [this]() { mp_edit_filter->setFocus(); });

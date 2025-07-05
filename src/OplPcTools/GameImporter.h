@@ -69,6 +69,7 @@ struct GameImportPorgress
     quint64 total_parts_bytes;
     quint64 done_parts_bytes;
     State state;
+    QString game_title;
 };
 
 class GameImporter : public QObject

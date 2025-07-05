@@ -48,8 +48,8 @@ GameArtNetworkSource::GameArtNetworkSource(
     QObject * _parent
 ) :
     QObject(_parent),
-    mp_reply(_reply),
-    m_task(_task)
+    m_task(_task),
+    mp_reply(_reply)
 {
     connect(_reply, &QNetworkReply::finished, this, &GameArtNetworkSource::onReplyFinished);
     connect(_reply, &QNetworkReply::errorOccurred, this, &GameArtNetworkSource::onReplyError);

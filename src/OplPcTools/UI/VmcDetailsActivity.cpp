@@ -262,7 +262,7 @@ void VmcDetailsActivity::setupShortcuts()
     connect(shortcut, &QShortcut::activated, this, &VmcDetailsActivity::close);
     shortcut = new QShortcut(QKeySequence("Esc"), this);
     connect(shortcut, &QShortcut::activated, this, &VmcDetailsActivity::close);
-    shortcut = new QShortcut(QKeySequence(Qt::ALT | Qt::Key_Left), this);
+    shortcut = new QShortcut(QKeySequence(static_cast<int>(Qt::ALT) | static_cast<int>(Qt::Key_Left)), this);
     connect(shortcut, &QShortcut::activated, mp_btn_fs_back, &QToolButton::click);
     shortcut = new QShortcut(QKeySequence(Qt::Key_PageUp), this);
     connect(shortcut, &QShortcut::activated, mp_btn_fs_back, &QToolButton::click);

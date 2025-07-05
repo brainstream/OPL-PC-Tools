@@ -44,6 +44,7 @@ GameImporter::GameImporter(
     m_source_directory(_source_directory),
     m_game(_game)
 {
+    m_progress.game_title = _game.title();
 }
 
 bool GameImporter::import()
@@ -83,6 +84,7 @@ bool GameImporter::import()
     {
         m_progress.state = GameImportPorgress::State::Cancelled;
         emit progress(m_progress);
+        rollback(tasks);
         return false;
     }
     catch(const Exception & exception)
@@ -118,7 +120,7 @@ bool GameImporter::processTask(FileCopyTask & _task)
     QFile src(_task.src.fileName());
     openFile(src, QIODevice::ReadOnly);
     QSharedPointer<QFile> dest = openFileToSyncWrite(_task.dest.fileName());
-    for(int i = 0; ; ++i)
+    for(;;)
     {
         if(QThread::currentThread()->isInterruptionRequested())
         {
@@ -143,8 +145,10 @@ void GameImporter::rollback(std::list<FileCopyTask> & _tasks)
 {
     m_progress.state = GameImportPorgress::State::Rollback;
     emit progress(m_progress);
+    emit rollbackStarted();
     for(FileCopyTask & task : _tasks)
         task.dest.remove();
+    emit rollbackFinished();
 }
 
 void GameImporter::copyArts()

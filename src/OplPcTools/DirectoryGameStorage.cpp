@@ -91,6 +91,7 @@ bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _
 
 bool DirectoryGameStorage::performRegistration(const Game & _game)
 {
+    Q_UNUSED(_game)
     return true;
 }
 

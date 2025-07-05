@@ -71,7 +71,7 @@ bool VmcCollection::isLoaded() const
     return mp_vmcs != nullptr;
 }
 
-const int VmcCollection::count() const
+int VmcCollection::count() const
 {
     return isLoaded() ? mp_vmcs->size() : 0;
 }

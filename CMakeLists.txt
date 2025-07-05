@@ -25,7 +25,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 else()
     message(FATAL_ERROR "GNU g++ is required")
 endif()
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
     # Static linking for easy debugging
@@ -44,6 +44,9 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Application will be built in the Debug configuration")
     set(CMAKE_VERBOSE_MAKEFILE ON)
 endif()
+
+set(OPT_SANITYZER "" CACHE STRING "Enable a sanitizer")
+set_property(CACHE OPT_SANITYZER PROPERTY STRINGS "" "ASAN" "UBSAN" "TSAN")
 
 #######################
 # Libraries
@@ -285,6 +288,21 @@ if(WIN32)
     add_executable(${OPT_EXE_NAME} WIN32 ${OPT_SRC} ${QM_FILES})
 else()
     add_executable(${OPT_EXE_NAME} ${OPT_SRC} ${QM_FILES})
+endif()
+
+target_compile_options(${OPT_EXE_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+if(OPT_SANITYZER STREQUAL "ASAN")
+    message(STATUS "Using ADDRESS sanitizer")
+    target_link_options(${OPT_EXE_NAME} PRIVATE -fsanitize=address)
+elseif(OPT_SANITYZER STREQUAL "UBSAN")
+    message(STATUS "Using UNDEFINED BEHAVIOR sanitizer")
+    target_link_options(${OPT_EXE_NAME} PRIVATE -fsanitize=undefined)
+elseif(OPT_SANITYZER STREQUAL "TSAN")
+    message(STATUS "Using THREAD sanitizer")
+    target_link_options(${OPT_EXE_NAME} PRIVATE -fsanitize=thread)
+elseif(DEFINED OPT_SANITYZER AND NOT OPT_SANITYZER STREQUAL "")
+    message(FATAL_ERROR "Unknown sanitizer is selected: \"${OPT_SANITYZER}\"")
 endif()
 
 target_link_libraries(${OPT_EXE_NAME}

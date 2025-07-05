@@ -599,12 +599,12 @@
 <context>
     <name>OplPcTools::GameImporter</name>
     <message>
-        <location filename="../GameImporter.cpp" line="65"/>
+        <location filename="../GameImporter.cpp" line="66"/>
         <source>File not found: &quot;%1&quot;</source>
         <translation>Файл не найден: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../GameImporter.cpp" line="70"/>
+        <location filename="../GameImporter.cpp" line="71"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
@@ -747,19 +747,49 @@
 <context>
     <name>OplPcTools::UI::GameImporterActivity</name>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="101"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="108"/>
         <source>Select OPL Game Storage</source>
         <translation>Выберете хранилище игр OPL</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="108"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="115"/>
         <source>Unable to open game storage</source>
         <translation>Не могу открыть хранилище игр</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="124"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="132"/>
         <source>Unable to read game from the storage</source>
         <translation>Не могу прочитать игру из хранилища</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="158"/>
+        <source>Done</source>
+        <translation>Готово</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="158"/>
+        <source>Import complete</source>
+        <translation>Импорт завершён</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="169"/>
+        <source>Registration...</source>
+        <translation>Регистрация...</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="172"/>
+        <source>Copying pictures...</source>
+        <translation>Копирование изображений...</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="191"/>
+        <source>Importing &apos;%1&apos;...</source>
+        <translation>Импорт &apos;%1&apos;...</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameImporterActivity.cpp" line="217"/>
+        <source>Rolling back...</source>
+        <translation>Откат изменений...</translation>
     </message>
 </context>
 <context>
@@ -798,22 +828,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="365"/>
+        <location filename="../UI/GameListWidget.cpp" line="372"/>
         <source>Directory</source>
         <translation>Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="438"/>
+        <location filename="../UI/GameListWidget.cpp" line="445"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="439"/>
+        <location filename="../UI/GameListWidget.cpp" line="446"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="441"/>
+        <location filename="../UI/GameListWidget.cpp" line="448"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Вы уверены, что хотите удалить эту игру?</translation>
     </message>

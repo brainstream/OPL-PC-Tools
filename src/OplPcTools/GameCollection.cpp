@@ -116,7 +116,7 @@ void GameCollection::deleteGame(const Game & _game)
         throw Exception(tr("Unable to delete game \"%1\"").arg(_game.title()));
 }
 
-const bool GameCollection::contains(const QString & _game_id) const
+bool GameCollection::contains(const QString & _game_id) const
 {
     for(int i = count() - 1; i >= 0; --i)
     {

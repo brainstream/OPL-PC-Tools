@@ -62,7 +62,6 @@
        <property name="font">
         <font>
          <pointsize>12</pointsize>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -82,6 +81,19 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <spacer name="mp_spacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>386</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item>
        <widget class="QProgressBar" name="mp_progress_bar">
         <property name="value">

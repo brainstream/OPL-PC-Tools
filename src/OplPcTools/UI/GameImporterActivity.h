@@ -22,6 +22,7 @@
 #include <OplPcTools/UI/Activity.h>
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/GameImporter.h>
 #include <OplPcTools/GameArtManager.h>
 
 namespace OplPcTools::UI {
@@ -40,13 +41,21 @@ public:
 
 private:
     void setBusyUIState(bool _is_busy);
+    void setProgress(const GameImportPorgress * _current_progress);
+    void setUnknownCurrentProgress(const QString & _message);
 
 private slots:
     void onThreadFinished();
+    void onInstallerProgress(const OplPcTools::GameImportPorgress & _progress);
+    void onInstallerError(const QString & _message);
+    void onInstallerRollbackStarted();
+    void onInstallerRollbackFinished();
 
 private:
     GameArtManager & mr_art_manager;
     WorkerThread * mp_thread;
+    int m_total_count;
+    int m_done_count;
 };
 
 } // namespace OplPcTools::UI

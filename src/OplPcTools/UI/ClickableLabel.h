@@ -32,15 +32,15 @@ class ClickableLabel : public QLabel
 public:
     explicit ClickableLabel(QWidget * _parent = nullptr, Qt::WindowFlags _flags = Qt::WindowFlags()) :
         QLabel(_parent, _flags),
-        m_pressed(false),
-        m_mouse_in(false)
+        m_mouse_in(false),
+        m_pressed(false)
     {
     }
 
     explicit ClickableLabel(const QString & _text, QWidget * _parent = nullptr, Qt::WindowFlags _flags = Qt::WindowFlags()) :
         QLabel(_text, _parent, _flags),
-        m_pressed(false),
-        m_mouse_in(false)
+        m_mouse_in(false),
+        m_pressed(false)
     {
     }
 

@@ -31,7 +31,7 @@ struct BigEndian
     IntT toIntLE() const
     {
         IntT value = 0;
-        for(short i = 0; i < sizeof(IntT); ++i)
+        for(size_t i = 0; i < sizeof(IntT); ++i)
             value = (value << 8) | data[i];
         return value;
     }

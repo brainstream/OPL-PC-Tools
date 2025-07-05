@@ -89,7 +89,7 @@ bool UlConfigGameInstaller::performInstallation()
             }
             else if(read_bytes > 0)
             {
-                quint64 written_bytes = part->write(bytes.constData(), read_bytes);
+                qint64 written_bytes = part->write(bytes.constData(), read_bytes);
                 if(written_bytes != read_bytes)
                 {
                     part->close();

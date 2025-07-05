@@ -20,7 +20,6 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/ChooseUlGamesDialog.h>
 #include <OplPcTools/UlConfigGameStorage.h>
-#include <OplPcTools/GameImporter.h>
 #include <QSettings>
 #include <QFileDialog>
 #include <QThread>
@@ -33,6 +32,8 @@ namespace {
 namespace SettingsKey {
     const char * import_dir = "ImportDirectory";
 } // namespace SettingsKey
+
+const int g_progress_total = 10000;
 
 class GameImporterIntent : public Intent
 {
@@ -86,9 +87,15 @@ private:
 GameImporterActivity::GameImporterActivity(GameArtManager & _art_manager, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_art_manager(_art_manager),
-    mp_thread(new WorkerThread(this))
+    mp_thread(new WorkerThread(this)),
+    m_total_count(0),
+    m_done_count(0)
 {
     setupUi(this);
+    mp_progress_bar_overall->setMaximum(g_progress_total);
+    mp_progress_bar_current->setMaximum(g_progress_total);
+    mp_panel_progress->setVisible(false);
+    connect(mp_button_box, &QDialogButtonBox::rejected, mp_thread, &QThread::requestInterruption);
     connect(mp_btn_close, &QPushButton::clicked, this, &QObject::deleteLater);
     connect(mp_thread, &QThread::finished, this, &GameImporterActivity::onThreadFinished);
 }
@@ -115,7 +122,8 @@ bool GameImporterActivity::onAttach()
         return false;
     }
     QList<GameImporter *> importers;
-    importers.reserve(dlg.selectedGameIds().count());
+    m_total_count = dlg.selectedGameIds().count();
+    importers.reserve(m_total_count);
     foreach(const Uuid & id, dlg.selectedGameIds())
     {
         const Game * game = storage->findGame(id);
@@ -124,8 +132,14 @@ bool GameImporterActivity::onAttach()
             Application::showErrorMessage(tr("Unable to read game from the storage"));
             return false;
         }
-        importers.append(new GameImporter(source_directory, mr_art_manager, *game, this));
+        GameImporter * importer = new GameImporter(source_directory, mr_art_manager, *game, this);
+        importers.append(importer);
+        connect(importer, &GameImporter::progress, this, &GameImporterActivity::onInstallerProgress);
+        connect(importer, &GameImporter::error, this, &GameImporterActivity::onInstallerError);
+        connect(importer, &GameImporter::rollbackStarted, this, &GameImporterActivity::onInstallerRollbackStarted);
+        connect(importer, &GameImporter::rollbackFinished, this, &GameImporterActivity::onInstallerRollbackFinished);
     }
+    mp_panel_progress->setVisible(true);
     setBusyUIState(true);
     mp_thread->setImporters(importers);
     mp_thread->start();
@@ -141,6 +155,73 @@ void GameImporterActivity::setBusyUIState(bool _is_busy)
 void GameImporterActivity::onThreadFinished()
 {
     setBusyUIState(false);
+    Application::showMessage(tr("Done"), tr("Import complete"));
+}
+
+void GameImporterActivity::onInstallerProgress(const GameImportPorgress & _progress)
+{
+    switch(_progress.state)
+    {
+    case GameImportPorgress::State::PartsCopying:
+        setProgress(&_progress);
+        break;
+    case GameImportPorgress::State::GameRegistration:
+        setUnknownCurrentProgress(tr("Registration..."));
+        break;
+    case GameImportPorgress::State::ArtsRegistration:
+        setUnknownCurrentProgress(tr("Copying pictures..."));
+        break;
+    case GameImportPorgress::State::Done:
+        ++m_done_count;
+        setProgress(nullptr);
+        break;
+    default:
+        break;
+    }
+}
+
+void GameImporterActivity::setProgress(const GameImportPorgress * _current_progress)
+{
+    const float overall_part_for_game = static_cast<float>(g_progress_total) / m_total_count;
+    float game_progress = 0;
+    mp_progress_bar_current->setMaximum(g_progress_total);
+    if(_current_progress)
+    {
+        game_progress = static_cast<float>(_current_progress->done_parts_bytes) / _current_progress->total_parts_bytes;
+        mp_label_current->setText(tr("Importing '%1'...").arg(_current_progress->game_title));
+        mp_progress_bar_current->setValue(static_cast<int>(g_progress_total * game_progress));
+    }
+    else
+    {
+        mp_label_current->setText(QString());
+        mp_progress_bar_current->setValue(g_progress_total);
+    }
+    mp_progress_bar_overall->setValue(
+        static_cast<int>(overall_part_for_game * m_done_count + overall_part_for_game * game_progress));
+}
+
+void GameImporterActivity::setUnknownCurrentProgress(const QString & _message)
+{
+    mp_progress_bar_current->setValue(0);
+    mp_progress_bar_current->setMaximum(0);
+    mp_label_current->setText(_message);
+}
+
+void GameImporterActivity::onInstallerError(const QString & _message)
+{
+    Application::showErrorMessage(_message);
+}
+
+void GameImporterActivity::onInstallerRollbackStarted()
+{
+    setUnknownCurrentProgress(tr("Rolling back..."));
+}
+
+void GameImporterActivity::onInstallerRollbackFinished()
+{
+    mp_progress_bar_current->setValue(0);
+    mp_progress_bar_current->setMaximum(100);
+    mp_label_current->setText(QString());
 }
 
 QSharedPointer<Intent> GameImporterActivity::createIntent(GameArtManager & _art_manager)

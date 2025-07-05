@@ -75,7 +75,7 @@ GameArtDownloaderActivity::GameArtDownloaderActivity(
     mp_progress_bar->setMaximum(_art_types.count());
     mp_progress_bar->setValue(0);
     GameArtDownloader * downloader = new GameArtDownloader(this);
-    connect(downloader, &GameArtDownloader::taskComplete, this, [=](quint32, const QStringList & __errors) {
+    connect(downloader, &GameArtDownloader::taskComplete, this, [this, downloader](quint32, const QStringList & __errors) {
        downloader->deleteLater();
        if(!__errors.isEmpty())
            Application::showErrorMessage(__errors.join("\n\n"));

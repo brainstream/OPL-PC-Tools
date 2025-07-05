@@ -11,9 +11,16 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Choose Games</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCheckBox" name="mp_checkbox_select_all">
+     <property name="text">
+      <string>Select All</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QListWidget" name="mp_list_games"/>
    </item>

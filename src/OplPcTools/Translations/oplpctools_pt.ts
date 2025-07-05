@@ -82,7 +82,12 @@
     <name>ChooseUlGamesDialog</name>
     <message>
         <location filename="../UI/ChooseUlGamesDialog.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Choose Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/ChooseUlGamesDialog.ui" line="20"/>
+        <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -274,14 +279,9 @@
 <context>
     <name>GameImporterActivity</name>
     <message>
-        <location filename="../UI/GameImporterActivity.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameImporterActivity.ui" line="40"/>
+        <location filename="../UI/GameImporterActivity.ui" line="37"/>
         <source>Back</source>
-        <translation type="unfinished">Voltar</translation>
+        <translation>Voltar</translation>
     </message>
 </context>
 <context>
@@ -464,11 +464,6 @@
         <source>Import game</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../UI/GameListWidget.ui" line="595"/>
-        <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GameRenameDialog</name>
@@ -605,13 +600,13 @@
     <name>OplPcTools::GameImporter</name>
     <message>
         <location filename="../GameImporter.cpp" line="65"/>
-        <source>File &quot;%1&quot; does not exist</source>
-        <translation type="unfinished"></translation>
+        <source>File not found: &quot;%1&quot;</source>
+        <translation>Arquivo não encontrado: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../GameImporter.cpp" line="70"/>
-        <source>File &quot;%1&quot; already exists</source>
-        <translation type="unfinished"></translation>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation>O arquivo já existe: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -1120,12 +1115,12 @@
     <message>
         <location filename="../File.h" line="46"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation type="unfinished">Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
+        <translation>Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../File.h" line="54"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
-        <translation type="unfinished">Incapaz de ler o arquivo: &quot;%1&quot;</translation>
+        <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="60"/>

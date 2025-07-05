@@ -62,12 +62,12 @@ bool GameImporter::import()
         tasks.emplace_back(src_filiname, dest_filename);
         if(!tasks.back().src.exists())
         {
-            emit error(tr("File \"%1\" does not exist").arg(src_filiname));
+            emit error(tr("File not found: \"%1\"").arg(src_filiname));
             return false;
         }
         if(tasks.back().dest.exists())
         {
-            emit error(tr("File \"%1\" already exists").arg(dest_filename));
+            emit error(tr("File already exists: \"%1\"").arg(dest_filename));
             return false;
         }
         m_progress.total_parts_bytes += tasks.back().src.size();

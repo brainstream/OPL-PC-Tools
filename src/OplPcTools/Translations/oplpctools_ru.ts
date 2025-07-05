@@ -82,8 +82,13 @@
     <name>ChooseUlGamesDialog</name>
     <message>
         <location filename="../UI/ChooseUlGamesDialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Choose Games</source>
+        <translation>Выберете игры</translation>
+    </message>
+    <message>
+        <location filename="../UI/ChooseUlGamesDialog.ui" line="20"/>
+        <source>Select All</source>
+        <translation>Выбрать всё</translation>
     </message>
 </context>
 <context>
@@ -274,14 +279,9 @@
 <context>
     <name>GameImporterActivity</name>
     <message>
-        <location filename="../UI/GameImporterActivity.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameImporterActivity.ui" line="40"/>
+        <location filename="../UI/GameImporterActivity.ui" line="37"/>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -457,17 +457,12 @@
     <message>
         <location filename="../UI/GameListWidget.ui" line="589"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="592"/>
         <source>Import game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameListWidget.ui" line="595"/>
-        <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт игр</translation>
     </message>
 </context>
 <context>
@@ -605,13 +600,13 @@
     <name>OplPcTools::GameImporter</name>
     <message>
         <location filename="../GameImporter.cpp" line="65"/>
-        <source>File &quot;%1&quot; does not exist</source>
-        <translation type="unfinished"></translation>
+        <source>File not found: &quot;%1&quot;</source>
+        <translation>Файл не найден: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../GameImporter.cpp" line="70"/>
-        <source>File &quot;%1&quot; already exists</source>
-        <translation type="unfinished"></translation>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -754,17 +749,17 @@
     <message>
         <location filename="../UI/GameImporterActivity.cpp" line="101"/>
         <source>Select OPL Game Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберете хранилище игр OPL</translation>
     </message>
     <message>
         <location filename="../UI/GameImporterActivity.cpp" line="108"/>
         <source>Unable to open game storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу открыть хранилище игр</translation>
     </message>
     <message>
         <location filename="../UI/GameImporterActivity.cpp" line="124"/>
         <source>Unable to read game from the storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу прочитать игру из хранилища</translation>
     </message>
 </context>
 <context>
@@ -1120,12 +1115,12 @@
     <message>
         <location filename="../File.h" line="46"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation type="unfinished">Не могу записать данные в файл: &quot;%1&quot;</translation>
+        <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../File.h" line="54"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
-        <translation type="unfinished">Не могу прочистать файл: &quot;%1&quot;</translation>
+        <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="60"/>

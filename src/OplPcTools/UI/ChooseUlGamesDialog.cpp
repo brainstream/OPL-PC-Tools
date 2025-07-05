@@ -54,14 +54,25 @@ ChooseUlGamesDialog::ChooseUlGamesDialog(const UlConfigGameStorage & _storage, Q
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
     connect(mp_list_games, &QListWidget::itemChanged, this, &ChooseUlGamesDialog::onListItemChanged);
-    const int game_count = _storage.count();
-    for(int i = 0; i < game_count; ++i)
+    connect(mp_checkbox_select_all,
+        &QCheckBox::stateChanged,
+        this,
+        &ChooseUlGamesDialog::onSelectAllCheckboxStateChanged);
+    m_total_games_count = _storage.count();
+    for(int i = 0; i < m_total_games_count; ++i)
         mp_list_games->addItem(new GameListItem(*_storage[i], mp_list_games));
 }
 
 void ChooseUlGamesDialog::updateUiState()
 {
-    mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(m_selected_games.empty());
+    int selected_count = m_selected_games.count();
+    mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(selected_count == 0);
+    mp_checkbox_select_all->blockSignals(true);
+    if(selected_count < m_total_games_count)
+        mp_checkbox_select_all->setCheckState(Qt::Unchecked);
+    else
+        mp_checkbox_select_all->setCheckState(Qt::Checked);
+    mp_checkbox_select_all->blockSignals(false);
 }
 
 void ChooseUlGamesDialog::onListItemChanged(QListWidgetItem * _item)
@@ -72,4 +83,19 @@ void ChooseUlGamesDialog::onListItemChanged(QListWidgetItem * _item)
     else
         m_selected_games.remove(gli->gameId());
     updateUiState();
+}
+
+void ChooseUlGamesDialog::onSelectAllCheckboxStateChanged(int _state)
+{
+    switch(_state)
+    {
+    case Qt::Checked:
+        for(int i = 0; i < m_total_games_count; ++i)
+            mp_list_games->item(i)->setCheckState(Qt::Checked);
+        break;
+    case Qt::Unchecked:
+        for(int i = 0; i < m_total_games_count; ++i)
+            mp_list_games->item(i)->setCheckState(Qt::Unchecked);
+        break;
+    }
 }

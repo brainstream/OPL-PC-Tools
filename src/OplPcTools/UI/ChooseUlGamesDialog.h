@@ -35,8 +35,10 @@ public:
 private:
     void updateUiState();
     void onListItemChanged(QListWidgetItem * _item);
+    void onSelectAllCheckboxStateChanged(int _state);
 
 private:
+    int m_total_games_count;
     QSet<Uuid> m_selected_games;
 };
 

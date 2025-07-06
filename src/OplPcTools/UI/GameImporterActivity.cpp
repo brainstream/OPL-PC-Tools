@@ -20,9 +20,11 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/ChooseImportGamesDialog.h>
 #include <OplPcTools/UlConfigGameStorage.h>
+#include <QPushButton>
 #include <QSettings>
 #include <QFileDialog>
 #include <QThread>
+#include <QShortcut>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -96,7 +98,6 @@ GameImporterActivity::GameImporterActivity(GameArtManager & _art_manager, QWidge
     mp_progress_bar_current->setMaximum(g_progress_total);
     mp_panel_progress->setVisible(false);
     connect(mp_button_box, &QDialogButtonBox::rejected, mp_thread, &QThread::requestInterruption);
-    connect(mp_btn_close, &QPushButton::clicked, this, &QObject::deleteLater);
     connect(mp_thread, &QThread::finished, this, &GameImporterActivity::onThreadFinished);
 }
 
@@ -147,14 +148,13 @@ bool GameImporterActivity::onAttach()
 
 void GameImporterActivity::setBusyUIState(bool _is_busy)
 {
-    mp_btn_close->setDisabled(_is_busy);
     mp_button_box->button(QDialogButtonBox::Cancel)->setEnabled(_is_busy);
 }
 
 void GameImporterActivity::onThreadFinished()
 {
     setBusyUIState(false);
-    Application::showMessage(tr("Done"), tr("Import complete"));
+    close();
 }
 
 void GameImporterActivity::onInstallerProgress(const GameImportPorgress & _progress)

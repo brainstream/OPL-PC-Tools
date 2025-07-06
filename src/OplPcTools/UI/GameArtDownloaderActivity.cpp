@@ -79,7 +79,7 @@ GameArtDownloaderActivity::GameArtDownloaderActivity(
        downloader->deleteLater();
        if(!__errors.isEmpty())
            Application::showErrorMessage(__errors.join("\n\n"));
-       deleteLater();
+       close();
     });
     connect(downloader, &GameArtDownloader::downloadComplete, this, [this, &_art_manager, _game_id](
         const OplPcTools::GameArtNetworkTask & __task,

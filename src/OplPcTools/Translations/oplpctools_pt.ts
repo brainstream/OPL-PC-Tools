@@ -282,14 +282,6 @@
     </message>
 </context>
 <context>
-    <name>GameImporterActivity</name>
-    <message>
-        <location filename="../UI/GameImporterActivity.ui" line="37"/>
-        <source>Back</source>
-        <translation>Voltar</translation>
-    </message>
-</context>
-<context>
     <name>GameInstallerActivity</name>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="37"/>
@@ -758,28 +750,18 @@
 <context>
     <name>OplPcTools::UI::GameImporterActivity</name>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="107"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="108"/>
         <source>Select OPL Game Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="114"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="115"/>
         <source>Unable to open game storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="131"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="132"/>
         <source>Unable to read game from the storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="157"/>
-        <source>Done</source>
-        <translation>Prontinho</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="157"/>
-        <source>Import complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

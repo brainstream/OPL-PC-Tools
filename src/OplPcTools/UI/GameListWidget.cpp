@@ -16,13 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QShortcut>
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QAbstractItemModel>
-#include <OplPcTools/Settings.h>
-#include <OplPcTools/Library.h>
-#include <OplPcTools/GameConfiguration.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
@@ -31,6 +24,13 @@
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/UI/GameListWidget.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/GameConfiguration.h>
+#include <OplPcTools/Settings.h>
+#include <QShortcut>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QAbstractItemModel>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;

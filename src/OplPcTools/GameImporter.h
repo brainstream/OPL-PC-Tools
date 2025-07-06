@@ -19,8 +19,7 @@
 #pragma once
 
 #include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/Game.h>
-#include <QObject>
+#include <OplPcTools/GameCollection.h>
 
 namespace OplPcTools {
 
@@ -29,9 +28,8 @@ struct GameImportPorgress
     enum class State
     {
         Preparing,
-        PartsCopying,
-        GameRegistration,
-        ArtsRegistration,
+        DataCopying,
+        ArtsCopying,
         Rollback,
         Done,
         Cancelled,
@@ -91,7 +89,7 @@ private:
 
 public:
     GameImporter(
-        const QString & _source_directory,
+        const QSharedPointer<GameCollection> _source_collection,
         GameArtManager & _art_manager,
         const Game & _game,
         QObject * _parent);
@@ -104,6 +102,8 @@ signals:
     void rollbackFinished();
 
 private:
+    bool emplaceUlTasks(std::list<FileCopyTask> & _tasks);
+    bool emplaceIsoTask(std::list<FileCopyTask> & _tasks);
     void rollback(std::list<FileCopyTask> & _tasks);
     bool processTasks(std::list<FileCopyTask> & _tasks);
     bool processTask(FileCopyTask & _task);
@@ -112,7 +112,7 @@ private:
 private:
     OplPcTools::GameImportPorgress m_progress;
     GameArtManager & mr_art_manager;
-    const QString m_source_directory;
+    const QSharedPointer<GameCollection> m_source_collection;
     const Game m_game;
 };
 

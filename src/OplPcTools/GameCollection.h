@@ -36,6 +36,7 @@ public:
     ~GameCollection() override;
     void load(const QDir & _directory);
     bool isLoaded() const;
+    const QString directory() const { return m_directory; }
     const Game * findGame(const Uuid & _uuid) const;
     int count() const;
     const Game * operator [](int _index) const;

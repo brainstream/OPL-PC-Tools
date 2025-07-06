@@ -47,9 +47,6 @@ public:
         return _game_id + _porperties.suffix + ".png";
     }
 
-public:
-    static const char art_directory[];
-
 signals:
     void artChanged(const QString & _game_id, GameArtType _type);
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ChooseUlGamesDialog</class>
- <widget class="QDialog" name="ChooseUlGamesDialog">
+ <class>ChooseImportGamesDialog</class>
+ <widget class="QDialog" name="ChooseImportGamesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -22,7 +22,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="mp_list_games"/>
+    <widget class="QListWidget" name="mp_list_games">
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="mp_button_box">
@@ -41,7 +45,7 @@
   <connection>
    <sender>mp_button_box</sender>
    <signal>accepted()</signal>
-   <receiver>ChooseUlGamesDialog</receiver>
+   <receiver>ChooseImportGamesDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -57,7 +61,7 @@
   <connection>
    <sender>mp_button_box</sender>
    <signal>rejected()</signal>
-   <receiver>ChooseUlGamesDialog</receiver>
+   <receiver>ChooseImportGamesDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

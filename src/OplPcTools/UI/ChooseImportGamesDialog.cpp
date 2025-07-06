@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/UI/ChooseUlGamesDialog.h>
+#include <OplPcTools/UI/ChooseImportGamesDialog.h>
 #include <QPushButton>
 
 using namespace OplPcTools;
@@ -46,24 +46,24 @@ private:
 
 } // namespace
 
-ChooseUlGamesDialog::ChooseUlGamesDialog(const UlConfigGameStorage & _storage, QWidget * _parent /*= nullptr*/) :
+ChooseImportGamesDialog::ChooseImportGamesDialog(const GameCollection & _game_collection, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint)
 {
     setupUi(this);
     updateUiState();
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    connect(mp_list_games, &QListWidget::itemChanged, this, &ChooseUlGamesDialog::onListItemChanged);
+    connect(mp_list_games, &QListWidget::itemChanged, this, &ChooseImportGamesDialog::onListItemChanged);
     connect(mp_checkbox_select_all,
         &QCheckBox::stateChanged,
         this,
-        &ChooseUlGamesDialog::onSelectAllCheckboxStateChanged);
-    m_total_games_count = _storage.count();
+        &ChooseImportGamesDialog::onSelectAllCheckboxStateChanged);
+    m_total_games_count = _game_collection.count();
     for(int i = 0; i < m_total_games_count; ++i)
-        mp_list_games->addItem(new GameListItem(*_storage[i], mp_list_games));
+        mp_list_games->addItem(new GameListItem(*_game_collection[i], mp_list_games));
 }
 
-void ChooseUlGamesDialog::updateUiState()
+void ChooseImportGamesDialog::updateUiState()
 {
     int selected_count = m_selected_games.count();
     mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(selected_count == 0);
@@ -75,7 +75,7 @@ void ChooseUlGamesDialog::updateUiState()
     mp_checkbox_select_all->blockSignals(false);
 }
 
-void ChooseUlGamesDialog::onListItemChanged(QListWidgetItem * _item)
+void ChooseImportGamesDialog::onListItemChanged(QListWidgetItem * _item)
 {
     GameListItem * gli = static_cast<GameListItem *>(_item);
     if(gli->checkState())
@@ -85,7 +85,7 @@ void ChooseUlGamesDialog::onListItemChanged(QListWidgetItem * _item)
     updateUiState();
 }
 
-void ChooseUlGamesDialog::onSelectAllCheckboxStateChanged(int _state)
+void ChooseImportGamesDialog::onSelectAllCheckboxStateChanged(int _state)
 {
     switch(_state)
     {

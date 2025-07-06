@@ -18,7 +18,7 @@
 
 #include <OplPcTools/UI/GameImporterActivity.h>
 #include <OplPcTools/UI/Application.h>
-#include <OplPcTools/UI/ChooseUlGamesDialog.h>
+#include <OplPcTools/UI/ChooseImportGamesDialog.h>
 #include <OplPcTools/UlConfigGameStorage.h>
 #include <QSettings>
 #include <QFileDialog>
@@ -109,14 +109,15 @@ bool GameImporterActivity::onAttach()
     if(file.isEmpty())
         return false;
     const QString source_directory = QFileInfo(file).absolutePath();
-    std::unique_ptr<UlConfigGameStorage> storage(new UlConfigGameStorage(this));
-    if(!storage->load(source_directory))
+    QSharedPointer<GameCollection> source_collection(new GameCollection());
+    source_collection->load(source_directory);
+    if(!source_collection->isLoaded())
     {
         Application::showErrorMessage(tr("Unable to open game storage"));
         return false;
     }
     settings.setValue(SettingsKey::import_dir, source_directory);
-    ChooseUlGamesDialog dlg(*storage, this);
+    ChooseImportGamesDialog dlg(*source_collection, this);
     if(dlg.exec() != QDialog::Accepted)
     {
         return false;
@@ -126,13 +127,13 @@ bool GameImporterActivity::onAttach()
     importers.reserve(m_total_count);
     foreach(const Uuid & id, dlg.selectedGameIds())
     {
-        const Game * game = storage->findGame(id);
+        const Game * game = source_collection->findGame(id);
         if(!game)
         {
             Application::showErrorMessage(tr("Unable to read game from the storage"));
             return false;
         }
-        GameImporter * importer = new GameImporter(source_directory, mr_art_manager, *game, this);
+        GameImporter * importer = new GameImporter(source_collection, mr_art_manager, *game, this);
         importers.append(importer);
         connect(importer, &GameImporter::progress, this, &GameImporterActivity::onInstallerProgress);
         connect(importer, &GameImporter::error, this, &GameImporterActivity::onInstallerError);
@@ -162,13 +163,10 @@ void GameImporterActivity::onInstallerProgress(const GameImportPorgress & _progr
 {
     switch(_progress.state)
     {
-    case GameImportPorgress::State::PartsCopying:
+    case GameImportPorgress::State::DataCopying:
         setProgress(&_progress);
         break;
-    case GameImportPorgress::State::GameRegistration:
-        setUnknownCurrentProgress(tr("Registration..."));
-        break;
-    case GameImportPorgress::State::ArtsRegistration:
+    case GameImportPorgress::State::ArtsCopying:
         setUnknownCurrentProgress(tr("Copying pictures..."));
         break;
     case GameImportPorgress::State::Done:

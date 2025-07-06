@@ -16,38 +16,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
-#define __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#include <OplPcTools/StandardDirectories.h>
 
-#include <OplPcTools/GameStorage.h>
-
-namespace OplPcTools {
-
-class DirectoryGameStorage final : public GameStorage
-{
-    Q_OBJECT
-
-public:
-    explicit DirectoryGameStorage(QObject * _parent = nullptr);
-    GameInstallationType installationType() const override;
-
-    static QString makeIsoFilename(const QString & _title, const QString & _id);
-    static QString makeIsoFilename(const QString & _title);
-    static QString makeGameIsoFilename(const QString & _title, const QString & _id);
-
-protected:
-    bool performLoading(const QDir & _directory) override;
-    bool performRenaming(const Game & _game, const QString & _title) override;
-    bool performRegistration(const Game & _game) override;
-    bool performDeletion(const Game & _game) override;
-
-private:
-    void loadDirectory(MediaType _media_type);
-
-private:
-    QString m_base_directory;
-};
-
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+const char * const OplPcTools::StandardDirectories::art = "ART";
+const char * const OplPcTools::StandardDirectories::cd = "CD";
+const char * const OplPcTools::StandardDirectories::dvd = "DVD";
+const char * const OplPcTools::StandardDirectories::cfg = "CFG";
+const char * const OplPcTools::StandardDirectories::vmc = "VMC";

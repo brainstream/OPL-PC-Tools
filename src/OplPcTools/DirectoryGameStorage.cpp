@@ -16,16 +16,14 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QVector>
-#include <OplPcTools/File.h>
 #include <OplPcTools/DirectoryGameStorage.h>
-#include <OplPcTools/Device.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
+#include <OplPcTools/Device.h>
+#include <OplPcTools/File.h>
+#include <OplPcTools/StandardDirectories.h>
+#include <QVector>
 
 using namespace OplPcTools;
-
-const QString DirectoryGameStorage::cd_directory("CD");
-const QString DirectoryGameStorage::dvd_directory("DVD");
 
 DirectoryGameStorage::DirectoryGameStorage(QObject * _parent /*= nullptr*/) :
     GameStorage(_parent)
@@ -48,7 +46,7 @@ bool DirectoryGameStorage::performLoading(const QDir & _directory)
 void DirectoryGameStorage::loadDirectory(MediaType _media_type)
 {
     QDir base_directory(m_base_directory);
-    if(!base_directory.cd(_media_type == MediaType::CD ? cd_directory : dvd_directory))
+    if(!base_directory.cd(_media_type == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return;
     foreach(const QString & iso, base_directory.entryList({ "*.iso" }))
     {
@@ -73,7 +71,7 @@ bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _
         return true;
     validateFilename(_title);
     QDir directory(m_base_directory);
-    if(!directory.cd(_game.mediaType() == MediaType::CD ? cd_directory : dvd_directory))
+    if(!directory.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return false;
     QString old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id()));
     bool is_name_included_id = true;
@@ -113,7 +111,7 @@ QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const 
 bool DirectoryGameStorage::performDeletion(const Game & _game)
 {
     QDir dir(m_base_directory);
-    dir.cd(_game.mediaType() == MediaType::CD ? cd_directory : dvd_directory);
+    dir.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd);
     QString path = dir.absoluteFilePath(_game.title()) + ".iso";
     if(QFile::exists(path) && QFile::remove(path))
         return true;

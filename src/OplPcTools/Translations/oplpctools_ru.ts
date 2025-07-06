@@ -56,6 +56,19 @@
     </message>
 </context>
 <context>
+    <name>ChooseImportGamesDialog</name>
+    <message>
+        <location filename="../UI/ChooseImportGamesDialog.ui" line="14"/>
+        <source>Choose Games</source>
+        <translation type="unfinished">Выберете игры</translation>
+    </message>
+    <message>
+        <location filename="../UI/ChooseImportGamesDialog.ui" line="20"/>
+        <source>Select All</source>
+        <translation type="unfinished">Выбрать всё</translation>
+    </message>
+</context>
+<context>
     <name>ChooseOpticalDiscDialog</name>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="14"/>
@@ -76,19 +89,6 @@
         <location filename="../UI/ChooseOpticalDiscDialog.ui" line="115"/>
         <source>Initialization...</source>
         <translation>Инициализация...</translation>
-    </message>
-</context>
-<context>
-    <name>ChooseUlGamesDialog</name>
-    <message>
-        <location filename="../UI/ChooseUlGamesDialog.ui" line="14"/>
-        <source>Choose Games</source>
-        <translation>Выберете игры</translation>
-    </message>
-    <message>
-        <location filename="../UI/ChooseUlGamesDialog.ui" line="20"/>
-        <source>Select All</source>
-        <translation>Выбрать всё</translation>
     </message>
 </context>
 <context>
@@ -550,7 +550,7 @@
 <context>
     <name>OplPcTools::DirectoryGameInstaller</name>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="45"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="46"/>
         <source>It is impossible to move the file &quot;%1&quot;. Probably it is read-only or not an ISO image.</source>
         <translation>Невозможно переместить файл &quot;%1&quot;. Возможно, этот файл доступен только для чтения или не является образом ISO.</translation>
     </message>
@@ -599,14 +599,20 @@
 <context>
     <name>OplPcTools::GameImporter</name>
     <message>
-        <location filename="../GameImporter.cpp" line="66"/>
+        <location filename="../GameImporter.cpp" line="108"/>
         <source>File not found: &quot;%1&quot;</source>
         <translation>Файл не найден: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../GameImporter.cpp" line="71"/>
+        <location filename="../GameImporter.cpp" line="113"/>
+        <location filename="../GameImporter.cpp" line="138"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../GameImporter.cpp" line="146"/>
+        <source>ISO file for game &quot;%1&quot; not found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -752,42 +758,37 @@
         <translation>Выберете хранилище игр OPL</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="115"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="116"/>
         <source>Unable to open game storage</source>
         <translation>Не могу открыть хранилище игр</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="132"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="133"/>
         <source>Unable to read game from the storage</source>
         <translation>Не могу прочитать игру из хранилища</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="158"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="159"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="158"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="159"/>
         <source>Import complete</source>
         <translation>Импорт завершён</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="169"/>
-        <source>Registration...</source>
-        <translation>Регистрация...</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="172"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="170"/>
         <source>Copying pictures...</source>
         <translation>Копирование изображений...</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="191"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="189"/>
         <source>Importing &apos;%1&apos;...</source>
         <translation>Импорт &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="217"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="215"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -1044,7 +1045,7 @@
 <context>
     <name>OplPcTools::VmcCollection</name>
     <message>
-        <location filename="../VmcCollection.cpp" line="94"/>
+        <location filename="../VmcCollection.cpp" line="95"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
         <translation>ВКП с именем &quot;%1&quot; уже существует</translation>
     </message>
@@ -1087,7 +1088,7 @@
         <translation>Осталось %1 байт</translation>
     </message>
     <message>
-        <location filename="../GameArtManager.cpp" line="146"/>
+        <location filename="../GameArtManager.cpp" line="145"/>
         <source>Unable to save file &quot;%1&quot;</source>
         <translation>Не могу сохранить файл &quot;%1&quot;</translation>
     </message>

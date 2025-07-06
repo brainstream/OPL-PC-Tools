@@ -16,12 +16,13 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/GameConfiguration.h>
+#include <OplPcTools/File.h>
+#include <OplPcTools/Maybe.h>
+#include <OplPcTools/StandardDirectories.h>
 #include <QSet>
 #include <QDir>
 #include <QFile>
-#include <OplPcTools/Maybe.h>
-#include <OplPcTools/GameConfiguration.h>
-#include <OplPcTools/File.h>
 
 using namespace OplPcTools;
 
@@ -192,7 +193,9 @@ GameConfiguration::GameConfiguration() :
 
 QString GameConfiguration::makeFilename(const QString & _library_path, const QString & _game_id)
 {
-    QDir dir((_library_path.endsWith(QDir::separator()) ? _library_path : _library_path + QDir::separator()) + "CFG");
+    QDir dir((_library_path.endsWith(QDir::separator())
+        ? _library_path
+        : _library_path + QDir::separator()) + StandardDirectories::cfg);
     return dir.absoluteFilePath(_game_id + ".cfg");
 }
 

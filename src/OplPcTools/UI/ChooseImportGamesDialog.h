@@ -16,38 +16,30 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
-#define __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#pragma once
 
-#include <OplPcTools/GameStorage.h>
+#include "ui_ChooseImportGamesDialog.h"
+#include <OplPcTools/GameCollection.h>
+#include <QSet>
 
-namespace OplPcTools {
+namespace OplPcTools::UI {
 
-class DirectoryGameStorage final : public GameStorage
+class ChooseImportGamesDialog : public QDialog, private Ui::ChooseImportGamesDialog
 {
     Q_OBJECT
 
 public:
-    explicit DirectoryGameStorage(QObject * _parent = nullptr);
-    GameInstallationType installationType() const override;
-
-    static QString makeIsoFilename(const QString & _title, const QString & _id);
-    static QString makeIsoFilename(const QString & _title);
-    static QString makeGameIsoFilename(const QString & _title, const QString & _id);
-
-protected:
-    bool performLoading(const QDir & _directory) override;
-    bool performRenaming(const Game & _game, const QString & _title) override;
-    bool performRegistration(const Game & _game) override;
-    bool performDeletion(const Game & _game) override;
+    explicit ChooseImportGamesDialog(const GameCollection & _game_collection, QWidget * _parent = nullptr);
+    QSet<Uuid> selectedGameIds() const { return m_selected_games; }
 
 private:
-    void loadDirectory(MediaType _media_type);
+    void updateUiState();
+    void onListItemChanged(QListWidgetItem * _item);
+    void onSelectAllCheckboxStateChanged(int _state);
 
 private:
-    QString m_base_directory;
+    int m_total_games_count;
+    QSet<Uuid> m_selected_games;
 };
 
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+} // namespace OplPcTools::UI

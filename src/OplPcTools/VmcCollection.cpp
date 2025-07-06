@@ -16,10 +16,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QVector>
+#include <OplPcTools/VmcCollection.h>
 #include <OplPcTools/VmcFS.h>
 #include <OplPcTools/File.h>
-#include <OplPcTools/VmcCollection.h>
+#include <OplPcTools/StandardDirectories.h>
+#include <QVector>
 
 using namespace OplPcTools;
 
@@ -43,7 +44,7 @@ VmcCollection::~VmcCollection()
 bool VmcCollection::load(const QDir & _base_directory)
 {
     mp_vmcs->clear();
-    QString vmc_dir_path = _base_directory.absoluteFilePath("VMC");
+    QString vmc_dir_path = _base_directory.absoluteFilePath(StandardDirectories::vmc);
     m_directory = QDir(vmc_dir_path);
     QFileInfo fi(vmc_dir_path);
     if(fi.exists())

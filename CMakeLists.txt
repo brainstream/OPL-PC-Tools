@@ -167,6 +167,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/Resources/Resources.qrc
     ${OPT_SRC_DIR}/Settings.cpp
     ${OPT_SRC_DIR}/Settings.h
+    ${OPT_SRC_DIR}/StandardDirectories.h
+    ${OPT_SRC_DIR}/StandardDirectories.cpp
     ${OPT_SRC_DIR}/UI/AboutDialog.cpp
     ${OPT_SRC_DIR}/UI/AboutDialog.h
     ${OPT_SRC_DIR}/UI/AboutDialog.ui
@@ -181,9 +183,9 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.cpp
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.h
     ${OPT_SRC_DIR}/UI/ChooseOpticalDiscDialog.ui
-    ${OPT_SRC_DIR}/UI/ChooseUlGamesDialog.h
-    ${OPT_SRC_DIR}/UI/ChooseUlGamesDialog.cpp
-    ${OPT_SRC_DIR}/UI/ChooseUlGamesDialog.ui
+    ${OPT_SRC_DIR}/UI/ChooseImportGamesDialog.h
+    ${OPT_SRC_DIR}/UI/ChooseImportGamesDialog.cpp
+    ${OPT_SRC_DIR}/UI/ChooseImportGamesDialog.ui
     ${OPT_SRC_DIR}/UI/ClickableLabel.h
     ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.cpp
     ${OPT_SRC_DIR}/UI/GameArtDownloaderActivity.h

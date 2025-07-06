@@ -20,8 +20,9 @@
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/GameArt.h>
 #include <OplPcTools/GameArtFileSource.h>
-#include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/File.h>
+#include <OplPcTools/StandardDirectories.h>
 #include <QThread>
 #include <list>
 
@@ -34,14 +35,14 @@ class ThreadCancelledException : public QException { };
 } // namespace
 
 GameImporter::GameImporter(
-    const QString & _source_directory,
-    GameArtManager & _art_manager,
-    const Game & _game,
-    QObject * _parent
-) :
+        const QSharedPointer<GameCollection> _source_collection,
+        GameArtManager & _art_manager,
+        const Game & _game,
+        QObject * _parent
+        ) :
     QObject(_parent),
     mr_art_manager(_art_manager),
-    m_source_directory(_source_directory),
+    m_source_collection(_source_collection),
     m_game(_game)
 {
     m_progress.game_title = _game.title();
@@ -53,29 +54,20 @@ bool GameImporter::import()
         return false;
     m_progress.reset();
     std::list<FileCopyTask> tasks;
-    QDir src_directory(m_source_directory);
-    QDir dest_directory(Library::instance().directory());
-    for(quint8 parts_idx = 0; parts_idx < m_game.partCount(); ++parts_idx)
+    switch(m_game.installationType())
     {
-        const QString part_filename = UlConfigGameStorage::makePartFilename(m_game.id(), m_game.title(), parts_idx);
-        const QString src_filiname = src_directory.absoluteFilePath(part_filename);
-        const QString dest_filename = dest_directory.absoluteFilePath(part_filename);
-        tasks.emplace_back(src_filiname, dest_filename);
-        if(!tasks.back().src.exists())
-        {
-            emit error(tr("File not found: \"%1\"").arg(src_filiname));
+    case GameInstallationType::UlConfig:
+        if(!emplaceUlTasks(tasks))
             return false;
-        }
-        if(tasks.back().dest.exists())
-        {
-            emit error(tr("File already exists: \"%1\"").arg(dest_filename));
+        break;
+    case GameInstallationType::Directory:
+        if(!emplaceIsoTask(tasks))
             return false;
-        }
-        m_progress.total_parts_bytes += tasks.back().src.size();
+        break;
     }
     try
     {
-        m_progress.state = GameImportPorgress::State::PartsCopying;
+        m_progress.state = GameImportPorgress::State::DataCopying;
         emit progress(m_progress);
         if(processTasks(tasks))
             Library::instance().games().addGame(m_game);
@@ -101,9 +93,63 @@ bool GameImporter::import()
     return true;
 }
 
+bool GameImporter::emplaceUlTasks(std::list<FileCopyTask> & _tasks)
+{
+    QDir src_directory(m_source_collection->directory());
+    QDir dest_directory(Library::instance().directory());
+    for(quint8 parts_idx = 0; parts_idx < m_game.partCount(); ++parts_idx)
+    {
+        const QString part_filename = UlConfigGameStorage::makePartFilename(m_game.id(), m_game.title(), parts_idx);
+        const QString src_filename = src_directory.absoluteFilePath(part_filename);
+        const QString dest_filename = dest_directory.absoluteFilePath(part_filename);
+        _tasks.emplace_back(src_filename, dest_filename);
+        if(!_tasks.back().src.exists())
+        {
+            emit error(tr("File not found: \"%1\"").arg(src_filename));
+            return false;
+        }
+        if(_tasks.back().dest.exists())
+        {
+            emit error(tr("File already exists: \"%1\"").arg(dest_filename));
+            return false;
+        }
+        m_progress.total_parts_bytes += _tasks.back().src.size();
+    }
+    return true;
+}
+
+bool GameImporter::emplaceIsoTask(std::list<FileCopyTask> & _tasks)
+{
+    const QString media_dir = m_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd;
+    QDir src_directory(m_source_collection->directory());
+    src_directory.cd(media_dir);
+    QDir dest_directory(Library::instance().directory());
+    if(!dest_directory.exists(media_dir))
+        dest_directory.mkdir(media_dir);
+    dest_directory.cd(media_dir);
+    foreach(const QString & iso, src_directory.entryList({ "*.iso" }))
+    {
+        if(iso.contains(m_game.title()))
+        {
+           const QString src_filename = src_directory.absoluteFilePath(iso);
+           const QString dest_filename = dest_directory.absoluteFilePath(iso);
+           if(QFile::exists(dest_filename))
+           {
+               emit error(tr("File already exists: \"%1\"").arg(dest_filename));
+               return false;
+           }
+           _tasks.emplace_back(src_filename, dest_filename);
+           m_progress.total_parts_bytes += _tasks.back().src.size();
+           return true;
+        }
+    }
+    emit error(tr("ISO file for game \"%1\" not found").arg(m_game.title()));
+    return false;
+}
+
 bool GameImporter::processTasks(std::list<FileCopyTask> & _tasks)
 {
-    m_progress.state = GameImportPorgress::State::PartsCopying;
+    m_progress.state = GameImportPorgress::State::DataCopying;
     emit progress(m_progress);
     for(FileCopyTask & task : _tasks)
     {
@@ -153,10 +199,10 @@ void GameImporter::rollback(std::list<FileCopyTask> & _tasks)
 
 void GameImporter::copyArts()
 {
-    m_progress.state = GameImportPorgress::State::ArtsRegistration;
+    m_progress.state = GameImportPorgress::State::ArtsCopying;
     emit progress(m_progress);
-    QDir src_directory(m_source_directory);
-    src_directory.cd(GameArtManager::art_directory);
+    QDir src_directory(m_source_collection->directory());
+    src_directory.cd(StandardDirectories::art);
     if(!src_directory.exists())
         return;
     QMap<GameArtType, GameArtProperties> property_map = makeGameArtProperies();

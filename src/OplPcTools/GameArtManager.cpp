@@ -16,20 +16,19 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QFile>
-#include <OplPcTools/Exception.h>
 #include <OplPcTools/GameArtManager.h>
+#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/Exception.h>
+#include <QFile>
 
 using namespace OplPcTools;
-
-const char GameArtManager::art_directory[] = "ART";
 
 GameArtManager::GameArtManager(const QDir & _base_directory, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     m_cached_types(),
     m_art_props(makeGameArtProperies())
 {
-    m_directory_path = _base_directory.absoluteFilePath(art_directory);
+    m_directory_path = _base_directory.absoluteFilePath(StandardDirectories::art);
 }
 
 void GameArtManager::addCacheType(GameArtType _type)

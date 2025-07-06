@@ -18,28 +18,15 @@
 
 #pragma once
 
-#include "ui_ChooseUlGamesDialog.h"
-#include <OplPcTools/UlConfigGameStorage.h>
-#include <QSet>
+namespace OplPcTools {
 
-namespace OplPcTools::UI {
-
-class ChooseUlGamesDialog : public QDialog, private Ui::ChooseUlGamesDialog
+struct StandardDirectories
 {
-    Q_OBJECT
-
-public:
-    explicit ChooseUlGamesDialog(const UlConfigGameStorage & _storage, QWidget * _parent = nullptr);
-    QSet<Uuid> selectedGameIds() const { return m_selected_games; }
-
-private:
-    void updateUiState();
-    void onListItemChanged(QListWidgetItem * _item);
-    void onSelectAllCheckboxStateChanged(int _state);
-
-private:
-    int m_total_games_count;
-    QSet<Uuid> m_selected_games;
+    static const char * const art;
+    static const char * const cd;
+    static const char * const dvd;
+    static const char * const cfg;
+    static const char * const vmc;
 };
 
-} // namespace OplPcTools::UI
+} // namespace OplPcTools

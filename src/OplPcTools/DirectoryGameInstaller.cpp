@@ -16,12 +16,13 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QStorageInfo>
-#include <QThread>
-#include <OplPcTools/Exception.h>
-#include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
+#include <OplPcTools/File.h>
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/StandardDirectories.h>
+#include <QStorageInfo>
+#include <QThread>
 
 using namespace OplPcTools;
 
@@ -50,8 +51,7 @@ bool DirectoryGameInstaller::performInstallation()
     mp_game->setMediaType(deviceMediaType());
     mp_game->setTitle(mr_device.title());
     QDir dest_dir(Library::instance().directory());
-    QString dest_subdir = mp_game->mediaType() == MediaType::CD ?
-        DirectoryGameStorage::cd_directory : DirectoryGameStorage::dvd_directory;
+    QString dest_subdir = mp_game->mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd;
     if(!dest_dir.cd(dest_subdir))
         dest_dir.mkdir(dest_subdir);
     dest_dir.cd(dest_subdir);

@@ -259,7 +259,7 @@ void VmcFormatter::initSuperblock()
     mp_sb->cardform = 1;
     mp_sb->rootdir_cluster = mp_sb->rootdir_cluster2 = 0;
     mp_sb->unknown5 = -1;
-    std::strncpy(mp_sb->magic, g_vmc_magic, sizeof(mp_sb->magic));
+    std::memcpy(mp_sb->magic, g_vmc_magic, sizeof(mp_sb->magic));
     std::strncpy(mp_sb->version, g_vmc_version, sizeof(mp_sb->version));
     std::memset(mp_sb->bad_block_list, -1, sizeof(VmcSuperblock::bad_block_list));
     const uint32_t available_cluster_count = mp_sb->clusters_per_card - mp_sb->clusters_per_block * 3; // superblock and 2 backups
@@ -307,22 +307,22 @@ void VmcFormatter::writeFAT()
     ifc_clusters_raw.reset();
     // FATs
     //
-    QScopedPointer<char> fat_cluster_raw(new char[mp_sb->cluster_size]);
+    std::unique_ptr<char[]> fat_cluster_raw(new char[mp_sb->cluster_size]);
     FATEntry fat_entry;
     fat_entry.flag = 0x7F; // TODO: flags
     fat_entry.cluster = 0xFFFFFF;
     for(uint32_t i = 0; i < mp_sb->fat_entries_per_cluster; ++i)
     {
-        memcpy(&fat_cluster_raw.data()[sizeof(FATEntry) * i], &fat_entry, sizeof(FATEntry));
+        memcpy(&fat_cluster_raw.get()[sizeof(FATEntry) * i], &fat_entry, sizeof(FATEntry));
     }
     m_file.seek(fat_start_cluster_index * mp_sb->cluster_size);
     for(uint32_t i = 0; i < fat_entry_count / mp_sb->fat_entries_per_cluster; ++i)
     {
-        m_file.write(fat_cluster_raw.data(), mp_sb->cluster_size);
+        m_file.write(fat_cluster_raw.get(), mp_sb->cluster_size);
     }
     if(fat_entry_count % mp_sb->fat_entries_per_cluster)
     {
-        m_file.write(fat_cluster_raw.data(), (fat_entry_count % mp_sb->fat_entries_per_cluster) * sizeof(FATEntry));
+        m_file.write(fat_cluster_raw.get(), (fat_entry_count % mp_sb->fat_entries_per_cluster) * sizeof(FATEntry));
     }
     fat_cluster_raw.reset();
     // Root directory
@@ -548,7 +548,7 @@ void VmcFS::Private::readFAT()
         ++valid_fat_ptr_count;
     }
     uint32_t fat_size= valid_fat_ptr_count * entries_per_cluster;
-    std::unique_ptr<FATEntry> fat_tmp(new FATEntry[fat_size]);
+    std::unique_ptr<FATEntry[]> fat_tmp(new FATEntry[fat_size]);
     for(size_t i = 0; i < valid_fat_ptr_count; ++i)
     {
         char * address = reinterpret_cast<char *>(fat_tmp.get()) + (mp_info->cluster_size * i);

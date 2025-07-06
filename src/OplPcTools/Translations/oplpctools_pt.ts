@@ -67,6 +67,11 @@
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../UI/ChooseImportGamesDialog.ui" line="48"/>
+        <source>Source</source>
+        <translation>Fonte</translation>
+    </message>
 </context>
 <context>
     <name>ChooseOpticalDiscDialog</name>
@@ -753,42 +758,42 @@
 <context>
     <name>OplPcTools::UI::GameImporterActivity</name>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="108"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="107"/>
         <source>Select OPL Game Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="116"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="114"/>
         <source>Unable to open game storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="133"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="131"/>
         <source>Unable to read game from the storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="159"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="157"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="159"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="157"/>
         <source>Import complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="170"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="168"/>
         <source>Copying pictures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="189"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="187"/>
         <source>Importing &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="215"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="213"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>

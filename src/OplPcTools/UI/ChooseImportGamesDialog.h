@@ -34,7 +34,7 @@ public:
 
 private:
     void updateUiState();
-    void onListItemChanged(QListWidgetItem * _item);
+    void onTreeItemChanged(QTreeWidgetItem * _item);
     void onSelectAllCheckboxStateChanged(int _state);
 
 private:

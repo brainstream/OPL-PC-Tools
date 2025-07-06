@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>419</height>
+    <width>652</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,10 +22,32 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="mp_list_games">
+    <widget class="QTreeWidget" name="mp_tree_games">
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
+     <property name="columnCount">
+      <number>2</number>
+     </property>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string notr="true">Title</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Source</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item>

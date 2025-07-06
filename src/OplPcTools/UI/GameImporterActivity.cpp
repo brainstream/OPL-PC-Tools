@@ -103,12 +103,10 @@ GameImporterActivity::GameImporterActivity(GameArtManager & _art_manager, QWidge
 bool GameImporterActivity::onAttach()
 {
     QSettings settings;
-    QString filter("ul.cfg");
-    QString ul_dir = settings.value(SettingsKey::import_dir).toString();
-    QString file = QFileDialog::getOpenFileName(this, tr("Select OPL Game Storage"), ul_dir, filter);
-    if(file.isEmpty())
+    QString source_directory = settings.value(SettingsKey::import_dir).toString();
+    source_directory = QFileDialog::getExistingDirectory(this, tr("Select OPL Game Storage"), source_directory);
+    if(source_directory.isEmpty())
         return false;
-    const QString source_directory = QFileInfo(file).absolutePath();
     QSharedPointer<GameCollection> source_collection(new GameCollection());
     source_collection->load(source_directory);
     if(!source_collection->isLoaded())

@@ -24,43 +24,79 @@ using namespace OplPcTools::UI;
 
 namespace {
 
-class GameListItem : public QListWidgetItem
+class GameListItem : public QTreeWidgetItem
 {
 public:
-    explicit GameListItem(const Game & _game, QListWidget * _listview) :
-        QListWidgetItem(_game.title(), _listview, UserType),
-        m_game_id(_game.uuid())
-    {
-        setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
-        setCheckState(Qt::Unchecked);
-    }
+    explicit GameListItem(const Game & _game, QTreeWidget * _widget);
+    QVariant data(int _column, int _role) const override;
 
     const Uuid & gameId() const
     {
-        return m_game_id;
+        return mr_game.uuid();
     }
 
 private:
-    const Uuid m_game_id;
+    const Game & mr_game;
 };
 
 } // namespace
+
+GameListItem::GameListItem(const Game & _game, QTreeWidget * _widget) :
+    QTreeWidgetItem(_widget, UserType),
+    mr_game(_game)
+{
+    setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
+    setCheckState(0, Qt::Unchecked);
+}
+
+QVariant GameListItem::data(int _column, int _role) const
+{
+    switch(_role)
+    {
+    case Qt::DisplayRole:
+        if(_column == 0)
+            return mr_game.title();
+        else if(_column == 1)
+        {
+            if(mr_game.installationType() == GameInstallationType::UlConfig)
+            {
+                return QString("UL");
+            }
+            else if(mr_game.mediaType() == MediaType::CD)
+            {
+                return QString("CD");
+            }
+            else if(mr_game.mediaType() == MediaType::DVD)
+            {
+                return QString("DVD");
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    return QTreeWidgetItem::data(_column, _role);
+}
 
 ChooseImportGamesDialog::ChooseImportGamesDialog(const GameCollection & _game_collection, QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint)
 {
     setupUi(this);
+    mp_tree_games->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    mp_tree_games->sortItems(0, Qt::AscendingOrder);
     updateUiState();
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    connect(mp_list_games, &QListWidget::itemChanged, this, &ChooseImportGamesDialog::onListItemChanged);
+    connect(mp_tree_games, &QTreeWidget::itemChanged, this, &ChooseImportGamesDialog::onTreeItemChanged);
     connect(mp_checkbox_select_all,
         &QCheckBox::stateChanged,
         this,
         &ChooseImportGamesDialog::onSelectAllCheckboxStateChanged);
     m_total_games_count = _game_collection.count();
     for(int i = 0; i < m_total_games_count; ++i)
-        mp_list_games->addItem(new GameListItem(*_game_collection[i], mp_list_games));
+    {
+        mp_tree_games->addTopLevelItem(new GameListItem(*_game_collection[i], mp_tree_games));
+    }
 }
 
 void ChooseImportGamesDialog::updateUiState()
@@ -75,10 +111,10 @@ void ChooseImportGamesDialog::updateUiState()
     mp_checkbox_select_all->blockSignals(false);
 }
 
-void ChooseImportGamesDialog::onListItemChanged(QListWidgetItem * _item)
+void ChooseImportGamesDialog::onTreeItemChanged(QTreeWidgetItem * _item)
 {
     GameListItem * gli = static_cast<GameListItem *>(_item);
-    if(gli->checkState())
+    if(gli->checkState(0))
         m_selected_games.insert(gli->gameId());
     else
         m_selected_games.remove(gli->gameId());
@@ -91,11 +127,11 @@ void ChooseImportGamesDialog::onSelectAllCheckboxStateChanged(int _state)
     {
     case Qt::Checked:
         for(int i = 0; i < m_total_games_count; ++i)
-            mp_list_games->item(i)->setCheckState(Qt::Checked);
+            mp_tree_games->topLevelItem(i)->setCheckState(0, Qt::Checked);
         break;
     case Qt::Unchecked:
         for(int i = 0; i < m_total_games_count; ++i)
-            mp_list_games->item(i)->setCheckState(Qt::Unchecked);
+            mp_tree_games->topLevelItem(i)->setCheckState(0, Qt::Unchecked);
         break;
     }
 }

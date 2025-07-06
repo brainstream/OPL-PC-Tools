@@ -35,7 +35,12 @@ public:
 private:
     void updateUiState();
     void onTreeItemChanged(QTreeWidgetItem * _item);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    void onSelectAllCheckboxStateChanged(Qt::CheckState _state);
+#else
     void onSelectAllCheckboxStateChanged(int _state);
+#endif
 
 private:
     int m_total_games_count;

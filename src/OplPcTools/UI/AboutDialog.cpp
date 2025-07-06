@@ -27,7 +27,7 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
     setupUi(this);
     mp_label_app_name->setText(APPLICATION_DISPLAY_NAME);
     static const int start_development_year = 2017;
-    int build_year = QString(__DATE__).rightRef(4).toInt();
+    int build_year = QString(__DATE__).right(4).toInt();
     QString years = (start_development_year < build_year) ?
         QString("%1 - %2").arg(start_development_year).arg(build_year) :
         QString::number(build_year);

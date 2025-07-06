@@ -89,7 +89,11 @@ ChooseImportGamesDialog::ChooseImportGamesDialog(const GameCollection & _game_co
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
     connect(mp_tree_games, &QTreeWidget::itemChanged, this, &ChooseImportGamesDialog::onTreeItemChanged);
     connect(mp_checkbox_select_all,
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+        &QCheckBox::checkStateChanged,
+#else
         &QCheckBox::stateChanged,
+#endif
         this,
         &ChooseImportGamesDialog::onSelectAllCheckboxStateChanged);
     m_total_games_count = _game_collection.count();
@@ -121,7 +125,11 @@ void ChooseImportGamesDialog::onTreeItemChanged(QTreeWidgetItem * _item)
     updateUiState();
 }
 
-void ChooseImportGamesDialog::onSelectAllCheckboxStateChanged(int _state)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    void ChooseImportGamesDialog::onSelectAllCheckboxStateChanged(Qt::CheckState _state)
+#else
+    void ChooseImportGamesDialog::onSelectAllCheckboxStateChanged(int _state)
+#endif
 {
     switch(_state)
     {
@@ -132,6 +140,8 @@ void ChooseImportGamesDialog::onSelectAllCheckboxStateChanged(int _state)
     case Qt::Unchecked:
         for(int i = 0; i < m_total_games_count; ++i)
             mp_tree_games->topLevelItem(i)->setCheckState(0, Qt::Unchecked);
+        break;
+    default:
         break;
     }
 }

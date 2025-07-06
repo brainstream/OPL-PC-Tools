@@ -40,13 +40,16 @@ private:
     void setupShortcuts();
     void initGameArts();
     void addArtListItem(GameArtType _type, const QString & _text);
-    void showItemContextMenu(const QPoint & _point);
-    void onArtChanged(const QString & _game_id, GameArtType _type);
-    void changeGameArt();
-    void deleteGameArt();
-    void downloadGameArt();
     void downloadGameArts(const QList<GameArtType> & _types);
     void startBusySmartThread(std::function<void()> _lambda);
+
+private slots:
+    void showItemContextMenu(const QPoint & _point);
+    void changeGameArt();
+    void downloadGameArt();
+    void deleteGameArt();
+    void onArtChanged(const QString & _game_id, OplPcTools::GameArtType _type);
+
 
 private:
     GameArtManager & mr_art_manager;

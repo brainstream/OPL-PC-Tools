@@ -175,7 +175,7 @@ void GameArtsWidget::showItemContextMenu(const QPoint & _point)
     mp_item_context_menu->exec(mp_list_arts->mapToGlobal(_point));
 }
 
-void GameArtsWidget::onArtChanged(const QString & _game_id, GameArtType _type)
+void GameArtsWidget::onArtChanged(const QString & _game_id, OplPcTools::GameArtType _type)
 {
     if(_game_id == m_game_id)
     {

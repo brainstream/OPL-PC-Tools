@@ -48,7 +48,7 @@ public:
     }
 
 signals:
-    void artChanged(const QString & _game_id, GameArtType _type);
+    void artChanged(const QString & _game_id, OplPcTools::GameArtType _type);
 
 private:
     void clearCache(GameArtType _type);

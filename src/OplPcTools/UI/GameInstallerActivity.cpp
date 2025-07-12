@@ -205,7 +205,14 @@ void TaskListItem::setProgress(int _progress)
     if(m_progress != _progress)
     {
         m_progress = _progress;
+#if QT_VERSION_MAJOR < 6
         emitDataChanged();
+#else
+        // For some unknown reason, emit DataChanged() does not trigger a paint event in Qt6.
+        // As a workaround, we redraw the entire widget.
+        QTreeWidget * tree = treeWidget();
+        if(tree) tree->viewport()->update();
+#endif
     }
 }
 
@@ -255,7 +262,7 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     const TaskListItem * item = static_cast<TaskListItem *>(mp_tree->topLevelItem(_index.row()));
     if(_index.column() != Column::Status || item->status() != GameInstallationStatus::Installation)
         return;
-    QStyleOptionProgressBar progress_bar_option;
+    QStyleOptionProgressBar progress_bar_option = { };
     progress_bar_option.state = QStyle::State_Enabled;
     progress_bar_option.direction = _option.direction;
     progress_bar_option.rect = _option.rect;
@@ -266,7 +273,7 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     progress_bar_option.textVisible = true;
     progress_bar_option.progress = item->progress();
     progress_bar_option.text = QString::asprintf("%d%%", progress_bar_option.progress / (g_progressbar_max_value / 100));
-    QStyleOption progress_indicator_option;
+    QStyleOption progress_indicator_option = { };
     progress_indicator_option.state = QStyle::State_Enabled;
     progress_indicator_option.direction = _option.direction;
     progress_indicator_option.rect = _option.rect;

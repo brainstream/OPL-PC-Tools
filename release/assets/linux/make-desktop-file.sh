@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FILENAME="OPL PC Tools.desktop"
+FILENAME="oplpctools.desktop"
 rm -f "${FILENAME}"
 
 echo "[Desktop Entry]" > "${FILENAME}"

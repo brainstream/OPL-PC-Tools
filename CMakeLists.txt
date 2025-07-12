@@ -35,7 +35,7 @@ endif()
 
 set(OPT_EXE_NAME "oplpctools")
 set(OPT_VERSION_MAJOR  3)
-set(OPT_VERSION_MINOR  0)
+set(OPT_VERSION_MINOR  1)
 set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -319,7 +319,9 @@ add_custom_target(misc SOURCES
     LICENSE.txt
     README.md
     NOTES.txt
-    release/make-release-linux.sh
+    Dockerfile
+    .dockerignore
+    make-release-linux.sh
     release/assets/linux/make-desktop-file.sh
     release/assets/linux/oplpctools.sh
 )

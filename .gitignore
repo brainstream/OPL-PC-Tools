@@ -14,3 +14,4 @@ CMakeLists.txt.user*
 /packages/*.msi
 /packages/*.pkg
 /release/release-*
+/release/*.tar.gz

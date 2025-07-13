@@ -54,6 +54,7 @@
 #include <cmath>
 #include <functional>
 #include <optional>
+#include <memory>
 #include <QRegularExpression>
 #include <QDateTime>
 #include <QTimeZone>
@@ -440,7 +441,7 @@ const VmcInfo * VmcFS::Private::info() const
 void VmcFS::Private::load()
 {
     deinit();
-    ::openFile(m_file, QIODevice::ReadOnly);
+    ::openFile(m_file, QIODevice::OpenMode(QIODevice::ReadOnly));
     readSuperblock();
     readFAT();
 }

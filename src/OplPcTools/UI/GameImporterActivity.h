@@ -25,7 +25,8 @@
 #include <OplPcTools/GameImporter.h>
 #include <OplPcTools/GameArtManager.h>
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class GameImporterActivity : public Activity, private Ui::GameImporterActivity
 {
@@ -58,4 +59,5 @@ private:
     int m_done_count;
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools

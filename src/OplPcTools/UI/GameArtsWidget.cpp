@@ -158,8 +158,8 @@ void GameArtsWidget::setupShortcuts()
 void GameArtsWidget::initGameArts()
 {
     auto properties = makeGameArtProperies();
-    for(auto it = properties.constKeyValueBegin(); it != properties.constKeyValueEnd(); ++it)
-        addArtListItem(it->first, it->second.name);
+    for(auto it = properties.keyBegin(); it != properties.keyEnd(); ++it)
+        addArtListItem(*it, properties.value(*it).name);
 }
 
 void GameArtsWidget::addArtListItem(GameArtType _type, const QString & _text)

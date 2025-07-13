@@ -22,7 +22,8 @@
 #include <OplPcTools/GameCollection.h>
 #include <QSet>
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class ChooseImportGamesDialog : public QDialog, private Ui::ChooseImportGamesDialog
 {
@@ -47,4 +48,5 @@ private:
     QSet<Uuid> m_selected_games;
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools

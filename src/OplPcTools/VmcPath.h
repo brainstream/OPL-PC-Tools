@@ -25,7 +25,7 @@ namespace OplPcTools {
 
 class VmcPath
 {
-    Q_DISABLE_COPY_MOVE(VmcPath)
+    Q_DISABLE_COPY(VmcPath)
 
 public:
     VmcPath()
@@ -85,7 +85,14 @@ public:
 private:
     QStringList split(const QString & _path) const
     {
-        return _path.split(s_path_separator, Qt::SkipEmptyParts);
+        return _path.split(
+            s_path_separator,
+#if QT_VERSION_MAJOR < 6
+            QString::SkipEmptyParts
+#else
+            Qt::SkipEmptyParts
+#endif
+        );
     }
 
 

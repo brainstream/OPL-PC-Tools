@@ -23,7 +23,8 @@
 #include <OplPcTools/GameArtManager.h>
 #include "ui_GameArtDownloaderActivity.h"
 
-namespace OplPcTools::UI {
+namespace OplPcTools {
+namespace UI {
 
 class GameArtDownloaderActivity : public Activity, private Ui::ArtDownloaderActivity
 {
@@ -42,4 +43,5 @@ public:
         const QList<GameArtType> & _art_types);
 };
 
-} // namespace OplPcTools::UI
+} // namespace UI
+} // namespace OplPcTools

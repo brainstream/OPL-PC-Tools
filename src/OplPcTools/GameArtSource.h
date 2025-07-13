@@ -24,7 +24,7 @@ namespace OplPcTools {
 
 class GameArtSource
 {
-    Q_DISABLE_COPY_MOVE(GameArtSource)
+    Q_DISABLE_COPY(GameArtSource)
 
 public:
     GameArtSource() { }

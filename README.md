@@ -28,6 +28,8 @@ With OPL PC Tools you can:
 
 ![OPL PC Tools game installation](screenshots/Install.png)
 
+![OPL PC Tools game installation](screenshots/Install_WindowsXP.png)
+
 ![OPL PC Tools art manager](screenshots/Arts.png)
 
 ![OPL PC Tools game config](screenshots/GameConfig.png)

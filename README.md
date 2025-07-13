@@ -6,7 +6,7 @@ With OPL PC Tools you can:
 
 - Manage your game collection;
 - Set pictures for games;
-- Download game images from the Internet;
+- Download game pictures from the Internet;
 - Install multiple games from different sources (CD/DVD drive or \*.iso, \*.bin, \*.nrg files) in automatic sequential mode;
 - Import games from other OPL storages;
 - Recover \*.iso files from installed games;

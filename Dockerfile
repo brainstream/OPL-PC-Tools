@@ -9,6 +9,8 @@ COPY . /oplpctools/src
 
 WORKDIR /oplpctools/src
 
+RUN rm -f CMakeCache.txt
+
 RUN mkdir build && \
     cd build && \
     cmake -G Ninja .. && \

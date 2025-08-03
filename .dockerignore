@@ -1,3 +1,5 @@
 build
 screenshots
 *.user
+/release/
+!/release/assets/

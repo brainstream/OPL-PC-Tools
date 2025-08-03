@@ -1,0 +1,195 @@
+ARG BASE_IMAGE=debian:stable
+
+FROM $BASE_IMAGE
+
+ARG VERSION
+ARG QT_VERSION
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+        file \
+        g++ \
+        cmake \
+        ninja-build \
+        patchelf \
+        binutils \
+        build-essential \
+        git \
+        python3 \
+        libgl1-mesa-dev \
+        libxkbcommon-dev \
+        libxcb-xinerama0-dev \
+        libfontconfig1-dev \
+        libfreetype6-dev \
+        libx11-dev \
+        libx11-xcb-dev \
+        libxcb-randr0-dev \
+        libxcb-icccm4-dev \
+        libxcb-cursor-dev \
+        libxcb-keysyms1-dev \
+        libxcb-xinput-dev \
+        libxcb-xfixes0-dev \
+        libxcb-shape0-dev \
+        libxcb-sync-dev \
+        libxcb-render-util0-dev \
+        libxcb-util-dev \
+        libwayland-dev \
+        libvulkan-dev \
+        libssl-dev \
+        libdbus-1-dev \
+        libatspi2.0-dev \
+        libxcb-image0-dev \
+        libxcb-xkb-dev \
+        libxkbcommon-x11-dev \
+        libfreetype-dev \
+        libxcb-glx0-dev \
+        libxcb-shm0-dev \
+        libxext-dev \
+        libxfixes-dev \
+        libxi-dev \
+        libxrender-dev \
+        libxcb1-dev \
+        libgtk-3-dev \
+        libgtk-4-dev \
+        libglib2.0-dev \
+        libgdk-pixbuf2.0-dev \
+        libpango1.0-dev \
+        libcairo2-dev \
+        adwaita-icon-theme \
+        ca-certificates \
+        wget
+
+WORKDIR /qt
+
+RUN git clone --branch v${QT_VERSION} https://code.qt.io/qt/qt5.git && \
+    cd qt5 && \
+    ./init-repository --module-subset=qtbase,qtsvg,qttools,qttranslations,qtsystems,qtwayland,qtimageformats && \
+    mkdir build && \
+    cd build && \
+    ../configure \
+        -prefix /opt/qt6 \
+        -release \
+        -opensource \
+        -confirm-license \
+        -nomake examples \
+        -nomake tests \
+        --doubleconversion=qt \
+        -ssl \
+        -xcb \
+        -glib \
+        -gtk \
+        -egl \
+        --pcre=qt \
+        --zlib=qt \
+        -gif \
+        -ico \
+        --libpng=qt \
+        --libjpeg=qt \
+        --tiff=qt \
+        --webp=qt \
+        -feature-thread \
+        -feature-style-stylesheet \
+        -feature-imageformat_bmp \
+        -feature-imageformat_jpeg \
+        -feature-imageformat_png \
+        -feature-imageformat_ppm \
+        -feature-imageformat_xbm \
+        -feature-imageformat_xpm \
+        -feature-imageformatplugin \
+        -feature-http \
+        -feature-desktopservices \
+        --sbom=no \
+        -no-dbus \
+    && \
+    cmake --build . --parallel && \
+    cmake --install .
+
+COPY . /oplpctools/src
+
+WORKDIR /oplpctools/src
+
+RUN mkdir build && \
+    cd build && \
+    cmake -G Ninja -DQT6_DIR=/opt/qt6 .. && \
+    ninja && \
+    patchelf --remove-rpath oplpctools && \
+    strip -s --strip-unneeded oplpctools
+
+WORKDIR /oplpctools/oplpctools
+
+RUN mkdir images \
+          bin \
+          bin/platforms \
+          bin/imageformats \
+          bin/tls \
+          bin/wayland-decoration-client \
+          bin/wayland-graphics-integration-client \
+          bin/wayland-graphics-integration-server \
+          bin/wayland-shell-integration \
+          bin/egldeviceintegrations \
+          bin/generic \
+          bin/iconengines \
+          bin/platforminputcontexts \
+          bin/platformthemes \
+          bin/xcbglintegrations \
+        && \
+    cp -v \
+        /oplpctools/src/LICENSE.txt \
+        /oplpctools/src/release/assets/linux/* \
+        . && \
+    cp -v /oplpctools/src/src/OplPcTools/Resources/images/application.png ./images/icon.png && \
+    cp -Lv \
+        /oplpctools/src/build/oplpctools \
+        /oplpctools/src/build/*.qm \
+        /opt/qt6/lib/libQt6Core.so.6 \
+        /opt/qt6/lib/libQt6Widgets.so.6 \
+        /opt/qt6/lib/libQt6Network.so.6 \
+        /opt/qt6/lib/libQt6Gui.so.6 \
+        /opt/qt6/lib/libQt6Svg.so.6 \
+        /opt/qt6/lib/libQt6XcbQpa.so.6 \
+        /opt/qt6/lib/libQt6WaylandEglClientHwIntegration.so.6 \
+        /opt/qt6/lib/libQt6WaylandClient.so.6 \
+        /opt/qt6/lib/libQt6WaylandCompositor.so.6 \
+        /opt/qt6/lib/libQt6WaylandCompositorIviapplication.so.6 \
+        /opt/qt6/lib/libQt6WaylandCompositorPresentationTime.so.6 \
+        /opt/qt6/lib/libQt6WaylandCompositorWLShell.so.6 \
+        /opt/qt6/lib/libQt6WaylandCompositorXdgShell.so.6 \
+        /opt/qt6/lib/libQt6WaylandEglCompositorHwIntegration.so.6 \
+        /opt/qt6/lib/libQt6WlShellIntegration.so.6 \
+        /opt/qt6/lib/libQt6OpenGL.so.6 \
+        /lib/x86_64-linux-gnu/libicudata.so.72 \
+        /lib/x86_64-linux-gnu/libicui18n.so.72 \
+        /lib/x86_64-linux-gnu/libicuuc.so.72 \
+        /lib/x86_64-linux-gnu/libxcb.so.1 \
+        /lib/x86_64-linux-gnu/libxcb-xkb.so.1 \
+        /lib/x86_64-linux-gnu/libpcre2-16.so.0 \
+        /lib/x86_64-linux-gnu/libxcb-cursor.so.0 \
+        /lib/x86_64-linux-gnu/libwayland-client.so.0 \
+        /lib/x86_64-linux-gnu/libwayland-egl.so.1 \
+        /lib/x86_64-linux-gnu/libxkbcommon.so.0 \
+        /lib/x86_64-linux-gnu/libxkbcommon-x11.so.0 \
+        /lib/x86_64-linux-gnu/libssl.so.3 \
+        /lib/x86_64-linux-gnu/libcrypto.so.3 \
+        bin && \
+    cp -Lv /opt/qt6/plugins/platforms/* bin/platforms && \
+    cp -Lv /opt/qt6/plugins/imageformats/* bin/imageformats && \
+    cp -Lv /opt/qt6/plugins/tls/* bin/tls && \
+    cp -Lv /opt/qt6/plugins/wayland-decoration-client/* bin/wayland-decoration-client && \
+    cp -Lv /opt/qt6/plugins/wayland-graphics-integration-client/* bin/wayland-graphics-integration-client && \
+    cp -Lv /opt/qt6/plugins/wayland-graphics-integration-server/* bin/wayland-graphics-integration-server && \
+    cp -Lv /opt/qt6/plugins/wayland-shell-integration/* bin/wayland-shell-integration && \
+    cp -Lv /opt/qt6/plugins/egldeviceintegrations/* bin/egldeviceintegrations && \
+    cp -Lv /opt/qt6/plugins/generic/* bin/generic && \
+    cp -Lv /opt/qt6/plugins/iconengines/* bin/iconengines && \
+    cp -Lv /opt/qt6/plugins/platforminputcontexts/* bin/platforminputcontexts && \
+    cp -Lv /opt/qt6/plugins/platformthemes/* bin/platformthemes && \
+    cp -Lv /opt/qt6/plugins/xcbglintegrations/* bin/xcbglintegrations && \
+    cp -Lv /opt/qt6/translations/qt_ru.qm bin/qt_ru && && \
+    cp -Lv /opt/qt6/translations/qtbase_ru.qm bin/qtbase_ru.qm && \
+    cp -Lv /opt/qt6/translations/qt_pt_BR.qm bin/qt_pt.qm && \
+    cp -Lv /opt/qt6/translations/qtbase_pt_BR.qm bin/qtbase_pt.qm && \
+    chmod +x oplpctools.sh
+
+WORKDIR /oplpctools
+
+RUN tar czf oplpctools_linux_${VERSION}_amd64.tar.gz oplpctools

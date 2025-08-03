@@ -7,12 +7,5 @@ CMakeLists.txt.user*
 /distr/
 /build*/
 /translations/*.qm
-/packages/*.deb
-/packages/*.rpm
-/packages/*.zip
-/packages/*.exe
-/packages/*.msi
-/packages/*.pkg
-/release/release-*
-/release/*.tar.gz
-/release/*.zip
+/release/
+!/release/assets/

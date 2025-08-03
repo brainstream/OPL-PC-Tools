@@ -1,5 +1,6 @@
 build
 screenshots
 *.user
+CMakeCache.txt
 /release/
 !/release/assets/

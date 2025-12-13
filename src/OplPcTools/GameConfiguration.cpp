@@ -224,51 +224,47 @@ void GameConfiguration::save(const GameConfiguration & _config, const QString & 
     QFile src_file(_filename);
     QFile tmp_file(_filename + ".tmp");
     QFileInfo(tmp_file).absoluteDir().mkpath(".");
-    if(tmp_file.exists())
+    openFile(src_file, QFile::ReadOnly | QFile::Text);
+    openFile(tmp_file, QFile::WriteOnly | QFile::Truncate | QFile::Text);
+    QSet<QString> written_keys;
+    for(; src_file.isOpen(); )
     {
-        openFile(tmp_file, QFile::ReadOnly | QFile::Text);
-        QSet<QString> written_keys;
-        openFile(tmp_file, QFile::WriteOnly | QFile::Truncate | QFile::Text);
-
-        for(; src_file.isOpen(); )
+        const QByteArray bytes = src_file.readLine();
+        if(bytes.isNull())
+            break;
+        auto kv = readKeyValue(QString::fromLatin1(bytes));
+        if(kv.hasValue())
         {
-            const QByteArray bytes = src_file.readLine();
-            if(bytes.isNull())
-                break;
-            auto kv = readKeyValue(QString::fromLatin1(bytes));
-            if(kv.hasValue())
+            const QString key = kv->first;
+            if(write(tmp_file, _config, key))
             {
-                const QString key = kv->first;
-                if (write(tmp_file, _config, key))
-                {
-                    written_keys.insert(key);
-                    continue;
-                }
+                written_keys.insert(key);
+                continue;
             }
-            tmp_file.write(bytes);
         }
-        src_file.close();
-        auto write_if_not_written = [&](const QString & key) {
-            if(!written_keys.contains(key))
-                write(tmp_file, _config, key);
-        };
-        write_if_not_written(Key::compatibility);
-        write_if_not_written(Key::enable_gsm);
-        write_if_not_written(Key::gsm_source);
-        write_if_not_written(Key::gsm_v_mode);
-        write_if_not_written(Key::gsm_x_offset);
-        write_if_not_written(Key::gsm_y_offset);
-        write_if_not_written(Key::gsm_skip_videos);
-        write_if_not_written(Key::gsm_emulate_field_flipping);
-        write_if_not_written(Key::game_id);
-        write_if_not_written(Key::custom_elf);
-        write_if_not_written(Key::vmc_0);
-        write_if_not_written(Key::vmc_1);
-        write_if_not_written(Key::config_source);
-        tmp_file.close();
-        src_file.remove();
-        tmp_file.rename(src_file.fileName());
+        tmp_file.write(bytes);
     }
+    src_file.close();
+    auto write_if_not_written = [&](const QString & key) {
+        if(!written_keys.contains(key))
+            write(tmp_file, _config, key);
+    };
+    write_if_not_written(Key::compatibility);
+    write_if_not_written(Key::enable_gsm);
+    write_if_not_written(Key::gsm_source);
+    write_if_not_written(Key::gsm_v_mode);
+    write_if_not_written(Key::gsm_x_offset);
+    write_if_not_written(Key::gsm_y_offset);
+    write_if_not_written(Key::gsm_skip_videos);
+    write_if_not_written(Key::gsm_emulate_field_flipping);
+    write_if_not_written(Key::game_id);
+    write_if_not_written(Key::custom_elf);
+    write_if_not_written(Key::vmc_0);
+    write_if_not_written(Key::vmc_1);
+    write_if_not_written(Key::config_source);
+    tmp_file.close();
+    src_file.remove();
+    tmp_file.rename(src_file.fileName());
 }
 
 

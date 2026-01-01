@@ -19,6 +19,7 @@
 #ifndef __OPLPCTOOLS_VMCEXPORTTHREAD__
 #define __OPLPCTOOLS_VMCEXPORTTHREAD__
 
+#include <OplPcTools/TextEncoding.h>
 #include <optional>
 #include <QWidget>
 #include <QEventLoop>
@@ -37,13 +38,21 @@ class VmcExportThreadWorker : public QObject
 
 public:
     VmcExportThreadWorker();
-    void start(const Vmc & _vmc, const QString & _destination_dir);
+    void start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir);
     void setAnswer(bool _answer);
     void cancel();
 
 private:
-    void exportDirectory(VmcFS & _fs, const VmcPath & _vmc_dir, const QString & _dest_directory);
-    void exportFile(VmcFS & _fs, const VmcPath & _vmc_file, const QString & _dest_directory);
+    void exportDirectory(
+        VmcFS & _fs,
+        TextDecoder & _decoder,
+        const VmcPath & _vmc_dir,
+        const QString & _dest_directory);
+    void exportFile(
+        VmcFS & _fs,
+        TextDecoder & _decoder,
+        const VmcPath & _vmc_file,
+        const QString & _dest_directory);
     Action getAction(const QString & _question);
 
 signals:
@@ -63,7 +72,7 @@ class VmcExportThread : public QObject
 
 public:
     explicit VmcExportThread(QWidget * _parent_widget);
-    void start(const Vmc & _vmc, const QString & _destination_dir);
+    void start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir);
 
 signals:
     void finished();

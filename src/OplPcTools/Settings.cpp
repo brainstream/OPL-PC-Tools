@@ -17,6 +17,8 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/TextEncoding.h>
+#include <QUrl>
 
 using namespace OplPcTools;
 
@@ -33,6 +35,10 @@ static const char rename_iso[] = "Settings/RenameISO";
 static const char check_new_version[] = "Settings/CheckNewVersion";
 static const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
 static const char icon_size[] = "Settings/IconSize";
+static const char vmc_fs_encoding[] = "Settings/VmcFsEncoding";
+
+static const char vmc_by_path_section[] = "Vmc";
+static const char vmc_by_path_fs_encoding[] = "FsEncoding";
 
 } // namespace Key
 } // namespace
@@ -150,6 +156,36 @@ void Settings::setIconSize(quint32 _size)
         mp_settings->setValue(Key::icon_size, _size);
         emit iconSizeChanged();
     }
+}
+
+void Settings::setDefaultVmcFsEncoding(const QString & _encoding)
+{
+    mp_settings->setValue(Key::vmc_fs_encoding, _encoding);
+}
+
+QString Settings::defaultVmcFsEncoding() const
+{
+    QString encoding = mp_settings->value(Key::vmc_fs_encoding).toString();
+    if(encoding.isEmpty())
+        encoding = TextEncoding::latin1();
+    return encoding;
+}
+
+void Settings::setVmcFsEncodingForPath(const QString & _path, const QString & _encoding)
+{
+    QString encodedPath = QUrl::toPercentEncoding(_path);
+    mp_settings->setValue(
+        QString("%1_%2/%3").arg(Key::vmc_by_path_section, encodedPath, Key::vmc_by_path_fs_encoding),
+        _encoding
+    );
+}
+
+QString Settings::vmcFsEncodingForPath(const QString & _path) const
+{
+    QString encodedPath = QUrl::toPercentEncoding(_path);
+    return mp_settings->value(
+        QString("%1_%2/%3").arg(Key::vmc_by_path_section, encodedPath, Key::vmc_by_path_fs_encoding)
+    ).toString();
 }
 
 Settings & Settings::instance()

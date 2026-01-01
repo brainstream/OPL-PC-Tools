@@ -575,7 +575,7 @@
 <context>
     <name>OplPcTools::GameArtNetworkSource</name>
     <message>
-        <location filename="../GameArtNetworkSource.cpp" line="82"/>
+        <location filename="../GameArtNetworkSource.cpp" line="86"/>
         <source>Unable to download picture: %1%2%3</source>
         <translation>Не могу скачать изображение: %1%2%3</translation>
     </message>
@@ -783,32 +783,32 @@
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="381"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="388"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
         <translation>Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="384"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="391"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="421"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="428"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="604"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="611"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="647"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="654"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="647"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="654"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -931,17 +931,17 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="273"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="315"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="304"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="304"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
@@ -949,7 +949,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="157"/>
+        <location filename="../UI/VmcExportThread.cpp" line="166"/>
         <source>Overwrite confirmation</source>
         <translation>Подтверждение перезаписи</translation>
     </message>
@@ -957,12 +957,12 @@
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="49"/>
+        <location filename="../UI/VmcExportThread.cpp" line="50"/>
         <source>An unknown error occurred while exporting VMC</source>
         <translation>Во время экспорта ВКП произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="86"/>
+        <location filename="../UI/VmcExportThread.cpp" line="95"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation>Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
@@ -1141,62 +1141,62 @@
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="60"/>
+        <location filename="../UI/VmcExportThread.cpp" line="65"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Не могу создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="83"/>
+        <location filename="../UI/VmcExportThread.cpp" line="92"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation>Не могу открыть файл ВКП &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="67"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="68"/>
         <source>B</source>
         <translation>Б</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="70"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="71"/>
         <source>KiB</source>
         <translation>КиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="73"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="74"/>
         <source>MiB</source>
         <translation>МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="76"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="77"/>
         <source>GiB</source>
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="204"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="219"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="214"/>
+        <location filename="../VmcFS.cpp" line="215"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>Размер ВКП не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="512"/>
+        <location filename="../VmcFS.cpp" line="513"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>ВКП повреждена или имеет некорректный формат</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="575"/>
+        <location filename="../VmcFS.cpp" line="576"/>
         <source>Path not found</source>
         <translation>Путь не найден</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="660"/>
+        <location filename="../VmcFS.cpp" line="661"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="662"/>
+        <location filename="../VmcFS.cpp" line="663"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; не является файлом</translation>
     </message>
@@ -1333,6 +1333,16 @@
         <source>List Icon Size</source>
         <translation>Размер иконок в списках</translation>
     </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="166"/>
+        <source>VMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="172"/>
+        <source>Default File System Encoding</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VmcCreateDialog</name>
@@ -1361,14 +1371,19 @@
     <name>VmcDetailsActivity</name>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="40"/>
-        <location filename="../UI/VmcDetailsActivity.ui" line="103"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="102"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="76"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="75"/>
         <source>Rename...</source>
         <translation>Переименовть...</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="198"/>
+        <source>Encoding</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

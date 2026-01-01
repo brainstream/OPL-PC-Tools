@@ -256,7 +256,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/VmcFS.cpp
     ${OPT_SRC_DIR}/VmcFS.h
     ${OPT_SRC_DIR}/VmcPath.h
-
+    ${OPT_SRC_DIR}/TextEncoding.cpp
+    ${OPT_SRC_DIR}/TextEncoding.h
 )
 
 if(WIN32)

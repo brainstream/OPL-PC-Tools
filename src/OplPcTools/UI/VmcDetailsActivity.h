@@ -47,11 +47,12 @@ private:
     void showErrorMessage(const QString & _message = QString());
     void hideErrorMessage();
     void loadVmcFS();
-    void setupView();
+    QString getFsEncoding() const;
     void setIconSize();
     void navigate(const VmcPath & _path);
     void onFsListItemActivated(const QModelIndex & _index);
     void onFsBackButtonClick();
+    void onEncodingChanged();
     void renameVmc();
 
 private:

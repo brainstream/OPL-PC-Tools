@@ -375,5 +375,5 @@ void VmcListWidget::exportFiles()
     connect(thread, &VmcExportThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);
     });
-    thread->start(*vmc, directory);
+    thread->start(*vmc, Settings::instance().vmcFsEncodingForPath(vmc->filepath()), directory);
 }

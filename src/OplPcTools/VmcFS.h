@@ -54,7 +54,7 @@ struct VmcInfo final
 
 struct VmcEntryInfo
 {
-    QString name;
+    QByteArray name;
     bool is_directory;
     uint32_t size;
 };
@@ -69,7 +69,7 @@ public:
 public:
     explicit VmcFile(Private * _private);
     ~VmcFile();
-    const QString & name() const;
+    const QByteArray & name() const;
     uint32_t size() const;
     bool seek(uint32_t _pos);
     int64_t read(char * _buffer, int64_t _max_size);

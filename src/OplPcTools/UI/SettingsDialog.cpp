@@ -18,6 +18,7 @@
 
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
+#include <OplPcTools/TextEncoding.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;
@@ -42,6 +43,15 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
         mp_checkbox_check_new_versions->setEnabled(false);
     mp_spinbox_icon_size->setValue(settings.iconSize());
     mp_tabs->setCurrentIndex(0);
+    {
+        QStringList codecs = TextEncoding::availableCodecs();
+        codecs.sort(Qt::CaseInsensitive);
+        QString encoding = settings.defaultVmcFsEncoding();
+        if(encoding.isEmpty() || !codecs.contains(encoding))
+            encoding = TextEncoding::latin1();
+        mp_combobox_vmc_fs_encoding->addItems(codecs);
+        mp_combobox_vmc_fs_encoding->setCurrentText(encoding);
+    }
 }
 
 void SettingsDialog::accept()
@@ -57,6 +67,7 @@ void SettingsDialog::accept()
     settings.setValidateUlCfg(mp_checkbox_validate_ulcfg->isChecked());
     settings.setCheckNewVersion(mp_checkbox_check_new_versions->isEnabled() && mp_checkbox_check_new_versions->isChecked());
     settings.setIconSize(mp_spinbox_icon_size->value());
+    settings.setDefaultVmcFsEncoding(mp_combobox_vmc_fs_encoding->currentText());
     settings.flush();
     QDialog::accept();
 }

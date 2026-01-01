@@ -1,5 +1,5 @@
 /***********************************************************************************************
- * Copyright © 2017-2025 Sergey Smolyannikov aka brainstream                                   *
+ * Copyright © 2017-2026 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *
@@ -16,91 +16,39 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QStringList>
+#pragma once
 
-#ifndef __OPLPCTOOLS_VMCPATH__
-#define __OPLPCTOOLS_VMCPATH__
+#include <QStringList>
 
 namespace OplPcTools {
 
-class VmcPath
+class TextEncoding final
 {
-    Q_DISABLE_COPY(VmcPath)
+private:
+    TextEncoding();
 
 public:
-    VmcPath()
-    {
-    }
+    static QStringList availableCodecs();
+    static constexpr QString latin1() { return "ISO-8859-1"; }
+};
 
-    VmcPath(const QString & _path) :
-        VmcPath(split(_path))
-    {
-    }
-
-    VmcPath(const QString & _base_path, const QString _relative_path) :
-        VmcPath(split(_base_path) + split(_relative_path))
-    {
-    }
-
-    explicit VmcPath(const QStringList & _parts) :
-        m_parts(_parts)
-    {
-    }
-
-    VmcPath operator + (const QString & _relative_path) const
-    {
-        return VmcPath(m_parts + split(_relative_path));
-    }
-
-    operator QString () const
-    {
-        return path();
-    }
-
-    const QString path() const
-    {
-        return QString(s_path_separator) + m_parts.join(s_path_separator);
-    }
-
-    const QStringList parts() const
-    {
-        return m_parts;
-    }
-
-    static VmcPath root()
-    {
-        return VmcPath();
-    }
-
-    bool isRoot() const
-    {
-        return m_parts.empty();
-    }
-
-    VmcPath up() const
-    {
-        return VmcPath(m_parts.mid(0, m_parts.size() - 1));
-    }
+class TextDecoder final
+{
+    Q_DISABLE_COPY(TextDecoder)
 
 private:
-    QStringList split(const QString & _path) const
-    {
-        return _path.split(
-            s_path_separator,
-#if QT_VERSION <= QT_VERSION_CHECK(5, 15, 0)
-            QString::SkipEmptyParts
-#else
-            Qt::SkipEmptyParts
-#endif
-        );
-    }
+    class Private;
 
+public:
+    explicit TextDecoder(const QString & _codec);
+    TextDecoder(TextDecoder && _decoder);
+    ~TextDecoder();
+    TextDecoder & operator = (TextDecoder && _decoder);
+    QString codecName() const;
+    QString decode(const QByteArray & _bytes) const;
 
 private:
-    static const char s_path_separator = '/';
-    const QStringList m_parts;
+    Private * mp_private;
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCPATH__

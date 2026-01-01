@@ -20,6 +20,7 @@
 #include <QShortcut>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/TextEncoding.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
@@ -87,7 +88,8 @@ namespace OplPcTools::UI {
 class VmcFileSystemViewModel : public QAbstractItemModel
 {
 public:
-    explicit VmcFileSystemViewModel(QObject * _parent = nullptr);
+    explicit VmcFileSystemViewModel(const QString & _encoding, QObject * _parent = nullptr);
+    void setEncoding(const QString & _encoding);
     void setItems(const QList<VmcEntryInfo> & _items);
     void clear();
     const VmcEntryInfo * item(const QModelIndex & _index) const;
@@ -110,6 +112,7 @@ private:
     };
 
 private:
+    TextDecoder m_string_decoder;
     QList<VmcEntryInfo> m_items;
     std::vector<int> m_item_indices;
     QIcon m_file_icon;
@@ -120,13 +123,23 @@ private:
 
 } // namespace OplPcTools::UI
 
-VmcFileSystemViewModel::VmcFileSystemViewModel(QObject * _parent /*= nullptr*/) :
+VmcFileSystemViewModel::VmcFileSystemViewModel(const QString & _encoding, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
+    m_string_decoder(_encoding),
     m_file_icon(":/images/file"),
     m_dir_icon(":/images/folder"),
     m_sorted_by_column(COL_TTITLE),
     m_sort_order(Qt::AscendingOrder)
 {
+}
+
+void VmcFileSystemViewModel::setEncoding(const QString & _encoding)
+{
+    if(m_string_decoder.codecName() == _encoding)
+        return;
+    beginResetModel();
+    m_string_decoder = TextDecoder(_encoding);
+    endResetModel();
 }
 
 void VmcFileSystemViewModel::setItems(const QList<VmcEntryInfo> & _items)
@@ -191,7 +204,9 @@ QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) con
         switch(_role)
         {
         case Qt::DisplayRole:
-            return item->name;
+        {
+            return QString(m_string_decoder.decode(item->name));
+        }
         case Qt::DecorationRole:
             return item->is_directory ? m_dir_icon : m_file_icon;
         }
@@ -252,8 +267,35 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     hideErrorMessage();
     mp_label_vmc_title->setText(mr_vmc.title());
     loadVmcFS();
+    QString encoding = getFsEncoding();
+    {
+        QStringList codecs = TextEncoding::availableCodecs();
+        codecs.sort(Qt::CaseInsensitive);
+        if(!codecs.contains(encoding))
+            encoding = TextEncoding::latin1();
+        mp_combobox_encoding->addItems(codecs);
+        mp_combobox_encoding->setCurrentText(encoding);
+    }
     if(m_fs_ptr)
-        setupView();
+    {
+        mp_model = new VmcFileSystemViewModel(encoding, this);
+        navigate(VmcPath::root());
+        mp_tree_fs->setModel(mp_model);
+        QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
+        header_model->setHorizontalHeaderLabels({ tr("Title"), tr("Size") });
+        header_model->horizontalHeaderItem(1)->setTextAlignment(Qt::Alignment(Qt::AlignRight));
+        mp_tree_fs->header()->setModel(header_model);
+        mp_tree_fs->header()->setStretchLastSection(false);
+        mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+        mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
+        connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
+        connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
+        connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
+        connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
+        connect(mp_label_vmc_title, &ClickableLabel::clicked, this, &VmcDetailsActivity::renameVmc);
+        connect(mp_combobox_encoding, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
+        setIconSize();
+    }
 }
 
 void VmcDetailsActivity::setupShortcuts()
@@ -295,24 +337,13 @@ void VmcDetailsActivity::loadVmcFS()
     }
 }
 
-void VmcDetailsActivity::setupView()
+QString VmcDetailsActivity::getFsEncoding() const
 {
-    mp_model = new VmcFileSystemViewModel(this);
-    navigate(VmcPath::root());
-    mp_tree_fs->setModel(mp_model);
-    QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
-    header_model->setHorizontalHeaderLabels({ tr("Title"), tr("Size") });
-    header_model->horizontalHeaderItem(1)->setTextAlignment(Qt::Alignment(Qt::AlignRight));
-    mp_tree_fs->header()->setModel(header_model);
-    mp_tree_fs->header()->setStretchLastSection(false);
-    mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
-    connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
-    connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
-    connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
-    connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
-    connect(mp_label_vmc_title, &ClickableLabel::clicked, this, &VmcDetailsActivity::renameVmc);
-    setIconSize();
+    Settings & settings = Settings::instance();
+    QString encoding = settings.vmcFsEncodingForPath(mr_vmc.filepath());
+    if(encoding.isEmpty())
+        encoding = settings.defaultVmcFsEncoding();
+    return encoding;
 }
 
 void VmcDetailsActivity::setIconSize()
@@ -359,6 +390,13 @@ void VmcDetailsActivity::onFsBackButtonClick()
     VmcPath path = VmcPath(mp_edit_fs_path->text());
     if(!path.isRoot())
         navigate(path.up());
+}
+
+void VmcDetailsActivity::onEncodingChanged()
+{
+    QString encoding = mp_combobox_encoding->currentText();
+    mp_model->setEncoding(encoding);
+    Settings::instance().setVmcFsEncodingForPath(mr_vmc.filepath(), encoding);
 }
 
 QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)

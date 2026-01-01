@@ -157,7 +157,7 @@ struct FATEntry
 
 struct EntryInfo
 {
-    QString name;
+    QByteArray name;
     bool is_directory;
     uint32_t cluster;
     uint32_t length;
@@ -403,7 +403,7 @@ private:
 struct VmcFile::Private
 {
     VmcFS::Private * fs;
-    QString name;
+    QByteArray name;
     uint32_t size;
     uint32_t position;
     QList<uint32_t> clusters;
@@ -611,7 +611,7 @@ EntryInfo VmcFS::Private::map(const FSEntry & _fs_entry) const
     EntryInfo info;
     info.is_directory = _fs_entry.mode & EM_DIRECTORY;
     info.cluster = _fs_entry.cluster;
-    info.name = QString::fromLatin1(_fs_entry.name, std::min(sizeof(FSEntry::name), std::strlen(_fs_entry.name)));
+    info.name = QByteArray(_fs_entry.name, std::min(sizeof(FSEntry::name), std::strlen(_fs_entry.name)));
     info.length = _fs_entry.length;
     return info;
 }
@@ -715,7 +715,7 @@ uint32_t VmcFile::size() const
     return mp_private->size;
 }
 
-const QString & VmcFile::name() const
+const QByteArray & VmcFile::name() const
 {
     return mp_private->name;
 }

@@ -32,13 +32,14 @@ VmcExportThreadWorker::VmcExportThreadWorker() :
 {
 }
 
-void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _destination_dir)
+void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir)
 {
     try
     {
         m_action = Action::Skip;
         QSharedPointer<VmcFS> fs = VmcFS::load(_vmc.filepath());
-        exportDirectory(*fs, VmcPath::root(), _destination_dir);
+        TextDecoder decoder(_fs_encoding);
+        exportDirectory(*fs, decoder, VmcPath::root(), _destination_dir);
     }
     catch(const Exception & _exception)
     {
@@ -51,7 +52,11 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _destination
     emit finished();
 }
 
-void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const VmcPath & _vmc_dir, const QString & _dest_directory)
+void VmcExportThreadWorker::exportDirectory(
+    VmcFS & _fs,
+    TextDecoder & _decoder,
+    const VmcPath & _vmc_dir,
+    const QString & _dest_directory)
 {
     if(m_action == Action::Cancel)
         return;
@@ -61,27 +66,31 @@ void VmcExportThreadWorker::exportDirectory(VmcFS & _fs, const VmcPath & _vmc_di
     QList<VmcEntryInfo> entries = _fs.enumerateEntries(_vmc_dir);
     foreach(const VmcEntryInfo & entry, entries)
     {
-        VmcPath next_vmc_entry = _vmc_dir + entry.name;
+        VmcPath next_vmc_entry = _vmc_dir + QString(entry.name);
         if(entry.is_directory)
         {
             QString next_directory = dir.absoluteFilePath(entry.name);
-            exportDirectory(_fs, next_vmc_entry, next_directory);
+            exportDirectory(_fs, _decoder, next_vmc_entry, next_directory);
         }
         else
         {
-            exportFile(_fs, next_vmc_entry, _dest_directory);
+            exportFile(_fs, _decoder, next_vmc_entry, _dest_directory);
             if(m_action == Action::Cancel)
                 break;
         }
     }
 }
 
-void VmcExportThreadWorker::exportFile(VmcFS & _fs, const VmcPath & _vmc_file, const QString & _dest_directory)
+void VmcExportThreadWorker::exportFile(
+    VmcFS & _fs,
+    TextDecoder & _decoder,
+    const VmcPath & _vmc_file,
+    const QString & _dest_directory)
 {
     QSharedPointer<VmcFile> file = _fs.openFile(_vmc_file);
     if(!file)
         throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
-    QFile out(QDir(_dest_directory).absoluteFilePath(file->name()));
+    QFile out(QDir(_dest_directory).absoluteFilePath(_decoder.decode(file->name())));
     if(!out.exists() ||
        getAction(tr("The file \"%1\" exists. Do you want to overwrite it?").arg(out.fileName())) == Action::Overwrite)
     {
@@ -124,13 +133,13 @@ VmcExportThread::VmcExportThread(QWidget * _parent_widget) :
 {
 }
 
-void VmcExportThread::start(const Vmc & _vmc, const QString & _destination_dir)
+void VmcExportThread::start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir)
 {
     QThread * thread = new QThread(this);
     BusyDialog * busy_dialog = new BusyDialog(mp_parent_widget);
     mp_worker = new VmcExportThreadWorker();
-    connect(thread, &QThread::started, this, [this, &_vmc, &_destination_dir]() {
-        mp_worker->start(_vmc, _destination_dir);
+    connect(thread, &QThread::started, this, [this, &_vmc, _fs_encoding, &_destination_dir]() {
+        mp_worker->start(_vmc, _fs_encoding, _destination_dir);
     });
     connect(thread, &QThread::finished, this, &VmcExportThread::finished);
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);

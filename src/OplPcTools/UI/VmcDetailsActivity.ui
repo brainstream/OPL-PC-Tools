@@ -61,7 +61,6 @@
        </property>
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -86,10 +85,10 @@
    <item>
     <widget class="QFrame" name="mp_frame">
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Shadow::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -106,7 +105,7 @@
            <string notr="true"/>
           </property>
           <property name="arrowType">
-           <enum>Qt::LeftArrow</enum>
+           <enum>Qt::ArrowType::LeftArrow</enum>
           </property>
          </widget>
         </item>
@@ -137,7 +136,7 @@
             <bool>true</bool>
            </property>
            <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+            <set>Qt::TextInteractionFlag::LinksAccessibleByMouse|Qt::TextInteractionFlag::TextSelectableByMouse</set>
            </property>
           </widget>
          </item>
@@ -147,16 +146,16 @@
       <item>
        <widget class="QTreeView" name="mp_tree_fs">
         <property name="contextMenuPolicy">
-         <enum>Qt::CustomContextMenu</enum>
+         <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
         </property>
         <property name="alternatingRowColors">
          <bool>true</bool>
         </property>
         <property name="selectionMode">
-         <enum>QAbstractItemView::ExtendedSelection</enum>
+         <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
         </property>
         <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
         </property>
         <property name="iconSize">
          <size>
@@ -178,6 +177,33 @@
         </property>
        </widget>
       </item>
+      <item>
+       <layout class="QHBoxLayout" name="mp_layout_3">
+        <item>
+         <spacer name="mp_spacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="mp_label_encoding">
+          <property name="text">
+           <string>Encoding</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="mp_combobox_encoding"/>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
@@ -192,6 +218,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>mp_tree_fs</tabstop>
+  <tabstop>mp_combobox_encoding</tabstop>
   <tabstop>mp_btn_close</tabstop>
   <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_fs_back</tabstop>

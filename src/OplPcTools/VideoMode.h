@@ -1,5 +1,5 @@
 /***********************************************************************************************
- * Copyright © 2017-2025 Sergey Smolyannikov aka brainstream                                   *
+ * Copyright © 2017-2026 Sergey Smolyannikov aka brainstream                                   *
  *                                                                                             *
  * This file is part of the OPL PC Tools project, the graphical PC tools for Open PS2 Loader.  *
  *                                                                                             *

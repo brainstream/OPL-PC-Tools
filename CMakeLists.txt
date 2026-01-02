@@ -269,23 +269,6 @@ if(WIN32)
 endif()
 
 #######################
-# Localization
-#######################
-
-set(TRANSLATIONS
-    ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_ru.ts
-    ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_pt.ts
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_add_translation(QM_FILES ${TRANSLATIONS})
-else()
-    qt5_create_translation(QM_FILES ${OPT_SRC} ${TRANSLATIONS}
-        OPTIONS "-no-obsolete"
-    )
-endif()
-
-#######################
 # Building
 #######################
 
@@ -347,3 +330,26 @@ if(QT_VERSION_MAJOR EQUAL 5)
         ${Qt5Network_DEFINITIONS}
     )
 endif()
+
+#######################
+# Localization
+#######################
+
+set(TRANSLATIONS
+    ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_ru.ts
+    ${OPT_SRC_DIR}/Translations/${OPT_EXE_NAME}_pt.ts
+)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_add_translations(${OPT_EXE_NAME}
+        LUPDATE_TARGET "translation_update"
+        LRELEASE_TARGET "translation_release"
+        TS_FILES ${TRANSLATIONS}
+    )
+else()
+    qt5_create_translation(QM_FILES ${OPT_SRC} ${TRANSLATIONS}
+        OPTIONS "-no-obsolete"
+    )
+endif()
+
+add_dependencies(${OPT_EXE_NAME} translation_update)

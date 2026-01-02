@@ -180,7 +180,7 @@
         <location filename="../UI/GameConfigWidget.ui" line="212"/>
         <location filename="../UI/GameConfigWidget.ui" line="260"/>
         <source>Create VMC</source>
-        <translation>Создать ВКП</translation>
+        <translation>Создать VMC</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="226"/>
@@ -488,7 +488,7 @@
     <message>
         <location filename="../UI/LibraryActivity.ui" line="52"/>
         <source>Virtual Memory Cards</source>
-        <translation>Виртуальные карты памяти</translation>
+        <translation>Виртуальные карты памяти (VMC)</translation>
     </message>
 </context>
 <context>
@@ -720,29 +720,29 @@
         <translation>Режим 8 ― Устарело</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="399"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="400"/>
         <source>Configuration cleared</source>
         <translation>Конфигурация очищена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="429"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="430"/>
         <source>Configuration saved</source>
         <translation>Конфигурация сохранена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="464"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
         <source>Confirmation</source>
         <translation>Подтверждение</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="466"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation>Вы уверены, что хотите удалить файл?
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="469"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="470"/>
         <source>Configuration file does not exist</source>
         <translation>Конфигурационный файл не существует</translation>
     </message>
@@ -959,7 +959,7 @@
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="50"/>
         <source>An unknown error occurred while exporting VMC</source>
-        <translation>Во время экспорта ВКП произошла неизвестная ошибка</translation>
+        <translation>Во время экспорта VMC произошла неизвестная ошибка</translation>
     </message>
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="95"/>
@@ -970,22 +970,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="304"/>
+        <location filename="../UI/VmcListWidget.cpp" line="321"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="305"/>
+        <location filename="../UI/VmcListWidget.cpp" line="322"/>
         <source>Delete VMC</source>
-        <translation>Удалить ВКП</translation>
+        <translation>Удалить VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="306"/>
+        <location filename="../UI/VmcListWidget.cpp" line="323"/>
         <source>Are you sure you want to delete this VMC?</source>
-        <translation>Вы уверены, что хотите удалить эту ВКП?</translation>
+        <translation>Вы уверены, что хотите удалить эту VMC?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="370"/>
+        <location filename="../UI/VmcListWidget.cpp" line="387"/>
         <source>Select directory</source>
         <translation>Выбор каталога</translation>
     </message>
@@ -993,9 +993,14 @@
 <context>
     <name>OplPcTools::UI::VmcPropertiesDialog</name>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="81"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="65"/>
+        <source>MiB</source>
+        <translation>МиБ</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="92"/>
         <source>Unable to read VMC</source>
-        <translation>Не могу прочитать ВКП</translation>
+        <translation>Не могу прочитать VMC</translation>
     </message>
 </context>
 <context>
@@ -1034,7 +1039,7 @@
     <message>
         <location filename="../VmcCollection.cpp" line="95"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
-        <translation>ВКП с именем &quot;%1&quot; уже существует</translation>
+        <translation>VMC с именем &quot;%1&quot; уже существует</translation>
     </message>
 </context>
 <context>
@@ -1148,7 +1153,7 @@
     <message>
         <location filename="../UI/VmcExportThread.cpp" line="92"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
-        <translation>Не могу открыть файл ВКП &quot;%1&quot;</translation>
+        <translation>Не могу открыть файл VMC &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="68"/>
@@ -1178,12 +1183,12 @@
     <message>
         <location filename="../VmcFS.cpp" line="215"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
-        <translation>Размер ВКП не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
+        <translation>Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="513"/>
         <source>The VMC is corrupted or not formatted correctly</source>
-        <translation>ВКП повреждена или имеет некорректный формат</translation>
+        <translation>VMC повреждена или имеет некорректный формат</translation>
     </message>
     <message>
         <location filename="../VmcFS.cpp" line="576"/>
@@ -1211,7 +1216,7 @@
         <translation>Следующие символы запрещены</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="142"/>
+        <location filename="../UI/VmcListWidget.cpp" line="157"/>
         <source>%1 MiB</source>
         <translation>%1 МиБ</translation>
     </message>
@@ -1296,7 +1301,7 @@
     <message>
         <location filename="../UI/SettingsDialog.ui" line="68"/>
         <source>Confirm the removal of a VMC</source>
-        <translation>Подтверждать удаление ВКП</translation>
+        <translation>Подтверждать удаление VMC</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="89"/>
@@ -1336,12 +1341,12 @@
     <message>
         <location filename="../UI/SettingsDialog.ui" line="166"/>
         <source>VMC</source>
-        <translation type="unfinished"></translation>
+        <translation>VMC</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="172"/>
-        <source>Default File System Encoding</source>
-        <translation type="unfinished"></translation>
+        <source>Default file system charset</source>
+        <translation>Кодировка файловой системы по умолчанию</translation>
     </message>
 </context>
 <context>
@@ -1349,7 +1354,7 @@
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="14"/>
         <source>Create VMC</source>
-        <translation>Создать ВКП</translation>
+        <translation>Создать VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcCreateDialog.ui" line="28"/>
@@ -1382,8 +1387,12 @@
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="198"/>
+        <source>Charset</source>
+        <translation>Кодировка</translation>
+    </message>
+    <message>
         <source>Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Кодировка</translation>
     </message>
 </context>
 <context>
@@ -1401,7 +1410,7 @@
     <message>
         <location filename="../UI/VmcListWidget.ui" line="200"/>
         <source>Create VMC</source>
-        <translation>Создать ВКП</translation>
+        <translation>Создать VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="212"/>
@@ -1411,7 +1420,7 @@
     <message>
         <location filename="../UI/VmcListWidget.ui" line="215"/>
         <source>Delete VMC</source>
-        <translation>Удалить ВКП</translation>
+        <translation>Удалить VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="227"/>
@@ -1421,7 +1430,7 @@
     <message>
         <location filename="../UI/VmcListWidget.ui" line="230"/>
         <source>Rename VMC</source>
-        <translation>Переименовать ВКП</translation>
+        <translation>Переименовать VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcListWidget.ui" line="242"/>
@@ -1439,105 +1448,135 @@
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="14"/>
         <source>VMC Properties</source>
-        <translation>Свойства ВКП</translation>
+        <translation>Свойства VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="38"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="27"/>
+        <source>Properties</source>
+        <translation>Свойства</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="65"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="93"/>
+        <source>File</source>
+        <translation>Файл</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="121"/>
+        <source>Size</source>
+        <translation>Размер</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="149"/>
+        <source>Charset</source>
+        <translation>Кодировка</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="177"/>
+        <source>Technical Details</source>
+        <translation>Технические детали</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="215"/>
         <source>Magic</source>
         <translation>Магия</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="58"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="246"/>
         <source>Version</source>
-        <translation>Верисия</translation>
+        <translation>Версия</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="78"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="277"/>
         <source>Page Size</source>
         <translation>Размер страницы</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="98"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="308"/>
         <source>Cluster Size</source>
         <translation>Размер кластера</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="118"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="339"/>
         <source>Pages per Cluster</source>
         <translation>Страниц в кластере</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="138"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="370"/>
         <source>Pages per Block</source>
         <translation>Страниц в блоке</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="158"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="401"/>
         <source>Clusters per Card</source>
         <translation>Кластеров в карте</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="178"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="432"/>
         <source>Alloc Offset</source>
         <translation>Смещение распределения</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="198"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="457"/>
         <source>Alloc End</source>
         <translation>Конец распределения</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="218"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="482"/>
         <source>Root Directory Cluster</source>
         <translation>Кластер корневого каталога</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="238"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="513"/>
         <source>Backup Block #1</source>
         <translation>Запасной блок №1</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="258"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="544"/>
         <source>Backup Block #2</source>
         <translation>Запасной блок №2</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="278"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="575"/>
         <source>Card Type</source>
         <translation>Тип карты</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="298"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="606"/>
         <source>Card Flags</source>
         <translation>Флаги карты</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="318"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="637"/>
         <source>FAT Entries per Cluster</source>
         <translation>Записей FAT в кластере</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="338"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="668"/>
         <source>Clusters per Block</source>
         <translation>Кластеров в блоке</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="358"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="699"/>
         <source>Card Format</source>
         <translation>Формат карты</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="378"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="730"/>
         <source>Max Allocatable Clusters</source>
         <translation>Максимальный распределяемый кластер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="398"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="761"/>
         <source>Bad Blocks</source>
         <translation>Плохие блоки</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="421"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="795"/>
         <source>IFC List</source>
         <translation>Список IFC</translation>
     </message>
@@ -1547,7 +1586,7 @@
     <message>
         <location filename="../UI/VmcRenameDialog.ui" line="14"/>
         <source>VMC Title</source>
-        <translation>Название ВКП</translation>
+        <translation>Название VMC</translation>
     </message>
 </context>
 </TS>

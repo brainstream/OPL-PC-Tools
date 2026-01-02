@@ -54,8 +54,6 @@ public:
     void setIconSize(quint32 _size);
     void setDefaultVmcFsEncoding(const QString & _encoding);
     QString defaultVmcFsEncoding() const;
-    void setVmcFsEncodingForPath(const QString & _path, const QString & _encoding);
-    QString vmcFsEncodingForPath(const QString & _path) const;
 
 signals:
     void iconSizeChanged();

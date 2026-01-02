@@ -339,8 +339,9 @@ int GameConfigWidget::getVmcComboBoxItemIndex(QComboBox * _combobox, const Uuid 
     return -1;
 }
 
-void GameConfigWidget::onVmcRenamed(const Uuid & _id)
+void GameConfigWidget::onVmcRenamed(const QString & _old_title, const Uuid & _id)
 {
+    Q_UNUSED(_old_title)
     const Vmc * vmc = mr_vmcs[_id];
     renameVmcComboBoxItem(mp_combo_vmc0, _id, vmc->title());
     renameVmcComboBoxItem(mp_combo_vmc1, _id, vmc->title());

@@ -120,7 +120,7 @@ void VmcCollection::renameVmc(const Uuid & _uuid, const QString & _title)
     QString dest = makeFilename(_title);
     renameFile(src, dest);
     vmc->setTitle(_title);
-    emit vmcRenamed(_uuid);
+    emit vmcRenamed(old_title, _uuid);
 }
 
 QString VmcCollection::makeFilename(const QString & _vmc_title) const

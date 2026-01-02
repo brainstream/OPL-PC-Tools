@@ -48,7 +48,7 @@ private:
     void onVmcDeleted(const Uuid & _id);
     void deleteVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id);
     int getVmcComboBoxItemIndex(QComboBox * _combobox, const Uuid & _id) const;
-    void onVmcRenamed(const Uuid & _id);
+    void onVmcRenamed(const QString & _old_title, const Uuid & _id);
     void renameVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id, const QString & _title);
     void createVmc0();
     void createVmc1();

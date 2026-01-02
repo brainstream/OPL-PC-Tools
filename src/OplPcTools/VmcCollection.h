@@ -44,7 +44,7 @@ public:
 
 signals:
     void vmcAdded(const OplPcTools::Uuid & _uuid);
-    void vmcRenamed(const OplPcTools::Uuid & _uuid);
+    void vmcRenamed(const QString & _old_title, const OplPcTools::Uuid & _uuid);
     void vmcAboutToBeDeleted(const OplPcTools::Uuid & _uuid);
     void vmcDeleted(const OplPcTools::Uuid & _uuid);
 

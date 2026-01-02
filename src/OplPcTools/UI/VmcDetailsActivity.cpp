@@ -339,10 +339,9 @@ void VmcDetailsActivity::loadVmcFS()
 
 QString VmcDetailsActivity::getFsEncoding() const
 {
-    Settings & settings = Settings::instance();
-    QString encoding = settings.vmcFsEncodingForPath(mr_vmc.filepath());
+    QString encoding = Library::instance().config().vmcFsEncoding(mr_vmc);
     if(encoding.isEmpty())
-        encoding = settings.defaultVmcFsEncoding();
+        encoding = Settings::instance().defaultVmcFsEncoding();
     return encoding;
 }
 
@@ -396,7 +395,7 @@ void VmcDetailsActivity::onEncodingChanged()
 {
     QString encoding = mp_combobox_encoding->currentText();
     mp_model->setEncoding(encoding);
-    Settings::instance().setVmcFsEncodingForPath(mr_vmc.filepath(), encoding);
+    Library::instance().config().setVmcFsEncoding(mr_vmc, encoding);
 }
 
 QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)

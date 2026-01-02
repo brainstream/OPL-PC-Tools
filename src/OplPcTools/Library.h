@@ -23,6 +23,7 @@
 #include <OplPcTools/GameCollection.h>
 #include <OplPcTools/VmcCollection.h>
 #include <OplPcTools/GameArtManager.h>
+#include <OplPcTools/LibraryConfiguration.h>
 
 namespace OplPcTools {
 
@@ -39,6 +40,7 @@ public:
     inline bool isLoaded() const;
     inline GameCollection & games() const;
     inline VmcCollection & vmcs() const;
+    inline LibraryConfiguration & config() const;
 
 public:
     static Library & instance();
@@ -52,6 +54,7 @@ private:
     QString m_directory;
     GameCollection * mp_games;
     VmcCollection * mp_vmcs;
+    LibraryConfiguration * mp_config;
 };
 
 const QString & Library::directory() const
@@ -72,6 +75,11 @@ GameCollection & Library::games() const
 VmcCollection & Library::vmcs() const
 {
     return *mp_vmcs;
+}
+
+LibraryConfiguration & Library::config() const
+{
+    return *mp_config;
 }
 
 } // namespace OplPcTools

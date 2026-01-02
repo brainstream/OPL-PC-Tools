@@ -16,31 +16,35 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Library.h>
+#pragma once
 
-using namespace OplPcTools;
+#include <OplPcTools/VmcCollection.h>
+#include <QDir>
+#include <QSettings>
 
-Library::Library() :
-    QObject(nullptr),
-    mp_config(nullptr)
+namespace OplPcTools {
+
+class LibraryConfiguration final : public QObject
 {
-    mp_games = new GameCollection(this);
-    mp_vmcs = new VmcCollection(this);
-    mp_config = new LibraryConfiguration(*mp_vmcs, this);
-}
+    Q_OBJECT
 
-void Library::load(const QDir & _directory)
-{
-    emit loading();
-    mp_games->load(_directory);
-    mp_vmcs->load(_directory);
-    mp_config->load(_directory);
-    m_directory = _directory.absolutePath();
-    emit loaded();
-}
+public:
+    LibraryConfiguration(const VmcCollection & _vmc_collection, QObject * _parent);
+    ~LibraryConfiguration() override;
+    void load(const QDir & _library_dir);
+    void setVmcFsEncoding(const Vmc & _vmc, const QString & _encoding);
+    QString vmcFsEncoding(const Vmc & _vmc) const;
 
-Library & Library::instance()
-{
-    static Library * library = new Library();
-    return *library;
-}
+private:
+    QString makeVmcSectionName(const QString & _vmc_title) const;
+    void renameConfigSection(const QString & _old_section, const QString & _new_section);
+    void deleteConfigSection(const QString & _section);
+    void onVmcAboutToBeDeleted(const Uuid & _uuid);
+    void onVmcRenamed(const QString & _old_title, const Uuid & _uuid);
+
+private:
+    const VmcCollection & mr_vmc_collection;
+    QSettings * mp_settings;
+};
+
+} // namespace OplPcTools

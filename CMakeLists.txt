@@ -158,6 +158,8 @@ set(OPT_SRC
     ${OPT_SRC_DIR}/IsoRestorer.h
     ${OPT_SRC_DIR}/Library.cpp
     ${OPT_SRC_DIR}/Library.h
+    ${OPT_SRC_DIR}/LibraryConfiguration.h
+    ${OPT_SRC_DIR}/LibraryConfiguration.cpp
     ${OPT_SRC_DIR}/Maybe.h
     ${OPT_SRC_DIR}/MediaType.h
     ${OPT_SRC_DIR}/NrgDeviceSource.cpp

@@ -193,14 +193,14 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="mp_label_encoding">
+         <widget class="QLabel" name="mp_label_charset">
           <property name="text">
-           <string>Encoding</string>
+           <string>Charset</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="mp_combobox_encoding"/>
+         <widget class="QComboBox" name="mp_combobox_charset"/>
         </item>
        </layout>
       </item>
@@ -218,7 +218,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>mp_tree_fs</tabstop>
-  <tabstop>mp_combobox_encoding</tabstop>
+  <tabstop>mp_combobox_charset</tabstop>
   <tabstop>mp_btn_close</tabstop>
   <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_fs_back</tabstop>

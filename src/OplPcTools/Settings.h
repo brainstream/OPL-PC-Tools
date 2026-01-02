@@ -52,8 +52,8 @@ public:
     void setValidateUlCfg(bool _value);
     quint32 iconSize() const;
     void setIconSize(quint32 _size);
-    void setDefaultVmcFsEncoding(const QString & _encoding);
-    QString defaultVmcFsEncoding() const;
+    void setDefaultVmcFsCharset(const QString & _encoding);
+    QString defaultVmcFsCharset() const;
 
 signals:
     void iconSizeChanged();

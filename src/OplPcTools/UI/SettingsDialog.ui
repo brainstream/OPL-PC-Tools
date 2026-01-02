@@ -167,14 +167,14 @@
       </attribute>
       <layout class="QFormLayout" name="formLayout_2">
        <item row="0" column="0">
-        <widget class="QLabel" name="mp_label_vmc_fs_encoding">
+        <widget class="QLabel" name="mp_label_vmc_fs_charset">
          <property name="text">
-          <string>Default File System Encoding</string>
+          <string>Default file system charset</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="mp_combobox_vmc_fs_encoding"/>
+        <widget class="QComboBox" name="mp_combobox_vmc_fs_charset"/>
        </item>
       </layout>
      </widget>

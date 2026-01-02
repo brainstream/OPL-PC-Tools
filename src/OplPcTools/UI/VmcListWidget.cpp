@@ -121,29 +121,44 @@ int VmcListWidget::VmcTreeModel::rowCount(const QModelIndex & _parent) const
 int VmcListWidget::VmcTreeModel::columnCount(const QModelIndex & _parent) const
 {
     Q_UNUSED(_parent);
-    return 2;
+    return 3;
 }
 
 QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role) const
 {
     const Vmc * vmc = Library::instance().vmcs()[_index.row()];
-    if(_index.column() == 0)
+    switch(_index.column())
     {
-        switch (_role)
+    case 0:
+        switch(_role)
         {
         case Qt::DisplayRole:
             return vmc->title();
         case Qt::DecorationRole:
             return QIcon(m_icon);
         }
-    }
-    else if(_role == Qt::DisplayRole)
-    {
-        return QObject::tr("%1 MiB").arg(vmc->size());
-    }
-    else if(_role == Qt::TextAlignmentRole)
-    {
-        return QVariant(Qt::AlignRight | Qt::AlignCenter);
+        break;
+    case 1:
+        switch(_role)
+        {
+        case Qt::DisplayRole:
+            {
+                QString cahrset = Library::instance().config().vmcFsCharset(*vmc);
+                if(cahrset.isEmpty())
+                    cahrset = Settings::instance().defaultVmcFsCharset();
+                return cahrset;
+            }
+        }
+        break;
+    case 2:
+        switch(_role)
+        {
+        case Qt::DisplayRole:
+            return QObject::tr("%1 MiB").arg(vmc->size());
+        case Qt::TextAlignmentRole:
+            return QVariant(Qt::AlignRight | Qt::AlignCenter);
+        }
+        break;
     }
     return QVariant();
 }
@@ -237,6 +252,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
         mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
     mp_proxy_model->sort(0, Qt::AscendingOrder);
     mp_tree_vmcs->setCurrentIndex(mp_proxy_model->index(0, 0));
+    mp_tree_vmcs->resizeColumnToContents(1);
 }
 
 void VmcListWidget::setupShortcuts()
@@ -376,5 +392,5 @@ void VmcListWidget::exportFiles()
     connect(thread, &VmcExportThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);
     });
-    thread->start(*vmc, Library::instance().config().vmcFsEncoding(*vmc), directory);
+    thread->start(*vmc, Library::instance().config().vmcFsCharset(*vmc), directory);
 }

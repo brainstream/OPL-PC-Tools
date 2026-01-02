@@ -32,8 +32,8 @@ public:
     LibraryConfiguration(const VmcCollection & _vmc_collection, QObject * _parent);
     ~LibraryConfiguration() override;
     void load(const QDir & _library_dir);
-    void setVmcFsEncoding(const Vmc & _vmc, const QString & _encoding);
-    QString vmcFsEncoding(const Vmc & _vmc) const;
+    void setVmcFsCharset(const Vmc & _vmc, const QString & _charset);
+    QString vmcFsCharset(const Vmc & _vmc) const;
 
 private:
     QString makeVmcSectionName(const QString & _vmc_title) const;

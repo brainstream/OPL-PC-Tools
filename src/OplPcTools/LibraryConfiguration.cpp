@@ -25,7 +25,7 @@ namespace {
 namespace Key {
 
 static const char vmc_section[] = "Vmc";
-static const char vmc_fs_encoding[] = "FsEncoding";
+static const char vmc_fs_charset[] = "Charset";
 
 } // namespace Key
 } // namespace
@@ -104,13 +104,13 @@ void LibraryConfiguration::renameConfigSection(const QString & _old_section, con
     }
 }
 
-void LibraryConfiguration::setVmcFsEncoding(const Vmc & _vmc, const QString & _encoding)
+void LibraryConfiguration::setVmcFsCharset(const Vmc & _vmc, const QString & _charset)
 {
-    mp_settings->setValue(QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_encoding), _encoding);
+    mp_settings->setValue(QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset), _charset);
     mp_settings->sync();
 }
 
-QString LibraryConfiguration::vmcFsEncoding(const Vmc & _vmc) const
+QString LibraryConfiguration::vmcFsCharset(const Vmc & _vmc) const
 {
-    return mp_settings->value(QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_encoding)).toString();
+    return mp_settings->value(QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset)).toString();
 }

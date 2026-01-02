@@ -273,8 +273,8 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         codecs.sort(Qt::CaseInsensitive);
         if(!codecs.contains(encoding))
             encoding = TextEncoding::latin1();
-        mp_combobox_encoding->addItems(codecs);
-        mp_combobox_encoding->setCurrentText(encoding);
+        mp_combobox_charset->addItems(codecs);
+        mp_combobox_charset->setCurrentText(encoding);
     }
     if(m_fs_ptr)
     {
@@ -293,7 +293,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
         connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
         connect(mp_label_vmc_title, &ClickableLabel::clicked, this, &VmcDetailsActivity::renameVmc);
-        connect(mp_combobox_encoding, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
+        connect(mp_combobox_charset, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
         setIconSize();
     }
 }
@@ -339,10 +339,10 @@ void VmcDetailsActivity::loadVmcFS()
 
 QString VmcDetailsActivity::getFsEncoding() const
 {
-    QString encoding = Library::instance().config().vmcFsEncoding(mr_vmc);
-    if(encoding.isEmpty())
-        encoding = Settings::instance().defaultVmcFsEncoding();
-    return encoding;
+    QString cahrset = Library::instance().config().vmcFsCharset(mr_vmc);
+    if(cahrset.isEmpty())
+        cahrset = Settings::instance().defaultVmcFsCharset();
+    return cahrset;
 }
 
 void VmcDetailsActivity::setIconSize()
@@ -393,9 +393,9 @@ void VmcDetailsActivity::onFsBackButtonClick()
 
 void VmcDetailsActivity::onEncodingChanged()
 {
-    QString encoding = mp_combobox_encoding->currentText();
+    QString encoding = mp_combobox_charset->currentText();
     mp_model->setEncoding(encoding);
-    Library::instance().config().setVmcFsEncoding(mr_vmc, encoding);
+    Library::instance().config().setVmcFsCharset(mr_vmc, encoding);
 }
 
 QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)

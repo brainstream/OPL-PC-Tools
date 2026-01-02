@@ -35,7 +35,7 @@ static const char rename_iso[] = "Settings/RenameISO";
 static const char check_new_version[] = "Settings/CheckNewVersion";
 static const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
 static const char icon_size[] = "Settings/IconSize";
-static const char vmc_fs_encoding[] = "Settings/VmcFsEncoding";
+static const char vmc_fs_charset[] = "Settings/VmcCharset";
 
 } // namespace Key
 } // namespace
@@ -155,14 +155,14 @@ void Settings::setIconSize(quint32 _size)
     }
 }
 
-void Settings::setDefaultVmcFsEncoding(const QString & _encoding)
+void Settings::setDefaultVmcFsCharset(const QString & _encoding)
 {
-    mp_settings->setValue(Key::vmc_fs_encoding, _encoding);
+    mp_settings->setValue(Key::vmc_fs_charset, _encoding);
 }
 
-QString Settings::defaultVmcFsEncoding() const
+QString Settings::defaultVmcFsCharset() const
 {
-    QString encoding = mp_settings->value(Key::vmc_fs_encoding).toString();
+    QString encoding = mp_settings->value(Key::vmc_fs_charset).toString();
     if(encoding.isEmpty())
         encoding = TextEncoding::latin1();
     return encoding;

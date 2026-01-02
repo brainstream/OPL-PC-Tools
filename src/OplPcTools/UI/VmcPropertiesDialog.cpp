@@ -17,6 +17,8 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/VmcFS.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
 
 using namespace OplPcTools::UI;
@@ -35,7 +37,7 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
 {
     setupUi(this);
     mp_label_error_message->hide();
-    mp_panel_properties->hide();
+    mp_tabs->hide();
     try
     {
         QSharedPointer<VmcFS> fs = VmcFS::load(_vmc.filepath());
@@ -58,6 +60,15 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
         mp_value_clusters_per_block->setText(QString::number(info->clusters_per_block));
         mp_value_card_format->setText(QString::number(info->cardform));
         mp_value_max_allocatable_clusters->setText(QString::number(info->max_allocatable_clusters));
+        mp_value_file->setText(_vmc.filepath());
+        mp_value_title->setText(_vmc.title());
+        mp_value_size->setText(QString("%1 %2").arg(_vmc.size()).arg(tr("MiB")));
+        {
+            QString charset = Library::instance().config().vmcFsCharset(_vmc);
+            if(charset.isEmpty())
+                charset = Settings::instance().defaultVmcFsCharset();
+            mp_value_fs_charset->setText(charset);
+        }
         QStringList values;
         for(size_t i = 0; i < sizeof(info->bad_block_list) / sizeof(int32_t); ++i)
             values << QString::number(info->bad_block_list[i]);
@@ -69,7 +80,7 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
             values << (value == static_cast<uint32_t>(-1) ? QString("-1") : QString::number(value));
         }
         mp_value_ifc_list->setText(values.join(", "));
-        mp_panel_properties->show();
+        mp_tabs->show();
     }
     catch(const Exception & exception)
     {

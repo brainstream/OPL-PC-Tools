@@ -949,7 +949,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="166"/>
+        <location filename="../UI/VmcExportThread.cpp" line="172"/>
         <source>Overwrite confirmation</source>
         <translation>Подтверждение перезаписи</translation>
     </message>
@@ -957,12 +957,12 @@
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="50"/>
+        <location filename="../UI/VmcExportThread.cpp" line="51"/>
         <source>An unknown error occurred while exporting VMC</source>
         <translation>Во время экспорта VMC произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="95"/>
+        <location filename="../UI/VmcExportThread.cpp" line="96"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation>Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
@@ -1146,12 +1146,12 @@
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="65"/>
+        <location filename="../UI/VmcExportThread.cpp" line="66"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Не могу создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="92"/>
+        <location filename="../UI/VmcExportThread.cpp" line="93"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation>Не могу открыть файл VMC &quot;%1&quot;</translation>
     </message>

@@ -949,7 +949,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="166"/>
+        <location filename="../UI/VmcExportThread.cpp" line="172"/>
         <source>Overwrite confirmation</source>
         <translation>Sobrescrever confirmação</translation>
     </message>
@@ -957,12 +957,12 @@
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="50"/>
+        <location filename="../UI/VmcExportThread.cpp" line="51"/>
         <source>An unknown error occurred while exporting VMC</source>
         <translation>Um erro desconhecido aconteceu enquanto exportando o VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="95"/>
+        <location filename="../UI/VmcExportThread.cpp" line="96"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation>O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
     </message>
@@ -1146,12 +1146,12 @@
         <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="65"/>
+        <location filename="../UI/VmcExportThread.cpp" line="66"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Não foi possível criar a pasta &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="92"/>
+        <location filename="../UI/VmcExportThread.cpp" line="93"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation>Não foi possível abrir o VMC  &quot;%1&quot;</translation>
     </message>

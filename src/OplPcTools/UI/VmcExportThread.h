@@ -34,15 +34,16 @@ class VmcExportThreadWorker : public QObject
 {
     Q_OBJECT
 
+    friend class VmcExportThread;
     enum class Action { Overwrite, Skip, Cancel };
 
 public:
     VmcExportThreadWorker();
     void start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir);
-    void setAnswer(bool _answer);
     void cancel();
 
 private:
+    void setAnswer(bool _answer);
     void exportDirectory(
         VmcFS & _fs,
         TextDecoder & _decoder,
@@ -54,9 +55,11 @@ private:
         const VmcPath & _vmc_file,
         const QString & _dest_directory);
     Action getAction(const QString & _question);
+    void onAnswerSet(bool _answer);
 
 signals:
     void askQuestion(const QString & _question);
+    void emitAnswer(bool _answer);
     void finished();
     void exception(const QString & _message);
 

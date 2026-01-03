@@ -30,6 +30,7 @@ VmcExportThreadWorker::VmcExportThreadWorker() :
     mp_loop(nullptr),
     m_action(Action::Skip)
 {
+    connect(this, &VmcExportThreadWorker::emitAnswer, this, &VmcExportThreadWorker::onAnswerSet);
 }
 
 void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir)
@@ -105,8 +106,8 @@ void VmcExportThreadWorker::exportFile(
 
 VmcExportThreadWorker::Action VmcExportThreadWorker::getAction(const QString & _question)
 {
+    mp_loop = new QEventLoop();
     emit askQuestion(_question);
-    mp_loop = new QEventLoop(this);
     mp_loop->exec(QEventLoop::ExcludeUserInputEvents);
     delete mp_loop;
     mp_loop = nullptr;
@@ -115,14 +116,19 @@ VmcExportThreadWorker::Action VmcExportThreadWorker::getAction(const QString & _
 
 void VmcExportThreadWorker::setAnswer(bool _answer)
 {
+    emit emitAnswer(_answer);
+}
+
+void VmcExportThreadWorker::onAnswerSet(bool _answer)
+{
     m_action = _answer ? Action::Overwrite : Action::Skip;
-    if(mp_loop) mp_loop->quit();
+    if(mp_loop) mp_loop->exit();
 }
 
 void VmcExportThreadWorker::cancel()
 {
     m_action = Action::Cancel;
-    if(mp_loop) mp_loop->quit();
+    if(mp_loop) mp_loop->exit();
 }
 
 VmcExportThread::VmcExportThread(QWidget * _parent_widget) :

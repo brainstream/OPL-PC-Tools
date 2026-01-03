@@ -62,7 +62,7 @@ private:
     void onVmcAdded(const Uuid & _uuid);
     void onVmcAboutToBeDeleted(const Uuid & _uuid);
     void onVmcDeleted(const Uuid & _uuid);
-    void onVmcRenames(const QString & _old_title, const Uuid & _uuid);
+    void onVmcRenamed(const QString & _old_title, const Uuid & _uuid);
 
 private:
     QPixmap m_icon;
@@ -75,7 +75,7 @@ VmcListWidget::VmcTreeModel::VmcTreeModel(QObject * _parent):
     VmcCollection * vmc_manager = &Library::instance().vmcs();
     connect(&Library::instance(), &Library::loaded, this, &VmcTreeModel::onLibraryLoaded);
     connect(vmc_manager, &VmcCollection::vmcAdded, this, &VmcTreeModel::onVmcAdded);
-    connect(vmc_manager, &VmcCollection::vmcRenamed, this, &VmcTreeModel::onVmcRenames);
+    connect(vmc_manager, &VmcCollection::vmcRenamed, this, &VmcTreeModel::onVmcRenamed);
     connect(vmc_manager, &VmcCollection::vmcAboutToBeDeleted, this, &VmcTreeModel::onVmcAboutToBeDeleted);
     connect(vmc_manager, &VmcCollection::vmcDeleted, this, &VmcTreeModel::onVmcDeleted);
 }
@@ -179,7 +179,7 @@ void VmcListWidget::VmcTreeModel::onVmcAdded(const Uuid & _uuid)
     endInsertRows();
 }
 
-void VmcListWidget::VmcTreeModel::onVmcRenames(const QString & _old_title, const Uuid & _uuid)
+void VmcListWidget::VmcTreeModel::onVmcRenamed(const QString & _old_title, const Uuid & _uuid)
 {
     Q_UNUSED(_old_title)
     QModelIndex start_index = index(_uuid);

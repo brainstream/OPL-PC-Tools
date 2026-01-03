@@ -19,6 +19,7 @@
 #pragma once
 
 #include <OplPcTools/VmcCollection.h>
+#include <OplPcTools/GameConfiguration.h>
 #include <QDir>
 #include <QSettings>
 
@@ -34,9 +35,10 @@ public:
     void load(const QDir & _library_dir);
     void setVmcFsCharset(const Vmc & _vmc, const QString & _charset);
     QString vmcFsCharset(const Vmc & _vmc) const;
+    void setOplVersion(GameConfigurationVersion _version);
+    GameConfigurationVersion oplVersion() const;
 
 private:
-    QString makeVmcSectionName(const QString & _vmc_title) const;
     void renameConfigSection(const QString & _old_section, const QString & _new_section);
     void deleteConfigSection(const QString & _section);
     void onVmcAboutToBeDeleted(const Uuid & _uuid);

@@ -22,12 +22,26 @@
 using namespace OplPcTools;
 
 namespace {
+
+namespace Section {
+
+static const char generic[] = "Settings";
+static const char vmc[] = "Vmc";
+
+} // namespace Section
+
 namespace Key {
 
-static const char vmc_section[] = "Vmc";
 static const char vmc_fs_charset[] = "Charset";
+static const char op_configl_version[] = "OplConfig";
 
 } // namespace Key
+
+QString makeVmcSectionName(const QString & _entity_name)
+{
+    return QString("%1_%2").arg(Section::vmc, _entity_name);
+}
+
 } // namespace
 
 LibraryConfiguration::LibraryConfiguration(const VmcCollection & _vmc_collection, QObject *_parent) :
@@ -73,11 +87,6 @@ void LibraryConfiguration::deleteConfigSection(const QString & _section)
     }
 }
 
-QString LibraryConfiguration::makeVmcSectionName(const QString & _vmc_title) const
-{
-    return QString("%1_%2").arg(Key::vmc_section, _vmc_title);
-}
-
 void LibraryConfiguration::onVmcRenamed(const QString & _old_title, const Uuid & _uuid)
 {
     if(const Vmc * vmc = mr_vmc_collection[_uuid])
@@ -106,11 +115,36 @@ void LibraryConfiguration::renameConfigSection(const QString & _old_section, con
 
 void LibraryConfiguration::setVmcFsCharset(const Vmc & _vmc, const QString & _charset)
 {
-    mp_settings->setValue(QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset), _charset);
+    mp_settings->setValue(
+        QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset), _charset);
     mp_settings->sync();
 }
 
 QString LibraryConfiguration::vmcFsCharset(const Vmc & _vmc) const
 {
-    return mp_settings->value(QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset)).toString();
+    return mp_settings->value(
+        QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset)).toString();
+}
+
+void LibraryConfiguration::setOplVersion(GameConfigurationVersion _version)
+{
+    if(mp_settings)
+    {
+        mp_settings->setValue(
+            QString("%1/%2").arg(Section::generic, Key::op_configl_version),
+            static_cast<int>(_version));
+        mp_settings->sync();
+    }
+}
+
+GameConfigurationVersion LibraryConfiguration::oplVersion() const
+{
+    if(mp_settings)
+    {
+        bool is_ok = false;
+        int value = mp_settings->value(QString("%1/%2").arg(Section::generic, Key::op_configl_version)).toInt(&is_ok);
+        if(is_ok && value >= 0 && value <= static_cast<int>(GameConfigurationVersion::Latest))
+            return static_cast<GameConfigurationVersion>(value);
+    }
+    return GameConfigurationVersion::Latest;
 }

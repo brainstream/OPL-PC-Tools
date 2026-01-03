@@ -16,7 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QSettings>
 #include <QMessageBox>
 #include <QToolTip>
 #include <OplPcTools/Exception.h>
@@ -30,27 +29,6 @@ using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
-
-namespace SettingsKey {
-
-const char config_version[] = "OplCfgVersion";
-
-} // namespace SettingsKey
-
-GameConfigurationVersion getConfigVersionFromSettings(GameConfigurationVersion _defualt)
-{
-    QSettings settings;
-    int version =  settings.value(SettingsKey::config_version, -1).toInt();
-    switch(version)
-    {
-    case static_cast<int>(GameConfigurationVersion::OPLv093):
-        return GameConfigurationVersion::OPLv093;
-    case static_cast<int>(GameConfigurationVersion::OPLv100):
-        return GameConfigurationVersion::OPLv100;
-    default:
-        return _defualt;
-    }
-}
 
 QString gameVideoModeToString(VideoMode mode)
 {
@@ -129,7 +107,7 @@ GameConfigWidget::GameConfigWidget(const Game & _game, QWidget * _parent /*= nul
     QWidget( _parent),
     mr_vmcs(Library::instance().vmcs()),
     mr_game(_game),
-    m_config_version(getConfigVersionFromSettings(GameConfigurationVersion::OPLv100))
+    m_config_version(Library::instance().config().oplVersion())
 {
     setupUi(this);
     if(!loadConfiguration())
@@ -297,7 +275,7 @@ void GameConfigWidget::onOplVerstionChanged()
 {
     int conf_version = mp_combo_opl_version->currentData().toInt();
     m_config_version = static_cast<GameConfigurationVersion>(conf_version);
-    QSettings().setValue(SettingsKey::config_version, conf_version);
+    Library::instance().config().setOplVersion(m_config_version);
     reinitOplVersionSensitiveControls();
 }
 

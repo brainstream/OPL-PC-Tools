@@ -28,7 +28,9 @@ namespace OplPcTools {
 enum class GameConfigurationVersion: int
 {
     OPLv093 = 0,
-    OPLv100 = 1
+    OPLv100 = 1,
+
+    Latest = OPLv100
 };
 
 struct GameConfiguration

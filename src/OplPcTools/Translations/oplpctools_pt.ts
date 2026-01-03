@@ -690,59 +690,59 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="240"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="218"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation>Modo 4 - Modo 0 PSS</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="242"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="220"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation>Modo 7 - Armazenamento de módulos em alta memoria</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="244"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="222"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
         <translation>Modo 9 - Esconder módulos DEV9</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="251"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="229"/>
         <source>Mode 4 ― Skip Videos</source>
         <translation>Modo 4 - Pular vídeos</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="253"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="231"/>
         <source>Mode 7 ― Deprecated</source>
         <translation>Modo 7 ― Obsoleto</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="255"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="233"/>
         <source>Mode 8 ― Deprecated</source>
         <translation>Modo 8 ― Obsoleto</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="400"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="378"/>
         <source>Configuration cleared</source>
         <translation>Configurações resetadas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="430"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="408"/>
         <source>Configuration saved</source>
         <translation>Configurações salvas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="465"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="443"/>
         <source>Confirmation</source>
         <translation>Confirmação</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="466"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="444"/>
         <source>Are you sure you want to delete file?
 %1</source>
         <translation>Tem certeza que quer apagar este arquivo?
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="470"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="448"/>
         <source>Configuration file does not exist</source>
         <translation>Arquivo de configurações não existe</translation>
     </message>

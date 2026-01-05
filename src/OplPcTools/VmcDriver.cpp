@@ -59,7 +59,7 @@
 #include <QDateTime>
 #include <QTimeZone>
 #include <OplPcTools/File.h>
-#include <OplPcTools/VMC/VmcDriver.h>
+#include <OplPcTools/VmcDriver.h>
 
 #define INVALID_CLUSTER_PTR static_cast<uint32_t>(-1)
 #define NULL_CLUSTER_PTR 0
@@ -748,14 +748,63 @@ int64_t VmcFile::read(char * _buffer, int64_t _max_size)
     return mp_private->fs->readFile(*this->mp_private, _buffer, _max_size);
 }
 
+struct VmcDriver::FSTreeNode : VmcEntryInfo
+{
+    QList<QSharedPointer<FSTreeNode>> children;
+};
+
+struct VmcDriver::FSTree : VmcDriver::FSTreeNode
+{
+    uint32_t used_size;
+};
+
 const uint32_t VmcDriver::min_size_mib = 8;
 const uint32_t VmcDriver::max_size_mib = 512;
 
-VmcDriver::VmcDriver() { }
+VmcDriver::VmcDriver(Private * _private) :
+    mp_private(_private),
+    mp_tree(loadTree())
+{
+}
 
 VmcDriver::~VmcDriver()
 {
     delete mp_private;
+    delete mp_tree;
+}
+
+VmcDriver::FSTree * VmcDriver::loadTree()
+{
+    FSTree * root = new FSTree;
+    root->name = QByteArray("/");
+    root->size = 0;
+    root->is_directory = true;
+    root->children = QList<QSharedPointer<FSTreeNode>>();
+    root->used_size = loadDirectory(VmcPath::root(), *root);
+    return root;
+}
+
+uint32_t VmcDriver::loadDirectory(const VmcPath & _path, FSTreeNode & _node)
+{
+    uint32_t total_size = 0;
+    foreach(const VmcEntryInfo & entry, mp_private->enumerateEntries(_path))
+    {
+        FSTreeNode * child_node = new FSTreeNode;
+        child_node->name = entry.name;
+        child_node->size = entry.size;
+        child_node->is_directory = entry.is_directory;
+        child_node->children = QList<QSharedPointer<FSTreeNode>>();
+        _node.children.append(QSharedPointer<FSTreeNode>(child_node));
+        if(entry.is_directory)
+        {
+            total_size += loadDirectory(VmcPath(_path, entry.name), *child_node);
+        }
+        else
+        {
+            total_size += entry.size;
+        }
+    }
+    return total_size;
 }
 
 const VmcInfo * VmcDriver::info() const
@@ -775,9 +824,7 @@ QSharedPointer<VmcDriver> VmcDriver::load(const QString & _filepath)
         delete driver_private;
         throw;
     }
-    VmcDriver * driver = new VmcDriver();
-    driver->mp_private = driver_private;
-    return QSharedPointer<VmcDriver>(driver);
+    return QSharedPointer<VmcDriver>(new VmcDriver(driver_private));
 }
 
 void VmcDriver::create(const QString & _filepath, uint32_t _size_mib)
@@ -785,9 +832,29 @@ void VmcDriver::create(const QString & _filepath, uint32_t _size_mib)
     VmcFormatter::format(_filepath, _size_mib);
 }
 
-QList<VmcEntryInfo> VmcDriver::enumerateEntries(const VmcPath & _path)
+QList<VmcEntryInfo> VmcDriver::enumerateEntries(const VmcPath & _path) const
 {
-    return mp_private->enumerateEntries(_path);
+    const FSTreeNode * dir = mp_tree;
+    foreach(const QByteArray & part, _path.parts())
+    {
+        bool is_found = false;
+        foreach(const QSharedPointer<FSTreeNode> & child, dir->children)
+        {
+            if(child->name == part)
+            {
+                is_found = child->is_directory;
+                dir = child.data();
+                break;
+            }
+        }
+        if(!is_found)
+            throw VmcFSException(QObject::tr("Path not found"));
+    }
+    QList<VmcEntryInfo> result;
+    result.reserve(dir->size);
+    foreach(const QSharedPointer<FSTreeNode> & entry, dir->children)
+        result.append(*entry);
+    return result;
 }
 
 QSharedPointer<VmcFile> VmcDriver::openFile(const VmcPath & _path)

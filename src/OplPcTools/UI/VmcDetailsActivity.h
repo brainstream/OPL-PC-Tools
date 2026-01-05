@@ -20,7 +20,7 @@
 #define __OPLPCTOOLS_VMCDETAILSACTIVITY__
 
 #include <OplPcTools/Vmc.h>
-#include <OplPcTools/VMC/VmcFileManager.h>
+#include <OplPcTools/VmcDriver.h>
 #include <OplPcTools/UI/Activity.h>
 #include <OplPcTools/UI/Intent.h>
 #include "ui_VmcDetailsActivity.h"
@@ -57,7 +57,7 @@ private:
 
 private:
     const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_fm_ptr;
+    QSharedPointer<VmcDriver> m_vmc_driver_ptr;
     VmcFileSystemViewModel * mp_model;
 };
 

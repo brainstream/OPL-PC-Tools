@@ -276,7 +276,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_combobox_charset->addItems(codecs);
         mp_combobox_charset->setCurrentText(encoding);
     }
-    if(m_fm_ptr)
+    if(m_vmc_driver_ptr)
     {
         mp_model = new VmcFileSystemViewModel(encoding, this);
         navigate(VmcPath::root());
@@ -325,7 +325,7 @@ void VmcDetailsActivity::loadFileManager()
 {
     try
     {
-        m_fm_ptr = VmcFileManager::load(mr_vmc.filepath());
+        m_vmc_driver_ptr = VmcDriver::load(mr_vmc.filepath());
     }
     catch(const Exception &_exception)
     {
@@ -358,7 +358,7 @@ void VmcDetailsActivity::navigate(const VmcPath & _path)
     hideErrorMessage();
     try
     {
-        QList<VmcEntryInfo> items = m_fm_ptr->enumerateEntries(_path);
+        QList<VmcEntryInfo> items = m_vmc_driver_ptr->enumerateEntries(_path);
         mp_model->setItems(items);
         mp_edit_fs_path->setText(
 

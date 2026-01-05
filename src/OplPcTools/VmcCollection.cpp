@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/VmcCollection.h>
-#include <OplPcTools/VMC/VmcDriver.h>
+#include <OplPcTools/VmcDriver.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
 #include <QVector>

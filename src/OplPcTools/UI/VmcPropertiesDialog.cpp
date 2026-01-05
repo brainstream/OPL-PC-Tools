@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/VMC/VmcDriver.h>
+#include <OplPcTools/VmcDriver.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>

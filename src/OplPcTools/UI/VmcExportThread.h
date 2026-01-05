@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QEventLoop>
 #include <OplPcTools/Vmc.h>
-#include <OplPcTools/VMC/VmcDriver.h>
+#include <OplPcTools/VmcDriver.h>
 
 namespace OplPcTools {
 namespace UI {

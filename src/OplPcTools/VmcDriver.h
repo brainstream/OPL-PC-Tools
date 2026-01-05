@@ -21,7 +21,7 @@
 
 #include <QString>
 #include <QSharedPointer>
-#include <OplPcTools/VMC/VmcPath.h>
+#include <OplPcTools/VmcPath.h>
 #include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
@@ -80,10 +80,9 @@ private:
 
 class VmcDriver final
 {
+    struct FSTree;
+    struct FSTreeNode;
     Q_DISABLE_COPY(VmcDriver)
-
-private:
-    VmcDriver();
 
 public:
     class Private;
@@ -91,11 +90,16 @@ public:
 public:
     ~VmcDriver();
     const VmcInfo * info() const;
-    QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path);
+    QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path) const;
     QSharedPointer<VmcFile> openFile(const VmcPath & _path);
 
     static QSharedPointer<VmcDriver> load(const QString & _filepath);
     static void create(const QString & _filepath, uint32_t _size_mib);
+
+private:
+    explicit VmcDriver(Private * _private);
+    FSTree * loadTree();
+    uint32_t loadDirectory(const VmcPath & _path, FSTreeNode & _node);
 
 public:
     static const uint32_t min_size_mib;
@@ -103,6 +107,7 @@ public:
 
 private:
     Private * mp_private;
+    FSTree * mp_tree;
 };
 
 } // namespace OplPcTools

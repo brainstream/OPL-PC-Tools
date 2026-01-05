@@ -193,7 +193,7 @@ endif()
 #######################
 
 file(GLOB_RECURSE TRANSLATIONS
-    " ${OPT_SRC_DIR}/Translations/*.ts"
+    "${OPT_SRC_DIR}/Translations/*.ts"
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

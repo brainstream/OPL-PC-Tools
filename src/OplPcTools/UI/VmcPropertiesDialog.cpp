@@ -16,10 +16,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/UI/VmcPropertiesDialog.h>
+#include <OplPcTools/UI/DisplayUtils.h>
 #include <OplPcTools/VmcDriver.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
-#include <OplPcTools/UI/VmcPropertiesDialog.h>
 
 using namespace OplPcTools::UI;
 
@@ -63,6 +64,8 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
         mp_value_file->setText(_vmc.filepath());
         mp_value_title->setText(_vmc.title());
         mp_value_size->setText(QString("%1 %2").arg(_vmc.size()).arg(tr("MiB")));
+        mp_value_used->setText(makeBytesDisplayString(driver->totalUsedBytes()));
+        mp_value_free->setText(makeBytesDisplayString(driver->totalFreeBytes()));
         {
             QString charset = Library::instance().config().vmcFsCharset(_vmc);
             if(charset.isEmpty())

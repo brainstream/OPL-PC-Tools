@@ -16,14 +16,15 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QStandardItemModel>
-#include <QShortcut>
-#include <OplPcTools/Settings.h>
-#include <OplPcTools/Library.h>
-#include <OplPcTools/TextEncoding.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
+#include <OplPcTools/UI/DisplayUtils.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/TextEncoding.h>
+#include <OplPcTools/Settings.h>
+#include <QStandardItemModel>
+#include <QShortcut>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -51,34 +52,6 @@ public:
 private:
     const Vmc & mr_vmc;
 };
-
-
-QString makeBytesDisplayString(uint32_t _bytes)
-{
-    uint32_t order = 0;
-    for(; (_bytes >> (order * 10)) > 1024; ++order);
-    QStringList result;
-    if(order == 0)
-        result << QString::number(_bytes);
-    else
-        result << QString::number(static_cast<double>(_bytes) / (order * 1024), 'f', 1) ;
-    switch(order)
-    {
-    case 0:
-        result << QObject::tr("B");
-        break;
-    case 1:
-        result << QObject::tr("KiB");
-        break;
-    case 2:
-        result << QObject::tr("MiB");
-        break;
-    case 3:
-        result << QObject::tr("GiB");
-        break;
-    }
-    return result.join(' ');
-}
 
 } // namespace
 
@@ -288,6 +261,17 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_tree_fs->header()->setStretchLastSection(false);
         mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
         mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
+        {
+            const uint32_t total_free_bytes = m_vmc_driver_ptr->totalFreeBytes();
+            const uint32_t total_used_bytes = m_vmc_driver_ptr->totalUsedBytes();
+            const uint32_t total_bytes = total_used_bytes + total_free_bytes;
+            mp_progress_bar_free->setMinimum(0);
+            mp_progress_bar_free->setMaximum(total_bytes);
+            mp_progress_bar_free->setValue(total_used_bytes);
+            mp_progress_bar_free->setFormat(tr("Free %1 of %2").arg(
+                makeBytesDisplayString(total_free_bytes),
+                makeBytesDisplayString(total_bytes)));
+        }
         connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
         connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
         connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);

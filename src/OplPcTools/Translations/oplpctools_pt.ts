@@ -931,19 +931,24 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="315"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="258"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="285"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="258"/>
         <source>Size</source>
         <translation>Tamanho</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
+        <source>Free %1 of %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -993,12 +998,12 @@
 <context>
     <name>OplPcTools::UI::VmcPropertiesDialog</name>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="65"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="66"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="92"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="95"/>
         <source>Unable to read VMC</source>
         <translation>Impossível ler o VMC</translation>
     </message>
@@ -1156,52 +1161,52 @@
         <translation>Não foi possível abrir o VMC  &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="68"/>
+        <location filename="../UI/DisplayUtils.cpp" line="34"/>
         <source>B</source>
         <translation>bytes</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="71"/>
+        <location filename="../UI/DisplayUtils.cpp" line="37"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="74"/>
+        <location filename="../UI/DisplayUtils.cpp" line="40"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="77"/>
+        <location filename="../UI/DisplayUtils.cpp" line="43"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="219"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="192"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="215"/>
+        <location filename="../VmcDriver.cpp" line="225"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>O tamanho do VMC deve estar entre %1 MiB e %2 MiB</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="513"/>
+        <location filename="../VmcDriver.cpp" line="76"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>O VMC está corrompido ou não foi formatado corretamente</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="576"/>
+        <location filename="../VmcDriver.cpp" line="81"/>
         <source>Path not found</source>
         <translation>Local não encontrado</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="661"/>
+        <location filename="../VmcDriver.cpp" line="678"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>
     <message>
-        <location filename="../VmcFS.cpp" line="663"/>
+        <location filename="../VmcDriver.cpp" line="680"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>
@@ -1386,7 +1391,7 @@
         <translation>Renomear...</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="198"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="185"/>
         <source>Charset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1473,106 +1478,116 @@
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="177"/>
+        <source>Used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="202"/>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="227"/>
         <source>Technical Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="215"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="265"/>
         <source>Magic</source>
         <translation>Número Magico</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="246"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="296"/>
         <source>Version</source>
         <translation>Versão</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="277"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="327"/>
         <source>Page Size</source>
         <translation>Tamanho da página da memoria</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="308"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="358"/>
         <source>Cluster Size</source>
         <translation>Tamanho do cluster</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="339"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="389"/>
         <source>Pages per Cluster</source>
         <translation>Páginas por cluster</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="370"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="420"/>
         <source>Pages per Block</source>
         <translation>Páginas por bloco</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="401"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="451"/>
         <source>Clusters per Card</source>
         <translation>Clusters no memory card</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="432"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="482"/>
         <source>Alloc Offset</source>
         <translation>Offset de alocação</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="457"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="507"/>
         <source>Alloc End</source>
         <translation>Final da alocação</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="482"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="532"/>
         <source>Root Directory Cluster</source>
         <translation>Cluster do diretório raiz</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="513"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="563"/>
         <source>Backup Block #1</source>
         <translation>Bloco de backup #1</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="544"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="594"/>
         <source>Backup Block #2</source>
         <translation>Bloco de backup #2</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="575"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="625"/>
         <source>Card Type</source>
         <translation>Tipo do cartão de memoria</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="606"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="656"/>
         <source>Card Flags</source>
         <translation>Flags no cartão de memoria</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="637"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="687"/>
         <source>FAT Entries per Cluster</source>
         <translation>Entradas FAT por cluster</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="668"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="718"/>
         <source>Clusters per Block</source>
         <translation>Clusters por bloco</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="699"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="749"/>
         <source>Card Format</source>
         <translation>Formato do cartão de memoria</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="730"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="780"/>
         <source>Max Allocatable Clusters</source>
         <translation>Número máximo de clusters alocáveis</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="761"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="811"/>
         <source>Bad Blocks</source>
         <translation>Blocos defeituosos</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.ui" line="795"/>
+        <location filename="../UI/VmcPropertiesDialog.ui" line="845"/>
         <source>IFC List</source>
         <translation>Lista IFC</translation>
     </message>

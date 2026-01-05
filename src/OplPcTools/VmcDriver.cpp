@@ -71,6 +71,16 @@ namespace {
 const char * g_vmc_magic = "Sony PS2 Memory Card Format ";
 const char * g_vmc_version = "1.2.0.0";
 
+[[noreturn]] void throwNotFormatted()
+{
+    throw VmcFSException(QObject::tr("The VMC is corrupted or not formatted correctly"));
+}
+
+[[noreturn]] void throwPathNotFound()
+{
+    throw VmcFSException(QObject::tr("Path not found"));
+}
+
 struct VmcSuperblock final
 {                                      // OFFSET:  (DEC)  (HEX)
     char magic[28];                    //          0      0x0
@@ -398,7 +408,6 @@ private:
     void readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size = 0);
     void read(quint64 _offset, char * _buffer, uint32_t _size);
     void validateSuperblock(const VmcSuperblock & _sb) const;
-    void throwNotFormatted() const;
     void readFAT();
     std::optional<EntryInfo> resolvePath(const VmcPath & _path);
     EntryInfo getRootEntry();
@@ -521,11 +530,6 @@ void VmcDriver::Private::validateSuperblock(const VmcSuperblock & _sb) const
     }
 }
 
-void VmcDriver::Private::throwNotFormatted() const
-{
-    throw VmcFSException(QObject::tr("The VMC is corrupted or not formatted correctly"));
-}
-
 void VmcDriver::Private::readFAT()
 {
     if(mp_fat)
@@ -586,7 +590,7 @@ QList<VmcEntryInfo> VmcDriver::Private::enumerateEntries(const VmcPath & _path)
     }
     else
     {
-        throw VmcFSException(QObject::tr("Path not found"));
+        throwPathNotFound();
     }
     return result;
 }
@@ -755,7 +759,7 @@ struct VmcDriver::FSTreeNode : VmcEntryInfo
 
 struct VmcDriver::FSTree : VmcDriver::FSTreeNode
 {
-    uint32_t used_size;
+    uint32_t used_bytes;
 };
 
 const uint32_t VmcDriver::min_size_mib = 8;
@@ -780,7 +784,7 @@ VmcDriver::FSTree * VmcDriver::loadTree()
     root->size = 0;
     root->is_directory = true;
     root->children = QList<QSharedPointer<FSTreeNode>>();
-    root->used_size = loadDirectory(VmcPath::root(), *root);
+    root->used_bytes = loadDirectory(VmcPath::root(), *root);
     return root;
 }
 
@@ -848,7 +852,9 @@ QList<VmcEntryInfo> VmcDriver::enumerateEntries(const VmcPath & _path) const
             }
         }
         if(!is_found)
-            throw VmcFSException(QObject::tr("Path not found"));
+        {
+            throwPathNotFound();
+        }
     }
     QList<VmcEntryInfo> result;
     result.reserve(dir->size);
@@ -860,4 +866,16 @@ QList<VmcEntryInfo> VmcDriver::enumerateEntries(const VmcPath & _path) const
 QSharedPointer<VmcFile> VmcDriver::openFile(const VmcPath & _path)
 {
     return mp_private->openFile(_path);
+}
+
+uint32_t VmcDriver::totalUsedBytes() const
+{
+    return mp_tree->used_bytes;
+}
+
+uint32_t VmcDriver::totalFreeBytes() const
+{
+    const VmcInfo * info = mp_private->info();
+    const uint32_t allocable_space = (info->alloc_end - info->alloc_offset) * info->cluster_size;
+    return allocable_space - totalUsedBytes();
 }

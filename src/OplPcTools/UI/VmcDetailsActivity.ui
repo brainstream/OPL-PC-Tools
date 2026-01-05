@@ -180,6 +180,16 @@
       <item>
        <layout class="QHBoxLayout" name="mp_layout_3">
         <item>
+         <widget class="QLabel" name="mp_label_charset">
+          <property name="text">
+           <string>Charset</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="mp_combobox_charset"/>
+        </item>
+        <item>
          <spacer name="mp_spacer">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
@@ -193,14 +203,23 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="mp_label_charset">
-          <property name="text">
-           <string>Charset</string>
+         <widget class="QProgressBar" name="mp_progress_bar_free">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>240</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="value">
+           <number>24</number>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="mp_combobox_charset"/>
         </item>
        </layout>
       </item>

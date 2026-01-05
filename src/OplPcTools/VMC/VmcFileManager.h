@@ -16,91 +16,33 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QStringList>
+#pragma once
 
-#ifndef __OPLPCTOOLS_VMCPATH__
-#define __OPLPCTOOLS_VMCPATH__
+#include <OplPcTools/VMC/VmcDriver.h>
 
 namespace OplPcTools {
 
-class VmcPath
+class VmcFileManager final
 {
-    Q_DISABLE_COPY(VmcPath)
+    Q_DISABLE_COPY_MOVE(VmcFileManager)
+
+private:
+    struct FSTree;
+    struct FSTreeNode;
+
+private:
+    explicit VmcFileManager(QSharedPointer<VmcDriver> && _fs);
+    static VmcFileManager::FSTree * loadTree(VmcDriver & _fs);
+    static uint32_t loadDirectory(VmcDriver & _fs, const VmcPath & _path, FSTreeNode & _node);
 
 public:
-    VmcPath()
-    {
-    }
-
-    VmcPath(const QString & _path) :
-        VmcPath(split(_path))
-    {
-    }
-
-    VmcPath(const QString & _base_path, const QString _relative_path) :
-        VmcPath(split(_base_path) + split(_relative_path))
-    {
-    }
-
-    explicit VmcPath(const QStringList & _parts) :
-        m_parts(_parts)
-    {
-    }
-
-    VmcPath operator + (const QString & _relative_path) const
-    {
-        return VmcPath(m_parts + split(_relative_path));
-    }
-
-    operator QString () const
-    {
-        return path();
-    }
-
-    const QString path() const
-    {
-        return QString(s_path_separator) + m_parts.join(s_path_separator);
-    }
-
-    const QStringList parts() const
-    {
-        return m_parts;
-    }
-
-    static VmcPath root()
-    {
-        return VmcPath();
-    }
-
-    bool isRoot() const
-    {
-        return m_parts.empty();
-    }
-
-    VmcPath up() const
-    {
-        return VmcPath(m_parts.mid(0, m_parts.size() - 1));
-    }
+    ~VmcFileManager();
+    static QSharedPointer<VmcFileManager> load(const QString & _filepath);
+    QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path) const;
 
 private:
-    QStringList split(const QString & _path) const
-    {
-        return _path.split(
-            s_path_separator,
-#if QT_VERSION <= QT_VERSION_CHECK(5, 15, 0)
-            QString::SkipEmptyParts
-#else
-            Qt::SkipEmptyParts
-#endif
-        );
-    }
-
-
-private:
-    static const char s_path_separator = '/';
-    const QStringList m_parts;
+    QSharedPointer<VmcDriver> m_driver_ptr;
+    FSTree * mp_tree;
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCPATH__

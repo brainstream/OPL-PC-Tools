@@ -16,53 +16,87 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#include <QStringList>
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/VMC/VmcFileManager.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_VmcDetailsActivity.h"
+#ifndef __OPLPCTOOLS_VMCPATH__
+#define __OPLPCTOOLS_VMCPATH__
 
 namespace OplPcTools {
-namespace UI {
 
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+class VmcPath
 {
-    Q_OBJECT
+    Q_DISABLE_COPY(VmcPath)
 
 public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
+    VmcPath()
+    {
+    }
 
+    VmcPath(const QByteArray & _path) :
+        VmcPath(split(_path))
+    {
+    }
 
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
+    VmcPath(const QByteArray & _base_path, const QByteArray _relative_path) :
+        VmcPath(split(_base_path.trimmed()) + split(_relative_path.trimmed()))
+    {
+    }
+
+    explicit VmcPath(const QList<QByteArray> & _parts) :
+        m_parts(_parts)
+    {
+    }
+
+    VmcPath operator + (const QByteArray & _relative_path) const
+    {
+        return VmcPath(m_parts + split(_relative_path.trimmed()));
+    }
+
+    operator QByteArray () const
+    {
+        return path();
+    }
+
+    const QByteArray path() const
+    {
+        return QByteArray(1, s_path_separator) + m_parts.join(s_path_separator);
+    }
+
+    const QList<QByteArray> parts() const
+    {
+        return m_parts;
+    }
+
+    static VmcPath root()
+    {
+        return VmcPath();
+    }
+
+    bool isRoot() const
+    {
+        return m_parts.empty();
+    }
+
+    VmcPath up() const
+    {
+        return VmcPath(m_parts.mid(0, m_parts.size() - 1));
+    }
 
 private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const VmcPath & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
+    QList<QByteArray> split(const QByteArray & _path) const
+    {
+        auto parts = _path.split(s_path_separator);
+        // parts.removeAll(QByteArray()); // Qt 5.14+
+        for(qsizetype i = parts.count() - 1; i >=0; --i)
+            if(parts.at(i).isEmpty()) parts.removeAt(i);
+        return parts;
+    }
 
 private:
-    const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_fm_ptr;
-    VmcFileSystemViewModel * mp_model;
+    static const char s_path_separator = '/';
+    const QList<QByteArray> m_parts;
 };
 
-
-} // namespace UI
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#endif // __OPLPCTOOLS_VMCPATH__

@@ -266,7 +266,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     setupShortcuts();
     hideErrorMessage();
     mp_label_vmc_title->setText(mr_vmc.title());
-    loadVmcFS();
+    loadFileManager();
     QString encoding = getFsEncoding();
     {
         QStringList codecs = TextEncoding::availableCodecs();
@@ -276,7 +276,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_combobox_charset->addItems(codecs);
         mp_combobox_charset->setCurrentText(encoding);
     }
-    if(m_fs_ptr)
+    if(m_fm_ptr)
     {
         mp_model = new VmcFileSystemViewModel(encoding, this);
         navigate(VmcPath::root());
@@ -321,11 +321,11 @@ void VmcDetailsActivity::hideErrorMessage()
     mp_widget_error_message->hide();
 }
 
-void VmcDetailsActivity::loadVmcFS()
+void VmcDetailsActivity::loadFileManager()
 {
     try
     {
-        m_fs_ptr = VmcFS::load(mr_vmc.filepath());
+        m_fm_ptr = VmcFileManager::load(mr_vmc.filepath());
     }
     catch(const Exception &_exception)
     {
@@ -358,9 +358,15 @@ void VmcDetailsActivity::navigate(const VmcPath & _path)
     hideErrorMessage();
     try
     {
-        QList<VmcEntryInfo> items = m_fs_ptr->enumerateEntries(_path);
+        QList<VmcEntryInfo> items = m_fm_ptr->enumerateEntries(_path);
         mp_model->setItems(items);
-        mp_edit_fs_path->setText(_path);
+        mp_edit_fs_path->setText(
+
+
+            QString::fromLatin1(_path) // FIXME: encoder!
+
+
+        );
         mp_btn_fs_back->setDisabled(_path.isRoot());
     }
     catch(const Exception &_exception)
@@ -380,13 +386,25 @@ void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
         return;
     if(item->is_directory)
     {
-        navigate(VmcPath(mp_edit_fs_path->text(), item->name));
+        navigate(VmcPath(
+
+
+            mp_edit_fs_path->text().toLatin1(), // FIXME: decoder!
+            item->name
+
+        ));
     }
 }
 
 void VmcDetailsActivity::onFsBackButtonClick()
 {
-    VmcPath path = VmcPath(mp_edit_fs_path->text());
+    VmcPath path = VmcPath(
+
+
+        mp_edit_fs_path->text().toLatin1() // FIXME: decoder!
+
+
+    );
     if(!path.isRoot())
         navigate(path.up());
 }

@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/VmcFS.h>
+#include <OplPcTools/VMC/VmcDriver.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
@@ -40,8 +40,8 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
     mp_tabs->hide();
     try
     {
-        QSharedPointer<VmcFS> fs = VmcFS::load(_vmc.filepath());
-        const VmcInfo * info = fs->info();
+        QSharedPointer<VmcDriver> driver = VmcDriver::load(_vmc.filepath());
+        const VmcInfo * info = driver->info();
         mp_value_magic->setText(info->magic);
         mp_value_version->setText(info->version);
         mp_value_pagesize->setText(QString::number(info->pagesize));

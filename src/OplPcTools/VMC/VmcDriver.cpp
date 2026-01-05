@@ -59,7 +59,7 @@
 #include <QDateTime>
 #include <QTimeZone>
 #include <OplPcTools/File.h>
-#include <OplPcTools/VmcFS.h>
+#include <OplPcTools/VMC/VmcDriver.h>
 
 #define INVALID_CLUSTER_PTR static_cast<uint32_t>(-1)
 #define NULL_CLUSTER_PTR 0
@@ -78,30 +78,30 @@ struct VmcSuperblock final
     int16_t pagesize;                  //          40     0x28
     uint16_t pages_per_cluster;        //          42     0x2A
     uint16_t pages_per_block;          //          44     0x2C
-    uint16_t unused;                   //          46     0x2E
+    uint16_t __unused;                 //          46     0x2E
     uint32_t clusters_per_card;        //          48     0x30
     uint32_t alloc_offset;             //          52     0x34
     uint32_t alloc_end;                //          56     0x38
     uint32_t rootdir_cluster;          //          60     0x3C
     uint32_t backup_block1;            //          64     0x40
     uint32_t backup_block2;            //          68     0x44
-    uint8_t unused2[8];                //          72     0x48
+    uint8_t __unused2[8];              //          72     0x48
     uint32_t ifc_ptr_list[32];         //          80     0x50
     uint32_t bad_block_list[32];       //          208    0xD0
     uint8_t cardtype;                  //          336    0x150
     uint8_t cardflags;                 //          337    0x151
-    uint16_t unused3;                  //          338    0x152
+    uint16_t __unused3;                //          338    0x152
     uint32_t cluster_size;             //          340    0x154
     uint32_t fat_entries_per_cluster;  //          344    0x158
     uint32_t clusters_per_block;       //          348    0x15C
     int32_t cardform;                  //          352    0x160
     uint32_t rootdir_cluster2;         //          356    0x164
-    uint32_t unknown1;                 //          360    0x168
-    uint32_t unknown2;                 //          364    0x16C
+    uint32_t __unknown1;               //          360    0x168
+    uint32_t __unknown2;               //          364    0x16C
     uint32_t max_allocatable_clusters; //          368    0x170
-    uint32_t unknown3;                 //          372    0x174
-    uint32_t unknown4;                 //          376    0x178
-    int32_t unknown5;                  //          380    0x17C
+    uint32_t __unknown3;               //          372    0x174
+    uint32_t __unknown4;               //          376    0x178
+    int32_t __unknown5;                //          380    0x17C
 } __attribute__((packed));             // TOTAL:   384    0x180
 
 
@@ -120,16 +120,16 @@ struct FSDateTime
 struct FSEntry
 {                           // OFFSET:  (DEC)  (HEX)
     uint16_t mode;          //          0      0x0
-    uint16_t unused;        //          2      0x2
+    uint16_t __unused;      //          2      0x2
     uint32_t length;        //          4      0x4
     FSDateTime created;     //          8      0x8
     uint32_t cluster;       //          16     0x10
     uint32_t dir_entry;     //          20     0x14
     FSDateTime modified;    //          24     0x18
     uint32_t attr;          //          32     0x20
-    uint32_t unused2[7];    //          36     0x24
+    uint32_t __unused2[7];  //          36     0x24
     char name[32];          //          64     0x40
-    uint8_t unused3[416];   //          96     0x60
+    uint8_t __unused3[416]; //          96     0x60
 } __attribute__((packed));  // TOTAL:   512    0x200
 
 
@@ -209,12 +209,12 @@ VmcFormatter::~VmcFormatter()
 
 void VmcFormatter::format(const QString & _filename, uint32_t _size_mib)
 {
-    if(_size_mib < VmcFS::min_size_mib || _size_mib > VmcFS::max_size_mib)
+    if(_size_mib < VmcDriver::min_size_mib || _size_mib > VmcDriver::max_size_mib)
     {
         throw ValidationException(
             QObject::tr("VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib")
-                .arg(VmcFS::min_size_mib)
-                .arg(VmcFS::max_size_mib)
+                .arg(VmcDriver::min_size_mib)
+                .arg(VmcDriver::max_size_mib)
         );
     }
     VmcFormatter(_filename, _size_mib).format();
@@ -259,7 +259,7 @@ void VmcFormatter::initSuperblock()
     mp_sb->cardflags = 0x2b;
     mp_sb->cardform = 1;
     mp_sb->rootdir_cluster = mp_sb->rootdir_cluster2 = 0;
-    mp_sb->unknown5 = -1;
+    mp_sb->__unknown5 = -1;
     std::memcpy(mp_sb->magic, g_vmc_magic, sizeof(mp_sb->magic));
     std::strncpy(mp_sb->version, g_vmc_version, sizeof(mp_sb->version));
     std::memset(mp_sb->bad_block_list, -1, sizeof(VmcSuperblock::bad_block_list));
@@ -351,7 +351,7 @@ void VmcFormatter::writeRootDirectory()
         entries[i].attr = 0;
         entries[i].mode = EM_READ | EM_WRITE | EM_EXECUTE | EM_DIRECTORY | EM_EXISTS;
         entries[i].cluster = mp_sb->rootdir_cluster;
-        entries[i].unused = 0;
+        entries[i].__unused = 0;
         entries[i].length = 2;
         entries[i].created = dt;
         entries[i].dir_entry = 0;
@@ -365,8 +365,21 @@ void VmcFormatter::writeRootDirectory()
     m_file.write(reinterpret_cast<const char *>(entries), sizeof(entries));
 }
 
+struct FSTreeNode
+{
+    QByteArray name;
+    size_t size;
+    bool is_directory;
+    QList<FSTreeNode *> children;
+};
 
-class VmcFS::Private final
+struct FSTree
+{
+    FSTreeNode * root;
+};
+
+
+class VmcDriver::Private final
 {
 public:
     explicit Private(const QString & _filepath);
@@ -402,14 +415,14 @@ private:
 
 struct VmcFile::Private
 {
-    VmcFS::Private * fs;
+    VmcDriver::Private * fs;
     QByteArray name;
     uint32_t size;
     uint32_t position;
     QList<uint32_t> clusters;
 };
 
-VmcFS::Private::Private(const QString & _filepath) :
+VmcDriver::Private::Private(const QString & _filepath) :
     m_file(_filepath),
     mp_info(nullptr),
     mp_fat(nullptr),
@@ -417,12 +430,12 @@ VmcFS::Private::Private(const QString & _filepath) :
 {
 }
 
-VmcFS::Private::~Private()
+VmcDriver::Private::~Private()
 {
     deinit();
 }
 
-void VmcFS::Private::deinit()
+void VmcDriver::Private::deinit()
 {
     if(m_file.isOpen())
         m_file.close();
@@ -433,12 +446,12 @@ void VmcFS::Private::deinit()
     m_fat_size = 0;
 }
 
-const VmcInfo * VmcFS::Private::info() const
+const VmcInfo * VmcDriver::Private::info() const
 {
     return mp_info;
 }
 
-void VmcFS::Private::load()
+void VmcDriver::Private::load()
 {
     deinit();
     ::openFile(m_file, QIODevice::OpenMode(QIODevice::ReadOnly));
@@ -446,7 +459,7 @@ void VmcFS::Private::load()
     readFAT();
 }
 
-void VmcFS::Private::readSuperblock()
+void VmcDriver::Private::readSuperblock()
 {
     QScopedPointer<VmcSuperblock> sb(new VmcSuperblock);
     read(0, reinterpret_cast<char *>(sb.data()), sizeof(VmcSuperblock));
@@ -474,7 +487,7 @@ void VmcFS::Private::readSuperblock()
     mp_info->max_allocatable_clusters = sb->max_allocatable_clusters;
 }
 
-void VmcFS::Private::readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size /*= 0*/)
+void VmcDriver::Private::readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size /*= 0*/)
 {
     qint64 offset = _cluster * mp_info->cluster_size;
     if(!_is_absolute)
@@ -482,13 +495,13 @@ void VmcFS::Private::readCluster(uint32_t _cluster, bool _is_absolute, char * _b
     read(offset, _buffer, _size == 0 ? mp_info->cluster_size : _size);
 }
 
-void VmcFS::Private::read(quint64 _offset, char * _buffer, uint32_t _size)
+void VmcDriver::Private::read(quint64 _offset, char * _buffer, uint32_t _size)
 {
     if(!m_file.seek(_offset) || m_file.read(_buffer, _size) != _size)
         throwNotFormatted();
 }
 
-void VmcFS::Private::validateSuperblock(const VmcSuperblock & _sb) const
+void VmcDriver::Private::validateSuperblock(const VmcSuperblock & _sb) const
 {
     static QRegularExpression version_regex("^1\\.[012]\\.0\\.0$");
     if(
@@ -508,12 +521,12 @@ void VmcFS::Private::validateSuperblock(const VmcSuperblock & _sb) const
     }
 }
 
-void VmcFS::Private::throwNotFormatted() const
+void VmcDriver::Private::throwNotFormatted() const
 {
     throw VmcFSException(QObject::tr("The VMC is corrupted or not formatted correctly"));
 }
 
-void VmcFS::Private::readFAT()
+void VmcDriver::Private::readFAT()
 {
     if(mp_fat)
     {
@@ -559,7 +572,7 @@ void VmcFS::Private::readFAT()
     m_fat_size = fat_size;
 }
 
-QList<VmcEntryInfo> VmcFS::Private::enumerateEntries(const VmcPath & _path)
+QList<VmcEntryInfo> VmcDriver::Private::enumerateEntries(const VmcPath & _path)
 {
     std::optional<EntryInfo> entry = resolvePath(_path);
     QList<VmcEntryInfo> result;
@@ -578,10 +591,10 @@ QList<VmcEntryInfo> VmcFS::Private::enumerateEntries(const VmcPath & _path)
     return result;
 }
 
-std::optional<EntryInfo> VmcFS::Private::resolvePath(const VmcPath & _path)
+std::optional<EntryInfo> VmcDriver::Private::resolvePath(const VmcPath & _path)
 {
     EntryInfo entry = getRootEntry();
-    for(const QString & path_part : _path.parts())
+    for(const QByteArray & path_part : _path.parts())
     {
         bool matched = false;
         enumerateEntries(entry, [&](const EntryInfo & next_entry) -> bool {
@@ -599,14 +612,14 @@ std::optional<EntryInfo> VmcFS::Private::resolvePath(const VmcPath & _path)
     return entry;
 }
 
-EntryInfo VmcFS::Private::getRootEntry()
+EntryInfo VmcDriver::Private::getRootEntry()
 {
     QScopedArrayPointer<char> ptr(new char[sizeof(FSEntry)]);
     readCluster(mp_info->rootdir_cluster, false, ptr.data(), sizeof(FSEntry));
     return map(*reinterpret_cast<FSEntry *>(ptr.data()));
 }
 
-EntryInfo VmcFS::Private::map(const FSEntry & _fs_entry) const
+EntryInfo VmcDriver::Private::map(const FSEntry & _fs_entry) const
 {
     EntryInfo info;
     info.is_directory = _fs_entry.mode & EM_DIRECTORY;
@@ -616,7 +629,7 @@ EntryInfo VmcFS::Private::map(const FSEntry & _fs_entry) const
     return info;
 }
 
-void VmcFS::Private::enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback)
+void VmcDriver::Private::enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback)
 {
     const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
     QList<uint32_t> clusters = getEntryClusters(_dir);
@@ -638,7 +651,7 @@ void VmcFS::Private::enumerateEntries(const EntryInfo & _dir, std::function<bool
     }
 }
 
-QList<uint32_t> VmcFS::Private::getEntryClusters(const EntryInfo & _entry) const
+QList<uint32_t> VmcDriver::Private::getEntryClusters(const EntryInfo & _entry) const
 {
     if(_entry.cluster > mp_info->max_allocatable_clusters)
         throwNotFormatted();
@@ -654,7 +667,7 @@ QList<uint32_t> VmcFS::Private::getEntryClusters(const EntryInfo & _entry) const
     return result;
 }
 
-QSharedPointer<VmcFile> VmcFS::Private::openFile(const VmcPath & _path)
+QSharedPointer<VmcFile> VmcDriver::Private::openFile(const VmcPath & _path)
 {
     std::optional<EntryInfo> entry = resolvePath(_path);
     if(!entry.has_value())
@@ -670,7 +683,7 @@ QSharedPointer<VmcFile> VmcFS::Private::openFile(const VmcPath & _path)
     return QSharedPointer<VmcFile>(new VmcFile(pr));
 }
 
-int64_t VmcFS::Private::readFile(VmcFile::Private & _file, char * _buffer, uint32_t _max_size)
+int64_t VmcDriver::Private::readFile(VmcFile::Private & _file, char * _buffer, uint32_t _max_size)
 {
     const uint32_t start_cluster_index = _file.position / mp_info->cluster_size;
     const uint32_t cluster_count = static_cast<uint32_t>(_file.clusters.size());
@@ -735,49 +748,49 @@ int64_t VmcFile::read(char * _buffer, int64_t _max_size)
     return mp_private->fs->readFile(*this->mp_private, _buffer, _max_size);
 }
 
-const uint32_t VmcFS::min_size_mib = 8;
-const uint32_t VmcFS::max_size_mib = 512;
+const uint32_t VmcDriver::min_size_mib = 8;
+const uint32_t VmcDriver::max_size_mib = 512;
 
-VmcFS::VmcFS() { }
+VmcDriver::VmcDriver() { }
 
-VmcFS::~VmcFS()
+VmcDriver::~VmcDriver()
 {
     delete mp_private;
 }
 
-const VmcInfo * VmcFS::info() const
+const VmcInfo * VmcDriver::info() const
 {
     return mp_private->info();
 }
 
-QSharedPointer<VmcFS> VmcFS::load(const QString & _filepath)
+QSharedPointer<VmcDriver> VmcDriver::load(const QString & _filepath)
 {
-    VmcFS::Private * fs_private = new VmcFS::Private(_filepath);
+    VmcDriver::Private * driver_private = new VmcDriver::Private(_filepath);
     try
     {
-        fs_private->load();
+        driver_private->load();
     }
     catch(...)
     {
-        delete fs_private;
+        delete driver_private;
         throw;
     }
-    VmcFS * fs = new VmcFS();
-    fs->mp_private = fs_private;
-    return QSharedPointer<VmcFS>(fs);
+    VmcDriver * driver = new VmcDriver();
+    driver->mp_private = driver_private;
+    return QSharedPointer<VmcDriver>(driver);
 }
 
-void VmcFS::create(const QString & _filepath, uint32_t _size_mib)
+void VmcDriver::create(const QString & _filepath, uint32_t _size_mib)
 {
     VmcFormatter::format(_filepath, _size_mib);
 }
 
-QList<VmcEntryInfo> VmcFS::enumerateEntries(const VmcPath & _path)
+QList<VmcEntryInfo> VmcDriver::enumerateEntries(const VmcPath & _path)
 {
     return mp_private->enumerateEntries(_path);
 }
 
-QSharedPointer<VmcFile> VmcFS::openFile(const VmcPath & _path)
+QSharedPointer<VmcFile> VmcDriver::openFile(const VmcPath & _path)
 {
     return mp_private->openFile(_path);
 }

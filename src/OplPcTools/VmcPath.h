@@ -82,6 +82,11 @@ public:
         return VmcPath(m_parts.mid(0, m_parts.size() - 1));
     }
 
+    QByteArray filename() const
+    {
+        return m_parts.empty() ? QByteArray() : m_parts.last();
+    }
+
 private:
     QList<QByteArray> split(const QByteArray & _path) const
     {

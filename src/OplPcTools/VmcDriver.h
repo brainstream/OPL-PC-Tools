@@ -92,6 +92,7 @@ public:
     const VmcInfo * info() const;
     QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path) const;
     QSharedPointer<VmcFile> openFile(const VmcPath & _path);
+    void writeFile(const VmcPath & _path, const QByteArray & _data);
     uint32_t totalUsedBytes() const;
     uint32_t totalFreeBytes() const;
 

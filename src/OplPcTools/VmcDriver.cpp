@@ -70,6 +70,7 @@ namespace {
 
 const char * g_vmc_magic = "Sony PS2 Memory Card Format ";
 const char * g_vmc_version = "1.2.0.0";
+constexpr int g_japan_timezone_offset_seconds = 9 * 60 * 60;
 
 [[noreturn]] void throwNotFormatted()
 {
@@ -79,6 +80,11 @@ const char * g_vmc_version = "1.2.0.0";
 [[noreturn]] void throwPathNotFound()
 {
     throw VmcFSException(QObject::tr("Path not found"));
+}
+
+[[noreturn]] void throwNoSpace()
+{
+    throw VmcFSException(QObject::tr("Not enough free space"));
 }
 
 struct VmcSuperblock final
@@ -158,10 +164,48 @@ enum FSEntryMode
 };
 
 
+enum FATEntryFlag : uint8_t
+{
+    FAT_FREE = 0xF7,
+    FAT_EOF = 0xFF,
+    FAT_POINTER = 0x08
+};
+
+
 struct FATEntry
 {
     uint32_t cluster: 24;
-    uint32_t flag: 8;
+    FATEntryFlag flag: 8;
+
+    static constexpr FATEntry free()
+    {
+        return { .cluster = 0xFFFFFF, .flag = FAT_FREE };
+    }
+
+    static constexpr FATEntry endOfFile()
+    {
+        return { .cluster = 0xFFFFFF, .flag = FAT_EOF };
+    }
+
+    static constexpr FATEntry pointer(uint32_t _cluster)
+    {
+        return { .cluster = _cluster, .flag = FAT_POINTER };
+    }
+
+    bool isFree() const
+    {
+        return flag == FAT_FREE;
+    }
+
+    bool isEndOfFile() const
+    {
+        return flag == FAT_EOF;
+    }
+
+    bool isPointer() const
+    {
+        return flag == FAT_POINTER;
+    }
 } __attribute__((packed));
 
 
@@ -319,9 +363,7 @@ void VmcFormatter::writeFAT()
     // FATs
     //
     std::unique_ptr<char[]> fat_cluster_raw(new char[mp_sb->cluster_size]);
-    FATEntry fat_entry;
-    fat_entry.flag = 0x7F; // TODO: flags
-    fat_entry.cluster = 0xFFFFFF;
+    FATEntry fat_entry = FATEntry::free();
     for(uint32_t i = 0; i < mp_sb->fat_entries_per_cluster; ++i)
     {
         memcpy(&fat_cluster_raw.get()[sizeof(FATEntry) * i], &fat_entry, sizeof(FATEntry));
@@ -339,7 +381,7 @@ void VmcFormatter::writeFAT()
     // Root directory
     //
     writeRootDirectory();
-    fat_entry.flag = 0xFF; // TODO: flags
+    fat_entry = FATEntry::endOfFile();
     m_file.seek(fat_start_cluster_index * mp_sb->cluster_size);
     m_file.write(reinterpret_cast<char *>(&fat_entry), sizeof(FATEntry));
 }
@@ -388,6 +430,19 @@ struct FSTree
     FSTreeNode * root;
 };
 
+struct FSEntrySearchResult
+{
+    FSEntrySearchResult() :
+        cluster_index(0),
+        cluster_entries(std::unique_ptr<FSEntry[]>()),
+        entry_index(0)
+    {
+    }
+
+    uint32_t cluster_index;
+    std::unique_ptr<FSEntry[]> cluster_entries;
+    size_t entry_index;
+};
 
 class VmcDriver::Private final
 {
@@ -401,12 +456,14 @@ public:
     void exportEntry(const VmcPath & _vmc_path, const QString & _dest_path);
     QSharedPointer<VmcFile> openFile(const VmcPath & _path);
     int64_t readFile(VmcFile::Private & _file, char * _buffer, uint32_t _max_size);
+    void writeFile(const VmcPath & _path, const QByteArray & _data);
 
 private:
     void deinit();
     void readSuperblock();
     void readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size = 0);
     void read(quint64 _offset, char * _buffer, uint32_t _size);
+    void writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer);
     void validateSuperblock(const VmcSuperblock & _sb) const;
     void readFAT();
     std::optional<EntryInfo> resolvePath(const VmcPath & _path);
@@ -414,6 +471,12 @@ private:
     inline EntryInfo map(const FSEntry & _fs_entry) const;
     void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback);
     QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
+    bool allocEntry(const EntryInfo & _parent, const EntryInfo & _entry);
+    void writeFATEntry(uint32_t _cluster, FATEntry _entry);
+    FSDateTime now() const;
+    bool findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result);
+    std::optional<QList<uint32_t>> alloc(uint32_t _allocation_size);
+    void free(const QList<uint32_t> & _clusters);
 
 private:
     QFile m_file;
@@ -424,7 +487,7 @@ private:
 
 struct VmcFile::Private
 {
-    VmcDriver::Private * fs;
+    VmcDriver::Private * driver;
     QByteArray name;
     uint32_t size;
     uint32_t position;
@@ -664,7 +727,7 @@ QList<uint32_t> VmcDriver::Private::getEntryClusters(const EntryInfo & _entry) c
     {
         result.append(cluster);
         FATEntry fat_entry = mp_fat[cluster];
-        if(fat_entry.flag == 0xff) // TODO: const, TODO: other flags (EOC, bad sector)
+        if(fat_entry.isEndOfFile())
             break;
         cluster = fat_entry.cluster;
     }
@@ -680,7 +743,7 @@ QSharedPointer<VmcFile> VmcDriver::Private::openFile(const VmcPath & _path)
         throw VmcFSException(QObject::tr("\"%1\" is not a file").arg(_path));
     VmcFile::Private * pr = new VmcFile::Private;
     pr->clusters = getEntryClusters(*entry);
-    pr->fs = this;
+    pr->driver = this;
     pr->position = 0;
     pr->size = entry->length;
     pr->name = entry->name;
@@ -717,6 +780,191 @@ int64_t VmcDriver::Private::readFile(VmcFile::Private & _file, char * _buffer, u
     return position_in_buffer;
 }
 
+void VmcDriver::Private::writeFile(const VmcPath & _path, const QByteArray & _data)
+{
+    VmcPath dir_path = _path.up();
+    std::optional<EntryInfo> dir_entry = resolvePath(dir_path);
+    if(!dir_entry.has_value())
+        throwPathNotFound();
+    if(!dir_entry->is_directory)
+        throw VmcFSException(QObject::tr("\"%1\" is not a directory").arg(dir_path.path()));
+
+    std::optional<QList<uint32_t>> file_data_clusters = alloc(_data.size());
+    if(!file_data_clusters)
+        throwNoSpace();
+
+    EntryInfo file_entry
+    {
+        .name = _path.filename(),
+        .is_directory = false,
+        .cluster = file_data_clusters->first(),
+        .length = static_cast<uint32_t>(_data.length())
+    };
+    if(!allocEntry(*dir_entry, file_entry))
+    {
+        free(*file_data_clusters);
+        throwNoSpace();
+    }
+
+    {
+        QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
+        foreach(uint32_t cluster, *file_data_clusters)
+        {
+            const qsizetype offset = cluster * mp_info->cluster_size;
+            std::memcpy(
+                buffer.data(),
+                &_data.data()[offset],
+                std::min(mp_info->cluster_size, static_cast<uint32_t>(_data.size() - offset)));
+            writeCluster(cluster, false, buffer.data());
+        }
+    }
+}
+
+bool VmcDriver::Private::allocEntry(const EntryInfo & _parent, const EntryInfo & _entry)
+{
+    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
+    QList<uint32_t> parent_dir_clusters = getEntryClusters(_parent);
+
+    FSEntrySearchResult parent_free_entry;
+    if(!findFreeEntry(parent_dir_clusters, parent_free_entry))
+    {
+        // If all entries of the parent cluster are occupied,
+        // we allocate a new cluster and link it to the parent via FAT.
+
+        std::optional<QList<uint32_t>> new_cluster = alloc(mp_info->cluster_size);
+        if(!new_cluster)
+            return false;
+
+        writeFATEntry(parent_dir_clusters.last(), FATEntry::pointer(new_cluster->first()));
+        writeFATEntry(new_cluster->first(), FATEntry::endOfFile());
+
+        parent_free_entry.entry_index = 0;
+        parent_free_entry.cluster_index = new_cluster->first();
+        parent_free_entry.cluster_entries.reset(new FSEntry[entry_count_per_cluster]);
+        for(size_t i = 0; i < entry_count_per_cluster; ++i)
+        {
+            parent_free_entry.cluster_entries[i] = {};
+            parent_free_entry.cluster_entries[i].cluster = 0xFFFFFFFF;
+        }
+    }
+
+    FSEntry & new_entry = parent_free_entry.cluster_entries[parent_free_entry.entry_index];
+    new_entry.mode = EM_EXISTS;
+    if(_entry.is_directory)
+        new_entry.mode |= EM_DIRECTORY;
+    else
+        new_entry.mode |= EM_READ | EM_WRITE;
+    new_entry.length = _entry.length;
+    new_entry.cluster = _entry.cluster;
+    new_entry.created = new_entry.modified = now();
+    std::strncpy(
+        new_entry.name,
+        _entry.name.data(),
+        std::min(sizeof(FSEntry::name), static_cast<size_t>(_entry.name.length())));
+
+    // Updating an old or new cluster
+    writeCluster(
+        parent_free_entry.cluster_index,
+        false,
+        reinterpret_cast<const char *>(parent_free_entry.cluster_entries.get()));
+
+    return true;
+}
+
+void VmcDriver::Private::writeFATEntry(uint32_t _cluster, FATEntry _entry)
+{
+    const uint32_t fat_table_index = _cluster / mp_info->fat_entries_per_cluster;
+    const uint32_t fat_index = _cluster % mp_info->fat_entries_per_cluster;
+    const uint32_t fat_table_cluster = mp_info->ifc_ptr_list[fat_table_index];
+    m_file.seek(fat_table_cluster * mp_info->cluster_size + fat_index * sizeof(FATEntry));
+    m_file.write(reinterpret_cast<const char *>(&_entry), sizeof(FATEntry));
+    mp_fat[_cluster] = _entry;
+}
+
+FSDateTime VmcDriver::Private::now() const
+{
+    QDateTime japan_now = QDateTime::currentDateTime().toOffsetFromUtc(g_japan_timezone_offset_seconds);
+    return FSDateTime
+    {
+        .resv2 = 0u,
+        .sec = static_cast<uint8_t>(japan_now.time().second()),
+        .min = static_cast<uint8_t>(japan_now.time().minute()),
+        .hour = static_cast<uint8_t>(japan_now.time().hour()),
+        .day = static_cast<uint8_t>(japan_now.date().day()),
+        .month = static_cast<uint8_t>(japan_now.date().month()),
+        .year = static_cast<uint8_t>(japan_now.date().year())
+    };
+}
+
+bool VmcDriver::Private::findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result)
+{
+    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
+    std::unique_ptr<FSEntry[]> entries(new FSEntry[entry_count_per_cluster]);
+    foreach(uint32_t parent_cluster, _parent_clusters)
+    {
+        readCluster(parent_cluster, false, reinterpret_cast<char *>(entries.get()));
+        for(size_t entry_index = 1; entry_index < entry_count_per_cluster; ++entry_index)
+        {
+            FSEntry & entry = entries[entry_index];
+            if(!(entry.mode & EM_EXISTS))
+            {
+                _result.cluster_entries.swap(entries);
+                _result.cluster_index = parent_cluster;
+                _result.entry_index = entry_index;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void VmcDriver::Private::writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer)
+{
+    const uint32_t offset = ((_is_absolute ? 0 : mp_info->alloc_offset) + _cluster) * mp_info->cluster_size;
+    m_file.seek(offset);
+    m_file.write(_buffer, mp_info->cluster_size);
+}
+
+std::optional<QList<uint32_t>> VmcDriver::Private::alloc(uint32_t _allocation_size)
+{
+    qsizetype cluster_count = _allocation_size / mp_info->cluster_size;
+    if(_allocation_size % mp_info->cluster_size)
+        ++cluster_count;
+
+    if(cluster_count == 0)
+        return std::nullopt;
+
+    QList<uint32_t> result;
+    result.reserve(cluster_count);
+
+    const size_t total_cluster_count = m_fat_size / sizeof(FATEntry);
+    for(size_t cluster = 0; cluster < total_cluster_count; ++cluster)
+    {
+        if(mp_fat[cluster].isFree())
+            result.append(cluster);
+        if(result.count() == cluster_count)
+            break;
+    }
+
+    if(result.count() < cluster_count)
+        return std::nullopt;
+
+    for(qsizetype cluster = 0; cluster < cluster_count; ++cluster)
+    {
+        writeFATEntry(
+            result[cluster],
+            cluster == cluster_count - 1 ? FATEntry::endOfFile() : FATEntry::pointer(result[cluster + 1]));
+    }
+
+    return result;
+}
+
+void VmcDriver::Private::free(const QList<uint32_t> & _clusters)
+{
+    foreach(uint32_t cluster, _clusters)
+        writeFATEntry(cluster, mp_fat[cluster] = FATEntry::free());
+}
+
 VmcFile::VmcFile(Private * _private) :
     mp_private(_private)
 {
@@ -749,7 +997,7 @@ bool VmcFile::seek(uint32_t _pos)
 
 int64_t VmcFile::read(char * _buffer, int64_t _max_size)
 {
-    return mp_private->fs->readFile(*this->mp_private, _buffer, _max_size);
+    return mp_private->driver->readFile(*this->mp_private, _buffer, _max_size);
 }
 
 struct VmcDriver::FSTreeNode : VmcEntryInfo
@@ -866,6 +1114,11 @@ QList<VmcEntryInfo> VmcDriver::enumerateEntries(const VmcPath & _path) const
 QSharedPointer<VmcFile> VmcDriver::openFile(const VmcPath & _path)
 {
     return mp_private->openFile(_path);
+}
+
+void VmcDriver::writeFile(const VmcPath & _path, const QByteArray & _data)
+{
+    mp_private->writeFile(_path, _data);
 }
 
 uint32_t VmcDriver::totalUsedBytes() const

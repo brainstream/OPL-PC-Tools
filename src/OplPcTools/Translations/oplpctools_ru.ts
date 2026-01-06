@@ -1186,29 +1186,39 @@
         <translation>&lt;каталог&gt;</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="225"/>
+        <location filename="../VmcDriver.cpp" line="269"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="76"/>
+        <location filename="../VmcDriver.cpp" line="77"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>VMC повреждена или имеет некорректный формат</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="81"/>
+        <location filename="../VmcDriver.cpp" line="82"/>
         <source>Path not found</source>
         <translation>Путь не найден</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="678"/>
+        <location filename="../VmcDriver.cpp" line="87"/>
+        <source>Not enough free space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../VmcDriver.cpp" line="741"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="680"/>
+        <location filename="../VmcDriver.cpp" line="743"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; не является файлом</translation>
+    </message>
+    <message>
+        <location filename="../VmcDriver.cpp" line="790"/>
+        <source>&quot;%1&quot; is not a directory</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../File.cpp" line="65"/>

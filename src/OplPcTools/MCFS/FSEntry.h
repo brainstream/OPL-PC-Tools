@@ -16,53 +16,41 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#pragma once
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_VmcDetailsActivity.h"
+#include <OplPcTools/MCFS/FSDateTime.h>
 
 namespace OplPcTools {
-namespace UI {
+namespace MCFS {
 
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+enum FSEntryMode
 {
-    Q_OBJECT
-
-public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
-
-
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
-
-private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const VmcPath & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
-
-private:
-    const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_vmc_file_manager_ptr;
-    VmcFileSystemViewModel * mp_model;
+    EM_READ = 0x1,
+    EM_WRITE = 0x2,
+    EM_EXECUTE = 0x4,
+    EM_PROTECTED = 0x8,
+    EM_FILE = 0x10,
+    EM_DIRECTORY = 0x20,
+    EM_POCKETSTATION = 0x800,
+    EM_PLAYSTATION = 0x1000,
+    EM_HIDDENT = 0x2000,
+    EM_EXISTS = 0x8000
 };
 
+struct __attribute__((packed)) FSEntry
+{                           // OFFSET:  (DEC)  (HEX)
+    uint16_t mode;          //          0      0x0
+    uint16_t __unused;      //          2      0x2
+    uint32_t length;        //          4      0x4
+    FSDateTime created;     //          8      0x8
+    uint32_t cluster;       //          16     0x10
+    uint32_t dir_entry;     //          20     0x14
+    FSDateTime modified;    //          24     0x18
+    uint32_t attr;          //          32     0x20
+    uint32_t __unused2[7];  //          36     0x24
+    char name[32];          //          64     0x40
+    uint8_t __unused3[416]; //          96     0x60
+};                          // TOTAL:   512    0x200
 
-} // namespace UI
+} // namespace MCFS
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__

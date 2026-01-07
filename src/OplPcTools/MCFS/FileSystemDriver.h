@@ -16,19 +16,18 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCFS__
-#define __OPLPCTOOLS_VMCFS__
+#pragma once
 
-#include <QString>
-#include <QSharedPointer>
+#include <OplPcTools/MCFS/FATable.h>
+#include <OplPcTools/MCFS/FSEntry.h>
+#include <OplPcTools/MCFS/Superblock.h>
 #include <OplPcTools/VmcPath.h>
-#include <OplPcTools/Exception.h>
+#include <QFile>
 
 namespace OplPcTools {
+namespace MCFS {
 
-DECLARE_EXCEPTION(VmcFSException)
-
-struct VmcInfo final
+struct FSInfo final
 {
     QString magic;
     QString version;
@@ -52,23 +51,24 @@ struct VmcInfo final
     uint32_t max_allocatable_clusters;
 };
 
-struct VmcEntryInfo
+struct EntryInfo
 {
     QByteArray name;
     bool is_directory;
-    uint32_t size;
+    uint32_t cluster;
+    uint32_t length;
 };
 
-class VmcFile final
+class MemoryCardFile final
 {
-    Q_DISABLE_COPY(VmcFile)
+    Q_DISABLE_COPY(MemoryCardFile)
 
 public:
     struct Private;
 
 public:
-    explicit VmcFile(Private * _private);
-    ~VmcFile();
+    explicit MemoryCardFile(Private * _private);
+    ~MemoryCardFile();
     const QByteArray & name() const;
     uint32_t size() const;
     bool seek(uint32_t _pos);
@@ -78,41 +78,59 @@ private:
     Private * mp_private;
 };
 
-class VmcDriver final
+class FileSystemDriver final
 {
-    struct FSTree;
-    struct FSTreeNode;
-    Q_DISABLE_COPY(VmcDriver)
+private:
+    struct FSEntrySearchResult
+    {
+        FSEntrySearchResult() :
+            cluster_index(0),
+            cluster_entries(std::unique_ptr<FSEntry[]>()),
+            entry_index(0)
+        {
+        }
+
+        uint32_t cluster_index;
+        std::unique_ptr<FSEntry[]> cluster_entries;
+        size_t entry_index;
+    };
 
 public:
-    class Private;
-
-public:
-    ~VmcDriver();
-    const VmcInfo * info() const;
-    QList<VmcEntryInfo> enumerateEntries(const VmcPath & _path) const;
-    QSharedPointer<VmcFile> openFile(const VmcPath & _path);
+    explicit FileSystemDriver(const QString & _filepath);
+    ~FileSystemDriver();
+    void load();
+    void create(uint8_t _size_mib);
+    const FSInfo * info() const;
+    QList<EntryInfo> enumerateEntries(const VmcPath & _path);
+    void exportEntry(const VmcPath & _vmc_path, const QString & _dest_path);
+    QSharedPointer<MemoryCardFile> openFile(const VmcPath & _path);
+    int64_t readFile(MemoryCardFile::Private & _file, char * _buffer, uint32_t _max_size);
     void writeFile(const VmcPath & _path, const QByteArray & _data);
-    uint32_t totalUsedBytes() const;
-    uint32_t totalFreeBytes() const;
-
-    static QSharedPointer<VmcDriver> load(const QString & _filepath);
-    static void create(const QString & _filepath, uint32_t _size_mib);
 
 private:
-    explicit VmcDriver(Private * _private);
-    FSTree * loadTree();
-    uint32_t loadDirectory(const VmcPath & _path, FSTreeNode & _node);
-
-public:
-    static const uint32_t min_size_mib;
-    static const uint32_t max_size_mib;
+    void deinit();
+    void readSuperblock();
+    void readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size = 0);
+    void read(quint64 _offset, char * _buffer, uint32_t _size);
+    void writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer);
+    void validateSuperblock(const Superblock & _sb) const;
+    void readFAT();
+    std::optional<EntryInfo> resolvePath(const VmcPath & _path);
+    EntryInfo getRootEntry();
+    inline EntryInfo map(const FSEntry & _fs_entry) const;
+    void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback);
+    QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
+    bool allocEntry(const EntryInfo & _parent, const EntryInfo & _entry);
+    void writeFATEntry(uint32_t _cluster, FATEntry _entry);
+    bool findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result);
+    std::optional<QList<uint32_t>> alloc(uint32_t _allocation_size);
+    void free(const QList<uint32_t> & _clusters);
 
 private:
-    Private * mp_private;
-    FSTree * mp_tree;
+    QFile m_file;
+    FSInfo * mp_info;
+    FATable m_fat;
 };
 
+} // namespace MCFS
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCFS__

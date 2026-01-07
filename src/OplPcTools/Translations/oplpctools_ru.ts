@@ -931,7 +931,7 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="312"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
@@ -1186,37 +1186,43 @@
         <translation>&lt;каталог&gt;</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="269"/>
+        <location filename="../MCFS/VmcFormatter.cpp" line="50"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="77"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="33"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>VMC повреждена или имеет некорректный формат</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="82"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="38"/>
+        <location filename="../VmcFileManager.cpp" line="139"/>
         <source>Path not found</source>
         <translation>Путь не найден</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="87"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="43"/>
         <source>Not enough free space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="741"/>
+        <location filename="../MCFS/FATable.h" line="123"/>
+        <source>FAT cluster index %1 is out of range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="324"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="743"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="326"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; не является файлом</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="790"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="372"/>
         <source>&quot;%1&quot; is not a directory</source>
         <translation type="unfinished"></translation>
     </message>

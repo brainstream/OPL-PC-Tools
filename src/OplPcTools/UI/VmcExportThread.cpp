@@ -38,9 +38,9 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
     try
     {
         m_action = Action::Skip;
-        QSharedPointer<VmcDriver> driver = VmcDriver::load(_vmc.filepath());
+        QSharedPointer<VmcFileManager> file_manager = VmcFileManager::load(_vmc.filepath());
         TextDecoder decoder(_fs_encoding);
-        exportDirectory(*driver, decoder, VmcPath::root(), _destination_dir);
+        exportDirectory(*file_manager, decoder, VmcPath::root(), _destination_dir);
     }
     catch(const Exception & _exception)
     {
@@ -54,7 +54,7 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
 }
 
 void VmcExportThreadWorker::exportDirectory(
-    VmcDriver & _driver,
+    VmcFileManager & _file_manager,
     TextDecoder & _decoder,
     const VmcPath & _vmc_dir,
     const QString & _dest_directory)
@@ -64,18 +64,18 @@ void VmcExportThreadWorker::exportDirectory(
     QDir dir(_dest_directory);
     if(!dir.exists() && !QDir().mkpath(dir.path()))
         throw Exception(QObject::tr("Unable to create directory \"%1\"").arg(dir.path()));
-    QList<VmcEntryInfo> entries = _driver.enumerateEntries(_vmc_dir);
-    foreach(const VmcEntryInfo & entry, entries)
+    QList<VmcFsEntryInfo> entries = _file_manager.enumerateEntries(_vmc_dir);
+    foreach(const VmcFsEntryInfo & entry, entries)
     {
         VmcPath next_vmc_entry = _vmc_dir + entry.name;
         if(entry.is_directory)
         {
             QString next_directory = dir.absoluteFilePath(entry.name);
-            exportDirectory(_driver, _decoder, next_vmc_entry, next_directory);
+            exportDirectory(_file_manager, _decoder, next_vmc_entry, next_directory);
         }
         else
         {
-            exportFile(_driver, _decoder, next_vmc_entry, _dest_directory);
+            exportFile(_file_manager, _decoder, next_vmc_entry, _dest_directory);
             if(m_action == Action::Cancel)
                 break;
         }
@@ -83,12 +83,12 @@ void VmcExportThreadWorker::exportDirectory(
 }
 
 void VmcExportThreadWorker::exportFile(
-    VmcDriver & _driver,
+    VmcFileManager & _file_manager,
     TextDecoder & _decoder,
     const VmcPath & _vmc_file,
     const QString & _dest_directory)
 {
-    QSharedPointer<VmcFile> file = _driver.openFile(_vmc_file);
+    QSharedPointer<VmcFile> file = _file_manager.openFile(_vmc_file);
     if(!file)
         throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
     QFile out(QDir(_dest_directory).absoluteFilePath(_decoder.decode(file->name())));

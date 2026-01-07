@@ -16,53 +16,65 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#ifndef __OPLPCTOOLS_VMCFS__
+#define __OPLPCTOOLS_VMCFS__
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_VmcDetailsActivity.h"
+#include <QString>
+#include <QSharedPointer>
+#include <OplPcTools/VmcPath.h>
+#include <OplPcTools/MCFS/FileSystemDriver.h>
 
 namespace OplPcTools {
-namespace UI {
 
+using VmcFsInfo = MCFS::FSInfo;
+using VmcFile = MCFS::MemoryCardFile;
 
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+struct VmcFsEntryInfo
 {
-    Q_OBJECT
+    VmcFsEntryInfo()
+    {
+    }
 
-public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
+    VmcFsEntryInfo(const MCFS::EntryInfo & _entry) :
+        name(_entry.name),
+        is_directory(_entry.is_directory),
+        size(_entry.length)
+    {
+    }
 
-
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
-
-private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const VmcPath & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
-
-private:
-    const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_vmc_file_manager_ptr;
-    VmcFileSystemViewModel * mp_model;
+    QByteArray name;
+    bool is_directory;
+    uint32_t size;
 };
 
+class VmcFileManager final
+{
+    struct FSTree;
+    struct FSTreeNode;
+    Q_DISABLE_COPY(VmcFileManager)
 
-} // namespace UI
+public:
+    ~VmcFileManager();
+    const VmcFsInfo * fileSystemInfo() const;
+    QList<VmcFsEntryInfo> enumerateEntries(const VmcPath & _path) const;
+    QSharedPointer<VmcFile> openFile(const VmcPath & _path);
+    void writeFile(const VmcPath & _path, const QByteArray & _data);
+    uint32_t totalUsedBytes() const;
+    uint32_t totalFreeBytes() const;
+
+    static QSharedPointer<VmcFileManager> load(const QString & _filepath);
+    static void createVmc(const QString & _filepath, uint32_t _size_mib);
+
+private:
+    explicit VmcFileManager(MCFS::FileSystemDriver * _private);
+    FSTree * loadTree();
+    uint32_t loadDirectory(const VmcPath & _path, FSTreeNode & _node);
+
+private:
+    MCFS::FileSystemDriver * mp_driver;
+    FSTree * mp_tree;
+};
+
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#endif // __OPLPCTOOLS_VMCFS__

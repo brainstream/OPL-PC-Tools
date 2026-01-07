@@ -63,9 +63,9 @@ class VmcFileSystemViewModel : public QAbstractItemModel
 public:
     explicit VmcFileSystemViewModel(const QString & _encoding, QObject * _parent = nullptr);
     void setEncoding(const QString & _encoding);
-    void setItems(const QList<VmcEntryInfo> & _items);
+    void setItems(const QList<VmcFsEntryInfo> & _items);
     void clear();
-    const VmcEntryInfo * item(const QModelIndex & _index) const;
+    const VmcFsEntryInfo * item(const QModelIndex & _index) const;
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
@@ -86,7 +86,7 @@ private:
 
 private:
     TextDecoder m_string_decoder;
-    QList<VmcEntryInfo> m_items;
+    QList<VmcFsEntryInfo> m_items;
     std::vector<int> m_item_indices;
     QIcon m_file_icon;
     QIcon m_dir_icon;
@@ -115,7 +115,7 @@ void VmcFileSystemViewModel::setEncoding(const QString & _encoding)
     endResetModel();
 }
 
-void VmcFileSystemViewModel::setItems(const QList<VmcEntryInfo> & _items)
+void VmcFileSystemViewModel::setItems(const QList<VmcFsEntryInfo> & _items)
 {
     beginResetModel();
     m_items = _items;
@@ -134,7 +134,7 @@ void VmcFileSystemViewModel::clear()
     endResetModel();
 }
 
-const VmcEntryInfo * VmcFileSystemViewModel::item(const QModelIndex & _index) const
+const VmcFsEntryInfo * VmcFileSystemViewModel::item(const QModelIndex & _index) const
 {
     if(_index.isValid() && _index.row() < m_items.size() && _index.row() >= 0)
         return &m_items[m_item_indices[_index.row()]];
@@ -168,7 +168,7 @@ int VmcFileSystemViewModel::columnCount(const QModelIndex & _parent) const
 
 QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) const
 {
-    const VmcEntryInfo * item = this->item(_index);
+    const VmcFsEntryInfo * item = this->item(_index);
     if(!item)
         return QVariant();
     switch(_index.column())
@@ -211,8 +211,8 @@ void VmcFileSystemViewModel::sort(int _column, Qt::SortOrder _order)
 void VmcFileSystemViewModel::unsafeSort()
 {
     std::stable_sort(m_item_indices.begin(), m_item_indices.end(), [&](const int & left_index, const int & right_index) {
-        const VmcEntryInfo & left = m_items.at(left_index);
-        const VmcEntryInfo & right = m_items.at(right_index);
+        const VmcFsEntryInfo & left = m_items.at(left_index);
+        const VmcFsEntryInfo & right = m_items.at(right_index);
         if(left.is_directory != right.is_directory)
             return left.is_directory;
         switch(m_sorted_by_column)
@@ -249,7 +249,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_combobox_charset->addItems(codecs);
         mp_combobox_charset->setCurrentText(encoding);
     }
-    if(m_vmc_driver_ptr)
+    if(m_vmc_file_manager_ptr)
     {
         mp_model = new VmcFileSystemViewModel(encoding, this);
         navigate(VmcPath::root());
@@ -262,8 +262,8 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
         mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
         {
-            const uint32_t total_free_bytes = m_vmc_driver_ptr->totalFreeBytes();
-            const uint32_t total_used_bytes = m_vmc_driver_ptr->totalUsedBytes();
+            const uint32_t total_free_bytes = m_vmc_file_manager_ptr->totalFreeBytes();
+            const uint32_t total_used_bytes = m_vmc_file_manager_ptr->totalUsedBytes();
             const uint32_t total_bytes = total_used_bytes + total_free_bytes;
             mp_progress_bar_free->setMinimum(0);
             mp_progress_bar_free->setMaximum(total_bytes);
@@ -280,6 +280,19 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_combobox_charset, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
         setIconSize();
     }
+
+
+
+
+    // QPushButton * create_file_btn = new QPushButton("Create File", this);
+    // mp_layout_3->addWidget(create_file_btn);
+    // connect(create_file_btn, &QPushButton::clicked, this, [this]() {
+    //     m_vmc_file_manager_ptr->writeFile(VmcPath("/test.txt"), QString("Hello, World").toLatin1());
+    // });
+
+
+
+
 }
 
 void VmcDetailsActivity::setupShortcuts()
@@ -309,7 +322,7 @@ void VmcDetailsActivity::loadFileManager()
 {
     try
     {
-        m_vmc_driver_ptr = VmcDriver::load(mr_vmc.filepath());
+        m_vmc_file_manager_ptr = VmcFileManager::load(mr_vmc.filepath());
     }
     catch(const Exception &_exception)
     {
@@ -342,7 +355,7 @@ void VmcDetailsActivity::navigate(const VmcPath & _path)
     hideErrorMessage();
     try
     {
-        QList<VmcEntryInfo> items = m_vmc_driver_ptr->enumerateEntries(_path);
+        QList<VmcFsEntryInfo> items = m_vmc_file_manager_ptr->enumerateEntries(_path);
         mp_model->setItems(items);
         mp_edit_fs_path->setText(
 
@@ -365,7 +378,7 @@ void VmcDetailsActivity::navigate(const VmcPath & _path)
 
 void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
 {
-    const VmcEntryInfo * item = mp_model->item(_index);
+    const VmcFsEntryInfo * item = mp_model->item(_index);
     if(item == nullptr)
         return;
     if(item->is_directory)

@@ -16,53 +16,36 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#pragma once
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_VmcDetailsActivity.h"
+#include <OplPcTools/MCFS/Superblock.h>
+#include <QFile>
 
 namespace OplPcTools {
-namespace UI {
+namespace MCFS {
 
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+class VmcFormatter final
 {
-    Q_OBJECT
+    Q_DISABLE_COPY_MOVE(VmcFormatter)
 
 public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
-
-
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
+    static void format(const QString & _filename, uint32_t _size_mib);
 
 private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const VmcPath & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
+    VmcFormatter(const QString & _filename, uint32_t _size_mib);
+    ~VmcFormatter();
+    void format();
+    void clearFile();
+    void initSuperblock();
+    void writeSuperblock();
+    void writeFAT();
+    void writeRootDirectory();
 
 private:
-    const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_vmc_file_manager_ptr;
-    VmcFileSystemViewModel * mp_model;
+    Superblock * mp_sb;
+    QFile m_file;
+    uint32_t m_size_mib;
 };
 
-
-} // namespace UI
+} // namespace MCFS
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__

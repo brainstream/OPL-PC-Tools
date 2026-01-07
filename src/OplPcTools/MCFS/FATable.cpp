@@ -16,53 +16,29 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#include <OplPcTools/MCFS/FATable.h>
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_VmcDetailsActivity.h"
+using namespace OplPcTools::MCFS;
 
-namespace OplPcTools {
-namespace UI {
-
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+std::optional<QList<uint32_t>> FATable::findFreeClusters(uint32_t _count) const
 {
-    Q_OBJECT
-
-public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
-
-
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
-
-private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const VmcPath & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
-
-private:
-    const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_vmc_file_manager_ptr;
-    VmcFileSystemViewModel * mp_model;
-};
-
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__
+    if(_count == 0)
+        return std::nullopt;
+    QList<uint32_t> result;
+    result.reserve(_count);
+    uint32_t cluster = 0;
+    foreach(const Table & table, m_tables)
+    {
+        foreach(const FATEntry & entry, table.fat)
+        {
+            if(entry.isFree())
+            {
+                result.append(cluster);
+            }
+            ++cluster;
+            if(result.count() > _count)
+                return result;
+        }
+    }
+    return std::nullopt;
+}

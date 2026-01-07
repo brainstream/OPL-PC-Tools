@@ -931,7 +931,7 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="299"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="312"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
@@ -1186,37 +1186,43 @@
         <translation>&lt;pasta&gt;</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="269"/>
+        <location filename="../MCFS/VmcFormatter.cpp" line="50"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>O tamanho do VMC deve estar entre %1 MiB e %2 MiB</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="77"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="33"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>O VMC está corrompido ou não foi formatado corretamente</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="82"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="38"/>
+        <location filename="../VmcFileManager.cpp" line="139"/>
         <source>Path not found</source>
         <translation>Local não encontrado</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="87"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="43"/>
         <source>Not enough free space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="741"/>
+        <location filename="../MCFS/FATable.h" line="123"/>
+        <source>FAT cluster index %1 is out of range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="324"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="743"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="326"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>
     <message>
-        <location filename="../VmcDriver.cpp" line="790"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="372"/>
         <source>&quot;%1&quot; is not a directory</source>
         <translation type="unfinished"></translation>
     </message>

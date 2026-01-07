@@ -16,53 +16,55 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#pragma once
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include "ui_VmcDetailsActivity.h"
+#include <cstdint>
 
 namespace OplPcTools {
-namespace UI {
+namespace MCFS {
 
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+enum FATEntryFlag : uint8_t
 {
-    Q_OBJECT
-
-public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
-
-
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
-
-private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const VmcPath & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
-
-private:
-    const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_vmc_file_manager_ptr;
-    VmcFileSystemViewModel * mp_model;
+    FAT_FREE = 0x7F,
+    FAT_EOF = 0xFF,
+    FAT_POINTER = 0x80
 };
 
+struct __attribute__((packed)) FATEntry
+{
+    uint32_t cluster: 24;
+    FATEntryFlag flag: 8;
 
-} // namespace UI
+    static constexpr FATEntry free()
+    {
+        return { .cluster = 0xFFFFFF, .flag = FAT_FREE };
+    }
+
+    static constexpr FATEntry endOfFile()
+    {
+        return { .cluster = 0xFFFFFF, .flag = FAT_EOF };
+    }
+
+    static constexpr FATEntry pointer(uint32_t _cluster)
+    {
+        return { .cluster = _cluster, .flag = FAT_POINTER };
+    }
+
+    bool isFree() const
+    {
+        return flag == FAT_FREE;
+    }
+
+    bool isEndOfFile() const
+    {
+        return flag == FAT_EOF;
+    }
+
+    bool isPointer() const
+    {
+        return flag == FAT_POINTER;
+    }
+};
+
+} // namespace MCFS
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__

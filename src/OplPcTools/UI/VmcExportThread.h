@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QEventLoop>
 #include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcDriver.h>
+#include <OplPcTools/VmcFileManager.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -45,12 +45,12 @@ public:
 private:
     void setAnswer(bool _answer);
     void exportDirectory(
-        VmcDriver & _driver,
+        VmcFileManager & _file_manager,
         TextDecoder & _decoder,
         const VmcPath & _vmc_dir,
         const QString & _dest_directory);
     void exportFile(
-        VmcDriver & _driver,
+        VmcFileManager & _file_manager,
         TextDecoder & _decoder,
         const VmcPath & _vmc_file,
         const QString & _dest_directory);

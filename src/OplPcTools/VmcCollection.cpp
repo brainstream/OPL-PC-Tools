@@ -17,9 +17,9 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/VmcCollection.h>
-#include <OplPcTools/VmcFileManager.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/MCFS/VmcFormatter.h>
 #include <QVector>
 
 using namespace OplPcTools;
@@ -97,7 +97,7 @@ const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
     validateFilename(_title);
     ensureDirectoryExists();
     QString vmc_filename = makeFilename(_title);
-    VmcFileManager::createVmc(vmc_filename, _size_mib);
+    MCFS::VmcFormatter::format(vmc_filename, _size_mib);
     Vmc * vmc = new Vmc(vmc_filename, _title, _size_mib);
     mp_vmcs->append(vmc);
     emit vmcAdded(vmc->uuid());

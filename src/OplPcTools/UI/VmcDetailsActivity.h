@@ -20,9 +20,9 @@
 #define __OPLPCTOOLS_VMCDETAILSACTIVITY__
 
 #include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
 #include <OplPcTools/UI/Activity.h>
 #include <OplPcTools/UI/Intent.h>
+#include <OplPcTools/MCFS/FileSystemDriver.h>
 #include "ui_VmcDetailsActivity.h"
 
 namespace OplPcTools {
@@ -49,7 +49,7 @@ private:
     void loadFileManager();
     QString getFsEncoding() const;
     void setIconSize();
-    void navigate(const VmcPath & _path);
+    void navigate(const MCFS::Path & _path);
     void onFsListItemActivated(const QModelIndex & _index);
     void onFsBackButtonClick();
     void onEncodingChanged();
@@ -57,7 +57,7 @@ private:
 
 private:
     const Vmc & mr_vmc;
-    QSharedPointer<VmcFileManager> m_vmc_file_manager_ptr;
+    QSharedPointer<MCFS::FileSystemDriver> m_vmc_driver_ptr;
     VmcFileSystemViewModel * mp_model;
 };
 

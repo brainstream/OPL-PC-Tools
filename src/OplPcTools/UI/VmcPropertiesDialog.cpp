@@ -18,7 +18,7 @@
 
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
 #include <OplPcTools/UI/DisplayUtils.h>
-#include <OplPcTools/VmcFileManager.h>
+#include <OplPcTools/MCFS/FileSystemDriver.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
 
@@ -41,8 +41,9 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
     mp_tabs->hide();
     try
     {
-        QSharedPointer<VmcFileManager> file_manager = VmcFileManager::load(_vmc.filepath());
-        const VmcFsInfo * info = file_manager->fileSystemInfo();
+        QSharedPointer<MCFS::FileSystemDriver> driver(new MCFS::FileSystemDriver(_vmc.filepath()));
+        driver->load();
+        const MCFS::FSInfo * info = driver->info();
         mp_value_magic->setText(info->magic);
         mp_value_version->setText(info->version);
         mp_value_pagesize->setText(QString::number(info->pagesize));
@@ -64,8 +65,8 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
         mp_value_file->setText(_vmc.filepath());
         mp_value_title->setText(_vmc.title());
         mp_value_size->setText(QString("%1 %2").arg(_vmc.size()).arg(tr("MiB")));
-        mp_value_used->setText(makeBytesDisplayString(file_manager->totalUsedBytes()));
-        mp_value_free->setText(makeBytesDisplayString(file_manager->totalFreeBytes()));
+        mp_value_used->setText(makeBytesDisplayString(driver->totalUsedBytes()));
+        mp_value_free->setText(makeBytesDisplayString(driver->totalFreeBytes()));
         {
             QString charset = Library::instance().config().vmcFsCharset(_vmc);
             if(charset.isEmpty())

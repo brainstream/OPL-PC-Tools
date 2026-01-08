@@ -63,9 +63,9 @@ class VmcFileSystemViewModel : public QAbstractItemModel
 public:
     explicit VmcFileSystemViewModel(const QString & _encoding, QObject * _parent = nullptr);
     void setEncoding(const QString & _encoding);
-    void setItems(const QList<VmcFsEntryInfo> & _items);
+    void setItems(const QList<MCFS::EntryInfo> & _items);
     void clear();
-    const VmcFsEntryInfo * item(const QModelIndex & _index) const;
+    const MCFS::EntryInfo * item(const QModelIndex & _index) const;
     QModelIndex index(int _row, int _column, const QModelIndex & _parent) const override;
     QModelIndex parent(const QModelIndex & _child) const override;
     int rowCount(const QModelIndex & _parent) const override;
@@ -86,7 +86,7 @@ private:
 
 private:
     TextDecoder m_string_decoder;
-    QList<VmcFsEntryInfo> m_items;
+    QList<MCFS::EntryInfo> m_items;
     std::vector<int> m_item_indices;
     QIcon m_file_icon;
     QIcon m_dir_icon;
@@ -115,7 +115,7 @@ void VmcFileSystemViewModel::setEncoding(const QString & _encoding)
     endResetModel();
 }
 
-void VmcFileSystemViewModel::setItems(const QList<VmcFsEntryInfo> & _items)
+void VmcFileSystemViewModel::setItems(const QList<MCFS::EntryInfo> & _items)
 {
     beginResetModel();
     m_items = _items;
@@ -134,7 +134,7 @@ void VmcFileSystemViewModel::clear()
     endResetModel();
 }
 
-const VmcFsEntryInfo * VmcFileSystemViewModel::item(const QModelIndex & _index) const
+const MCFS::EntryInfo * VmcFileSystemViewModel::item(const QModelIndex & _index) const
 {
     if(_index.isValid() && _index.row() < m_items.size() && _index.row() >= 0)
         return &m_items[m_item_indices[_index.row()]];
@@ -168,7 +168,7 @@ int VmcFileSystemViewModel::columnCount(const QModelIndex & _parent) const
 
 QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) const
 {
-    const VmcFsEntryInfo * item = this->item(_index);
+    const MCFS::EntryInfo * item = this->item(_index);
     if(!item)
         return QVariant();
     switch(_index.column())
@@ -190,7 +190,7 @@ QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) con
         case Qt::DisplayRole:
             if(item->is_directory)
                 return QObject::tr("<directory>");
-            return makeBytesDisplayString(item->size);
+            return makeBytesDisplayString(item->length);
         case Qt::TextAlignmentRole:
             return static_cast<int>(Qt::AlignRight) | static_cast<int>(Qt::AlignVCenter);
         }
@@ -211,8 +211,8 @@ void VmcFileSystemViewModel::sort(int _column, Qt::SortOrder _order)
 void VmcFileSystemViewModel::unsafeSort()
 {
     std::stable_sort(m_item_indices.begin(), m_item_indices.end(), [&](const int & left_index, const int & right_index) {
-        const VmcFsEntryInfo & left = m_items.at(left_index);
-        const VmcFsEntryInfo & right = m_items.at(right_index);
+        const MCFS::EntryInfo & left = m_items.at(left_index);
+        const MCFS::EntryInfo & right = m_items.at(right_index);
         if(left.is_directory != right.is_directory)
             return left.is_directory;
         switch(m_sorted_by_column)
@@ -223,7 +223,7 @@ void VmcFileSystemViewModel::unsafeSort()
             return m_sort_order == Qt::AscendingOrder ? result < 0 : result > 0;
         }
         case COL_SIZE:
-            return m_sort_order == Qt::AscendingOrder ? left.size < right.size : right.size < left.size;
+            return m_sort_order == Qt::AscendingOrder ? left.length < right.length : right.length < left.length;
         default:
             return false;
         }
@@ -249,10 +249,10 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_combobox_charset->addItems(codecs);
         mp_combobox_charset->setCurrentText(encoding);
     }
-    if(m_vmc_file_manager_ptr)
+    if(m_vmc_driver_ptr)
     {
         mp_model = new VmcFileSystemViewModel(encoding, this);
-        navigate(VmcPath::root());
+        navigate(MCFS::Path::root());
         mp_tree_fs->setModel(mp_model);
         QStandardItemModel * header_model = new QStandardItemModel(mp_tree_fs);
         header_model->setHorizontalHeaderLabels({ tr("Title"), tr("Size") });
@@ -262,8 +262,8 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
         mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
         {
-            const uint32_t total_free_bytes = m_vmc_file_manager_ptr->totalFreeBytes();
-            const uint32_t total_used_bytes = m_vmc_file_manager_ptr->totalUsedBytes();
+            const uint32_t total_free_bytes = m_vmc_driver_ptr->totalFreeBytes();
+            const uint32_t total_used_bytes = m_vmc_driver_ptr->totalUsedBytes();
             const uint32_t total_bytes = total_used_bytes + total_free_bytes;
             mp_progress_bar_free->setMinimum(0);
             mp_progress_bar_free->setMaximum(total_bytes);
@@ -287,7 +287,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     // QPushButton * create_file_btn = new QPushButton("Create File", this);
     // mp_layout_3->addWidget(create_file_btn);
     // connect(create_file_btn, &QPushButton::clicked, this, [this]() {
-    //     m_vmc_file_manager_ptr->writeFile(VmcPath("/test.txt"), QString("Hello, World").toLatin1());
+    //     m_vmc_driver_ptr->writeFile(MCFS::Path("/TEST_DATA/test.txt"), QString("Hello, World").toLatin1());
     // });
 
 
@@ -322,7 +322,9 @@ void VmcDetailsActivity::loadFileManager()
 {
     try
     {
-        m_vmc_file_manager_ptr = VmcFileManager::load(mr_vmc.filepath());
+        QSharedPointer<MCFS::FileSystemDriver> driver(new MCFS::FileSystemDriver(mr_vmc.filepath()));
+        driver->load();
+        m_vmc_driver_ptr = std::move(driver);
     }
     catch(const Exception &_exception)
     {
@@ -350,12 +352,12 @@ void VmcDetailsActivity::setIconSize()
     mp_tree_fs->setIconSize(size);
 }
 
-void VmcDetailsActivity::navigate(const VmcPath & _path)
+void VmcDetailsActivity::navigate(const MCFS::Path & _path)
 {
     hideErrorMessage();
     try
     {
-        QList<VmcFsEntryInfo> items = m_vmc_file_manager_ptr->enumerateEntries(_path);
+        QList<MCFS::EntryInfo> items = m_vmc_driver_ptr->enumerateEntries(_path);
         mp_model->setItems(items);
         mp_edit_fs_path->setText(
 
@@ -378,12 +380,12 @@ void VmcDetailsActivity::navigate(const VmcPath & _path)
 
 void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
 {
-    const VmcFsEntryInfo * item = mp_model->item(_index);
+    const MCFS::EntryInfo * item = mp_model->item(_index);
     if(item == nullptr)
         return;
     if(item->is_directory)
     {
-        navigate(VmcPath(
+        navigate(MCFS::Path(
 
 
             mp_edit_fs_path->text().toLatin1(), // FIXME: decoder!
@@ -395,7 +397,7 @@ void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
 
 void VmcDetailsActivity::onFsBackButtonClick()
 {
-    VmcPath path = VmcPath(
+    MCFS::Path path = MCFS::Path(
 
 
         mp_edit_fs_path->text().toLatin1() // FIXME: decoder!

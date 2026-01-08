@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QEventLoop>
 #include <OplPcTools/Vmc.h>
-#include <OplPcTools/VmcFileManager.h>
+#include <OplPcTools/MCFS/FileSystemDriver.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -45,14 +45,14 @@ public:
 private:
     void setAnswer(bool _answer);
     void exportDirectory(
-        VmcFileManager & _file_manager,
+        MCFS::FileSystemDriver & _driver,
         TextDecoder & _decoder,
-        const VmcPath & _vmc_dir,
+        const MCFS::Path & _vmc_dir,
         const QString & _dest_directory);
     void exportFile(
-        VmcFileManager & _file_manager,
+        MCFS::FileSystemDriver & _driver,
         TextDecoder & _decoder,
-        const VmcPath & _vmc_file,
+        const MCFS::Path & _vmc_file,
         const QString & _dest_directory);
     Action getAction(const QString & _question);
     void onAnswerSet(bool _answer);

@@ -21,7 +21,7 @@
 #include <OplPcTools/MCFS/FATable.h>
 #include <OplPcTools/MCFS/FSEntry.h>
 #include <OplPcTools/MCFS/Superblock.h>
-#include <OplPcTools/VmcPath.h>
+#include <OplPcTools/MCFS/Path.h>
 #include <QFile>
 
 namespace OplPcTools {
@@ -71,16 +71,16 @@ struct EntryPath
     EntryAddress address;
 };
 
-class MemoryCardFile final
+class File final
 {
-    Q_DISABLE_COPY(MemoryCardFile)
+    Q_DISABLE_COPY(File)
 
 public:
     struct Private;
 
 public:
-    explicit MemoryCardFile(Private * _private);
-    ~MemoryCardFile();
+    explicit File(Private * _private);
+    ~File();
     const QByteArray & name() const;
     uint32_t size() const;
     bool seek(uint32_t _pos);
@@ -113,11 +113,11 @@ public:
     void load();
     void create(uint8_t _size_mib);
     const FSInfo * info() const;
-    QList<EntryInfo> enumerateEntries(const VmcPath & _path);
-    void exportEntry(const VmcPath & _vmc_path, const QString & _dest_path);
-    QSharedPointer<MemoryCardFile> openFile(const VmcPath & _path);
-    int64_t readFile(MemoryCardFile::Private & _file, char * _buffer, uint32_t _max_size);
-    void writeFile(const VmcPath & _path, const QByteArray & _data);
+    QList<EntryInfo> enumerateEntries(const Path & _path);
+    void exportEntry(const Path & _vmc_path, const QString & _dest_path);
+    QSharedPointer<File> openFile(const Path & _path);
+    int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);
+    void writeFile(const Path & _path, const QByteArray & _data);
     uint32_t totalUsedBytes() const;
     uint32_t totalFreeBytes() const;
 
@@ -129,7 +129,7 @@ private:
     void writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer);
     void validateSuperblock(const Superblock & _sb) const;
     void readFAT();
-    std::optional<EntryPath> resolvePath(const VmcPath & _path);
+    std::optional<EntryPath> resolvePath(const Path & _path);
     EntryPath getRootEntry();
     inline EntryInfo map(const FSEntry & _fs_entry) const;
     void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback);

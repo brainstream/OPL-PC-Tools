@@ -954,7 +954,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="172"/>
+        <location filename="../UI/VmcExportThread.cpp" line="173"/>
         <source>Overwrite confirmation</source>
         <translation>Sobrescrever confirmação</translation>
     </message>
@@ -962,12 +962,12 @@
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="51"/>
+        <location filename="../UI/VmcExportThread.cpp" line="52"/>
         <source>An unknown error occurred while exporting VMC</source>
         <translation>Um erro desconhecido aconteceu enquanto exportando o VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="96"/>
+        <location filename="../UI/VmcExportThread.cpp" line="97"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation>O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
     </message>
@@ -998,12 +998,12 @@
 <context>
     <name>OplPcTools::UI::VmcPropertiesDialog</name>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="66"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="67"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="95"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="96"/>
         <source>Unable to read VMC</source>
         <translation>Impossível ler o VMC</translation>
     </message>
@@ -1151,12 +1151,12 @@
         <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="66"/>
+        <location filename="../UI/VmcExportThread.cpp" line="67"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Não foi possível criar a pasta &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="93"/>
+        <location filename="../UI/VmcExportThread.cpp" line="94"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation>Não foi possível abrir o VMC  &quot;%1&quot;</translation>
     </message>

@@ -45,7 +45,7 @@ namespace {
 
 } // namespace
 
-struct MemoryCardFile::Private
+struct File::Private
 {
     FileSystemDriver * driver;
     QByteArray name;
@@ -54,27 +54,27 @@ struct MemoryCardFile::Private
     QList<uint32_t> clusters;
 };
 
-MemoryCardFile::MemoryCardFile(Private * _private) :
+File::File(Private * _private) :
     mp_private(_private)
 {
 }
 
-MemoryCardFile::~MemoryCardFile()
+File::~File()
 {
     delete mp_private;
 }
 
-uint32_t MemoryCardFile::size() const
+uint32_t File::size() const
 {
     return mp_private->size;
 }
 
-const QByteArray & MemoryCardFile::name() const
+const QByteArray & File::name() const
 {
     return mp_private->name;
 }
 
-bool MemoryCardFile::seek(uint32_t _pos)
+bool File::seek(uint32_t _pos)
 {
     if(_pos == mp_private->position)
         return true;
@@ -84,7 +84,7 @@ bool MemoryCardFile::seek(uint32_t _pos)
     return true;
 }
 
-int64_t MemoryCardFile::read(char * _buffer, int64_t _max_size)
+int64_t File::read(char * _buffer, int64_t _max_size)
 {
     return mp_private->driver->readFile(*this->mp_private, _buffer, _max_size);
 }
@@ -222,7 +222,7 @@ void FileSystemDriver::readFAT()
     }
 }
 
-QList<EntryInfo> FileSystemDriver::enumerateEntries(const VmcPath & _path)
+QList<EntryInfo> FileSystemDriver::enumerateEntries(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     QList<EntryInfo> result;
@@ -241,7 +241,7 @@ QList<EntryInfo> FileSystemDriver::enumerateEntries(const VmcPath & _path)
     return result;
 }
 
-std::optional<EntryPath> FileSystemDriver::resolvePath(const VmcPath & _path)
+std::optional<EntryPath> FileSystemDriver::resolvePath(const Path & _path)
 {
     EntryPath entry_path = getRootEntry();
     for(const QByteArray & path_part : _path.parts())
@@ -330,23 +330,23 @@ QList<uint32_t> FileSystemDriver::getEntryClusters(const EntryInfo & _entry) con
     return result;
 }
 
-QSharedPointer<MemoryCardFile> FileSystemDriver::openFile(const VmcPath & _path)
+QSharedPointer<File> FileSystemDriver::openFile(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
         throw MCFSException(QObject::tr("File not found"));
     if(entry_path->entry.is_directory)
         throw MCFSException(QObject::tr("\"%1\" is not a file").arg(_path));
-    MemoryCardFile::Private * pr = new MemoryCardFile::Private;
+    File::Private * pr = new File::Private;
     pr->clusters = getEntryClusters(entry_path->entry);
     pr->driver = this;
     pr->position = 0;
     pr->size = entry_path->entry.length;
     pr->name = entry_path->entry.name;
-    return QSharedPointer<MemoryCardFile>(new MemoryCardFile(pr));
+    return QSharedPointer<File>(new File(pr));
 }
 
-int64_t FileSystemDriver::readFile(MemoryCardFile::Private & _file, char * _buffer, uint32_t _max_size)
+int64_t FileSystemDriver::readFile(File::Private & _file, char * _buffer, uint32_t _max_size)
 {
     const uint32_t start_cluster_index = _file.position / mp_info->cluster_size;
     const uint32_t cluster_count = static_cast<uint32_t>(_file.clusters.size());
@@ -375,9 +375,9 @@ int64_t FileSystemDriver::readFile(MemoryCardFile::Private & _file, char * _buff
     return position_in_buffer;
 }
 
-void FileSystemDriver::writeFile(const VmcPath & _path, const QByteArray & _data)
+void FileSystemDriver::writeFile(const Path & _path, const QByteArray & _data)
 {
-    VmcPath dir_path = _path.up();
+    Path dir_path = _path.up();
     std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
     if(!dir_entry_path.has_value())
         throwPathNotFound();

@@ -38,9 +38,10 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
     try
     {
         m_action = Action::Skip;
-        QSharedPointer<VmcFileManager> file_manager = VmcFileManager::load(_vmc.filepath());
+        QSharedPointer<MCFS::FileSystemDriver> driver(new MCFS::FileSystemDriver(_vmc.filepath()));
+        driver->load();
         TextDecoder decoder(_fs_encoding);
-        exportDirectory(*file_manager, decoder, VmcPath::root(), _destination_dir);
+        exportDirectory(*driver, decoder, MCFS::Path::root(), _destination_dir);
     }
     catch(const Exception & _exception)
     {
@@ -54,9 +55,9 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
 }
 
 void VmcExportThreadWorker::exportDirectory(
-    VmcFileManager & _file_manager,
+    MCFS::FileSystemDriver & _driver,
     TextDecoder & _decoder,
-    const VmcPath & _vmc_dir,
+    const MCFS::Path & _vmc_dir,
     const QString & _dest_directory)
 {
     if(m_action == Action::Cancel)
@@ -64,18 +65,18 @@ void VmcExportThreadWorker::exportDirectory(
     QDir dir(_dest_directory);
     if(!dir.exists() && !QDir().mkpath(dir.path()))
         throw Exception(QObject::tr("Unable to create directory \"%1\"").arg(dir.path()));
-    QList<VmcFsEntryInfo> entries = _file_manager.enumerateEntries(_vmc_dir);
-    foreach(const VmcFsEntryInfo & entry, entries)
+    QList<MCFS::EntryInfo> entries = _driver.enumerateEntries(_vmc_dir);
+    foreach(const MCFS::EntryInfo & entry, entries)
     {
-        VmcPath next_vmc_entry = _vmc_dir + entry.name;
+        MCFS::Path next_vmc_entry = _vmc_dir + entry.name;
         if(entry.is_directory)
         {
             QString next_directory = dir.absoluteFilePath(entry.name);
-            exportDirectory(_file_manager, _decoder, next_vmc_entry, next_directory);
+            exportDirectory(_driver, _decoder, next_vmc_entry, next_directory);
         }
         else
         {
-            exportFile(_file_manager, _decoder, next_vmc_entry, _dest_directory);
+            exportFile(_driver, _decoder, next_vmc_entry, _dest_directory);
             if(m_action == Action::Cancel)
                 break;
         }
@@ -83,12 +84,12 @@ void VmcExportThreadWorker::exportDirectory(
 }
 
 void VmcExportThreadWorker::exportFile(
-    VmcFileManager & _file_manager,
+    MCFS::FileSystemDriver & _driver,
     TextDecoder & _decoder,
-    const VmcPath & _vmc_file,
+    const MCFS::Path & _vmc_file,
     const QString & _dest_directory)
 {
-    QSharedPointer<VmcFile> file = _file_manager.openFile(_vmc_file);
+    QSharedPointer<MCFS::File> file = _driver.openFile(_vmc_file);
     if(!file)
         throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
     QFile out(QDir(_dest_directory).absoluteFilePath(_decoder.decode(file->name())));

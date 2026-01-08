@@ -32,7 +32,7 @@ namespace {
 
 const char g_image_prefix[] = "ul.";
 
-struct RawConfigRecord
+struct __attribute__((packed)) RawConfigRecord
 {
     explicit RawConfigRecord(const Game & _game);
     char name[UlConfigGameStorage::max_name_length];
@@ -40,7 +40,7 @@ struct RawConfigRecord
     quint8 parts;
     quint8 media;
     quint8 pad[15];
-} __attribute__((packed));
+};
 
 RawConfigRecord::RawConfigRecord(const Game & _game)
 {

@@ -24,7 +24,7 @@
 namespace OplPcTools {
 
 template<typename IntT>
-struct BigEndian
+struct __attribute__((packed)) BigEndian
 {
     quint8 data[sizeof(IntT)];
 
@@ -35,7 +35,7 @@ struct BigEndian
             value = (value << 8) | data[i];
         return value;
     }
-} __attribute__((packed));
+};
 
 } // namespace OplPcTools
 

@@ -27,7 +27,7 @@ using namespace OplPcTools;
 namespace {
 
 template<typename IntType>
-struct LBInt
+struct __attribute__((packed)) LBInt
 {
     IntType le;
     IntType be;
@@ -41,12 +41,12 @@ struct LBInt
 #endif
 
     }
-} __attribute__((packed));
+};
 
 using LBInt16 = LBInt<qint16>;
 using LBInt32 = LBInt<qint32>;
 
-struct DateTimeDR
+struct __attribute__((packed)) DateTimeDR
 {
     qint8 year;
     qint8 month;
@@ -55,7 +55,7 @@ struct DateTimeDR
     qint8 minute;
     qint8 second;
     qint8 timezone_offset;
-} __attribute__((packed));
+};
 
 struct FileFlags
 {
@@ -69,7 +69,7 @@ struct FileFlags
     bool is_not_final_dir: 1;
 };
 
-struct FileRecord
+struct __attribute__((packed)) FileRecord
 {
     qint8 record_length;
     qint8 extended_attr_record_length;
@@ -82,9 +82,9 @@ struct FileRecord
     LBInt16 volume_sequence_number;
     qint8 filename_length;
     char filename[1];
-} __attribute__((packed));
+};
 
-struct DateTimePVD
+struct __attribute__((packed)) DateTimePVD
 {
     char year[4];
     char month[2];
@@ -94,7 +94,7 @@ struct DateTimePVD
     char second[2];
     char second_hundredths[2];
     qint8 timezone_offset;
-} __attribute__((packed));
+};
 
 enum class VolumeDescriptorType : qint8
 {
@@ -104,19 +104,19 @@ enum class VolumeDescriptorType : qint8
     VolumePartitionDescriptor  = 3
 };
 
-struct BasicVolumeDescriptor
+struct __attribute__((packed)) BasicVolumeDescriptor
 {
     VolumeDescriptorType type;
     char id[5];
     qint8 version;
-} __attribute__((packed));
+};
 
-struct VolumeDescriptor : BasicVolumeDescriptor
+struct __attribute__((packed)) VolumeDescriptor : BasicVolumeDescriptor
 {
     qint8 data[2041];
-} __attribute__((packed));
+};
 
-struct PrimaryVolumeDescriptor : BasicVolumeDescriptor
+struct __attribute__((packed)) PrimaryVolumeDescriptor : BasicVolumeDescriptor
 {
     qint8 unused_1;
     char system_id[32];
@@ -148,7 +148,7 @@ struct PrimaryVolumeDescriptor : BasicVolumeDescriptor
     qint8 unused_4;
     qint8 application_data[512];
     qint8 unused_5[653];
-} __attribute__((packed));
+};
 
 class Iso9660 final
 {

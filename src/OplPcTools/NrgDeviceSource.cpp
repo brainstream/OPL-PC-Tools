@@ -27,24 +27,24 @@ using namespace OplPcTools;
 
 namespace {
 
-struct Chunk
+struct __attribute__((packed)) Chunk
 {
     char id[4];
     BigEndian<quint32> size;
-} __attribute__((packed));
+};
 
-struct Ner5
+struct __attribute__((packed)) Ner5
 {
     char id[4];
     BigEndian<quint64> offset_of_first_chunk;
-} __attribute__((packed));
+};
 
-struct Daox
+struct __attribute__((packed)) Daox
 {
     quint8 header[30];
-} __attribute__((packed));
+};
 
-struct DaoxTrack
+struct __attribute__((packed)) DaoxTrack
 {
     char isrc[12];
     quint8 sector_size[2];
@@ -53,7 +53,7 @@ struct DaoxTrack
     quint8 pre_gap[8];
     BigEndian<quint64> track_begin;
     BigEndian<quint64> track_end;
-} __attribute__((packed));
+};
 
 } // namespace
 

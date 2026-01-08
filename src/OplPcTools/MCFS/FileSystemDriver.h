@@ -118,6 +118,7 @@ public:
     QSharedPointer<File> openFile(const Path & _path);
     int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);
     void writeFile(const Path & _path, const QByteArray & _data);
+    void createDirectory(const Path & _path);
     uint32_t totalUsedBytes() const;
     uint32_t totalFreeBytes() const;
 
@@ -134,6 +135,11 @@ private:
     inline EntryInfo map(const FSEntry & _fs_entry) const;
     void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback);
     QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
+    void writeFile(
+        const EntryPath & _directory_path,
+        const QByteArray & _filename,
+        const QByteArray & _data,
+        bool _is_directory);
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);
     bool findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result);

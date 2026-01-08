@@ -381,8 +381,47 @@ void FileSystemDriver::writeFile(const Path & _path, const QByteArray & _data)
     std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
     if(!dir_entry_path.has_value())
         throwPathNotFound();
-    if(!dir_entry_path->entry.is_directory)
-        throw MCFSException(QObject::tr("\"%1\" is not a directory").arg(dir_path.path()));
+    writeFile(*dir_entry_path, _path.filename(), _data, false);
+}
+
+void FileSystemDriver::createDirectory(const Path & _path)
+{
+    Path parent_dir_path = _path.up();
+    std::optional<EntryPath> parent_dir_entry_path = resolvePath(parent_dir_path);
+    if(!parent_dir_entry_path.has_value())
+        throwPathNotFound();
+
+    const FSDateTime now = FSDateTime::now();
+    QByteArray buffer(sizeof(FSEntry) * 2, '\0');
+    FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
+    for(int i = 0; i < 2; ++i)
+    {
+        entries[i].mode = EM_READ | EM_WRITE | EM_EXECUTE | EM_DIRECTORY | EM_EXISTS;
+        entries[i].created = now;
+        entries[i].modified = now;
+        entries[i].name[0] = '.';
+    }
+    entries[0].cluster = parent_dir_entry_path->address.cluster;
+    entries[0].dir_entry = parent_dir_entry_path->address.index;
+    entries[1].name[1] = '.';
+    entries[1].length = 2;
+
+    writeFile(*parent_dir_entry_path, _path.filename(), buffer, true);
+}
+
+void FileSystemDriver::writeFile(
+    const EntryPath & _directory_path,
+    const QByteArray & _filename,
+    const QByteArray & _data,
+    bool _is_directory)
+{
+    if(!_directory_path.entry.is_directory)
+    {
+        throw MCFSException(
+            QObject::tr("Entry %1 in cluster %2 is not a directory")
+                .arg(_directory_path.address.index)
+                .arg(_directory_path.address.cluster));
+    }
 
     std::optional<QList<uint32_t>> file_data_clusters = alloc(_data.size());
     if(!file_data_clusters)
@@ -390,12 +429,12 @@ void FileSystemDriver::writeFile(const Path & _path, const QByteArray & _data)
 
     EntryInfo file_entry
     {
-        .name = _path.filename(),
-        .is_directory = false,
+        .name = _filename,
+        .is_directory = _is_directory,
         .cluster = file_data_clusters->first(),
         .length = static_cast<uint32_t>(_data.length())
     };
-    if(!allocEntry(*dir_entry_path, file_entry))
+    if(!allocEntry(_directory_path, file_entry))
     {
         free(*file_data_clusters);
         throwNoSpace();

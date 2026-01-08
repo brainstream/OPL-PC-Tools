@@ -931,7 +931,7 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="312"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="317"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
@@ -1206,6 +1206,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="425"/>
+        <source>Entry %1 in cluster %2 is not a directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MCFS/FATable.h" line="119"/>
         <source>FAT cluster index %1 is out of range</source>
         <translation type="unfinished"></translation>
@@ -1219,11 +1224,6 @@
         <location filename="../MCFS/FileSystemDriver.cpp" line="339"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; não é um arquivo</translation>
-    </message>
-    <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="385"/>
-        <source>&quot;%1&quot; is not a directory</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../File.cpp" line="65"/>

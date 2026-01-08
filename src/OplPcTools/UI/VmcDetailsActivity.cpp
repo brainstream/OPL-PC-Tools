@@ -283,6 +283,11 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
 
 
 
+    // QPushButton * create_dir_btn = new QPushButton("Create Directory", this);
+    // mp_layout_3->addWidget(create_dir_btn);
+    // connect(create_dir_btn, &QPushButton::clicked, this, [this]() {
+    //     m_vmc_driver_ptr->createDirectory(MCFS::Path("/TEST_DATA"));
+    // });
 
     // QPushButton * create_file_btn = new QPushButton("Create File", this);
     // mp_layout_3->addWidget(create_file_btn);

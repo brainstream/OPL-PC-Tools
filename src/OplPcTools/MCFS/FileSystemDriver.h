@@ -118,6 +118,8 @@ public:
     QSharedPointer<MemoryCardFile> openFile(const VmcPath & _path);
     int64_t readFile(MemoryCardFile::Private & _file, char * _buffer, uint32_t _max_size);
     void writeFile(const VmcPath & _path, const QByteArray & _data);
+    uint32_t totalUsedBytes() const;
+    uint32_t totalFreeBytes() const;
 
 private:
     void deinit();

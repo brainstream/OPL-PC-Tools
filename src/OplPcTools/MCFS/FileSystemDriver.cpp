@@ -403,14 +403,16 @@ void FileSystemDriver::writeFile(const VmcPath & _path, const QByteArray & _data
 
     {
         QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
+        uint32_t chunk_idx = 0;
         foreach(uint32_t cluster, *file_data_clusters)
         {
-            const qsizetype offset = cluster * mp_info->cluster_size;
+            const qsizetype offset = chunk_idx * mp_info->cluster_size;
             std::memcpy(
                 buffer.data(),
                 &_data.data()[offset],
                 std::min(mp_info->cluster_size, static_cast<uint32_t>(_data.size() - offset)));
             writeCluster(cluster, false, buffer.data());
+            ++chunk_idx;
         }
     }
 }
@@ -481,7 +483,7 @@ void FileSystemDriver::writeFATEntry(uint32_t _cluster, FATEntry _entry)
     const uint32_t entry_index = _cluster % mp_info->fat_entries_per_cluster;
     m_file.seek(fat_cluster * mp_info->cluster_size + entry_index * sizeof(FATEntry));
     m_file.write(reinterpret_cast<const char *>(&_entry), sizeof(FATEntry));
-    m_fat[_cluster] = _entry;
+    m_fat.setEntry(_cluster, _entry);
 }
 
 bool FileSystemDriver::findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result)
@@ -535,6 +537,21 @@ std::optional<QList<uint32_t>> FileSystemDriver::alloc(uint32_t _allocation_size
 
 void FileSystemDriver::free(const QList<uint32_t> & _clusters)
 {
+    const FATEntry free = FATEntry::free();
     foreach(uint32_t cluster, _clusters)
-    writeFATEntry(cluster, m_fat[cluster] = FATEntry::free());
+    {
+        m_fat.setEntry(cluster, free);
+        writeFATEntry(cluster, free);
+    }
+}
+
+uint32_t FileSystemDriver::totalUsedBytes() const
+{
+    return m_fat.allocatedCount() * mp_info->cluster_size;
+}
+
+uint32_t FileSystemDriver::totalFreeBytes() const
+{
+    const uint32_t allocable_space = (mp_info->alloc_end - mp_info->alloc_offset) * mp_info->cluster_size;
+    return allocable_space - totalUsedBytes();
 }

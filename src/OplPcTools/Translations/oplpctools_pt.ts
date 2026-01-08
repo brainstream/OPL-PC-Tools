@@ -1197,7 +1197,6 @@
     </message>
     <message>
         <location filename="../MCFS/FileSystemDriver.cpp" line="38"/>
-        <location filename="../VmcFileManager.cpp" line="139"/>
         <source>Path not found</source>
         <translation>Local não encontrado</translation>
     </message>
@@ -1207,7 +1206,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FATable.h" line="123"/>
+        <location filename="../MCFS/FATable.h" line="119"/>
         <source>FAT cluster index %1 is out of range</source>
         <translation type="unfinished"></translation>
     </message>

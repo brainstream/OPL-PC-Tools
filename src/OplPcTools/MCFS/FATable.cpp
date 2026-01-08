@@ -20,6 +20,29 @@
 
 using namespace OplPcTools::MCFS;
 
+void FATable::append(uint32_t _cluster, const QList<FATEntry> & _fat)
+{
+    m_cluster_count += _fat.count();
+    m_tables.append(Table { .fat = _fat, .cluster = _cluster });
+    foreach(const FATEntry & entry, _fat)
+    {
+        if(!entry.isFree())
+            ++m_allocated_cluster_count;
+    }
+}
+
+void FATable::setEntry(uint32_t _index, FATEntry _entry)
+{
+    uint32_t index;
+    Table * table = findFatEntry(m_tables, _index, &index);
+    table->fat[index] = _entry;
+
+    if(!_entry.isFree() && table->fat[index].isFree())
+        --m_allocated_cluster_count;
+    else if(_entry.isFree() && !table->fat[index].isFree())
+        ++m_allocated_cluster_count;
+}
+
 std::optional<QList<uint32_t>> FATable::findFreeClusters(uint32_t _count) const
 {
     if(_count == 0)

@@ -41,8 +41,9 @@ public:
     void append(uint32_t _cluster, const QList<FATEntry> & _fat);
     void reset();
     uint32_t count() const;
+    uint32_t allocatedCount() const;
     const FATEntry & operator [] (uint32_t _index) const;
-    FATEntry & operator [] (uint32_t _index);
+    void setEntry(uint32_t _index, FATEntry _entry);
     std::optional<QList<uint32_t>> findFreeClusters(uint32_t _count) const;
     uint32_t fatCluster(uint32_t _index) const;
 
@@ -56,23 +57,20 @@ private:
 private:
     QList<Table> m_tables;
     uint32_t m_cluster_count;
+    uint32_t m_allocated_cluster_count;
 };
 
 inline FATable::FATable() :
-    m_cluster_count(0)
+    m_cluster_count(0),
+    m_allocated_cluster_count(0)
 {
-}
-
-inline void FATable::append(uint32_t _cluster, const QList<FATEntry> & _fat)
-{
-    m_cluster_count += _fat.count();
-    m_tables.append(Table { .fat = _fat, .cluster = _cluster });
 }
 
 inline void FATable::reset()
 {
     m_tables.clear();
     m_cluster_count = 0;
+    m_allocated_cluster_count = 0;
 }
 
 inline uint32_t FATable::count() const
@@ -80,17 +78,15 @@ inline uint32_t FATable::count() const
     return m_cluster_count;
 }
 
+inline uint32_t FATable::allocatedCount() const
+{
+    return m_allocated_cluster_count;
+}
+
 inline const FATEntry & FATable::operator [] (uint32_t _index) const
 {
     uint32_t index;
     const Table * table = findFatEntry(m_tables, _index, &index);
-    return table->fat[index];
-}
-
-inline FATEntry & FATable::operator [] (uint32_t _index)
-{
-    uint32_t index;
-    Table * table = findFatEntry(m_tables, _index, &index);
     return table->fat[index];
 }
 

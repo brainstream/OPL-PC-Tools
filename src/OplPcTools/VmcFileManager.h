@@ -29,7 +29,7 @@ namespace OplPcTools {
 using VmcFsInfo = MCFS::FSInfo;
 using VmcFile = MCFS::MemoryCardFile;
 
-struct VmcFsEntryInfo
+struct VmcFsEntryInfo final
 {
     VmcFsEntryInfo()
     {
@@ -49,8 +49,6 @@ struct VmcFsEntryInfo
 
 class VmcFileManager final
 {
-    struct FSTree;
-    struct FSTreeNode;
     Q_DISABLE_COPY(VmcFileManager)
 
 public:
@@ -59,20 +57,17 @@ public:
     QList<VmcFsEntryInfo> enumerateEntries(const VmcPath & _path) const;
     QSharedPointer<VmcFile> openFile(const VmcPath & _path);
     void writeFile(const VmcPath & _path, const QByteArray & _data);
-    uint32_t totalUsedBytes() const;
-    uint32_t totalFreeBytes() const;
+    uint32_t totalUsedBytes() const { return mp_driver->totalUsedBytes(); }
+    uint32_t totalFreeBytes() const { return mp_driver->totalFreeBytes(); }
 
     static QSharedPointer<VmcFileManager> load(const QString & _filepath);
     static void createVmc(const QString & _filepath, uint32_t _size_mib);
 
 private:
     explicit VmcFileManager(MCFS::FileSystemDriver * _private);
-    FSTree * loadTree();
-    uint32_t loadDirectory(const VmcPath & _path, FSTreeNode & _node);
 
 private:
     MCFS::FileSystemDriver * mp_driver;
-    FSTree * mp_tree;
 };
 
 } // namespace OplPcTools

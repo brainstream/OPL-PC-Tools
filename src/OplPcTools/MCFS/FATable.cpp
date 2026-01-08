@@ -34,10 +34,10 @@ std::optional<QList<uint32_t>> FATable::findFreeClusters(uint32_t _count) const
             if(entry.isFree())
             {
                 result.append(cluster);
+                if(result.count() == _count)
+                    return result;
             }
             ++cluster;
-            if(result.count() == _count)
-                return result;
         }
     }
     return std::nullopt;

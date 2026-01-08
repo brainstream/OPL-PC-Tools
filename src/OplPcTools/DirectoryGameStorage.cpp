@@ -48,7 +48,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
     QDir base_directory(m_base_directory);
     if(!base_directory.cd(_media_type == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return;
-    foreach(const QString & iso, base_directory.entryList({ "*.iso" }))
+    foreach(const QString & iso, base_directory.entryList({ "*.iso", "*.zso" }))
     {
         Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(base_directory.absoluteFilePath(iso))));
         if(!image.init())

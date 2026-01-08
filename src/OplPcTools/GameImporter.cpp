@@ -127,7 +127,7 @@ bool GameImporter::emplaceIsoTask(std::list<FileCopyTask> & _tasks)
     if(!dest_directory.exists(media_dir))
         dest_directory.mkdir(media_dir);
     dest_directory.cd(media_dir);
-    foreach(const QString & iso, src_directory.entryList({ "*.iso" }))
+    foreach(const QString & iso, src_directory.entryList({ "*.iso", "*.zso" }))
     {
         if(iso.contains(m_game.title()))
         {

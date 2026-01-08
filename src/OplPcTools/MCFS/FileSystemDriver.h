@@ -51,12 +51,24 @@ struct FSInfo final
     uint32_t max_allocatable_clusters;
 };
 
+struct EntryAddress
+{
+    uint32_t cluster;
+    uint32_t index;
+};
+
 struct EntryInfo
 {
     QByteArray name;
     bool is_directory;
     uint32_t cluster;
     uint32_t length;
+};
+
+struct EntryPath
+{
+    EntryInfo entry;
+    EntryAddress address;
 };
 
 class MemoryCardFile final
@@ -115,12 +127,12 @@ private:
     void writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer);
     void validateSuperblock(const Superblock & _sb) const;
     void readFAT();
-    std::optional<EntryInfo> resolvePath(const VmcPath & _path);
-    EntryInfo getRootEntry();
+    std::optional<EntryPath> resolvePath(const VmcPath & _path);
+    EntryPath getRootEntry();
     inline EntryInfo map(const FSEntry & _fs_entry) const;
-    void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback);
+    void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback);
     QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
-    bool allocEntry(const EntryInfo & _parent, const EntryInfo & _entry);
+    bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);
     bool findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result);
     std::optional<QList<uint32_t>> alloc(uint32_t _allocation_size);

@@ -1212,17 +1212,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="324"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="337"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="326"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="339"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="372"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="385"/>
         <source>&quot;%1&quot; is not a directory</source>
         <translation type="unfinished"></translation>
     </message>

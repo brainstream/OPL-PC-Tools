@@ -224,13 +224,13 @@ void FileSystemDriver::readFAT()
 
 QList<EntryInfo> FileSystemDriver::enumerateEntries(const VmcPath & _path)
 {
-    std::optional<EntryInfo> entry = resolvePath(_path);
+    std::optional<EntryPath> entry_path = resolvePath(_path);
     QList<EntryInfo> result;
-    if(entry.has_value())
+    if(entry_path.has_value())
     {
-        enumerateEntries(*entry, [&](const EntryInfo & next_entry) -> bool {
-            if(next_entry.name.compare(".") != 0  && next_entry.name.compare("..") != 0)
-                result << next_entry;
+        enumerateEntries(entry_path->entry, [&](const EntryPath & next_entry_path) -> bool {
+            if(next_entry_path.entry.name.compare(".") != 0  && next_entry_path.entry.name.compare("..") != 0)
+                result << next_entry_path.entry;
             return true;
         });
     }
@@ -241,17 +241,17 @@ QList<EntryInfo> FileSystemDriver::enumerateEntries(const VmcPath & _path)
     return result;
 }
 
-std::optional<EntryInfo> FileSystemDriver::resolvePath(const VmcPath & _path)
+std::optional<EntryPath> FileSystemDriver::resolvePath(const VmcPath & _path)
 {
-    EntryInfo entry = getRootEntry();
+    EntryPath entry_path = getRootEntry();
     for(const QByteArray & path_part : _path.parts())
     {
         bool matched = false;
-        enumerateEntries(entry, [&](const EntryInfo & next_entry) -> bool {
-            if(path_part.compare(next_entry.name, Qt::CaseInsensitive) == 0)
+        enumerateEntries(entry_path.entry, [&](const EntryPath & __next_entry_path) -> bool {
+            if(path_part.compare(__next_entry_path.entry.name, Qt::CaseInsensitive) == 0)
             {
                 matched = true;
-                entry = next_entry;
+                entry_path = __next_entry_path;
                 return false;
             }
             return true;
@@ -259,14 +259,22 @@ std::optional<EntryInfo> FileSystemDriver::resolvePath(const VmcPath & _path)
         if(!matched)
             return std::nullopt;
     }
-    return entry;
+    return entry_path;
 }
 
-EntryInfo FileSystemDriver::getRootEntry()
+EntryPath FileSystemDriver::getRootEntry()
 {
     QScopedArrayPointer<char> ptr(new char[sizeof(FSEntry)]);
     readCluster(mp_info->rootdir_cluster, false, ptr.data(), sizeof(FSEntry));
-    return map(*reinterpret_cast<FSEntry *>(ptr.data()));
+    return EntryPath
+    {
+        .entry = map(*reinterpret_cast<FSEntry *>(ptr.data())),
+        .address = EntryAddress
+        {
+            .cluster = mp_info->rootdir_cluster,
+            .index = 0
+        }
+    };
 }
 
 EntryInfo FileSystemDriver::map(const FSEntry & _fs_entry) const
@@ -279,7 +287,7 @@ EntryInfo FileSystemDriver::map(const FSEntry & _fs_entry) const
     return info;
 }
 
-void FileSystemDriver::enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryInfo &)> _callback)
+void FileSystemDriver::enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback)
 {
     const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
     QList<uint32_t> clusters = getEntryClusters(_dir);
@@ -295,7 +303,12 @@ void FileSystemDriver::enumerateEntries(const EntryInfo & _dir, std::function<bo
             const FSEntry & entry = entries[i];
             if(!(entry.mode & EM_EXISTS))
                 continue;
-            if(!_callback(map(entry)))
+            EntryPath ep
+            {
+                .entry = map(entry),
+                .address = EntryAddress { .cluster = cluster, .index = static_cast<uint32_t>(i) }
+            };
+            if(!_callback(ep))
                 return;
         }
     }
@@ -319,17 +332,17 @@ QList<uint32_t> FileSystemDriver::getEntryClusters(const EntryInfo & _entry) con
 
 QSharedPointer<MemoryCardFile> FileSystemDriver::openFile(const VmcPath & _path)
 {
-    std::optional<EntryInfo> entry = resolvePath(_path);
-    if(!entry.has_value())
+    std::optional<EntryPath> entry_path = resolvePath(_path);
+    if(!entry_path.has_value())
         throw MCFSException(QObject::tr("File not found"));
-    if(entry->is_directory)
+    if(entry_path->entry.is_directory)
         throw MCFSException(QObject::tr("\"%1\" is not a file").arg(_path));
     MemoryCardFile::Private * pr = new MemoryCardFile::Private;
-    pr->clusters = getEntryClusters(*entry);
+    pr->clusters = getEntryClusters(entry_path->entry);
     pr->driver = this;
     pr->position = 0;
-    pr->size = entry->length;
-    pr->name = entry->name;
+    pr->size = entry_path->entry.length;
+    pr->name = entry_path->entry.name;
     return QSharedPointer<MemoryCardFile>(new MemoryCardFile(pr));
 }
 
@@ -365,10 +378,10 @@ int64_t FileSystemDriver::readFile(MemoryCardFile::Private & _file, char * _buff
 void FileSystemDriver::writeFile(const VmcPath & _path, const QByteArray & _data)
 {
     VmcPath dir_path = _path.up();
-    std::optional<EntryInfo> dir_entry = resolvePath(dir_path);
-    if(!dir_entry.has_value())
+    std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
+    if(!dir_entry_path.has_value())
         throwPathNotFound();
-    if(!dir_entry->is_directory)
+    if(!dir_entry_path->entry.is_directory)
         throw MCFSException(QObject::tr("\"%1\" is not a directory").arg(dir_path.path()));
 
     std::optional<QList<uint32_t>> file_data_clusters = alloc(_data.size());
@@ -382,7 +395,7 @@ void FileSystemDriver::writeFile(const VmcPath & _path, const QByteArray & _data
         .cluster = file_data_clusters->first(),
         .length = static_cast<uint32_t>(_data.length())
     };
-    if(!allocEntry(*dir_entry, file_entry))
+    if(!allocEntry(*dir_entry_path, file_entry))
     {
         free(*file_data_clusters);
         throwNoSpace();
@@ -402,10 +415,10 @@ void FileSystemDriver::writeFile(const VmcPath & _path, const QByteArray & _data
     }
 }
 
-bool FileSystemDriver::allocEntry(const EntryInfo & _parent, const EntryInfo & _entry)
+bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
 {
     const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
-    QList<uint32_t> parent_dir_clusters = getEntryClusters(_parent);
+    QList<uint32_t> parent_dir_clusters = getEntryClusters(_parent.entry);
 
     FSEntrySearchResult parent_free_entry;
     if(!findFreeEntry(parent_dir_clusters, parent_free_entry))
@@ -430,25 +443,34 @@ bool FileSystemDriver::allocEntry(const EntryInfo & _parent, const EntryInfo & _
         }
     }
 
-    FSEntry & new_entry = parent_free_entry.cluster_entries[parent_free_entry.entry_index];
-    new_entry.mode = EM_EXISTS;
-    if(_entry.is_directory)
-        new_entry.mode |= EM_DIRECTORY;
-    else
-        new_entry.mode |= EM_READ | EM_WRITE;
-    new_entry.length = _entry.length;
-    new_entry.cluster = _entry.cluster;
-    new_entry.created = new_entry.modified = FSDateTime::now();
-    std::strncpy(
-        new_entry.name,
-        _entry.name.data(),
-        std::min(sizeof(FSEntry::name), static_cast<size_t>(_entry.name.length())));
+    { // Creating a new entry
+        FSEntry & new_entry = parent_free_entry.cluster_entries[parent_free_entry.entry_index];
+        new_entry.mode = EM_EXISTS;
+        if(_entry.is_directory)
+            new_entry.mode |= EM_DIRECTORY;
+        else
+            new_entry.mode |= EM_READ | EM_WRITE;
+        new_entry.length = _entry.length;
+        new_entry.cluster = _entry.cluster;
+        new_entry.created = new_entry.modified = FSDateTime::now();
+        std::strncpy(
+            new_entry.name,
+            _entry.name.data(),
+            std::min(sizeof(FSEntry::name), static_cast<size_t>(_entry.name.length())));
+    }
 
     // Updating an old or new cluster
     writeCluster(
         parent_free_entry.cluster_index,
         false,
         reinterpret_cast<const char *>(parent_free_entry.cluster_entries.get()));
+
+    { // Increment length of the parent
+        QScopedArrayPointer<FSEntry> parent_header_entries(new FSEntry[entry_count_per_cluster]);
+        readCluster(_parent.address.cluster, false, reinterpret_cast<char *>(parent_header_entries.data()));
+        ++parent_header_entries[_parent.address.index].length;
+        writeCluster(_parent.address.cluster, false, reinterpret_cast<const char *>(parent_header_entries.data()));
+    }
 
     return true;
 }

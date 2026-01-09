@@ -422,7 +422,8 @@ void FileSystemDriver::writeFile(
         .name = _filename,
         .is_directory = _is_directory,
         .cluster = file_data_clusters->first(),
-        .length = static_cast<uint32_t>(_data.length())
+        // New directory contains two entries: . and ..
+        .length = _is_directory ? 2 : static_cast<uint32_t>(_data.length())
     };
     if(!allocEntry(_directory_path, file_entry))
     {
@@ -476,11 +477,11 @@ bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _
 
     { // Creating a new entry
         FSEntry & new_entry = parent_free_entry.cluster_entries[parent_free_entry.entry_index];
-        new_entry.mode = EM_EXISTS;
+        new_entry.mode = EM_EXISTS | EM_READ | EM_WRITE;
         if(_entry.is_directory)
-            new_entry.mode |= EM_DIRECTORY;
+            new_entry.mode |= EM_DIRECTORY | EM_EXECUTE;
         else
-            new_entry.mode |= EM_READ | EM_WRITE;
+            new_entry.mode |= EM_FILE;
         new_entry.length = _entry.length;
         new_entry.cluster = _entry.cluster;
         new_entry.created = new_entry.modified = FSDateTime::now();

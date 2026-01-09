@@ -25,7 +25,7 @@ namespace MCFS {
 
 struct __attribute__((packed)) FSDateTime
 {
-    uint8_t resv2;
+    uint8_t __reserved;
     uint8_t sec;
     uint8_t min;
     uint8_t hour;
@@ -39,13 +39,13 @@ struct __attribute__((packed)) FSDateTime
         const QDateTime japan_now = QDateTime::currentDateTime().toOffsetFromUtc(japan_timezone_offset_seconds);
         return FSDateTime
         {
-            .resv2 = 0u,
+            .__reserved = 0,
             .sec = static_cast<uint8_t>(japan_now.time().second()),
             .min = static_cast<uint8_t>(japan_now.time().minute()),
             .hour = static_cast<uint8_t>(japan_now.time().hour()),
             .day = static_cast<uint8_t>(japan_now.date().day()),
             .month = static_cast<uint8_t>(japan_now.date().month()),
-            .year = static_cast<uint8_t>(japan_now.date().year())
+            .year = static_cast<uint16_t>(japan_now.date().year())
         };
     }
 };

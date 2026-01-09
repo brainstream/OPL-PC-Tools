@@ -59,6 +59,17 @@ struct EntryAddress
 
 struct EntryInfo
 {
+    static EntryInfo fromFSEntry(const FSEntry & _fs_entry)
+    {
+        return EntryInfo
+        {
+            .name = QByteArray(_fs_entry.name, std::min(sizeof(FSEntry::name), std::strlen(_fs_entry.name))),
+            .is_directory = (_fs_entry.mode & EM_DIRECTORY) != 0,
+            .cluster = _fs_entry.cluster,
+            .length = _fs_entry.length
+        };
+    }
+
     QByteArray name;
     bool is_directory;
     uint32_t cluster;
@@ -111,7 +122,6 @@ public:
     explicit FileSystemDriver(const QString & _filepath);
     ~FileSystemDriver();
     void load();
-    void create(uint8_t _size_mib);
     const FSInfo * info() const;
     QList<EntryInfo> enumerateEntries(const Path & _path);
     void exportEntry(const Path & _vmc_path, const QString & _dest_path);
@@ -133,7 +143,6 @@ private:
     void readFAT();
     std::optional<EntryPath> resolvePath(const Path & _path);
     EntryPath getRootEntry();
-    inline EntryInfo map(const FSEntry & _fs_entry) const;
     void forEachEntry(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback);
     QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
     void writeFile(

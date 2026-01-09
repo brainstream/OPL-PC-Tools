@@ -268,23 +268,13 @@ EntryPath FileSystemDriver::getRootEntry()
     readCluster(mp_info->rootdir_cluster, false, ptr.data(), sizeof(FSEntry));
     return EntryPath
     {
-        .entry = map(*reinterpret_cast<FSEntry *>(ptr.data())),
+        .entry = EntryInfo::fromFSEntry(*reinterpret_cast<FSEntry *>(ptr.data())),
         .address = EntryAddress
         {
             .cluster = mp_info->rootdir_cluster,
             .entry = 0
         }
     };
-}
-
-EntryInfo FileSystemDriver::map(const FSEntry & _fs_entry) const
-{
-    EntryInfo info;
-    info.is_directory = _fs_entry.mode & EM_DIRECTORY;
-    info.cluster = _fs_entry.cluster;
-    info.name = QByteArray(_fs_entry.name, std::min(sizeof(FSEntry::name), std::strlen(_fs_entry.name)));
-    info.length = _fs_entry.length;
-    return info;
 }
 
 void FileSystemDriver::forEachEntry(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback)
@@ -305,7 +295,7 @@ void FileSystemDriver::forEachEntry(const EntryInfo & _dir, std::function<bool(c
                 continue;
             EntryPath ep
             {
-                .entry = map(entry),
+                .entry = EntryInfo::fromFSEntry(entry),
                 .address = EntryAddress { .cluster = cluster, .entry = static_cast<uint32_t>(i) }
             };
             if(!_callback(ep))
@@ -618,7 +608,8 @@ void FileSystemDriver::eraseEntriesRecursive(const EntryPath & _path)
     if(_path.entry.is_directory)
     {
         forEachEntry(_path.entry, [this](const EntryPath & __child_path) -> bool {
-            eraseEntriesRecursive(__child_path);
+            if(__child_path.entry.name != "." && __child_path.entry.name != "..")
+                eraseEntriesRecursive(__child_path);
             return true;
         });
     }

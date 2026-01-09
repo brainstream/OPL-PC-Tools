@@ -1206,7 +1206,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="421"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="411"/>
         <source>Entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1216,12 +1216,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="337"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="327"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="339"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="329"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; não é um arquivo</translation>
     </message>

@@ -295,6 +295,12 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     //     m_vmc_driver_ptr->writeFile(MCFS::Path("/TEST_DATA/test.txt"), QString("Hello, World").toLatin1());
     // });
 
+    // QPushButton * delete_dir_btn = new QPushButton("Delete Directory", this);
+    // mp_layout_3->addWidget(delete_dir_btn);
+    // connect(delete_dir_btn, &QPushButton::clicked, this, [this]() {
+    //     m_vmc_driver_ptr->deleteFileOrDirectory(MCFS::Path("/TEST_DATA"));
+    // });
+
 
 
 

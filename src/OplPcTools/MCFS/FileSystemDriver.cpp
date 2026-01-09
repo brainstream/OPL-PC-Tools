@@ -228,7 +228,7 @@ QList<EntryInfo> FileSystemDriver::enumerateEntries(const Path & _path)
     QList<EntryInfo> result;
     if(entry_path.has_value())
     {
-        enumerateEntries(entry_path->entry, [&](const EntryPath & next_entry_path) -> bool {
+        forEachEntry(entry_path->entry, [&](const EntryPath & next_entry_path) -> bool {
             if(next_entry_path.entry.name.compare(".") != 0  && next_entry_path.entry.name.compare("..") != 0)
                 result << next_entry_path.entry;
             return true;
@@ -247,7 +247,7 @@ std::optional<EntryPath> FileSystemDriver::resolvePath(const Path & _path)
     for(const QByteArray & path_part : _path.parts())
     {
         bool matched = false;
-        enumerateEntries(entry_path.entry, [&](const EntryPath & __next_entry_path) -> bool {
+        forEachEntry(entry_path.entry, [&](const EntryPath & __next_entry_path) -> bool {
             if(path_part.compare(__next_entry_path.entry.name, Qt::CaseInsensitive) == 0)
             {
                 matched = true;
@@ -272,7 +272,7 @@ EntryPath FileSystemDriver::getRootEntry()
         .address = EntryAddress
         {
             .cluster = mp_info->rootdir_cluster,
-            .index = 0
+            .entry = 0
         }
     };
 }
@@ -287,7 +287,7 @@ EntryInfo FileSystemDriver::map(const FSEntry & _fs_entry) const
     return info;
 }
 
-void FileSystemDriver::enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback)
+void FileSystemDriver::forEachEntry(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback)
 {
     const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
     QList<uint32_t> clusters = getEntryClusters(_dir);
@@ -306,7 +306,7 @@ void FileSystemDriver::enumerateEntries(const EntryInfo & _dir, std::function<bo
             EntryPath ep
             {
                 .entry = map(entry),
-                .address = EntryAddress { .cluster = cluster, .index = static_cast<uint32_t>(i) }
+                .address = EntryAddress { .cluster = cluster, .entry = static_cast<uint32_t>(i) }
             };
             if(!_callback(ep))
                 return;
@@ -402,7 +402,7 @@ void FileSystemDriver::createDirectory(const Path & _path)
         entries[i].name[0] = '.';
     }
     entries[0].cluster = parent_dir_entry_path->address.cluster;
-    entries[0].dir_entry = parent_dir_entry_path->address.index;
+    entries[0].dir_entry = parent_dir_entry_path->address.entry;
     entries[1].name[1] = '.';
     entries[1].length = 2;
 
@@ -419,7 +419,7 @@ void FileSystemDriver::writeFile(
     {
         throw MCFSException(
             QObject::tr("Entry %1 in cluster %2 is not a directory")
-                .arg(_directory_path.address.index)
+                .arg(_directory_path.address.entry)
                 .arg(_directory_path.address.cluster));
     }
 
@@ -436,7 +436,7 @@ void FileSystemDriver::writeFile(
     };
     if(!allocEntry(_directory_path, file_entry))
     {
-        free(*file_data_clusters);
+        freeFAT(*file_data_clusters);
         throwNoSpace();
     }
 
@@ -506,14 +506,20 @@ bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _
         false,
         reinterpret_cast<const char *>(parent_free_entry.cluster_entries.get()));
 
-    { // Increment length of the parent
-        QScopedArrayPointer<FSEntry> parent_header_entries(new FSEntry[entry_count_per_cluster]);
-        readCluster(_parent.address.cluster, false, reinterpret_cast<char *>(parent_header_entries.data()));
-        ++parent_header_entries[_parent.address.index].length;
-        writeCluster(_parent.address.cluster, false, reinterpret_cast<const char *>(parent_header_entries.data()));
-    }
+    // Increment parent's length
+    changeEntryLength(_parent.address, 1);
 
     return true;
+}
+
+void FileSystemDriver::changeEntryLength(const EntryAddress & _address, int8_t _amount)
+{
+    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
+    FSEntry * entries = new FSEntry[entry_count_per_cluster];
+    readCluster(_address.cluster, false, reinterpret_cast<char *>(entries));
+    entries[_address.entry].length += _amount;
+    writeCluster(_address.cluster, false, reinterpret_cast<const char *>(entries));
+    delete [] entries;
 }
 
 void FileSystemDriver::writeFATEntry(uint32_t _cluster, FATEntry _entry)
@@ -532,7 +538,7 @@ bool FileSystemDriver::findFreeEntry(const QList<uint32_t> & _parent_clusters, F
     foreach(uint32_t parent_cluster, _parent_clusters)
     {
         readCluster(parent_cluster, false, reinterpret_cast<char *>(entries.get()));
-        for(size_t entry_index = 1; entry_index < entry_count_per_cluster; ++entry_index)
+        for(size_t entry_index = 0; entry_index < entry_count_per_cluster; ++entry_index)
         {
             FSEntry & entry = entries[entry_index];
             if(!(entry.mode & EM_EXISTS))
@@ -574,13 +580,51 @@ std::optional<QList<uint32_t>> FileSystemDriver::alloc(uint32_t _allocation_size
     return result;
 }
 
-void FileSystemDriver::free(const QList<uint32_t> & _clusters)
+void FileSystemDriver::freeFAT(const QList<uint32_t> & _clusters)
 {
     const FATEntry free = FATEntry::free();
     foreach(uint32_t cluster, _clusters)
     {
         m_fat.setEntry(cluster, free);
         writeFATEntry(cluster, free);
+    }
+}
+
+void FileSystemDriver::deleteFileOrDirectory(const Path & _path)
+{
+    std::optional<EntryPath> entry_path = resolvePath(_path);
+    if(!entry_path.has_value())
+        throwPathNotFound();
+
+    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
+    const std::optional<EntryPath> parent = resolvePath(_path.up());
+
+    { // Mark parent's entry as unused
+        FSEntry * entries = new FSEntry[entry_count_per_cluster];
+        readCluster(entry_path->address.cluster, false, reinterpret_cast<char *>(entries));
+        entries[entry_path->address.entry].mode = 0;
+        writeCluster(entry_path->address.cluster, false, reinterpret_cast<const char *>(entries));
+        delete [] entries;
+    }
+
+    eraseEntriesRecursive(*entry_path);
+
+    // Decrement parent's length
+    changeEntryLength(parent->address, -1);
+}
+
+void FileSystemDriver::eraseEntriesRecursive(const EntryPath & _path)
+{
+    if(_path.entry.is_directory)
+    {
+        forEachEntry(_path.entry, [this](const EntryPath & __child_path) -> bool {
+            eraseEntriesRecursive(__child_path);
+            return true;
+        });
+    }
+    else
+    {
+        freeFAT(getEntryClusters(_path.entry));
     }
 }
 

@@ -54,7 +54,7 @@ struct FSInfo final
 struct EntryAddress
 {
     uint32_t cluster;
-    uint32_t index;
+    uint32_t entry;
 };
 
 struct EntryInfo
@@ -119,6 +119,7 @@ public:
     int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);
     void writeFile(const Path & _path, const QByteArray & _data);
     void createDirectory(const Path & _path);
+    void deleteFileOrDirectory(const Path & _path);
     uint32_t totalUsedBytes() const;
     uint32_t totalFreeBytes() const;
 
@@ -133,7 +134,7 @@ private:
     std::optional<EntryPath> resolvePath(const Path & _path);
     EntryPath getRootEntry();
     inline EntryInfo map(const FSEntry & _fs_entry) const;
-    void enumerateEntries(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback);
+    void forEachEntry(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback);
     QList<uint32_t> getEntryClusters(const EntryInfo & _entry) const;
     void writeFile(
         const EntryPath & _directory_path,
@@ -141,10 +142,12 @@ private:
         const QByteArray & _data,
         bool _is_directory);
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
+    void changeEntryLength(const EntryAddress & _address, int8_t _amount);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);
     bool findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result);
     std::optional<QList<uint32_t>> alloc(uint32_t _allocation_size);
-    void free(const QList<uint32_t> & _clusters);
+    void freeFAT(const QList<uint32_t> & _clusters);
+    void eraseEntriesRecursive(const EntryPath & _path);
 
 private:
     QFile m_file;

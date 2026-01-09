@@ -931,7 +931,7 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="317"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="323"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
@@ -1206,7 +1206,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="425"/>
+        <location filename="../MCFS/FileSystemDriver.cpp" line="421"/>
         <source>Entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>

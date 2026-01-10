@@ -69,7 +69,6 @@ bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _
 {
     if(_game.title() == _title)
         return true;
-    validateFilename(_title);
     QDir directory(m_base_directory);
     if(!directory.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return false;

@@ -16,27 +16,18 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCRENAMEDIALOG__
-#define __OPLPCTOOLS_VMCRENAMEDIALOG__
+#pragma once
 
-#include "ui_VmcRenameDialog.h"
+#include <OplPcTools/MemoryCard/FSEntry.h>
+#include <QByteArray>
 
 namespace OplPcTools {
-namespace UI {
+namespace MemoryCard {
 
-class VmcRenameDialog : public QDialog, private Ui::VmcRenameDialog
-{
-    Q_OBJECT
+constexpr char g_entry_name_forbidden_characters[] = "/?*";
+constexpr size_t g_max_entry_name_length = sizeof(FSEntry::name);
 
-public:
-    explicit VmcRenameDialog(const QString & _name, QWidget * _parent = nullptr);
-    QString name() const;
+bool isEntryNameValid(const QByteArray & _name);
 
-private:
-    void setSaveButtonState();
-};
-
-} // namespace UI
+} // namespace MemoryCard
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCRENAMEDIALOG__

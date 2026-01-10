@@ -94,7 +94,6 @@ const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
         if(_title == vmc->title())
             throw Exception(tr("VMC with name \"%1\" already exists").arg(_title));
     }
-    validateFilename(_title);
     ensureDirectoryExists();
     QString vmc_filename = makeFilename(_title);
     MemoryCard::VmcFormatter::format(vmc_filename, _size_mib);
@@ -111,7 +110,6 @@ void VmcCollection::ensureDirectoryExists()
 
 void VmcCollection::renameVmc(const Uuid & _uuid, const QString & _title)
 {
-    validateFilename(_title);
     Vmc * vmc = findVmc(_uuid);
     if(vmc == nullptr || vmc->title() == _title)
         return;

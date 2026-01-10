@@ -16,27 +16,45 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCRENAMEDIALOG__
-#define __OPLPCTOOLS_VMCRENAMEDIALOG__
+#include <OplPcTools/UI/VmcFileNameDialog.h>
+#include <OplPcTools/MemoryCard/FSEntryNameValidator.h>
+#include <OplPcTools/FilenameValidator.h>
+#include <QPushButton>
 
-#include "ui_VmcRenameDialog.h"
+using namespace OplPcTools::UI;
 
-namespace OplPcTools {
-namespace UI {
-
-class VmcRenameDialog : public QDialog, private Ui::VmcRenameDialog
+VmcFileNameDialog::VmcFileNameDialog(QWidget * _parent) :
+    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    Q_OBJECT
+    setupUi(this);
+    setTitle(false);
+    FilenameValidator * name_validator = new FilenameValidator(MemoryCard::g_entry_name_forbidden_characters, this);
+    name_validator->setMaxLength(MemoryCard::g_max_entry_name_length); // TODO: validate length of encoded string
+    mp_edit_name->setValidator(name_validator);
+    mp_label_error_message->setHidden(true);
+    connect(mp_edit_name, &QLineEdit::textChanged, this, &VmcFileNameDialog::setSaveButtonState);
+    connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcFileNameDialog::accept);
+    connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcFileNameDialog::reject);
+    setSaveButtonState();
+}
 
-public:
-    explicit VmcRenameDialog(const QString & _name, QWidget * _parent = nullptr);
-    QString name() const;
+void VmcFileNameDialog::setCurrentFilename(const QString & _filename)
+{
+    mp_edit_name->setText(_filename);
+    mp_edit_name->setSelection(0, _filename.length());
+}
 
-private:
-    void setSaveButtonState();
-};
+const QString VmcFileNameDialog::currentFilename() const
+{
+    return mp_edit_name->text();
+}
 
-} // namespace UI
-} // namespace OplPcTools
+void VmcFileNameDialog::setTitle(bool _is_directory)
+{
+    setWindowTitle(_is_directory ? tr("Directory Name") : tr("File Name"));
+}
 
-#endif // __OPLPCTOOLS_VMCRENAMEDIALOG__
+void VmcFileNameDialog::setSaveButtonState()
+{
+    mp_button_box->button(QDialogButtonBox::Save)->setEnabled(mp_edit_name->hasAcceptableInput());
+}

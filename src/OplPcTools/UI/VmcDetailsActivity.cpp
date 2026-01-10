@@ -18,6 +18,7 @@
 
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
+#include <OplPcTools/UI/VmcFileNameDialog.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 #include <OplPcTools/UI/DisplayUtils.h>
 #include <OplPcTools/Library.h>
@@ -272,44 +273,25 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
                 makeBytesDisplayString(total_free_bytes),
                 makeBytesDisplayString(total_bytes)));
         }
+        addAction(mp_action_create_directory);
+        addAction(mp_action_rename_entry);
+        addAction(mp_action_delete);
+        addAction(mp_action_download);
+        addAction(mp_action_upload);
         connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
+        connect(mp_tree_fs, &QTreeView::customContextMenuRequested, this, &VmcDetailsActivity::showTreeContextMenu);
         connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
         connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
         connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
         connect(mp_label_vmc_title, &ClickableLabel::clicked, this, &VmcDetailsActivity::renameVmc);
         connect(mp_combobox_charset, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
+        connect(mp_action_create_directory, &QAction::triggered, this, &VmcDetailsActivity::createDirectory);
+        connect(mp_action_rename_entry, &QAction::triggered, this, &VmcDetailsActivity::renameEntry);
         setIconSize();
+
+        mp_action_download->setVisible(false); // TODO: WIP
+        mp_action_upload->setVisible(false); // TODO: WIP
     }
-
-
-
-    // QPushButton * create_dir_btn = new QPushButton("Create Directory", this);
-    // mp_layout_3->addWidget(create_dir_btn);
-    // connect(create_dir_btn, &QPushButton::clicked, this, [this]() {
-    //     m_vmc_fs_ptr->createDirectory(MemoryCard::Path("/TEST_DATA"));
-    // });
-
-    // QPushButton * create_file_btn = new QPushButton("Create File", this);
-    // mp_layout_3->addWidget(create_file_btn);
-    // connect(create_file_btn, &QPushButton::clicked, this, [this]() {
-    //     m_vmc_fs_ptr->writeFile(MemoryCard::Path("/TEST_DATA/test.txt"), QString("Hello, World").toLatin1());
-    // });
-
-    // QPushButton * rename_file_btn = new QPushButton("Rename File", this);
-    // mp_layout_3->addWidget(rename_file_btn);
-    // connect(rename_file_btn, &QPushButton::clicked, this, [this]() {
-    //     m_vmc_fs_ptr->rename(MemoryCard::Path("/TEST_DATA/test.txt"), "new_name.txt");
-    // });
-
-    // QPushButton * delete_dir_btn = new QPushButton("Delete Directory", this);
-    // mp_layout_3->addWidget(delete_dir_btn);
-    // connect(delete_dir_btn, &QPushButton::clicked, this, [this]() {
-    //     m_vmc_fs_ptr->remove(MemoryCard::Path("/TEST_DATA"));
-    // });
-
-
-
-
 }
 
 void VmcDetailsActivity::setupShortcuts()
@@ -455,4 +437,51 @@ void VmcDetailsActivity::renameVmc()
     {
         Application::showErrorMessage();
     }
+}
+
+void VmcDetailsActivity::showTreeContextMenu(const QPoint & _point)
+{
+    QMenu menu;
+    if(mp_tree_fs->currentIndex().isValid())
+    {
+        menu.addAction(mp_action_rename_entry);
+        menu.addAction(mp_action_download);
+        menu.addAction(mp_action_delete);
+        menu.addSeparator();
+    }
+    menu.addAction(mp_action_create_directory);
+    menu.addAction(mp_action_upload);
+    menu.exec(mp_tree_fs->mapToGlobal(_point + QPoint(0, mp_tree_fs->header()->height())));
+}
+
+void VmcDetailsActivity::createDirectory()
+{
+    VmcFileNameDialog dlg(this);
+    dlg.setTitle(true);
+    if(dlg.exec() != QDialog::Accepted)
+        return;
+
+    // TODO: encoding
+    m_vmc_fs_ptr->createDirectory(
+        MemoryCard::Path(mp_edit_fs_path->text().toLatin1(), dlg.currentFilename().toLatin1()));
+    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+}
+
+void VmcDetailsActivity::renameEntry()
+{
+    const MemoryCard::EntryInfo * entry = mp_model->item(mp_tree_fs->currentIndex());
+    if(!entry)
+        return;
+
+    VmcFileNameDialog dlg(this);
+    dlg.setTitle(entry->is_directory);
+    dlg.setCurrentFilename(entry->name); // TODO: encoding
+    if(dlg.exec() != QDialog::Accepted)
+        return;
+
+    // TODO: encoding
+    m_vmc_fs_ptr->rename(
+        MemoryCard::Path(mp_edit_fs_path->text().toLatin1(), entry->name),
+        dlg.currentFilename().toLatin1());
+    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
 }

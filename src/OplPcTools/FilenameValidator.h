@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_FILENAMEVALIDATOR__
-#define __OPLPCTOOLS_FILENAMEVALIDATOR__
+#pragma once
 
 #include <QValidator>
 
@@ -26,13 +25,13 @@ namespace OplPcTools {
 class FilenameValidator final : public QValidator
 {
 public:
-    explicit FilenameValidator(QObject * _parent = nullptr);
+    explicit FilenameValidator(const QString & _forbidden_characters, QObject * _parent = nullptr);
+    void setMaxLength(size_t _max_length) { m_max_length = _max_length; }
     State validate(QString & _input, int & _pos) const override;
 
 public:
-    static const QString s_disallowed_characters;
+    const QString m_forbidden_characters;
+    size_t m_max_length;
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_FILENAMEVALIDATOR__

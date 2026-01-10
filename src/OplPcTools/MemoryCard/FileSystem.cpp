@@ -454,7 +454,7 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
 {
     QList<uint32_t> parent_dir_clusters = getEntryClusters(_parent.entry);
 
-    EntrySearchResult parent_free_entry;
+    EntrySearchResult parent_free_entry = {};
     if(!findFreeEntry(parent_dir_clusters, parent_free_entry))
     {
         // If all entries of the parent cluster are occupied,

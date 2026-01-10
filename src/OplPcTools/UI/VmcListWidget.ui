@@ -53,7 +53,7 @@
          </size>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
+         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -75,7 +75,7 @@
          </size>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
+         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -100,7 +100,26 @@
          </size>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
+         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="mp_btn_properties">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -110,7 +129,7 @@
       <item>
        <spacer name="mp_spacer">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Orientation::Vertical</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -135,7 +154,7 @@
          </size>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
+         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -160,7 +179,7 @@
      <item>
       <widget class="QTreeView" name="mp_tree_vmcs">
        <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
+        <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
        </property>
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -242,25 +261,30 @@
     <string>Properties</string>
    </property>
    <property name="shortcut">
-    <string notr="true"/>
+    <string>Alt+Return</string>
    </property>
   </action>
   <action name="mp_action_export">
    <property name="icon">
     <iconset resource="../Resources/Resources.qrc">
-     <normaloff>:/images/save</normaloff>:/images/save</iconset>
+     <normaloff>:/images/download</normaloff>:/images/download</iconset>
    </property>
    <property name="text">
     <string>Export</string>
    </property>
+   <property name="toolTip">
+    <string>Download VMC content to local disk</string>
+   </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+E</string>
+    <string>Ctrl+E</string>
    </property>
   </action>
  </widget>
  <tabstops>
   <tabstop>mp_btn_rename_vmc</tabstop>
   <tabstop>mp_btn_delete_vmc</tabstop>
+  <tabstop>mp_btn_export</tabstop>
+  <tabstop>mp_btn_properties</tabstop>
   <tabstop>mp_btn_create_vmc</tabstop>
   <tabstop>mp_edit_filter</tabstop>
   <tabstop>mp_tree_vmcs</tabstop>

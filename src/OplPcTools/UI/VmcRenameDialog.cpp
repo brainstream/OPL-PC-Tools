@@ -16,9 +16,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QPushButton>
-#include <OplPcTools/File.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
+#include <OplPcTools/File.h>
+#include <OplPcTools/FilenameValidator.h>
+#include <QPushButton>
 
 using namespace OplPcTools::UI;
 
@@ -26,30 +27,21 @@ VmcRenameDialog::VmcRenameDialog(const QString & _name, QWidget * _parent /*= nu
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
     setupUi(this);
-    connect(mp_edit_name, &QLineEdit::textChanged, this, &VmcRenameDialog::onNameChanged);
+    mp_edit_name->setValidator(new FilenameValidator(g_filename_forbidden_characters, this));
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &VmcRenameDialog::accept);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &VmcRenameDialog::reject);
+    connect(mp_edit_name, &QLineEdit::textChanged, this, &VmcRenameDialog::setSaveButtonState);
     mp_edit_name->setText(_name);
     mp_edit_name->selectAll();
     mp_edit_name->setFocus();
 }
 
+void VmcRenameDialog::setSaveButtonState()
+{
+    mp_button_box->button(QDialogButtonBox::Save)->setEnabled(mp_edit_name->hasAcceptableInput());
+}
+
 QString VmcRenameDialog::name() const
 {
     return mp_edit_name->text();
-}
-
-void VmcRenameDialog::onNameChanged(const QString & _name)
-{
-    QString error_message;
-    try
-    {
-        validateFilename(_name);
-    }
-    catch(const Exception & exception)
-    {
-        error_message = exception.message();
-    }
-    mp_button_box->button(QDialogButtonBox::Ok)->setDisabled(!error_message.isEmpty());
-    mp_label_error_message->setText(error_message);
 }

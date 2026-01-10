@@ -107,12 +107,6 @@ class FileSystem final
 private:
     struct EntrySearchResult
     {
-        EntrySearchResult() :
-            cluster_index(0),
-            entry_index(0)
-        {
-        }
-
         uint32_t cluster_index;
         QList<FSEntry> cluster_entries;
         size_t entry_index;

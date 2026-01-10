@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VmcRenameDialog</class>
- <widget class="QDialog" name="VmcRenameDialog">
+ <class>VmcFileNameDialog</class>
+ <widget class="QDialog" name="VmcFileNameDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>348</width>
+    <width>317</width>
     <height>108</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>VMC Title</string>
+   <string notr="true"/>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -19,6 +19,22 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item alignment="Qt::AlignmentFlag::AlignTop">
     <widget class="QLineEdit" name="mp_edit_name"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="mp_label_error_message">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+     </property>
+    </widget>
    </item>
    <item alignment="Qt::AlignmentFlag::AlignBottom">
     <widget class="QDialogButtonBox" name="mp_button_box">
@@ -32,9 +48,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>mp_edit_name</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

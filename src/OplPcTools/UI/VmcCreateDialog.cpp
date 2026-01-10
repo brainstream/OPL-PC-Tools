@@ -16,13 +16,14 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QPushButton>
-#include <QCloseEvent>
-#include <OplPcTools/Exception.h>
-#include <OplPcTools/Library.h>
-#include <OplPcTools/FilenameValidator.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
+#include <OplPcTools/File.h>
+#include <OplPcTools/FilenameValidator.h>
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
+#include <QPushButton>
+#include <QCloseEvent>
 
 using namespace OplPcTools::UI;
 
@@ -34,7 +35,7 @@ VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
     setWindowFlag(Qt::WindowCloseButtonHint, false);
 #endif
     setupUi(this);
-    mp_edit_title->setValidator(new FilenameValidator(this));
+    mp_edit_title->setValidator(new FilenameValidator(g_filename_forbidden_characters, this));
     mp_combobox_size->addItem(tr("8 MiB"), 8);
     mp_combobox_size->addItem(tr("16 MiB"), 16);
     mp_combobox_size->addItem(tr("32 MiB"), 32);
@@ -86,8 +87,7 @@ void VmcCreateDialog::setProgressVisibility()
 
 void VmcCreateDialog::setSaveButtonState()
 {
-    QString filename = mp_edit_title->text().trimmed();
-    mp_button_box->button(QDialogButtonBox::Save)->setDisabled(filename.isEmpty());
+    mp_button_box->button(QDialogButtonBox::Save)->setEnabled(mp_edit_title->hasAcceptableInput());
 }
 
 void VmcCreateDialog::closeEvent(QCloseEvent * _event)

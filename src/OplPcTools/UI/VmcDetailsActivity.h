@@ -37,9 +37,6 @@ class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
 
 public:
     explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
-
-
-public:
     static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
 
 private:
@@ -54,6 +51,9 @@ private:
     void onFsBackButtonClick();
     void onEncodingChanged();
     void renameVmc();
+    void showTreeContextMenu(const QPoint & _point);
+    void createDirectory();
+    void renameEntry();
 
 private:
     const Vmc & mr_vmc;

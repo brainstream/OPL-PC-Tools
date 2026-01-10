@@ -20,20 +20,24 @@
 
 using namespace OplPcTools;
 
-const QString FilenameValidator::s_disallowed_characters("<>:\"/\\|?*");
-
-FilenameValidator::FilenameValidator(QObject * _parent /*= nullptr*/) :
-    QValidator(_parent)
+FilenameValidator::FilenameValidator(const QString & _forbidden_characters, QObject * _parent /*= nullptr*/) :
+    QValidator(_parent),
+    m_forbidden_characters(_forbidden_characters),
+    m_max_length(0)
 {
 }
 
 QValidator::State FilenameValidator::validate(QString & _input, int & _pos) const
 {
     Q_UNUSED(_pos);
-    int size = _input.size();
-    for(int i = 0; i < size; ++i)
+    size_t size = static_cast<size_t>(_input.size());
+    if(size == 0)
+        return QValidator::Intermediate;
+    if(m_max_length && size > m_max_length)
+        return QValidator::Invalid;
+    for(size_t i = 0; i < size; ++i)
     {
-        if(s_disallowed_characters.contains(_input[i]))
+        if(m_forbidden_characters.contains(_input[i]))
             _input[i] = '_';
     }
     return QValidator::Acceptable;

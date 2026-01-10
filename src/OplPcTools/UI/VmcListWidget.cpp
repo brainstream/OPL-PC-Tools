@@ -213,6 +213,7 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_btn_delete_vmc->setDefaultAction(mp_action_delete_vmc);
     mp_btn_rename_vmc->setDefaultAction(mp_action_rename_vmc);
     mp_btn_export->setDefaultAction(mp_action_export);
+    mp_btn_properties->setDefaultAction(mp_action_properties);
     mp_model = new VmcTreeModel(this);
     mp_proxy_model = new QSortFilterProxyModel(this);
     mp_proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);

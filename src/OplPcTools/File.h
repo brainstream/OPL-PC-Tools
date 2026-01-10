@@ -16,12 +16,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_FILE__
-#define __OPLPCTOOLS_FILE__
+#pragma once
 
-#include <QFile>
-#include <QSharedPointer>
 #include <OplPcTools/Exception.h>
+#include <QSharedPointer>
+#include <QFile>
 
 namespace OplPcTools {
 
@@ -55,10 +54,8 @@ inline qint64 readFile(QFile & _file, char * _buffer, qint64 _length)
     return read_bytes;
 }
 
+constexpr char g_filename_forbidden_characters[] = "<>:\"/\\|?*";
+
 bool isFilenameValid(const QString & _filename);
 
-void validateFilename(const QString & _filename);
-
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_FILE__

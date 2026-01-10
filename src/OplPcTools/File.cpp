@@ -20,7 +20,6 @@
 #   include <fcntl.h>
 #endif
 
-#include <OplPcTools/FilenameValidator.h>
 #include <OplPcTools/File.h>
 
 namespace {
@@ -70,19 +69,10 @@ bool isFilenameValid(const QString & _filename)
 {
     for(const QChar & chr : _filename)
     {
-        if(FilenameValidator::s_disallowed_characters.contains(chr))
-            return false;
+        for(size_t i = 0; g_filename_forbidden_characters[i]; ++i)
+            if(chr == g_filename_forbidden_characters[i]) return false;
     }
     return true;
-}
-
-void validateFilename(const QString & _filename)
-{
-    if(!isFilenameValid(_filename))
-        throw ValidationException(QString("%1: %2").arg(
-            QObject::tr("The following characters are not allowed"),
-            FilenameValidator::s_disallowed_characters)
-        );
 }
 
 } // namespace OplPcTools

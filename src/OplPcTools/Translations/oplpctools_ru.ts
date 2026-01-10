@@ -908,37 +908,37 @@
 <context>
     <name>OplPcTools::UI::VmcCreateDialog</name>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="38"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
         <source>8 MiB</source>
         <translation>8 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
         <source>16 MiB</source>
         <translation>16 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
         <source>32 MiB</source>
         <translation>32 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
         <source>64 MiB</source>
         <translation>64 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
         <source>128 MiB</source>
         <translation>128 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="44"/>
         <source>256 MiB</source>
         <translation>256 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="44"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="45"/>
         <source>512 MiB</source>
         <translation>512 МиБ</translation>
     </message>
@@ -946,22 +946,22 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="329"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="311"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="258"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="259"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="258"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="259"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="272"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -988,24 +988,37 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::VmcFileNameDialog</name>
+    <message>
+        <location filename="../UI/VmcFileNameDialog.cpp" line="54"/>
+        <source>Directory Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcFileNameDialog.cpp" line="54"/>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="321"/>
+        <location filename="../UI/VmcListWidget.cpp" line="322"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="322"/>
+        <location filename="../UI/VmcListWidget.cpp" line="323"/>
         <source>Delete VMC</source>
         <translation>Удалить VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="323"/>
+        <location filename="../UI/VmcListWidget.cpp" line="324"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation>Вы уверены, что хотите удалить эту VMC?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="387"/>
+        <location filename="../UI/VmcListWidget.cpp" line="388"/>
         <source>Select directory</source>
         <translation>Выбор каталога</translation>
     </message>
@@ -1146,22 +1159,22 @@
         <translation>&lt;Без названия&gt;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="31"/>
+        <location filename="../File.h" line="30"/>
         <source>Unable to open file &quot;%1&quot;</source>
         <translation>Не могу открыть файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="39"/>
+        <location filename="../File.h" line="38"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="46"/>
+        <location filename="../File.h" line="45"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="54"/>
+        <location filename="../File.h" line="53"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
@@ -1196,7 +1209,7 @@
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="192"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="193"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
@@ -1241,12 +1254,12 @@
         <translation>&quot;%1&quot; не является файлом</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="65"/>
+        <location filename="../File.cpp" line="64"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Не могу открыть файл для записи: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="83"/>
+        <location filename="../UI/GameRenameDialog.cpp" line="58"/>
         <source>The following characters are not allowed</source>
         <translation>Следующие символы запрещены</translation>
     </message>
@@ -1426,6 +1439,60 @@
         <translation>Кодировка</translation>
     </message>
     <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="236"/>
+        <source>Create Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="239"/>
+        <source>F7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="251"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="254"/>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="obsolete">Экспорт</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="269"/>
+        <source>Ctrl+E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="299"/>
+        <source>Ins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
+        <source>Download</source>
+        <translation type="unfinished">Скачать</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
+        <source>Rename</source>
+        <translation type="unfinished">Переименовать</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="284"/>
+        <source>F2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
+        <source>Upload files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Encoding</source>
         <translation type="vanished">Кодировка</translation>
     </message>
@@ -1433,49 +1500,64 @@
 <context>
     <name>VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="153"/>
+        <location filename="../UI/VmcListWidget.ui" line="172"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="197"/>
+        <location filename="../UI/VmcListWidget.ui" line="216"/>
         <source>Create</source>
         <translation>Создать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="200"/>
+        <location filename="../UI/VmcListWidget.ui" line="219"/>
         <source>Create VMC</source>
         <translation>Создать VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="212"/>
+        <location filename="../UI/VmcListWidget.ui" line="231"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="215"/>
+        <location filename="../UI/VmcListWidget.ui" line="234"/>
         <source>Delete VMC</source>
         <translation>Удалить VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="227"/>
+        <location filename="../UI/VmcListWidget.ui" line="246"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="230"/>
+        <location filename="../UI/VmcListWidget.ui" line="249"/>
         <source>Rename VMC</source>
         <translation>Переименовать VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="242"/>
+        <location filename="../UI/VmcListWidget.ui" line="261"/>
         <source>Properties</source>
         <translation>Свойства</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="254"/>
+        <location filename="../UI/VmcListWidget.ui" line="264"/>
+        <source>Alt+Return</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.ui" line="273"/>
         <source>Export</source>
         <translation>Экспорт</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.ui" line="276"/>
+        <source>Download VMC content to local disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcListWidget.ui" line="279"/>
+        <source>Ctrl+E</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

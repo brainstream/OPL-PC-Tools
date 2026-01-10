@@ -16,21 +16,22 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCRENAMEDIALOG__
-#define __OPLPCTOOLS_VMCRENAMEDIALOG__
+#pragma once
 
-#include "ui_VmcRenameDialog.h"
+#include "ui_VmcFileNameDialog.h"
 
 namespace OplPcTools {
 namespace UI {
 
-class VmcRenameDialog : public QDialog, private Ui::VmcRenameDialog
+class VmcFileNameDialog : public QDialog, private Ui::VmcFileNameDialog
 {
     Q_OBJECT
 
 public:
-    explicit VmcRenameDialog(const QString & _name, QWidget * _parent = nullptr);
-    QString name() const;
+    explicit VmcFileNameDialog(QWidget * _parent = nullptr);
+    void setCurrentFilename(const QString & _filename);
+    const QString currentFilename() const;
+    void setTitle(bool _is_directory);
 
 private:
     void setSaveButtonState();
@@ -38,5 +39,3 @@ private:
 
 } // namespace UI
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCRENAMEDIALOG__

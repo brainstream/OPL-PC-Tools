@@ -51,15 +51,11 @@ GameRenameDialog::FilenameValidator::FilenameValidator() :
 
 bool GameRenameDialog::FilenameValidator::validate(const QString & _name)
 {
-    m_is_invalid = false;
-    try
+    m_is_invalid = !isFilenameValid(_name);
+    if(m_is_invalid)
     {
-        validateFilename(_name);
-    }
-    catch(const ValidationException & _exception)
-    {
-        m_is_invalid = true;
-        m_message = _exception.message();
+        m_message = QString("%1: %2")
+            .arg(QObject::tr("The following characters are not allowed"), g_filename_forbidden_characters);
     }
     return !m_is_invalid;
 }

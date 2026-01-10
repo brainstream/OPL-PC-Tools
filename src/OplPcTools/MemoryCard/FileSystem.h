@@ -129,7 +129,8 @@ public:
     int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);
     void writeFile(const Path & _path, const QByteArray & _data);
     void createDirectory(const Path & _path);
-    void deleteFileOrDirectory(const Path & _path);
+    void remove(const Path & _path);
+    void rename(const Path & _path, const QByteArray & _new_name);
     uint32_t totalUsedBytes() const;
     uint32_t totalFreeBytes() const;
 

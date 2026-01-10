@@ -582,7 +582,7 @@ void FileSystem::freeFAT(const QList<uint32_t> & _clusters)
     }
 }
 
-void FileSystem::deleteFileOrDirectory(const Path & _path)
+void FileSystem::remove(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
@@ -618,6 +618,22 @@ void FileSystem::eraseEntriesRecursive(const EntryPath & _path)
     {
         freeFAT(getEntryClusters(_path.entry));
     }
+}
+
+void FileSystem::rename(const Path & _path, const QByteArray & _new_name)
+{
+    std::optional<EntryPath> entry_path = resolvePath(_path);
+    if(!entry_path)
+        throwPathNotFound();
+    QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
+    readCluster(entry_path->address.cluster, false, buffer.data());
+    FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
+    memset(entries[entry_path->address.entry].name, 0, sizeof(FSEntry::name));
+    strncpy(
+        entries[entry_path->address.entry].name,
+        _new_name.data(),
+        std::min(sizeof(FSEntry::name), static_cast<size_t>(_new_name.size())));
+    writeCluster(entry_path->address.cluster, false, buffer.data());
 }
 
 uint32_t FileSystem::totalUsedBytes() const

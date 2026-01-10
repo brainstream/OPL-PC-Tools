@@ -295,10 +295,16 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     //     m_vmc_fs_ptr->writeFile(MemoryCard::Path("/TEST_DATA/test.txt"), QString("Hello, World").toLatin1());
     // });
 
+    // QPushButton * rename_file_btn = new QPushButton("Rename File", this);
+    // mp_layout_3->addWidget(rename_file_btn);
+    // connect(rename_file_btn, &QPushButton::clicked, this, [this]() {
+    //     m_vmc_fs_ptr->rename(MemoryCard::Path("/TEST_DATA/test.txt"), "new_name.txt");
+    // });
+
     // QPushButton * delete_dir_btn = new QPushButton("Delete Directory", this);
     // mp_layout_3->addWidget(delete_dir_btn);
     // connect(delete_dir_btn, &QPushButton::clicked, this, [this]() {
-    //     m_vmc_fs_ptr->deleteFileOrDirectory(MemoryCard::Path("/TEST_DATA"));
+    //     m_vmc_fs_ptr->remove(MemoryCard::Path("/TEST_DATA"));
     // });
 
 

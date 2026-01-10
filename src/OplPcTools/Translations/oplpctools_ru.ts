@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name></name>
+    <message>
+        <source>File not found</source>
+        <translation type="obsolete">Файл не найден</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is not a file</source>
+        <translation type="obsolete">&quot;%1&quot; не является файлом</translation>
+    </message>
+    <message>
+        <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
+        <translation type="obsolete">Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
+    </message>
+</context>
+<context>
     <name>AboutDialog</name>
     <message>
         <location filename="../UI/AboutDialog.ui" line="20"/>
@@ -1186,42 +1201,42 @@
         <translation>&lt;каталог&gt;</translation>
     </message>
     <message>
-        <location filename="../MCFS/VmcFormatter.cpp" line="50"/>
+        <location filename="../MemoryCard/VmcFormatter.cpp" line="50"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="33"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="33"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>VMC повреждена или имеет некорректный формат</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="38"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="38"/>
         <source>Path not found</source>
         <translation>Путь не найден</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="43"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="43"/>
         <source>Not enough free space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="411"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="414"/>
         <source>Entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FATable.h" line="119"/>
+        <location filename="../MemoryCard/FATable.h" line="119"/>
         <source>FAT cluster index %1 is out of range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="327"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="330"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>
     <message>
-        <location filename="../MCFS/FileSystemDriver.cpp" line="329"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="332"/>
         <source>&quot;%1&quot; is not a file</source>
         <translation>&quot;%1&quot; не является файлом</translation>
     </message>

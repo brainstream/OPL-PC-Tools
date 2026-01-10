@@ -18,11 +18,11 @@
 
 #pragma once
 
-#include <OplPcTools/MCFS/Superblock.h>
+#include <OplPcTools/MemoryCard/Superblock.h>
 #include <QFile>
 
 namespace OplPcTools {
-namespace MCFS {
+namespace MemoryCard {
 
 class VmcFormatter final
 {
@@ -47,5 +47,5 @@ private:
     uint32_t m_size_mib;
 };
 
-} // namespace MCFS
+} // namespace MemoryCard
 } // namespace OplPcTools

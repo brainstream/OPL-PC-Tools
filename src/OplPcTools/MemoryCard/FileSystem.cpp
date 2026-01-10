@@ -16,12 +16,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/MCFS/FileSystemDriver.h>
+#include <OplPcTools/MemoryCard/FileSystem.h>
 #include <OplPcTools/File.h>
 #include <QRegularExpression>
 
 using namespace OplPcTools;
-using namespace OplPcTools::MCFS;
+using namespace OplPcTools::MemoryCard;
 
 #define INVALID_CLUSTER_PTR static_cast<uint32_t>(-1)
 #define NULL_CLUSTER_PTR 0
@@ -47,7 +47,7 @@ namespace {
 
 struct File::Private
 {
-    FileSystemDriver * driver;
+    FileSystem * fs;
     QByteArray name;
     uint32_t size;
     uint32_t position;
@@ -86,21 +86,21 @@ bool File::seek(uint32_t _pos)
 
 int64_t File::read(char * _buffer, int64_t _max_size)
 {
-    return mp_private->driver->readFile(*this->mp_private, _buffer, _max_size);
+    return mp_private->fs->readFile(*this->mp_private, _buffer, _max_size);
 }
 
-FileSystemDriver::FileSystemDriver(const QString & _filepath) :
+FileSystem::FileSystem(const QString & _filepath) :
     m_file(_filepath),
     mp_info(nullptr)
 {
 }
 
-FileSystemDriver::~FileSystemDriver()
+FileSystem::~FileSystem()
 {
     deinit();
 }
 
-void FileSystemDriver::deinit()
+void FileSystem::deinit()
 {
     if(m_file.isOpen())
         m_file.close();
@@ -109,12 +109,12 @@ void FileSystemDriver::deinit()
     m_fat.reset();
 }
 
-const FSInfo * FileSystemDriver::info() const
+const FSInfo * FileSystem::info() const
 {
     return mp_info;
 }
 
-void FileSystemDriver::load()
+void FileSystem::load()
 {
     deinit();
     ::openFile(m_file, QIODevice::OpenMode(QIODevice::ReadWrite | QIODevice::ExistingOnly));
@@ -122,7 +122,7 @@ void FileSystemDriver::load()
     readFAT();
 }
 
-void FileSystemDriver::readSuperblock()
+void FileSystem::readSuperblock()
 {
     QScopedPointer<Superblock> sb(new Superblock);
     read(0, reinterpret_cast<char *>(sb.data()), sizeof(Superblock));
@@ -145,12 +145,13 @@ void FileSystemDriver::readSuperblock()
     mp_info->cardflags = sb->cardflags;
     mp_info->cluster_size = sb->cluster_size;
     mp_info->fat_entries_per_cluster = sb->fat_entries_per_cluster;
+    mp_info->fs_entries_per_cluster = sb->cluster_size / sizeof(FSEntry);
     mp_info->clusters_per_block = sb->clusters_per_block;
     mp_info->cardform = sb->cardform;
     mp_info->max_allocatable_clusters = sb->max_allocatable_clusters;
 }
 
-void FileSystemDriver::readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size /*= 0*/)
+void FileSystem::readCluster(uint32_t _cluster, bool _is_absolute, char * _buffer, uint32_t _size /*= 0*/)
 {
     qint64 offset = _cluster * mp_info->cluster_size;
     if(!_is_absolute)
@@ -158,37 +159,34 @@ void FileSystemDriver::readCluster(uint32_t _cluster, bool _is_absolute, char * 
     read(offset, _buffer, _size == 0 ? mp_info->cluster_size : _size);
 }
 
-void FileSystemDriver::read(quint64 _offset, char * _buffer, uint32_t _size)
+void FileSystem::read(quint64 _offset, char * _buffer, uint32_t _size)
 {
     if(!m_file.seek(_offset) || m_file.read(_buffer, _size) != _size)
         throwNotFormatted();
 }
 
-void FileSystemDriver::validateSuperblock(const Superblock & _sb) const
+void FileSystem::validateSuperblock(const Superblock & _sb) const
 {
     static QRegularExpression version_regex("^1\\.[012]\\.0\\.0$");
     if(
         std::strncmp(g_mcfs_magic, _sb.magic, strlen(g_mcfs_magic)) != 0 ||
         !version_regex.match(_sb.version).hasMatch() ||
         _sb.pagesize != 512 ||
-        (
-            _sb.cluster_size != 1024 && _sb.cluster_size != 512) ||
-            _sb.pages_per_cluster != _sb.cluster_size / _sb.pagesize ||
-            _sb.alloc_offset == INVALID_CLUSTER_PTR ||
-            _sb.alloc_offset < 2 ||
-            _sb.alloc_end == INVALID_CLUSTER_PTR ||
-            _sb.alloc_end < _sb.alloc_offset ||
-            _sb.ifc_ptr_list[0] >= _sb.alloc_offset
-        )
+        (_sb.cluster_size != 1024 && _sb.cluster_size != 512) ||
+        _sb.pages_per_cluster != _sb.cluster_size / _sb.pagesize ||
+        _sb.alloc_offset == INVALID_CLUSTER_PTR ||
+        _sb.alloc_offset < 2 ||
+        _sb.alloc_end == INVALID_CLUSTER_PTR ||
+        _sb.alloc_end < _sb.alloc_offset ||
+        _sb.ifc_ptr_list[0] >= _sb.alloc_offset)
     {
         throwNotFormatted();
     }
 }
 
-void FileSystemDriver::readFAT()
+void FileSystem::readFAT()
 {
     m_fat.reset();
-    const size_t entries_per_cluster = mp_info->cluster_size / sizeof(uint32_t);
 
     //
     // Loading IFC
@@ -200,7 +198,11 @@ void FileSystemDriver::readFAT()
         if(ptr == INVALID_CLUSTER_PTR || ptr == NULL_CLUSTER_PTR)
             break;
     }
-    const size_t fat_ptrs_count = ifc_ptr_count * entries_per_cluster;
+
+    //
+    // Loading FAT pointers
+    //
+    const size_t fat_ptrs_count = ifc_ptr_count * mp_info->fat_entries_per_cluster;
     QScopedArrayPointer<uint32_t> fat_ptrs(new uint32_t[fat_ptrs_count]);
     for(size_t i = 0; i < ifc_ptr_count; ++i)
     {
@@ -211,18 +213,19 @@ void FileSystemDriver::readFAT()
     //
     // Loading FATs
     //
-    QList<FATEntry> fat(entries_per_cluster);
+    QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
     for(size_t i = 0; i < fat_ptrs_count; ++i)
     {
         const uint32_t fat_cluster = fat_ptrs[i];
         if(fat_cluster == INVALID_CLUSTER_PTR)
             break;
-        readCluster(fat_cluster, true, reinterpret_cast<char *>(fat.data()));
-        m_fat.append(fat_cluster, fat);
+        readCluster(fat_cluster, true, buffer.data());
+        FATEntry * fat = reinterpret_cast<FATEntry *>(buffer.data());
+        m_fat.append(fat_cluster, QList<FATEntry>(fat, &fat[mp_info->fat_entries_per_cluster]));
     }
 }
 
-QList<EntryInfo> FileSystemDriver::enumerateEntries(const Path & _path)
+QList<EntryInfo> FileSystem::enumerateEntries(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     QList<EntryInfo> result;
@@ -241,7 +244,7 @@ QList<EntryInfo> FileSystemDriver::enumerateEntries(const Path & _path)
     return result;
 }
 
-std::optional<EntryPath> FileSystemDriver::resolvePath(const Path & _path)
+std::optional<EntryPath> FileSystem::resolvePath(const Path & _path)
 {
     EntryPath entry_path = getRootEntry();
     for(const QByteArray & path_part : _path.parts())
@@ -262,13 +265,13 @@ std::optional<EntryPath> FileSystemDriver::resolvePath(const Path & _path)
     return entry_path;
 }
 
-EntryPath FileSystemDriver::getRootEntry()
+EntryPath FileSystem::getRootEntry()
 {
-    QScopedArrayPointer<char> ptr(new char[sizeof(FSEntry)]);
-    readCluster(mp_info->rootdir_cluster, false, ptr.data(), sizeof(FSEntry));
+    QByteArray buffer(sizeof(FSEntry), Qt::Uninitialized);
+    readCluster(mp_info->rootdir_cluster, false, buffer.data(), sizeof(FSEntry));
     return EntryPath
     {
-        .entry = EntryInfo::fromFSEntry(*reinterpret_cast<FSEntry *>(ptr.data())),
+        .entry = EntryInfo::fromFSEntry(*reinterpret_cast<FSEntry *>(buffer.data())),
         .address = EntryAddress
         {
             .cluster = mp_info->rootdir_cluster,
@@ -277,16 +280,16 @@ EntryPath FileSystemDriver::getRootEntry()
     };
 }
 
-void FileSystemDriver::forEachEntry(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback)
+void FileSystem::forEachEntry(const EntryInfo & _dir, std::function<bool(const EntryPath &)> _callback)
 {
-    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
     QList<uint32_t> clusters = getEntryClusters(_dir);
-    QScopedArrayPointer<FSEntry> entries(new FSEntry[entry_count_per_cluster]);
+    QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
     uint32_t read_count = 0;
     foreach(uint32_t cluster, clusters)
     {
-        readCluster(cluster, false, reinterpret_cast<char *>(entries.data()));
-        for(size_t i = 0; i < entry_count_per_cluster; ++i)
+        readCluster(cluster, false, buffer.data());
+        const FSEntry * entries = reinterpret_cast<const FSEntry *>(buffer.data());
+        for(size_t i = 0; i < mp_info->fs_entries_per_cluster; ++i)
         {
             if(++read_count > _dir.length)
                 return;
@@ -304,7 +307,7 @@ void FileSystemDriver::forEachEntry(const EntryInfo & _dir, std::function<bool(c
     }
 }
 
-QList<uint32_t> FileSystemDriver::getEntryClusters(const EntryInfo & _entry) const
+QList<uint32_t> FileSystem::getEntryClusters(const EntryInfo & _entry) const
 {
     if(_entry.cluster > mp_info->max_allocatable_clusters)
         throwNotFormatted();
@@ -320,7 +323,7 @@ QList<uint32_t> FileSystemDriver::getEntryClusters(const EntryInfo & _entry) con
     return result;
 }
 
-QSharedPointer<File> FileSystemDriver::openFile(const Path & _path)
+QSharedPointer<File> FileSystem::openFile(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
@@ -329,14 +332,14 @@ QSharedPointer<File> FileSystemDriver::openFile(const Path & _path)
         throw MCFSException(QObject::tr("\"%1\" is not a file").arg(_path));
     File::Private * pr = new File::Private;
     pr->clusters = getEntryClusters(entry_path->entry);
-    pr->driver = this;
+    pr->fs = this;
     pr->position = 0;
     pr->size = entry_path->entry.length;
     pr->name = entry_path->entry.name;
     return QSharedPointer<File>(new File(pr));
 }
 
-int64_t FileSystemDriver::readFile(File::Private & _file, char * _buffer, uint32_t _max_size)
+int64_t FileSystem::readFile(File::Private & _file, char * _buffer, uint32_t _max_size)
 {
     const uint32_t start_cluster_index = _file.position / mp_info->cluster_size;
     const uint32_t cluster_count = static_cast<uint32_t>(_file.clusters.size());
@@ -345,7 +348,7 @@ int64_t FileSystemDriver::readFile(File::Private & _file, char * _buffer, uint32
     uint32_t position_in_cluster = _file.position % mp_info->cluster_size;
     uint32_t position_in_file = _file.position;
     uint32_t position_in_buffer = 0;
-    QScopedArrayPointer<char> cluster_buff(new char[mp_info->cluster_size]);
+    QByteArray cluster_buff(mp_info->cluster_size, Qt::Uninitialized);
     for(int cluster_index = start_cluster_index; cluster_index < _file.clusters.size(); ++cluster_index)
     {
         const uint32_t available_to_read = std::min(
@@ -365,7 +368,7 @@ int64_t FileSystemDriver::readFile(File::Private & _file, char * _buffer, uint32
     return position_in_buffer;
 }
 
-void FileSystemDriver::writeFile(const Path & _path, const QByteArray & _data)
+void FileSystem::writeFile(const Path & _path, const QByteArray & _data)
 {
     Path dir_path = _path.up();
     std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
@@ -374,14 +377,14 @@ void FileSystemDriver::writeFile(const Path & _path, const QByteArray & _data)
     writeFile(*dir_entry_path, _path.filename(), _data, false);
 }
 
-void FileSystemDriver::createDirectory(const Path & _path)
+void FileSystem::createDirectory(const Path & _path)
 {
     Path parent_dir_path = _path.up();
     std::optional<EntryPath> parent_dir_entry_path = resolvePath(parent_dir_path);
     if(!parent_dir_entry_path.has_value())
         throwPathNotFound();
 
-    const FSDateTime now = FSDateTime::now();
+    const DateTime now = DateTime::now();
     QByteArray buffer(sizeof(FSEntry) * 2, '\0');
     FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
     for(int i = 0; i < 2; ++i)
@@ -399,7 +402,7 @@ void FileSystemDriver::createDirectory(const Path & _path)
     writeFile(*parent_dir_entry_path, _path.filename(), buffer, true);
 }
 
-void FileSystemDriver::writeFile(
+void FileSystem::writeFile(
     const EntryPath & _directory_path,
     const QByteArray & _filename,
     const QByteArray & _data,
@@ -447,12 +450,11 @@ void FileSystemDriver::writeFile(
     }
 }
 
-bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
+bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
 {
-    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
     QList<uint32_t> parent_dir_clusters = getEntryClusters(_parent.entry);
 
-    FSEntrySearchResult parent_free_entry;
+    EntrySearchResult parent_free_entry;
     if(!findFreeEntry(parent_dir_clusters, parent_free_entry))
     {
         // If all entries of the parent cluster are occupied,
@@ -467,8 +469,8 @@ bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _
 
         parent_free_entry.entry_index = 0;
         parent_free_entry.cluster_index = new_cluster->first();
-        parent_free_entry.cluster_entries.reset(new FSEntry[entry_count_per_cluster]);
-        for(size_t i = 0; i < entry_count_per_cluster; ++i)
+        parent_free_entry.cluster_entries.resize(mp_info->fs_entries_per_cluster);
+        for(size_t i = 0; i < mp_info->fs_entries_per_cluster; ++i)
         {
             parent_free_entry.cluster_entries[i] = {};
             parent_free_entry.cluster_entries[i].cluster = 0xFFFFFFFF;
@@ -484,7 +486,7 @@ bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _
             new_entry.mode |= EM_FILE;
         new_entry.length = _entry.length;
         new_entry.cluster = _entry.cluster;
-        new_entry.created = new_entry.modified = FSDateTime::now();
+        new_entry.created = new_entry.modified = DateTime::now();
         std::strncpy(
             new_entry.name,
             _entry.name.data(),
@@ -495,7 +497,7 @@ bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _
     writeCluster(
         parent_free_entry.cluster_index,
         false,
-        reinterpret_cast<const char *>(parent_free_entry.cluster_entries.get()));
+        reinterpret_cast<const char *>(parent_free_entry.cluster_entries.data()));
 
     // Increment parent's length
     changeEntryLength(_parent.address, 1);
@@ -503,17 +505,16 @@ bool FileSystemDriver::allocEntry(const EntryPath & _parent, const EntryInfo & _
     return true;
 }
 
-void FileSystemDriver::changeEntryLength(const EntryAddress & _address, int8_t _amount)
+void FileSystem::changeEntryLength(const EntryAddress & _address, int8_t _amount)
 {
-    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
-    FSEntry * entries = new FSEntry[entry_count_per_cluster];
-    readCluster(_address.cluster, false, reinterpret_cast<char *>(entries));
+    QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
+    readCluster(_address.cluster, false, buffer.data());
+    FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
     entries[_address.entry].length += _amount;
     writeCluster(_address.cluster, false, reinterpret_cast<const char *>(entries));
-    delete [] entries;
 }
 
-void FileSystemDriver::writeFATEntry(uint32_t _cluster, FATEntry _entry)
+void FileSystem::writeFATEntry(uint32_t _cluster, FATEntry _entry)
 {
     const uint32_t fat_cluster = m_fat.fatCluster(_cluster);
     const uint32_t entry_index = _cluster % mp_info->fat_entries_per_cluster;
@@ -522,19 +523,19 @@ void FileSystemDriver::writeFATEntry(uint32_t _cluster, FATEntry _entry)
     m_fat.setEntry(_cluster, _entry);
 }
 
-bool FileSystemDriver::findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result)
+bool FileSystem::findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySearchResult & _result)
 {
-    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
-    std::unique_ptr<FSEntry[]> entries(new FSEntry[entry_count_per_cluster]);
+    QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
     foreach(uint32_t parent_cluster, _parent_clusters)
     {
-        readCluster(parent_cluster, false, reinterpret_cast<char *>(entries.get()));
-        for(size_t entry_index = 0; entry_index < entry_count_per_cluster; ++entry_index)
+        readCluster(parent_cluster, false, buffer.data());
+        FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
+        for(size_t entry_index = 0; entry_index < mp_info->fs_entries_per_cluster; ++entry_index)
         {
             FSEntry & entry = entries[entry_index];
             if(!(entry.mode & EM_EXISTS))
             {
-                _result.cluster_entries.swap(entries);
+                _result.cluster_entries = QList<FSEntry>(entries, &entries[mp_info->fs_entries_per_cluster]);
                 _result.cluster_index = parent_cluster;
                 _result.entry_index = entry_index;
                 return true;
@@ -544,14 +545,14 @@ bool FileSystemDriver::findFreeEntry(const QList<uint32_t> & _parent_clusters, F
     return false;
 }
 
-void FileSystemDriver::writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer)
+void FileSystem::writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer)
 {
     const uint32_t offset = ((_is_absolute ? 0 : mp_info->alloc_offset) + _cluster) * mp_info->cluster_size;
     m_file.seek(offset);
     m_file.write(_buffer, mp_info->cluster_size);
 }
 
-std::optional<QList<uint32_t>> FileSystemDriver::alloc(uint32_t _allocation_size)
+std::optional<QList<uint32_t>> FileSystem::alloc(uint32_t _allocation_size)
 {
     qsizetype cluster_count = _allocation_size / mp_info->cluster_size;
     if(_allocation_size % mp_info->cluster_size)
@@ -571,7 +572,7 @@ std::optional<QList<uint32_t>> FileSystemDriver::alloc(uint32_t _allocation_size
     return result;
 }
 
-void FileSystemDriver::freeFAT(const QList<uint32_t> & _clusters)
+void FileSystem::freeFAT(const QList<uint32_t> & _clusters)
 {
     const FATEntry free = FATEntry::free();
     foreach(uint32_t cluster, _clusters)
@@ -581,21 +582,20 @@ void FileSystemDriver::freeFAT(const QList<uint32_t> & _clusters)
     }
 }
 
-void FileSystemDriver::deleteFileOrDirectory(const Path & _path)
+void FileSystem::deleteFileOrDirectory(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
         throwPathNotFound();
 
-    const size_t entry_count_per_cluster = mp_info->cluster_size / sizeof(FSEntry);
     const std::optional<EntryPath> parent = resolvePath(_path.up());
 
     { // Mark parent's entry as unused
-        FSEntry * entries = new FSEntry[entry_count_per_cluster];
-        readCluster(entry_path->address.cluster, false, reinterpret_cast<char *>(entries));
+        QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
+        readCluster(entry_path->address.cluster, false, buffer.data());
+        FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
         entries[entry_path->address.entry].mode = 0;
-        writeCluster(entry_path->address.cluster, false, reinterpret_cast<const char *>(entries));
-        delete [] entries;
+        writeCluster(entry_path->address.cluster, false, buffer.data());
     }
 
     eraseEntriesRecursive(*entry_path);
@@ -604,7 +604,7 @@ void FileSystemDriver::deleteFileOrDirectory(const Path & _path)
     changeEntryLength(parent->address, -1);
 }
 
-void FileSystemDriver::eraseEntriesRecursive(const EntryPath & _path)
+void FileSystem::eraseEntriesRecursive(const EntryPath & _path)
 {
     if(_path.entry.is_directory)
     {
@@ -620,12 +620,12 @@ void FileSystemDriver::eraseEntriesRecursive(const EntryPath & _path)
     }
 }
 
-uint32_t FileSystemDriver::totalUsedBytes() const
+uint32_t FileSystem::totalUsedBytes() const
 {
     return m_fat.allocatedCount() * mp_info->cluster_size;
 }
 
-uint32_t FileSystemDriver::totalFreeBytes() const
+uint32_t FileSystem::totalFreeBytes() const
 {
     const uint32_t allocable_space = (mp_info->alloc_end - mp_info->alloc_offset) * mp_info->cluster_size;
     return allocable_space - totalUsedBytes();

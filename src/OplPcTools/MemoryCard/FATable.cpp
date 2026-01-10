@@ -16,53 +16,52 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#include <OplPcTools/MemoryCard/FATable.h>
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/MemoryCard/FileSystem.h>
-#include "ui_VmcDetailsActivity.h"
+using namespace OplPcTools::MemoryCard;
 
-namespace OplPcTools {
-namespace UI {
-
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+void FATable::append(uint32_t _cluster, const QList<FATEntry> & _fat)
 {
-    Q_OBJECT
+    m_cluster_count += _fat.count();
+    m_tables.append(Table { .fat = _fat, .cluster = _cluster });
+    foreach(const FATEntry & entry, _fat)
+    {
+        if(!entry.isFree())
+            ++m_allocated_cluster_count;
+    }
+}
 
-public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
+void FATable::setEntry(uint32_t _index, FATEntry _entry)
+{
+    uint32_t index;
+    Table * table = findFatEntry(m_tables, _index, &index);
+    table->fat[index] = _entry;
 
+    if(!_entry.isFree() && table->fat[index].isFree())
+        --m_allocated_cluster_count;
+    else if(_entry.isFree() && !table->fat[index].isFree())
+        ++m_allocated_cluster_count;
+}
 
-public:
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
-
-private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const MemoryCard::Path & _path);
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
-
-private:
-    const Vmc & mr_vmc;
-    QSharedPointer<MemoryCard::FileSystem> m_vmc_fs_ptr;
-    VmcFileSystemViewModel * mp_model;
-};
-
-
-} // namespace UI
-} // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__
+std::optional<QList<uint32_t>> FATable::findFreeClusters(uint32_t _count) const
+{
+    if(_count == 0)
+        return std::nullopt;
+    QList<uint32_t> result;
+    result.reserve(_count);
+    uint32_t cluster = 0;
+    foreach(const Table & table, m_tables)
+    {
+        foreach(const FATEntry & entry, table.fat)
+        {
+            if(entry.isFree())
+            {
+                result.append(cluster);
+                if(result.count() == _count)
+                    return result;
+            }
+            ++cluster;
+        }
+    }
+    return std::nullopt;
+}

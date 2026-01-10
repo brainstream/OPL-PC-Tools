@@ -19,7 +19,7 @@
 #include <OplPcTools/VmcCollection.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
-#include <OplPcTools/MCFS/VmcFormatter.h>
+#include <OplPcTools/MemoryCard/VmcFormatter.h>
 #include <QVector>
 
 using namespace OplPcTools;
@@ -97,7 +97,7 @@ const Vmc * VmcCollection::createVmc(const QString & _title, uint32_t _size_mib)
     validateFilename(_title);
     ensureDirectoryExists();
     QString vmc_filename = makeFilename(_title);
-    MCFS::VmcFormatter::format(vmc_filename, _size_mib);
+    MemoryCard::VmcFormatter::format(vmc_filename, _size_mib);
     Vmc * vmc = new Vmc(vmc_filename, _title, _size_mib);
     mp_vmcs->append(vmc);
     emit vmcAdded(vmc->uuid());

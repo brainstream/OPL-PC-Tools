@@ -18,14 +18,14 @@
 
 #pragma once
 
-#include <OplPcTools/MCFS/FATable.h>
-#include <OplPcTools/MCFS/FSEntry.h>
-#include <OplPcTools/MCFS/Superblock.h>
-#include <OplPcTools/MCFS/Path.h>
+#include <OplPcTools/MemoryCard/FATable.h>
+#include <OplPcTools/MemoryCard/FSEntry.h>
+#include <OplPcTools/MemoryCard/Superblock.h>
+#include <OplPcTools/MemoryCard/Path.h>
 #include <QFile>
 
 namespace OplPcTools {
-namespace MCFS {
+namespace MemoryCard {
 
 struct FSInfo final
 {
@@ -46,6 +46,7 @@ struct FSInfo final
     uint8_t cardflags;
     uint32_t cluster_size;
     uint32_t fat_entries_per_cluster;
+    uint32_t fs_entries_per_cluster;
     uint32_t clusters_per_block;
     int32_t cardform;
     uint32_t max_allocatable_clusters;
@@ -101,26 +102,25 @@ private:
     Private * mp_private;
 };
 
-class FileSystemDriver final
+class FileSystem final
 {
 private:
-    struct FSEntrySearchResult
+    struct EntrySearchResult
     {
-        FSEntrySearchResult() :
+        EntrySearchResult() :
             cluster_index(0),
-            cluster_entries(std::unique_ptr<FSEntry[]>()),
             entry_index(0)
         {
         }
 
         uint32_t cluster_index;
-        std::unique_ptr<FSEntry[]> cluster_entries;
+        QList<FSEntry> cluster_entries;
         size_t entry_index;
     };
 
 public:
-    explicit FileSystemDriver(const QString & _filepath);
-    ~FileSystemDriver();
+    explicit FileSystem(const QString & _filepath);
+    ~FileSystem();
     void load();
     const FSInfo * info() const;
     QList<EntryInfo> enumerateEntries(const Path & _path);
@@ -153,7 +153,7 @@ private:
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
     void changeEntryLength(const EntryAddress & _address, int8_t _amount);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);
-    bool findFreeEntry(const QList<uint32_t> & _parent_clusters, FSEntrySearchResult & _result);
+    bool findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySearchResult & _result);
     std::optional<QList<uint32_t>> alloc(uint32_t _allocation_size);
     void freeFAT(const QList<uint32_t> & _clusters);
     void eraseEntriesRecursive(const EntryPath & _path);
@@ -164,5 +164,5 @@ private:
     FATable m_fat;
 };
 
-} // namespace MCFS
+} // namespace MemoryCard
 } // namespace OplPcTools

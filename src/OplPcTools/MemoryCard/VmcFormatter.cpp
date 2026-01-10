@@ -16,12 +16,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/MCFS/VmcFormatter.h>
-#include <OplPcTools/MCFS/FATEntry.h>
-#include <OplPcTools/MCFS/FSEntry.h>
+#include <OplPcTools/MemoryCard/VmcFormatter.h>
+#include <OplPcTools/MemoryCard/FATEntry.h>
+#include <OplPcTools/MemoryCard/FSEntry.h>
 #include <OplPcTools/File.h>
 
-using namespace OplPcTools::MCFS;
+using namespace OplPcTools::MemoryCard;
 
 namespace {
 
@@ -167,7 +167,7 @@ void VmcFormatter::writeFAT()
 
 void VmcFormatter::writeRootDirectory()
 {
-    const FSDateTime now = FSDateTime::now();
+    const DateTime now = DateTime::now();
     FSEntry entries[2];
     std::memset(entries, 0, sizeof(entries));
     for(int i = 0; i < 2; ++i)

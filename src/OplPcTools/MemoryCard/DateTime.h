@@ -18,39 +18,37 @@
 
 #pragma once
 
-#include <OplPcTools/MCFS/FSDateTime.h>
+#include <QDateTime>
 
 namespace OplPcTools {
-namespace MCFS {
+namespace MemoryCard {
 
-enum FSEntryMode
+struct __attribute__((packed)) DateTime
 {
-    EM_READ = 0x1,
-    EM_WRITE = 0x2,
-    EM_EXECUTE = 0x4,
-    EM_PROTECTED = 0x8,
-    EM_FILE = 0x10,
-    EM_DIRECTORY = 0x20,
-    EM_POCKETSTATION = 0x800,
-    EM_PLAYSTATION = 0x1000,
-    EM_HIDDENT = 0x2000,
-    EM_EXISTS = 0x8000
+    uint8_t __reserved;
+    uint8_t sec;
+    uint8_t min;
+    uint8_t hour;
+    uint8_t day;
+    uint8_t month;
+    uint16_t year;
+
+    static DateTime now()
+    {
+        const int japan_timezone_offset_seconds = 9 * 60 * 60;
+        const QDateTime japan_now = QDateTime::currentDateTime().toOffsetFromUtc(japan_timezone_offset_seconds);
+        return DateTime
+        {
+            .__reserved = 0,
+            .sec = static_cast<uint8_t>(japan_now.time().second()),
+            .min = static_cast<uint8_t>(japan_now.time().minute()),
+            .hour = static_cast<uint8_t>(japan_now.time().hour()),
+            .day = static_cast<uint8_t>(japan_now.date().day()),
+            .month = static_cast<uint8_t>(japan_now.date().month()),
+            .year = static_cast<uint16_t>(japan_now.date().year())
+        };
+    }
 };
 
-struct __attribute__((packed)) FSEntry
-{                           // OFFSET:  (DEC)  (HEX)
-    uint16_t mode;          //          0      0x0
-    uint16_t __unused;      //          2      0x2
-    uint32_t length;        //          4      0x4
-    FSDateTime created;     //          8      0x8
-    uint32_t cluster;       //          16     0x10
-    uint32_t dir_entry;     //          20     0x14
-    FSDateTime modified;    //          24     0x18
-    uint32_t attr;          //          32     0x20
-    uint32_t __unused2[7];  //          36     0x24
-    char name[32];          //          64     0x40
-    uint8_t __unused3[416]; //          96     0x60
-};                          // TOTAL:   512    0x200
-
-} // namespace MCFS
+} // namespace MemoryCard
 } // namespace OplPcTools

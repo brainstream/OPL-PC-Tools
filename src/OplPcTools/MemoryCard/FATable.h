@@ -18,12 +18,12 @@
 
 #pragma once
 
-#include <OplPcTools/MCFS/FATEntry.h>
-#include <OplPcTools/MCFS/MCFSException.h>
+#include <OplPcTools/MemoryCard/FATEntry.h>
+#include <OplPcTools/MemoryCard/MCFSException.h>
 #include <QList>
 
 namespace OplPcTools {
-namespace MCFS {
+namespace MemoryCard {
 
 class FATable final
 {
@@ -119,5 +119,5 @@ auto FATable::findFatEntry(
     throw MCFSException(QObject::tr("FAT cluster index %1 is out of range").arg(_entry_index));
 }
 
-} // namespace MCFS
+} // namespace MemoryCard
 } // namespace OplPcTools

@@ -16,52 +16,55 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/MCFS/FATable.h>
+#pragma once
 
-using namespace OplPcTools::MCFS;
+#include <cstdint>
 
-void FATable::append(uint32_t _cluster, const QList<FATEntry> & _fat)
+namespace OplPcTools {
+namespace MemoryCard {
+
+enum FATEntryFlag : uint8_t
 {
-    m_cluster_count += _fat.count();
-    m_tables.append(Table { .fat = _fat, .cluster = _cluster });
-    foreach(const FATEntry & entry, _fat)
+    FAT_FREE = 0x7F,
+    FAT_EOF = 0xFF,
+    FAT_POINTER = 0x80
+};
+
+struct __attribute__((packed)) FATEntry
+{
+    uint32_t cluster: 24;
+    FATEntryFlag flag: 8;
+
+    static constexpr FATEntry free()
     {
-        if(!entry.isFree())
-            ++m_allocated_cluster_count;
+        return { .cluster = 0xFFFFFF, .flag = FAT_FREE };
     }
-}
 
-void FATable::setEntry(uint32_t _index, FATEntry _entry)
-{
-    uint32_t index;
-    Table * table = findFatEntry(m_tables, _index, &index);
-    table->fat[index] = _entry;
-
-    if(!_entry.isFree() && table->fat[index].isFree())
-        --m_allocated_cluster_count;
-    else if(_entry.isFree() && !table->fat[index].isFree())
-        ++m_allocated_cluster_count;
-}
-
-std::optional<QList<uint32_t>> FATable::findFreeClusters(uint32_t _count) const
-{
-    if(_count == 0)
-        return std::nullopt;
-    QList<uint32_t> result;
-    result.reserve(_count);
-    uint32_t cluster = 0;
-    foreach(const Table & table, m_tables)
+    static constexpr FATEntry endOfFile()
     {
-        foreach(const FATEntry & entry, table.fat)
-        {
-            if(entry.isFree())
-            {
-                result.append(cluster);
-                if(result.count() == _count)
-                    return result;
-            }
-            ++cluster;
-        }
+        return { .cluster = 0xFFFFFF, .flag = FAT_EOF };
     }
-    return std::nullopt;
-}
+
+    static constexpr FATEntry pointer(uint32_t _cluster)
+    {
+        return { .cluster = _cluster, .flag = FAT_POINTER };
+    }
+
+    bool isFree() const
+    {
+        return flag == FAT_FREE;
+    }
+
+    bool isEndOfFile() const
+    {
+        return flag == FAT_EOF;
+    }
+
+    bool isPointer() const
+    {
+        return flag == FAT_POINTER;
+    }
+};
+
+} // namespace MemoryCard
+} // namespace OplPcTools

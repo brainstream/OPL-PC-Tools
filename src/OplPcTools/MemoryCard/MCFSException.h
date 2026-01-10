@@ -18,37 +18,12 @@
 
 #pragma once
 
-#include <QDateTime>
+#include <OplPcTools/Exception.h>
 
 namespace OplPcTools {
-namespace MCFS {
+namespace MemoryCard {
 
-struct __attribute__((packed)) FSDateTime
-{
-    uint8_t __reserved;
-    uint8_t sec;
-    uint8_t min;
-    uint8_t hour;
-    uint8_t day;
-    uint8_t month;
-    uint16_t year;
+DECLARE_EXCEPTION(MCFSException)
 
-    static FSDateTime now()
-    {
-        const int japan_timezone_offset_seconds = 9 * 60 * 60;
-        const QDateTime japan_now = QDateTime::currentDateTime().toOffsetFromUtc(japan_timezone_offset_seconds);
-        return FSDateTime
-        {
-            .__reserved = 0,
-            .sec = static_cast<uint8_t>(japan_now.time().second()),
-            .min = static_cast<uint8_t>(japan_now.time().minute()),
-            .hour = static_cast<uint8_t>(japan_now.time().hour()),
-            .day = static_cast<uint8_t>(japan_now.date().day()),
-            .month = static_cast<uint8_t>(japan_now.date().month()),
-            .year = static_cast<uint16_t>(japan_now.date().year())
-        };
-    }
-};
-
-} // namespace MCFS
+} // namespace MemoryCard
 } // namespace OplPcTools

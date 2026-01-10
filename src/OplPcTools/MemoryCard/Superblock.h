@@ -21,7 +21,7 @@
 #include <cstdint>
 
 namespace OplPcTools {
-namespace MCFS {
+namespace MemoryCard {
 
 struct __attribute__((packed)) Superblock final
 {                                      // OFFSET:  (DEC)  (HEX)
@@ -59,5 +59,5 @@ struct __attribute__((packed)) Superblock final
 constexpr char g_mcfs_magic[] = "Sony PS2 Memory Card Format ";
 constexpr char g_mcfs_version[] = "1.2.0.0";
 
-} // namespace MCFS
+} // namespace MemoryCard
 } // namespace OplPcTools

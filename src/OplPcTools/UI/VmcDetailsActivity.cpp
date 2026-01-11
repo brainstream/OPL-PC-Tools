@@ -24,6 +24,7 @@
 #include <OplPcTools/Library.h>
 #include <OplPcTools/TextEncoding.h>
 #include <OplPcTools/Settings.h>
+#include <QFileDialog>
 #include <QStandardItemModel>
 #include <QShortcut>
 
@@ -287,10 +288,10 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_combobox_charset, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
         connect(mp_action_create_directory, &QAction::triggered, this, &VmcDetailsActivity::createDirectory);
         connect(mp_action_rename_entry, &QAction::triggered, this, &VmcDetailsActivity::renameEntry);
+        connect(mp_action_upload, &QAction::triggered, this, &VmcDetailsActivity::upload);
         setIconSize();
 
         mp_action_download->setVisible(false); // TODO: WIP
-        mp_action_upload->setVisible(false); // TODO: WIP
     }
 }
 
@@ -484,4 +485,16 @@ void VmcDetailsActivity::renameEntry()
         MemoryCard::Path(mp_edit_fs_path->text().toLatin1(), entry->name),
         dlg.currentFilename().toLatin1());
     mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+}
+
+void VmcDetailsActivity::upload()
+{
+    QFileDialog::getOpenFileContent(
+        QString(),
+        [this](const QString & __filename, const QByteArray & __content) {
+            MemoryCard::Path path(mp_edit_fs_path->text().toLatin1(), QFileInfo(__filename).fileName().toLatin1()); // TODO: encoding
+            m_vmc_fs_ptr->writeFile(path, __content);
+            mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+        },
+        this);
 }

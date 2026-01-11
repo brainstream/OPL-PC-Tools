@@ -946,22 +946,22 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="311"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="312"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="259"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="260"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="259"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="260"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="272"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="273"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1209,7 +1209,7 @@
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="193"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="194"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
@@ -1234,7 +1234,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="414"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="412"/>
         <source>Entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>

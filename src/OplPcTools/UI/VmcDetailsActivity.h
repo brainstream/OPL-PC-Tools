@@ -54,6 +54,7 @@ private:
     void showTreeContextMenu(const QPoint & _point);
     void createDirectory();
     void renameEntry();
+    void upload();
 
 private:
     const Vmc & mr_vmc;

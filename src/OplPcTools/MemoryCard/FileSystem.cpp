@@ -397,7 +397,6 @@ void FileSystem::createDirectory(const Path & _path)
     entries[0].cluster = parent_dir_entry_path->address.cluster;
     entries[0].dir_entry = parent_dir_entry_path->address.entry;
     entries[1].name[1] = '.';
-    entries[1].length = 2;
 
     writeFile(*parent_dir_entry_path, _path.filename(), buffer, true);
 }

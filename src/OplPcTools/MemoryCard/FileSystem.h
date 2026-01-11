@@ -85,7 +85,7 @@ struct EntryPath
 
 class File final
 {
-    Q_DISABLE_COPY(File)
+    Q_DISABLE_COPY_MOVE(File)
 
 public:
     struct Private;
@@ -104,6 +104,8 @@ private:
 
 class FileSystem final
 {
+    Q_DISABLE_COPY_MOVE(FileSystem)
+
 private:
     struct EntrySearchResult
     {

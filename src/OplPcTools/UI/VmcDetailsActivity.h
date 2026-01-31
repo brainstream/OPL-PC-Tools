@@ -54,7 +54,10 @@ private:
     void showTreeContextMenu(const QPoint & _point);
     void createDirectory();
     void renameEntry();
-    void upload();
+    void uploadFiles();
+    void uploadDirectoryImpl(const QString & _directory_path, const MemoryCard::Path & _dest_dir);
+    void uploadFileImpl(const QString & _file_path, const MemoryCard::Path & _dest_dir);
+    void uploadDirectory();
 
 private:
     const Vmc & mr_vmc;

@@ -946,23 +946,28 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="312"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="317"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="260"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="261"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="260"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="261"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="273"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="274"/>
         <source>Free %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="459"/>
+        <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1209,7 +1214,7 @@
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="194"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="195"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
@@ -1234,7 +1239,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="412"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="413"/>
         <source>Entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1459,17 +1464,46 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
+        <source>Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="299"/>
+        <source>Upload Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="302"/>
+        <source>Ctrl+U</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="314"/>
+        <source>Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="317"/>
+        <source>Upload Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directory</source>
+        <translation type="obsolete">Каталог</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="320"/>
+        <source>Ctrl+Shift+U</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Export</source>
         <translation type="obsolete">Экспорт</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="269"/>
         <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="299"/>
-        <source>Ins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1485,11 +1519,6 @@
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="284"/>
         <source>F2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
-        <source>Upload files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

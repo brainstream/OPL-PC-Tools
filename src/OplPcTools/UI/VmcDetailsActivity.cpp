@@ -24,6 +24,7 @@
 #include <OplPcTools/Library.h>
 #include <OplPcTools/TextEncoding.h>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/File.h>
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QShortcut>
@@ -278,7 +279,8 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         addAction(mp_action_rename_entry);
         addAction(mp_action_delete);
         addAction(mp_action_download);
-        addAction(mp_action_upload);
+        addAction(mp_action_upload_files);
+        addAction(mp_action_upload_directory);
         connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
         connect(mp_tree_fs, &QTreeView::customContextMenuRequested, this, &VmcDetailsActivity::showTreeContextMenu);
         connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
@@ -288,9 +290,12 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_combobox_charset, &QComboBox::currentTextChanged, this, &VmcDetailsActivity::onEncodingChanged);
         connect(mp_action_create_directory, &QAction::triggered, this, &VmcDetailsActivity::createDirectory);
         connect(mp_action_rename_entry, &QAction::triggered, this, &VmcDetailsActivity::renameEntry);
-        connect(mp_action_upload, &QAction::triggered, this, &VmcDetailsActivity::upload);
+        connect(mp_action_upload_files, &QAction::triggered, this, &VmcDetailsActivity::uploadFiles);
+        connect(mp_action_upload_directory, &QAction::triggered, this, &VmcDetailsActivity::uploadDirectory);
+
         setIconSize();
 
+        mp_action_delete->setVisible(false); // TODO: WIP
         mp_action_download->setVisible(false); // TODO: WIP
     }
 }
@@ -451,7 +456,10 @@ void VmcDetailsActivity::showTreeContextMenu(const QPoint & _point)
         menu.addSeparator();
     }
     menu.addAction(mp_action_create_directory);
-    menu.addAction(mp_action_upload);
+    QMenu * upload_menu = menu.addMenu(tr("Upload"));
+    upload_menu->setIcon(QIcon(":/images/upload"));
+    upload_menu->addAction(mp_action_upload_files);
+    upload_menu->addAction(mp_action_upload_directory);
     menu.exec(mp_tree_fs->mapToGlobal(_point + QPoint(0, mp_tree_fs->header()->height())));
 }
 
@@ -487,14 +495,64 @@ void VmcDetailsActivity::renameEntry()
     mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
 }
 
-void VmcDetailsActivity::upload()
+void VmcDetailsActivity::uploadFiles()
 {
-    QFileDialog::getOpenFileContent(
-        QString(),
-        [this](const QString & __filename, const QByteArray & __content) {
-            MemoryCard::Path path(mp_edit_fs_path->text().toLatin1(), QFileInfo(__filename).fileName().toLatin1()); // TODO: encoding
-            m_vmc_fs_ptr->writeFile(path, __content);
-            mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
-        },
-        this);
+    QStringList filenames = QFileDialog::getOpenFileNames(this); // TODO: store directory
+    try
+    {
+        MemoryCard::Path vmc_dir(mp_edit_fs_path->text().toLatin1()); // TODO: encoding
+        foreach(const QString & filename, filenames)
+            uploadFileImpl(filename, vmc_dir);
+        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+    }
+    catch(const Exception & exception)
+    {
+        Application::showErrorMessage(exception.message());
+    }
+}
+
+void VmcDetailsActivity::uploadDirectoryImpl(const QString & _directory_path, const MemoryCard::Path & _dest_dir)
+{
+    QDir directory(_directory_path);
+    if(!directory.exists())
+        return;
+
+    MemoryCard::Path vmc_dir(_dest_dir, directory.dirName().toLatin1()); // TODO: encoding
+    m_vmc_fs_ptr->createDirectory(vmc_dir);
+
+    foreach(
+        const QFileInfo & entry,
+        directory.entryInfoList(QDir::NoDotAndDotDot | QDir::CaseSensitive | QDir::Dirs | QDir::Files))
+    {
+        if(entry.isFile())
+            uploadFileImpl(entry.absoluteFilePath(), vmc_dir);
+        else if(entry.isDir())
+            uploadDirectoryImpl(entry.absoluteFilePath(), vmc_dir);
+    }
+}
+
+void VmcDetailsActivity::uploadFileImpl(const QString & _file_path, const MemoryCard::Path & _dest_dir)
+{
+    QFile file(_file_path);
+    openFile(file, QIODevice::ReadOnly);
+    QByteArray content = file.readAll();
+    MemoryCard::Path path(_dest_dir, QFileInfo(file).fileName().toLatin1()); // TODO: encoding
+    m_vmc_fs_ptr->writeFile(path, content);
+    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+}
+
+void VmcDetailsActivity::uploadDirectory()
+{
+    QString directory_path = QFileDialog::getExistingDirectory(this); // TODO: store directory
+    if(directory_path.isEmpty())
+        return;
+    try
+    {
+        uploadDirectoryImpl(directory_path, mp_edit_fs_path->text().toLatin1()); // TODO: encoding
+        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+    }
+    catch(const Exception & exception)
+    {
+        Application::showErrorMessage(exception.message());
+    }
 }

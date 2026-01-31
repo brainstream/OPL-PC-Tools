@@ -287,16 +287,37 @@
     <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
-  <action name="mp_action_upload">
+  <action name="mp_action_upload_files">
    <property name="icon">
     <iconset resource="../Resources/Resources.qrc">
-     <normaloff>:/images/upload</normaloff>:/images/upload</iconset>
+     <normaloff>:/images/file</normaloff>:/images/file</iconset>
    </property>
    <property name="text">
-    <string>Upload files</string>
+    <string>Files</string>
+   </property>
+   <property name="toolTip">
+    <string>Upload Files</string>
    </property>
    <property name="shortcut">
-    <string>Ins</string>
+    <string>Ctrl+U</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="mp_action_upload_directory">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/folder</normaloff>:/images/folder</iconset>
+   </property>
+   <property name="text">
+    <string>Folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Upload Folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+U</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

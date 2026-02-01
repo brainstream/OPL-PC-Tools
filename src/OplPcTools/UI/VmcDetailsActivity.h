@@ -60,6 +60,7 @@ private:
     void uploadDirectoryImpl(const QString & _directory_path, const MemoryCard::Path & _dest_dir);
     void uploadFileImpl(const QString & _file_path, const MemoryCard::Path & _dest_dir);
     void uploadDirectory();
+    void deleteEntry();
 
 private:
     const Vmc & mr_vmc;

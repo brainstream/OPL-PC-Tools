@@ -298,10 +298,10 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_action_rename_entry, &QAction::triggered, this, &VmcDetailsActivity::renameEntry);
         connect(mp_action_upload_files, &QAction::triggered, this, &VmcDetailsActivity::uploadFiles);
         connect(mp_action_upload_directory, &QAction::triggered, this, &VmcDetailsActivity::uploadDirectory);
+        connect(mp_action_delete, &QAction::triggered, this, &VmcDetailsActivity::deleteEntry);
 
         setIconSize();
 
-        mp_action_delete->setVisible(false); // TODO: WIP
         mp_action_download->setVisible(false); // TODO: WIP
     }
 }
@@ -562,6 +562,38 @@ void VmcDetailsActivity::uploadDirectory()
     {
         uploadDirectoryImpl(directory_path, vmc_current_dir);
         mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
+    }
+    catch(const MemoryCard::MemoryCardFileException & exception)
+    {
+        showErrorMessage(exception.message(), exception.path());
+    }
+    catch(const Exception & exception)
+    {
+        Application::showErrorMessage(exception.message());
+    }
+}
+
+void VmcDetailsActivity::deleteEntry()
+{
+    try
+    {
+        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+
+        // TODO: confirm dialog
+
+        const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
+
+        bool deleted = false;
+        foreach(const QModelIndex & index, selection)
+        {
+            const MemoryCard::EntryInfo * entry = mp_model->item(index);
+            if(!entry) continue;
+            deleted = true;
+            m_vmc_fs_ptr->remove(vmc_current_dir + entry->name);
+        }
+
+        if(deleted)
+            mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {

@@ -41,12 +41,14 @@ public:
 
 private:
     void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString());
+    void showErrorMessage(const QString & _message = QString(), const QByteArray & _path = QByteArray());
     void hideErrorMessage();
     void loadFileManager();
     QString getFsEncoding() const;
     void setIconSize();
     void navigate(const MemoryCard::Path & _path);
+    QByteArray encodePath(const QString & _path) const;
+    QString decodePath(const QByteArray & _path) const;
     void onFsListItemActivated(const QModelIndex & _index);
     void onFsBackButtonClick();
     void onEncodingChanged();

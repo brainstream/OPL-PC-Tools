@@ -202,10 +202,9 @@ if(QT_VERSION_MAJOR EQUAL 6)
         LRELEASE_TARGET "translation_release"
         TS_FILES ${TRANSLATIONS}
     )
+    add_dependencies(${OPT_EXE_NAME} translation_update)
 else()
     qt5_create_translation(QM_FILES ${OPT_SRC} ${TRANSLATIONS}
         OPTIONS "-no-obsolete"
     )
 endif()
-
-add_dependencies(${OPT_EXE_NAME} translation_update)

@@ -23,6 +23,7 @@
 #include <OplPcTools/MemoryCard/Superblock.h>
 #include <OplPcTools/MemoryCard/Path.h>
 #include <QFile>
+#include <cstring>
 
 namespace OplPcTools {
 namespace MemoryCard {
@@ -110,7 +111,7 @@ private:
     struct EntrySearchResult
     {
         uint32_t cluster_index;
-        QList<FSEntry> cluster_entries;
+        QVector<FSEntry> cluster_entries;
         size_t entry_index;
     };
 

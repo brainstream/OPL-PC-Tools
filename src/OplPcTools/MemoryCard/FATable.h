@@ -103,8 +103,8 @@ auto FATable::findFatEntry(
     uint32_t _entry_index,
     uint32_t * _out_entry_index_in_table) -> decltype(&_tables[0])
 {
-    uint32_t result_idx = _entry_index;
-    for(uint32_t i = 0; i < _tables.count(); ++i)
+    qsizetype result_idx = _entry_index;
+    for(qsizetype i = 0; i < _tables.count(); ++i)
     {
         auto & table = _tables[i];
         if(result_idx < table.fat.count())
@@ -116,7 +116,7 @@ auto FATable::findFatEntry(
         }
         result_idx -= table.fat.count();
     }
-    throw MCFSException(QObject::tr("FAT cluster index %1 is out of range").arg(_entry_index));
+    throw MemoryCardFileSystemException(QObject::tr("FAT cluster index %1 is out of range").arg(_entry_index));
 }
 
 } // namespace MemoryCard

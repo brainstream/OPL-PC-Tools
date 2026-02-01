@@ -30,12 +30,12 @@ FilenameValidator::FilenameValidator(const QString & _forbidden_characters, QObj
 QValidator::State FilenameValidator::validate(QString & _input, int & _pos) const
 {
     Q_UNUSED(_pos);
-    size_t size = static_cast<size_t>(_input.size());
+    uint32_t size = static_cast<uint32_t>(_input.size());
     if(size == 0)
         return QValidator::Intermediate;
     if(m_max_length && size > m_max_length)
         return QValidator::Invalid;
-    for(size_t i = 0; i < size; ++i)
+    for(uint32_t i = 0; i < size; ++i)
     {
         if(m_forbidden_characters.contains(_input[i]))
             _input[i] = '_';

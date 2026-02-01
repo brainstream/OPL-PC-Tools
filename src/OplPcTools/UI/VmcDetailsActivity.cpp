@@ -22,7 +22,7 @@
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 #include <OplPcTools/UI/DisplayUtils.h>
 #include <OplPcTools/Library.h>
-#include <OplPcTools/TextEncoding.h>
+#include <OplPcTools/StringConverter.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/File.h>
 #include <QFileDialog>
@@ -75,6 +75,7 @@ public:
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
     void sort(int _column, Qt::SortOrder _order) override;
+    const StringConverter & stringConverter() const;
 
 private:
     void unsafeSort();
@@ -88,7 +89,7 @@ private:
     };
 
 private:
-    TextDecoder m_string_decoder;
+    StringConverter m_string_converter;
     QList<MemoryCard::EntryInfo> m_items;
     std::vector<int> m_item_indices;
     QIcon m_file_icon;
@@ -101,7 +102,7 @@ private:
 
 VmcFileSystemViewModel::VmcFileSystemViewModel(const QString & _encoding, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
-    m_string_decoder(_encoding),
+    m_string_converter(_encoding),
     m_file_icon(":/images/file"),
     m_dir_icon(":/images/folder"),
     m_sorted_by_column(COL_TTITLE),
@@ -111,10 +112,10 @@ VmcFileSystemViewModel::VmcFileSystemViewModel(const QString & _encoding, QObjec
 
 void VmcFileSystemViewModel::setEncoding(const QString & _encoding)
 {
-    if(m_string_decoder.codecName() == _encoding)
+    if(m_string_converter.codecName() == _encoding)
         return;
     beginResetModel();
-    m_string_decoder = TextDecoder(_encoding);
+    m_string_converter = StringConverter(_encoding);
     endResetModel();
 }
 
@@ -181,7 +182,7 @@ QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) con
         {
         case Qt::DisplayRole:
         {
-            return QString(m_string_decoder.decode(item->name));
+            return QString(m_string_converter.decode(item->name));
         }
         case Qt::DecorationRole:
             return item->is_directory ? m_dir_icon : m_file_icon;
@@ -231,6 +232,11 @@ void VmcFileSystemViewModel::unsafeSort()
             return false;
         }
     });
+}
+
+inline const StringConverter & VmcFileSystemViewModel::stringConverter() const
+{
+    return m_string_converter;
 }
 
 VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= nullptr*/) :
@@ -312,9 +318,14 @@ void VmcDetailsActivity::setupShortcuts()
     connect(shortcut, &QShortcut::activated, mp_btn_fs_back, &QToolButton::click);
 }
 
-void VmcDetailsActivity::showErrorMessage(const QString & _message /*= QString()*/)
+void VmcDetailsActivity::showErrorMessage(
+    const QString & _message /*= QString()*/,
+    const QByteArray & _path /*= QByteArray()*/)
 {
-    mp_label_error_message->setText(_message.isEmpty() ? tr("An unknown error has occurred") : _message);
+    QString message = _message.isEmpty() ? tr("An unknown error has occurred") : _message;
+    if(!_path.isEmpty())
+        message += QString(" (%1)").arg(decodePath(_path));
+    mp_label_error_message->setText(message);
     mp_widget_error_message->show();
 }
 
@@ -331,9 +342,13 @@ void VmcDetailsActivity::loadFileManager()
         fs->load();
         m_vmc_fs_ptr = std::move(fs);
     }
-    catch(const Exception &_exception)
+    catch(const MemoryCard::MemoryCardFileException & exception)
     {
-        showErrorMessage(_exception.message());
+        showErrorMessage(exception.message(), exception.path());
+    }
+    catch(const Exception & exception)
+    {
+        showErrorMessage(exception.message());
     }
     catch(...)
     {
@@ -363,24 +378,32 @@ void VmcDetailsActivity::navigate(const MemoryCard::Path & _path)
     try
     {
         QList<MemoryCard::EntryInfo> items = m_vmc_fs_ptr->enumerateEntries(_path);
-        mp_model->setItems(items);
-        mp_edit_fs_path->setText(
-
-
-            QString::fromLatin1(_path) // FIXME: encoder!
-
-
-        );
+        mp_model->setItems(items); // FIXME: update model automatically
+        mp_edit_fs_path->setText(decodePath(_path));
         mp_btn_fs_back->setDisabled(_path.isRoot());
     }
-    catch(const Exception &_exception)
+    catch(const MemoryCard::MemoryCardFileException & exception)
     {
-        showErrorMessage(_exception.message());
+        showErrorMessage(exception.message(), exception.path());
+    }
+    catch(const Exception & exception)
+    {
+        showErrorMessage(exception.message());
     }
     catch(...)
     {
         showErrorMessage();
     }
+}
+
+QByteArray VmcDetailsActivity::encodePath(const QString & _path) const
+{
+    return mp_model->stringConverter().encode(_path);
+}
+
+QString VmcDetailsActivity::decodePath(const QByteArray & _path) const
+{
+    return mp_model->stringConverter().decode(_path);
 }
 
 void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
@@ -389,26 +412,12 @@ void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
     if(item == nullptr)
         return;
     if(item->is_directory)
-    {
-        navigate(MemoryCard::Path(
-
-
-            mp_edit_fs_path->text().toLatin1(), // FIXME: decoder!
-            item->name
-
-        ));
-    }
+        navigate(MemoryCard::Path(encodePath(mp_edit_fs_path->text()), item->name));
 }
 
 void VmcDetailsActivity::onFsBackButtonClick()
 {
-    MemoryCard::Path path = MemoryCard::Path(
-
-
-        mp_edit_fs_path->text().toLatin1() // FIXME: decoder!
-
-
-    );
+    MemoryCard::Path path = MemoryCard::Path(encodePath(mp_edit_fs_path->text()));
     if(!path.isRoot())
         navigate(path.up());
 }
@@ -435,9 +444,13 @@ void VmcDetailsActivity::renameVmc()
         Library::instance().vmcs().renameVmc(mr_vmc.uuid(), dlg.name());
         mp_label_vmc_title->setText(dlg.name());
     }
-    catch(const Exception & _exception)
+    catch(const MemoryCard::MemoryCardFileException & exception)
     {
-        Application::showErrorMessage(_exception.message());
+        showErrorMessage(exception.message(), exception.path());
+    }
+    catch(const Exception & exception)
+    {
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
@@ -469,11 +482,9 @@ void VmcDetailsActivity::createDirectory()
     dlg.setTitle(true);
     if(dlg.exec() != QDialog::Accepted)
         return;
-
-    // TODO: encoding
-    m_vmc_fs_ptr->createDirectory(
-        MemoryCard::Path(mp_edit_fs_path->text().toLatin1(), dlg.currentFilename().toLatin1()));
-    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+    const MemoryCard::Path vmc_current_dir = encodePath(mp_edit_fs_path->text());
+    m_vmc_fs_ptr->createDirectory(vmc_current_dir + encodePath(dlg.currentFilename()));
+    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(encodePath(mp_edit_fs_path->text()))); // FIXME: update model automatically
 }
 
 void VmcDetailsActivity::renameEntry()
@@ -484,15 +495,13 @@ void VmcDetailsActivity::renameEntry()
 
     VmcFileNameDialog dlg(this);
     dlg.setTitle(entry->is_directory);
-    dlg.setCurrentFilename(entry->name); // TODO: encoding
+    dlg.setCurrentFilename(decodePath(entry->name));
     if(dlg.exec() != QDialog::Accepted)
         return;
 
-    // TODO: encoding
-    m_vmc_fs_ptr->rename(
-        MemoryCard::Path(mp_edit_fs_path->text().toLatin1(), entry->name),
-        dlg.currentFilename().toLatin1());
-    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+    const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+    m_vmc_fs_ptr->rename(vmc_current_dir + encodePath(entry->name), encodePath(dlg.currentFilename()));
+    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
 }
 
 void VmcDetailsActivity::uploadFiles()
@@ -500,10 +509,14 @@ void VmcDetailsActivity::uploadFiles()
     QStringList filenames = QFileDialog::getOpenFileNames(this); // TODO: store directory
     try
     {
-        MemoryCard::Path vmc_dir(mp_edit_fs_path->text().toLatin1()); // TODO: encoding
+        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
         foreach(const QString & filename, filenames)
-            uploadFileImpl(filename, vmc_dir);
-        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+            uploadFileImpl(filename, vmc_current_dir);
+        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
+    }
+    catch(const MemoryCard::MemoryCardFileException & exception)
+    {
+        showErrorMessage(exception.message(), exception.path());
     }
     catch(const Exception & exception)
     {
@@ -517,7 +530,7 @@ void VmcDetailsActivity::uploadDirectoryImpl(const QString & _directory_path, co
     if(!directory.exists())
         return;
 
-    MemoryCard::Path vmc_dir(_dest_dir, directory.dirName().toLatin1()); // TODO: encoding
+    const MemoryCard::Path vmc_dir(_dest_dir, encodePath(directory.dirName()));
     m_vmc_fs_ptr->createDirectory(vmc_dir);
 
     foreach(
@@ -536,20 +549,23 @@ void VmcDetailsActivity::uploadFileImpl(const QString & _file_path, const Memory
     QFile file(_file_path);
     openFile(file, QIODevice::ReadOnly);
     QByteArray content = file.readAll();
-    MemoryCard::Path path(_dest_dir, QFileInfo(file).fileName().toLatin1()); // TODO: encoding
-    m_vmc_fs_ptr->writeFile(path, content);
-    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+    m_vmc_fs_ptr->writeFile(_dest_dir + encodePath(QFileInfo(file).fileName()), content);
 }
 
 void VmcDetailsActivity::uploadDirectory()
 {
-    QString directory_path = QFileDialog::getExistingDirectory(this); // TODO: store directory
+    const QString directory_path = QFileDialog::getExistingDirectory(this); // TODO: store directory
     if(directory_path.isEmpty())
         return;
+    const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
     try
     {
-        uploadDirectoryImpl(directory_path, mp_edit_fs_path->text().toLatin1()); // TODO: encoding
-        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(mp_edit_fs_path->text().toLatin1())); // TODO: encoding
+        uploadDirectoryImpl(directory_path, vmc_current_dir);
+        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
+    }
+    catch(const MemoryCard::MemoryCardFileException & exception)
+    {
+        showErrorMessage(exception.message(), exception.path());
     }
     catch(const Exception & exception)
     {

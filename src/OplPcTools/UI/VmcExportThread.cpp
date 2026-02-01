@@ -40,8 +40,8 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
         m_action = Action::Skip;
         QSharedPointer<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(_vmc.filepath()));
         fs->load();
-        TextDecoder decoder(_fs_encoding);
-        exportDirectory(*fs, decoder, MemoryCard::Path::root(), _destination_dir);
+        StringConverter string_converter(_fs_encoding);
+        exportDirectory(*fs, string_converter, MemoryCard::Path::root(), _destination_dir);
     }
     catch(const Exception & _exception)
     {
@@ -56,7 +56,7 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
 
 void VmcExportThreadWorker::exportDirectory(
     MemoryCard::FileSystem & _fs,
-    TextDecoder & _decoder,
+    StringConverter & _string_converter,
     const MemoryCard::Path & _vmc_dir,
     const QString & _dest_directory)
 {
@@ -72,11 +72,11 @@ void VmcExportThreadWorker::exportDirectory(
         if(entry.is_directory)
         {
             QString next_directory = dir.absoluteFilePath(entry.name);
-            exportDirectory(_fs, _decoder, next_vmc_entry, next_directory);
+            exportDirectory(_fs, _string_converter, next_vmc_entry, next_directory);
         }
         else
         {
-            exportFile(_fs, _decoder, next_vmc_entry, _dest_directory);
+            exportFile(_fs, _string_converter, next_vmc_entry, _dest_directory);
             if(m_action == Action::Cancel)
                 break;
         }
@@ -85,14 +85,14 @@ void VmcExportThreadWorker::exportDirectory(
 
 void VmcExportThreadWorker::exportFile(
     MemoryCard::FileSystem & _fs,
-    TextDecoder & _decoder,
+    StringConverter & _string_converter,
     const MemoryCard::Path & _vmc_file,
     const QString & _dest_directory)
 {
     QSharedPointer<MemoryCard::File> file = _fs.openFile(_vmc_file);
     if(!file)
-        throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_vmc_file));
-    QFile out(QDir(_dest_directory).absoluteFilePath(_decoder.decode(file->name())));
+        throw Exception(QObject::tr("Unable to open VMC file \"%1\"").arg(_string_converter.decode(_vmc_file.path())));
+    QFile out(QDir(_dest_directory).absoluteFilePath(_string_converter.decode(file->name())));
     if(!out.exists() ||
        getAction(tr("The file \"%1\" exists. Do you want to overwrite it?").arg(out.fileName())) == Action::Overwrite)
     {

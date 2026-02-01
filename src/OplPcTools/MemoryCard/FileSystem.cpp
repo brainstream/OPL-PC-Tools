@@ -30,17 +30,17 @@ namespace {
 
 [[noreturn]] inline void throwNotFormatted()
 {
-    throw MCFSException(QObject::tr("The VMC is corrupted or not formatted correctly"));
+    throw MemoryCardFileSystemException(QObject::tr("The VMC is corrupted or not formatted correctly"));
 }
 
-[[noreturn]] inline void throwPathNotFound()
+[[noreturn]] inline void throwPathNotFound(const Path & _path)
 {
-    throw MCFSException(QObject::tr("Path not found"));
+    throw MemoryCardFileException(QObject::tr("Path not found"), _path.path());
 }
 
 [[noreturn]] inline void throwNoSpace()
 {
-    throw MCFSException(QObject::tr("Not enough free space"));
+    throw MemoryCardFileSystemException(QObject::tr("Not enough free space"));
 }
 
 } // namespace
@@ -239,7 +239,7 @@ QList<EntryInfo> FileSystem::enumerateEntries(const Path & _path)
     }
     else
     {
-        throwPathNotFound();
+        throwPathNotFound(_path);
     }
     return result;
 }
@@ -327,9 +327,9 @@ QSharedPointer<File> FileSystem::openFile(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
-        throw MCFSException(QObject::tr("File not found"));
+        throw MemoryCardFileException(QObject::tr("File not found"), _path);
     if(entry_path->entry.is_directory)
-        throw MCFSException(QObject::tr("\"%1\" is not a file").arg(_path));
+        throw MemoryCardFileException(QObject::tr("The entry is not a file"), _path);
     File::Private * pr = new File::Private;
     pr->clusters = getEntryClusters(entry_path->entry);
     pr->fs = this;
@@ -373,7 +373,7 @@ void FileSystem::writeFile(const Path & _path, const QByteArray & _data)
     Path dir_path = _path.up();
     std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
     if(!dir_entry_path.has_value())
-        throwPathNotFound();
+        throwPathNotFound(dir_path);
     writeFile(*dir_entry_path, _path.filename(), _data, false);
 }
 
@@ -382,7 +382,7 @@ void FileSystem::createDirectory(const Path & _path)
     Path parent_dir_path = _path.up();
     std::optional<EntryPath> parent_dir_entry_path = resolvePath(parent_dir_path);
     if(!parent_dir_entry_path.has_value())
-        throwPathNotFound();
+        throwPathNotFound(parent_dir_path);
 
     const DateTime now = DateTime::now();
     QByteArray buffer(sizeof(FSEntry) * 2, '\0');
@@ -409,8 +409,8 @@ void FileSystem::writeFile(
 {
     if(!_directory_path.entry.is_directory)
     {
-        throw MCFSException(
-            QObject::tr("Entry %1 in cluster %2 is not a directory")
+        throw MemoryCardFileSystemException(
+            QObject::tr("The entry %1 in cluster %2 is not a directory")
                 .arg(_directory_path.address.entry)
                 .arg(_directory_path.address.cluster));
     }
@@ -534,7 +534,7 @@ bool FileSystem::findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySe
             FSEntry & entry = entries[entry_index];
             if(!(entry.mode & EM_EXISTS))
             {
-                _result.cluster_entries = QList<FSEntry>(entries, &entries[mp_info->fs_entries_per_cluster]);
+                _result.cluster_entries = QVector<FSEntry>(entries, &entries[mp_info->fs_entries_per_cluster]);
                 _result.cluster_index = parent_cluster;
                 _result.entry_index = entry_index;
                 return true;
@@ -585,7 +585,7 @@ void FileSystem::remove(const Path & _path)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
-        throwPathNotFound();
+        throwPathNotFound(_path);
 
     const std::optional<EntryPath> parent = resolvePath(_path.up());
 
@@ -623,7 +623,7 @@ void FileSystem::rename(const Path & _path, const QByteArray & _new_name)
 {
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path)
-        throwPathNotFound();
+        throwPathNotFound(_path);
     QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
     readCluster(entry_path->address.cluster, false, buffer.data());
     FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());

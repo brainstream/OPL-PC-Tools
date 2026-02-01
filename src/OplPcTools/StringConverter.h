@@ -32,20 +32,21 @@ public:
     static constexpr QString latin1() { return "ISO-8859-1"; }
 };
 
-class TextDecoder final
+class StringConverter final
 {
-    Q_DISABLE_COPY(TextDecoder)
+    Q_DISABLE_COPY(StringConverter)
 
 private:
     class Private;
 
 public:
-    explicit TextDecoder(const QString & _codec);
-    TextDecoder(TextDecoder && _decoder);
-    ~TextDecoder();
-    TextDecoder & operator = (TextDecoder && _decoder);
+    explicit StringConverter(const QString & _codec);
+    StringConverter(StringConverter && _converter);
+    ~StringConverter();
+    StringConverter & operator = (StringConverter && _converter);
     QString codecName() const;
     QString decode(const QByteArray & _bytes) const;
+    QByteArray encode(const QString & _string) const;
 
 private:
     Private * mp_private;

@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/Settings.h>
-#include <OplPcTools/TextEncoding.h>
+#include <OplPcTools/StringConverter.h>
 #include <QUrl>
 
 using namespace OplPcTools;

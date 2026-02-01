@@ -23,7 +23,25 @@
 namespace OplPcTools {
 namespace MemoryCard {
 
-DECLARE_EXCEPTION(MCFSException)
+DECLARE_EXCEPTION(MemoryCardFileSystemException)
+
+class MemoryCardFileException : public MemoryCardFileSystemException
+{
+public:
+    MemoryCardFileException(const QString & _message, const QByteArray & _path) :
+        MemoryCardFileSystemException(_message),
+        m_path(_path)
+    {
+    }
+
+    const QByteArray & path() const
+    {
+        return m_path;
+    }
+
+private:
+    const QByteArray m_path;
+};
 
 } // namespace MemoryCard
 } // namespace OplPcTools

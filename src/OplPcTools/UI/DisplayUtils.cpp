@@ -18,6 +18,7 @@
 
 #include <OplPcTools/UI/DisplayUtils.h>
 #include <QObject>
+#include <cmath>
 
 QString OplPcTools::UI::makeBytesDisplayString(uint32_t _bytes)
 {

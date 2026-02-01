@@ -20,6 +20,8 @@
 #include <OplPcTools/MemoryCard/FATEntry.h>
 #include <OplPcTools/MemoryCard/FSEntry.h>
 #include <OplPcTools/File.h>
+#include <cstring>
+#include <cmath>
 
 using namespace OplPcTools::MemoryCard;
 

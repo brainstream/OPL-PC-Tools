@@ -19,7 +19,7 @@
 #ifndef __OPLPCTOOLS_VMCEXPORTTHREAD__
 #define __OPLPCTOOLS_VMCEXPORTTHREAD__
 
-#include <OplPcTools/TextEncoding.h>
+#include <OplPcTools/StringConverter.h>
 #include <optional>
 #include <QWidget>
 #include <QEventLoop>
@@ -46,12 +46,12 @@ private:
     void setAnswer(bool _answer);
     void exportDirectory(
         MemoryCard::FileSystem & _fs,
-        TextDecoder & _decoder,
+        StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_dir,
         const QString & _dest_directory);
     void exportFile(
         MemoryCard::FileSystem & _fs,
-        TextDecoder & _decoder,
+        StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_file,
         const QString & _dest_directory);
     Action getAction(const QString & _question);

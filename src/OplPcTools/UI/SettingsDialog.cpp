@@ -18,7 +18,7 @@
 
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
-#include <OplPcTools/TextEncoding.h>
+#include <OplPcTools/StringConverter.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 
 using namespace OplPcTools;

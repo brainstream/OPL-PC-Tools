@@ -946,27 +946,27 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="317"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="325"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="261"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="261"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="274"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="280"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="459"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="472"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1194,32 +1194,32 @@
         <translation>Não foi possível abrir o VMC  &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/DisplayUtils.cpp" line="34"/>
+        <location filename="../UI/DisplayUtils.cpp" line="35"/>
         <source>B</source>
         <translation>bytes</translation>
     </message>
     <message>
-        <location filename="../UI/DisplayUtils.cpp" line="37"/>
+        <location filename="../UI/DisplayUtils.cpp" line="38"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../UI/DisplayUtils.cpp" line="40"/>
+        <location filename="../UI/DisplayUtils.cpp" line="41"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
-        <location filename="../UI/DisplayUtils.cpp" line="43"/>
+        <location filename="../UI/DisplayUtils.cpp" line="44"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="195"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="196"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/VmcFormatter.cpp" line="50"/>
+        <location filename="../MemoryCard/VmcFormatter.cpp" line="52"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>O tamanho do VMC deve estar entre %1 MiB e %2 MiB</translation>
     </message>
@@ -1239,8 +1239,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="332"/>
+        <source>The entry is not a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="413"/>
-        <source>Entry %1 in cluster %2 is not a directory</source>
+        <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1254,9 +1259,8 @@
         <translation>Arquivo não encontrado</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="332"/>
         <source>&quot;%1&quot; is not a file</source>
-        <translation>&quot;%1&quot; não é um arquivo</translation>
+        <translation type="vanished">&quot;%1&quot; não é um arquivo</translation>
     </message>
     <message>
         <location filename="../File.cpp" line="64"/>

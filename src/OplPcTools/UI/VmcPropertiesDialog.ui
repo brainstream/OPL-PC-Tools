@@ -58,7 +58,7 @@
             <widget class="QLabel" name="mp_label_title">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -86,7 +86,7 @@
             <widget class="QLabel" name="mp_label_file">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -114,7 +114,7 @@
             <widget class="QLabel" name="mp_label_size">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -142,7 +142,7 @@
             <widget class="QLabel" name="mp_label_fs_charset">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -170,7 +170,7 @@
             <widget class="QLabel" name="mp_label_used">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -195,7 +195,7 @@
             <widget class="QLabel" name="mp_label_free">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -258,7 +258,7 @@
             <widget class="QLabel" name="mp_label_magic">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -289,7 +289,7 @@
             <widget class="QLabel" name="mp_label_version">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -320,7 +320,7 @@
             <widget class="QLabel" name="mp_label_pagesize">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -351,7 +351,7 @@
             <widget class="QLabel" name="mp_label_cluster_size_2">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -382,7 +382,7 @@
             <widget class="QLabel" name="mp_label_pages_per_cluster">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -413,7 +413,7 @@
             <widget class="QLabel" name="mp_label_pages_per_block">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -444,7 +444,7 @@
             <widget class="QLabel" name="mp_label_cluster_size">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -475,7 +475,7 @@
             <widget class="QLabel" name="mp_label_alloc_offset">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -500,7 +500,7 @@
             <widget class="QLabel" name="mp_label_alloc_end">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -525,7 +525,7 @@
             <widget class="QLabel" name="mp_label_root_dir_cluster">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -556,7 +556,7 @@
             <widget class="QLabel" name="mp_label_backup_block1">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -587,7 +587,7 @@
             <widget class="QLabel" name="mp_label_backup_block2">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -618,7 +618,7 @@
             <widget class="QLabel" name="mp_label_card_type">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -649,7 +649,7 @@
             <widget class="QLabel" name="mp_label_card_flags">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -680,7 +680,7 @@
             <widget class="QLabel" name="mp_label_fat_entries_per_cluster">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -711,7 +711,7 @@
             <widget class="QLabel" name="mp_label_clusters_per_block">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -742,7 +742,7 @@
             <widget class="QLabel" name="mp_label_card_format">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -773,7 +773,7 @@
             <widget class="QLabel" name="mp_label_max_allocatable_clusters">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -804,7 +804,7 @@
             <widget class="QLabel" name="mp_label_bad_blocks">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -838,7 +838,7 @@
             <widget class="QLabel" name="mp_label_ifc_list">
              <property name="font">
               <font>
-               <fontweight>DemiBold</fontweight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">

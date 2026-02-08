@@ -39,8 +39,6 @@ using namespace OplPcTools::UI;
 
 namespace {
 
-static const char * g_settings_key_cover_dir = "PixmapDirectory";
-
 class ArtListItem : public QListWidgetItem
 {
 public:
@@ -190,8 +188,8 @@ void GameArtsWidget::changeGameArt()
     ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->currentItem());
     if(item == nullptr)
         return;
-    QSettings settings;
-    QString dirpath = settings.value(g_settings_key_cover_dir).toString();
+    Settings & settings = Settings::instance();
+    QString dirpath = settings.path(Settings::Directory::GameCover);
     if(dirpath.isEmpty())
     {
         QStringList dirpaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
@@ -204,7 +202,7 @@ void GameArtsWidget::changeGameArt()
         tr("Pictures") + " (*.png *.jpg *.jpeg *.bmp)");
     if(filename.isEmpty())
         return;
-    settings.setValue(g_settings_key_cover_dir, QFileInfo(filename).absoluteDir().absolutePath());
+    settings.setPath(Settings::Directory::GameCover, QFileInfo(filename).absoluteDir().absolutePath());
     startBusySmartThread([this, item, filename]() {
         mr_art_manager.setArt(m_game_id, item->type(), GameArtFileSource(filename));
     });

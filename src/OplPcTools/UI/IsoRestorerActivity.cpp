@@ -16,25 +16,19 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <cmath>
-#include <QFileDialog>
-#include <QSettings>
-#include <OplPcTools/IsoRestorer.h>
-#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
+#include <OplPcTools/IsoRestorer.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/Settings.h>
+#include <QFileDialog>
+#include <cmath>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
-
-namespace SettingsKey {
-
-static const char * iso_recover_dir = "ISORecoverDirectory";
-
-} // namespace SettingsKey
 
 class IsoRestorerActivityIntent : public Intent
 {
@@ -83,15 +77,15 @@ bool IsoRestorerActivity::onAttach()
     if(!game)
         return false;
     mp_label_title->setText(game->title());
-    QSettings settings;
-    QString iso_dir = settings.value(SettingsKey::iso_recover_dir).toString();
+    Settings & settings = Settings::instance();
+    QString iso_dir = settings.path(Settings::Directory::IsoRecover);
     QString iso_filename = iso_dir.isEmpty() ?  game->title() + ".iso" :
         QDir(iso_dir).absoluteFilePath(game->title() + ".iso");
     iso_filename = QFileDialog::getSaveFileName(this, tr("Choose an ISO image filename to save"),
         iso_filename, tr("ISO Image") + " (*.iso)");
     if(iso_filename.isEmpty())
         return false;
-    settings.setValue(SettingsKey::iso_recover_dir, QFileInfo(iso_filename).absoluteDir().absolutePath());
+    settings.setPath(Settings::Directory::IsoRecover, QFileInfo(iso_filename).absoluteDir().absolutePath());
     restore(*game, iso_filename);
     return true;
 }

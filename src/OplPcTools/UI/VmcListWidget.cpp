@@ -16,15 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QShortcut>
-#include <QMessageBox>
-#include <QCheckBox>
-#include <QSettings>
-#include <QStandardPaths>
-#include <QFileDialog>
-#include <OplPcTools/Settings.h>
-#include <OplPcTools/Exception.h>
-#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcRenameDialog.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
@@ -32,18 +23,17 @@
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 #include <OplPcTools/UI/VmcExportThread.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
+#include <OplPcTools/Settings.h>
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
+#include <QShortcut>
+#include <QMessageBox>
+#include <QCheckBox>
+#include <QStandardPaths>
+#include <QFileDialog>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
-
-namespace {
-namespace SettingsKey {
-
-const char export_dir[] = "VmcExportDir";
-
-} // namespace SettingsKey
-} // namespace
-
 
 class VmcListWidget::VmcTreeModel final : public QAbstractItemModel
 {
@@ -381,13 +371,13 @@ void VmcListWidget::exportFiles()
 {
     const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
     if(!vmc) return;
-    QSettings settings;
-    QString directory = settings.value(SettingsKey::export_dir).toString();
+    Settings & settings = Settings::instance();
+    QString directory = settings.path(Settings::Directory::VmcExport);
     if(directory.isEmpty())
         directory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     directory = QFileDialog::getExistingDirectory(this, tr("Select directory"), directory);
     if(directory.isEmpty()) return;
-    settings.setValue(SettingsKey::export_dir, directory);
+    settings.setPath(Settings::Directory::VmcExport, directory);
     VmcExportThread * thread = new VmcExportThread(this);
     connect(thread, &VmcExportThread::finished, thread, &VmcExportThread::deleteLater);
     connect(thread, &VmcExportThread::exception, [](const QString & message) {

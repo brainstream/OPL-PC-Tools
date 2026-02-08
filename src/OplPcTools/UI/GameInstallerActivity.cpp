@@ -41,10 +41,6 @@ using namespace OplPcTools::UI;
 
 namespace {
 
-namespace SettingsKey {
-    const char * iso_dir = "ISODirectory";
-} // namespace SettingsKey
-
 namespace Column {
 enum
 {
@@ -384,13 +380,13 @@ void GameInstallerActivity::taskSelectionChanged()
 
 void GameInstallerActivity::addDiscImage()
 {
-    QSettings settings;
+    Settings & settings = Settings::instance();
     QString filter = tr("All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)")
         .arg(g_iso_ext, g_bin_ext, g_nrg_ext);
-    QString iso_dir = settings.value(SettingsKey::iso_dir).toString();
+    QString iso_dir = settings.path(Settings::Directory::IsoSource);
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(files.isEmpty()) return;
-    settings.setValue(SettingsKey::iso_dir, QFileInfo(files[0]).absolutePath());
+    settings.setPath(Settings::Directory::IsoSource, QFileInfo(files[0]).absolutePath());
     foreach(const QString & file, files)
     {
         addDiscImage(file);

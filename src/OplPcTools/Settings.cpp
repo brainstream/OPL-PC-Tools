@@ -25,17 +25,26 @@ using namespace OplPcTools;
 namespace {
 namespace Key {
 
-static const char reopen_last_session[] = "Settings/ReopenLastSession";
-static const char confirm_game_deletion[] = "Settings/ConfirmGameDeletion";
-static const char confirm_pixmap_deletion[] = "Settings/ConfirmPixmapDeletion";
-static const char confirm_vmc_deletion[] = "Settings/ConfirmVmcDeletion";
-static const char split_up_iso[] = "Settings/SplitUpISO";
-static const char move_iso[] = "Settings/MoveISO";
-static const char rename_iso[] = "Settings/RenameISO";
-static const char check_new_version[] = "Settings/CheckNewVersion";
-static const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
-static const char icon_size[] = "Settings/IconSize";
-static const char vmc_fs_charset[] = "Settings/VmcCharset";
+const char reopen_last_session[] = "Settings/ReopenLastSession";
+const char confirm_game_deletion[] = "Settings/ConfirmGameDeletion";
+const char confirm_pixmap_deletion[] = "Settings/ConfirmPixmapDeletion";
+const char confirm_vmc_deletion[] = "Settings/ConfirmVmcDeletion";
+const char split_up_iso[] = "Settings/SplitUpISO";
+const char move_iso[] = "Settings/MoveISO";
+const char rename_iso[] = "Settings/RenameISO";
+const char check_new_version[] = "Settings/CheckNewVersion";
+const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
+const char icon_size[] = "Settings/IconSize";
+const char vmc_fs_charset[] = "Settings/VmcCharset";
+
+const char ul_dir[] = "ULDirectory";
+const char game_cover_dir[] = "PixmapDirectory";
+const char game_import_dir[] = "ImportDirectory";
+const char iso_source_dir[] = "ISODirectory";
+const char iso_recover_dir[] = "ISORecoverDirectory";
+const char vmc_export_dir[] = "VmcExportDir";
+
+const char wnd_geometry[] = "WindowGeometry";
 
 } // namespace Key
 } // namespace
@@ -49,6 +58,62 @@ Settings::Settings()
 void Settings::flush()
 {
     mp_settings->sync();
+}
+
+void Settings::setPath(Directory _directory, const QString & _path)
+{
+    switch (_directory)
+    {
+    case Directory::UL:
+        mp_settings->setValue(Key::ul_dir, _path);
+        return;
+    case Directory::GameCover:
+        mp_settings->setValue(Key::game_cover_dir, _path);
+        return;
+    case Directory::GameImport:
+        mp_settings->setValue(Key::game_import_dir, _path);
+        return;
+    case Directory::IsoSource:
+        mp_settings->setValue(Key::iso_source_dir, _path);
+        return;
+    case Directory::IsoRecover:
+        mp_settings->setValue(Key::iso_recover_dir, _path);
+        return;
+    case Directory::VmcExport:
+        mp_settings->setValue(Key::vmc_export_dir, _path);
+        return;
+    }
+}
+
+const QString Settings::path(Directory _directory)
+{
+    switch (_directory)
+    {
+    case Directory::UL:
+        return mp_settings->value(Key::ul_dir).toString();
+    case Directory::GameCover:
+        return mp_settings->value(Key::game_cover_dir).toString();
+    case Directory::GameImport:
+        return mp_settings->value(Key::game_import_dir).toString();
+    case Directory::IsoSource:
+        return mp_settings->value(Key::iso_source_dir).toString();
+    case Directory::IsoRecover:
+        return mp_settings->value(Key::iso_recover_dir).toString();
+    case Directory::VmcExport:
+        return mp_settings->value(Key::vmc_export_dir).toString();
+    default:
+        return QString();
+    }
+}
+
+void Settings::setWindowGeometry(const QByteArray & _geometry)
+{
+    mp_settings->setValue(Key::wnd_geometry, _geometry);
+}
+
+QByteArray Settings::windowGeometry() const
+{
+    return mp_settings->value(Key::wnd_geometry, false).toByteArray();
 }
 
 bool Settings::reopenLastSession() const

@@ -20,8 +20,8 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/ChooseImportGamesDialog.h>
 #include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/Settings.h>
 #include <QPushButton>
-#include <QSettings>
 #include <QFileDialog>
 #include <QThread>
 #include <QShortcut>
@@ -30,10 +30,6 @@ using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 namespace {
-
-namespace SettingsKey {
-    const char * import_dir = "ImportDirectory";
-} // namespace SettingsKey
 
 const int g_progress_total = 10000;
 
@@ -103,8 +99,8 @@ GameImporterActivity::GameImporterActivity(GameArtManager & _art_manager, QWidge
 
 bool GameImporterActivity::onAttach()
 {
-    QSettings settings;
-    QString source_directory = settings.value(SettingsKey::import_dir).toString();
+    Settings & settings = Settings::instance();
+    QString source_directory = settings.path(Settings::Directory::GameImport);
     source_directory = QFileDialog::getExistingDirectory(this, tr("Select OPL Game Storage"), source_directory);
     if(source_directory.isEmpty())
         return false;
@@ -115,7 +111,7 @@ bool GameImporterActivity::onAttach()
         Application::showErrorMessage(tr("Unable to open game storage"));
         return false;
     }
-    settings.setValue(SettingsKey::import_dir, source_directory);
+    settings.setPath(Settings::Directory::GameImport, source_directory);
     ChooseImportGamesDialog dlg(*source_collection, this);
     if(dlg.exec() != QDialog::Accepted)
     {

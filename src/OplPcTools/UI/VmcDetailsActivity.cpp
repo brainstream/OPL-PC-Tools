@@ -578,7 +578,12 @@ void VmcDetailsActivity::download()
     try
     {
         const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-        const QString directory_path = QFileDialog::getExistingDirectory(this); // TODO: store directory
+        Settings & settings = Settings::instance();
+        const QString directory_path =
+            QFileDialog::getExistingDirectory(this, QString(), settings.path(Settings::Directory::VmcExport));
+        if(directory_path.isEmpty())
+            return;
+        settings.setPath(Settings::Directory::VmcExport,  directory_path);
 
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
         QList<MemoryCard::Path> paths;

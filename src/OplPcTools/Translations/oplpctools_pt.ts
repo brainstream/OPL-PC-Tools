@@ -667,37 +667,37 @@
 <context>
     <name>OplPcTools::UI::GameArtsWidget</name>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="203"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="201"/>
         <source>Choose a Picture</source>
         <translation>Escolha uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="204"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="202"/>
         <source>Pictures</source>
         <translation>Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="231"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="229"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="232"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="230"/>
         <source>Delete Picture</source>
         <translation>Apagar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="233"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="231"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="272"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="270"/>
         <source>Download Pictures</source>
         <translation>Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="273"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="271"/>
         <source>Do you want to replace existing pictures?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -765,32 +765,32 @@
 <context>
     <name>OplPcTools::UI::GameImporterActivity</name>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="108"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="104"/>
         <source>Select OPL Game Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="115"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="111"/>
         <source>Unable to open game storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="132"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="128"/>
         <source>Unable to read game from the storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="168"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="164"/>
         <source>Copying pictures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="187"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="183"/>
         <source>Importing &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameImporterActivity.cpp" line="213"/>
+        <location filename="../UI/GameImporterActivity.cpp" line="209"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -798,32 +798,32 @@
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="388"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="384"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
         <translation>Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="391"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="428"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="424"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="611"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="607"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="654"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="650"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="654"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="650"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -854,37 +854,37 @@
 <context>
     <name>OplPcTools::UI::IsoRestorerActivity</name>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="90"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="84"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Escolha um nome para o arquivo ISO ser salvo</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="91"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="85"/>
         <source>ISO Image</source>
         <translation>Imagem ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="124"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="118"/>
         <source>Restoring &apos;%1&apos; to &apos;%2&apos;...</source>
         <translation>Restaurando &apos;%1&apos; para &apos;%2&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="132"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="126"/>
         <source>Synchronization of buffers. Please wait...</source>
         <translation>Sincronizando os buffers . Espera um pouquinho...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="133"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="127"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="149"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="143"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="150"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="144"/>
         <source>Canceled</source>
         <translation>Cancelado</translation>
     </message>
@@ -900,7 +900,7 @@
 <context>
     <name>OplPcTools::UI::MainWindow</name>
     <message>
-        <location filename="../UI/MainWindow.cpp" line="160"/>
+        <location filename="../UI/MainWindow.cpp" line="148"/>
         <source>Choose the OPL root directory</source>
         <translation>Escolha a raiz da pasta do OPL</translation>
     </message>
@@ -1013,22 +1013,22 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="322"/>
+        <location filename="../UI/VmcListWidget.cpp" line="312"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="323"/>
+        <location filename="../UI/VmcListWidget.cpp" line="313"/>
         <source>Delete VMC</source>
         <translation>Deletar VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="324"/>
+        <location filename="../UI/VmcListWidget.cpp" line="314"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation>Tem certeza que quer apagar este VMC?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="388"/>
+        <location filename="../UI/VmcListWidget.cpp" line="378"/>
         <source>Select directory</source>
         <translation>Selecione a pasta</translation>
     </message>
@@ -1088,27 +1088,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="150"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -1278,7 +1278,7 @@
         <translation>Os seguintes caracteres não são permitidos</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="157"/>
+        <location filename="../UI/VmcListWidget.cpp" line="147"/>
         <source>%1 MiB</source>
         <translation>%1 MiB</translation>
     </message>

@@ -28,10 +28,25 @@ class Settings  final : public QObject
     Q_OBJECT
 
 public:
-    static Settings & instance();
+
+    enum class Directory
+    {
+        UL,
+        GameCover,
+        GameImport,
+        IsoSource,
+        IsoRecover,
+        VmcExport
+    };
 
 public:
+    static Settings & instance();
+
     void flush();
+    void setPath(Directory _directory, const QString & _path);
+    const QString path(Directory _directory);
+    void setWindowGeometry(const QByteArray & _geometry);
+    QByteArray windowGeometry() const;
     bool reopenLastSession() const;
     void setReopenLastSession(bool _value);
     bool confirmGameDeletion() const;

@@ -16,35 +16,25 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QStyle>
-#include <QMessageBox>
-#include <QSettings>
-#include <QFileDialog>
-#include <QDesktopServices>
-#include <QUrl>
-#include <OplPcTools/Exception.h>
-#include <OplPcTools/Settings.h>
-#include <OplPcTools/Updater.h>
-#include <OplPcTools/Library.h>
-#include <OplPcTools/ApplicationInfo.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/MainWindow.h>
 #include <OplPcTools/UI/LibraryActivity.h>
 #include <OplPcTools/UI/AboutDialog.h>
 #include <OplPcTools/UI/SettingsDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/Settings.h>
+#include <OplPcTools/Updater.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/ApplicationInfo.h>
+#include <QStyle>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QDesktopServices>
+#include <QUrl>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
-
-namespace {
-namespace SettingsKey {
-
-const char * wnd_geometry = "WindowGeometry";
-const char * ul_dir       = "ULDirectory";
-
-} // namespace SettingsKey
-} // namespace
 
 MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     QMainWindow(_parent),
@@ -58,8 +48,7 @@ MainWindow::MainWindow(QWidget * _parent /*= nullptr*/) :
     mp_btn_open_library->setDefaultAction(mp_action_open_library);
     mp_btn_open_library->setToolTip(QString());
     setupUpdater();
-    QSettings settings;
-    restoreGeometry(settings.value(SettingsKey::wnd_geometry).toByteArray());
+    restoreGeometry(Settings::instance().windowGeometry());
     connect(&Library::instance(), &Library::loaded, this, &MainWindow::onLibraryLoaded);
     connect(mp_action_open_library, &QAction::triggered, this, &MainWindow::openLibrary);
     connect(mp_action_settings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
@@ -100,8 +89,7 @@ void MainWindow::setupUpdater()
 void MainWindow::closeEvent(QCloseEvent * _event)
 {
     QMainWindow::closeEvent(_event);
-    QSettings settings;
-    settings.setValue(SettingsKey::wnd_geometry, saveGeometry());
+    Settings::instance().setWindowGeometry(saveGeometry());
 }
 
 bool MainWindow::pushActivity(Intent & _intent)
@@ -145,22 +133,22 @@ void MainWindow::tryOpenRecentLibrary()
 {
     if(!Settings::instance().reopenLastSession())
         return;
-    QSettings settings;
-    QVariant value = settings.value(SettingsKey::ul_dir);
-    if(!value.isValid()) return;
-    QDir dir(value.toString());
+    Settings & settings = Settings::instance();
+    QString path = settings.path(Settings::Directory::UL);
+    if(path.isEmpty()) return;
+    QDir dir(path);
     if(!dir.exists()) return;
     loadLibrary(dir);
 }
 
 void MainWindow::openLibrary()
 {
-    QSettings settings;
-    QString dirpath = settings.value(SettingsKey::ul_dir).toString();
+    Settings & settings = Settings::instance();
+    QString dirpath = settings.path(Settings::Directory::UL);
     QString choosen_dirpath = QFileDialog::getExistingDirectory(this, tr("Choose the OPL root directory"), dirpath);
     if(choosen_dirpath.isEmpty()) return;
     if(choosen_dirpath != dirpath)
-        settings.setValue(SettingsKey::ul_dir, choosen_dirpath);
+        settings.setPath(Settings::Directory::UL, choosen_dirpath);
     closeAllActivities();
     loadLibrary(choosen_dirpath);
 }

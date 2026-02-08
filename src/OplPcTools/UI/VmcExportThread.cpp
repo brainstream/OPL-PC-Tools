@@ -33,15 +33,32 @@ VmcExportThreadWorker::VmcExportThreadWorker() :
     connect(this, &VmcExportThreadWorker::emitAnswer, this, &VmcExportThreadWorker::onAnswerSet);
 }
 
-void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir)
+void VmcExportThreadWorker::start(
+    const Vmc & _vmc,
+    const StringConverter & _string_converter,
+    const QList<MemoryCard::Path> & _sources,
+    const QString & _destination_dir)
 {
     try
     {
         m_action = Action::Skip;
         QSharedPointer<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(_vmc.filepath()));
         fs->load();
-        StringConverter string_converter(_fs_encoding);
-        exportDirectory(*fs, string_converter, MemoryCard::Path::root(), _destination_dir);
+        foreach(const MemoryCard::Path & source, _sources)
+        {
+            if(std::optional<MemoryCard::EntryInfo> entry = fs->entry(source))
+            {
+                if(entry->isDirectory())
+                    exportDirectory(*fs, _string_converter, MemoryCard::Path::root(), _destination_dir);
+                else
+                    exportFile(*fs, _string_converter, source, _destination_dir);
+            }
+            else
+            {
+                emit exception(tr("Source path not found: %1").arg(_string_converter.decode(source.path())));
+                return;
+            }
+        }
     }
     catch(const Exception & _exception)
     {
@@ -56,7 +73,7 @@ void VmcExportThreadWorker::start(const Vmc & _vmc, const QString & _fs_encoding
 
 void VmcExportThreadWorker::exportDirectory(
     MemoryCard::FileSystem & _fs,
-    StringConverter & _string_converter,
+    const StringConverter & _string_converter,
     const MemoryCard::Path & _vmc_dir,
     const QString & _dest_directory)
 {
@@ -68,10 +85,10 @@ void VmcExportThreadWorker::exportDirectory(
     QList<MemoryCard::EntryInfo> entries = _fs.enumerateEntries(_vmc_dir);
     foreach(const MemoryCard::EntryInfo & entry, entries)
     {
-        MemoryCard::Path next_vmc_entry = _vmc_dir + entry.name;
-        if(entry.is_directory)
+        MemoryCard::Path next_vmc_entry = _vmc_dir + entry.name();
+        if(entry.isDirectory())
         {
-            QString next_directory = dir.absoluteFilePath(entry.name);
+            QString next_directory = dir.absoluteFilePath(entry.name());
             exportDirectory(_fs, _string_converter, next_vmc_entry, next_directory);
         }
         else
@@ -85,7 +102,7 @@ void VmcExportThreadWorker::exportDirectory(
 
 void VmcExportThreadWorker::exportFile(
     MemoryCard::FileSystem & _fs,
-    StringConverter & _string_converter,
+    const StringConverter & _string_converter,
     const MemoryCard::Path & _vmc_file,
     const QString & _dest_directory)
 {
@@ -140,13 +157,17 @@ VmcExportThread::VmcExportThread(QWidget * _parent_widget) :
 {
 }
 
-void VmcExportThread::start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir)
+void VmcExportThread::start(
+    const Vmc & _vmc,
+    const StringConverter & _string_converter,
+    const QList<MemoryCard::Path> & _sources,
+    const QString & _destination_dir)
 {
     QThread * thread = new QThread(this);
     BusyDialog * busy_dialog = new BusyDialog(mp_parent_widget);
     mp_worker = new VmcExportThreadWorker();
-    connect(thread, &QThread::started, this, [this, &_vmc, _fs_encoding, &_destination_dir]() {
-        mp_worker->start(_vmc, _fs_encoding, _destination_dir);
+    connect(thread, &QThread::started, this, [this, &_vmc, &_string_converter, &_sources, &_destination_dir]() {
+        mp_worker->start(_vmc, _string_converter, _sources, _destination_dir);
     });
     connect(thread, &QThread::finished, this, &VmcExportThread::finished);
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);

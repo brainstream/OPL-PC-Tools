@@ -59,23 +59,53 @@ struct EntryAddress
     uint32_t entry;
 };
 
-struct EntryInfo
+class EntryInfo final
 {
-    static EntryInfo fromFSEntry(const FSEntry & _fs_entry)
+public:
+    EntryInfo(const QByteArray & _name, bool _is_directory, uint32_t _cluster, uint32_t _length) :
+        m_name(_name),
+        m_is_directory(_is_directory),
+        m_cluster(_cluster),
+        m_length(_length)
     {
-        return EntryInfo
-        {
-            .name = QByteArray(_fs_entry.name, std::min(sizeof(FSEntry::name), std::strlen(_fs_entry.name))),
-            .is_directory = (_fs_entry.mode & EM_DIRECTORY) != 0,
-            .cluster = _fs_entry.cluster,
-            .length = _fs_entry.length
-        };
     }
 
-    QByteArray name;
-    bool is_directory;
-    uint32_t cluster;
-    uint32_t length;
+    EntryInfo(const FSEntry & _fs_entry) :
+        m_name(_fs_entry.name, std::min(sizeof(FSEntry::name), std::strlen(_fs_entry.name))),
+        m_is_directory((_fs_entry.mode & EM_DIRECTORY) != 0),
+        m_cluster(_fs_entry.cluster),
+        m_length(_fs_entry.length)
+    {
+    }
+
+    EntryInfo(const EntryInfo &) = default;
+    EntryInfo & operator = (const EntryInfo &) = default;
+
+    const QByteArray & name() const
+    {
+        return m_name;
+    }
+
+    bool isDirectory() const
+    {
+        return m_is_directory;
+    }
+
+    uint32_t cluster() const
+    {
+        return m_cluster;
+    }
+
+    uint32_t length() const
+    {
+        return m_length;
+    }
+
+private:
+    QByteArray m_name;
+    bool m_is_directory;
+    uint32_t m_cluster;
+    uint32_t m_length;
 };
 
 struct EntryPath
@@ -121,6 +151,7 @@ public:
     void load();
     const FSInfo * info() const;
     QList<EntryInfo> enumerateEntries(const Path & _path);
+    std::optional<EntryInfo> entry(const Path & _path);
     void exportEntry(const Path & _vmc_path, const QString & _dest_path);
     QSharedPointer<File> openFile(const Path & _path);
     int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);

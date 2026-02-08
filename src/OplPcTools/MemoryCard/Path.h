@@ -25,8 +25,6 @@ namespace MemoryCard {
 
 class Path
 {
-    Q_DISABLE_COPY(Path)
-
 public:
     Path()
     {
@@ -46,6 +44,10 @@ public:
         m_parts(_parts)
     {
     }
+
+    Path(const Path &) = default;
+
+    Path & operator = (const Path &) = default;
 
     Path operator + (const QByteArray & _relative_path) const
     {
@@ -91,7 +93,7 @@ private:
     QList<QByteArray> split(const QByteArray & _path) const
     {
         auto parts = _path.split(s_path_separator);
-        // parts.removeAll(QByteArray()); // Qt 5.14+
+        // parts.removeAll(QByteArray()); // Cannot be used, Qt 5.14+
         for(qsizetype i = parts.count() - 1; i >=0; --i)
             if(parts.at(i).isEmpty()) parts.removeAt(i);
         return parts;
@@ -99,7 +101,7 @@ private:
 
 private:
     static const char s_path_separator = '/';
-    const QList<QByteArray> m_parts;
+    QList<QByteArray> m_parts;
 };
 
 } // namespace MemoryCard

@@ -39,21 +39,34 @@ class VmcExportThreadWorker : public QObject
 
 public:
     VmcExportThreadWorker();
-    void start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir);
+    void start(
+        const Vmc & _vmc,
+        const StringConverter & _string_converter,
+        const QList<MemoryCard::Path> & _sources,
+        const QString & _destination_dir);
     void cancel();
 
 private:
     void setAnswer(bool _answer);
     void exportDirectory(
         MemoryCard::FileSystem & _fs,
-        StringConverter & _string_converter,
+        const StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_dir,
         const QString & _dest_directory);
     void exportFile(
         MemoryCard::FileSystem & _fs,
-        StringConverter & _string_converter,
+        const StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_file,
         const QString & _dest_directory);
+
+
+    void exportEntries(
+        MemoryCard::FileSystem & _fs,
+        const StringConverter & _string_converter,
+        const MemoryCard::Path & _vmc_dir,
+        const QString & _dest_directory);
+
+
     Action getAction(const QString & _question);
     void onAnswerSet(bool _answer);
 
@@ -75,7 +88,11 @@ class VmcExportThread : public QObject
 
 public:
     explicit VmcExportThread(QWidget * _parent_widget);
-    void start(const Vmc & _vmc, const QString & _fs_encoding, const QString & _destination_dir);
+    void start(
+        const Vmc & _vmc,
+        const StringConverter & _string_converter,
+        const QList<MemoryCard::Path> & _sources,
+        const QString & _destination_dir);
 
 signals:
     void finished();

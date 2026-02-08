@@ -951,17 +951,17 @@
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="280"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="281"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -974,7 +974,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="173"/>
+        <location filename="../UI/VmcExportThread.cpp" line="194"/>
         <source>Overwrite confirmation</source>
         <translation>Подтверждение перезаписи</translation>
     </message>
@@ -982,12 +982,17 @@
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="52"/>
+        <location filename="../UI/VmcExportThread.cpp" line="58"/>
+        <source>Source path not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExportThread.cpp" line="69"/>
         <source>An unknown error occurred while exporting VMC</source>
         <translation>Во время экспорта VMC произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="97"/>
+        <location filename="../UI/VmcExportThread.cpp" line="114"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation>Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
@@ -1184,12 +1189,12 @@
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="67"/>
+        <location filename="../UI/VmcExportThread.cpp" line="84"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Не могу создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="94"/>
+        <location filename="../UI/VmcExportThread.cpp" line="111"/>
         <source>Unable to open VMC file &quot;%1&quot;</source>
         <translation>Не могу открыть файл VMC &quot;%1&quot;</translation>
     </message>
@@ -1214,7 +1219,7 @@
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="196"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="197"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
@@ -1239,12 +1244,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="332"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="339"/>
         <source>The entry is not a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="413"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="420"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1254,7 +1259,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="330"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="337"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>

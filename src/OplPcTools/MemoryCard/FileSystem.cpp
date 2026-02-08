@@ -232,7 +232,7 @@ QList<EntryInfo> FileSystem::enumerateEntries(const Path & _path)
     if(entry_path.has_value())
     {
         forEachEntry(entry_path->entry, [&](const EntryPath & next_entry_path) -> bool {
-            if(next_entry_path.entry.name.compare(".") != 0  && next_entry_path.entry.name.compare("..") != 0)
+            if(next_entry_path.entry.name().compare(".") != 0  && next_entry_path.entry.name().compare("..") != 0)
                 result << next_entry_path.entry;
             return true;
         });
@@ -244,6 +244,13 @@ QList<EntryInfo> FileSystem::enumerateEntries(const Path & _path)
     return result;
 }
 
+std::optional<EntryInfo> FileSystem::entry(const Path & _path)
+{
+    std::optional<EntryPath> ep = resolvePath(_path);
+    if(ep) return ep->entry;
+    return std::nullopt;
+}
+
 std::optional<EntryPath> FileSystem::resolvePath(const Path & _path)
 {
     EntryPath entry_path = getRootEntry();
@@ -251,7 +258,7 @@ std::optional<EntryPath> FileSystem::resolvePath(const Path & _path)
     {
         bool matched = false;
         forEachEntry(entry_path.entry, [&](const EntryPath & __next_entry_path) -> bool {
-            if(path_part.compare(__next_entry_path.entry.name, Qt::CaseInsensitive) == 0)
+            if(path_part.compare(__next_entry_path.entry.name(), Qt::CaseInsensitive) == 0)
             {
                 matched = true;
                 entry_path = __next_entry_path;
@@ -271,7 +278,7 @@ EntryPath FileSystem::getRootEntry()
     readCluster(mp_info->rootdir_cluster, false, buffer.data(), sizeof(FSEntry));
     return EntryPath
     {
-        .entry = EntryInfo::fromFSEntry(*reinterpret_cast<FSEntry *>(buffer.data())),
+        .entry = EntryInfo(*reinterpret_cast<FSEntry *>(buffer.data())),
         .address = EntryAddress
         {
             .cluster = mp_info->rootdir_cluster,
@@ -291,14 +298,14 @@ void FileSystem::forEachEntry(const EntryInfo & _dir, std::function<bool(const E
         const FSEntry * entries = reinterpret_cast<const FSEntry *>(buffer.data());
         for(size_t i = 0; i < mp_info->fs_entries_per_cluster; ++i)
         {
-            if(++read_count > _dir.length)
+            if(++read_count > _dir.length())
                 return;
             const FSEntry & entry = entries[i];
             if(!(entry.mode & EM_EXISTS))
                 continue;
             EntryPath ep
             {
-                .entry = EntryInfo::fromFSEntry(entry),
+                .entry = entry,
                 .address = EntryAddress { .cluster = cluster, .entry = static_cast<uint32_t>(i) }
             };
             if(!_callback(ep))
@@ -309,10 +316,10 @@ void FileSystem::forEachEntry(const EntryInfo & _dir, std::function<bool(const E
 
 QList<uint32_t> FileSystem::getEntryClusters(const EntryInfo & _entry) const
 {
-    if(_entry.cluster > mp_info->max_allocatable_clusters)
+    if(_entry.cluster() > mp_info->max_allocatable_clusters)
         throwNotFormatted();
     QList<uint32_t> result;
-    for(uint32_t cluster = _entry.cluster;;) // TODO: check overflow, cycles, etc.
+    for(uint32_t cluster = _entry.cluster();;) // TODO: check overflow, cycles, etc.
     {
         result.append(cluster);
         FATEntry fat_entry = m_fat[cluster];
@@ -328,14 +335,14 @@ QSharedPointer<File> FileSystem::openFile(const Path & _path)
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path.has_value())
         throw MemoryCardFileException(QObject::tr("File not found"), _path);
-    if(entry_path->entry.is_directory)
+    if(entry_path->entry.isDirectory())
         throw MemoryCardFileException(QObject::tr("The entry is not a file"), _path);
     File::Private * pr = new File::Private;
     pr->clusters = getEntryClusters(entry_path->entry);
     pr->fs = this;
     pr->position = 0;
-    pr->size = entry_path->entry.length;
-    pr->name = entry_path->entry.name;
+    pr->size = entry_path->entry.length();
+    pr->name = entry_path->entry.name();
     return QSharedPointer<File>(new File(pr));
 }
 
@@ -407,7 +414,7 @@ void FileSystem::writeFile(
     const QByteArray & _data,
     bool _is_directory)
 {
-    if(!_directory_path.entry.is_directory)
+    if(!_directory_path.entry.isDirectory())
     {
         throw MemoryCardFileSystemException(
             QObject::tr("The entry %1 in cluster %2 is not a directory")
@@ -419,14 +426,12 @@ void FileSystem::writeFile(
     if(!file_data_clusters)
         throwNoSpace();
 
-    EntryInfo file_entry
-    {
-        .name = _filename,
-        .is_directory = _is_directory,
-        .cluster = file_data_clusters->first(),
+    EntryInfo file_entry(
+        _filename,
+        _is_directory,
+        file_data_clusters->first(),
         // New directory contains two entries: . and ..
-        .length = _is_directory ? 2 : static_cast<uint32_t>(_data.length())
-    };
+        _is_directory ? 2 : static_cast<uint32_t>(_data.length()));
     if(!allocEntry(_directory_path, file_entry))
     {
         freeFAT(*file_data_clusters);
@@ -479,17 +484,17 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
     { // Creating a new entry
         FSEntry & new_entry = parent_free_entry.cluster_entries[parent_free_entry.entry_index];
         new_entry.mode = EM_EXISTS | EM_READ | EM_WRITE;
-        if(_entry.is_directory)
+        if(_entry.isDirectory())
             new_entry.mode |= EM_DIRECTORY | EM_EXECUTE;
         else
             new_entry.mode |= EM_FILE;
-        new_entry.length = _entry.length;
-        new_entry.cluster = _entry.cluster;
+        new_entry.length = _entry.length();
+        new_entry.cluster = _entry.cluster();
         new_entry.created = new_entry.modified = DateTime::now();
         std::strncpy(
             new_entry.name,
-            _entry.name.data(),
-            std::min(sizeof(FSEntry::name), static_cast<size_t>(_entry.name.length())));
+            _entry.name().data(),
+            std::min(sizeof(FSEntry::name), static_cast<size_t>(_entry.name().length())));
     }
 
     // Updating an old or new cluster
@@ -605,10 +610,10 @@ void FileSystem::remove(const Path & _path)
 
 void FileSystem::eraseEntriesRecursive(const EntryPath & _path)
 {
-    if(_path.entry.is_directory)
+    if(_path.entry.isDirectory())
     {
         forEachEntry(_path.entry, [this](const EntryPath & __child_path) -> bool {
-            if(__child_path.entry.name != "." && __child_path.entry.name != "..")
+            if(__child_path.entry.name() != "." && __child_path.entry.name() != "..")
                 eraseEntriesRecursive(__child_path);
             return true;
         });

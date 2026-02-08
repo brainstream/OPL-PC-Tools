@@ -21,6 +21,7 @@
 #include <OplPcTools/UI/VmcFileNameDialog.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 #include <OplPcTools/UI/DisplayUtils.h>
+#include <OplPcTools/UI/VmcExportThread.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/StringConverter.h>
 #include <OplPcTools/Settings.h>
@@ -182,19 +183,19 @@ QVariant VmcFileSystemViewModel::data(const QModelIndex & _index, int _role) con
         {
         case Qt::DisplayRole:
         {
-            return QString(m_string_converter.decode(item->name));
+            return QString(m_string_converter.decode(item->name()));
         }
         case Qt::DecorationRole:
-            return item->is_directory ? m_dir_icon : m_file_icon;
+            return item->isDirectory() ? m_dir_icon : m_file_icon;
         }
         break;
     case COL_SIZE:
         switch(_role)
         {
         case Qt::DisplayRole:
-            if(item->is_directory)
+            if(item->isDirectory())
                 return QObject::tr("<directory>");
-            return makeBytesDisplayString(item->length);
+            return makeBytesDisplayString(item->length());
         case Qt::TextAlignmentRole:
             return static_cast<int>(Qt::AlignRight) | static_cast<int>(Qt::AlignVCenter);
         }
@@ -217,17 +218,17 @@ void VmcFileSystemViewModel::unsafeSort()
     std::stable_sort(m_item_indices.begin(), m_item_indices.end(), [&](const int & left_index, const int & right_index) {
         const MemoryCard::EntryInfo & left = m_items.at(left_index);
         const MemoryCard::EntryInfo & right = m_items.at(right_index);
-        if(left.is_directory != right.is_directory)
-            return left.is_directory;
+        if(left.isDirectory() != right.isDirectory())
+            return left.isDirectory();
         switch(m_sorted_by_column)
         {
         case COL_TTITLE:
         {
-            int result = left.name.compare(right.name, Qt::CaseInsensitive);
+            int result = left.name().compare(right.name(), Qt::CaseInsensitive);
             return m_sort_order == Qt::AscendingOrder ? result < 0 : result > 0;
         }
         case COL_SIZE:
-            return m_sort_order == Qt::AscendingOrder ? left.length < right.length : right.length < left.length;
+            return m_sort_order == Qt::AscendingOrder ? left.length() < right.length() : right.length() < left.length();
         default:
             return false;
         }
@@ -298,11 +299,10 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_action_rename_entry, &QAction::triggered, this, &VmcDetailsActivity::renameEntry);
         connect(mp_action_upload_files, &QAction::triggered, this, &VmcDetailsActivity::uploadFiles);
         connect(mp_action_upload_directory, &QAction::triggered, this, &VmcDetailsActivity::uploadDirectory);
+        connect(mp_action_download, &QAction::triggered, this, &VmcDetailsActivity::download);
         connect(mp_action_delete, &QAction::triggered, this, &VmcDetailsActivity::deleteEntry);
 
         setIconSize();
-
-        mp_action_download->setVisible(false); // TODO: WIP
     }
 }
 
@@ -411,8 +411,8 @@ void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
     const MemoryCard::EntryInfo * item = mp_model->item(_index);
     if(item == nullptr)
         return;
-    if(item->is_directory)
-        navigate(MemoryCard::Path(encodePath(mp_edit_fs_path->text()), item->name));
+    if(item->isDirectory())
+        navigate(MemoryCard::Path(encodePath(mp_edit_fs_path->text()), item->name()));
 }
 
 void VmcDetailsActivity::onFsBackButtonClick()
@@ -494,13 +494,13 @@ void VmcDetailsActivity::renameEntry()
         return;
 
     VmcFileNameDialog dlg(this);
-    dlg.setTitle(entry->is_directory);
-    dlg.setCurrentFilename(decodePath(entry->name));
+    dlg.setTitle(entry->isDirectory());
+    dlg.setCurrentFilename(decodePath(entry->name()));
     if(dlg.exec() != QDialog::Accepted)
         return;
 
     const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-    m_vmc_fs_ptr->rename(vmc_current_dir + encodePath(entry->name), encodePath(dlg.currentFilename()));
+    m_vmc_fs_ptr->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
     mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
 }
 
@@ -520,7 +520,7 @@ void VmcDetailsActivity::uploadFiles()
     }
     catch(const Exception & exception)
     {
-        Application::showErrorMessage(exception.message());
+        showErrorMessage(exception.message());
     }
 }
 
@@ -569,7 +569,45 @@ void VmcDetailsActivity::uploadDirectory()
     }
     catch(const Exception & exception)
     {
-        Application::showErrorMessage(exception.message());
+        showErrorMessage(exception.message());
+    }
+}
+
+void VmcDetailsActivity::download()
+{
+    try
+    {
+        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+        const QString directory_path = QFileDialog::getExistingDirectory(this); // TODO: store directory
+
+        const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
+        QList<MemoryCard::Path> paths;
+        paths.reserve((selection.count()));
+        foreach(const QModelIndex & index, selection)
+        {
+            const MemoryCard::EntryInfo * entry = mp_model->item(index);
+            if(!entry) continue;
+            paths.emplaceBack(MemoryCard::Path(vmc_current_dir, entry->name()));
+        }
+
+        if(paths.empty())
+            return;
+
+        VmcExportThread * thread = new VmcExportThread(this);
+        connect(thread, &VmcExportThread::finished, thread, &VmcExportThread::deleteLater);
+        connect(thread, &VmcExportThread::exception, [](const QString & message) {
+            Application::showErrorMessage(message);
+        });
+
+        thread->start(mr_vmc, mp_model->stringConverter(), paths, directory_path);
+    }
+    catch(const MemoryCard::MemoryCardFileException & exception)
+    {
+        showErrorMessage(exception.message(), exception.path());
+    }
+    catch(const Exception & exception)
+    {
+        showErrorMessage(exception.message());
     }
 }
 
@@ -589,7 +627,7 @@ void VmcDetailsActivity::deleteEntry()
             const MemoryCard::EntryInfo * entry = mp_model->item(index);
             if(!entry) continue;
             deleted = true;
-            m_vmc_fs_ptr->remove(vmc_current_dir + entry->name);
+            m_vmc_fs_ptr->remove(vmc_current_dir + entry->name());
         }
 
         if(deleted)
@@ -601,6 +639,6 @@ void VmcDetailsActivity::deleteEntry()
     }
     catch(const Exception & exception)
     {
-        Application::showErrorMessage(exception.message());
+        showErrorMessage(exception.message());
     }
 }

@@ -393,5 +393,6 @@ void VmcListWidget::exportFiles()
     connect(thread, &VmcExportThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);
     });
-    thread->start(*vmc, Library::instance().config().vmcFsCharset(*vmc), directory);
+    StringConverter string_converter(Library::instance().config().vmcFsCharset(*vmc));
+    thread->start(*vmc, string_converter, { QByteArray("/") }, directory);
 }

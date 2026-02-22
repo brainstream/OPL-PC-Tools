@@ -70,6 +70,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="mp_checkbox_confirm_vmc_file_deletion">
+         <property name="text">
+          <string>Confirm the removal of a VMC file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="mp_spacer">
          <property name="orientation">
           <enum>Qt::Orientation::Vertical</enum>
@@ -193,17 +200,19 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mp_tabs</tabstop>
   <tabstop>mp_checkbx_reopen_last_catalog</tabstop>
   <tabstop>mp_checkbox_validate_ulcfg</tabstop>
   <tabstop>mp_checkbox_check_new_versions</tabstop>
   <tabstop>mp_checkbox_confirm_game_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_picture_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_vmc_deletion</tabstop>
+  <tabstop>mp_checkbox_confirm_vmc_file_deletion</tabstop>
   <tabstop>mp_checkbox_donot_splitup</tabstop>
   <tabstop>mp_checkobx_move_iso</tabstop>
   <tabstop>mp_checkbox_add_id</tabstop>
   <tabstop>mp_spinbox_icon_size</tabstop>
-  <tabstop>mp_tabs</tabstop>
+  <tabstop>mp_combobox_vmc_fs_charset</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -214,8 +223,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>254</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -230,8 +239,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>322</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

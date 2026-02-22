@@ -29,6 +29,7 @@ const char reopen_last_session[] = "Settings/ReopenLastSession";
 const char confirm_game_deletion[] = "Settings/ConfirmGameDeletion";
 const char confirm_pixmap_deletion[] = "Settings/ConfirmPixmapDeletion";
 const char confirm_vmc_deletion[] = "Settings/ConfirmVmcDeletion";
+const char confirm_vmc_file_deletion[] = "Settings/ConfirmVmcFileDeletion";
 const char split_up_iso[] = "Settings/SplitUpISO";
 const char move_iso[] = "Settings/MoveISO";
 const char rename_iso[] = "Settings/RenameISO";
@@ -43,6 +44,7 @@ const char game_import_dir[] = "ImportDirectory";
 const char iso_source_dir[] = "ISODirectory";
 const char iso_recover_dir[] = "ISORecoverDirectory";
 const char vmc_export_dir[] = "VmcExportDir";
+const char vmc_import_dir[] = "VmcImportDir";
 
 const char wnd_geometry[] = "WindowGeometry";
 
@@ -82,6 +84,9 @@ void Settings::setPath(Directory _directory, const QString & _path)
     case Directory::VmcExport:
         mp_settings->setValue(Key::vmc_export_dir, _path);
         return;
+    case Directory::VmcImport:
+        mp_settings->setValue(Key::vmc_import_dir, _path);
+        return;
     }
 }
 
@@ -101,6 +106,8 @@ const QString Settings::path(Directory _directory)
         return mp_settings->value(Key::iso_recover_dir).toString();
     case Directory::VmcExport:
         return mp_settings->value(Key::vmc_export_dir).toString();
+    case Directory::VmcImport:
+        return mp_settings->value(Key::vmc_import_dir).toString();
     default:
         return QString();
     }
@@ -154,6 +161,16 @@ bool Settings::confirmVmcDeletion() const
 void Settings::setConfirmVmcDeletion(bool _value)
 {
     mp_settings->setValue(Key::confirm_vmc_deletion, _value);
+}
+
+bool Settings::confirmVmcFileDeletion() const
+{
+    return mp_settings->value(Key::confirm_vmc_file_deletion, true).toBool();
+}
+
+void Settings::setConfirmVmcFileDeletion(bool _value)
+{
+    mp_settings->setValue(Key::confirm_vmc_file_deletion, _value);
 }
 
 bool Settings::splitUpIso() const

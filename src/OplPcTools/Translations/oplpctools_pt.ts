@@ -946,29 +946,53 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="325"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="327"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="270"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="270"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="281"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="283"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="472"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="474"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="656"/>
+        <source>Are you sure you want to delete this file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="657"/>
+        <source>Are you sure you want to delete these files?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="658"/>
+        <source>Do not ask again</source>
+        <translation type="unfinished">Não pedir de novo</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="659"/>
+        <source>Delete VMC files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete VMC</source>
+        <translation type="obsolete">Deletar VMC</translation>
     </message>
 </context>
 <context>
@@ -1219,7 +1243,7 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="197"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="199"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>
@@ -1366,47 +1390,52 @@
         <translation>Confirme a remoção de um VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="89"/>
+        <location filename="../UI/SettingsDialog.ui" line="75"/>
+        <source>Confirm the removal of a VMC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="96"/>
         <source>Installation</source>
         <translation>Instalação</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="95"/>
+        <location filename="../UI/SettingsDialog.ui" line="102"/>
         <source>Default behaviour</source>
         <translation>Comportamento padrão</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="101"/>
+        <location filename="../UI/SettingsDialog.ui" line="108"/>
         <source>Write ISO in a single file</source>
         <translation>Salvar ISO em um único arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="108"/>
+        <location filename="../UI/SettingsDialog.ui" line="115"/>
         <source>Move ISO instead of copy</source>
         <translation>Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="115"/>
+        <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Add a game ID to a filename</source>
         <translation>Adicionar um ID de jogo ao um arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="139"/>
+        <location filename="../UI/SettingsDialog.ui" line="146"/>
         <source>Appearance</source>
         <translation>Aparência</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="145"/>
+        <location filename="../UI/SettingsDialog.ui" line="152"/>
         <source>List Icon Size</source>
         <translation>Tamanho dos ícones na listagem</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="166"/>
+        <location filename="../UI/SettingsDialog.ui" line="173"/>
         <source>VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="172"/>
+        <location filename="../UI/SettingsDialog.ui" line="179"/>
         <source>Default file system charset</source>
         <translation type="unfinished"></translation>
     </message>

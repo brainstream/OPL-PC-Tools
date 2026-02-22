@@ -33,6 +33,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_checkbox_confirm_game_deletion->setChecked(settings.confirmGameDeletion());
     mp_checkbox_confirm_picture_deletion->setChecked(settings.confirmPixmapDeletion());
     mp_checkbox_confirm_vmc_deletion->setChecked(settings.confirmVmcDeletion());
+    mp_checkbox_confirm_vmc_file_deletion->setChecked(settings.confirmVmcFileDeletion());
     mp_checkbox_donot_splitup->setChecked(!settings.splitUpIso());
     mp_checkbox_add_id->setChecked(settings.renameIso());
     mp_checkobx_move_iso->setChecked(settings.moveIso());
@@ -61,6 +62,7 @@ void SettingsDialog::accept()
     settings.setConfirmGameDeletion(mp_checkbox_confirm_game_deletion->isChecked());
     settings.setConfirmPixmapDeletion(mp_checkbox_confirm_picture_deletion->isChecked());
     settings.setConfirmVmcDeletion(mp_checkbox_confirm_vmc_deletion->isChecked());
+    settings.setConfirmVmcFileDeletion(mp_checkbox_confirm_vmc_file_deletion->isChecked());
     settings.setSplitUpIso(!mp_checkbox_donot_splitup->isChecked());
     settings.setRenameIso(mp_checkbox_add_id->isChecked());
     settings.setMoveIso(mp_checkobx_move_iso->isChecked());

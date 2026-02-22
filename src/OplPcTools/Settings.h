@@ -36,7 +36,8 @@ public:
         GameImport,
         IsoSource,
         IsoRecover,
-        VmcExport
+        VmcExport,
+        VmcImport
     };
 
 public:
@@ -55,6 +56,8 @@ public:
     void setConfirmPixmapDeletion(bool _value);
     bool confirmVmcDeletion() const;
     void setConfirmVmcDeletion(bool _value);
+    bool confirmVmcFileDeletion() const;
+    void setConfirmVmcFileDeletion(bool _value);
     bool splitUpIso() const;
     void setSplitUpIso(bool _value);
     bool moveIso() const;

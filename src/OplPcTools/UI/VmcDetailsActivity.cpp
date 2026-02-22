@@ -27,6 +27,8 @@
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/File.h>
 #include <QFileDialog>
+#include <QCheckBox>
+#include <QMessageBox>
 #include <QStandardItemModel>
 #include <QShortcut>
 
@@ -506,7 +508,12 @@ void VmcDetailsActivity::renameEntry()
 
 void VmcDetailsActivity::uploadFiles()
 {
-    QStringList filenames = QFileDialog::getOpenFileNames(this); // TODO: store directory
+    QStringList filenames = QFileDialog::getOpenFileNames(
+        this,
+        QString(),
+        Settings::instance().path(Settings::Directory::VmcImport));
+    if(!filenames.empty())
+        Settings::instance().setPath(Settings::Directory::VmcImport, QFileInfo(filenames.first()).absolutePath());
     try
     {
         const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
@@ -554,9 +561,13 @@ void VmcDetailsActivity::uploadFileImpl(const QString & _file_path, const Memory
 
 void VmcDetailsActivity::uploadDirectory()
 {
-    const QString directory_path = QFileDialog::getExistingDirectory(this); // TODO: store directory
+    const QString directory_path = QFileDialog::getExistingDirectory(
+        this,
+        QString(),
+        Settings::instance().path(Settings::Directory::VmcImport));
     if(directory_path.isEmpty())
         return;
+    Settings::instance().setPath(Settings::Directory::VmcImport, directory_path);
     const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
     try
     {
@@ -592,7 +603,7 @@ void VmcDetailsActivity::download()
         {
             const MemoryCard::EntryInfo * entry = mp_model->item(index);
             if(!entry) continue;
-            paths.emplaceBack(MemoryCard::Path(vmc_current_dir, entry->name()));
+            paths.append(MemoryCard::Path(vmc_current_dir, entry->name()));
         }
 
         if(paths.empty())
@@ -621,10 +632,40 @@ void VmcDetailsActivity::deleteEntry()
     try
     {
         const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-
-        // TODO: confirm dialog
-
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
+
+        Settings & settings = Settings::instance();
+        if(settings.confirmVmcFileDeletion())
+        {
+            QString items;
+            int display_items_count = 0;
+            foreach(const QModelIndex & index, selection)
+            {
+                const MemoryCard::EntryInfo * entry = mp_model->item(index);
+                if(!entry) continue;
+                if(display_items_count == 9)
+                {
+                    items += QString("\n...");
+                    break;
+                }
+                items += QString("\n") + mp_model->stringConverter().decode(entry->name());
+                ++display_items_count;
+            }
+            QString message =
+                display_items_count == 1 ?
+                tr("Are you sure you want to delete this file?") :
+                tr("Are you sure you want to delete these files?");
+            QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
+            QMessageBox message_box(QMessageBox::Question, tr("Delete VMC files"),
+                                    QString("%1\n%2\n").arg(message, items),
+                                    QMessageBox::Yes | QMessageBox::No);
+            message_box.setDefaultButton(QMessageBox::Yes);
+            message_box.setCheckBox(checkbox);
+            if(message_box.exec() != QMessageBox::Yes)
+                return;
+            if(checkbox->isChecked())
+                settings.setConfirmVmcFileDeletion(false);
+        }
 
         bool deleted = false;
         foreach(const QModelIndex & index, selection)

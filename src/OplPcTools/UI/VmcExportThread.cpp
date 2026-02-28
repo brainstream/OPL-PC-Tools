@@ -42,7 +42,7 @@ void VmcExportThreadWorker::start(
     try
     {
         m_action = Action::Skip;
-        QSharedPointer<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(_vmc.filepath()));
+        std::unique_ptr<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(_vmc.filepath(), this));
         fs->load();
         foreach(const MemoryCard::Path & source, _sources)
         {

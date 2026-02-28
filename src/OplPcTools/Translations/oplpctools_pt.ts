@@ -946,47 +946,47 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="327"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="319"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="270"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="270"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="283"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="413"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="474"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="488"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="656"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="666"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="657"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="667"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="658"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="668"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="659"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="669"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1268,12 +1268,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="339"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="340"/>
         <source>The entry is not a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="420"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="423"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1283,7 +1283,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="337"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="338"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>

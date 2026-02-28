@@ -133,9 +133,9 @@ private:
     Private * mp_private;
 };
 
-class FileSystem final
+class FileSystem final : public QObject
 {
-    Q_DISABLE_COPY_MOVE(FileSystem)
+    Q_OBJECT
 
 private:
     struct EntrySearchResult
@@ -146,7 +146,7 @@ private:
     };
 
 public:
-    explicit FileSystem(const QString & _filepath);
+    explicit FileSystem(const QString & _filepath, QObject * _parent = nullptr);
     ~FileSystem();
     void load();
     const FSInfo * info() const;
@@ -161,6 +161,9 @@ public:
     void rename(const Path & _path, const QByteArray & _new_name);
     uint32_t totalUsedBytes() const;
     uint32_t totalFreeBytes() const;
+
+signals:
+    void changed();
 
 private:
     void deinit();

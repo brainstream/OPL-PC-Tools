@@ -49,6 +49,8 @@ private:
     void navigate(const MemoryCard::Path & _path);
     QByteArray encodePath(const QString & _path) const;
     QString decodePath(const QByteArray & _path) const;
+    void updateSpaceInfo();
+    void onFsChanged();
     void onFsListItemActivated(const QModelIndex & _index);
     void onFsBackButtonClick();
     void onEncodingChanged();
@@ -65,7 +67,7 @@ private:
 
 private:
     const Vmc & mr_vmc;
-    QSharedPointer<MemoryCard::FileSystem> m_vmc_fs_ptr;
+    MemoryCard::FileSystem * mp_vmc_fs;
     VmcFileSystemViewModel * mp_model;
 };
 

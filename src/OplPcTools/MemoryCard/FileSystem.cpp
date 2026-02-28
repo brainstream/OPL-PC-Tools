@@ -89,7 +89,8 @@ int64_t File::read(char * _buffer, int64_t _max_size)
     return mp_private->fs->readFile(*this->mp_private, _buffer, _max_size);
 }
 
-FileSystem::FileSystem(const QString & _filepath) :
+FileSystem::FileSystem(const QString & _filepath, QObject * _parent /*= nullptr*/) :
+    QObject(_parent),
     m_file(_filepath),
     mp_info(nullptr)
 {
@@ -382,6 +383,7 @@ void FileSystem::writeFile(const Path & _path, const QByteArray & _data)
     if(!dir_entry_path.has_value())
         throwPathNotFound(dir_path);
     writeFile(*dir_entry_path, _path.filename(), _data, false);
+    emit changed();
 }
 
 void FileSystem::createDirectory(const Path & _path)
@@ -406,6 +408,7 @@ void FileSystem::createDirectory(const Path & _path)
     entries[1].name[1] = '.';
 
     writeFile(*parent_dir_entry_path, _path.filename(), buffer, true);
+    emit changed();
 }
 
 void FileSystem::writeFile(
@@ -566,11 +569,11 @@ std::optional<QList<uint32_t>> FileSystem::alloc(uint32_t _allocation_size)
     if(!result)
         return std::nullopt;
 
-    for(qsizetype cluster = 0; cluster < cluster_count; ++cluster)
+    for(qsizetype result_idx = 0; result_idx < cluster_count; ++result_idx)
     {
         writeFATEntry(
-            result->at(cluster),
-            cluster == cluster_count - 1 ? FATEntry::endOfFile() : FATEntry::pointer(result->at(cluster + 1)));
+            result->at(result_idx),
+            result_idx == cluster_count - 1 ? FATEntry::endOfFile() : FATEntry::pointer(result->at(result_idx + 1)));
     }
 
     return result;
@@ -606,6 +609,8 @@ void FileSystem::remove(const Path & _path)
 
     // Decrement parent's length
     changeEntryLength(parent->address, -1);
+
+    emit changed();
 }
 
 void FileSystem::eraseEntriesRecursive(const EntryPath & _path)
@@ -638,6 +643,7 @@ void FileSystem::rename(const Path & _path, const QByteArray & _new_name)
         _new_name.data(),
         std::min(sizeof(FSEntry::name), static_cast<size_t>(_new_name.size())));
     writeCluster(entry_path->address.cluster, false, buffer.data());
+    emit changed();
 }
 
 uint32_t FileSystem::totalUsedBytes() const

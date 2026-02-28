@@ -88,7 +88,7 @@ private:
     {
         COL_TTITLE,
         COL_SIZE,
-        column_count // It should be the last item
+        column_count // It must be the last item
     };
 
 private:
@@ -245,6 +245,7 @@ inline const StringConverter & VmcFileSystemViewModel::stringConverter() const
 VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_vmc(_vmc),
+    mp_vmc_fs(nullptr),
     mp_model(nullptr)
 {
     setupUi(this);
@@ -261,7 +262,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_combobox_charset->addItems(codecs);
         mp_combobox_charset->setCurrentText(encoding);
     }
-    if(m_vmc_fs_ptr)
+    if(mp_vmc_fs)
     {
         mp_model = new VmcFileSystemViewModel(encoding, this);
         navigate(MemoryCard::Path::root());
@@ -273,23 +274,14 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         mp_tree_fs->header()->setStretchLastSection(false);
         mp_tree_fs->header()->setSectionResizeMode(0, QHeaderView::Stretch);
         mp_tree_fs->sortByColumn(0, Qt::AscendingOrder);
-        {
-            const uint32_t total_free_bytes = m_vmc_fs_ptr->totalFreeBytes();
-            const uint32_t total_used_bytes = m_vmc_fs_ptr->totalUsedBytes();
-            const uint32_t total_bytes = total_used_bytes + total_free_bytes;
-            mp_progress_bar_free->setMinimum(0);
-            mp_progress_bar_free->setMaximum(total_bytes);
-            mp_progress_bar_free->setValue(total_used_bytes);
-            mp_progress_bar_free->setFormat(tr("Free %1 of %2").arg(
-                makeBytesDisplayString(total_free_bytes),
-                makeBytesDisplayString(total_bytes)));
-        }
+        updateSpaceInfo();
         addAction(mp_action_create_directory);
         addAction(mp_action_rename_entry);
         addAction(mp_action_delete);
         addAction(mp_action_download);
         addAction(mp_action_upload_files);
         addAction(mp_action_upload_directory);
+        connect(mp_vmc_fs, &MemoryCard::FileSystem::changed, this, &VmcDetailsActivity::onFsChanged);
         connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
         connect(mp_tree_fs, &QTreeView::customContextMenuRequested, this, &VmcDetailsActivity::showTreeContextMenu);
         connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
@@ -340,9 +332,11 @@ void VmcDetailsActivity::loadFileManager()
 {
     try
     {
-        QSharedPointer<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(mr_vmc.filepath()));
+        std::unique_ptr<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(mr_vmc.filepath(), this));
         fs->load();
-        m_vmc_fs_ptr = std::move(fs);
+        if(mp_vmc_fs)
+            delete mp_vmc_fs;
+        mp_vmc_fs = fs.release();
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {
@@ -379,8 +373,8 @@ void VmcDetailsActivity::navigate(const MemoryCard::Path & _path)
     hideErrorMessage();
     try
     {
-        QList<MemoryCard::EntryInfo> items = m_vmc_fs_ptr->enumerateEntries(_path);
-        mp_model->setItems(items); // FIXME: update model automatically
+        QList<MemoryCard::EntryInfo> items = mp_vmc_fs->enumerateEntries(_path);
+        mp_model->setItems(items);
         mp_edit_fs_path->setText(decodePath(_path));
         mp_btn_fs_back->setDisabled(_path.isRoot());
     }
@@ -406,6 +400,26 @@ QByteArray VmcDetailsActivity::encodePath(const QString & _path) const
 QString VmcDetailsActivity::decodePath(const QByteArray & _path) const
 {
     return mp_model->stringConverter().decode(_path);
+}
+
+void VmcDetailsActivity::updateSpaceInfo()
+{
+    const uint32_t total_free_bytes = mp_vmc_fs->totalFreeBytes();
+    const uint32_t total_used_bytes = mp_vmc_fs->totalUsedBytes();
+    const uint32_t total_bytes = total_used_bytes + total_free_bytes;
+    mp_progress_bar_free->setMinimum(0);
+    mp_progress_bar_free->setMaximum(total_bytes);
+    mp_progress_bar_free->setValue(total_used_bytes);
+    mp_progress_bar_free->setFormat(tr("Free %1 of %2").arg(
+        makeBytesDisplayString(total_free_bytes),
+        makeBytesDisplayString(total_bytes)));
+}
+
+void VmcDetailsActivity::onFsChanged()
+{
+    const MemoryCard::Path vmc_current_dir = encodePath(mp_edit_fs_path->text());
+    mp_model->setItems(mp_vmc_fs->enumerateEntries(vmc_current_dir));
+    updateSpaceInfo();
 }
 
 void VmcDetailsActivity::onFsListItemActivated(const QModelIndex & _index)
@@ -485,8 +499,7 @@ void VmcDetailsActivity::createDirectory()
     if(dlg.exec() != QDialog::Accepted)
         return;
     const MemoryCard::Path vmc_current_dir = encodePath(mp_edit_fs_path->text());
-    m_vmc_fs_ptr->createDirectory(vmc_current_dir + encodePath(dlg.currentFilename()));
-    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(encodePath(mp_edit_fs_path->text()))); // FIXME: update model automatically
+    mp_vmc_fs->createDirectory(vmc_current_dir + encodePath(dlg.currentFilename()));
 }
 
 void VmcDetailsActivity::renameEntry()
@@ -502,8 +515,7 @@ void VmcDetailsActivity::renameEntry()
         return;
 
     const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-    m_vmc_fs_ptr->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
-    mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
+    mp_vmc_fs->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
 }
 
 void VmcDetailsActivity::uploadFiles()
@@ -519,7 +531,6 @@ void VmcDetailsActivity::uploadFiles()
         const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
         foreach(const QString & filename, filenames)
             uploadFileImpl(filename, vmc_current_dir);
-        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {
@@ -538,7 +549,7 @@ void VmcDetailsActivity::uploadDirectoryImpl(const QString & _directory_path, co
         return;
 
     const MemoryCard::Path vmc_dir(_dest_dir, encodePath(directory.dirName()));
-    m_vmc_fs_ptr->createDirectory(vmc_dir);
+    mp_vmc_fs->createDirectory(vmc_dir);
 
     foreach(
         const QFileInfo & entry,
@@ -556,7 +567,7 @@ void VmcDetailsActivity::uploadFileImpl(const QString & _file_path, const Memory
     QFile file(_file_path);
     openFile(file, QIODevice::ReadOnly);
     QByteArray content = file.readAll();
-    m_vmc_fs_ptr->writeFile(_dest_dir + encodePath(QFileInfo(file).fileName()), content);
+    mp_vmc_fs->writeFile(_dest_dir + encodePath(QFileInfo(file).fileName()), content);
 }
 
 void VmcDetailsActivity::uploadDirectory()
@@ -572,7 +583,6 @@ void VmcDetailsActivity::uploadDirectory()
     try
     {
         uploadDirectoryImpl(directory_path, vmc_current_dir);
-        mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {
@@ -667,17 +677,12 @@ void VmcDetailsActivity::deleteEntry()
                 settings.setConfirmVmcFileDeletion(false);
         }
 
-        bool deleted = false;
         foreach(const QModelIndex & index, selection)
         {
             const MemoryCard::EntryInfo * entry = mp_model->item(index);
             if(!entry) continue;
-            deleted = true;
-            m_vmc_fs_ptr->remove(vmc_current_dir + entry->name());
+            mp_vmc_fs->remove(vmc_current_dir + entry->name());
         }
-
-        if(deleted)
-            mp_model->setItems(m_vmc_fs_ptr->enumerateEntries(vmc_current_dir)); // FIXME: update model automatically
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {

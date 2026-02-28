@@ -35,12 +35,13 @@ void FATable::setEntry(uint32_t _index, FATEntry _entry)
 {
     uint32_t index;
     Table * table = findFatEntry(m_tables, _index, &index);
-    table->fat[index] = _entry;
 
-    if(!_entry.isFree() && table->fat[index].isFree())
+    if(_entry.isFree() && !table->fat[index].isFree())
         --m_allocated_cluster_count;
-    else if(_entry.isFree() && !table->fat[index].isFree())
+    else if(!_entry.isFree() && table->fat[index].isFree())
         ++m_allocated_cluster_count;
+
+    table->fat[index] = _entry;
 }
 
 std::optional<QList<uint32_t>> FATable::findFreeClusters(uint32_t _count) const

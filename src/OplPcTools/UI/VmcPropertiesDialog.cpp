@@ -41,7 +41,7 @@ VmcPropertiesDialog::VmcPropertiesDialog(const Vmc & _vmc, QWidget * _parent /*=
     mp_tabs->hide();
     try
     {
-        QSharedPointer<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(_vmc.filepath()));
+        std::unique_ptr<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(_vmc.filepath(), this));
         fs->load();
         const MemoryCard::FSInfo * info = fs->info();
         mp_value_magic->setText(info->magic);

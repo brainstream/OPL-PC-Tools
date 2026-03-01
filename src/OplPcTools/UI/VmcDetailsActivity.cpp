@@ -541,19 +541,12 @@ void VmcDetailsActivity::renameEntry()
     mp_vmc_fs->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
 }
 
-void VmcDetailsActivity::uploadDroppedData(const QDropEvent & _event)
+void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)
 {
     MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
-    const QModelIndex index = mp_tree_fs->indexAt(_event.position().toPoint());
-    if(index.isValid())
-    {
-        const MemoryCard::EntryInfo * entry = mp_model->item(index);
-        if(entry && entry->isDirectory())
-            vmc_destination_dir += entry->name();
-    }
     try
     {
-        foreach(const QUrl & url, _event.mimeData()->urls())
+        foreach(const QUrl & url, _data.urls())
         {
             QFileInfo fi(url.path());
             if(!fi.exists())

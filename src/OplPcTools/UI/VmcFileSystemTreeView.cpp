@@ -56,5 +56,5 @@ void VmcFileSystemTreeView::dragMoveEvent(QDragMoveEvent * _event)
 
 void VmcFileSystemTreeView::dropEvent(QDropEvent * _event)
 {
-    emit filesDropped(*_event);
+    emit filesDropped(*_event->mimeData());
 }

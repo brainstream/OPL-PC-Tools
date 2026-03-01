@@ -31,7 +31,7 @@ public:
     explicit VmcFileSystemTreeView(QWidget * _parent = nullptr);
 
 signals:
-    void filesDropped(const QDropEvent & _event);
+    void filesDropped(const QMimeData & _data);
 
 protected:
     void dragEnterEvent(QDragEnterEvent * _event) override;

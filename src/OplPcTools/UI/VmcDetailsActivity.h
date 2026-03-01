@@ -58,7 +58,7 @@ private:
     void showTreeContextMenu(const QPoint & _point);
     void createDirectory();
     void renameEntry();
-    void uploadDroppedData(const QDropEvent & _event);
+    void uploadDroppedData(const QMimeData & _data);
     void uploadFiles();
     void uploadDirectoryImpl(const QString & _directory_path, const MemoryCard::Path & _dest_dir);
     void uploadFileImpl(const QString & _file_path, const MemoryCard::Path & _dest_dir);

@@ -144,9 +144,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QTreeView" name="mp_tree_fs">
+       <widget class="OplPcTools::UI::VmcFileSystemTreeView" name="mp_tree_fs">
         <property name="contextMenuPolicy">
          <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::DropAction::CopyAction</enum>
         </property>
         <property name="alternatingRowColors">
          <bool>true</bool>
@@ -329,6 +341,11 @@
    <class>OplPcTools::UI::ClickableLabel</class>
    <extends>QLabel</extends>
    <header location="global">OplPcTools/UI/ClickableLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>OplPcTools::UI::VmcFileSystemTreeView</class>
+   <extends>QTreeView</extends>
+   <header location="global">OplPcTools/UI/VmcFileSystemTreeView.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

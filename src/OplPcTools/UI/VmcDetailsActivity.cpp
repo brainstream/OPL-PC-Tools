@@ -31,6 +31,7 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QShortcut>
+#include <QMimeData>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -79,6 +80,12 @@ public:
     QVariant data(const QModelIndex & _index, int _role) const override;
     void sort(int _column, Qt::SortOrder _order) override;
     const StringConverter & stringConverter() const;
+    bool canDropMimeData(
+        const QMimeData * _data,
+        Qt::DropAction _action,
+        int _row,
+        int _column,
+        const QModelIndex & _parent) const override;
 
 private:
     void unsafeSort();
@@ -242,6 +249,21 @@ inline const StringConverter & VmcFileSystemViewModel::stringConverter() const
     return m_string_converter;
 }
 
+inline bool VmcFileSystemViewModel::canDropMimeData(
+    const QMimeData * _data,
+    Qt::DropAction _action,
+    int _row,
+    int _column,
+    const QModelIndex & _parent) const
+{
+    Q_UNUSED( _data)
+    Q_UNUSED(_action)
+    Q_UNUSED(_row)
+    Q_UNUSED(_column)
+    Q_UNUSED(_parent)
+    return _data->hasUrls();
+}
+
 VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mr_vmc(_vmc),
@@ -284,6 +306,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_vmc_fs, &MemoryCard::FileSystem::changed, this, &VmcDetailsActivity::onFsChanged);
         connect(mp_tree_fs, &QTreeView::activated, this, &VmcDetailsActivity::onFsListItemActivated);
         connect(mp_tree_fs, &QTreeView::customContextMenuRequested, this, &VmcDetailsActivity::showTreeContextMenu);
+        connect(mp_tree_fs, &VmcFileSystemTreeView::filesDropped, this, &VmcDetailsActivity::uploadDroppedData);
         connect(mp_btn_fs_back, &QToolButton::clicked, this, &VmcDetailsActivity::onFsBackButtonClick);
         connect(&Settings::instance(), &Settings::iconSizeChanged, this, &VmcDetailsActivity::setIconSize);
         connect(mp_btn_rename, &QToolButton::clicked, this, &VmcDetailsActivity::renameVmc);
@@ -516,6 +539,39 @@ void VmcDetailsActivity::renameEntry()
 
     const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
     mp_vmc_fs->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
+}
+
+void VmcDetailsActivity::uploadDroppedData(const QDropEvent & _event)
+{
+    MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
+    const QModelIndex index = mp_tree_fs->indexAt(_event.position().toPoint());
+    if(index.isValid())
+    {
+        const MemoryCard::EntryInfo * entry = mp_model->item(index);
+        if(entry && entry->isDirectory())
+            vmc_destination_dir += entry->name();
+    }
+    try
+    {
+        foreach(const QUrl & url, _event.mimeData()->urls())
+        {
+            QFileInfo fi(url.path());
+            if(!fi.exists())
+                continue;
+            else if(fi.isDir())
+                uploadDirectoryImpl(fi.absoluteFilePath(), vmc_destination_dir);
+            else if(fi.isFile())
+                uploadFileImpl(fi.absoluteFilePath(), vmc_destination_dir);
+        }
+    }
+    catch(const MemoryCard::MemoryCardFileException & exception)
+    {
+        showErrorMessage(exception.message(), exception.path());
+    }
+    catch(const Exception & exception)
+    {
+        showErrorMessage(exception.message());
+    }
 }
 
 void VmcDetailsActivity::uploadFiles()

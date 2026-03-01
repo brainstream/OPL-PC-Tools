@@ -16,64 +16,31 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_VMCDETAILSACTIVITY__
-#define __OPLPCTOOLS_VMCDETAILSACTIVITY__
+#pragma once
 
-#include <OplPcTools/Vmc.h>
-#include <OplPcTools/UI/Activity.h>
-#include <OplPcTools/UI/Intent.h>
-#include <OplPcTools/MemoryCard/FileSystem.h>
-#include "ui_VmcDetailsActivity.h"
+#include <QTreeView>
 
 namespace OplPcTools {
 namespace UI {
 
-
-class VmcFileSystemViewModel;
-
-class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
+class VmcFileSystemTreeView : public QTreeView
 {
     Q_OBJECT
 
 public:
-    explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
-    static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
+    explicit VmcFileSystemTreeView(QWidget * _parent = nullptr);
+
+signals:
+    void filesDropped(const QDropEvent & _event);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent * _event) override;
+    void dragMoveEvent(QDragMoveEvent * _event) override;
+    void dropEvent(QDropEvent * _event) override;
 
 private:
-    void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString(), const QByteArray & _path = QByteArray());
-    void hideErrorMessage();
-    void loadFileManager();
-    QString getFsEncoding() const;
-    void setIconSize();
-    void navigate(const MemoryCard::Path & _path);
-    QByteArray encodePath(const QString & _path) const;
-    QString decodePath(const QByteArray & _path) const;
-    void updateSpaceInfo();
-    void onFsChanged();
-    void onFsListItemActivated(const QModelIndex & _index);
-    void onFsBackButtonClick();
-    void onEncodingChanged();
-    void renameVmc();
-    void showTreeContextMenu(const QPoint & _point);
-    void createDirectory();
-    void renameEntry();
-    void uploadDroppedData(const QDropEvent & _event);
-    void uploadFiles();
-    void uploadDirectoryImpl(const QString & _directory_path, const MemoryCard::Path & _dest_dir);
-    void uploadFileImpl(const QString & _file_path, const MemoryCard::Path & _dest_dir);
-    void uploadDirectory();
-    void download();
-    void deleteEntry();
-
-private:
-    const Vmc & mr_vmc;
-    MemoryCard::FileSystem * mp_vmc_fs;
-    VmcFileSystemViewModel * mp_model;
+    bool isAccepatableDropData(const QMimeData * _data);
 };
-
 
 } // namespace UI
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_VMCDETAILSACTIVITY__

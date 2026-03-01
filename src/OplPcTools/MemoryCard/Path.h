@@ -54,6 +54,12 @@ public:
         return Path(m_parts + split(_relative_path.trimmed()));
     }
 
+    Path & operator += (const QByteArray & _relative_path)
+    {
+        m_parts.append(split(_relative_path.trimmed()));
+        return *this;
+    }
+
     operator QByteArray () const
     {
         return path();

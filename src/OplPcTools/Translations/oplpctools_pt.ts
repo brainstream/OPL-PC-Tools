@@ -946,47 +946,47 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="319"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="342"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="293"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="271"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="293"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="413"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="436"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="488"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="511"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="666"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="722"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="667"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="723"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="668"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="724"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="669"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="725"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1243,7 +1243,7 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="199"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="206"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>
@@ -1477,52 +1477,52 @@
         <translation>Renomear...</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="185"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="197"/>
         <source>Charset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="236"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="248"/>
         <source>Create Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="239"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="251"/>
         <source>F7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="251"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="263"/>
         <source>Delete</source>
         <translation type="unfinished">Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="254"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="308"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="299"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="311"/>
         <source>Upload Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="302"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="314"/>
         <source>Ctrl+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="314"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="326"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="317"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="329"/>
         <source>Upload Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1531,7 +1531,7 @@
         <translation type="obsolete">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="320"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="332"/>
         <source>Ctrl+Shift+U</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1540,22 +1540,22 @@
         <translation type="obsolete">Exportar</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="269"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
         <source>Ctrl+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="278"/>
         <source>Download</source>
         <translation type="unfinished">Baixar</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="293"/>
         <source>Rename</source>
         <translation type="unfinished">Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="284"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>

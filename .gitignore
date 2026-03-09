@@ -9,3 +9,4 @@ CMakeLists.txt.user*
 /translations/*.qm
 /release/
 !/release/assets/
+*.hexproj

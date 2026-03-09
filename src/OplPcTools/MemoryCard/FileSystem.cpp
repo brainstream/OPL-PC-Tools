@@ -481,6 +481,7 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
         {
             parent_free_entry.cluster_entries[i] = {};
             parent_free_entry.cluster_entries[i].cluster = 0xFFFFFFFF;
+
         }
     }
 
@@ -540,7 +541,7 @@ bool FileSystem::findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySe
         for(size_t entry_index = 0; entry_index < mp_info->fs_entries_per_cluster; ++entry_index)
         {
             FSEntry & entry = entries[entry_index];
-            if(!(entry.mode & EM_EXISTS))
+            if(entry.mode == EM_INVALID || !(entry.mode & EM_EXISTS))
             {
                 _result.cluster_entries = QVector<FSEntry>(entries, &entries[mp_info->fs_entries_per_cluster]);
                 _result.cluster_index = parent_cluster;

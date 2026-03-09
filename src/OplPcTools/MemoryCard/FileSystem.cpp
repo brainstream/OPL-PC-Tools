@@ -299,11 +299,11 @@ void FileSystem::forEachEntry(const EntryInfo & _dir, std::function<bool(const E
         const FSEntry * entries = reinterpret_cast<const FSEntry *>(buffer.data());
         for(size_t i = 0; i < mp_info->fs_entries_per_cluster; ++i)
         {
+            const FSEntry & entry = entries[i];
+            if(entry.mode == EM_INVALID || !(entry.mode & EM_EXISTS))
+                continue;
             if(++read_count > _dir.length())
                 return;
-            const FSEntry & entry = entries[i];
-            if(!(entry.mode & EM_EXISTS))
-                continue;
             EntryPath ep
             {
                 .entry = entry,

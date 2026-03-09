@@ -23,7 +23,7 @@
 namespace OplPcTools {
 namespace MemoryCard {
 
-enum FSEntryMode
+enum FSEntryMode : uint16_t
 {
     EM_READ = 0x1,
     EM_WRITE = 0x2,
@@ -33,8 +33,9 @@ enum FSEntryMode
     EM_DIRECTORY = 0x20,
     EM_POCKETSTATION = 0x800,
     EM_PLAYSTATION = 0x1000,
-    EM_HIDDENT = 0x2000,
-    EM_EXISTS = 0x8000
+    EM_HIDDEN = 0x2000,
+    EM_EXISTS = 0x8000,
+    EM_INVALID = 0xFFFF
 };
 
 struct __attribute__((packed)) FSEntry

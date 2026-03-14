@@ -971,22 +971,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="715"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="721"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="716"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="722"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="717"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="723"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="718"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="724"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>

@@ -694,20 +694,26 @@ void VmcDetailsActivity::deleteEntry()
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
 
         Settings & settings = Settings::instance();
+        QList<QByteArray> entries;
+        entries.reserve(selection.count());
+        foreach(const QModelIndex & index, selection)
+        {
+            const MemoryCard::EntryInfo * entry = mp_model->item(index);
+            if(entry) entries.append(entry->name());
+        }
+
         if(settings.confirmVmcFileDeletion())
         {
             QString items;
             int display_items_count = 0;
-            foreach(const QModelIndex & index, selection)
+            foreach(const QByteArray & entry, entries)
             {
-                const MemoryCard::EntryInfo * entry = mp_model->item(index);
-                if(!entry) continue;
                 if(display_items_count == 9)
                 {
                     items += QString("\n...");
                     break;
                 }
-                items += QString("\n") + mp_model->stringConverter().decode(entry->name());
+                items += QString("\n") + mp_model->stringConverter().decode(entry);
                 ++display_items_count;
             }
             QString message =
@@ -726,12 +732,8 @@ void VmcDetailsActivity::deleteEntry()
                 settings.setConfirmVmcFileDeletion(false);
         }
 
-        foreach(const QModelIndex & index, selection)
-        {
-            const MemoryCard::EntryInfo * entry = mp_model->item(index);
-            if(!entry) continue;
-            mp_vmc_fs->remove(vmc_current_dir + entry->name());
-        }
+        foreach(const QByteArray & entry, entries)
+            mp_vmc_fs->remove(vmc_current_dir + entry);
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {

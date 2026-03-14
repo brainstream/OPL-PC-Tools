@@ -1268,12 +1268,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="340"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="344"/>
         <source>The entry is not a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="423"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="427"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1283,7 +1283,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="338"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="342"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>

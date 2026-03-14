@@ -203,12 +203,15 @@ void FileSystem::readFAT()
     //
     // Loading FAT pointers
     //
-    const size_t fat_ptrs_count = ifc_ptr_count * mp_info->fat_entries_per_cluster;
-    QScopedArrayPointer<uint32_t> fat_ptrs(new uint32_t[fat_ptrs_count]);
+    size_t fat_ptrs_count = 0;
+    QScopedArrayPointer<uint32_t> fat_ptrs(new uint32_t[ifc_ptr_count * mp_info->fat_entries_per_cluster]);
     for(size_t i = 0; i < ifc_ptr_count; ++i)
     {
+        if(mp_info->ifc_ptr_list[i] == 0)
+            break;
         char * address = reinterpret_cast<char *>(fat_ptrs.data()) + (mp_info->cluster_size * i);
         readCluster(mp_info->ifc_ptr_list[i], true, address);
+        ++fat_ptrs_count;
     }
 
     //

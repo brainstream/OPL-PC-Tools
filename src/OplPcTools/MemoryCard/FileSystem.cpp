@@ -192,10 +192,10 @@ void FileSystem::readFAT()
     //
     // Loading IFC
     //
-    size_t ifc_ptr_count = 0;
-    for(; ifc_ptr_count < sizeof(Superblock::ifc_ptr_list) / sizeof(uint32_t); ++ifc_ptr_count)
+    size_t ifc_list_count = 0;
+    for(; ifc_list_count < sizeof(Superblock::ifc_ptr_list) / sizeof(uint32_t); ++ifc_list_count)
     {
-        uint32_t ptr = mp_info->ifc_ptr_list[ifc_ptr_count];
+        uint32_t ptr = mp_info->ifc_ptr_list[ifc_list_count];
         if(ptr == INVALID_CLUSTER_PTR || ptr == NULL_CLUSTER_PTR)
             break;
     }
@@ -203,25 +203,22 @@ void FileSystem::readFAT()
     //
     // Loading FAT pointers
     //
-    size_t fat_ptrs_count = 0;
-    QScopedArrayPointer<uint32_t> fat_ptrs(new uint32_t[ifc_ptr_count * mp_info->fat_entries_per_cluster]);
-    for(size_t i = 0; i < ifc_ptr_count; ++i)
+    const size_t fat_ptr_count = ifc_list_count * mp_info->fat_entries_per_cluster;
+    QScopedArrayPointer<uint32_t> fat_ptrs(new uint32_t[fat_ptr_count]);
+    for(size_t i = 0; i < ifc_list_count; ++i)
     {
-        if(mp_info->ifc_ptr_list[i] == 0)
-            break;
         char * address = reinterpret_cast<char *>(fat_ptrs.data()) + (mp_info->cluster_size * i);
         readCluster(mp_info->ifc_ptr_list[i], true, address);
-        ++fat_ptrs_count;
     }
 
     //
     // Loading FATs
     //
     QByteArray buffer(mp_info->cluster_size, Qt::Uninitialized);
-    for(size_t i = 0; i < fat_ptrs_count; ++i)
+    for(size_t i = 0; i < fat_ptr_count; ++i)
     {
         const uint32_t fat_cluster = fat_ptrs[i];
-        if(fat_cluster == INVALID_CLUSTER_PTR)
+        if(fat_cluster == INVALID_CLUSTER_PTR || fat_cluster == 0)
             break;
         readCluster(fat_cluster, true, buffer.data());
         FATEntry * fat = reinterpret_cast<FATEntry *>(buffer.data());

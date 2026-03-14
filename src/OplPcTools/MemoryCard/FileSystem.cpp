@@ -481,7 +481,6 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
         {
             parent_free_entry.cluster_entries[i] = {};
             parent_free_entry.cluster_entries[i].cluster = 0xFFFFFFFF;
-
         }
     }
 
@@ -495,6 +494,7 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
         new_entry.length = _entry.length();
         new_entry.cluster = _entry.cluster();
         new_entry.created = new_entry.modified = DateTime::now();
+        std::memset(new_entry.name, 0, sizeof(FSEntry::name));
         std::strncpy(
             new_entry.name,
             _entry.name().data(),

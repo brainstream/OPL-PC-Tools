@@ -654,6 +654,5 @@ uint32_t FileSystem::totalUsedBytes() const
 
 uint32_t FileSystem::totalFreeBytes() const
 {
-    const uint32_t allocable_space = (mp_info->alloc_end - mp_info->alloc_offset) * mp_info->cluster_size;
-    return allocable_space - totalUsedBytes();
+    return (m_fat.totalClusterCount() - m_fat.allocatedCount()) * mp_info->cluster_size;
 }

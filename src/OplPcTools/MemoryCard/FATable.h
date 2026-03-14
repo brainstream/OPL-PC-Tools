@@ -40,7 +40,7 @@ public:
     FATable();
     void append(uint32_t _cluster, const QList<FATEntry> & _fat);
     void reset();
-    uint32_t count() const;
+    uint32_t totalClusterCount() const;
     uint32_t allocatedCount() const;
     const FATEntry & operator [] (uint32_t _index) const;
     void setEntry(uint32_t _index, FATEntry _entry);
@@ -73,7 +73,7 @@ inline void FATable::reset()
     m_allocated_cluster_count = 0;
 }
 
-inline uint32_t FATable::count() const
+inline uint32_t FATable::totalClusterCount() const
 {
     return m_cluster_count;
 }

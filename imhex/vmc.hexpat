@@ -1,3 +1,7 @@
+#pragma description Playstation 2 Memory Card
+#pragma MIME application/x-playstation2-memory-card
+#pragma magic [ 53 6F 6E 79 20 50 53 32  20 4D 65 6D 6F 72 79 20 43 61 72 64 20 46 6F 72  6D 61 74 20 ] @ 0x00
+
 import std.io;
 import std.mem;
 

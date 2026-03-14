@@ -1,3 +1,5 @@
+#pragma description OPL ul.cfg
+
 import std.mem;
 
 enum MediaType : u8 {

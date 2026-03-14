@@ -320,7 +320,7 @@ QList<uint32_t> FileSystem::getEntryClusters(const EntryInfo & _entry) const
     if(_entry.cluster() > mp_info->max_allocatable_clusters)
         throwNotFormatted();
     QList<uint32_t> result;
-    for(uint32_t cluster = _entry.cluster();;) // TODO: check overflow, cycles, etc.
+    for(uint32_t cluster = _entry.cluster();;)
     {
         result.append(cluster);
         FATEntry fat_entry = m_fat[cluster];

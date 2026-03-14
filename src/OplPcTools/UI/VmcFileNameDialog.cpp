@@ -29,7 +29,7 @@ VmcFileNameDialog::VmcFileNameDialog(QWidget * _parent) :
     setupUi(this);
     setTitle(false);
     FilenameValidator * name_validator = new FilenameValidator(MemoryCard::g_entry_name_forbidden_characters, this);
-    name_validator->setMaxLength(MemoryCard::g_max_entry_name_length); // TODO: validate length of encoded string
+    name_validator->setMaxLength(MemoryCard::g_max_entry_name_length);
     mp_edit_name->setValidator(name_validator);
     mp_label_error_message->setHidden(true);
     connect(mp_edit_name, &QLineEdit::textChanged, this, &VmcFileNameDialog::setSaveButtonState);

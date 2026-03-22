@@ -28,6 +28,7 @@ ProgressDialog::ProgressDialog(QWidget * _parent) :
     m_is_one_shot_close_allowed(false)
 {
     setupUi(this);
+    setWindowTitle(mp_lable_progress->text());
     mp_progress_bar->setRange(0, 0);
     mp_progress_bar->setValue(0);
     connect(mp_button_box, &QDialogButtonBox::rejected, this, &ProgressDialog::canceled);

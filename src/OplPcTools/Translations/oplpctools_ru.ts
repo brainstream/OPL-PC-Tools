@@ -959,7 +959,7 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="371"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="377"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
@@ -974,37 +974,37 @@
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="465"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="472"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="540"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="547"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="615"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="622"/>
         <source>Uploading files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="799"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="806"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="800"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="807"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="801"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="808"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="802"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="809"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>

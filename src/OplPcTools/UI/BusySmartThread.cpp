@@ -44,8 +44,7 @@ void BusySmartThread::destroyBusyDialog()
 {
     if(mp_dialog)
     {
-        mp_dialog->hide();
-        delete mp_dialog;
+        mp_dialog->deleteLater();
         mp_dialog = nullptr;
     }
 }

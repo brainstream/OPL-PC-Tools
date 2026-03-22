@@ -39,9 +39,11 @@ public:
     explicit VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent = nullptr);
     static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
 
+private slots:
+    void showErrorMessage(const QString & _message = QString(), const QByteArray & _path = QByteArray());
+
 private:
     void setupShortcuts();
-    void showErrorMessage(const QString & _message = QString(), const QByteArray & _path = QByteArray());
     void hideErrorMessage();
     void loadFileManager();
     QString getFsEncoding() const;

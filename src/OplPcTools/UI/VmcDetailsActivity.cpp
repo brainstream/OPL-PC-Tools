@@ -368,11 +368,18 @@ void VmcDetailsActivity::showErrorMessage(
     const QString & _message /*= QString()*/,
     const QByteArray & _path /*= QByteArray()*/)
 {
-    QString message = _message.isEmpty() ? tr("An unknown error has occurred") : _message;
-    if(!_path.isEmpty())
-        message += QString(" (%1)").arg(decodePath(_path));
-    mp_label_error_message->setText(message);
-    mp_widget_error_message->show();
+    if(qApp->thread() != QThread::currentThread())
+    {
+        QMetaObject::invokeMethod(this, "showErrorMessage", Q_ARG(QString, _message), Q_ARG(QByteArray, _path));
+    }
+    else
+    {
+        QString message = _message.isEmpty() ? tr("An unknown error has occurred") : _message;
+        if(!_path.isEmpty())
+            message += QString(" (%1)").arg(decodePath(_path));
+        mp_label_error_message->setText(message);
+        mp_widget_error_message->show();
+    }
 }
 
 void VmcDetailsActivity::hideErrorMessage()

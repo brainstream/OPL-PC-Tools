@@ -60,8 +60,14 @@ private:
     void renameEntry();
     void uploadDroppedData(const QMimeData & _data);
     void uploadFiles();
-    void uploadDirectoryImpl(const QString & _directory_path, const MemoryCard::Path & _dest_dir);
-    void uploadFileImpl(const QString & _file_path, const MemoryCard::Path & _dest_dir);
+    void uploadDirectoryImpl(
+        const QString & _directory_path,
+        const MemoryCard::Path & _dest_dir,
+        MemoryCard::FileTransferProgressTracker & _tracker);
+    void uploadFileImpl(
+        const QString & _file_path,
+        const MemoryCard::Path & _dest_dir,
+        MemoryCard::FileTransferProgressTracker & _tracker);
     void uploadDirectory();
     void download();
     void deleteEntry();

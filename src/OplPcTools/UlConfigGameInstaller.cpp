@@ -70,7 +70,7 @@ bool UlConfigGameInstaller::performInstallation()
         QSharedPointer<QFile> part;
         try
         {
-            part = openFileToSyncWrite(part_filename);
+            part = openFileToSyncWrite(part_filename, OFSM_READ_WRITE | OFSM_CREATE);
         }
         catch(...)
         {

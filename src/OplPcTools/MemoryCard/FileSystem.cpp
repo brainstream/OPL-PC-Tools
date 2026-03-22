@@ -91,7 +91,7 @@ int64_t File::read(char * _buffer, int64_t _max_size)
 
 FileSystem::FileSystem(const QString & _filepath, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    m_file(_filepath),
+    m_filename(_filepath),
     mp_info(nullptr)
 {
 }
@@ -103,8 +103,11 @@ FileSystem::~FileSystem()
 
 void FileSystem::deinit()
 {
-    if(m_file.isOpen())
-        m_file.close();
+    if(m_file && m_file->isOpen())
+    {
+        m_file->close();
+        m_file.reset();
+    }
     delete mp_info;
     mp_info = nullptr;
     m_fat.reset();
@@ -118,7 +121,7 @@ const FSInfo * FileSystem::info() const
 void FileSystem::load()
 {
     deinit();
-    ::openFile(m_file, QIODevice::OpenMode(QIODevice::ReadWrite | QIODevice::ExistingOnly));
+    m_file = ::openFileToSyncWrite(m_filename, OFSM_READ_WRITE);
     readSuperblock();
     readFAT();
 }
@@ -162,8 +165,10 @@ void FileSystem::readCluster(uint32_t _cluster, bool _is_absolute, char * _buffe
 
 void FileSystem::read(quint64 _offset, char * _buffer, uint32_t _size)
 {
-    if(!m_file.seek(_offset) || m_file.read(_buffer, _size) != _size)
+    m_read_write_mutex.lock();
+    if(!m_file->seek(_offset) || m_file->read(_buffer, _size) != _size)
         throwNotFormatted();
+    m_read_write_mutex.unlock();
 }
 
 void FileSystem::validateSuperblock(const Superblock & _sb) const
@@ -376,13 +381,13 @@ int64_t FileSystem::readFile(File::Private & _file, char * _buffer, uint32_t _ma
     return position_in_buffer;
 }
 
-void FileSystem::writeFile(const Path & _path, const QByteArray & _data)
+void FileSystem::writeFile(const Path & _path, const QByteArray & _data, FileTransferProgressTracker & _tracker)
 {
     Path dir_path = _path.up();
     std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
     if(!dir_entry_path.has_value())
         throwPathNotFound(dir_path);
-    writeFile(*dir_entry_path, _path.filename(), _data, false);
+    writeFile(*dir_entry_path, _path.filename(), _data, false, &_tracker);
     emit changed();
 }
 
@@ -407,7 +412,7 @@ void FileSystem::createDirectory(const Path & _path)
     entries[0].dir_entry = parent_dir_entry_path->address.entry;
     entries[1].name[1] = '.';
 
-    writeFile(*parent_dir_entry_path, _path.filename(), buffer, true);
+    writeFile(*parent_dir_entry_path, _path.filename(), buffer, true, nullptr);
     emit changed();
 }
 
@@ -415,7 +420,8 @@ void FileSystem::writeFile(
     const EntryPath & _directory_path,
     const QByteArray & _filename,
     const QByteArray & _data,
-    bool _is_directory)
+    bool _is_directory,
+    FileTransferProgressTracker * _tracker)
 {
     if(!_directory_path.entry.isDirectory())
     {
@@ -447,12 +453,12 @@ void FileSystem::writeFile(
         foreach(uint32_t cluster, *file_data_clusters)
         {
             const qsizetype offset = chunk_idx * mp_info->cluster_size;
-            std::memcpy(
-                buffer.data(),
-                &_data.data()[offset],
-                std::min(mp_info->cluster_size, static_cast<uint32_t>(_data.size() - offset)));
+            uint32_t length = std::min(mp_info->cluster_size, static_cast<uint32_t>(_data.size() - offset));
+            std::memcpy(buffer.data(), &_data.data()[offset], length);
             writeCluster(cluster, false, buffer.data());
             ++chunk_idx;
+            if(_tracker)
+                emit _tracker->progress(_data.length(), offset + length, length);
         }
     }
 }
@@ -524,11 +530,13 @@ void FileSystem::changeEntryLength(const EntryAddress & _address, int8_t _amount
 
 void FileSystem::writeFATEntry(uint32_t _cluster, FATEntry _entry)
 {
+    m_read_write_mutex.lock();
     const uint32_t fat_cluster = m_fat.fatCluster(_cluster);
     const uint32_t entry_index = _cluster % mp_info->fat_entries_per_cluster;
-    m_file.seek(fat_cluster * mp_info->cluster_size + entry_index * sizeof(FATEntry));
-    m_file.write(reinterpret_cast<const char *>(&_entry), sizeof(FATEntry));
+    m_file->seek(fat_cluster * mp_info->cluster_size + entry_index * sizeof(FATEntry));
+    m_file->write(reinterpret_cast<const char *>(&_entry), sizeof(FATEntry));
     m_fat.setEntry(_cluster, _entry);
+    m_read_write_mutex.unlock();
 }
 
 bool FileSystem::findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySearchResult & _result)
@@ -555,9 +563,11 @@ bool FileSystem::findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySe
 
 void FileSystem::writeCluster(uint32_t _cluster, bool _is_absolute, const char * _buffer)
 {
+    m_read_write_mutex.lock();
     const uint32_t offset = ((_is_absolute ? 0 : mp_info->alloc_offset) + _cluster) * mp_info->cluster_size;
-    m_file.seek(offset);
-    m_file.write(_buffer, mp_info->cluster_size);
+    m_file->seek(offset);
+    m_file->write(_buffer, mp_info->cluster_size);
+    m_read_write_mutex.unlock();
 }
 
 std::optional<QList<uint32_t>> FileSystem::alloc(uint32_t _allocation_size)

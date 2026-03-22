@@ -946,47 +946,52 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="342"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="371"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="293"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="322"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="293"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="322"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="436"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="465"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="511"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="540"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="721"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="613"/>
+        <source>Uploading files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="793"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="722"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="794"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="723"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="795"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="724"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="796"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1198,17 +1203,17 @@
         <translation>Не могу открыть файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="38"/>
+        <location filename="../File.h" line="51"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="45"/>
+        <location filename="../File.h" line="58"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="53"/>
+        <location filename="../File.h" line="66"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
@@ -1243,7 +1248,7 @@
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="206"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="235"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
@@ -1268,12 +1273,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="340"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="345"/>
         <source>The entry is not a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="423"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="429"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1283,7 +1288,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="338"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="343"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>
@@ -1292,7 +1297,7 @@
         <translation type="vanished">&quot;%1&quot; не является файлом</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="64"/>
+        <location filename="../File.cpp" line="92"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Не могу открыть файл для записи: &quot;%1&quot;</translation>
     </message>

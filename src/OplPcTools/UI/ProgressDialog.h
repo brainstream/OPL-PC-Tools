@@ -18,57 +18,42 @@
 
 #pragma once
 
-#include <OplPcTools/Exception.h>
-#include <QSharedPointer>
-#include <QFile>
+#include "ui_ProgressDialog.h"
 
 namespace OplPcTools {
+namespace UI {
 
-inline void openFile(QFile & _file, QIODevice::OpenMode _flags)
+class ProgressDialog : public QDialog, private Ui::ProgressDialog
 {
-    if(!_file.open(_flags))
-        throw IOException(QObject::tr("Unable to open file \"%1\"").arg(_file.fileName()));
-}
+    Q_OBJECT
 
-enum __OpenFileSyncModes
-{
-    OFSM_READ = 0x1,
-    OFSM_WRITE = 0x2,
-    OFSM_READ_WRITE = OFSM_READ | OFSM_WRITE,
-    OFSM_TRUNCATE = 0x4,
-    OFSM_APPEND = 0x8,
-    OFSM_CREATE = 0x10
+public:
+    explicit ProgressDialog(QWidget * _parent = nullptr);
+    void disableCancelation(bool _disable);
+    bool isCancelationDisabled() const { return m_is_cancelation_disabled; }
+    int progressValue() const { return mp_progress_bar->value(); }
+
+public slots:
+    void accept() override;
+    void setProgressLabelText(const QString & _text);
+    void setProgressRange(int _min_value, int _max_value);
+    void setProgressMinimum(int _min_value);
+    void setProgressMaximum(int _max_value);
+    void setProgressValue(int _value);
+
+signals:
+    void canceled();
+
+protected:
+    void closeEvent(QCloseEvent * _event) override;
+
+private:
+    void repackLayout();
+
+private:
+    bool m_is_cancelation_disabled;
+    bool m_is_one_shot_close_allowed;
 };
 
-Q_DECLARE_FLAGS(OpenFileSyncMode, __OpenFileSyncModes)
-Q_DECLARE_OPERATORS_FOR_FLAGS(OpenFileSyncMode)
-
-QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename, OpenFileSyncMode _mode);
-
-inline void renameFile(const QString & _old_filename, const QString & _new_filename)
-{
-    if(!QFile::rename(_old_filename, _new_filename))
-        throw IOException(QObject::tr("Unable to rename file \"%1\" to \"%2\"").arg(_old_filename, _new_filename));
-}
-
-inline qint64 writeFile(QFile & _file, const char * _data, qint64 _length)
-{
-    qint64 write_bytes = _file.write(_data, _length);
-    if(write_bytes <= 0)
-        throw IOException(QObject::tr("Unable to write a data into the file: \"%1\"").arg(_file.fileName()));
-    return write_bytes;
-}
-
-inline qint64 readFile(QFile & _file, char * _buffer, qint64 _length)
-{
-    qint64 read_bytes = _file.read(_buffer, _length);
-    if(read_bytes < 0)
-        throw IOException(QObject::tr("Unable to read the file: \"%1\"").arg(_file.fileName()));
-    return read_bytes;
-}
-
-constexpr char g_filename_forbidden_characters[] = "<>:\"/\\|?*";
-
-bool isFilenameValid(const QString & _filename);
-
+} // namespace UI
 } // namespace OplPcTools

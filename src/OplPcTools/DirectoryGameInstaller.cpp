@@ -100,7 +100,7 @@ bool DirectoryGameInstaller::copyDeviceTo(const QString & _dest)
     QByteArray bytes(read_size, Qt::Initialization::Uninitialized);
     if(QFile::exists(_dest))
         throw IOException(tr("File already exists: \"%1\"").arg(_dest));
-    QSharedPointer<QFile> dest = openFileToSyncWrite(_dest);
+    QSharedPointer<QFile> dest = openFileToSyncWrite(_dest, OFSM_WRITE | OFSM_CREATE);
     const quint64 iso_size = mr_device.size();
     mr_device.seek(0);
     for(quint64 total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)

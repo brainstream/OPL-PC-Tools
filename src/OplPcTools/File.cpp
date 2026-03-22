@@ -22,9 +22,37 @@
 
 #include <OplPcTools/File.h>
 
+using namespace OplPcTools;
+
 namespace {
 
+QIODevice::OpenMode openFileSyncModeToQtMode(OpenFileSyncMode _mode)
+{
+    QIODevice::OpenMode result = QIODevice::NotOpen;
+    if(_mode & OFSM_READ) result |= QIODevice::ReadOnly;
+    if(_mode & OFSM_WRITE) result |= QIODevice::WriteOnly;
+    if(_mode & OFSM_TRUNCATE) result |= QIODevice::Truncate;
+    if(_mode & OFSM_APPEND) result |= QIODevice::Append;
+    if((_mode & OFSM_CREATE) == 0) result |= QIODevice::ExistingOnly;
+    return result;
+}
+
 #ifdef __linux
+int openFileSyncModeToStdMode(OpenFileSyncMode _mode)
+{
+    int result = 0;
+
+    if((_mode & OFSM_READ_WRITE) == OFSM_READ_WRITE) result |= O_RDWR;
+    else if(_mode & OFSM_READ) result |= O_RDONLY;
+    else if(_mode & OFSM_WRITE) result |= O_WRONLY;
+
+    if(_mode & OFSM_TRUNCATE) result |= O_TRUNC;
+    if(_mode & OFSM_APPEND) result |= O_APPEND;
+    if(_mode & OFSM_CREATE) result |= O_CREAT;
+
+    return result;
+}
+
 class SynchronouslyWritableFile : public QFile
 {
 public:
@@ -50,12 +78,12 @@ typedef QFile SynchronouslyWritableFile;
 
 namespace OplPcTools {
 
-QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename)
+QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename, OpenFileSyncMode _mode)
 {
     QSharedPointer<QFile> file = QSharedPointer<QFile>(new SynchronouslyWritableFile(_filename));
-    QIODevice::OpenMode mode = QIODevice::WriteOnly;
+    QIODevice::OpenMode mode = openFileSyncModeToQtMode(_mode);
 #ifdef __linux
-    int fd = open(_filename.toLocal8Bit(), O_SYNC | O_RDWR | O_CREAT, 0664);
+    int fd = open(_filename.toLocal8Bit(), openFileSyncModeToStdMode(_mode) | O_SYNC, 0664);
     bool result = fd >= 0 && file->open(fd, mode, QFile::AutoCloseHandle);
 #else
     bool result = file->open(mode);

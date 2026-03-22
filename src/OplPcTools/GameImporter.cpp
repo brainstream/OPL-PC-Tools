@@ -165,7 +165,7 @@ bool GameImporter::processTask(FileCopyTask & _task)
     QByteArray buffer(batch_size, Qt::Uninitialized);
     QFile src(_task.src.fileName());
     openFile(src, QIODevice::ReadOnly);
-    QSharedPointer<QFile> dest = openFileToSyncWrite(_task.dest.fileName());
+    QSharedPointer<QFile> dest = openFileToSyncWrite(_task.dest.fileName(), OFSM_WRITE | OFSM_CREATE);
     for(;;)
     {
         if(QThread::currentThread()->isInterruptionRequested())

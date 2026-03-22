@@ -23,6 +23,7 @@
 #include <OplPcTools/MemoryCard/Superblock.h>
 #include <OplPcTools/MemoryCard/Path.h>
 #include <QFile>
+#include <QMutex>
 #include <cstring>
 
 namespace OplPcTools {
@@ -133,6 +134,21 @@ private:
     Private * mp_private;
 };
 
+class FileTransferProgressTracker : public QObject
+{
+    friend class FileSystem;
+    Q_OBJECT
+
+public:
+    FileTransferProgressTracker(QObject * _parent) :
+        QObject(_parent)
+    {
+    }
+
+signals:
+    void progress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta);
+};
+
 class FileSystem final : public QObject
 {
     Q_OBJECT
@@ -155,7 +171,7 @@ public:
     void exportEntry(const Path & _vmc_path, const QString & _dest_path);
     QSharedPointer<File> openFile(const Path & _path);
     int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);
-    void writeFile(const Path & _path, const QByteArray & _data);
+    void writeFile(const Path & _path, const QByteArray & _data, FileTransferProgressTracker & _tracker);
     void createDirectory(const Path & _path);
     void remove(const Path & _path);
     void rename(const Path & _path, const QByteArray & _new_name);
@@ -181,7 +197,8 @@ private:
         const EntryPath & _directory_path,
         const QByteArray & _filename,
         const QByteArray & _data,
-        bool _is_directory);
+        bool _is_directory,
+        FileTransferProgressTracker *_tracker);
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
     void changeEntryLength(const EntryAddress & _address, int8_t _amount);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);
@@ -191,7 +208,9 @@ private:
     void eraseEntriesRecursive(const EntryPath & _path);
 
 private:
-    QFile m_file;
+    QSharedPointer<QFile> m_file;
+    const QString m_filename;
+    QMutex m_read_write_mutex;
     FSInfo * mp_info;
     FATable m_fat;
 };

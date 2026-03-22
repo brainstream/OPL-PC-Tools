@@ -171,7 +171,7 @@ public:
     void exportEntry(const Path & _vmc_path, const QString & _dest_path);
     QSharedPointer<File> openFile(const Path & _path);
     int64_t readFile(File::Private & _file, char * _buffer, uint32_t _max_size);
-    void writeFile(const Path & _path, const QByteArray & _data, FileTransferProgressTracker & _tracker);
+    void writeFile(const Path & _path, const QByteArray & _data, FileTransferProgressTracker * _tracker);
     void createDirectory(const Path & _path);
     void remove(const Path & _path);
     void rename(const Path & _path, const QByteArray & _new_name);

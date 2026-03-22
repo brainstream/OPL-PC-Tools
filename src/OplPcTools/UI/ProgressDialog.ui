@@ -10,6 +10,9 @@
     <height>189</height>
    </rect>
   </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -23,7 +26,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true"/>
+      <string>Processing...</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>

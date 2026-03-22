@@ -157,7 +157,7 @@ void MainWindow::loadLibrary(const QDir & _directory)
 {
     BusySmartThread * thread = new BusySmartThread([_directory]() {
         Library::instance().load(_directory);
-    }, this);
+    }, nullptr, this);
     connect(thread, &BusySmartThread::exception, this, [this](const QString & message) {
         mp_widget_open_library->show();
         Application::showErrorMessage(message);

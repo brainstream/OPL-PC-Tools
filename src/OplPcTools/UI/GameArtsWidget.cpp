@@ -210,7 +210,7 @@ void GameArtsWidget::changeGameArt()
 
 void GameArtsWidget::startBusySmartThread(std::function<void()> _lambda)
 {
-    BusySmartThread * thread = new BusySmartThread(_lambda, this);
+    BusySmartThread * thread = new BusySmartThread(_lambda, nullptr, this);
     connect(thread, &BusySmartThread::finished, mp_list_arts, &QListWidget::doItemsLayout);
     connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
     connect(thread, &BusySmartThread::exception, [](const QString & message) {

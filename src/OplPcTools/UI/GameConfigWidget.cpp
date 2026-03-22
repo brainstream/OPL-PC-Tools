@@ -456,7 +456,7 @@ void GameConfigWidget::remove()
 
 void GameConfigWidget::startSmartThread(std::function<void()> _lambda)
 {
-    BusySmartThread * thread = new BusySmartThread(_lambda, this);
+    BusySmartThread * thread = new BusySmartThread(_lambda, nullptr, this);
     connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
     connect(thread, &BusySmartThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);

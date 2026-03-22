@@ -65,9 +65,8 @@
 <context>
     <name>BusyDialog</name>
     <message>
-        <location filename="../UI/BusyDialog.ui" line="36"/>
         <source>Pocessing...</source>
-        <translation>Обработка...</translation>
+        <translation type="vanished">Обработка...</translation>
     </message>
 </context>
 <context>
@@ -657,6 +656,13 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::BusySmartThread</name>
+    <message>
+        <source>Processing...</source>
+        <translation type="vanished">Обработка...</translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::ChooseOpticalDiscDialog</name>
     <message>
         <location filename="../UI/ChooseOpticalDiscDialog.cpp" line="147"/>
@@ -906,6 +912,13 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::ProgressDialog</name>
+    <message>
+        <source>Processing...</source>
+        <translation type="vanished">Обработка...</translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::VmcCreateDialog</name>
     <message>
         <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
@@ -971,27 +984,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="613"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="615"/>
         <source>Uploading files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="793"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="799"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="794"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="800"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="795"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="801"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="796"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="802"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1003,7 +1016,7 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="194"/>
+        <location filename="../UI/VmcExportThread.cpp" line="195"/>
         <source>Overwrite confirmation</source>
         <translation>Подтверждение перезаписи</translation>
     </message>
@@ -1112,6 +1125,14 @@
         <location filename="../VmcCollection.cpp" line="95"/>
         <source>VMC with name &quot;%1&quot; already exists</source>
         <translation>VMC с именем &quot;%1&quot; уже существует</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressDialog</name>
+    <message>
+        <location filename="../UI/ProgressDialog.ui" line="29"/>
+        <source>Processing...</source>
+        <translation>Обработка...</translation>
     </message>
 </context>
 <context>

@@ -63,11 +63,11 @@ private:
     void uploadDirectoryImpl(
         const QString & _directory_path,
         const MemoryCard::Path & _dest_dir,
-        MemoryCard::FileTransferProgressTracker & _tracker);
+        MemoryCard::FileTransferProgressTracker * _tracker);
     void uploadFileImpl(
         const QString & _file_path,
         const MemoryCard::Path & _dest_dir,
-        MemoryCard::FileTransferProgressTracker & _tracker);
+        MemoryCard::FileTransferProgressTracker * _tracker);
     void uploadDirectory();
     void download();
     void deleteEntry();

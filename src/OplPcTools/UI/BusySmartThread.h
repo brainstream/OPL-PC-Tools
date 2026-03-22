@@ -20,8 +20,8 @@
 #define __BUSYSMARTTHREAD_LIBRARY__
 
 #include <QTimer>
-#include <OplPcTools/UI/BusyDialog.h>
 #include <OplPcTools/UI/LambdaThread.h>
+#include <QDialog>
 
 namespace OplPcTools {
 namespace UI {
@@ -31,7 +31,7 @@ class BusySmartThread : public QObject
     Q_OBJECT
 
 public:
-    BusySmartThread(std::function<void()> _lambda, QWidget * _parent_widget);
+    BusySmartThread(std::function<void()> _lambda, QDialog * _dialog, QWidget * _parent_widget);
     ~BusySmartThread() override;
     void setSpinnerDisplayTimeout(uint32_t _timeout_ms);
     void start();
@@ -48,7 +48,7 @@ private:
 private:
     uint32_t m_spinner_display_timeout;
     QWidget * mp_parent_widget;
-    BusyDialog * mp_dialog;
+    QDialog * mp_dialog;
     LambdaThread * mp_thread;
     QTimer * mp_timer;
 };

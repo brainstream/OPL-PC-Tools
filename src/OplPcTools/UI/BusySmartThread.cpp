@@ -17,14 +17,15 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/UI/BusySmartThread.h>
+#include <OplPcTools/UI/ProgressDialog.h>
 
 using namespace OplPcTools::UI;
 
-BusySmartThread::BusySmartThread(std::function<void()> _lambda, QWidget * _parent_widget) :
+BusySmartThread::BusySmartThread(std::function<void()> _lambda, QDialog * _dialog, QWidget * _parent_widget) :
     QObject(_parent_widget),
     m_spinner_display_timeout(700),
     mp_parent_widget(_parent_widget),
-    mp_dialog(nullptr)
+    mp_dialog(_dialog)
 {
     mp_thread = new LambdaThread(_lambda, this);
     mp_timer = new QTimer(this);
@@ -70,8 +71,15 @@ void BusySmartThread::finish()
 
 void BusySmartThread::showBusyDialog()
 {
-    if(mp_dialog)
-        return;
-    mp_dialog = new BusyDialog(mp_parent_widget);
-    mp_dialog->show();
+    if(!mp_dialog)
+    {
+        ProgressDialog * dlg = new ProgressDialog(mp_parent_widget);
+        dlg->disableCancelation(true);
+        mp_dialog = dlg;
+    }
+
+    if(!mp_dialog->isVisible())
+    {
+        mp_dialog->show();
+    }
 }

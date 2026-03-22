@@ -381,13 +381,13 @@ int64_t FileSystem::readFile(File::Private & _file, char * _buffer, uint32_t _ma
     return position_in_buffer;
 }
 
-void FileSystem::writeFile(const Path & _path, const QByteArray & _data, FileTransferProgressTracker & _tracker)
+void FileSystem::writeFile(const Path & _path, const QByteArray & _data, FileTransferProgressTracker * _tracker)
 {
     Path dir_path = _path.up();
     std::optional<EntryPath> dir_entry_path = resolvePath(dir_path);
     if(!dir_entry_path.has_value())
         throwPathNotFound(dir_path);
-    writeFile(*dir_entry_path, _path.filename(), _data, false, &_tracker);
+    writeFile(*dir_entry_path, _path.filename(), _data, false, _tracker);
     emit changed();
 }
 

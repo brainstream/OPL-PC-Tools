@@ -16,12 +16,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/UI/VmcExportThread.h>
+#include <OplPcTools/UI/ProgressDialog.h>
+#include <OplPcTools/File.h>
+#include <QMessageBox>
 #include <QThread>
 #include <QDir>
-#include <QMessageBox>
-#include <OplPcTools/File.h>
-#include <OplPcTools/UI/BusyDialog.h>
-#include <OplPcTools/UI/VmcExportThread.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -164,7 +164,8 @@ void VmcExportThread::start(
     const QString & _destination_dir)
 {
     QThread * thread = new QThread(this);
-    BusyDialog * busy_dialog = new BusyDialog(mp_parent_widget);
+    ProgressDialog * busy_dialog = new ProgressDialog(mp_parent_widget);
+    busy_dialog->disableCancelation(true);
     mp_worker = new VmcExportThreadWorker();
     connect(thread, &QThread::started, this, [this, &_vmc, &_string_converter, &_sources, &_destination_dir]() {
         mp_worker->start(_vmc, _string_converter, _sources, _destination_dir);
@@ -172,7 +173,7 @@ void VmcExportThread::start(
     connect(thread, &QThread::finished, this, &VmcExportThread::finished);
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     connect(thread, &QThread::finished, mp_worker, &VmcExportThreadWorker::deleteLater);
-    connect(thread, &QThread::finished, busy_dialog, &BusyDialog::deleteLater);
+    connect(thread, &QThread::finished, busy_dialog, &QObject::deleteLater);
     connect(mp_worker, &VmcExportThreadWorker::finished, thread, &QThread::quit);
     connect(mp_worker, &VmcExportThreadWorker::askQuestion, this, &VmcExportThread::askQuestion);
     connect(mp_worker, &VmcExportThreadWorker::exception, this, &VmcExportThread::exception);

@@ -32,6 +32,7 @@ class BusySmartThread : public QObject
 
 public:
     BusySmartThread(std::function<void()> _lambda, QDialog * _dialog, QWidget * _parent_widget);
+    BusySmartThread(QRunnable * _runnable, QDialog * _dialog, QWidget * _parent_widget);
     ~BusySmartThread() override;
     void setSpinnerDisplayTimeout(uint32_t _timeout_ms);
     void start();

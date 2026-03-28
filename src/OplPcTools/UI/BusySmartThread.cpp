@@ -22,12 +22,17 @@
 using namespace OplPcTools::UI;
 
 BusySmartThread::BusySmartThread(std::function<void()> _lambda, QDialog * _dialog, QWidget * _parent_widget) :
+    BusySmartThread(QRunnable::create(_lambda), _dialog, _parent_widget)
+{
+}
+
+BusySmartThread::BusySmartThread(QRunnable * _runnable, QDialog * _dialog, QWidget * _parent_widget) :
     QObject(_parent_widget),
     m_spinner_display_timeout(700),
     mp_parent_widget(_parent_widget),
     mp_dialog(_dialog)
 {
-    mp_thread = new LambdaThread(_lambda, this);
+    mp_thread = new LambdaThread(_runnable, this);
     mp_timer = new QTimer(this);
     mp_timer->setSingleShot(true);
     connect(mp_thread, &LambdaThread::exception, this, &BusySmartThread::exception);
@@ -56,9 +61,16 @@ void BusySmartThread::setSpinnerDisplayTimeout(uint32_t _timeout_ms)
 
 void BusySmartThread::start()
 {
-    mp_timer->setInterval(m_spinner_display_timeout);
-    mp_timer->start();
     mp_thread->start();
+    if(m_spinner_display_timeout == 0)
+    {
+        showBusyDialog();
+    }
+    else
+    {
+        mp_timer->setInterval(m_spinner_display_timeout);
+        mp_timer->start();
+    }
 }
 
 void BusySmartThread::finish()

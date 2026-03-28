@@ -645,12 +645,12 @@
 <context>
     <name>OplPcTools::UI::Application</name>
     <message>
-        <location filename="../UI/Application.cpp" line="109"/>
+        <location filename="../UI/Application.cpp" line="151"/>
         <source>Something went wrong</source>
         <translation>Alguma coisa deu ruim...</translation>
     </message>
     <message>
-        <location filename="../UI/Application.cpp" line="114"/>
+        <location filename="../UI/Application.cpp" line="167"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -898,7 +898,7 @@
 <context>
     <name>OplPcTools::UI::LambdaThread</name>
     <message>
-        <location filename="../UI/LambdaThread.h" line="59"/>
+        <location filename="../UI/LambdaThread.h" line="71"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
@@ -959,52 +959,52 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="377"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="376"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="322"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="323"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="322"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="323"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="472"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="447"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="547"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="510"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="622"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="573"/>
         <source>Uploading files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="806"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="745"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="807"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="746"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="808"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="747"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="809"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="748"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1016,27 +1016,34 @@
 <context>
     <name>OplPcTools::UI::VmcExportThread</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="195"/>
         <source>Overwrite confirmation</source>
-        <translation>Sobrescrever confirmação</translation>
+        <translation type="vanished">Sobrescrever confirmação</translation>
     </message>
 </context>
 <context>
     <name>OplPcTools::UI::VmcExportThreadWorker</name>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="58"/>
-        <source>Source path not found: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcExportThread.cpp" line="69"/>
         <source>An unknown error occurred while exporting VMC</source>
-        <translation>Um erro desconhecido aconteceu enquanto exportando o VMC</translation>
+        <translation type="vanished">Um erro desconhecido aconteceu enquanto exportando o VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="114"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
-        <translation>O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
+        <translation type="vanished">O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::VmcExporter</name>
+    <message>
+        <source>An unknown error occurred while exporting VMC</source>
+        <translation type="obsolete">Um erro desconhecido aconteceu enquanto exportando o VMC</translation>
+    </message>
+    <message>
+        <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
+        <translation type="obsolete">O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
+    </message>
+    <message>
+        <source>Overwrite confirmation</source>
+        <translation type="obsolete">Sobrescrever confirmação</translation>
     </message>
 </context>
 <context>
@@ -1055,24 +1062,23 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="312"/>
+        <location filename="../UI/VmcListWidget.cpp" line="306"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="313"/>
+        <location filename="../UI/VmcListWidget.cpp" line="307"/>
         <source>Delete VMC</source>
         <translation>Deletar VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="314"/>
+        <location filename="../UI/VmcListWidget.cpp" line="308"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation>Tem certeza que quer apagar este VMC?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="378"/>
         <source>Select directory</source>
-        <translation>Selecione a pasta</translation>
+        <translation type="vanished">Selecione a pasta</translation>
     </message>
 </context>
 <context>
@@ -1239,14 +1245,33 @@
         <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="84"/>
+        <location filename="../UI/VmcExporter.cpp" line="60"/>
+        <source>Source path not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExporter.cpp" line="75"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Não foi possível criar a pasta &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExportThread.cpp" line="111"/>
+        <location filename="../UI/VmcExporter.cpp" line="102"/>
+        <source>Unable to open VMC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExporter.cpp" line="107"/>
+        <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
+        <translation type="unfinished">O arquivo &quot;%1&quot; já existe. Deseja sobrescrever?</translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcExporter.cpp" line="127"/>
+        <source>Overwrite confirmation</source>
+        <translation type="unfinished">Sobrescrever confirmação</translation>
+    </message>
+    <message>
         <source>Unable to open VMC file &quot;%1&quot;</source>
-        <translation>Não foi possível abrir o VMC  &quot;%1&quot;</translation>
+        <translation type="vanished">Não foi possível abrir o VMC  &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/DisplayUtils.cpp" line="35"/>
@@ -1269,7 +1294,7 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="235"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="236"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>
@@ -1328,7 +1353,7 @@
         <translation>Os seguintes caracteres não são permitidos</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="147"/>
+        <location filename="../UI/VmcListWidget.cpp" line="145"/>
         <source>%1 MiB</source>
         <translation>%1 MiB</translation>
     </message>
@@ -1589,64 +1614,53 @@
 <context>
     <name>VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="172"/>
+        <location filename="../UI/VmcListWidget.ui" line="147"/>
         <source>Filter</source>
         <translation>Filtro</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="216"/>
+        <location filename="../UI/VmcListWidget.ui" line="191"/>
         <source>Create</source>
         <translation>Criar</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="219"/>
+        <location filename="../UI/VmcListWidget.ui" line="194"/>
         <source>Create VMC</source>
         <translation>Criar VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="231"/>
+        <location filename="../UI/VmcListWidget.ui" line="206"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="234"/>
+        <location filename="../UI/VmcListWidget.ui" line="209"/>
         <source>Delete VMC</source>
         <translation>Deletar VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="246"/>
+        <location filename="../UI/VmcListWidget.ui" line="221"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="249"/>
+        <location filename="../UI/VmcListWidget.ui" line="224"/>
         <source>Rename VMC</source>
         <translation>Renomear VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="261"/>
+        <location filename="../UI/VmcListWidget.ui" line="236"/>
         <source>Properties</source>
         <translation>Propriedades</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="264"/>
+        <location filename="../UI/VmcListWidget.ui" line="239"/>
         <source>Alt+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="273"/>
         <source>Export</source>
-        <translation>Exportar</translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.ui" line="276"/>
-        <source>Download VMC content to local disk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcListWidget.ui" line="279"/>
-        <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Exportar</translation>
     </message>
 </context>
 <context>

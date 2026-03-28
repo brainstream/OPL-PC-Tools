@@ -21,7 +21,7 @@
 #include <OplPcTools/UI/VmcFileNameDialog.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
 #include <OplPcTools/UI/DisplayUtils.h>
-#include <OplPcTools/UI/VmcExportThread.h>
+#include <OplPcTools/UI/VmcExporter.h>
 #include <OplPcTools/UI/ProgressDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/Library.h>
@@ -34,6 +34,7 @@
 #include <QStandardItemModel>
 #include <QShortcut>
 #include <QMimeData>
+#include <QThreadPool>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -364,9 +365,7 @@ void VmcDetailsActivity::setupShortcuts()
     connect(shortcut, &QShortcut::activated, mp_btn_fs_back, &QToolButton::click);
 }
 
-void VmcDetailsActivity::showErrorMessage(
-    const QString & _message /*= QString()*/,
-    const QByteArray & _path /*= QByteArray()*/)
+void VmcDetailsActivity::showErrorMessage(const QString & _message, const QByteArray & _path /*= QByteArray()*/)
 {
     if(qApp->thread() != QThread::currentThread())
     {
@@ -389,26 +388,14 @@ void VmcDetailsActivity::hideErrorMessage()
 
 void VmcDetailsActivity::loadFileManager()
 {
-    try
+    handleErrors([this]
     {
         std::unique_ptr<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(mr_vmc.filepath(), this));
         fs->load();
         if(mp_vmc_fs)
             delete mp_vmc_fs;
         mp_vmc_fs = fs.release();
-    }
-    catch(const MemoryCard::MemoryCardFileException & exception)
-    {
-        showErrorMessage(exception.message(), exception.path());
-    }
-    catch(const Exception & exception)
-    {
-        showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        showErrorMessage();
-    }
+    });
 }
 
 QString VmcDetailsActivity::getFsEncoding() const
@@ -430,25 +417,13 @@ void VmcDetailsActivity::setIconSize()
 void VmcDetailsActivity::navigate(const MemoryCard::Path & _path)
 {
     hideErrorMessage();
-    try
+    handleErrors([this, &_path]
     {
         QList<MemoryCard::EntryInfo> items = mp_vmc_fs->enumerateEntries(_path);
         mp_model->setItems(items);
         mp_edit_fs_path->setText(decodePath(_path));
         mp_btn_fs_back->setDisabled(_path.isRoot());
-    }
-    catch(const MemoryCard::MemoryCardFileException & exception)
-    {
-        showErrorMessage(exception.message(), exception.path());
-    }
-    catch(const Exception & exception)
-    {
-        showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        showErrorMessage();
-    }
+    });
 }
 
 QByteArray VmcDetailsActivity::encodePath(const QString & _path) const
@@ -511,26 +486,14 @@ QSharedPointer<Intent> VmcDetailsActivity::createIntent(const Vmc & _vmc)
 
 void VmcDetailsActivity::renameVmc()
 {
-    VmcRenameDialog dlg(mr_vmc.title(), this);
-    if(dlg.exec() != QDialog::Accepted)
-        return;
-    try
+    handleErrors([this]
     {
+        VmcRenameDialog dlg(mr_vmc.title(), this);
+        if(dlg.exec() != QDialog::Accepted)
+            return;
         Library::instance().vmcs().renameVmc(mr_vmc.uuid(), dlg.name());
         mp_label_vmc_title->setText(dlg.name());
-    }
-    catch(const MemoryCard::MemoryCardFileException & exception)
-    {
-        showErrorMessage(exception.message(), exception.path());
-    }
-    catch(const Exception & exception)
-    {
-        Application::showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        Application::showErrorMessage();
-    }
+    });
 }
 
 void VmcDetailsActivity::showTreeContextMenu(const QPoint & _point)
@@ -579,9 +542,9 @@ void VmcDetailsActivity::renameEntry()
 
 void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)
 {
-    MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
-    try
+    handleErrors([this, &_data]
     {
+        MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
         foreach(const QUrl & url, _data.urls())
         {
             QFileInfo fi(url.path());
@@ -592,19 +555,7 @@ void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)
             else if(fi.isFile())
                 uploadFileImpl(fi.absoluteFilePath(), vmc_destination_dir, nullptr);
         }
-    }
-    catch(const MemoryCard::MemoryCardFileException & exception)
-    {
-        showErrorMessage(exception.message(), exception.path());
-    }
-    catch(const Exception & exception)
-    {
-        showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        showErrorMessage();
-    }
+    });
 }
 
 void VmcDetailsActivity::uploadFiles()
@@ -630,7 +581,7 @@ void VmcDetailsActivity::uploadFiles()
 
     std::function<void()> lambda = [this, filenames, progress_dialog]()
     {
-        try
+        handleErrors([this, filenames, progress_dialog]
         {
             const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
             foreach(const QString & filename, filenames)
@@ -638,24 +589,10 @@ void VmcDetailsActivity::uploadFiles()
                 progress_dialog->setProgressLabelText(QFileInfo(filename).fileName());
                 uploadFileImpl(filename, vmc_current_dir, &progress_dialog->tracker());
             }
-        }
-        catch(const MemoryCard::MemoryCardFileException & exception)
-        {
-            showErrorMessage(exception.message(), exception.path());
-        }
-        catch(const Exception & exception)
-        {
-            showErrorMessage(exception.message());
-        }
-        catch(...)
-        {
-            showErrorMessage();
-        }
-        progress_dialog->deleteLater();
+        });
     };
     BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);
     connect(thread, &BusySmartThread::finished, thread, &QObject::deleteLater);
-    connect(thread, &BusySmartThread::finished, progress_dialog, &QObject::deleteLater);
     connect(thread, &BusySmartThread::exception, [](const QString & message) {
         Application::showErrorMessage(message);
     });
@@ -698,17 +635,25 @@ void VmcDetailsActivity::uploadFileImpl(
 
 void VmcDetailsActivity::uploadDirectory()
 {
-    const QString directory_path = QFileDialog::getExistingDirectory(
-        this,
-        QString(),
-        Settings::instance().path(Settings::Directory::VmcImport));
-    if(directory_path.isEmpty())
-        return;
-    Settings::instance().setPath(Settings::Directory::VmcImport, directory_path);
-    const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+    handleErrors([this]
+    {
+        const QString directory_path = QFileDialog::getExistingDirectory(
+            this,
+            QString(),
+            Settings::instance().path(Settings::Directory::VmcImport));
+        if(directory_path.isEmpty())
+            return;
+        Settings::instance().setPath(Settings::Directory::VmcImport, directory_path);
+        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+        uploadDirectoryImpl(directory_path, vmc_current_dir, nullptr);
+    });
+}
+
+void VmcDetailsActivity::handleErrors(std::function<void()> _lambda)
+{
     try
     {
-        uploadDirectoryImpl(directory_path, vmc_current_dir, nullptr);
+        _lambda();
     }
     catch(const MemoryCard::MemoryCardFileException & exception)
     {
@@ -716,28 +661,28 @@ void VmcDetailsActivity::uploadDirectory()
     }
     catch(const Exception & exception)
     {
-        showErrorMessage(exception.message());
+        Application::showErrorMessage(exception.message());
     }
     catch(...)
     {
-        showErrorMessage();
+        Application::showErrorMessage();
     }
 }
 
 void VmcDetailsActivity::download()
 {
-    try
+    QList<MemoryCard::Path> paths;
+    QString directory_path;
+    handleErrors([this, &paths, &directory_path]
     {
         const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
         Settings & settings = Settings::instance();
-        const QString directory_path =
-            QFileDialog::getExistingDirectory(this, QString(), settings.path(Settings::Directory::VmcExport));
+        directory_path = QFileDialog::getExistingDirectory(
+            this, QString(), settings.path(Settings::Directory::VmcExport));
         if(directory_path.isEmpty())
             return;
         settings.setPath(Settings::Directory::VmcExport,  directory_path);
-
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
-        QList<MemoryCard::Path> paths;
         paths.reserve((selection.count()));
         foreach(const QModelIndex & index, selection)
         {
@@ -745,35 +690,29 @@ void VmcDetailsActivity::download()
             if(!entry) continue;
             paths.append(MemoryCard::Path(vmc_current_dir, entry->name()));
         }
+    });
 
-        if(paths.empty())
-            return;
+    if(paths.empty())
+        return;
 
-        VmcExportThread * thread = new VmcExportThread(this);
-        connect(thread, &VmcExportThread::finished, thread, &VmcExportThread::deleteLater);
-        connect(thread, &VmcExportThread::exception, [](const QString & message) {
-            Application::showErrorMessage(message);
-        });
-
-        thread->start(mr_vmc, mp_model->stringConverter(), paths, directory_path);
-    }
-    catch(const MemoryCard::MemoryCardFileException & exception)
+    std::function<void()> lambda = [this, paths, directory_path]
     {
-        showErrorMessage(exception.message(), exception.path());
-    }
-    catch(const Exception & exception)
-    {
-        showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        showErrorMessage();
-    }
+        QThread::msleep(100);
+        VmcExporter * exportert = new VmcExporter(mr_vmc, mp_model->stringConverter(), paths, directory_path);
+        handleErrors([exportert] { exportert->run(); });
+        delete exportert;
+    };
+    BusySmartThread * thread = new BusySmartThread(lambda, nullptr, this);
+    // When the progress dialog appears, the question dialog is behind it and can't get focus for clicking the button.
+    // Therefore, we display the progress dialog immediately, without delay.
+    thread->setSpinnerDisplayTimeout(0);
+    connect(thread, &BusySmartThread::finished, thread, &QObject::deleteLater);
+    thread->start();
 }
 
 void VmcDetailsActivity::deleteEntry()
 {
-    try
+    handleErrors([this]
     {
         const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
@@ -819,17 +758,5 @@ void VmcDetailsActivity::deleteEntry()
 
         foreach(const QByteArray & entry, entries)
             mp_vmc_fs->remove(vmc_current_dir + entry);
-    }
-    catch(const MemoryCard::MemoryCardFileException & exception)
-    {
-        showErrorMessage(exception.message(), exception.path());
-    }
-    catch(const Exception & exception)
-    {
-        showErrorMessage(exception.message());
-    }
-    catch(...)
-    {
-        showErrorMessage();
-    }
+    });
 }

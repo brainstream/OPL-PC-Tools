@@ -40,12 +40,13 @@ public:
     static QSharedPointer<Intent> createIntent(const Vmc & _vmc);
 
 private slots:
-    void showErrorMessage(const QString & _message = QString(), const QByteArray & _path = QByteArray());
+    void showErrorMessage(const QString & _message, const QByteArray & _path = QByteArray());
 
 private:
     void setupShortcuts();
     void hideErrorMessage();
     void loadFileManager();
+    void handleErrors(std::function<void()> _lambda);
     QString getFsEncoding() const;
     void setIconSize();
     void navigate(const MemoryCard::Path & _path);

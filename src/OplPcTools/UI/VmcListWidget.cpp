@@ -21,7 +21,6 @@
 #include <OplPcTools/UI/VmcCreateDialog.h>
 #include <OplPcTools/UI/VmcListWidget.h>
 #include <OplPcTools/UI/VmcDetailsActivity.h>
-#include <OplPcTools/UI/VmcExportThread.h>
 #include <OplPcTools/UI/VmcPropertiesDialog.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Exception.h>
@@ -30,7 +29,6 @@
 #include <QMessageBox>
 #include <QCheckBox>
 #include <QStandardPaths>
-#include <QFileDialog>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -202,7 +200,6 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_btn_create_vmc->setDefaultAction(mp_action_create_vmc);
     mp_btn_delete_vmc->setDefaultAction(mp_action_delete_vmc);
     mp_btn_rename_vmc->setDefaultAction(mp_action_rename_vmc);
-    mp_btn_export->setDefaultAction(mp_action_export);
     mp_btn_properties->setDefaultAction(mp_action_properties);
     mp_model = new VmcTreeModel(this);
     mp_proxy_model = new QSortFilterProxyModel(this);
@@ -216,7 +213,6 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     mp_context_menu = new QMenu(this);
     mp_context_menu->addAction(mp_action_rename_vmc);
     mp_context_menu->addAction(mp_action_delete_vmc);
-    mp_context_menu->addAction(mp_action_export);
     mp_context_menu->addAction(mp_action_properties);
     mp_context_menu->addSeparator();
     mp_context_menu->addAction(mp_action_create_vmc);
@@ -229,7 +225,6 @@ VmcListWidget::VmcListWidget(QWidget * _parent /*= nullptr*/):
     connect(mp_action_delete_vmc, &QAction::triggered, this, &VmcListWidget::deleteVmc);
     connect(mp_action_create_vmc, &QAction::triggered, this, &VmcListWidget::createVmc);
     connect(mp_action_properties, &QAction::triggered, this, &VmcListWidget::showVmcProperties);
-    connect(mp_action_export, &QAction::triggered, this, &VmcListWidget::exportFiles);
     connect(mp_tree_vmcs, &QTreeView::customContextMenuRequested, this, &VmcListWidget::showTreeContextMenu);
     connect(mp_tree_vmcs, &QTreeView::activated, this, &VmcListWidget::onTreeViewItemActivated);
     connect(
@@ -298,7 +293,6 @@ void VmcListWidget::activateItemControls(const Vmc * _vmc)
     mp_action_rename_vmc->setDisabled(disabled);
     mp_action_delete_vmc->setDisabled(disabled);
     mp_action_properties->setDisabled(disabled);
-    mp_action_export->setDisabled(disabled);
 }
 
 void VmcListWidget::deleteVmc()
@@ -365,24 +359,4 @@ void VmcListWidget::onTreeViewItemActivated(const QModelIndex & _index)
         auto intent = VmcDetailsActivity::createIntent(*vmc);
         Application::pushActivity(*intent);
     }
-}
-
-void VmcListWidget::exportFiles()
-{
-    const Vmc * vmc = mp_model->vmc(mp_proxy_model->mapToSource(mp_tree_vmcs->currentIndex()));
-    if(!vmc) return;
-    Settings & settings = Settings::instance();
-    QString directory = settings.path(Settings::Directory::VmcExport);
-    if(directory.isEmpty())
-        directory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    directory = QFileDialog::getExistingDirectory(this, tr("Select directory"), directory);
-    if(directory.isEmpty()) return;
-    settings.setPath(Settings::Directory::VmcExport, directory);
-    VmcExportThread * thread = new VmcExportThread(this);
-    connect(thread, &VmcExportThread::finished, thread, &VmcExportThread::deleteLater);
-    connect(thread, &VmcExportThread::exception, [](const QString & message) {
-        Application::showErrorMessage(message);
-    });
-    StringConverter string_converter(Library::instance().config().vmcFsCharset(*vmc));
-    thread->start(*vmc, string_converter, { QByteArray("/") }, directory);
 }

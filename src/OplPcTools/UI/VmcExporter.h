@@ -20,31 +20,27 @@
 #define __OPLPCTOOLS_VMCEXPORTTHREAD__
 
 #include <OplPcTools/StringConverter.h>
-#include <optional>
-#include <QWidget>
-#include <QEventLoop>
 #include <OplPcTools/Vmc.h>
 #include <OplPcTools/MemoryCard/FileSystem.h>
+#include <optional>
 
 namespace OplPcTools {
 namespace UI {
 
-
-class VmcExportThreadWorker : public QObject
+class VmcExporter
 {
-    Q_OBJECT
+    Q_DISABLE_COPY_MOVE(VmcExporter)
 
-    friend class VmcExportThread;
+private:
     enum class Action { Overwrite, Skip, Cancel };
 
 public:
-    VmcExportThreadWorker();
-    void start(
+    VmcExporter(
         const Vmc & _vmc,
         const StringConverter & _string_converter,
         const QList<MemoryCard::Path> & _sources,
         const QString & _destination_dir);
-    void cancel();
+    void run();
 
 private:
     void setAnswer(bool _answer);
@@ -58,55 +54,21 @@ private:
         const StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_file,
         const QString & _dest_directory);
-
-
     void exportEntries(
         MemoryCard::FileSystem & _fs,
         const StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_dir,
         const QString & _dest_directory);
-
-
     Action getAction(const QString & _question);
-    void onAnswerSet(bool _answer);
-
-signals:
-    void askQuestion(const QString & _question);
-    void emitAnswer(bool _answer);
-    void finished();
-    void exception(const QString & _message);
 
 private:
-    QEventLoop * mp_loop;
-    Action m_action;
-};
-
-
-class VmcExportThread : public QObject
-{
-    Q_OBJECT
-
-public:
-    explicit VmcExportThread(QWidget * _parent_widget);
-    void start(
-        const Vmc & _vmc,
-        const StringConverter & _string_converter,
-        const QList<MemoryCard::Path> & _sources,
-        const QString & _destination_dir);
-
-signals:
-    void finished();
-    void exception(const QString & _message);
-
-private:
-    void askQuestion(const QString & _question);
-
-private:
-    QWidget * mp_parent_widget;
     std::optional<bool> m_default_answer;
-    VmcExportThreadWorker * mp_worker;
+    Action m_action;
+    const Vmc & mr_vmc;
+    const StringConverter & mr_string_converter;
+    const QList<MemoryCard::Path> & mr_sources;
+    const QString m_destination_dir;
 };
-
 
 } // namespace UI
 } // namespace OplPcTools

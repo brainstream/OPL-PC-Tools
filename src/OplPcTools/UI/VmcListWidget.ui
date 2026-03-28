@@ -83,31 +83,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="mp_btn_export">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QToolButton" name="mp_btn_properties">
         <property name="text">
          <string notr="true"/>
@@ -264,26 +239,10 @@
     <string>Alt+Return</string>
    </property>
   </action>
-  <action name="mp_action_export">
-   <property name="icon">
-    <iconset resource="../Resources/Resources.qrc">
-     <normaloff>:/images/download</normaloff>:/images/download</iconset>
-   </property>
-   <property name="text">
-    <string>Export</string>
-   </property>
-   <property name="toolTip">
-    <string>Download VMC content to local disk</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+E</string>
-   </property>
-  </action>
  </widget>
  <tabstops>
   <tabstop>mp_btn_rename_vmc</tabstop>
   <tabstop>mp_btn_delete_vmc</tabstop>
-  <tabstop>mp_btn_export</tabstop>
   <tabstop>mp_btn_properties</tabstop>
   <tabstop>mp_btn_create_vmc</tabstop>
   <tabstop>mp_edit_filter</tabstop>

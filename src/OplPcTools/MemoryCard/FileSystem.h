@@ -198,7 +198,7 @@ private:
         const QByteArray & _filename,
         const QByteArray & _data,
         bool _is_directory,
-        FileTransferProgressTracker *_tracker);
+        FileTransferProgressTracker * _tracker);
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
     void changeEntryLength(const EntryAddress & _address, int8_t _amount);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);

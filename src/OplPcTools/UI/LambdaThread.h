@@ -19,9 +19,10 @@
 #ifndef __OPLPCTOOLS_LAMBDATHREAD__
 #define __OPLPCTOOLS_LAMBDATHREAD__
 
-#include <functional>
-#include <QThread>
 #include <OplPcTools/Exception.h>
+#include <QThread>
+#include <QRunnable>
+#include <functional>
 
 namespace OplPcTools {
 namespace UI {
@@ -32,19 +33,30 @@ class LambdaThread : public QThread
 
 public:
     explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
+        LambdaThread(QRunnable::create(_lambda), _parent)
+    {
+    }
+
+    explicit LambdaThread(QRunnable * _runnable, QObject * _parent = nullptr) :
         QThread(_parent),
-        m_lambda(_lambda)
+        mp_runnable(_runnable)
     {
         setObjectName("LambdaThread");
     }
 
+    ~LambdaThread() override
+    {
+        if(mp_runnable && mp_runnable->autoDelete())
+            delete mp_runnable;
+    }
 
 protected:
     void run() override
     {
         try
         {
-            m_lambda();
+            if(mp_runnable)
+                mp_runnable->run();
         }
         catch(const OplPcTools::Exception & ex)
         {
@@ -64,7 +76,7 @@ signals:
     void exception(QString _message);
 
 private:
-    std::function<void()> m_lambda;
+    QRunnable * mp_runnable;
 };
 
 } // namespace UI

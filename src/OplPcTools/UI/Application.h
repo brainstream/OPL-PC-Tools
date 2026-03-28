@@ -19,13 +19,41 @@
 #ifndef __OPLPCTOOLS_APPLICATION__
 #define __OPLPCTOOLS_APPLICATION__
 
-#include <QApplication>
-#include <QWidget>
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/UI/MainWindow.h>
+#include <QApplication>
+#include <QWidget>
+#include <QMessageBox>
 
 namespace OplPcTools {
 namespace UI {
+
+namespace __Private {
+
+class QuestionAsker : public QObject
+{
+    Q_OBJECT
+
+public:
+    QuestionAsker(
+        const QString & _title,
+        const QString & _message,
+        QMessageBox::StandardButtons _buttons,
+        QWidget * _parent);
+    QMessageBox::StandardButton answer() const { return m_answer; }
+
+public slots:
+    void ask();
+
+private:
+    QWidget * mp_parent;
+    const QString m_title;
+    const QString m_message;
+    const QMessageBox::StandardButtons m_buttons;
+    QMessageBox::StandardButton m_answer;
+};
+
+} // namespace __Private
 
 class Application : public QApplication
 {
@@ -42,7 +70,15 @@ public:
     static void showMessage(const QString & _message);
     static void showErrorMessage();
     static void showErrorMessage(const QString & _message);
+    static QMessageBox::StandardButton askQuestion(
+        const QString & _title,
+        const QString & _message,
+        QMessageBox::StandardButtons _buttons);
     static bool pushActivity(Intent & _intent);
+
+private slots:
+    void showMessageImpl(const QString & _title, const QString & _message);
+    void showErrorMessageImpl(const QString & _message);
 
 private:
     MainWindow * ensureMainWindow();

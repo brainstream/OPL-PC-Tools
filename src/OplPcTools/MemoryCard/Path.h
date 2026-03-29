@@ -60,6 +60,20 @@ public:
         return *this;
     }
 
+    bool operator == (const Path & _other)
+    {
+        if(_other.isRoot() == isRoot() && isRoot())
+            return true;
+        if(_other.m_parts.count() != m_parts.count())
+            return false;
+        for(qsizetype i = 0; i < m_parts.count(); ++i)
+        {
+            if(m_parts[i] != _other.m_parts[i])
+                return false;
+        }
+        return true;
+    }
+
     operator QByteArray () const
     {
         return path();

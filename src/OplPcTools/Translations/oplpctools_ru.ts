@@ -989,22 +989,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="744"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="750"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="745"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="751"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="746"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="752"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="747"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="753"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1245,27 +1245,27 @@
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="60"/>
+        <location filename="../UI/VmcExporter.cpp" line="70"/>
         <source>Source path not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="73"/>
+        <location filename="../UI/VmcExporter.cpp" line="83"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Не могу создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="101"/>
+        <location filename="../UI/VmcExporter.cpp" line="111"/>
         <source>Unable to open VMC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="106"/>
+        <location filename="../UI/VmcExporter.cpp" line="116"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation type="unfinished">Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="135"/>
+        <location filename="../UI/VmcExporter.cpp" line="145"/>
         <source>Overwrite confirmation</source>
         <translation type="unfinished">Подтверждение перезаписи</translation>
     </message>

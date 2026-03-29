@@ -48,9 +48,19 @@ void VmcExporter::run()
     {
         if(std::optional<MemoryCard::EntryInfo> entry = fs->entry(source))
         {
-            if(!(entry->isDirectory()
-                      ? exportDirectory(*fs, mr_string_converter, MemoryCard::Path::root(), m_destination_dir)
-                      : exportFile(*fs, mr_string_converter, source, m_destination_dir)))
+            bool result;
+            if(entry->isDirectory())
+            {
+                const QString destination = source.isRoot()
+                    ? m_destination_dir
+                    : QDir(m_destination_dir).absoluteFilePath(mr_string_converter.decode(entry->name()));
+                result = exportDirectory(*fs, mr_string_converter, source, destination);
+            }
+            else
+            {
+                result = exportFile(*fs, mr_string_converter, source, m_destination_dir);
+            }
+            if(!result)
             {
                 return;
             }
@@ -77,7 +87,7 @@ bool VmcExporter::exportDirectory(
         MemoryCard::Path next_vmc_entry = _vmc_dir + entry.name();
         if(entry.isDirectory())
         {
-            QString next_directory = dir.absoluteFilePath(entry.name());
+            QString next_directory = dir.absoluteFilePath(_string_converter.decode(entry.name()));
             if(!exportDirectory(_fs, _string_converter, next_vmc_entry, next_directory))
                 return false;
         }

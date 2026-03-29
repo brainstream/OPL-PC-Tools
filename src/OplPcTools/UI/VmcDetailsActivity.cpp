@@ -682,7 +682,13 @@ void VmcDetailsActivity::download()
         if(directory_path.isEmpty())
             return;
         settings.setPath(Settings::Directory::VmcExport,  directory_path);
-        const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
+        QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
+        if(selection.empty())
+        {
+            int count = mp_model->rowCount(mp_tree_fs->rootIndex());
+            for(int i = 0; i < count; ++i)
+                selection.append(mp_model->index(i, 0, mp_tree_fs->rootIndex()));
+        }
         paths.reserve((selection.count()));
         foreach(const QModelIndex & index, selection)
         {

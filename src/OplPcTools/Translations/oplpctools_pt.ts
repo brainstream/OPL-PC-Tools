@@ -959,52 +959,47 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="376"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="427"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="323"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="374"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="323"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="374"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="447"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="498"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="510"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="561"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="573"/>
-        <source>Uploading files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="750"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="851"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="751"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="852"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="752"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="853"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="753"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="854"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1079,6 +1074,14 @@
     <message>
         <source>Select directory</source>
         <translation type="vanished">Selecione a pasta</translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::VmcProgressDialog</name>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="166"/>
+        <source>Uploading</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1294,7 +1297,7 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="236"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="287"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>

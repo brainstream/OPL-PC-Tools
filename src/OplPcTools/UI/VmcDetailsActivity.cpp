@@ -35,6 +35,7 @@
 #include <QShortcut>
 #include <QMimeData>
 #include <QThreadPool>
+#include <QDirIterator>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -63,32 +64,44 @@ private:
     const Vmc & mr_vmc;
 };
 
-class VmcProgressDialog : public ProgressDialog
+qint64 calculateTotalSize(const QStringList & _paths)
 {
-public:
-    explicit VmcProgressDialog(QWidget * _parent) :
-        ProgressDialog(_parent),
-        m_tracker(_parent)
+    qint64 total = 0;
+    QSet<QString> visited_dirs;
+
+    foreach(const QString & path, _paths)
     {
-        connect(&m_tracker, &MemoryCard::FileTransferProgressTracker::progress, this, &VmcProgressDialog::updateProgress);
+        QFileInfo info(path);
+        if (!info.exists())
+            continue;
+        if(info.isFile())
+        {
+            total += info.size();
+            continue;
+        }
+        if(info.isDir())
+        {
+            QString canonical = info.canonicalFilePath();
+            if (visited_dirs.contains(canonical))
+                continue;
+            visited_dirs.insert(canonical);
+            QDirIterator it(
+                path,
+                QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
+                QDirIterator::Subdirectories);
+            while(it.hasNext())
+            {
+                it.next();
+                const QFileInfo fi = it.fileInfo();
+                if(fi.isFile())
+                    total += fi.size();
+            }
+        }
     }
 
-    MemoryCard::FileTransferProgressTracker & tracker()
-    {
-        return m_tracker;
-    }
+    return total;
+}
 
-private:
-    void updateProgress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta)
-    {
-        Q_UNUSED(_total_bytes)
-        Q_UNUSED(_done_bytes)
-        setProgressValue(progressValue() + static_cast<int>(_delta));
-    }
-
-private:
-    MemoryCard::FileTransferProgressTracker m_tracker;
-};
 
 } // namespace
 
@@ -136,6 +149,44 @@ private:
     QIcon m_dir_icon;
     int m_sorted_by_column;
     Qt::SortOrder m_sort_order;
+};
+
+class VmcProgressDialog : public ProgressDialog
+{
+public:
+    enum Action { Upload };
+
+    explicit VmcProgressDialog(Action _action, QWidget * _parent) :
+        ProgressDialog(_parent),
+        m_tracker(_parent)
+    {
+        switch(_action)
+        {
+        case Upload:
+            setWindowTitle(tr("Uploading"));
+            break;
+        default:
+            break;
+        }
+
+        connect(&m_tracker, &MemoryCard::FileTransferProgressTracker::progress, this, &VmcProgressDialog::updateProgress);
+    }
+
+    MemoryCard::FileTransferProgressTracker & tracker()
+    {
+        return m_tracker;
+    }
+
+private:
+    void updateProgress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta)
+    {
+        Q_UNUSED(_total_bytes)
+        Q_UNUSED(_done_bytes)
+        setProgressValue(progressValue() + static_cast<int>(_delta));
+    }
+
+private:
+    MemoryCard::FileTransferProgressTracker m_tracker;
 };
 
 } // namespace OplPcTools::UI
@@ -542,20 +593,47 @@ void VmcDetailsActivity::renameEntry()
 
 void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)
 {
-    handleErrors([this, &_data]
+    QStringList paths;
     {
-        MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
-        foreach(const QUrl & url, _data.urls())
+        QList<QUrl> urls = _data.urls();
+        paths.reserve(urls.size());
+        std::transform(
+            urls.cbegin(),
+            urls.cend(),
+            std::back_inserter(paths),
+            [](const QUrl & __url) { return __url.toLocalFile(); });
+    }
+
+    int total_size = static_cast<int>(calculateTotalSize(paths));
+    VmcProgressDialog * progress_dialog = new VmcProgressDialog(VmcProgressDialog::Upload, this);
+    progress_dialog->setProgressRange(0, total_size);
+    progress_dialog->disableCancelation(true);
+
+    std::function<void()> lambda = [this, paths, progress_dialog]
+    {
+        handleErrors([this, &paths, progress_dialog]
         {
-            QFileInfo fi(url.path());
-            if(!fi.exists())
-                continue;
-            else if(fi.isDir())
-                uploadDirectoryImpl(fi.absoluteFilePath(), vmc_destination_dir, nullptr);
-            else if(fi.isFile())
-                uploadFileImpl(fi.absoluteFilePath(), vmc_destination_dir, nullptr);
-        }
-    });
+            MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
+            foreach(const QString & path, paths)
+            {
+                QFileInfo fi(path);
+                if(!fi.exists())
+                    continue;
+                else if(fi.isDir())
+                    uploadDirectoryImpl(fi.absoluteFilePath(), vmc_destination_dir, *progress_dialog);
+                else if(fi.isFile())
+                    uploadFileImpl(fi.absoluteFilePath(), vmc_destination_dir, *progress_dialog);
+            }
+        });
+    };
+    BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);
+    thread->setSpinnerDisplayTimeout(0);
+    connect(thread, &BusySmartThread::finished, thread, &QObject::deleteLater);
+    connect(
+        thread,
+        &BusySmartThread::exception,
+        [](const QString & __message) { Application::showErrorMessage(__message); });
+    thread->start();
 }
 
 void VmcDetailsActivity::uploadFiles()
@@ -564,13 +642,14 @@ void VmcDetailsActivity::uploadFiles()
         this,
         QString(),
         Settings::instance().path(Settings::Directory::VmcImport));
-    if(!filenames.empty())
-        Settings::instance().setPath(Settings::Directory::VmcImport, QFileInfo(filenames.first()).absolutePath());
+    if(filenames.empty())
+        return;
 
-    VmcProgressDialog * progress_dialog = new VmcProgressDialog(this);
+    Settings::instance().setPath(Settings::Directory::VmcImport, QFileInfo(filenames.first()).absolutePath());
+
+    VmcProgressDialog * progress_dialog = new VmcProgressDialog(VmcProgressDialog::Upload, this);
     {
         progress_dialog->disableCancelation(true);
-        progress_dialog->setWindowTitle(tr("Uploading files"));
         qint64 total_bytes = std::accumulate(
             filenames.begin(),
             filenames.end(),
@@ -579,30 +658,43 @@ void VmcDetailsActivity::uploadFiles()
         progress_dialog->setProgressRange(0, static_cast<int>(total_bytes));
     }
 
-    std::function<void()> lambda = [this, filenames, progress_dialog]()
+    std::function<void()> lambda = [this, filenames, progress_dialog]
     {
         handleErrors([this, filenames, progress_dialog]
         {
             const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
             foreach(const QString & filename, filenames)
             {
-                progress_dialog->setProgressLabelText(QFileInfo(filename).fileName());
-                uploadFileImpl(filename, vmc_current_dir, &progress_dialog->tracker());
+                uploadFileImpl(filename, vmc_current_dir, *progress_dialog);
             }
         });
     };
     BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);
+    thread->setSpinnerDisplayTimeout(0);
     connect(thread, &BusySmartThread::finished, thread, &QObject::deleteLater);
-    connect(thread, &BusySmartThread::exception, [](const QString & message) {
-        Application::showErrorMessage(message);
-    });
+    connect(
+        thread,
+        &BusySmartThread::exception,
+        [](const QString & __message) { Application::showErrorMessage(__message); });
     thread->start();
+}
+
+void VmcDetailsActivity::uploadFileImpl(
+    const QString & _file_path,
+    const MemoryCard::Path & _dest_dir,
+    VmcProgressDialog & _progress_dialog)
+{
+    QFile file(_file_path);
+    openFile(file, QIODevice::ReadOnly);
+    QByteArray content = file.readAll();
+    _progress_dialog.setProgressLabelText(_file_path);
+    mp_vmc_fs->writeFile(_dest_dir + encodePath(QFileInfo(file).fileName()), content, &_progress_dialog.tracker());
 }
 
 void VmcDetailsActivity::uploadDirectoryImpl(
     const QString & _directory_path,
     const MemoryCard::Path & _dest_dir,
-    MemoryCard::FileTransferProgressTracker * _tracker)
+    VmcProgressDialog & _progress_dialog)
 {
     QDir directory(_directory_path);
     if(!directory.exists())
@@ -611,42 +703,51 @@ void VmcDetailsActivity::uploadDirectoryImpl(
     const MemoryCard::Path vmc_dir(_dest_dir, encodePath(directory.dirName()));
     mp_vmc_fs->createDirectory(vmc_dir);
 
-    foreach(
-        const QFileInfo & entry,
-        directory.entryInfoList(QDir::NoDotAndDotDot | QDir::CaseSensitive | QDir::Dirs | QDir::Files))
+    QDirIterator it(
+        _directory_path,
+        QDir::NoDotAndDotDot | QDir::CaseSensitive | QDir::Dirs | QDir::Files | QDir::NoSymLinks);
+    while(it.hasNext())
     {
+        it.next();
+        QFileInfo entry = it.fileInfo();
         if(entry.isFile())
-            uploadFileImpl(entry.absoluteFilePath(), vmc_dir, _tracker);
+            uploadFileImpl(entry.absoluteFilePath(), vmc_dir, _progress_dialog);
         else if(entry.isDir())
-            uploadDirectoryImpl(entry.absoluteFilePath(), vmc_dir, _tracker);
+            uploadDirectoryImpl(entry.absoluteFilePath(), vmc_dir, _progress_dialog);
     }
-}
-
-void VmcDetailsActivity::uploadFileImpl(
-    const QString & _file_path,
-    const MemoryCard::Path & _dest_dir,
-    MemoryCard::FileTransferProgressTracker * _tracker)
-{
-    QFile file(_file_path);
-    openFile(file, QIODevice::ReadOnly);
-    QByteArray content = file.readAll();
-    mp_vmc_fs->writeFile(_dest_dir + encodePath(QFileInfo(file).fileName()), content, _tracker);
 }
 
 void VmcDetailsActivity::uploadDirectory()
 {
-    handleErrors([this]
+    const QString directory_path = QFileDialog::getExistingDirectory(
+        this,
+        QString(),
+        Settings::instance().path(Settings::Directory::VmcImport));
+    if(directory_path.isEmpty())
+        return;
+    Settings::instance().setPath(Settings::Directory::VmcImport, directory_path);
+
+    int total_size = static_cast<int>(calculateTotalSize({ directory_path }));
+    VmcProgressDialog * progress_dialog = new VmcProgressDialog(VmcProgressDialog::Upload, this);
+    progress_dialog->setProgressRange(0, total_size);
+    progress_dialog->disableCancelation(true);
+
+    std::function<void()> lambda = [this, directory_path, progress_dialog]
     {
-        const QString directory_path = QFileDialog::getExistingDirectory(
-            this,
-            QString(),
-            Settings::instance().path(Settings::Directory::VmcImport));
-        if(directory_path.isEmpty())
-            return;
-        Settings::instance().setPath(Settings::Directory::VmcImport, directory_path);
-        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-        uploadDirectoryImpl(directory_path, vmc_current_dir, nullptr);
-    });
+        handleErrors([this, directory_path, progress_dialog]
+        {
+            const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+            uploadDirectoryImpl(directory_path, vmc_current_dir, *progress_dialog);
+        });
+    };
+    BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);
+    thread->setSpinnerDisplayTimeout(0);
+    connect(thread, &BusySmartThread::finished, thread, &QObject::deleteLater);
+    connect(
+        thread,
+        &BusySmartThread::exception,
+        [](const QString & __message) { Application::showErrorMessage(__message); });
+    thread->start();
 }
 
 void VmcDetailsActivity::handleErrors(std::function<void()> _lambda)

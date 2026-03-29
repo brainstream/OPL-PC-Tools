@@ -145,6 +145,11 @@ public:
     {
     }
 
+    void setProgress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta)
+    {
+        emit progress(_total_bytes, _done_bytes, _delta);
+    }
+
 signals:
     void progress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta);
 };

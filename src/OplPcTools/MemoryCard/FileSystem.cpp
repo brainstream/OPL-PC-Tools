@@ -457,8 +457,10 @@ void FileSystem::writeFile(
             std::memcpy(buffer.data(), &_data.data()[offset], length);
             writeCluster(cluster, false, buffer.data());
             ++chunk_idx;
-            if(_tracker)
-                emit _tracker->progress(_data.length(), offset + length, length);
+            if(!_is_directory && _tracker)
+            {
+                _tracker->setProgress(_data.length(), offset + length, length);
+            }
         }
     }
 }
@@ -575,6 +577,8 @@ std::optional<QList<uint32_t>> FileSystem::alloc(uint32_t _allocation_size)
     qsizetype cluster_count = _allocation_size / mp_info->cluster_size;
     if(_allocation_size % mp_info->cluster_size)
         ++cluster_count;
+    if(cluster_count == 0)
+        cluster_count = 1;
 
     std::optional<QList<uint32_t>> result = m_fat.findFreeClusters(cluster_count);
     if(!result)

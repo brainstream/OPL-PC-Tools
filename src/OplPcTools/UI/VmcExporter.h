@@ -44,12 +44,12 @@ public:
 
 private:
     void setAnswer(bool _answer);
-    void exportDirectory(
+    bool exportDirectory(
         MemoryCard::FileSystem & _fs,
         const StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_dir,
         const QString & _dest_directory);
-    void exportFile(
+    bool exportFile(
         MemoryCard::FileSystem & _fs,
         const StringConverter & _string_converter,
         const MemoryCard::Path & _vmc_file,
@@ -63,7 +63,6 @@ private:
 
 private:
     std::optional<bool> m_default_answer;
-    Action m_action;
     const Vmc & mr_vmc;
     const StringConverter & mr_string_converter;
     const QList<MemoryCard::Path> & mr_sources;

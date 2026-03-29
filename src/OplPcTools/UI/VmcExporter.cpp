@@ -33,7 +33,6 @@ VmcExporter::VmcExporter(
     const QList<MemoryCard::Path> & _sources,
     const QString & _destination_dir
 ) :
-    m_action(Action::Skip),
     mr_vmc(_vmc),
     mr_string_converter(_string_converter),
     mr_sources(_sources),
@@ -43,17 +42,18 @@ VmcExporter::VmcExporter(
 
 void VmcExporter::run()
 {
-    m_action = Action::Skip;
     std::unique_ptr<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(mr_vmc.filepath(), nullptr));
     fs->load();
     foreach(const MemoryCard::Path & source, mr_sources)
     {
         if(std::optional<MemoryCard::EntryInfo> entry = fs->entry(source))
         {
-            if(entry->isDirectory())
-                exportDirectory(*fs, mr_string_converter, MemoryCard::Path::root(), m_destination_dir);
-            else
-                exportFile(*fs, mr_string_converter, source, m_destination_dir);
+            if(!(entry->isDirectory()
+                      ? exportDirectory(*fs, mr_string_converter, MemoryCard::Path::root(), m_destination_dir)
+                      : exportFile(*fs, mr_string_converter, source, m_destination_dir)))
+            {
+                return;
+            }
         }
         else
         {
@@ -62,14 +62,12 @@ void VmcExporter::run()
     }
 }
 
-void VmcExporter::exportDirectory(
+bool VmcExporter::exportDirectory(
     MemoryCard::FileSystem & _fs,
     const StringConverter & _string_converter,
     const MemoryCard::Path & _vmc_dir,
     const QString & _dest_directory)
 {
-    if(m_action == Action::Cancel)
-        return;
     QDir dir(_dest_directory);
     if(!dir.exists() && !QDir().mkpath(dir.path()))
         throw Exception(QObject::tr("Unable to create directory \"%1\"").arg(dir.path()));
@@ -80,18 +78,19 @@ void VmcExporter::exportDirectory(
         if(entry.isDirectory())
         {
             QString next_directory = dir.absoluteFilePath(entry.name());
-            exportDirectory(_fs, _string_converter, next_vmc_entry, next_directory);
+            if(!exportDirectory(_fs, _string_converter, next_vmc_entry, next_directory))
+                return false;
         }
         else
         {
-            exportFile(_fs, _string_converter, next_vmc_entry, _dest_directory);
-            if(m_action == Action::Cancel)
-                break;
+            if(!exportFile(_fs, _string_converter, next_vmc_entry, _dest_directory))
+                return false;
         }
     }
+    return true;
 }
 
-void VmcExporter::exportFile(
+bool VmcExporter::exportFile(
     MemoryCard::FileSystem & _fs,
     const StringConverter & _string_converter,
     const MemoryCard::Path & _vmc_file,
@@ -101,18 +100,27 @@ void VmcExporter::exportFile(
     if(!file)
         throw MemoryCard::MemoryCardFileException(QObject::tr("Unable to open VMC file"), _vmc_file.path());
     QFile out(QDir(_dest_directory).absoluteFilePath(_string_converter.decode(file->name())));
-    if(
-        !out.exists() ||
-        Action::Overwrite == getAction(
-            QObject::tr("The file \"%1\" exists. Do you want to overwrite it?").arg(out.fileName())))
+
+    if(out.exists())
     {
-        char * buffer = new char[file->size()];
-        int64_t size = file->read(buffer, file->size());
-        openFile(out, QIODevice::Truncate | QIODevice::WriteOnly);
-        if(size > 0)
-            out.write(buffer, size);
-        delete [] buffer;
+        switch(getAction(QObject::tr("The file \"%1\" exists. Do you want to overwrite it?").arg(out.fileName())))
+        {
+        case Action::Skip:
+        case Action::Cancel:
+            return false;
+        case Action::Overwrite:
+            break;
+        }
     }
+
+    char * buffer = new char[file->size()];
+    int64_t size = file->read(buffer, file->size());
+    openFile(out, QIODevice::Truncate | QIODevice::WriteOnly);
+    if(size > 0)
+        out.write(buffer, size);
+    delete [] buffer;
+
+    return true;
 }
 
 VmcExporter::Action VmcExporter::getAction(const QString & _question)

@@ -697,7 +697,6 @@ void VmcDetailsActivity::download()
 
     std::function<void()> lambda = [this, paths, directory_path]
     {
-        QThread::msleep(100);
         VmcExporter * exportert = new VmcExporter(mr_vmc, mp_model->stringConverter(), paths, directory_path);
         handleErrors([exportert] { exportert->run(); });
         delete exportert;

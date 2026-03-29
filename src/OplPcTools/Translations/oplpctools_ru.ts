@@ -989,22 +989,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="745"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="744"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="746"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="745"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="747"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="746"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="748"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="747"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1250,22 +1250,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="75"/>
+        <location filename="../UI/VmcExporter.cpp" line="73"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Не могу создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="102"/>
+        <location filename="../UI/VmcExporter.cpp" line="101"/>
         <source>Unable to open VMC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="107"/>
+        <location filename="../UI/VmcExporter.cpp" line="106"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation type="unfinished">Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="127"/>
+        <location filename="../UI/VmcExporter.cpp" line="135"/>
         <source>Overwrite confirmation</source>
         <translation type="unfinished">Подтверждение перезаписи</translation>
     </message>

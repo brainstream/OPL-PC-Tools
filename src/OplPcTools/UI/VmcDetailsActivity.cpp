@@ -154,7 +154,7 @@ private:
 class VmcProgressDialog : public ProgressDialog
 {
 public:
-    enum Action { Upload };
+    enum Action { Upload, Delete };
 
     explicit VmcProgressDialog(Action _action, QWidget * _parent) :
         ProgressDialog(_parent),
@@ -164,6 +164,9 @@ public:
         {
         case Upload:
             setWindowTitle(tr("Uploading"));
+            break;
+        case Delete:
+            setWindowTitle(tr("Deleting"));
             break;
         default:
             break;
@@ -818,13 +821,14 @@ void VmcDetailsActivity::download()
 
 void VmcDetailsActivity::deleteEntry()
 {
-    handleErrors([this]
+    QList<QByteArray> entries;
+    const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+
+    handleErrors([this, &entries]
     {
-        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
 
         Settings & settings = Settings::instance();
-        QList<QByteArray> entries;
         entries.reserve(selection.count());
         foreach(const QModelIndex & index, selection)
         {
@@ -862,7 +866,23 @@ void VmcDetailsActivity::deleteEntry()
                 settings.setConfirmVmcFileDeletion(false);
         }
 
-        foreach(const QByteArray & entry, entries)
-            mp_vmc_fs->remove(vmc_current_dir + entry);
     });
+
+    VmcProgressDialog * progress_dialog = new VmcProgressDialog(VmcProgressDialog::Delete, this);
+    progress_dialog->setProgressRange(0, entries.count());
+    progress_dialog->disableCancelation(true);
+    std::function<void()> lambda = [this, vmc_current_dir, entries, progress_dialog]()
+    {
+        int progress = 0;
+        foreach(const QByteArray & entry, entries)
+        {
+            progress_dialog->setProgressLabelText(decodePath(entry));
+            mp_vmc_fs->remove(vmc_current_dir + entry);
+            progress_dialog->setProgressValue(++progress);
+        }
+    };
+    BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);
+    thread->setSpinnerDisplayTimeout(0);
+    connect(thread, &BusySmartThread::finished, thread, &QObject::deleteLater);
+    thread->start();
 }

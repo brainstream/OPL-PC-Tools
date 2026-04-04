@@ -41,3 +41,6 @@ With OPL PC Tools you can:
 ![OPL PC Tools VMC creation](screenshots/VmcCreation.png)
 
 ![OPL PC Tools VMC explorer](screenshots/VmcExplorer.png)
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/brainstream/OPL-PC-Tools.svg?variant=adaptive)](https://starchart.cc/brainstream/OPL-PC-Tools)

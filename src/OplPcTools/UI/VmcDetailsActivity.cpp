@@ -614,7 +614,7 @@ void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)
 
     std::function<void()> lambda = [this, paths, progress_dialog]
     {
-        handleErrors([this, &paths, progress_dialog]
+        handleErrors([&, this]
         {
             MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
             foreach(const QString & path, paths)
@@ -663,7 +663,7 @@ void VmcDetailsActivity::uploadFiles()
 
     std::function<void()> lambda = [this, filenames, progress_dialog]
     {
-        handleErrors([this, filenames, progress_dialog]
+        handleErrors([&, this]
         {
             const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
             foreach(const QString & filename, filenames)
@@ -737,7 +737,7 @@ void VmcDetailsActivity::uploadDirectory()
 
     std::function<void()> lambda = [this, directory_path, progress_dialog]
     {
-        handleErrors([this, directory_path, progress_dialog]
+        handleErrors([&, this]
         {
             const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
             uploadDirectoryImpl(directory_path, vmc_current_dir, *progress_dialog);
@@ -873,13 +873,16 @@ void VmcDetailsActivity::deleteEntry()
     progress_dialog->disableCancelation(true);
     std::function<void()> lambda = [this, vmc_current_dir, entries, progress_dialog]()
     {
-        int progress = 0;
-        foreach(const QByteArray & entry, entries)
+        handleErrors([&, this]
         {
-            progress_dialog->setProgressLabelText(decodePath(entry));
-            mp_vmc_fs->remove(vmc_current_dir + entry);
-            progress_dialog->setProgressValue(++progress);
-        }
+            int progress = 0;
+            foreach(const QByteArray & entry, entries)
+            {
+                progress_dialog->setProgressLabelText(decodePath(entry));
+                mp_vmc_fs->remove(vmc_current_dir + entry);
+                progress_dialog->setProgressValue(++progress);
+            }
+        });
     };
     BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);
     thread->setSpinnerDisplayTimeout(0);

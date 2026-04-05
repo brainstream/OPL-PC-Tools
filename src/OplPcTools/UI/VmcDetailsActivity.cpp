@@ -570,28 +570,34 @@ void VmcDetailsActivity::showTreeContextMenu(const QPoint & _point)
 
 void VmcDetailsActivity::createDirectory()
 {
-    VmcFileNameDialog dlg(this);
-    dlg.setTitle(true);
-    if(dlg.exec() != QDialog::Accepted)
-        return;
-    const MemoryCard::Path vmc_current_dir = encodePath(mp_edit_fs_path->text());
-    mp_vmc_fs->createDirectory(vmc_current_dir + encodePath(dlg.currentFilename()));
+    handleErrors([this]
+    {
+        VmcFileNameDialog dlg(this);
+        dlg.setTitle(true);
+        if(dlg.exec() != QDialog::Accepted)
+            return;
+        const MemoryCard::Path vmc_current_dir = encodePath(mp_edit_fs_path->text());
+        mp_vmc_fs->createDirectory(vmc_current_dir + encodePath(dlg.currentFilename()));
+    });
 }
 
 void VmcDetailsActivity::renameEntry()
 {
-    const MemoryCard::EntryInfo * entry = mp_model->item(mp_tree_fs->currentIndex());
-    if(!entry)
-        return;
+    handleErrors([this]
+    {
+        const MemoryCard::EntryInfo * entry = mp_model->item(mp_tree_fs->currentIndex());
+        if(!entry)
+            return;
 
-    VmcFileNameDialog dlg(this);
-    dlg.setTitle(entry->isDirectory());
-    dlg.setCurrentFilename(decodePath(entry->name()));
-    if(dlg.exec() != QDialog::Accepted)
-        return;
+        VmcFileNameDialog dlg(this);
+        dlg.setTitle(entry->isDirectory());
+        dlg.setCurrentFilename(decodePath(entry->name()));
+        if(dlg.exec() != QDialog::Accepted)
+            return;
 
-    const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-    mp_vmc_fs->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
+        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+        mp_vmc_fs->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
+    });
 }
 
 void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)

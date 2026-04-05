@@ -643,6 +643,24 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::MemoryCard::FileSystem</name>
+    <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="530"/>
+        <source>The entry name must not be empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="535"/>
+        <source>The entry name &quot;%1&quot; is too long, the maximum length is %2 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="542"/>
+        <source>The entry name must not contain following symbols: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::Application</name>
     <message>
         <location filename="../UI/Application.cpp" line="151"/>
@@ -984,22 +1002,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="855"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="861"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="856"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="862"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="857"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="863"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="858"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="864"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1312,27 +1330,27 @@
         <translation>Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="33"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="34"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>VMC повреждена или имеет некорректный формат</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="38"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="39"/>
         <source>Path not found</source>
         <translation>Путь не найден</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="43"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="44"/>
         <source>Not enough free space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="345"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="346"/>
         <source>The entry is not a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="429"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="430"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1342,7 +1360,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="343"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="344"/>
         <source>File not found</source>
         <translation>Файл не найден</translation>
     </message>

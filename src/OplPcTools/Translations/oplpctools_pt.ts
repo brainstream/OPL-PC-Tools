@@ -643,6 +643,24 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::MemoryCard::FileSystem</name>
+    <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="530"/>
+        <source>The entry name must not be empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="535"/>
+        <source>The entry name &quot;%1&quot; is too long, the maximum length is %2 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MemoryCard/FileSystem.cpp" line="542"/>
+        <source>The entry name must not contain following symbols: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::Application</name>
     <message>
         <location filename="../UI/Application.cpp" line="151"/>
@@ -984,22 +1002,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="855"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="861"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="856"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="862"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="857"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="863"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="858"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="864"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1312,27 +1330,27 @@
         <translation>O tamanho do VMC deve estar entre %1 MiB e %2 MiB</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="33"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="34"/>
         <source>The VMC is corrupted or not formatted correctly</source>
         <translation>O VMC está corrompido ou não foi formatado corretamente</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="38"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="39"/>
         <source>Path not found</source>
         <translation>Local não encontrado</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="43"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="44"/>
         <source>Not enough free space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="345"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="346"/>
         <source>The entry is not a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="429"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="430"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1342,7 +1360,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="343"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="344"/>
         <source>File not found</source>
         <translation>Arquivo não encontrado</translation>
     </message>

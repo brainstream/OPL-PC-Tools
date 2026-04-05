@@ -205,6 +205,7 @@ private:
         bool _is_directory,
         FileTransferProgressTracker * _tracker);
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
+    void validateEntryName(const QByteArray & _name);
     void changeEntryLength(const EntryAddress & _address, int8_t _amount);
     void writeFATEntry(uint32_t _cluster, FATEntry _entry);
     bool findFreeEntry(const QList<uint32_t> & _parent_clusters, EntrySearchResult & _result);

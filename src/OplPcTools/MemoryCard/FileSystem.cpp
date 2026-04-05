@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/MemoryCard/FileSystem.h>
+#include <OplPcTools/MemoryCard/FSEntryNameValidator.h>
 #include <OplPcTools/File.h>
 #include <QRegularExpression>
 
@@ -467,6 +468,7 @@ void FileSystem::writeFile(
 
 bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
 {
+    validateEntryName(_entry.name());
     QList<uint32_t> parent_dir_clusters = getEntryClusters(_parent.entry);
 
     EntrySearchResult parent_free_entry = {};
@@ -519,6 +521,26 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
     changeEntryLength(_parent.address, 1);
 
     return true;
+}
+
+void FileSystem::validateEntryName(const QByteArray & _name)
+{
+    if(_name.isEmpty())
+    {
+        throw MemoryCardFileSystemException(tr("The entry name must not be empty"));
+    }
+    if(static_cast<size_t>(_name.length()) > g_max_entry_name_length)
+    {
+        throw MemoryCardFileSystemException(
+            tr("The entry name \"%1\" is too long, the maximum length is %2 bytes")
+                .arg(_name)
+                .arg(g_max_entry_name_length));
+    }
+    if(!isEntryNameValid(_name))
+    {
+        throw MemoryCardFileSystemException(
+            tr("The entry name must not contain following symbols: %1").arg(g_entry_name_forbidden_characters));
+    }
 }
 
 void FileSystem::changeEntryLength(const EntryAddress & _address, int8_t _amount)
@@ -646,6 +668,7 @@ void FileSystem::eraseEntriesRecursive(const EntryPath & _path)
 
 void FileSystem::rename(const Path & _path, const QByteArray & _new_name)
 {
+    validateEntryName(_new_name);
     std::optional<EntryPath> entry_path = resolvePath(_path);
     if(!entry_path)
         throwPathNotFound(_path);

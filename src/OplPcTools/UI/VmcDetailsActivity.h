@@ -30,7 +30,7 @@ namespace UI {
 
 
 class VmcFileSystemViewModel;
-class VmcProgressDialog;
+struct VmcEntryUploadControls;
 
 class VmcDetailsActivity : public Activity, private Ui::VmcDetailsActivity
 {
@@ -64,15 +64,15 @@ private:
     void renameEntry();
     void uploadDroppedData(const QMimeData & _data);
     void uploadFiles();
-    void uploadFileImpl(
+    bool uploadFileImpl(
         const QString & _file_path,
         const MemoryCard::Path & _dest_dir,
-        VmcProgressDialog & _progress_dialog);
+        VmcEntryUploadControls & _ctrl);
     void uploadDirectory();
-    void uploadDirectoryImpl(
+    bool uploadDirectoryImpl(
         const QString & _directory_path,
         const MemoryCard::Path & _dest_dir,
-        VmcProgressDialog & _progress_dialog);
+        VmcEntryUploadControls & _ctrl);
     void download();
     void deleteEntry();
 

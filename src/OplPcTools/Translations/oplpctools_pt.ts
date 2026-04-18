@@ -977,47 +977,57 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="430"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="519"/>
         <source>An unknown error has occurred</source>
         <translation>Um erro desconhecido aconteceu</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="377"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="466"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="377"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="466"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="501"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="590"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="564"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="653"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="861"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="674"/>
+        <source>Unable to create directory &quot;%1&quot;, a file or directory with the same name already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="700"/>
+        <source>Unable to rename &quot;%1&quot; to &quot;%2&quot;, a file or directory with the same name already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1029"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="862"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1030"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="863"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1031"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="864"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1032"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1092,19 +1102,6 @@
     <message>
         <source>Select directory</source>
         <translation type="vanished">Selecione a pasta</translation>
-    </message>
-</context>
-<context>
-    <name>OplPcTools::UI::VmcProgressDialog</name>
-    <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="166"/>
-        <source>Uploading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="169"/>
-        <source>Deleting</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1320,7 +1317,29 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="290"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="237"/>
+        <source>Target exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="247"/>
+        <source>Unable to overwrite the target directory with file &quot;%1&quot;
+Want to skip it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="248"/>
+        <source>Unable to overwrite the target file with directory &quot;%1&quot;
+Want to skip it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
+        <source>The target file &quot;%1&quot; already exists. Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="379"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;pasta&gt;</translation>
     </message>
@@ -1687,6 +1706,19 @@
     <message>
         <source>Export</source>
         <translation type="vanished">Exportar</translation>
+    </message>
+</context>
+<context>
+    <name>VmcProgressDialog</name>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="142"/>
+        <source>Uploading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="145"/>
+        <source>Deleting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

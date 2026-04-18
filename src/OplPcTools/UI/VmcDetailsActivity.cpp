@@ -102,6 +102,71 @@ qint64 calculateTotalSize(const QStringList & _paths)
     return total;
 }
 
+class EntryNameConflictResolver final
+{
+    Q_DISABLE_COPY_MOVE(EntryNameConflictResolver)
+
+public:
+    enum class Action
+    {
+        Cancel,
+        Override,
+        Skip
+    };
+
+    explicit EntryNameConflictResolver(const StringConverter & _converter) :
+        mr_converter(_converter)
+    {
+    }
+
+    Action resolve(const MemoryCard::Path & _target_path, bool _is_target_directory, bool _is_source_directory);
+
+private:
+    const StringConverter & mr_converter;
+    std::optional<Action> m_file_implicit_action;
+    std::optional<Action> m_directory_implicit_action;
+};
+
+class VmcProgressDialog : public ProgressDialog
+{
+public:
+    enum Action { Upload, Delete };
+
+    explicit VmcProgressDialog(Action _action, QWidget * _parent) :
+        ProgressDialog(_parent),
+        m_tracker(_parent)
+    {
+        switch(_action)
+        {
+        case Upload:
+            setWindowTitle(tr("Uploading"));
+            break;
+        case Delete:
+            setWindowTitle(tr("Deleting"));
+            break;
+        default:
+            break;
+        }
+
+        connect(&m_tracker, &MemoryCard::FileTransferProgressTracker::progress, this, &VmcProgressDialog::updateProgress);
+    }
+
+    MemoryCard::FileTransferProgressTracker & tracker()
+    {
+        return m_tracker;
+    }
+
+private:
+    void updateProgress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta)
+    {
+        Q_UNUSED(_total_bytes)
+        Q_UNUSED(_done_bytes)
+        setProgressValue(progressValue() + static_cast<int>(_delta));
+    }
+
+private:
+    MemoryCard::FileTransferProgressTracker m_tracker;
+};
 
 } // namespace
 
@@ -151,48 +216,72 @@ private:
     Qt::SortOrder m_sort_order;
 };
 
-class VmcProgressDialog : public ProgressDialog
+struct VmcEntryUploadControls
 {
-public:
-    enum Action { Upload, Delete };
-
-    explicit VmcProgressDialog(Action _action, QWidget * _parent) :
-        ProgressDialog(_parent),
-        m_tracker(_parent)
-    {
-        switch(_action)
-        {
-        case Upload:
-            setWindowTitle(tr("Uploading"));
-            break;
-        case Delete:
-            setWindowTitle(tr("Deleting"));
-            break;
-        default:
-            break;
-        }
-
-        connect(&m_tracker, &MemoryCard::FileTransferProgressTracker::progress, this, &VmcProgressDialog::updateProgress);
-    }
-
-    MemoryCard::FileTransferProgressTracker & tracker()
-    {
-        return m_tracker;
-    }
-
-private:
-    void updateProgress(qsizetype _total_bytes, qsizetype _done_bytes, qsizetype _delta)
-    {
-        Q_UNUSED(_total_bytes)
-        Q_UNUSED(_done_bytes)
-        setProgressValue(progressValue() + static_cast<int>(_delta));
-    }
-
-private:
-    MemoryCard::FileTransferProgressTracker m_tracker;
+    VmcProgressDialog * progress_dialog;
+    std::unique_ptr<EntryNameConflictResolver> conflict_resolver;
 };
 
 } // namespace OplPcTools::UI
+
+EntryNameConflictResolver::Action EntryNameConflictResolver::resolve(
+    const MemoryCard::Path & _target_path,
+    bool _is_target_directory,
+    bool _is_source_directory)
+{
+    if(_is_target_directory && _is_source_directory)
+    {
+        return Action::Skip;
+    }
+
+    const QString dialog_title = QObject::tr("Target exists");
+    const QString entry_name = mr_converter.decode(_target_path);
+
+    if(_is_target_directory != _is_source_directory)
+    {
+        if(m_directory_implicit_action)
+            return *m_directory_implicit_action;
+        QMessageBox::StandardButton answer = Application::askQuestion(
+            dialog_title,
+            _is_target_directory
+                ? QObject::tr("Unable to overwrite the target directory with file \"%1\"\nWant to skip it?").arg(entry_name)
+                : QObject::tr("Unable to overwrite the target file with directory \"%1\"\nWant to skip it?").arg(entry_name),
+            QMessageBox::YesToAll | QMessageBox::Yes | QMessageBox::Cancel);
+        switch(answer)
+        {
+        case QMessageBox::Yes:
+            return Action::Skip;
+        case QMessageBox::YesToAll:
+            m_directory_implicit_action = Action::Skip;
+            return Action::Skip;
+        default:
+            return Action::Cancel;
+        }
+    }
+
+    if(m_file_implicit_action)
+        return *m_file_implicit_action;
+
+    QMessageBox::StandardButton answer = Application::askQuestion(
+        dialog_title,
+        QObject::tr("The target file \"%1\" already exists. Do you want to overwrite it?").arg(entry_name),
+        QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    switch(answer)
+    {
+    case QMessageBox::Yes:
+        return Action::Override;
+    case QMessageBox::No:
+        return Action::Skip;
+    case QMessageBox::YesToAll:
+        m_file_implicit_action = Action::Override;
+        return Action::Override;
+    case QMessageBox::NoToAll:
+        m_file_implicit_action = Action::Skip;
+        return Action::Skip;
+    default:
+        return Action::Cancel;
+    }
+}
 
 VmcFileSystemViewModel::VmcFileSystemViewModel(const QString & _encoding, QObject * _parent /*= nullptr*/) :
     QAbstractItemModel(_parent),
@@ -575,9 +664,17 @@ void VmcDetailsActivity::createDirectory()
         VmcFileNameDialog dlg(this);
         dlg.setTitle(true);
         if(dlg.exec() != QDialog::Accepted)
+        {
             return;
-        const MemoryCard::Path vmc_current_dir = encodePath(mp_edit_fs_path->text());
-        mp_vmc_fs->createDirectory(vmc_current_dir + encodePath(dlg.currentFilename()));
+        }
+        const MemoryCard::Path path = encodePath(mp_edit_fs_path->text()) + encodePath(dlg.currentFilename());
+        if(mp_vmc_fs->entry(path))
+        {
+            throw ValidationException(
+                tr("Unable to create directory \"%1\", a file or directory with the same name already exists")
+                .arg(dlg.currentFilename()));
+        }
+        mp_vmc_fs->createDirectory(path);
     });
 }
 
@@ -587,16 +684,23 @@ void VmcDetailsActivity::renameEntry()
     {
         const MemoryCard::EntryInfo * entry = mp_model->item(mp_tree_fs->currentIndex());
         if(!entry)
+        {
             return;
-
+        }
         VmcFileNameDialog dlg(this);
         dlg.setTitle(entry->isDirectory());
-        dlg.setCurrentFilename(decodePath(entry->name()));
-        if(dlg.exec() != QDialog::Accepted)
+        const QString prev_entry_name = decodePath(entry->name());
+        dlg.setCurrentFilename(prev_entry_name);
+        if(dlg.exec() != QDialog::Accepted || prev_entry_name == dlg.currentFilename())
             return;
-
-        const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-        mp_vmc_fs->rename(vmc_current_dir + encodePath(entry->name()), encodePath(dlg.currentFilename()));
+        const QByteArray new_name = encodePath(dlg.currentFilename());
+        if(mp_vmc_fs->entry(encodePath(mp_edit_fs_path->text()) + new_name))
+        {
+            throw ValidationException(
+                tr("Unable to rename \"%1\" to \"%2\", a file or directory with the same name already exists")
+                .arg(prev_entry_name, dlg.currentFilename()));
+        }
+        mp_vmc_fs->rename(encodePath(mp_edit_fs_path->text()) + entry->name(), new_name);
     });
 }
 
@@ -623,15 +727,26 @@ void VmcDetailsActivity::uploadDroppedData(const QMimeData & _data)
         handleErrors([&, this]
         {
             MemoryCard::Path vmc_destination_dir(encodePath(mp_edit_fs_path->text()));
+            VmcEntryUploadControls ctrl =
+            {
+                .progress_dialog = progress_dialog,
+                .conflict_resolver = std::make_unique<EntryNameConflictResolver>(mp_model->stringConverter())
+            };
             foreach(const QString & path, paths)
             {
                 QFileInfo fi(path);
                 if(!fi.exists())
                     continue;
                 else if(fi.isDir())
-                    uploadDirectoryImpl(fi.absoluteFilePath(), vmc_destination_dir, *progress_dialog);
+                {
+                    if(!uploadDirectoryImpl(fi.absoluteFilePath(), vmc_destination_dir, ctrl))
+                        break;
+                }
                 else if(fi.isFile())
-                    uploadFileImpl(fi.absoluteFilePath(), vmc_destination_dir, *progress_dialog);
+                {
+                    if(!uploadFileImpl(fi.absoluteFilePath(), vmc_destination_dir, ctrl))
+                        break;
+                }
             }
         });
     };
@@ -672,9 +787,15 @@ void VmcDetailsActivity::uploadFiles()
         handleErrors([&, this]
         {
             const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+            VmcEntryUploadControls ctrl
+            {
+                .progress_dialog = progress_dialog,
+                .conflict_resolver = std::make_unique<EntryNameConflictResolver>(mp_model->stringConverter())
+            };
             foreach(const QString & filename, filenames)
             {
-                uploadFileImpl(filename, vmc_current_dir, *progress_dialog);
+                if(!uploadFileImpl(filename, vmc_current_dir, ctrl))
+                    break;
             }
         });
     };
@@ -688,29 +809,64 @@ void VmcDetailsActivity::uploadFiles()
     thread->start();
 }
 
-void VmcDetailsActivity::uploadFileImpl(
+bool VmcDetailsActivity::uploadFileImpl(
     const QString & _file_path,
     const MemoryCard::Path & _dest_dir,
-    VmcProgressDialog & _progress_dialog)
+    VmcEntryUploadControls & _ctrl)
 {
     QFile file(_file_path);
+    const MemoryCard::Path dest_path = _dest_dir + encodePath(QFileInfo(file).fileName());
+    std::optional<MemoryCard::EntryInfo> existent_dest_entry = mp_vmc_fs->entry(dest_path);
+    if(existent_dest_entry)
+    {
+        EntryNameConflictResolver::Action action = _ctrl.conflict_resolver->resolve(
+            dest_path,
+            existent_dest_entry->isDirectory(),
+            false);
+        switch(action)
+        {
+        case EntryNameConflictResolver::Action::Cancel:
+            return false;
+        case EntryNameConflictResolver::Action::Skip:
+            return true;
+        case EntryNameConflictResolver::Action::Override:
+            mp_vmc_fs->remove(dest_path);
+            break;
+        }
+    }
     openFile(file, QIODevice::ReadOnly);
     QByteArray content = file.readAll();
-    _progress_dialog.setProgressLabelText(_file_path);
-    mp_vmc_fs->writeFile(_dest_dir + encodePath(QFileInfo(file).fileName()), content, &_progress_dialog.tracker());
+    _ctrl.progress_dialog->setProgressLabelText(_file_path);
+    mp_vmc_fs->writeFile(dest_path, content, &_ctrl.progress_dialog->tracker());
+    return true;
 }
 
-void VmcDetailsActivity::uploadDirectoryImpl(
+bool VmcDetailsActivity::uploadDirectoryImpl(
     const QString & _directory_path,
     const MemoryCard::Path & _dest_dir,
-    VmcProgressDialog & _progress_dialog)
+    VmcEntryUploadControls & _ctrl)
 {
     QDir directory(_directory_path);
     if(!directory.exists())
-        return;
+        return true;
 
     const MemoryCard::Path vmc_dir(_dest_dir, encodePath(directory.dirName()));
-    mp_vmc_fs->createDirectory(vmc_dir);
+    std::optional<MemoryCard::EntryInfo> existent_dest_entry = mp_vmc_fs->entry(vmc_dir);
+    if(existent_dest_entry)
+    {
+        if(!existent_dest_entry->isDirectory())
+        {
+            EntryNameConflictResolver::Action action = _ctrl.conflict_resolver->resolve(
+                vmc_dir,
+                existent_dest_entry->isDirectory(),
+                true);
+            return action == EntryNameConflictResolver::Action::Skip;
+        }
+    }
+    else
+    {
+        mp_vmc_fs->createDirectory(vmc_dir);
+    }
 
     QDirIterator it(
         _directory_path,
@@ -720,10 +876,17 @@ void VmcDetailsActivity::uploadDirectoryImpl(
         it.next();
         QFileInfo entry = it.fileInfo();
         if(entry.isFile())
-            uploadFileImpl(entry.absoluteFilePath(), vmc_dir, _progress_dialog);
+        {
+            if(!uploadFileImpl(entry.absoluteFilePath(), vmc_dir, _ctrl))
+                return false;
+        }
         else if(entry.isDir())
-            uploadDirectoryImpl(entry.absoluteFilePath(), vmc_dir, _progress_dialog);
+        {
+            if(!uploadDirectoryImpl(entry.absoluteFilePath(), vmc_dir, _ctrl))
+                return false;
+        }
     }
+    return true;
 }
 
 void VmcDetailsActivity::uploadDirectory()
@@ -745,8 +908,13 @@ void VmcDetailsActivity::uploadDirectory()
     {
         handleErrors([&, this]
         {
+            VmcEntryUploadControls ctrl =
+            {
+                .progress_dialog = progress_dialog,
+                .conflict_resolver = std::make_unique<EntryNameConflictResolver>(mp_model->stringConverter())
+            };
             const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
-            uploadDirectoryImpl(directory_path, vmc_current_dir, *progress_dialog);
+            uploadDirectoryImpl(directory_path, vmc_current_dir, ctrl);
         });
     };
     BusySmartThread * thread = new BusySmartThread(lambda, progress_dialog, this);

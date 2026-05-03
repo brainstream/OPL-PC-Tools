@@ -110,7 +110,7 @@ public:
     }
 
 private:
-    QList<QByteArray> split(const QByteArray & _path) const
+    static QList<QByteArray> split(const QByteArray & _path)
     {
         auto parts = _path.split(s_path_separator);
         // parts.removeAll(QByteArray()); // Cannot be used, Qt 5.14+

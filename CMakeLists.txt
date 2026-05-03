@@ -19,6 +19,8 @@
 cmake_minimum_required(VERSION 3.16)
 project("OPL PC Tools" LANGUAGES CXX)
 
+include(ExternalProject)
+
 message("CMake version: " ${CMAKE_VERSION})
 if(CMAKE_COMPILER_IS_GNUCXX)
     message("GNU g++ version: " ${CMAKE_CXX_COMPILER_VERSION})
@@ -126,6 +128,23 @@ if(WIN32)
 endif()
 
 #######################
+# lz4
+#######################
+
+ExternalProject_Add(ext_lz4
+    SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/lib"
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND "make"
+    INSTALL_COMMAND ""
+    BUILD_IN_SOURCE 1
+)
+add_library(lz4 STATIC IMPORTED GLOBAL)
+set_target_properties(lz4 PROPERTIES
+    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/lib/liblz4.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/lib"
+)
+
+#######################
 # Building
 #######################
 
@@ -134,6 +153,9 @@ if(WIN32)
 else()
     add_executable(${OPT_EXE_NAME} ${OPT_SRC} ${QM_FILES})
 endif()
+
+
+add_dependencies(${OPT_EXE_NAME} lz4)
 
 target_compile_options(${OPT_EXE_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
@@ -155,6 +177,7 @@ target_link_libraries(${OPT_EXE_NAME}
     ${QT_PREFIX}::Gui
     ${QT_PREFIX}::Widgets
     ${QT_PREFIX}::Network
+    lz4
 )
 
 add_custom_target(misc SOURCES

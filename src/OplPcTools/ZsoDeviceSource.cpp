@@ -201,6 +201,7 @@ qint64 ZsoDeviceSource::ZsoImage::read(QByteArray & _buffer)
         ++block_index;
         can_read_bytes = m_header.block_size;
         position_in_block = 0;
+        m_logical_offset += bytes_to_copy;
     } while(need_to_read > 0);
 
 
@@ -215,7 +216,12 @@ QByteArray ZsoDeviceSource::ZsoImage::readBlock(quint32 _index)
     if(m_cache.isValide() && m_cache.index == _index)
         return m_cache.data;
 
-    m_cache.data.reserve(m_header.block_size);
+    if(!m_file.seek(m_index[_index].address))
+        return QByteArray();
+
+    if(m_cache.data.size() < m_header.block_size)
+        m_cache.data.resize(m_header.block_size);
+
     m_cache.index = _index;
 
     if(m_index[_index].is_compressed)
@@ -234,11 +240,12 @@ QByteArray ZsoDeviceSource::ZsoImage::readBlock(quint32 _index)
             m_cache.reset();
             return m_cache.data;
         }
-        if(LZ4_decompress_safe(
-                compressed_data.constData(),
-                m_cache.data.data(),
-                compressed_size,
-                m_header.block_size) < 0)
+        const int decompressed_bytes = LZ4_decompress_safe(
+            compressed_data.constData(),
+            m_cache.data.data(),
+            compressed_size,
+            m_header.block_size);
+        if(decompressed_bytes < 0)
         {
             m_cache.reset();
             return m_cache.data;

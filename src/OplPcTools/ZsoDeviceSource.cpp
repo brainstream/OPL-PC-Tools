@@ -240,10 +240,11 @@ QByteArray ZsoDeviceSource::ZsoImage::readBlock(quint32 _index)
             m_cache.reset();
             return m_cache.data;
         }
-        const int decompressed_bytes = LZ4_decompress_safe(
+        const int decompressed_bytes = LZ4_decompress_safe_partial(
             compressed_data.constData(),
             m_cache.data.data(),
             compressed_size,
+            m_header.block_size,
             m_header.block_size);
         if(decompressed_bytes < 0)
         {

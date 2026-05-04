@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <OplPcTools/Device.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
+#include <OplPcTools/ZsoDeviceSource.h>
 #include <OplPcTools/BinCueDeviceSource.h>
 #include <OplPcTools/NrgDeviceSource.h>
 #include <OplPcTools/OpticalDriveDeviceSource.h>
@@ -51,6 +52,7 @@ enum
 
 const int g_progressbar_max_value = 1000;
 const char * g_iso_ext = ".iso";
+const char * g_zso_ext = ".zso";
 const char * g_bin_ext = ".bin";
 const char * g_nrg_ext = ".nrg";
 
@@ -381,8 +383,13 @@ void GameInstallerActivity::taskSelectionChanged()
 void GameInstallerActivity::addDiscImage()
 {
     Settings & settings = Settings::instance();
-    QString filter = tr("All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)")
-        .arg(g_iso_ext, g_bin_ext, g_nrg_ext);
+    QString filter = tr(
+        "All Supported Images (*%1 *%2 *%3 *%4);;"
+        "ISO Images (*%1);;"
+        "Compressed ISO Images (*%2);;"
+        "Bin Files (*%3);;"
+        "Nero Images (*%4)")
+        .arg(g_iso_ext, g_zso_ext, g_bin_ext, g_nrg_ext);
     QString iso_dir = settings.path(Settings::Directory::IsoSource);
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(files.isEmpty()) return;
@@ -406,6 +413,8 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
     QSharedPointer<DeviceSource> source;
     if(_file_path.endsWith(g_iso_ext, Qt::CaseInsensitive))
         source.reset(new Iso9660DeviceSource(_file_path));
+    if(_file_path.endsWith(g_zso_ext, Qt::CaseInsensitive))
+        source.reset(new ZsoDeviceSource(_file_path));
     else if(_file_path.endsWith(g_bin_ext, Qt::CaseInsensitive))
         source.reset(new BinCueDeviceSource(_file_path));
     else if(_file_path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
@@ -448,6 +457,7 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
         QString path = url.path();
         if(
             path.endsWith(g_iso_ext, Qt::CaseInsensitive) ||
+            path.endsWith(g_zso_ext, Qt::CaseInsensitive) ||
             path.endsWith(g_bin_ext, Qt::CaseInsensitive) ||
             path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
         {
@@ -465,6 +475,7 @@ void GameInstallerActivity::dropEvent(QDropEvent * _event)
         QString path = url.toLocalFile();
         if(
             path.endsWith(g_iso_ext, Qt::CaseInsensitive) ||
+            path.endsWith(g_zso_ext, Qt::CaseInsensitive) ||
             path.endsWith(g_bin_ext, Qt::CaseInsensitive) ||
             path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
         {

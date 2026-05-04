@@ -41,6 +41,8 @@ public:
     inline MediaType mediaType() const;
     inline void setPartCount(quint8 _count);
     inline quint8 partCount() const;
+    inline void setIsCompressed(bool _compressed);
+    inline bool isCompressed() const;
     inline GameInstallationType installationType() const;
 
 private:
@@ -49,6 +51,7 @@ private:
     QString m_title;
     MediaType m_media_type;
     quint8 m_part_count;
+    bool m_is_compressed;
     GameInstallationType m_installation_type;
 };
 
@@ -57,6 +60,7 @@ Game::Game(const QString & _id, GameInstallationType _type) :
     m_id(_id),
     m_media_type(MediaType::Unknown),
     m_part_count(1),
+    m_is_compressed(false),
     m_installation_type(_type)
 {
     m_title = QObject::tr("<Untitled>");
@@ -101,6 +105,16 @@ void Game::setPartCount(quint8 _count)
 quint8 Game::partCount() const
 {
     return m_part_count;
+}
+
+void Game::setIsCompressed(bool _compressed)
+{
+    m_is_compressed = _compressed;
+}
+
+bool Game::isCompressed() const
+{
+    return m_is_compressed;
 }
 
 GameInstallationType Game::installationType() const

@@ -18,6 +18,7 @@
 
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
+#include <OplPcTools/ZsoDeviceSource.h>
 #include <OplPcTools/Device.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
@@ -48,14 +49,21 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
     QDir base_directory(m_base_directory);
     if(!base_directory.cd(_media_type == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return;
-    foreach(const QString & iso, base_directory.entryList({ "*.iso" }))
+    foreach(const QString & iso, base_directory.entryList({ "*.iso", "*.zso" }))
     {
-        Device image(QSharedPointer<DeviceSource>(new Iso9660DeviceSource(base_directory.absoluteFilePath(iso))));
+        DeviceSource * device_source = nullptr;
+        bool is_compressed = QFileInfo(iso).suffix().compare("zso", Qt::CaseInsensitive) == 0;
+        if(is_compressed)
+            device_source = new ZsoDeviceSource(base_directory.absoluteFilePath(iso));
+        else
+            device_source = new Iso9660DeviceSource(base_directory.absoluteFilePath(iso));
+        Device image{QSharedPointer<DeviceSource>(device_source)};
         if(!image.init())
             continue;
         Game * game = createGame(image.gameId());
         game->setMediaType(_media_type);
         game->setPartCount(1);
+        game->setIsCompressed(is_compressed);
         QString title = QFileInfo(image.filepath()).fileName();
         title = title.left(title.lastIndexOf('.'));
         if(title.startsWith(image.gameId()))

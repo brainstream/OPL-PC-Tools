@@ -421,57 +421,62 @@
         <translation>Частей:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="517"/>
+        <location filename="../UI/GameListWidget.ui" line="491"/>
+        <source>Compressed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="537"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="520"/>
+        <location filename="../UI/GameListWidget.ui" line="540"/>
         <source>Edit game</source>
         <translation>Редактировать игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="532"/>
+        <location filename="../UI/GameListWidget.ui" line="552"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="535"/>
+        <location filename="../UI/GameListWidget.ui" line="555"/>
         <source>Delete game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="547"/>
+        <location filename="../UI/GameListWidget.ui" line="567"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="550"/>
+        <location filename="../UI/GameListWidget.ui" line="570"/>
         <source>Install game</source>
         <translation>Установить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="562"/>
+        <location filename="../UI/GameListWidget.ui" line="582"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="565"/>
+        <location filename="../UI/GameListWidget.ui" line="585"/>
         <source>Rename game</source>
         <translation>Переименовать игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="577"/>
+        <location filename="../UI/GameListWidget.ui" line="597"/>
         <source>Restore ISO</source>
         <translation>Восстановить ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="589"/>
+        <location filename="../UI/GameListWidget.ui" line="609"/>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="592"/>
+        <location filename="../UI/GameListWidget.ui" line="612"/>
         <source>Import game</source>
         <translation>Импорт игр</translation>
     </message>
@@ -822,32 +827,36 @@
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="384"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
-        <translation>Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
+        <translation type="vanished">Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="386"/>
+        <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="424"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="433"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="607"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="618"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="650"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="650"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -855,22 +864,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="372"/>
+        <location filename="../UI/GameListWidget.cpp" line="373"/>
         <source>Directory</source>
         <translation>Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="445"/>
+        <location filename="../UI/GameListWidget.cpp" line="446"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="446"/>
+        <location filename="../UI/GameListWidget.cpp" line="447"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="448"/>
+        <location filename="../UI/GameListWidget.cpp" line="449"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Вы уверены, что хотите удалить эту игру?</translation>
     </message>
@@ -1167,27 +1176,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="150"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -1243,7 +1252,7 @@
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
     <message>
-        <location filename="../Game.h" line="62"/>
+        <location filename="../Game.h" line="66"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Без названия&gt;</translation>
     </message>

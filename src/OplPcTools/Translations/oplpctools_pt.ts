@@ -421,57 +421,62 @@
         <translation>Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="517"/>
+        <location filename="../UI/GameListWidget.ui" line="491"/>
+        <source>Compressed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="537"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="520"/>
+        <location filename="../UI/GameListWidget.ui" line="540"/>
         <source>Edit game</source>
         <translation>Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="532"/>
+        <location filename="../UI/GameListWidget.ui" line="552"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="535"/>
+        <location filename="../UI/GameListWidget.ui" line="555"/>
         <source>Delete game</source>
         <translation>Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="547"/>
+        <location filename="../UI/GameListWidget.ui" line="567"/>
         <source>Install</source>
         <translation>Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="550"/>
+        <location filename="../UI/GameListWidget.ui" line="570"/>
         <source>Install game</source>
         <translation>Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="562"/>
+        <location filename="../UI/GameListWidget.ui" line="582"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="565"/>
+        <location filename="../UI/GameListWidget.ui" line="585"/>
         <source>Rename game</source>
         <translation>Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="577"/>
+        <location filename="../UI/GameListWidget.ui" line="597"/>
         <source>Restore ISO</source>
         <translation>Restaurar ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="589"/>
+        <location filename="../UI/GameListWidget.ui" line="609"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="592"/>
+        <location filename="../UI/GameListWidget.ui" line="612"/>
         <source>Import game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -822,32 +827,36 @@
 <context>
     <name>OplPcTools::UI::GameInstallerActivity</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="384"/>
         <source>All Supported Images (*%1 *%2 *%3);;ISO Images (*%1);;Bin Files (*%2);;Nero Images (*%3)</source>
-        <translation>Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
+        <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="386"/>
+        <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="424"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="433"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="607"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="618"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="650"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="650"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -855,22 +864,22 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="372"/>
+        <location filename="../UI/GameListWidget.cpp" line="373"/>
         <source>Directory</source>
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="445"/>
+        <location filename="../UI/GameListWidget.cpp" line="446"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="446"/>
+        <location filename="../UI/GameListWidget.cpp" line="447"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="448"/>
+        <location filename="../UI/GameListWidget.cpp" line="449"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
@@ -1167,27 +1176,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="150"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -1243,7 +1252,7 @@
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>
     <message>
-        <location filename="../Game.h" line="62"/>
+        <location filename="../Game.h" line="66"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Sem título&gt;</translation>
     </message>

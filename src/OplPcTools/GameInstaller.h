@@ -22,7 +22,7 @@
 #include <QObject>
 #include <QStringList>
 #include <OplPcTools/Game.h>
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 
 namespace OplPcTools {
 
@@ -31,7 +31,7 @@ class GameInstaller : public QObject
     Q_OBJECT
 
 public:
-    explicit GameInstaller(Device & _device, QObject * _parent = nullptr);
+    explicit GameInstaller(DeviceReader & _device, QObject * _parent = nullptr);
     bool install();
     virtual const Game * installedGame() const = 0;
 
@@ -47,7 +47,7 @@ protected:
     MediaType deviceMediaType() const;
 
 protected:
-    Device & mr_device;
+    DeviceReader & mr_device;
 };
 
 } // namespace OplPcTools

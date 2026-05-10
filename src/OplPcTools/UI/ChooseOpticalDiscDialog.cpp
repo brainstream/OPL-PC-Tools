@@ -30,7 +30,7 @@ namespace {
 struct DeviceDisplayData
 {
     QString name;
-    QSharedPointer<Device> device;
+    QSharedPointer<DeviceReader> device;
 };
 
 class DeviceListItem : public QTreeWidgetItem
@@ -38,7 +38,7 @@ class DeviceListItem : public QTreeWidgetItem
 public:
     DeviceListItem(QTreeWidget * _view, const DeviceDisplayData & _data);
     QVariant data(int _column, int _role) const;
-    inline QSharedPointer<Device> device() const;
+    inline QSharedPointer<DeviceReader> device() const;
 
 private:
     DeviceDisplayData m_data;
@@ -66,7 +66,7 @@ QVariant DeviceListItem::data(int _column, int _role) const
     return QTreeWidgetItem::data(_column, _role);
 }
 
-QSharedPointer<Device> DeviceListItem::device() const
+QSharedPointer<DeviceReader> DeviceListItem::device() const
 {
     return m_data.device;
 }
@@ -99,7 +99,7 @@ void InitializationThread::run()
         foreach(const DeviceName & device_name, devices)
         {
             DeviceDisplayData display_data;
-            display_data.device = QSharedPointer<Device>(new Device(
+            display_data.device = QSharedPointer<DeviceReader>(new DeviceReader(
                 QSharedPointer<DeviceSource>(new OpticalDriveDeviceSource(device_name.filename))));
             display_data.name = device_name.name;
             if(display_data.device->init())
@@ -159,7 +159,7 @@ ChooseOpticalDiscDialog::ChooseOpticalDiscDialog(QWidget * _parent /*= nullptr*/
     thread->start();
 }
 
-void ChooseOpticalDiscDialog::fixDeviceTitle(Device & _device) const
+void ChooseOpticalDiscDialog::fixDeviceTitle(DeviceReader & _device) const
 {
     QString title = _device.title();
     if(title.isEmpty())
@@ -190,9 +190,9 @@ void ChooseOpticalDiscDialog::deviceSelectionChanged()
     mp_button_box->button(QDialogButtonBox::Open)->setDisabled(mp_tree_devices->selectedItems().isEmpty());
 }
 
-QList<QSharedPointer<Device> > ChooseOpticalDiscDialog::devices() const
+QList<QSharedPointer<DeviceReader> > ChooseOpticalDiscDialog::devices() const
 {
-    QList<QSharedPointer<Device>> result;
+    QList<QSharedPointer<DeviceReader>> result;
     QModelIndexList indexes = mp_tree_devices->selectionModel()->selectedRows();
     foreach(const QModelIndex & index, indexes)
     {

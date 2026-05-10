@@ -18,7 +18,7 @@
 
 #ifdef __MACH__
 
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 
 QList<DeviceName> OplPcTools::loadDriveList()
 {

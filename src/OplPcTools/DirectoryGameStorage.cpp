@@ -19,7 +19,7 @@
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
 #include <OplPcTools/ZsoDeviceSource.h>
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
 #include <QVector>
@@ -57,7 +57,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
             device_source = new ZsoDeviceSource(base_directory.absoluteFilePath(iso));
         else
             device_source = new Iso9660DeviceSource(base_directory.absoluteFilePath(iso));
-        Device image{QSharedPointer<DeviceSource>(device_source)};
+        DeviceReader image{QSharedPointer<DeviceSource>(device_source)};
         if(!image.init())
             continue;
         Game * game = createGame(image.gameId());

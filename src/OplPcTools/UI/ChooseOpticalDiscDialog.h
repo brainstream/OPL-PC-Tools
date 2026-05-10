@@ -20,7 +20,7 @@
 #define __OPLPCTOOLS_CHOOSEOPTICALDISCDIALOG__
 
 #include <QSharedPointer>
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 #include "ui_ChooseOpticalDiscDialog.h"
 
 namespace OplPcTools {
@@ -32,13 +32,13 @@ class ChooseOpticalDiscDialog : public QDialog, private Ui::ChooseOpticalDiscDia
 
 public:
     explicit ChooseOpticalDiscDialog(QWidget * _parent = nullptr);
-    QList<QSharedPointer<OplPcTools::Device>> devices() const;
+    QList<QSharedPointer<OplPcTools::DeviceReader>> devices() const;
 
 private slots:
     void deviceSelectionChanged();
 
 private:
-    void fixDeviceTitle(OplPcTools::Device & _device) const;
+    void fixDeviceTitle(OplPcTools::DeviceReader & _device) const;
 };
 
 } // namespace UI

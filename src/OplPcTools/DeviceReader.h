@@ -35,12 +35,12 @@ struct DeviceName
 
 QList<DeviceName> loadDriveList();
 
-class Device final
+class DeviceReader final
 {   
-    Q_DISABLE_COPY(Device)
+    Q_DISABLE_COPY(DeviceReader)
 
 public:
-    explicit Device(QSharedPointer<DeviceSource> _source);
+    explicit DeviceReader(QSharedPointer<DeviceSource> _source);
     const QString filepath() const;
     bool init();
     bool isInitialized() const;
@@ -66,37 +66,37 @@ private:
     quint64 m_size;
 };
 
-QString Device::title() const
+QString DeviceReader::title() const
 {
     return m_title;
 }
 
-void Device::setTitle(const QString _title)
+void DeviceReader::setTitle(const QString _title)
 {
     m_title = _title;
 }
 
-quint64 Device::size() const
+quint64 DeviceReader::size() const
 {
     return m_size;
 }
 
-const QString & Device::gameId() const
+const QString & DeviceReader::gameId() const
 {
     return m_id;
 }
 
-MediaType Device::mediaType() const
+MediaType DeviceReader::mediaType() const
 {
     return m_media_type;
 }
 
-void Device::setMediaType(MediaType _media_type)
+void DeviceReader::setMediaType(MediaType _media_type)
 {
     m_media_type = _media_type;
 }
 
-bool Device::isReadOnly() const
+bool DeviceReader::isReadOnly() const
 {
     return m_source_ptr->isReadOnly();
 }

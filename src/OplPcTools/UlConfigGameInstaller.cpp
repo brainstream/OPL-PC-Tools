@@ -26,7 +26,7 @@
 
 using namespace OplPcTools;
 
-UlConfigGameInstaller::UlConfigGameInstaller(Device & _device, QObject * _parent) :
+UlConfigGameInstaller::UlConfigGameInstaller(DeviceReader & _device, QObject * _parent) :
     GameInstaller(_device, _parent),
     mp_game(nullptr)
 {

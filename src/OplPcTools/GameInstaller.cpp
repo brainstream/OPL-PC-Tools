@@ -22,7 +22,7 @@
 
 using namespace OplPcTools;
 
-GameInstaller::GameInstaller(Device & _device, QObject * _parent /*= nullptr*/) :
+GameInstaller::GameInstaller(DeviceReader & _device, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     mr_device(_device)
 {

@@ -26,7 +26,7 @@
 
 using namespace OplPcTools;
 
-DirectoryGameInstaller::DirectoryGameInstaller(Device & _device, QObject * _parent /*= nullptr*/) :
+DirectoryGameInstaller::DirectoryGameInstaller(DeviceReader & _device, QObject * _parent /*= nullptr*/) :
     GameInstaller(_device, _parent),
     m_move_file(false),
     m_rename_file(false),

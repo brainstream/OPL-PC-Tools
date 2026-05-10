@@ -23,7 +23,7 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QMimeData>
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
 #include <OplPcTools/ZsoDeviceSource.h>
 #include <OplPcTools/BinCueDeviceSource.h>
@@ -83,9 +83,9 @@ public:
 class TaskListItem : public QTreeWidgetItem
 {
 public:
-    TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget);
+    TaskListItem(QSharedPointer<DeviceReader> _device, QTreeWidget * _widget);
     QVariant data(int _column, int _role) const;
-    inline Device & device();
+    inline DeviceReader & device();
     void rename(const QString & _new_name);
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
@@ -102,7 +102,7 @@ public:
     inline void enabelMoving(bool _enable);
 
 private:
-    QSharedPointer<Device> m_device_ptr;
+    QSharedPointer<DeviceReader> m_device_ptr;
     GameInstallationStatus m_status;
     int m_progress;
     QString m_error_message;
@@ -128,7 +128,7 @@ private:
 
 } // namespace
 
-TaskListItem::TaskListItem(QSharedPointer<Device> _device, QTreeWidget * _widget) :
+TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, QTreeWidget * _widget) :
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
     m_device_ptr(_device),
     m_status(GameInstallationStatus::Queued),
@@ -163,7 +163,7 @@ QVariant TaskListItem::data(int _column, int _role) const
     }
 }
 
-Device & TaskListItem::device()
+DeviceReader & TaskListItem::device()
 {
     return *m_device_ptr;
 }
@@ -419,7 +419,7 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
         source.reset(new BinCueDeviceSource(_file_path));
     else if(_file_path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
         source.reset(new NrgDeviceSource(_file_path));
-    QSharedPointer<Device> device(new Device(source));
+    QSharedPointer<DeviceReader> device(new DeviceReader(source));
     if(device->init())
     {
         device->setTitle(file_info.completeBaseName());
@@ -489,8 +489,8 @@ void GameInstallerActivity::addDisc()
     ChooseOpticalDiscDialog dlg(this);
     if(dlg.exec() != QDialog::Accepted)
         return;
-    QList<QSharedPointer<Device>> device_list = dlg.devices();
-    for(QSharedPointer<Device> & device : device_list)
+    QList<QSharedPointer<DeviceReader>> device_list = dlg.devices();
+    for(QSharedPointer<DeviceReader> & device : device_list)
     {
         QTreeWidgetItem * existingTask = findTaskInList(device->filepath());
         if(existingTask)

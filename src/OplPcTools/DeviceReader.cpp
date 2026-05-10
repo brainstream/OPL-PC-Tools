@@ -18,7 +18,7 @@
 
 #include <QRegularExpression>
 #include <QFileInfo>
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 
 #define ISO9660_OFFSET 0x8000
 
@@ -296,19 +296,19 @@ QString Iso9660::title() const
         QString();
 }
 
-Device::Device(QSharedPointer<DeviceSource> _source) :
+DeviceReader::DeviceReader(QSharedPointer<DeviceSource> _source) :
     m_is_initialized(false),
     m_source_ptr(_source),
     m_media_type(MediaType::Unknown)
 {
 }
 
-const QString Device::filepath() const
+const QString DeviceReader::filepath() const
 {
     return m_source_ptr->filepath();
 }
 
-bool Device::init()
+bool DeviceReader::init()
 {
     if(!m_source_ptr)
         return false;
@@ -329,33 +329,33 @@ bool Device::init()
     return m_is_initialized;
 }
 
-bool Device::isInitialized() const
+bool DeviceReader::isInitialized() const
 {
     return m_is_initialized;
 }
 
-bool Device::open()
+bool DeviceReader::open()
 {
     close();
     return m_source_ptr->open();
 }
 
-void Device::close()
+void DeviceReader::close()
 {
     m_source_ptr->close();
 }
 
-bool Device::isOpen() const
+bool DeviceReader::isOpen() const
 {
     return m_source_ptr->isOpen();
 }
 
-bool Device::seek(quint64 _offset)
+bool DeviceReader::seek(quint64 _offset)
 {
     return m_source_ptr->seek(_offset);
 }
 
-qint64 Device::read(QByteArray & _buffer)
+qint64 DeviceReader::read(QByteArray & _buffer)
 {
     return m_source_ptr->read(_buffer);
 }

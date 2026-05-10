@@ -24,7 +24,7 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <linux/cdrom.h>
-#include <OplPcTools/Device.h>
+#include <OplPcTools/DeviceReader.h>
 
 using namespace OplPcTools;
 

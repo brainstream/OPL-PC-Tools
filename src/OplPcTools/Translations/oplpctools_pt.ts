@@ -564,31 +564,46 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::DefaultDeviceWriter</name>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="37"/>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation type="unfinished">O arquivo já existe: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="48"/>
+        <source>An error occurred during reading the source medium</source>
+        <translation type="unfinished">Um erro ocorreu durante a leitura da fonte</translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
+        <source>Unable to write a data into the file: &quot;%1&quot;</source>
+        <translation type="unfinished">Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::DirectoryGameInstaller</name>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="46"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="51"/>
         <source>It is impossible to move the file &quot;%1&quot;. Probably it is read-only or not an ISO image.</source>
         <translation>É impossível mover o arquivo &quot;%1&quot;. Provavelmente está como apenas-leitura ou não é um arquivo ISO válido.</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="70"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="75"/>
         <source>Unable to open device to read: &quot;%1&quot;</source>
         <translation>Incapaz de abrir o dispositivo para leitura: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="102"/>
         <source>File already exists: &quot;%1&quot;</source>
-        <translation>O arquivo já existe: &quot;%1&quot;</translation>
+        <translation type="vanished">O arquivo já existe: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="113"/>
         <source>An error occurred during reading the source medium</source>
-        <translation>Um erro ocorreu durante a leitura da fonte</translation>
+        <translation type="vanished">Um erro ocorreu durante a leitura da fonte</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="121"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation>Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
+        <translation type="vanished">Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -831,32 +846,32 @@
         <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="386"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
         <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="395"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="433"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="434"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="618"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="619"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -1176,27 +1191,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="157"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="159"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="161"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>

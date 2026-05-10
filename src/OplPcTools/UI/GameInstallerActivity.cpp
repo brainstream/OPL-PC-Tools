@@ -32,6 +32,7 @@
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
+#include <OplPcTools/DefaultDeviceWriter.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
@@ -682,7 +683,8 @@ bool GameInstallerActivity::startNextTask()
     }
     else
     {
-        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), this);
+        std::unique_ptr<DefaultDeviceWriter> writer(new DefaultDeviceWriter());
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), std::move(writer), this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;

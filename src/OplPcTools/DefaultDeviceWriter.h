@@ -18,65 +18,17 @@
 
 #pragma once
 
-#include <OplPcTools/GameInstaller.h>
 #include <OplPcTools/DeviceWriter.h>
 
 namespace OplPcTools {
 
-class DirectoryGameInstaller : public GameInstaller
+class DefaultDeviceWriter : public DeviceWriter
 {
     Q_OBJECT
 
 public:
-    DirectoryGameInstaller(
-        DeviceReader & _reader,
-        std::unique_ptr<DeviceWriter> && _writer,
-        QObject * _parent = nullptr);
-    ~DirectoryGameInstaller() override;
-    inline quint8 options() const;
-    inline void setOptionMoveFile(bool _value);
-    inline bool isOptionMoveFileSet() const;
-    inline void setOptionRenameFile(bool _value);
-    inline bool isOptionRenameFileSet() const;
-    inline const Game * installedGame() const override;
-
-protected:
-    bool performInstallation() override;
-
-private:
-    void rollback(const QString & _dest);
-    void registerGame();
-
-private:
-    bool m_move_file;
-    bool m_rename_file;
-    Game * mp_game;
-    std::unique_ptr<DeviceWriter> m_writer_ptr;
+    explicit DefaultDeviceWriter(QObject * _parent = nullptr);
+    bool write(DeviceReader & _reader, const QString & _destination) override;
 };
-
-void DirectoryGameInstaller::setOptionMoveFile(bool _value)
-{
-    m_move_file = _value;
-}
-
-bool DirectoryGameInstaller::isOptionMoveFileSet() const
-{
-    return m_move_file;
-}
-
-void DirectoryGameInstaller::setOptionRenameFile(bool _value)
-{
-    m_rename_file = _value;
-}
-
-bool DirectoryGameInstaller::isOptionRenameFileSet() const
-{
-    return m_rename_file;
-}
-
-const Game * DirectoryGameInstaller::installedGame() const
-{
-    return mp_game;
-}
 
 } // namespace OplPcTools

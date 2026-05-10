@@ -564,31 +564,46 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::DefaultDeviceWriter</name>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="37"/>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation type="unfinished">Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="48"/>
+        <source>An error occurred during reading the source medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
+        <source>Unable to write a data into the file: &quot;%1&quot;</source>
+        <translation type="unfinished">Не могу записать данные в файл: &quot;%1&quot;</translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::DirectoryGameInstaller</name>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="46"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="51"/>
         <source>It is impossible to move the file &quot;%1&quot;. Probably it is read-only or not an ISO image.</source>
         <translation>Невозможно переместить файл &quot;%1&quot;. Возможно, этот файл доступен только для чтения или не является образом ISO.</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="70"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="75"/>
         <source>Unable to open device to read: &quot;%1&quot;</source>
         <translation>Не могу открыть устройство для чтения: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="102"/>
         <source>File already exists: &quot;%1&quot;</source>
-        <translation>Файл уже существует: &quot;%1&quot;</translation>
+        <translation type="vanished">Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="113"/>
         <source>An error occurred during reading the source medium</source>
-        <translation>Во время чтения источника данных возникла ошибка</translation>
+        <translation type="vanished">Во время чтения источника данных возникла ошибка</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="121"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
+        <translation type="vanished">Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -831,32 +846,32 @@
         <translation type="vanished">Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="386"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
         <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="395"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="433"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="434"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="618"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="619"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="661"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -1176,27 +1191,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="152"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="157"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="159"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="161"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>

@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMEINSTALLER__
-#define __OPLPCTOOLS_GAMEINSTALLER__
+#pragma once
 
 #include <QObject>
 #include <QStringList>
@@ -51,5 +50,3 @@ protected:
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_GAMEINSTALLER__

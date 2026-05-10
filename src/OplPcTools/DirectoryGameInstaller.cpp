@@ -22,16 +22,21 @@
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/StandardDirectories.h>
 #include <QStorageInfo>
-#include <QThread>
 
 using namespace OplPcTools;
 
-DirectoryGameInstaller::DirectoryGameInstaller(DeviceReader & _device, QObject * _parent /*= nullptr*/) :
-    GameInstaller(_device, _parent),
+DirectoryGameInstaller::DirectoryGameInstaller(
+    DeviceReader & _reader,
+    std::unique_ptr<DeviceWriter> && _writer,
+    QObject * _parent /*= nullptr*/
+) :
+    GameInstaller(_reader, _parent),
     m_move_file(false),
     m_rename_file(false),
-    mp_game(nullptr)
+    mp_game(nullptr),
+    m_writer_ptr(std::move(_writer))
 {
+    connect(m_writer_ptr.get(), &DeviceWriter::progress, this, &DirectoryGameInstaller::progress);
 }
 
 DirectoryGameInstaller::~DirectoryGameInstaller()
@@ -70,7 +75,7 @@ bool DirectoryGameInstaller::performInstallation()
             throw IOException(tr("Unable to open device to read: \"%1\"").arg(mr_device.filepath()));
         try
         {
-        if(!copyDeviceTo(dest_filepath))
+        if(!m_writer_ptr->write(mr_device, dest_filepath))
             return false;
         }
         catch(...)
@@ -90,51 +95,6 @@ bool DirectoryGameInstaller::performInstallation()
     {
         rollback(dest_filepath);
         throw;
-    }
-    return true;
-}
-
-bool DirectoryGameInstaller::copyDeviceTo(const QString & _dest)
-{
-    const ssize_t read_size = 4194304;
-    QByteArray bytes(read_size, Qt::Initialization::Uninitialized);
-    if(QFile::exists(_dest))
-        throw IOException(tr("File already exists: \"%1\"").arg(_dest));
-    QSharedPointer<QFile> dest = openFileToSyncWrite(_dest, OFSM_WRITE | OFSM_CREATE);
-    const quint64 iso_size = mr_device.size();
-    mr_device.seek(0);
-    for(quint64 total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)
-    {
-        qint64 read_bytes = mr_device.read(bytes);
-        if(read_bytes < 0)
-        {
-            dest->close();
-            rollback(_dest);
-            throw IOException(tr("An error occurred during reading the source medium"));
-        }
-        else if(read_bytes > 0)
-        {
-            if(dest->write(bytes.constData(), read_bytes) != read_bytes)
-            {
-                dest->close();
-                rollback(_dest);
-                throw IOException(tr("Unable to write a data into the file: \"%1\"").arg(dest->fileName()));
-            }
-            if(++write_operation % 5 == 0)
-                dest->flush();
-            total_read_bytes += read_bytes;
-            emit progress(iso_size, total_read_bytes);
-        }
-        if(read_bytes < read_size)
-        {
-            emit progress(iso_size, iso_size);
-            break;
-        }
-        if(QThread::currentThread()->isInterruptionRequested())
-        {
-            rollback(_dest);
-            return false;
-        }
     }
     return true;
 }

@@ -152,6 +152,7 @@ TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, SourceFormat _f
     m_device_ptr(_device),
     m_source_format(_format),
     m_target_format(TargetFormat::Iso),
+    m_status(GameInstallationStatus::Queued),
     m_progress(0)
 {
     const Settings & settings = Settings::instance();

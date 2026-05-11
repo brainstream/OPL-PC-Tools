@@ -343,54 +343,78 @@
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="288"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="287"/>
         <source>Media Type</source>
         <translation>Tipo de mídia</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="294"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="293"/>
         <source>Auto</source>
         <translation>Automático</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="304"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="303"/>
         <source>DVD</source>
         <translation>DVD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="311"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="310"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="327"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="320"/>
+        <source>Target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the only way to run large games (larger than 4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should split up large files into parts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Essa é a única forma de rodar jogos grandes (maiores que 4GB) pelo USB, já que o OPL aceita apenas o sistema de arquivos FAT32, que suporta apenas arquivos menores que 4GB. Por isso você deve dividir os arquivos em várias partes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Essa é a única forma de rodar jogos grandes (maiores que 4GB) pelo USB, já que o OPL aceita apenas o sistema de arquivos FAT32, que suporta apenas arquivos menores que 4GB. Por isso você deve dividir os arquivos em várias partes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="330"/>
-        <source>Split up ISO file into parts</source>
-        <translation>Dividir o arquivo ISO em partes menores</translation>
+        <location filename="../UI/GameInstallerActivity.ui" line="326"/>
+        <source>Split the file into parts</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="337"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse é o método recomendado se você planeja jogar pela rede. O arquivo ISO vai ser colocado dentro da pasta DVD ou CD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="340"/>
-        <source>Do not split up ISO file</source>
-        <translation>Não dividir o arquivo ISO</translation>
+        <location filename="../UI/GameInstallerActivity.ui" line="333"/>
+        <source>Install as ISO file</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="350"/>
-        <source>Move ISO file instead of copy</source>
-        <translation>Mover o arquivo ISO ao invés de copiar</translation>
+        <source>Move source file instead of copying it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.ui" line="343"/>
+        <source>Install as compressed ZSO file</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="357"/>
+        <source>Add game ID to file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Split up ISO file into parts</source>
+        <translation type="vanished">Dividir o arquivo ISO em partes menores</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse é o método recomendado se você planeja jogar pela rede. O arquivo ISO vai ser colocado dentro da pasta DVD ou CD.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Do not split up ISO file</source>
+        <translation type="vanished">Não dividir o arquivo ISO</translation>
+    </message>
+    <message>
+        <source>Move ISO file instead of copy</source>
+        <translation type="vanished">Mover o arquivo ISO ao invés de copiar</translation>
+    </message>
+    <message>
         <source>Add a game ID to filename</source>
-        <translation>Adicionar um ID de jogo ao nome do arquivo</translation>
+        <translation type="vanished">Adicionar um ID de jogo ao nome do arquivo</translation>
     </message>
 </context>
 <context>
@@ -596,12 +620,16 @@
 <context>
     <name>OplPcTools::DirectoryGameInstaller</name>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="51"/>
         <source>It is impossible to move the file &quot;%1&quot;. Probably it is read-only or not an ISO image.</source>
-        <translation>É impossível mover o arquivo &quot;%1&quot;. Provavelmente está como apenas-leitura ou não é um arquivo ISO válido.</translation>
+        <translation type="vanished">É impossível mover o arquivo &quot;%1&quot;. Provavelmente está como apenas-leitura ou não é um arquivo ISO válido.</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="75"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="68"/>
+        <source>It is impossible to move the file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DirectoryGameInstaller.cpp" line="74"/>
         <source>Unable to open device to read: &quot;%1&quot;</source>
         <translation>Incapaz de abrir o dispositivo para leitura: &quot;%1&quot;</translation>
     </message>
@@ -642,18 +670,18 @@
 <context>
     <name>OplPcTools::GameImporter</name>
     <message>
-        <location filename="../GameImporter.cpp" line="108"/>
+        <location filename="../GameImporter.cpp" line="109"/>
         <source>File not found: &quot;%1&quot;</source>
         <translation>Arquivo não encontrado: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../GameImporter.cpp" line="113"/>
-        <location filename="../GameImporter.cpp" line="138"/>
+        <location filename="../GameImporter.cpp" line="114"/>
+        <location filename="../GameImporter.cpp" line="139"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>O arquivo já existe: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../GameImporter.cpp" line="146"/>
+        <location filename="../GameImporter.cpp" line="147"/>
         <source>ISO file for game &quot;%1&quot; not found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -858,32 +886,37 @@
         <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="388"/>
-        <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
+        <location filename="../UI/GameInstallerActivity.cpp" line="429"/>
+        <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="396"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="437"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="435"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="480"/>
+        <source>Unknown file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.cpp" line="494"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="620"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="685"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="663"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="728"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="663"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="728"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -914,37 +947,37 @@
 <context>
     <name>OplPcTools::UI::IsoRestorerActivity</name>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="84"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="87"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Escolha um nome para o arquivo ISO ser salvo</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="85"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="88"/>
         <source>ISO Image</source>
         <translation>Imagem ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="118"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="121"/>
         <source>Restoring &apos;%1&apos; to &apos;%2&apos;...</source>
         <translation>Restaurando &apos;%1&apos; para &apos;%2&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="126"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="129"/>
         <source>Synchronization of buffers. Please wait...</source>
         <translation>Sincronizando os buffers . Espera um pouquinho...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="127"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="130"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="143"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="146"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="144"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="147"/>
         <source>Canceled</source>
         <translation>Cancelado</translation>
     </message>
@@ -1203,27 +1236,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="173"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="175"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="177"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="179"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="181"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>

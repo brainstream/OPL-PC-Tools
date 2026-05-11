@@ -49,7 +49,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
     QDir base_directory(m_base_directory);
     if(!base_directory.cd(_media_type == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return;
-    foreach(const QString & iso, base_directory.entryList({ "*.iso", "*.zso" }))
+    foreach(const QString & iso, base_directory.entryList({ g_filename_pattern_iso, g_filename_pattern_zso }))
     {
         DeviceSource * device_source = nullptr;
         bool is_compressed = QFileInfo(iso).suffix().compare("zso", Qt::CaseInsensitive) == 0;
@@ -80,18 +80,24 @@ bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _
     QDir directory(m_base_directory);
     if(!directory.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return false;
-    QString old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id()));
+    QString ext = getFilenameExtension(_game);
+    QString old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id(), ext));
     bool is_name_included_id = true;
     if(!QFile::exists(old_filename))
     {
         is_name_included_id = false;
-        old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title()));
+        old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), ext));
         if(!QFile::exists(old_filename))
             return false;
     }
     QString new_filename = directory.absoluteFilePath(
-        is_name_included_id ? makeIsoFilename(_title, _game.id()) : makeIsoFilename(_title));
+        is_name_included_id ? makeIsoFilename(_title, _game.id(), ext) : makeIsoFilename(_title, ext));
     return QFile::rename(old_filename, new_filename);
+}
+
+QString DirectoryGameStorage::getFilenameExtension(const Game & _game)
+{
+    return _game.isCompressed() ? g_file_ext_zso : g_file_ext_iso;
 }
 
 bool DirectoryGameStorage::performRegistration(const Game & _game)
@@ -100,28 +106,30 @@ bool DirectoryGameStorage::performRegistration(const Game & _game)
     return true;
 }
 
-QString DirectoryGameStorage::makeIsoFilename(const QString & _title, const QString & _id)
+QString DirectoryGameStorage::makeIsoFilename(const QString & _title, const QString & _id, const QString _ext)
 {
-    return QString("%1.%2.iso").arg(_id, _title);
+    return QString("%1.%2%3").arg(_id, _title, _ext);
 }
 
-QString DirectoryGameStorage::makeIsoFilename(const QString & _title)
+QString DirectoryGameStorage::makeIsoFilename(const QString & _title, const QString _ext)
 {
-    return _title + ".iso";
+    return _title + _ext;
 }
 
-QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const QString & _id)
+QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const QString & _id, const QString _ext)
 {
-    return QString("%1.%2.iso").arg(_id, _title);
+    return QString("%1.%2%3").arg(_id, _title, _ext);
 }
 
 bool DirectoryGameStorage::performDeletion(const Game & _game)
 {
     QDir dir(m_base_directory);
     dir.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd);
-    QString path = dir.absoluteFilePath(_game.title()) + ".iso";
+
+    QString ext = getFilenameExtension(_game);
+    QString path = dir.absoluteFilePath(_game.title()) + ext;
     if(QFile::exists(path) && QFile::remove(path))
         return true;
-    path = dir.absoluteFilePath(makeGameIsoFilename(_game.title(), _game.id()));
+    path = dir.absoluteFilePath(makeGameIsoFilename(_game.title(), _game.id(), ext));
     return QFile::exists(path) && QFile::remove(path);
 }

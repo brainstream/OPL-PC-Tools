@@ -187,11 +187,6 @@ QString NrgDeviceSource::filepath() const
     return mp_image->filepath();
 }
 
-bool NrgDeviceSource::isReadOnly() const
-{
-    return true;
-}
-
 bool NrgDeviceSource::open()
 {
     try {

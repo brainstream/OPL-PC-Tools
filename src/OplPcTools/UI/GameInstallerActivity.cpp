@@ -16,13 +16,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QStyledItemDelegate>
-#include <QShortcut>
-#include <QFileInfo>
-#include <QFileDialog>
-#include <QDragEnterEvent>
-#include <QDropEvent>
-#include <QMimeData>
+#include <OplPcTools/UI/Application.h>
+#include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
+#include <OplPcTools/UI/GameRenameDialog.h>
+#include <OplPcTools/UI/GameInstallerActivity.h>
 #include <OplPcTools/DeviceReader.h>
 #include <OplPcTools/Iso9660DeviceSource.h>
 #include <OplPcTools/ZsoDeviceSource.h>
@@ -33,10 +30,15 @@
 #include <OplPcTools/UlConfigGameInstaller.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
 #include <OplPcTools/DefaultDeviceWriter.h>
-#include <OplPcTools/UI/Application.h>
-#include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
-#include <OplPcTools/UI/GameRenameDialog.h>
-#include <OplPcTools/UI/GameInstallerActivity.h>
+#include <OplPcTools/CompressedDeviceWriter.h>
+#include <OplPcTools/Constants.h>
+#include <QStyledItemDelegate>
+#include <QShortcut>
+#include <QFileInfo>
+#include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -52,10 +54,6 @@ enum
 } // namespace Column
 
 const int g_progressbar_max_value = 1000;
-const char * g_iso_ext = ".iso";
-const char * g_zso_ext = ".zso";
-const char * g_bin_ext = ".bin";
-const char * g_nrg_ext = ".nrg";
 
 enum class GameInstallationStatus
 {
@@ -81,12 +79,33 @@ public:
     }
 };
 
+enum class SourceFormat
+{
+    PhysicalDevice,
+    Iso,
+    CompressedIso,
+    Bin,
+    NeroImage
+};
+
+enum class TargetFormat
+{
+    UlConfig,
+    Iso,
+    CompressedIso
+};
+
 class TaskListItem : public QTreeWidgetItem
 {
 public:
-    TaskListItem(QSharedPointer<DeviceReader> _device, QTreeWidget * _widget);
+    TaskListItem(QSharedPointer<DeviceReader> _device, SourceFormat _format, QTreeWidget * _widget);
     QVariant data(int _column, int _role) const;
     inline DeviceReader & device();
+    inline SourceFormat sourceFormat() const;
+    inline void setTargetFormat(TargetFormat _format);
+    inline TargetFormat targetFormat() const;
+    inline bool canFileBeMoved() const;
+    inline bool canFileBeRenamed() const;
     void rename(const QString & _new_name);
     void setStatus(GameInstallationStatus _status);
     void setError(const QString & _message);
@@ -95,8 +114,6 @@ public:
     inline void setProgress(int _progress);
     inline int progress() const;
     inline void setMediaType(MediaType _media_type);
-    inline bool isSplittingUpEnabled() const;
-    inline void enabelSplittingUp(bool _enable);
     inline bool isRenamingEnabled() const;
     inline void enabelRenaming(bool _enable);
     inline bool isMovingEnabled() const;
@@ -104,10 +121,11 @@ public:
 
 private:
     QSharedPointer<DeviceReader> m_device_ptr;
+    SourceFormat m_source_format;
+    TargetFormat m_target_format;
     GameInstallationStatus m_status;
     int m_progress;
     QString m_error_message;
-    bool m_is_splitting_up_enabled;
     bool m_is_renaming_enabled;
     bool m_is_moving_enabled;
 };
@@ -129,14 +147,16 @@ private:
 
 } // namespace
 
-TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, QTreeWidget * _widget) :
+TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, SourceFormat _format, QTreeWidget * _widget) :
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
     m_device_ptr(_device),
-    m_status(GameInstallationStatus::Queued),
+    m_source_format(_format),
+    m_target_format(TargetFormat::Iso),
     m_progress(0)
 {
     const Settings & settings = Settings::instance();
-    m_is_splitting_up_enabled = settings.splitUpIso();
+    if(settings.splitUpIso())
+        m_target_format = TargetFormat::UlConfig;
     m_is_renaming_enabled = settings.renameIso();
     m_is_moving_enabled = settings.moveIso();
 }
@@ -167,6 +187,33 @@ QVariant TaskListItem::data(int _column, int _role) const
 DeviceReader & TaskListItem::device()
 {
     return *m_device_ptr;
+}
+
+SourceFormat TaskListItem::sourceFormat() const
+{
+    return m_source_format;
+}
+
+void TaskListItem::setTargetFormat(TargetFormat _format)
+{
+    m_target_format = _format;
+}
+
+TargetFormat TaskListItem::targetFormat() const
+{
+    return m_target_format;
+}
+
+bool TaskListItem::canFileBeMoved() const
+{
+    return
+        (m_source_format == SourceFormat::Iso && m_target_format == TargetFormat::Iso) ||
+        (m_source_format == SourceFormat::CompressedIso && m_target_format == TargetFormat::CompressedIso);
+}
+
+bool TaskListItem::canFileBeRenamed() const
+{
+    return m_target_format == TargetFormat::Iso || m_target_format == TargetFormat::CompressedIso;
 }
 
 void TaskListItem::rename(const QString & _new_name)
@@ -225,19 +272,9 @@ void TaskListItem::setMediaType(MediaType _media_type)
     m_device_ptr->setMediaType(_media_type);
 }
 
-bool TaskListItem::isSplittingUpEnabled() const
-{
-    return m_is_splitting_up_enabled;
-}
-
-void TaskListItem::enabelSplittingUp(bool _enable)
-{
-    m_is_splitting_up_enabled = _enable;
-}
-
 bool TaskListItem::isRenamingEnabled() const
 {
-    return m_is_renaming_enabled;
+    return canFileBeRenamed() && m_is_renaming_enabled;
 }
 
 void TaskListItem::enabelRenaming(bool _enable)
@@ -247,7 +284,7 @@ void TaskListItem::enabelRenaming(bool _enable)
 
 bool TaskListItem::isMovingEnabled() const
 {
-    return m_is_moving_enabled;
+    return canFileBeMoved() && m_is_moving_enabled;
 }
 
 void TaskListItem::enabelMoving(bool _enable)
@@ -255,7 +292,10 @@ void TaskListItem::enabelMoving(bool _enable)
     m_is_moving_enabled = _enable;
 }
 
-void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem & _option, const QModelIndex & _index ) const
+void TaskListViewDelegate::paint(
+    QPainter * _painter,
+    const QStyleOptionViewItem & _option,
+    const QModelIndex & _index ) const
 {
     QStyledItemDelegate::paint(_painter, _option, _index);
     const TaskListItem * item = static_cast<TaskListItem *>(mp_tree->topLevelItem(_index.row()));
@@ -276,7 +316,8 @@ void TaskListViewDelegate::paint(QPainter * _painter, const QStyleOptionViewItem
     progress_indicator_option.state = QStyle::State_Enabled;
     progress_indicator_option.direction = _option.direction;
     progress_indicator_option.rect = _option.rect;
-    progress_indicator_option.rect.setWidth(progress_indicator_option.rect.width() * progress_bar_option.progress / g_progressbar_max_value);
+    progress_indicator_option.rect.setWidth(
+        progress_indicator_option.rect.width() * progress_bar_option.progress / g_progressbar_max_value);
     progress_indicator_option.fontMetrics = _option.fontMetrics;
     progress_indicator_option.palette.setColor(QPalette::Highlight,
         progress_indicator_option.palette.color(QPalette::Highlight).darker(150));
@@ -310,8 +351,9 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     connect(mp_radio_mtcd, &QRadioButton::clicked, this, &GameInstallerActivity::mediaTypeChanged);
     connect(mp_checkbox_move, &QCheckBox::clicked, this, &GameInstallerActivity::moveOptionChanged);
     connect(mp_checkbox_rename, &QCheckBox::clicked, this, &GameInstallerActivity::renameOptionChanged);
-    connect(mp_radio_split_up, &QRadioButton::clicked, this, &GameInstallerActivity::splitUpOptionChanged);
-    connect(mp_radio_dnot_split_up, &QRadioButton::clicked, this, &GameInstallerActivity::splitUpOptionChanged);
+    connect(mp_radio_target_ul, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
+    connect(mp_radio_target_iso, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
+    connect(mp_radio_target_zso, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
     connect(mp_btn_install, &QPushButton::clicked, this, &GameInstallerActivity::install);
     connect(mp_btn_cancel, &QPushButton::clicked, this, &GameInstallerActivity::cancel);
     taskSelectionChanged();
@@ -372,25 +414,25 @@ void GameInstallerActivity::taskSelectionChanged()
         mp_radio_mtauto->setChecked(true);
         break;
     }
-    bool split_up = item->isSplittingUpEnabled();
-    mp_radio_split_up->setChecked(split_up);
-    mp_radio_dnot_split_up->setChecked(!split_up);
+    mp_radio_target_ul->setChecked(item->targetFormat() == TargetFormat::UlConfig);
+    mp_radio_target_iso->setChecked(item->targetFormat() == TargetFormat::Iso);
+    mp_radio_target_zso->setChecked(item->targetFormat() == TargetFormat::CompressedIso);
     mp_checkbox_move->setChecked(item->isMovingEnabled());
     mp_checkbox_rename->setChecked(item->isRenamingEnabled());
-    mp_checkbox_move->setDisabled(split_up || item->device().isReadOnly());
-    mp_checkbox_rename->setDisabled(split_up);
+    mp_checkbox_move->setEnabled(item->canFileBeMoved());
+    mp_checkbox_rename->setEnabled(item->canFileBeRenamed());
 }
 
 void GameInstallerActivity::addDiscImage()
 {
     Settings & settings = Settings::instance();
     QString filter = tr(
-        "All Supported Images (*%1 *%2 *%3 *%4);;"
-        "ISO Images (*%1);;"
-        "Compressed ISO Images (*%2);;"
-        "Bin Files (*%3);;"
-        "Nero Images (*%4)")
-        .arg(g_iso_ext, g_zso_ext, g_bin_ext, g_nrg_ext);
+        "All Supported Images (%1 %2 %3 %4);;"
+        "ISO Images (%1);;"
+        "Compressed ISO Images (%2);;"
+        "Bin Files (%3);;"
+        "Nero Images (%4)")
+        .arg(g_filename_pattern_iso, g_filename_pattern_zso, g_filename_pattern_bin, g_filename_pattern_nrg);
     QString iso_dir = settings.path(Settings::Directory::IsoSource);
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select PS2 Disc Image Files"), iso_dir, filter);
     if(files.isEmpty()) return;
@@ -412,19 +454,37 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
         return;
     }
     QSharedPointer<DeviceSource> source;
-    if(_file_path.endsWith(g_iso_ext, Qt::CaseInsensitive))
+    SourceFormat format;
+    if(_file_path.endsWith(g_file_ext_iso, Qt::CaseInsensitive))
+    {
         source.reset(new Iso9660DeviceSource(_file_path));
-    if(_file_path.endsWith(g_zso_ext, Qt::CaseInsensitive))
+        format = SourceFormat::Iso;
+    }
+    else if(_file_path.endsWith(g_file_ext_zso, Qt::CaseInsensitive))
+    {
         source.reset(new ZsoDeviceSource(_file_path));
-    else if(_file_path.endsWith(g_bin_ext, Qt::CaseInsensitive))
+        format = SourceFormat::CompressedIso;
+    }
+    else if(_file_path.endsWith(g_file_ext_bin, Qt::CaseInsensitive))
+    {
         source.reset(new BinCueDeviceSource(_file_path));
-    else if(_file_path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
+        format = SourceFormat::Bin;
+    }
+    else if(_file_path.endsWith(g_file_ext_nrg, Qt::CaseInsensitive))
+    {
         source.reset(new NrgDeviceSource(_file_path));
+        format = SourceFormat::NeroImage;
+    }
+    else
+    {
+        Application::showErrorMessage(tr("Unknown file format"));
+        return;
+    }
     QSharedPointer<DeviceReader> device(new DeviceReader(source));
     if(device->init())
     {
         device->setTitle(file_info.completeBaseName());
-        TaskListItem * item = new TaskListItem(device, mp_tree_tasks);
+        TaskListItem * item = new TaskListItem(device, format, mp_tree_tasks);
         mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
         mp_tree_tasks->setCurrentItem(item);
         mp_btn_install->setDisabled(false);
@@ -456,11 +516,7 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
     foreach(const QUrl & url, _event->mimeData()->urls())
     {
         QString path = url.path();
-        if(
-            path.endsWith(g_iso_ext, Qt::CaseInsensitive) ||
-            path.endsWith(g_zso_ext, Qt::CaseInsensitive) ||
-            path.endsWith(g_bin_ext, Qt::CaseInsensitive) ||
-            path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
+        if(isSourceFileSupported(path))
         {
             _event->accept();
             return;
@@ -469,19 +525,21 @@ void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
     _event->ignore();
 }
 
+bool GameInstallerActivity::isSourceFileSupported(const QString & _file_path)
+{
+    return _file_path.endsWith(g_file_ext_iso, Qt::CaseInsensitive) ||
+           _file_path.endsWith(g_file_ext_zso, Qt::CaseInsensitive) ||
+           _file_path.endsWith(g_file_ext_bin, Qt::CaseInsensitive) ||
+           _file_path.endsWith(g_file_ext_nrg, Qt::CaseInsensitive);
+}
+
 void GameInstallerActivity::dropEvent(QDropEvent * _event)
 {
     foreach(const QUrl & url, _event->mimeData()->urls())
     {
         QString path = url.toLocalFile();
-        if(
-            path.endsWith(g_iso_ext, Qt::CaseInsensitive) ||
-            path.endsWith(g_zso_ext, Qt::CaseInsensitive) ||
-            path.endsWith(g_bin_ext, Qt::CaseInsensitive) ||
-            path.endsWith(g_nrg_ext, Qt::CaseInsensitive))
-        {
+        if(isSourceFileSupported(path))
             addDiscImage(path);
-        }
     }
 }
 
@@ -499,7 +557,7 @@ void GameInstallerActivity::addDisc()
             mp_tree_tasks->setCurrentItem(existingTask);
             return;
         }
-        TaskListItem * item = new TaskListItem(device, mp_tree_tasks);
+        TaskListItem * item = new TaskListItem(device, SourceFormat::PhysicalDevice, mp_tree_tasks);
         mp_tree_tasks->insertTopLevelItem(mp_tree_tasks->topLevelItemCount(), item);
         mp_tree_tasks->setCurrentItem(item);
         mp_btn_install->setDisabled(false);
@@ -512,8 +570,10 @@ void GameInstallerActivity::renameGame()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item || item->status() != GameInstallationStatus::Queued)
         return;
-    GameRenameDialog dlg(item->device().title(),
-            item->isSplittingUpEnabled() ? GameInstallationType::UlConfig : GameInstallationType::Directory, this);
+    GameRenameDialog dlg(
+        item->device().title(),
+        item->targetFormat() == TargetFormat::UlConfig ? GameInstallationType::UlConfig : GameInstallationType::Directory,
+        this);
     if(dlg.exec() == QDialog::Accepted)
     {
         item->rename(dlg.name());
@@ -546,15 +606,21 @@ void GameInstallerActivity::mediaTypeChanged(bool _checked)
     item->setMediaType(media_type);
 }
 
-void GameInstallerActivity::splitUpOptionChanged(bool _checked)
+void GameInstallerActivity::targetOptionChanged(bool _checked)
 {
     if(!_checked) return;
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item) return;
-    bool split_up = mp_radio_split_up->isChecked();
-    mp_checkbox_move->setDisabled(split_up || item->device().isReadOnly());
-    mp_checkbox_rename->setDisabled(split_up);
-    item->enabelSplittingUp(split_up);
+    if(mp_radio_target_iso->isChecked())
+        item->setTargetFormat(TargetFormat::Iso);
+    else if(mp_radio_target_zso->isChecked())
+        item->setTargetFormat(TargetFormat::CompressedIso);
+    else
+        item->setTargetFormat(TargetFormat::UlConfig);
+    mp_checkbox_move->setEnabled(item->canFileBeMoved());
+    mp_checkbox_rename->setEnabled(item->canFileBeRenamed());
+    item->enabelMoving(mp_checkbox_move->isEnabled() && mp_checkbox_move->isChecked());
+    item->enabelRenaming(mp_checkbox_rename->isEnabled() && mp_checkbox_move->isChecked());
 }
 
 void GameInstallerActivity::renameOptionChanged()
@@ -677,16 +743,22 @@ bool GameInstallerActivity::startNextTask()
         item->setMediaType(MediaType::DVD);
     else
         item->setMediaType(MediaType::Unknown);
-    if(item->isSplittingUpEnabled())
+    if(item->targetFormat() == TargetFormat::UlConfig)
     {
         mp_installer = new UlConfigGameInstaller(item->device(), this);
     }
     else
     {
-        std::unique_ptr<DefaultDeviceWriter> writer(new DefaultDeviceWriter());
-        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(item->device(), std::move(writer), this);
+        DeviceWriter * writer = item->targetFormat() == TargetFormat::CompressedIso
+            ? static_cast<DeviceWriter *>(new CompressedDeviceWriter())
+            : static_cast<DeviceWriter *>(new DefaultDeviceWriter());
+        DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(
+            item->device(),
+            std::unique_ptr<DeviceWriter>(writer),
+            this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
+        dir_installer->setOptionCompressed(item->targetFormat() == TargetFormat::CompressedIso);
         mp_installer = dir_installer;
     }
     mp_working_thread = new LambdaThread([this]() {

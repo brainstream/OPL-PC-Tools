@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISO9660DEVICESOURCE__
-#define __OPLPCTOOLS_ISO9660DEVICESOURCE__
+#pragma once
 
 #include <QFileInfo>
 #include <OplPcTools/OpticalDriveDeviceSource.h>
@@ -30,18 +29,8 @@ public:
     explicit Iso9660DeviceSource(const QString & _filepath) :
         OpticalDriveDeviceSource(_filepath)
     {
-        m_is_readonly = !QFileInfo(_filepath).isWritable();
     }
-
-    bool isReadOnly() const override
-    {
-        return m_is_readonly;
-    }
-
-private:
-    bool m_is_readonly;
 };
 
 } // namespace OplPcTools
 
-#endif // __OPLPCTOOLS_ISO9660DEVICESOURCE__

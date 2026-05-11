@@ -30,7 +30,6 @@ public:
     explicit OpticalDriveDeviceSource(const QString & _filepath);
     ~OpticalDriveDeviceSource() override;
     QString filepath() const override;
-    bool isReadOnly() const override;
     bool open() override;
     bool isOpen() const override;
     void close() override;

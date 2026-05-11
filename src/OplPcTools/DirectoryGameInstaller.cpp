@@ -33,6 +33,7 @@ DirectoryGameInstaller::DirectoryGameInstaller(
     GameInstaller(_reader, _parent),
     m_move_file(false),
     m_rename_file(false),
+    m_is_compressed(false),
     mp_game(nullptr),
     m_writer_ptr(std::move(_writer))
 {
@@ -46,27 +47,25 @@ DirectoryGameInstaller::~DirectoryGameInstaller()
 
 bool DirectoryGameInstaller::performInstallation()
 {
-    if(m_move_file && mr_device.isReadOnly())
-    {
-        throw IOException(tr("It is impossible to move the file \"%1\". "
-            "Probably it is read-only or not an ISO image.").arg(mr_device.filepath()));
-    }
     delete mp_game;
     mp_game = new Game(mr_device.gameId(), GameInstallationType::Directory);
     mp_game->setMediaType(deviceMediaType());
     mp_game->setTitle(mr_device.title());
+    mp_game->setIsCompressed(m_is_compressed);
     QDir dest_dir(Library::instance().directory());
     QString dest_subdir = mp_game->mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd;
     if(!dest_dir.cd(dest_subdir))
         dest_dir.mkdir(dest_subdir);
     dest_dir.cd(dest_subdir);
+    const QString dest_file_ext(m_is_compressed ? g_file_ext_zso : g_file_ext_iso);
     QString dest_filepath = m_rename_file ?
-        dest_dir.absoluteFilePath(DirectoryGameStorage::makeGameIsoFilename(mp_game->title(), mp_game->id())) :
-        dest_dir.absoluteFilePath(mp_game->title() + ".iso");
+        dest_dir.absoluteFilePath(DirectoryGameStorage::makeGameIsoFilename(mp_game->title(), mp_game->id(), dest_file_ext)) :
+        dest_dir.absoluteFilePath(mp_game->title() + dest_file_ext);
     if(m_move_file && QStorageInfo(mr_device.filepath()).device() == QStorageInfo(dest_dir).device())
     {
         quint64 iso_size = mr_device.size();
-        QFile::rename(mr_device.filepath(), dest_filepath);
+        if(!QFile::rename(mr_device.filepath(), dest_filepath))
+            throw IOException(tr("It is impossible to move the file \"%1\"").arg(mr_device.filepath()));
         emit progress(iso_size, iso_size);
     }
     else

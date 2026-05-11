@@ -38,6 +38,8 @@ public:
     inline bool isOptionMoveFileSet() const;
     inline void setOptionRenameFile(bool _value);
     inline bool isOptionRenameFileSet() const;
+    inline void setOptionCompressed(bool _value);
+    inline bool isOptionCompressedSet() const;
     inline const Game * installedGame() const override;
 
 protected:
@@ -50,6 +52,7 @@ private:
 private:
     bool m_move_file;
     bool m_rename_file;
+    bool m_is_compressed;
     Game * mp_game;
     std::unique_ptr<DeviceWriter> m_writer_ptr;
 };
@@ -72,6 +75,16 @@ void DirectoryGameInstaller::setOptionRenameFile(bool _value)
 bool DirectoryGameInstaller::isOptionRenameFileSet() const
 {
     return m_rename_file;
+}
+
+void DirectoryGameInstaller::setOptionCompressed(bool _value)
+{
+    m_is_compressed = _value;
+}
+
+bool DirectoryGameInstaller::isOptionCompressedSet() const
+{
+    return m_is_compressed;
 }
 
 const Game * DirectoryGameInstaller::installedGame() const

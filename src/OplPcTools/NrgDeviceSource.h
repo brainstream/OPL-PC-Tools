@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_NRGDEVICESOURCE__
-#define __OPLPCTOOLS_NRGDEVICESOURCE__
+#pragma once
 
 #include <OplPcTools/DeviceSource.h>
 
@@ -29,7 +28,6 @@ public:
     explicit NrgDeviceSource(const QString & _nrg_filepath);
     ~NrgDeviceSource() override;
     QString filepath() const override;
-    bool isReadOnly() const override;
     bool open() override;
     bool isOpen() const override;
     void close() override;
@@ -42,5 +40,3 @@ private:
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_NRGDEVICESOURCE__

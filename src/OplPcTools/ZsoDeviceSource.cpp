@@ -261,11 +261,6 @@ QString ZsoDeviceSource::filepath() const
     return mp_image->filepath();
 }
 
-bool ZsoDeviceSource::isReadOnly() const
-{
-    return true;
-}
-
 bool ZsoDeviceSource::open()
 {
     return mp_image->open();

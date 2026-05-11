@@ -45,7 +45,7 @@
      <item>
       <spacer name="mp_spacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -114,7 +114,7 @@
            </sizepolicy>
           </property>
           <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
           </property>
           <property name="showDropIndicator" stdset="0">
            <bool>false</bool>
@@ -176,7 +176,7 @@
           <item>
            <spacer name="mp_spacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -267,7 +267,6 @@
               <widget class="QLabel" name="mp_label_title">
                <property name="font">
                 <font>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -278,7 +277,7 @@
                 <bool>true</bool>
                </property>
                <property name="textInteractionFlags">
-                <set>Qt::TextSelectableByMouse</set>
+                <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
                </property>
               </widget>
              </item>
@@ -318,26 +317,20 @@
              <item>
               <widget class="QGroupBox" name="mp_groupbox_options">
                <property name="title">
-                <string/>
+                <string>Target</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
                 <item>
-                 <widget class="QRadioButton" name="mp_radio_split_up">
-                  <property name="toolTip">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the only way to run large games (larger than 4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should split up large files into parts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
+                 <widget class="QRadioButton" name="mp_radio_target_ul">
                   <property name="text">
-                   <string>Split up ISO file into parts</string>
+                   <string>Split the file into parts</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="mp_radio_dnot_split_up">
-                  <property name="toolTip">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the recommended method if you planning to run games through a local network. The ISO files will be placed in the DVD or the CD directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
+                 <widget class="QRadioButton" name="mp_radio_target_iso">
                   <property name="text">
-                   <string>Do not split up ISO file</string>
+                   <string>Install as ISO file</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -345,16 +338,23 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="QRadioButton" name="mp_radio_target_zso">
+                  <property name="text">
+                   <string>Install as compressed ZSO file</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QCheckBox" name="mp_checkbox_move">
                   <property name="text">
-                   <string>Move ISO file instead of copy</string>
+                   <string>Move source file instead of copying it</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QCheckBox" name="mp_checkbox_rename">
                   <property name="text">
-                   <string>Add a game ID to filename</string>
+                   <string>Add game ID to file name</string>
                   </property>
                  </widget>
                 </item>
@@ -381,14 +381,14 @@
                 <bool>true</bool>
                </property>
                <property name="textInteractionFlags">
-                <set>Qt::TextSelectableByMouse</set>
+                <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
                </property>
               </widget>
              </item>
              <item>
               <spacer name="mp_spacer_3">
                <property name="orientation">
-                <enum>Qt::Vertical</enum>
+                <enum>Qt::Orientation::Vertical</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -418,14 +418,15 @@
   <tabstop>mp_radio_mtauto</tabstop>
   <tabstop>mp_radio_mtdvd</tabstop>
   <tabstop>mp_radio_mtcd</tabstop>
-  <tabstop>mp_radio_split_up</tabstop>
-  <tabstop>mp_radio_dnot_split_up</tabstop>
+  <tabstop>mp_radio_target_ul</tabstop>
+  <tabstop>mp_radio_target_iso</tabstop>
+  <tabstop>mp_radio_target_zso</tabstop>
   <tabstop>mp_checkbox_move</tabstop>
   <tabstop>mp_checkbox_rename</tabstop>
+  <tabstop>mp_tree_tasks</tabstop>
   <tabstop>mp_btn_back</tabstop>
   <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_btn_cancel</tabstop>
-  <tabstop>mp_tree_tasks</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources/Resources.qrc"/>

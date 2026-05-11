@@ -18,26 +18,16 @@
 
 #pragma once
 
-#include <OplPcTools/DeviceSource.h>
-#include <QFile>
-
 namespace OplPcTools {
 
-class ZsoDeviceSource : public DeviceSource
-{
-public:
-    explicit ZsoDeviceSource(const QString & _zso_filepath);
-    ~ZsoDeviceSource() override;
-    QString filepath() const override;
-    bool open() override;
-    bool isOpen() const override;
-    void close() override;
-    bool seek(qint64 _offset) override;
-    qint64 read(QByteArray & _buffer) override;
+constexpr char g_file_ext_iso[] = ".iso";
+constexpr char g_file_ext_zso[] = ".zso";
+constexpr char g_file_ext_nrg[] = ".nrg";
+constexpr char g_file_ext_bin[] = ".bin";
 
-private:
-    class ZsoImage;
-    ZsoImage * mp_image;
-};
+constexpr char g_filename_pattern_iso[] = "*.iso";
+constexpr char g_filename_pattern_zso[] = "*.zso";
+constexpr char g_filename_pattern_nrg[] = "*.nrg";
+constexpr char g_filename_pattern_bin[] = "*.bin";
 
 } // namespace OplPcTools

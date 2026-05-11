@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_BINCUEDEVICESOURCE__
-#define __OPLPCTOOLS_BINCUEDEVICESOURCE__
+#pragma once
 
 #include <QFile>
 #include <OplPcTools/DeviceSource.h>
@@ -29,7 +28,6 @@ class BinCueDeviceSource : public DeviceSource
 public:
     explicit BinCueDeviceSource(const QString & _bin_filepath);
     QString filepath() const override;
-    bool isReadOnly() const override;
     bool open() override;
     bool isOpen() const override;
     void close() override;
@@ -41,5 +39,3 @@ private:
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_BINCUEDEVICESOURCE__

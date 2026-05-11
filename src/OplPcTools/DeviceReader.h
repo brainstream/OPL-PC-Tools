@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DEVICE__
-#define __OPLPCTOOLS_DEVICE__
+#pragma once
 
 #include <QString>
 #include <QList>
@@ -36,7 +35,7 @@ struct DeviceName
 QList<DeviceName> loadDriveList();
 
 class DeviceReader final
-{   
+{
     Q_DISABLE_COPY(DeviceReader)
 
 public:
@@ -53,7 +52,6 @@ public:
     bool open();
     void close();
     bool isOpen() const;
-    inline bool isReadOnly() const;
     bool seek(quint64 _offset);
     qint64 read(QByteArray & _buffer);
 
@@ -96,11 +94,4 @@ void DeviceReader::setMediaType(MediaType _media_type)
     m_media_type = _media_type;
 }
 
-bool DeviceReader::isReadOnly() const
-{
-    return m_source_ptr->isReadOnly();
-}
-
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_DEVICE__

@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DEVICESOURCE__
-#define __OPLPCTOOLS_DEVICESOURCE__
+#pragma once
 
 #include <QString>
 #include <QByteArray>
@@ -29,7 +28,6 @@ class DeviceSource
 public:
     virtual ~DeviceSource() { }
     virtual QString filepath() const = 0;
-    virtual bool isReadOnly() const = 0;
     virtual bool open() = 0;
     virtual bool isOpen() const = 0;
     virtual void close() = 0;
@@ -38,5 +36,3 @@ public:
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_DEVICESOURCE__

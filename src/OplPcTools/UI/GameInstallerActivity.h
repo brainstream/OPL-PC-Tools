@@ -48,12 +48,13 @@ private:
     void taskSelectionChanged();
     void addDiscImage();
     void addDiscImage(const QString & _file_path);
+    static bool isSourceFileSupported(const QString & _file_path);
     void addDisc();
     QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
     void renameGame();
     void removeGame();
     void mediaTypeChanged(bool _checked);
-    void splitUpOptionChanged(bool _checked);
+    void targetOptionChanged(bool _checked);
     void renameOptionChanged();
     void moveOptionChanged();
     void install();

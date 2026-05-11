@@ -22,6 +22,7 @@
 #include <OplPcTools/IsoRestorer.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/Constants.h>
 #include <QFileDialog>
 #include <cmath>
 
@@ -79,10 +80,12 @@ bool IsoRestorerActivity::onAttach()
     mp_label_title->setText(game->title());
     Settings & settings = Settings::instance();
     QString iso_dir = settings.path(Settings::Directory::IsoRecover);
-    QString iso_filename = iso_dir.isEmpty() ?  game->title() + ".iso" :
-        QDir(iso_dir).absoluteFilePath(game->title() + ".iso");
-    iso_filename = QFileDialog::getSaveFileName(this, tr("Choose an ISO image filename to save"),
-        iso_filename, tr("ISO Image") + " (*.iso)");
+    QString iso_filename = iso_dir.isEmpty() ?  game->title() + g_file_ext_iso :
+        QDir(iso_dir).absoluteFilePath(game->title() + g_file_ext_iso);
+    iso_filename = QFileDialog::getSaveFileName(
+        this,
+        tr("Choose an ISO image filename to save"),
+        iso_filename, tr("ISO Image") + QString(" (%1)").arg(g_filename_pattern_iso));
     if(iso_filename.isEmpty())
         return false;
     settings.setPath(Settings::Directory::IsoRecover, QFileInfo(iso_filename).absoluteDir().absolutePath());

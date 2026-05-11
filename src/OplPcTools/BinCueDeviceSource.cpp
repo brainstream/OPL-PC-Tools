@@ -37,11 +37,6 @@ QString BinCueDeviceSource::filepath() const
     return m_bin_file.fileName();
 }
 
-bool BinCueDeviceSource::isReadOnly() const
-{
-    return true;
-}
-
 bool BinCueDeviceSource::open()
 {
     return m_bin_file.open(QIODevice::ReadOnly);

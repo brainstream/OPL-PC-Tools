@@ -23,6 +23,7 @@
 #include <OplPcTools/Library.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/Constants.h>
 #include <QThread>
 #include <list>
 
@@ -127,7 +128,7 @@ bool GameImporter::emplaceIsoTask(std::list<FileCopyTask> & _tasks)
     if(!dest_directory.exists(media_dir))
         dest_directory.mkdir(media_dir);
     dest_directory.cd(media_dir);
-    foreach(const QString & iso, src_directory.entryList({ "*.iso" }))
+    foreach(const QString & iso, src_directory.entryList({ g_file_ext_iso }))
     {
         if(iso.contains(m_game.title()))
         {

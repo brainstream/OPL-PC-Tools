@@ -113,11 +113,6 @@ QString OpticalDriveDeviceSource::filepath() const
     return mp_file->fileName();
 }
 
-bool OpticalDriveDeviceSource::isReadOnly() const
-{
-    return true;
-}
-
 bool OpticalDriveDeviceSource::open()
 {
     return mp_file->open(QIODevice::ReadOnly);

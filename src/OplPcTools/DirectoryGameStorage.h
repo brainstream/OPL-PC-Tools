@@ -16,10 +16,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
-#define __OPLPCTOOLS_DIRECTORYGAMESTORAGE__
+#pragma once
 
 #include <OplPcTools/GameStorage.h>
+#include <OplPcTools/Constants.h>
 
 namespace OplPcTools {
 
@@ -31,9 +31,10 @@ public:
     explicit DirectoryGameStorage(QObject * _parent = nullptr);
     GameInstallationType installationType() const override;
 
-    static QString makeIsoFilename(const QString & _title, const QString & _id);
-    static QString makeIsoFilename(const QString & _title);
-    static QString makeGameIsoFilename(const QString & _title, const QString & _id);
+    static QString makeIsoFilename(const QString & _title, const QString & _id, const QString _ext);
+    static QString makeIsoFilename(const QString & _title, const QString _ext);
+    static QString makeGameIsoFilename(const QString & _title, const QString & _id, const QString _ext);
+    static QString getFilenameExtension(const Game & _game);
 
 protected:
     bool performLoading(const QDir & _directory) override;
@@ -49,5 +50,3 @@ private:
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_DIRECTORYGAMESTORAGE__

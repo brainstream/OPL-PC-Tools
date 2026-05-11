@@ -19,34 +19,74 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="20"/>
         <source>About Program</source>
-        <translation>О программе</translation>
+        <translation type="vanished">О программе</translation>
     </message>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="96"/>
+        <location filename="../UI/AboutDialog.ui" line="94"/>
         <source>Version %1</source>
         <translation>Версия %1</translation>
     </message>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="119"/>
+        <location filename="../UI/AboutDialog.ui" line="140"/>
+        <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="153"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Sergey Smolyannikov aka brainstream&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="127"/>
+        <source>&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="20"/>
+        <source>About OPL PC Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="101"/>
+        <source>Tools for managing PS2 disc images used in &lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Open Playstation 2 Loader&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="182"/>
+        <source>This project uses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="188"/>
+        <source>&lt;a href=&quot;https://www.qt.io&quot;&gt;Qt – a cross-platform application development framework&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="201"/>
+        <source>&lt;a href=&quot;https://github.com/lz4/lz4&quot;&gt;LZ4 – extremely fast compression algorithm&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="214"/>
+        <source>&lt;a href=&quot;https://ia903209.us.archive.org/view_archive.php?archive=/34/items/ps2-opl-cover-art-set/PS2_OPL_ART_kira.7z&quot;&gt;A large collection of game art at archive.org&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Tools for managing PS2 disc images used in OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
-        <translation>Инструмент для управления образами дисков PS2, использующихся в OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Официальная страница на GitHub&lt;/a&gt;</translation>
+        <translation type="vanished">Инструмент для управления образами дисков PS2, использующихся в OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Официальная страница на GitHub&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="129"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Sergey Smolyannikov&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Сергей Смольянников&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Сергей Смольянников&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="158"/>
         <source>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;OPL page on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Страница OPL на GitHub&lt;/a</translation>
+        <translation type="vanished">&lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Страница OPL на GitHub&lt;/a</translation>
     </message>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="171"/>
         <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, верисия 3&lt;/a</translation>
+        <translation type="vanished">&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, верисия 3&lt;/a</translation>
     </message>
 </context>
 <context>

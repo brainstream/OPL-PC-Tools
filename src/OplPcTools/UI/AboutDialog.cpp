@@ -29,9 +29,9 @@ AboutDialog::AboutDialog(QWidget * _parent /*= nullptr*/) :
     static const int start_development_year = 2017;
     int build_year = QString(__DATE__).right(4).toInt();
     QString years = (start_development_year < build_year) ?
-        QString("%1 - %2").arg(start_development_year).arg(build_year) :
+        QString("%1 – %2").arg(start_development_year).arg(build_year) :
         QString::number(build_year);
     mp_label_version->setText(mp_label_version->text().arg(APPLICATION_VERSION));
-    mp_label_description->setText(mp_label_description->text().arg(years));
+    mp_label_copyright->setText(mp_label_copyright->text().arg(years));
     adjustSize();
 }

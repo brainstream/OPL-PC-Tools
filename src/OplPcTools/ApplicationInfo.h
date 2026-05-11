@@ -16,13 +16,16 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_APPLICATIONINFO__
-#define __OPLPCTOOLS_APPLICATIONINFO__
+#pragma once
 
 #include <QtGlobal>
 
 #define APPLICATION_NAME           QT_STRINGIFY(_OPLPCTOOLS_EXE)
 #define APPLICATION_DISPLAY_NAME   "OPL PC Tools"
-#define APPLICATION_VERSION        QT_STRINGIFY(_OPLPCTOOLS_VERSION_MAJOR) "." QT_STRINGIFY(_OPLPCTOOLS_VERSION_MINOR)
+#define APPLICATION_VERSION_BASE   QT_STRINGIFY(_OPLPCTOOLS_VERSION_MAJOR) "." QT_STRINGIFY(_OPLPCTOOLS_VERSION_MINOR)
 
-#endif // __OPLPCTOOLS_APPLICATIONINFO__
+#ifdef _OPLPCTOOLS_VERSION_SUFFIX
+#   define APPLICATION_VERSION APPLICATION_VERSION_BASE " " QT_STRINGIFY(_OPLPCTOOLS_VERSION_SUFFIX)
+#else
+#   define APPLICATION_VERSION APPLICATION_VERSION_BASE
+#endif

@@ -446,61 +446,61 @@
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="491"/>
-        <source>Compressed:</source>
+        <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="537"/>
+        <location filename="../UI/GameListWidget.ui" line="531"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="540"/>
+        <location filename="../UI/GameListWidget.ui" line="534"/>
         <source>Edit game</source>
         <translation>Редактировать игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="552"/>
+        <location filename="../UI/GameListWidget.ui" line="546"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="555"/>
+        <location filename="../UI/GameListWidget.ui" line="549"/>
         <source>Delete game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="567"/>
+        <location filename="../UI/GameListWidget.ui" line="561"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="570"/>
+        <location filename="../UI/GameListWidget.ui" line="564"/>
         <source>Install game</source>
         <translation>Установить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="582"/>
+        <location filename="../UI/GameListWidget.ui" line="576"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="585"/>
+        <location filename="../UI/GameListWidget.ui" line="579"/>
         <source>Rename game</source>
         <translation>Переименовать игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="597"/>
+        <location filename="../UI/GameListWidget.ui" line="591"/>
         <source>Restore ISO</source>
         <translation>Восстановить ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="609"/>
+        <location filename="../UI/GameListWidget.ui" line="603"/>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="612"/>
+        <location filename="../UI/GameListWidget.ui" line="606"/>
         <source>Import game</source>
         <translation>Импорт игр</translation>
     </message>

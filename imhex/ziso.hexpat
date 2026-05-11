@@ -27,4 +27,4 @@ struct ZsoIndex
 
 u32 block_count = zso.total_bytes / zso.block_size;
 ZsoIndex indices[block_count] @ zso.header_size  [[name("Indices")]];
-u32 data_start @ zso.header_size + block_count * 4;
+u32 data_start @ zso.header_size + block_count * 4 + 4;

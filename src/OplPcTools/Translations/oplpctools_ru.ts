@@ -564,19 +564,31 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::DefaultDeviceWriter</name>
+    <name>OplPcTools::CompressedDeviceWriter</name>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="37"/>
-        <source>File already exists: &quot;%1&quot;</source>
-        <translation type="unfinished">Файл уже существует: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="48"/>
+        <location filename="../CompressedDeviceWriter.cpp" line="81"/>
         <source>An error occurred during reading the source medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
+        <location filename="../CompressedDeviceWriter.cpp" line="89"/>
+        <source>An error occurred during compressing the source data</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::DefaultDeviceWriter</name>
+    <message>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation type="obsolete">Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="46"/>
+        <source>An error occurred during reading the source medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="54"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation type="unfinished">Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
@@ -846,32 +858,32 @@
         <translation type="vanished">Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="388"/>
         <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="395"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="396"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="434"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="435"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="619"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="620"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="663"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="663"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -1191,27 +1203,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="157"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="159"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="161"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -1277,17 +1289,17 @@
         <translation>Не могу открыть файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="51"/>
+        <location filename="../File.h" line="52"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать файл &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="58"/>
+        <location filename="../File.h" line="59"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="66"/>
+        <location filename="../File.h" line="67"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
         <translation>Не могу прочитать файл: &quot;%1&quot;</translation>
     </message>
@@ -1412,7 +1424,12 @@ Want to skip it?</source>
         <translation type="vanished">&quot;%1&quot; не является файлом</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="92"/>
+        <location filename="../File.cpp" line="84"/>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation type="unfinished">Файл уже существует: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../File.cpp" line="99"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Не могу открыть файл для записи: &quot;%1&quot;</translation>
     </message>

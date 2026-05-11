@@ -33,9 +33,7 @@ bool DefaultDeviceWriter::write(DeviceReader & _reader, const QString & _destina
 {
     const qsizetype read_size = 4194304;
     QByteArray bytes(read_size, Qt::Initialization::Uninitialized);
-    if(QFile::exists(_destination))
-        throw IOException(tr("File already exists: \"%1\"").arg(_destination));
-    QSharedPointer<QFile> dest = openFileToSyncWrite(_destination, OFSM_WRITE | OFSM_CREATE);
+    QSharedPointer<QFile> dest = createFileToSyncWrite(_destination);
     const quint64 iso_size = _reader.size();
     _reader.seek(0);
     for(quint64 total_read_bytes = 0, write_operation = 0; total_read_bytes < iso_size; ++write_operation)

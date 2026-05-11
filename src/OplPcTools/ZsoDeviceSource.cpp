@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/ZsoDeviceSource.h>
-#include <lz4.h>
+#include <OplPcTools/Zso.h>
 #include <QFile>
 #include <QList>
 
@@ -26,19 +26,6 @@ static_assert(Q_BYTE_ORDER == Q_LITTLE_ENDIAN, "ZsoDeviceSource: only little-end
 using namespace OplPcTools;
 
 namespace {
-
-constexpr quint32 g_zso_magic = 0x4F53495A;
-
-struct __attribute__((packed)) ZsoHeader
-{
-    quint32 magic;       // 0
-    quint32 header_size; // 4
-    quint64 total_bytes; // 8
-    quint32 block_size;  // 16
-    quint8 version;      // 20
-    quint8 align;        // 21
-    quint8 reserved[2];  // 22
-};
 
 struct  ZsoIndex
 {
@@ -109,6 +96,7 @@ bool ZsoDeviceSource::ZsoImage::open()
     if(
         m_file.read(reinterpret_cast<char *>(&m_header), sizeof(ZsoHeader)) != sizeof(ZsoHeader) ||
         m_header.magic != g_zso_magic ||
+        m_header.version != g_zso_version_1 ||
         !initIndex())
     {
         m_file.close();
@@ -240,13 +228,7 @@ QByteArray ZsoDeviceSource::ZsoImage::readBlock(quint32 _index)
             m_cache.reset();
             return m_cache.data;
         }
-        const int decompressed_bytes = LZ4_decompress_safe_partial(
-            compressed_data.constData(),
-            m_cache.data.data(),
-            compressed_size,
-            m_header.block_size,
-            m_header.block_size);
-        if(decompressed_bytes < 0)
+        if(!decompressZsoBlock(compressed_data, m_cache.data))
         {
             m_cache.reset();
             return m_cache.data;

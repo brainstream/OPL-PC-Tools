@@ -75,8 +75,8 @@ bool DirectoryGameInstaller::performInstallation()
             throw IOException(tr("Unable to open device to read: \"%1\"").arg(mr_device.filepath()));
         try
         {
-        if(!m_writer_ptr->write(mr_device, dest_filepath))
-            return false;
+            if(!m_writer_ptr->write(mr_device, dest_filepath))
+                return false;
         }
         catch(...)
         {

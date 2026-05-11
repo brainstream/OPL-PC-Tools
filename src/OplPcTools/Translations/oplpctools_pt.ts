@@ -564,19 +564,31 @@
     </message>
 </context>
 <context>
-    <name>OplPcTools::DefaultDeviceWriter</name>
+    <name>OplPcTools::CompressedDeviceWriter</name>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="37"/>
-        <source>File already exists: &quot;%1&quot;</source>
-        <translation type="unfinished">O arquivo já existe: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="48"/>
+        <location filename="../CompressedDeviceWriter.cpp" line="81"/>
         <source>An error occurred during reading the source medium</source>
         <translation type="unfinished">Um erro ocorreu durante a leitura da fonte</translation>
     </message>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
+        <location filename="../CompressedDeviceWriter.cpp" line="89"/>
+        <source>An error occurred during compressing the source data</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::DefaultDeviceWriter</name>
+    <message>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation type="obsolete">O arquivo já existe: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="46"/>
+        <source>An error occurred during reading the source medium</source>
+        <translation type="unfinished">Um erro ocorreu durante a leitura da fonte</translation>
+    </message>
+    <message>
+        <location filename="../DefaultDeviceWriter.cpp" line="54"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation type="unfinished">Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
@@ -846,32 +858,32 @@
         <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="387"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="388"/>
         <source>All Supported Images (*%1 *%2 *%3 *%4);;ISO Images (*%1);;Compressed ISO Images (*%2);;Bin Files (*%3);;Nero Images (*%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="395"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="396"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="434"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="435"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="619"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="620"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="663"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="662"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="663"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -1191,27 +1203,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="153"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="154"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="155"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="156"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="157"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="158"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="159"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="160"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="161"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="162"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -1277,17 +1289,17 @@
         <translation>Não foi possível abrir o arquivo &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="51"/>
+        <location filename="../File.h" line="52"/>
         <source>Unable to rename file &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Não foi possível renomear o arquivo &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="58"/>
+        <location filename="../File.h" line="59"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation>Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../File.h" line="66"/>
+        <location filename="../File.h" line="67"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
         <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
     </message>
@@ -1412,7 +1424,12 @@ Want to skip it?</source>
         <translation type="vanished">&quot;%1&quot; não é um arquivo</translation>
     </message>
     <message>
-        <location filename="../File.cpp" line="92"/>
+        <location filename="../File.cpp" line="84"/>
+        <source>File already exists: &quot;%1&quot;</source>
+        <translation type="unfinished">O arquivo já existe: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../File.cpp" line="99"/>
         <source>Unable to open file to write: &quot;%1&quot;</source>
         <translation>Incapaz de abrir o arquivo para escrita: &quot;%1&quot;</translation>
     </message>

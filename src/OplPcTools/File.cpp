@@ -78,6 +78,13 @@ typedef QFile SynchronouslyWritableFile;
 
 namespace OplPcTools {
 
+QSharedPointer<QFile> createFileToSyncWrite(const QString & _filename)
+{
+    if(QFile::exists(_filename))
+        throw IOException(QObject::tr("File already exists: \"%1\"").arg(_filename));
+    return openFileToSyncWrite(_filename, OFSM_WRITE | OFSM_CREATE);
+}
+
 QSharedPointer<QFile> openFileToSyncWrite(const QString & _filename, OpenFileSyncMode _mode)
 {
     QSharedPointer<QFile> file = QSharedPointer<QFile>(new SynchronouslyWritableFile(_filename));

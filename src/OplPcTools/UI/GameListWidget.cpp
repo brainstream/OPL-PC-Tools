@@ -21,6 +21,7 @@
 #include <OplPcTools/UI/IsoRestorerActivity.h>
 #include <OplPcTools/UI/GameImporterActivity.h>
 #include <OplPcTools/UI/GameInstallerActivity.h>
+#include <OplPcTools/UI/GameArtDownloaderActivity.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/UI/GameListWidget.h>
@@ -45,6 +46,7 @@ public:
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
     const Game * game(const QModelIndex & _index) const;
+    int gameCount() const;
     void setArtManager(GameArtManager & _manager);
 
 private:
@@ -164,6 +166,11 @@ int GameListWidget::GameTreeModel::rowCount(const QModelIndex & _parent) const
 {
     if(_parent.isValid())
         return 0;
+    return gameCount();
+}
+
+inline int GameListWidget::GameTreeModel::gameCount() const
+{
     return m_uuids.size();
 }
 
@@ -232,6 +239,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_btn_delete->setDefaultAction(mp_action_delete);
     mp_btn_install->setDefaultAction(mp_action_install);
     mp_btn_import->setDefaultAction(mp_action_import);
+    mp_btn_download_arts->setDefaultAction(mp_action_download_arts);
     mp_btn_resore_iso->setDefaultAction(mp_action_restore_iso);
     mp_context_menu = new QMenu(this);
     mp_context_menu->addAction(mp_action_rename);
@@ -239,6 +247,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_context_menu->addAction(mp_action_restore_iso);
     mp_context_menu->addAction(mp_action_delete);
     mp_context_menu->addSeparator();
+    mp_context_menu->addAction(mp_action_download_arts);
     mp_context_menu->addAction(mp_action_import);
     mp_context_menu->addAction(mp_action_install);
     activateCollectionControls(false);
@@ -253,6 +262,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     connect(mp_action_import, &QAction::triggered, this, &GameListWidget::showGameImporter);
     connect(mp_action_install, &QAction::triggered, this, &GameListWidget::showGameInstaller);
     connect(mp_action_restore_iso, &QAction::triggered, this, &GameListWidget::showIsoRestorer);
+    connect(mp_action_download_arts, &QAction::triggered, this, &GameListWidget::downloadAllGameArts);
     connect(mp_tree_games, &QTreeView::activated, this, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameListWidget::showTreeContextMenu);
     connect(
@@ -477,4 +487,50 @@ void GameListWidget::startBusyThread(std::function<void()> _lambda)
         Application::showErrorMessage(message);
     });
     thread->start();
+}
+
+void GameListWidget::downloadAllGameArts()
+{
+    const QList<GameArtType> all_art_types(std::begin(g_all_game_art_types), std::end(g_all_game_art_types));
+    QList<GameArtDownloaderActivityTask> tasks;
+    tasks.reserve(mp_model->gameCount());
+    bool replace = false;
+    bool asked = false;
+    for(int row = 0; row < mp_model->gameCount(); ++row)
+    {
+        const Game * game = mp_model->game(mp_model->index(row, 0, QModelIndex()));
+        if(!game) continue;
+        std::optional<QList<GameArtType>> existent_art_types;
+        if(!asked)
+        {
+            existent_art_types = mp_game_art_manager->existentArts(game->id());
+            if(!existent_art_types->empty())
+            {
+                asked = true;
+                QMessageBox::StandardButton answer = QMessageBox::question(
+                    this,
+                    tr("Download Pictures"),
+                    tr("There are already some pictures. Do you want to replace them?"),
+                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                    QMessageBox::No);
+                if(answer == QMessageBox::No) replace = false;
+                else if(answer == QMessageBox::Yes) replace = true;
+                else return;
+            }
+        }
+        if(replace)
+        {
+            tasks.append({ game->id(), all_art_types });
+        }
+        else
+        {
+            if(!existent_art_types)
+                existent_art_types = mp_game_art_manager->existentArts(game->id());
+            QList<GameArtType> art_types = all_art_types;
+            foreach(GameArtType existent, *existent_art_types)
+                art_types.removeOne(existent);
+            tasks.append({ game->id(), art_types });
+        }
+    }
+    Application::pushActivity(*GameArtDownloaderActivity::createIntent(*mp_game_art_manager, tasks));
 }

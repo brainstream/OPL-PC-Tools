@@ -148,56 +148,6 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QToolButton" name="mp_btn_import">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="mp_btn_install">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -207,14 +157,88 @@
       <number>4</number>
      </property>
      <item>
-      <widget class="QLineEdit" name="mp_edit_filter">
-       <property name="placeholderText">
-        <string>Filter</string>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="mp_edit_filter">
+         <property name="placeholderText">
+          <string>Filter</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="mp_btn_download_arts">
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="mp_btn_import">
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="mp_btn_install">
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QTreeView" name="mp_tree_games">
@@ -558,13 +582,13 @@
      <normaloff>:/images/add</normaloff>:/images/add</iconset>
    </property>
    <property name="text">
-    <string>Install</string>
+    <string>Install games</string>
    </property>
    <property name="toolTip">
-    <string>Install game</string>
+    <string>Install games</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ins</string>
+    <string>Ins</string>
    </property>
   </action>
   <action name="mp_action_rename">
@@ -600,24 +624,44 @@
      <normaloff>:/images/copy</normaloff>:/images/copy</iconset>
    </property>
    <property name="text">
-    <string>Import</string>
+    <string>Import games</string>
    </property>
    <property name="toolTip">
-    <string>Import game</string>
+    <string>Import games</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+I</string>
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="mp_action_download_arts">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/download</normaloff>:/images/download</iconset>
+   </property>
+   <property name="text">
+    <string>Download all pictures</string>
+   </property>
+   <property name="toolTip">
+    <string>Download all pictures</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>
  <tabstops>
+  <tabstop>mp_tree_games</tabstop>
   <tabstop>mp_btn_rename</tabstop>
   <tabstop>mp_btn_edit</tabstop>
   <tabstop>mp_btn_resore_iso</tabstop>
   <tabstop>mp_btn_delete</tabstop>
-  <tabstop>mp_btn_install</tabstop>
   <tabstop>mp_edit_filter</tabstop>
-  <tabstop>mp_tree_games</tabstop>
+  <tabstop>mp_btn_download_arts</tabstop>
+  <tabstop>mp_btn_import</tabstop>
+  <tabstop>mp_btn_install</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources/Resources.qrc"/>

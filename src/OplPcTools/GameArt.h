@@ -36,6 +36,18 @@ enum class GameArtType
     Logo         = 0x80
 };
 
+constexpr GameArtType g_all_game_art_types[]
+{
+    GameArtType::Icon,
+    GameArtType::Front,
+    GameArtType::Back,
+    GameArtType::Spine,
+    GameArtType::Screenshot1,
+    GameArtType::Screenshot2,
+    GameArtType::Background,
+    GameArtType::Logo
+};
+
 inline uint qHash(GameArtType _game_art_type, uint _seed = 0) noexcept
 {
     return ::qHash(static_cast<int>(_game_art_type), _seed);

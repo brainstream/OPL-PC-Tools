@@ -21,10 +21,18 @@
 #include <OplPcTools/UI/Activity.h>
 #include <OplPcTools/UI/Intent.h>
 #include <OplPcTools/GameArtManager.h>
+#include <OplPcTools/GameArtNetworkSource.h>
 #include "ui_GameArtDownloaderActivity.h"
+#include <QQueue>
 
 namespace OplPcTools {
 namespace UI {
+
+struct GameArtDownloaderActivityTask
+{
+    QString game_id;
+    QList<GameArtType> art_types;
+};
 
 class GameArtDownloaderActivity : public Activity, private Ui::ArtDownloaderActivity
 {
@@ -33,14 +41,22 @@ class GameArtDownloaderActivity : public Activity, private Ui::ArtDownloaderActi
 public:
     GameArtDownloaderActivity(
         GameArtManager & _art_manager,
-        const QString & _game_id,
-        const QList<GameArtType> & _art_types,
+        const QList<GameArtDownloaderActivityTask> & _tasks,
         QWidget * _parent = nullptr);
+    bool onAttach() override;
 
     static QSharedPointer<Intent> createIntent(
         GameArtManager & _art_manager,
-        const QString & _game_id,
-        const QList<GameArtType> & _art_types);
+        const QList<GameArtDownloaderActivityTask> & _tasks);
+
+private:
+    bool placeNextTask();
+
+private:
+    GameArtManager & mr_art_manager;
+    GameArtDownloader * mp_downloader;
+    QQueue<GameArtDownloaderActivityTask> m_tasks;
+    GameArtDownloaderTask * mp_current_task;
 };
 
 } // namespace UI

@@ -60,6 +60,7 @@ private:
     void onGameArtChanged(const QString & _game_id, GameArtType _type);
     void onGameSelected();
     void showIsoRestorer();
+    void downloadAllGameArts();
 
 private:
     GameArtManager * mp_game_art_manager;

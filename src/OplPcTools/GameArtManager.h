@@ -41,6 +41,7 @@ public:
     void deleteArt(const QString & _game_id, GameArtType _type);
     void clearArts(const QString & _game_id);
     void setArt(const QString & _game_id, GameArtType _type, const GameArtSource & _source);
+    QList<GameArtType> existentArts(const QString & _game_id) const;
 
     static QString makeArtFilename(const QString & _game_id, const GameArtProperties & _porperties)
     {
@@ -51,6 +52,7 @@ signals:
     void artChanged(const QString & _game_id, OplPcTools::GameArtType _type);
 
 private:
+    QStringList makeFilePaths(const QString & _game_id, GameArtType _type) const;
     void clearCache(GameArtType _type);
     Maybe<QPixmap> findInCache(const QString & _game_id, GameArtType _type) const;
     void cacheArt(const QString & _game_id, GameArtType _type, const QPixmap & _pixmap);

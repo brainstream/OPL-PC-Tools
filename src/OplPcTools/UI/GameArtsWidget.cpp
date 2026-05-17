@@ -244,25 +244,9 @@ void GameArtsWidget::deleteGameArt()
 
 void GameArtsWidget::downloadAllGameArts()
 {
-    QList<GameArtType> art_types =
+    QList<GameArtType> art_types(std::begin(g_all_game_art_types), std::end(g_all_game_art_types));
     {
-        GameArtType::Icon,
-        GameArtType::Front,
-        GameArtType::Back,
-        GameArtType::Spine,
-        GameArtType::Screenshot1,
-        GameArtType::Screenshot2,
-        GameArtType::Background,
-        GameArtType::Logo
-    };
-    {
-        QList<GameArtType> existent_art_types;
-        for(int i = 0; i < mp_list_arts->count(); ++i)
-        {
-            ArtListItem * item = static_cast<ArtListItem *>(mp_list_arts->item(i));
-            if(item && item->hasPixmap())
-                existent_art_types.append(item->type());
-        }
+        QList<GameArtType> existent_art_types = mr_art_manager.existentArts(m_game_id);
         if(!existent_art_types.empty())
         {
             QMessageBox::StandardButton replace = QMessageBox::question(
@@ -289,7 +273,9 @@ void GameArtsWidget::downloadGameArts(const QList<GameArtType> & _types)
 {
     if(!_types.empty())
     {
-        QSharedPointer<Intent> intent = GameArtDownloaderActivity::createIntent(mr_art_manager, m_game_id, _types);
+        QSharedPointer<Intent> intent = GameArtDownloaderActivity::createIntent(
+            mr_art_manager,
+            { GameArtDownloaderActivityTask { m_game_id, _types } });
         Application::pushActivity(*intent);
     }
 }

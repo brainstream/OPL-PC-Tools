@@ -460,88 +460,113 @@
 <context>
     <name>GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="212"/>
+        <location filename="../UI/GameListWidget.ui" line="164"/>
         <source>Filter</source>
         <translation>Filtrar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="411"/>
+        <location filename="../UI/GameListWidget.ui" line="435"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="431"/>
+        <location filename="../UI/GameListWidget.ui" line="455"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="451"/>
+        <location filename="../UI/GameListWidget.ui" line="475"/>
         <source>Source:</source>
         <translation>Fonte:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="471"/>
+        <location filename="../UI/GameListWidget.ui" line="495"/>
         <source>Parts:</source>
         <translation>Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="491"/>
+        <location filename="../UI/GameListWidget.ui" line="515"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="531"/>
+        <location filename="../UI/GameListWidget.ui" line="555"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="534"/>
+        <location filename="../UI/GameListWidget.ui" line="558"/>
         <source>Edit game</source>
         <translation>Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="546"/>
+        <location filename="../UI/GameListWidget.ui" line="570"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="549"/>
+        <location filename="../UI/GameListWidget.ui" line="573"/>
         <source>Delete game</source>
         <translation>Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="561"/>
+        <location filename="../UI/GameListWidget.ui" line="585"/>
+        <location filename="../UI/GameListWidget.ui" line="588"/>
+        <source>Install games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="591"/>
+        <source>Ins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="627"/>
+        <location filename="../UI/GameListWidget.ui" line="630"/>
+        <source>Import games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="633"/>
+        <source>Ctrl+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Install</source>
-        <translation>Instalar</translation>
+        <translation type="vanished">Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="564"/>
         <source>Install game</source>
-        <translation>Instalar jogo</translation>
+        <translation type="vanished">Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="576"/>
+        <location filename="../UI/GameListWidget.ui" line="600"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="579"/>
+        <location filename="../UI/GameListWidget.ui" line="603"/>
         <source>Rename game</source>
         <translation>Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="591"/>
+        <location filename="../UI/GameListWidget.ui" line="615"/>
         <source>Restore ISO</source>
         <translation>Restaurar ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="603"/>
-        <source>Import</source>
+        <location filename="../UI/GameListWidget.ui" line="648"/>
+        <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="606"/>
-        <source>Import game</source>
+        <source>Pictures</source>
+        <translation type="obsolete">Imagens</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="642"/>
+        <location filename="../UI/GameListWidget.ui" line="645"/>
+        <source>Download all pictures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -816,12 +841,12 @@
         <translation>Tem certeza que quer apagar esta imagem?</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="270"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="254"/>
         <source>Download Pictures</source>
         <translation>Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameArtsWidget.cpp" line="271"/>
+        <location filename="../UI/GameArtsWidget.cpp" line="255"/>
         <source>Do you want to replace existing pictures?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -964,24 +989,34 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="373"/>
+        <location filename="../UI/GameListWidget.cpp" line="383"/>
         <source>Directory</source>
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="446"/>
+        <location filename="../UI/GameListWidget.cpp" line="456"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="447"/>
+        <location filename="../UI/GameListWidget.cpp" line="457"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="449"/>
+        <location filename="../UI/GameListWidget.cpp" line="459"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.cpp" line="513"/>
+        <source>Download Pictures</source>
+        <translation type="unfinished">Baixar imagem</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.cpp" line="514"/>
+        <source>There are already some pictures. Do you want to replace them?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1311,7 +1346,7 @@
         <translation>%1 byte(s) restante</translation>
     </message>
     <message>
-        <location filename="../GameArtManager.cpp" line="145"/>
+        <location filename="../GameArtManager.cpp" line="157"/>
         <source>Unable to save file &quot;%1&quot;</source>
         <translation>Incapaz de salvar o arquivo &quot;%1&quot;</translation>
     </message>

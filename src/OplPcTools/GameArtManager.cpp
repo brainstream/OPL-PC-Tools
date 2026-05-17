@@ -63,11 +63,9 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
     QDir dir(m_directory_path);
     if(!dir.exists())
         return QPixmap();
-    static const QStringList exts { ".png", ".jpeg", ".jpg", ".bmp" };
-    const QString sfx = m_art_props[_type].suffix;
-    for(const QString & ext : exts)
+    for(const QString & path : makeFilePaths(_game_id, _type))
     {
-        QFile file(dir.absoluteFilePath(_game_id + sfx + ext));
+        QFile file(path);
         if(!file.exists()) continue;
         QPixmap pixmap(file.fileName());
         if(pixmap.isNull()) continue;
@@ -79,6 +77,20 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
         return pixmap;
     }
     return QPixmap();
+}
+
+QStringList GameArtManager::makeFilePaths(const QString & _game_id, GameArtType _type) const
+{
+    static const QStringList exts { ".png", ".jpeg", ".jpg", ".bmp" };
+    const QString sfx = m_art_props[_type].suffix;
+    QDir dir(m_directory_path);
+    QStringList result;
+    result.reserve(exts.count());
+    foreach(const QString & ext, exts)
+    {
+        result.append(dir.absoluteFilePath(_game_id + sfx + ext));
+    }
+    return result;
 }
 
 Maybe<QPixmap> GameArtManager::findInCache(const QString & _game_id, GameArtType _type) const
@@ -146,4 +158,21 @@ void GameArtManager::setArt(const QString & _game_id, GameArtType _type, const G
     if(m_cached_types & _type)
         cacheArt(_game_id, _type, pixmap);
     emit artChanged(_game_id, _type);
+}
+
+QList<GameArtType> GameArtManager::existentArts(const QString & _game_id) const
+{
+    QList<GameArtType> art_types;
+    for(GameArtType art_type : g_all_game_art_types)
+    {
+        foreach(const QString & path, makeFilePaths(_game_id, art_type))
+        {
+            if(QFile::exists(path))
+            {
+                art_types.append(art_type);
+                break;
+            }
+        }
+    }
+    return art_types;
 }

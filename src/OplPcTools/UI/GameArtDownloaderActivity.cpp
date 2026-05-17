@@ -18,7 +18,6 @@
 
 #include <OplPcTools/UI/GameArtDownloaderActivity.h>
 #include <OplPcTools/UI/Application.h>
-#include <OplPcTools/GameArtNetworkSource.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -30,18 +29,16 @@ class ArtDownloaderIntent : public Intent
 public:
     ArtDownloaderIntent(
         GameArtManager & _art_manager,
-        const QString & _game_id,
-        const QList<GameArtType> & _art_types
+        const QList<GameArtDownloaderActivityTask> & _tasks
     ) :
         mr_art_manager(_art_manager),
-        m_game_id(_game_id),
-        m_art_types(_art_types)
+        m_tasks(_tasks)
     {
     }
 
     Activity * createActivity(QWidget * _parent) override
     {
-        return new GameArtDownloaderActivity(mr_art_manager, m_game_id, m_art_types, _parent);
+        return new GameArtDownloaderActivity(mr_art_manager, m_tasks, _parent);
     }
 
     QString activityClass() const override
@@ -51,51 +48,86 @@ public:
 
 private:
     GameArtManager & mr_art_manager;
-    const QString m_game_id;
-    const QList<GameArtType> m_art_types;
+    const QList<GameArtDownloaderActivityTask> m_tasks;
 };
 
 } // namespace name
 
 GameArtDownloaderActivity::GameArtDownloaderActivity(
     GameArtManager & _art_manager,
-    const QString & _game_id,
-    const QList<GameArtType> & _art_types,
+    const QList<GameArtDownloaderActivityTask> & _tasks,
     QWidget * _parent /*= nullptr*/
 ) :
-    Activity(_parent)
+    Activity(_parent),
+    mr_art_manager(_art_manager),
+    mp_downloader(new GameArtDownloader(this)),
+    mp_current_task(nullptr)
 {
     setupUi(this);
-    if(_art_types.empty())
+
+    qsizetype total_art_count = 0;
+    foreach(const GameArtDownloaderActivityTask & t, _tasks)
+    {
+        if(t.art_types.empty())
+            continue;
+        m_tasks.enqueue(t);
+        total_art_count += t.art_types.count();
+    }
+    if(m_tasks.empty())
     {
         deleteLater();
         return;
     }
+
     mp_progress_bar->setMinimum(0);
-    mp_progress_bar->setMaximum(_art_types.count());
+    mp_progress_bar->setMaximum(total_art_count);
     mp_progress_bar->setValue(0);
-    GameArtDownloader * downloader = new GameArtDownloader(this);
-    connect(downloader, &GameArtDownloader::taskComplete, this, [this, downloader](quint32, const QStringList & __errors) {
-       downloader->deleteLater();
-       if(!__errors.isEmpty())
-           Application::showErrorMessage(__errors.join("\n\n"));
-       close();
+
+    connect(mp_downloader, &GameArtDownloader::taskComplete, this, [this](quint32, const QStringList & __errors) {
+        mp_current_task = nullptr;
+        if(!__errors.isEmpty())
+            Application::showErrorMessage(__errors.join("\n\n"));
+        if(!placeNextTask())
+        {
+            mp_downloader->deleteLater();
+            close();
+        }
     });
-    connect(downloader, &GameArtDownloader::downloadComplete, this, [this, &_art_manager, _game_id](
+    connect(mp_downloader, &GameArtDownloader::downloadComplete, this, [this](
         const OplPcTools::GameArtNetworkTask & __task,
         const OplPcTools::GameArtNetworkSource & __source
     ) {
-        _art_manager.setArt(_game_id, __task.art_type, __source);
+        mr_art_manager.setArt(__task.game_id, __task.art_type, __source);
         mp_progress_bar->setValue(mp_progress_bar->value() + 1);
     });
-    GameArtDownloaderTask * task = downloader->downloadArts(_game_id, _art_types);
-    connect(mp_button_box, &QDialogButtonBox::rejected, task, &GameArtDownloaderTask::cancel);
+    connect(mp_button_box, &QDialogButtonBox::rejected, this, [this]() {
+        if(mp_current_task)
+        {
+            m_tasks.clear();
+            mp_current_task->cancel();
+        }
+    });
+}
+
+bool GameArtDownloaderActivity::onAttach()
+{
+    if(m_tasks.empty())
+        return false;
+    return placeNextTask();
+}
+
+bool GameArtDownloaderActivity::placeNextTask()
+{
+    if(m_tasks.empty())
+        return false;
+    GameArtDownloaderActivityTask task_src = m_tasks.dequeue();
+    mp_current_task = mp_downloader->downloadArts(task_src.game_id, task_src.art_types);
+    return true;
 }
 
 QSharedPointer<Intent> GameArtDownloaderActivity::createIntent(
     GameArtManager & _art_manager,
-    const QString & _game_id,
-    const QList<GameArtType> & _art_types)
+    const QList<GameArtDownloaderActivityTask> & _tasks)
 {
-    return QSharedPointer<Intent>(new ArtDownloaderIntent(_art_manager, _game_id, _art_types));
+    return QSharedPointer<Intent>(new ArtDownloaderIntent(_art_manager, _tasks));
 }

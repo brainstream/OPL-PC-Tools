@@ -926,37 +926,37 @@
         <translation type="vanished">Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="430"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="432"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="438"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="440"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="481"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="483"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="495"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="497"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="686"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="688"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="729"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="731"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="729"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="731"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -1276,27 +1276,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="174"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="176"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="176"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="178"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="178"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="180"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="180"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="182"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="182"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="184"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -1621,31 +1621,36 @@ Want to skip it?</source>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="115"/>
+        <source>Compress ISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Move ISO instead of copy</source>
         <translation>Перемещать ISO вместо копирования</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="122"/>
+        <location filename="../UI/SettingsDialog.ui" line="129"/>
         <source>Add a game ID to a filename</source>
         <translation>Добавлять ID к имени игр</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="146"/>
+        <location filename="../UI/SettingsDialog.ui" line="153"/>
         <source>Appearance</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="152"/>
+        <location filename="../UI/SettingsDialog.ui" line="159"/>
         <source>List Icon Size</source>
         <translation>Размер иконок в списках</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="173"/>
+        <location filename="../UI/SettingsDialog.ui" line="180"/>
         <source>VMC</source>
         <translation>VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="179"/>
+        <location filename="../UI/SettingsDialog.ui" line="186"/>
         <source>Default file system charset</source>
         <translation>Кодировка файловой системы по умолчанию</translation>
     </message>

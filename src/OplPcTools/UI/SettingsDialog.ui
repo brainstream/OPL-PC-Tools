@@ -110,6 +110,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="mp_checkbox_compress_iso">
+            <property name="text">
+             <string>Compress ISO</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="mp_checkobx_move_iso">
             <property name="text">
              <string>Move ISO instead of copy</string>
@@ -209,6 +216,7 @@
   <tabstop>mp_checkbox_confirm_vmc_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_vmc_file_deletion</tabstop>
   <tabstop>mp_checkbox_donot_splitup</tabstop>
+  <tabstop>mp_checkbox_compress_iso</tabstop>
   <tabstop>mp_checkobx_move_iso</tabstop>
   <tabstop>mp_checkbox_add_id</tabstop>
   <tabstop>mp_spinbox_icon_size</tabstop>

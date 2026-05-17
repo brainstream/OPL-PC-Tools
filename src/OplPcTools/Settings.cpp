@@ -31,6 +31,7 @@ const char confirm_pixmap_deletion[] = "Settings/ConfirmPixmapDeletion";
 const char confirm_vmc_deletion[] = "Settings/ConfirmVmcDeletion";
 const char confirm_vmc_file_deletion[] = "Settings/ConfirmVmcFileDeletion";
 const char split_up_iso[] = "Settings/SplitUpISO";
+const char compress_iso[] = "Settings/CompressISO";
 const char move_iso[] = "Settings/MoveISO";
 const char rename_iso[] = "Settings/RenameISO";
 const char check_new_version[] = "Settings/CheckNewVersion";
@@ -181,6 +182,17 @@ bool Settings::splitUpIso() const
 void Settings::setSplitUpIso(bool _value)
 {
     mp_settings->setValue(Key::split_up_iso, _value);
+}
+
+
+bool Settings::compressIso() const
+{
+    return mp_settings->value(Key::compress_iso, false).toBool();
+}
+
+void Settings::setCompressIso(bool _value)
+{
+    mp_settings->setValue(Key::compress_iso, _value);
 }
 
 bool Settings::moveIso() const

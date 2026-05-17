@@ -160,6 +160,8 @@ TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, SourceFormat _f
         m_target_format = TargetFormat::UlConfig;
     m_is_renaming_enabled = settings.renameIso();
     m_is_moving_enabled = settings.moveIso();
+    if(settings.compressIso())
+        m_target_format = TargetFormat::CompressedIso;
 }
 
 QVariant TaskListItem::data(int _column, int _role) const

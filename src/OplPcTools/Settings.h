@@ -60,6 +60,8 @@ public:
     void setConfirmVmcFileDeletion(bool _value);
     bool splitUpIso() const;
     void setSplitUpIso(bool _value);
+    bool compressIso() const;
+    void setCompressIso(bool _value);
     bool moveIso() const;
     void setMoveIso(bool _value);
     bool renameIso() const;

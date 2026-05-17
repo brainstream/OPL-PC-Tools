@@ -926,37 +926,37 @@
         <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="430"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="432"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="438"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="440"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="481"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="483"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="495"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="497"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="686"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="688"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="729"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="731"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="729"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="731"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -1276,27 +1276,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="174"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="176"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="176"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="178"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="178"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="180"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="180"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="182"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="182"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="184"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -1621,31 +1621,36 @@ Want to skip it?</source>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="115"/>
+        <source>Compress ISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Move ISO instead of copy</source>
         <translation>Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="122"/>
+        <location filename="../UI/SettingsDialog.ui" line="129"/>
         <source>Add a game ID to a filename</source>
         <translation>Adicionar um ID de jogo ao um arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="146"/>
+        <location filename="../UI/SettingsDialog.ui" line="153"/>
         <source>Appearance</source>
         <translation>Aparência</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="152"/>
+        <location filename="../UI/SettingsDialog.ui" line="159"/>
         <source>List Icon Size</source>
         <translation>Tamanho dos ícones na listagem</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="173"/>
+        <location filename="../UI/SettingsDialog.ui" line="180"/>
         <source>VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="179"/>
+        <location filename="../UI/SettingsDialog.ui" line="186"/>
         <source>Default file system charset</source>
         <translation type="unfinished"></translation>
     </message>

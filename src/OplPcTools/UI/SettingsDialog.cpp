@@ -35,6 +35,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_checkbox_confirm_vmc_deletion->setChecked(settings.confirmVmcDeletion());
     mp_checkbox_confirm_vmc_file_deletion->setChecked(settings.confirmVmcFileDeletion());
     mp_checkbox_donot_splitup->setChecked(!settings.splitUpIso());
+    mp_checkbox_compress_iso->setChecked(settings.compressIso());
     mp_checkbox_add_id->setChecked(settings.renameIso());
     mp_checkobx_move_iso->setChecked(settings.moveIso());
     mp_checkbox_validate_ulcfg->setChecked(settings.validateUlCfg());
@@ -64,6 +65,7 @@ void SettingsDialog::accept()
     settings.setConfirmVmcDeletion(mp_checkbox_confirm_vmc_deletion->isChecked());
     settings.setConfirmVmcFileDeletion(mp_checkbox_confirm_vmc_file_deletion->isChecked());
     settings.setSplitUpIso(!mp_checkbox_donot_splitup->isChecked());
+    settings.setCompressIso(mp_checkbox_compress_iso->isChecked());
     settings.setRenameIso(mp_checkbox_add_id->isChecked());
     settings.setMoveIso(mp_checkobx_move_iso->isChecked());
     settings.setValidateUlCfg(mp_checkbox_validate_ulcfg->isChecked());

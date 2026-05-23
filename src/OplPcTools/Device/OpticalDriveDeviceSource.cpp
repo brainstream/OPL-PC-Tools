@@ -19,7 +19,7 @@
 #ifdef _WIN32
 #   include <windows.h>
 #endif
-#include <OplPcTools/OpticalDriveDeviceSource.h>
+#include <OplPcTools/Device/OpticalDriveDeviceSource.h>
 
 using namespace OplPcTools;
 

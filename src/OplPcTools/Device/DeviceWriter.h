@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include <OplPcTools/DeviceReader.h>
+#include <OplPcTools/Device/DeviceReader.h>
 #include <QObject>
 
 namespace OplPcTools {

@@ -18,25 +18,80 @@
 
 #pragma once
 
-#include <QFile>
-#include <OplPcTools/DeviceSource.h>
+#include <QString>
+#include <QList>
+#include <QSharedPointer>
+#include <OplPcTools/MediaType.h>
+#include <OplPcTools/Device/DeviceSource.h>
 
 namespace OplPcTools {
 
-class BinCueDeviceSource : public DeviceSource
+struct DeviceName
 {
+    QString name;
+    QString filename;
+};
+
+QList<DeviceName> loadDriveList();
+
+class DeviceReader final
+{
+    Q_DISABLE_COPY(DeviceReader)
+
 public:
-    explicit BinCueDeviceSource(const QString & _bin_filepath);
-    QString filepath() const override;
-    bool open() override;
-    bool isOpen() const override;
-    qint64 isoSize() const override;
-    void close() override;
-    bool seek(qint64 _offset) override;
-    qint64 read(QByteArray & _buffer) override;
+    explicit DeviceReader(QSharedPointer<DeviceSource> _source);
+    const QString filepath() const;
+    bool init();
+    bool isInitialized() const;
+    inline QString title() const;
+    inline void setTitle(const QString _title);
+    inline quint64 size() const;
+    inline MediaType mediaType() const;
+    inline void setMediaType(MediaType _media_type);
+    inline const QString & gameId() const;
+    bool open();
+    void close();
+    bool isOpen() const;
+    bool seek(quint64 _offset);
+    qint64 read(QByteArray & _buffer);
 
 private:
-    QFile m_bin_file;
+    bool m_is_initialized;
+    QSharedPointer<DeviceSource> m_source_ptr;
+    MediaType m_media_type;
+    QString m_id;
+    QString m_title;
+    quint64 m_size;
 };
+
+QString DeviceReader::title() const
+{
+    return m_title;
+}
+
+void DeviceReader::setTitle(const QString _title)
+{
+    m_title = _title;
+}
+
+quint64 DeviceReader::size() const
+{
+    return m_size;
+}
+
+const QString & DeviceReader::gameId() const
+{
+    return m_id;
+}
+
+MediaType DeviceReader::mediaType() const
+{
+    return m_media_type;
+}
+
+void DeviceReader::setMediaType(MediaType _media_type)
+{
+    m_media_type = _media_type;
+}
 
 } // namespace OplPcTools

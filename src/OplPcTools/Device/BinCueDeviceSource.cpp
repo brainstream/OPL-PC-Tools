@@ -18,7 +18,7 @@
 
 #include <QFileInfo>
 #include <QDir>
-#include <OplPcTools/BinCueDeviceSource.h>
+#include <OplPcTools/Device/BinCueDeviceSource.h>
 
 #define BIN_HEADER_SIZE    24
 #define BIN_SECTOR_SIZE    2352

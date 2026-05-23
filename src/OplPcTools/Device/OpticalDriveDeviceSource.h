@@ -16,19 +16,31 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#pragma once
+#ifndef __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__
+#define __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__
 
-#include <OplPcTools/DeviceWriter.h>
+#include <QFile>
+#include <OplPcTools/Device/DeviceSource.h>
 
 namespace OplPcTools {
 
-class CompressedDeviceWriter : public DeviceWriter
+class OpticalDriveDeviceSource : public DeviceSource
 {
-    Q_OBJECT
-
 public:
-    explicit CompressedDeviceWriter(QObject * _parent = nullptr);
-    bool write(DeviceReader & _reader, const QString & _destination) override;
+    explicit OpticalDriveDeviceSource(const QString & _filepath);
+    ~OpticalDriveDeviceSource() override;
+    QString filepath() const override;
+    bool open() override;
+    bool isOpen() const override;
+    qint64 isoSize() const override;
+    void close() override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
+
+private:
+    QFile * mp_file;
 };
 
 } // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_OPTICALDRIVEDEVICESOURCE__

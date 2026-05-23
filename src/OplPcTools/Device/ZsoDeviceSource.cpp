@@ -16,8 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/ZsoDeviceSource.h>
-#include <OplPcTools/Zso.h>
+#include <OplPcTools/Device/ZsoDeviceSource.h>
+#include <OplPcTools/Device/Zso.h>
 #include <QFile>
 #include <QList>
 

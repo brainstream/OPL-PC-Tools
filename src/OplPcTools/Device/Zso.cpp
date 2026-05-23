@@ -16,19 +16,22 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#pragma once
+#include <OplPcTools/Device/Zso.h>
+#include <lz4.h>
 
-#include <OplPcTools/DeviceWriter.h>
+using namespace OplPcTools;
 
-namespace OplPcTools {
-
-class DefaultDeviceWriter : public DeviceWriter
+int OplPcTools::compressZsoBlock(const QByteArray & _source, QByteArray & _destination)
 {
-    Q_OBJECT
+    return LZ4_compress_default(_source.data(), _destination.data(), _source.size(), _destination.size());
+}
 
-public:
-    explicit DefaultDeviceWriter(QObject * _parent = nullptr);
-    bool write(DeviceReader & _reader, const QString & _destination) override;
-};
-
-} // namespace OplPcTools
+bool OplPcTools::decompressZsoBlock(const QByteArray & _source, QByteArray & _destination)
+{
+    return LZ4_decompress_safe_partial(
+        _source.constData(),
+        _destination.data(),
+        _source.size(),
+        _destination.size(),
+        _destination.size()) > 0;
+}

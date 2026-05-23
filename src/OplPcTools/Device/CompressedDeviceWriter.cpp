@@ -16,8 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/CompressedDeviceWriter.h>
-#include <OplPcTools/Zso.h>
+#include <OplPcTools/Device/CompressedDeviceWriter.h>
+#include <OplPcTools/Device/Zso.h>
 #include <OplPcTools/File.h>
 #include <QThread>
 

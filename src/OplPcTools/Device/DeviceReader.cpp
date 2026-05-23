@@ -18,7 +18,7 @@
 
 #include <QRegularExpression>
 #include <QFileInfo>
-#include <OplPcTools/DeviceReader.h>
+#include <OplPcTools/Device/DeviceReader.h>
 
 #define ISO9660_OFFSET 0x8000
 

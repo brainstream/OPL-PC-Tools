@@ -17,9 +17,9 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/DirectoryGameStorage.h>
-#include <OplPcTools/Iso9660DeviceSource.h>
-#include <OplPcTools/ZsoDeviceSource.h>
-#include <OplPcTools/DeviceReader.h>
+#include <OplPcTools/Device/Iso9660DeviceSource.h>
+#include <OplPcTools/Device/ZsoDeviceSource.h>
+#include <OplPcTools/Device/DeviceReader.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardDirectories.h>
 #include <QVector>

@@ -18,19 +18,25 @@
 
 #pragma once
 
-#include <QFileInfo>
-#include <OplPcTools/OpticalDriveDeviceSource.h>
+#include <QFile>
+#include <OplPcTools/Device/DeviceSource.h>
 
 namespace OplPcTools {
 
-class Iso9660DeviceSource : public OpticalDriveDeviceSource
+class BinCueDeviceSource : public DeviceSource
 {
 public:
-    explicit Iso9660DeviceSource(const QString & _filepath) :
-        OpticalDriveDeviceSource(_filepath)
-    {
-    }
+    explicit BinCueDeviceSource(const QString & _bin_filepath);
+    QString filepath() const override;
+    bool open() override;
+    bool isOpen() const override;
+    qint64 isoSize() const override;
+    void close() override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
+
+private:
+    QFile m_bin_file;
 };
 
 } // namespace OplPcTools
-

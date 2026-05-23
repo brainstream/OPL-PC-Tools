@@ -19,7 +19,7 @@
 #pragma once
 
 #include <OplPcTools/GameInstaller.h>
-#include <OplPcTools/DeviceWriter.h>
+#include <OplPcTools/Device/DeviceWriter.h>
 
 namespace OplPcTools {
 

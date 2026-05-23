@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include <OplPcTools/DeviceSource.h>
+#include <OplPcTools/Device/DeviceSource.h>
 
 namespace OplPcTools {
 

@@ -19,7 +19,7 @@
 #include <cstring>
 #include <QFile>
 #include <OplPcTools/BigEndian.h>
-#include <OplPcTools/NrgDeviceSource.h>
+#include <OplPcTools/Device/NrgDeviceSource.h>
 
 #define INVALID_OFFSET (~(quint64)0)
 

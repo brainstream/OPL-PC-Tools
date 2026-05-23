@@ -151,6 +151,13 @@
     </message>
 </context>
 <context>
+    <name>DefaultDeviceWriter</name>
+    <message>
+        <source>Unable to write a data into the file: &quot;%1&quot;</source>
+        <translation type="obsolete">Не могу записать данные в файл: &quot;%1&quot;</translation>
+    </message>
+</context>
+<context>
     <name>GameArtsWidget</name>
     <message>
         <location filename="../UI/GameArtsWidget.ui" line="70"/>
@@ -663,12 +670,12 @@
 <context>
     <name>OplPcTools::CompressedDeviceWriter</name>
     <message>
-        <location filename="../CompressedDeviceWriter.cpp" line="81"/>
+        <location filename="../Device/CompressedDeviceWriter.cpp" line="81"/>
         <source>An error occurred during reading the source medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CompressedDeviceWriter.cpp" line="89"/>
+        <location filename="../Device/CompressedDeviceWriter.cpp" line="89"/>
         <source>An error occurred during compressing the source data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -680,12 +687,12 @@
         <translation type="obsolete">Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="46"/>
+        <location filename="../Device/DefaultDeviceWriter.cpp" line="46"/>
         <source>An error occurred during reading the source medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
+        <location filename="../Device/DefaultDeviceWriter.cpp" line="56"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation type="unfinished">Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>

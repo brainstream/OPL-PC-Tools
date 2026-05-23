@@ -16,8 +16,8 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/DefaultDeviceWriter.h>
-#include <OplPcTools/DeviceReader.h>
+#include <OplPcTools/Device/DefaultDeviceWriter.h>
+#include <OplPcTools/Device/DeviceReader.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Exception.h>
 #include <QThread>

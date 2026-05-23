@@ -20,7 +20,7 @@
 #include <QThread>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
-#include <OplPcTools/OpticalDriveDeviceSource.h>
+#include <OplPcTools/Device/OpticalDriveDeviceSource.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;

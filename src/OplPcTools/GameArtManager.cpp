@@ -63,7 +63,7 @@ QPixmap GameArtManager::load(const QString & _game_id, GameArtType _type)
     QDir dir(m_directory_path);
     if(!dir.exists())
         return QPixmap();
-    for(const QString & path : makeFilePaths(_game_id, _type))
+    foreach(const QString & path, makeFilePaths(_game_id, _type))
     {
         QFile file(path);
         if(!file.exists()) continue;

@@ -16,29 +16,58 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#pragma once
+#ifdef __linux__
 
-#include <OplPcTools/DeviceSource.h>
-#include <QFile>
+#include <unistd.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <linux/cdrom.h>
+#include <OplPcTools/Device/DeviceReader.h>
 
-namespace OplPcTools {
+using namespace OplPcTools;
 
-class ZsoDeviceSource : public DeviceSource
+namespace {
+
+bool isBlockDevice(const char * _file)
 {
-public:
-    explicit ZsoDeviceSource(const QString & _zso_filepath);
-    ~ZsoDeviceSource() override;
-    QString filepath() const override;
-    bool open() override;
-    bool isOpen() const override;
-    qint64 isoSize() const override;
-    void close() override;
-    bool seek(qint64 _offset) override;
-    qint64 read(QByteArray & _buffer) override;
+    struct stat file_stat;
+    lstat(_file, &file_stat);
+    return S_ISBLK(file_stat.st_mode);
+}
 
-private:
-    class ZsoImage;
-    ZsoImage * mp_image;
-};
+bool isOpticalDrive(const char * _file)
+{
+    if(!isBlockDevice(_file)) return false;
+    int fd = open(_file, O_RDONLY | O_NONBLOCK);
+    if(fd < 0) return false;
+    bool result = ioctl(fd, CDROM_GET_CAPABILITY) >= 0;
+    close(fd);
+    return result;
+}
 
-} // namespace OplPcTools
+} // namespace
+
+QList<DeviceName> OplPcTools::loadDriveList()
+{
+    QList<DeviceName> result;
+    std::string dev_dir_path("/dev/");
+    DIR * dev_dir = opendir(dev_dir_path.c_str());
+    if(!dev_dir) return result;
+    for(struct dirent * entry = readdir(dev_dir); entry != nullptr; entry = readdir(dev_dir))
+    {
+        std::string filename = dev_dir_path + entry->d_name;
+        if(isOpticalDrive(filename.c_str()))
+        {
+            DeviceName device_name;
+            device_name.name = entry->d_name;
+            device_name.filename = QString::fromStdString(filename);
+            result.append(device_name);
+        }
+    }
+    closedir(dev_dir);
+    return result;
+}
+
+#endif // __linux__

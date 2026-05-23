@@ -67,6 +67,7 @@ public:
     void close();
     bool isOpen() const;
     QString filepath() const;
+    quint64 isoSize() const;
     bool seek(quint64 _offset);
     qint64 read(QByteArray & _buffer);
 
@@ -154,6 +155,11 @@ inline bool ZsoDeviceSource::ZsoImage::isOpen() const
 inline QString ZsoDeviceSource::ZsoImage::filepath() const
 {
     return m_file.fileName();
+}
+
+inline quint64 ZsoDeviceSource::ZsoImage::isoSize() const
+{
+    return isOpen() ? m_header.total_bytes : -1;
 }
 
 bool ZsoDeviceSource::ZsoImage::seek(quint64 _offset)
@@ -269,6 +275,11 @@ bool ZsoDeviceSource::open()
 bool ZsoDeviceSource::isOpen() const
 {
     return mp_image->isOpen();
+}
+
+qint64 ZsoDeviceSource::isoSize() const
+{
+    return mp_image->isoSize();
 }
 
 void ZsoDeviceSource::close()

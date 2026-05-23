@@ -47,7 +47,9 @@ bool DefaultDeviceWriter::write(DeviceReader & _reader, const QString & _destina
         }
         else if(read_bytes > 0)
         {
-            if(dest->write(bytes.constData(), read_bytes) != read_bytes)
+            // Some formats have data behind the end (hello, NRG)
+            const qint64 to_write = std::min(static_cast<qint64>(iso_size - total_read_bytes), read_bytes);
+            if(dest->write(bytes.constData(), to_write) != to_write)
             {
                 dest->close();
                 QFile::remove(_destination);

@@ -321,7 +321,7 @@ bool DeviceReader::init()
     {
         m_title = iso->title();
         m_id = iso->gameId();
-        m_size = static_cast<quint64>(iso->blockCount()) * iso->blockSize();
+        m_size = m_source_ptr->isoSize();
         m_is_initialized = true;
     }
     delete iso;

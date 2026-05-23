@@ -123,6 +123,11 @@ bool OpticalDriveDeviceSource::isOpen() const
     return mp_file->isOpen();
 }
 
+qint64 OpticalDriveDeviceSource::isoSize() const
+{
+    return isOpen() ? mp_file->size() : -1;
+}
+
 void OpticalDriveDeviceSource::close()
 {
     mp_file->close();

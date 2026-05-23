@@ -677,7 +677,7 @@
         <translation type="unfinished">Um erro ocorreu durante a leitura da fonte</translation>
     </message>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="54"/>
+        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation type="unfinished">Incapaz de escrever dados para o arquivo: &quot;%1&quot;</translation>
     </message>
@@ -1009,12 +1009,12 @@
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="513"/>
+        <location filename="../UI/GameListWidget.cpp" line="512"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="514"/>
+        <location filename="../UI/GameListWidget.cpp" line="513"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>

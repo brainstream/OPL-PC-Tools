@@ -685,7 +685,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DefaultDeviceWriter.cpp" line="54"/>
+        <location filename="../DefaultDeviceWriter.cpp" line="56"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
         <translation type="unfinished">Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
@@ -1017,12 +1017,12 @@
         <translation>Вы уверены, что хотите удалить эту игру?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="513"/>
+        <location filename="../UI/GameListWidget.cpp" line="512"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Скачать изображения</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="514"/>
+        <location filename="../UI/GameListWidget.cpp" line="513"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>

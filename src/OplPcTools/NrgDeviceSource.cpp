@@ -29,8 +29,8 @@ namespace {
 
 struct __attribute__((packed)) Chunk
 {
-    char id[4];
-    BigEndian<quint32> size;
+    char id[4];               // 0
+    BigEndian<quint32> size;  // 4
 };
 
 struct __attribute__((packed)) Ner5
@@ -39,20 +39,22 @@ struct __attribute__((packed)) Ner5
     BigEndian<quint64> offset_of_first_chunk;
 };
 
-struct __attribute__((packed)) Daox
+struct __attribute__((packed)) Daox : Chunk
 {
-    quint8 header[30];
-};
-
-struct __attribute__((packed)) DaoxTrack
-{
-    char isrc[12];
-    quint8 sector_size[2];
-    quint8 mode[2];
-    quint8 unknown[2];
-    quint8 pre_gap[8];
-    BigEndian<quint64> track_begin;
-    BigEndian<quint64> track_end;
+    BigEndian<quint32> size2;                // 8
+    char upc[13];                            // 12
+    quint8 padding;                          // 25
+    BigEndian<quint16> toc_type;             // 26
+    quint8 first_track_in_session;           // 28
+    quint8 last_track_in_session;            // 29
+    char isrc[12];                           // 30
+    BigEndian<quint16> image_sector_size;    // 42
+    BigEndian<quint16> mode;                 // 44
+    BigEndian<quint16> unknown;              // 46
+    BigEndian<quint64> padding2;             // 48
+    BigEndian<quint64> begin_of_track;       // 56
+    BigEndian<quint64> end_of_track_plus_1b; // 64
+                                             // 72
 };
 
 } // namespace
@@ -70,21 +72,24 @@ public:
     inline QString filepath() const;
     bool seek(quint64 _offset);
     qint64 read(QByteArray & _buffer);
+    qint64 isoSize() const;
 
 private:
     quint64 readFirstChunkOffset();
     bool readChunkHeader(quint64 _offset, Chunk * _chunk);
-    quint64 getTrackLocation(quint64 _dao_header_offset);
+    bool readDaox(quint64 _offset, Daox * _daox);
 
 private:
     QFile m_file;
     quint64 m_track_location;
+    qint64 m_iso_size;
 };
 
 
 NrgDeviceSource::NrgImage::NrgImage(const QString & _filepath) :
     m_file(_filepath),
-    m_track_location(INVALID_OFFSET)
+    m_track_location(INVALID_OFFSET),
+    m_iso_size(-1)
 {
 }
 
@@ -104,7 +109,11 @@ bool NrgDeviceSource::NrgImage::open()
             break;
         if(std::strncmp("DAOX", header.id, sizeof(header.id)) == 0)
         {
-            m_track_location = getTrackLocation(offset);
+            Daox daox;
+            if(!readDaox(offset, &daox))
+                return false;
+            m_track_location = daox.begin_of_track.toIntLE();
+            m_iso_size = daox.end_of_track_plus_1b.toIntLE() - m_track_location;
             return true;
         }
         offset += header.size.toIntLE() + sizeof(Chunk);
@@ -133,14 +142,13 @@ bool NrgDeviceSource::NrgImage::readChunkHeader(quint64 _offset, Chunk * _chunk)
     return true;
 }
 
-quint64 NrgDeviceSource::NrgImage::getTrackLocation(quint64 _dao_header_offset)
+bool NrgDeviceSource::NrgImage::readDaox(quint64 _offset, Daox * _daox)
 {
-    if(!m_file.seek(_dao_header_offset + sizeof(Daox::header)))
-        return INVALID_OFFSET;
-    DaoxTrack first_track_header;
-    if(!m_file.read(reinterpret_cast<char *>(&first_track_header), sizeof(DaoxTrack)))
-        return INVALID_OFFSET;
-    return first_track_header.track_begin.toIntLE();
+    if(!m_file.seek(_offset))
+        return false;
+    if(!m_file.read(reinterpret_cast<char *>(_daox), sizeof(Daox)))
+        return false;
+    return true;
 }
 
 void NrgDeviceSource::NrgImage::close()
@@ -170,6 +178,11 @@ qint64 NrgDeviceSource::NrgImage::read(QByteArray & _buffer)
     if(m_track_location == INVALID_OFFSET)
         return 0;
     return m_file.read(_buffer.data(), _buffer.size());
+}
+
+inline qint64 NrgDeviceSource::NrgImage::isoSize() const
+{
+    return m_iso_size;
 }
 
 NrgDeviceSource::NrgDeviceSource(const QString & _nrg_filepath) :
@@ -202,6 +215,11 @@ bool NrgDeviceSource::open()
 bool NrgDeviceSource::isOpen() const
 {
     return mp_image->isOpen();
+}
+
+qint64 NrgDeviceSource::isoSize() const
+{
+    return mp_image->isoSize();
 }
 
 void NrgDeviceSource::close()

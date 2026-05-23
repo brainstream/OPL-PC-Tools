@@ -31,6 +31,7 @@ public:
     QString filepath() const override;
     bool open() override;
     bool isOpen() const override;
+    qint64 isoSize() const override;
     void close() override;
     bool seek(qint64 _offset) override;
     qint64 read(QByteArray & _buffer) override;

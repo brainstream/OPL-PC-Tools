@@ -47,6 +47,11 @@ bool BinCueDeviceSource::isOpen() const
     return m_bin_file.isOpen();
 }
 
+qint64 BinCueDeviceSource::isoSize() const
+{
+    return isOpen() ? (m_bin_file.size() / BIN_SECTOR_SIZE) * ISO_SECTOR_SIZE : -1;
+}
+
 void BinCueDeviceSource::close()
 {
     m_bin_file.close();

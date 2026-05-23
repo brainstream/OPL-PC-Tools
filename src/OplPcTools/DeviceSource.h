@@ -31,6 +31,7 @@ public:
     virtual bool open() = 0;
     virtual bool isOpen() const = 0;
     virtual void close() = 0;
+    virtual qint64 isoSize() const = 0;
     virtual bool seek(qint64 _offset) = 0;
     virtual qint64 read(QByteArray & _buffer) = 0;
 };

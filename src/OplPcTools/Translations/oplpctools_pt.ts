@@ -33,11 +33,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/AboutDialog.ui" line="153"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright %1 © Sergey Smolyannikov aka brainstream&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/AboutDialog.ui" line="127"/>
         <source>&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
@@ -50,6 +45,11 @@
     <message>
         <location filename="../UI/AboutDialog.ui" line="101"/>
         <source>Tools for managing PS2 disc images used in &lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Open Playstation 2 Loader&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutDialog.ui" line="153"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyleft %1 🄯 Sergey Smolyannikov aka brainstream&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

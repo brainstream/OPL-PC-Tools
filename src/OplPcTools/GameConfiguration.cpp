@@ -224,10 +224,9 @@ void GameConfiguration::save(const GameConfiguration & _config, const QString & 
     QFile src_file(_filename);
     QFile tmp_file(_filename + ".tmp");
     QFileInfo(tmp_file).absoluteDir().mkpath(".");
-    openFile(src_file, QFile::ReadOnly | QFile::Text);
     openFile(tmp_file, QFile::WriteOnly | QFile::Truncate | QFile::Text);
     QSet<QString> written_keys;
-    for(; src_file.isOpen(); )
+    for(bool is_src_open = src_file.open(QFile::ReadOnly | QFile::Text); is_src_open;)
     {
         const QByteArray bytes = src_file.readLine();
         if(bytes.isNull())

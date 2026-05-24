@@ -16,11 +16,20 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/StandardDirectories.h>
+#pragma once
 
-const char * const OplPcTools::StandardDirectories::art = "ART";
-const char * const OplPcTools::StandardDirectories::cd = "CD";
-const char * const OplPcTools::StandardDirectories::dvd = "DVD";
-const char * const OplPcTools::StandardDirectories::cfg = "CFG";
-const char * const OplPcTools::StandardDirectories::vmc = "VMC";
-const char * const OplPcTools::StandardDirectories::cht = "CHT";
+#include <QString>
+#include <QSharedPointer>
+
+namespace OplPcTools {
+
+struct GameCheat
+{
+    static QString makeFilename(const QString & _library_path, const QString & _game_id);
+    static QSharedPointer<GameCheat> load(const QString & _filename);
+    static void save(const GameCheat & _cheat, const QString & _filename);
+
+    QString text;
+};
+
+} // namespace OplPcTools

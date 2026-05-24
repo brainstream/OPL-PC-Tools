@@ -27,6 +27,7 @@ struct StandardDirectories
     static const char * const dvd;
     static const char * const cfg;
     static const char * const vmc;
+    static const char * const cht;
 };
 
 } // namespace OplPcTools

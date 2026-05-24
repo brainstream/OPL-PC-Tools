@@ -16,11 +16,33 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/StandardDirectories.h>
+#pragma once
 
-const char * const OplPcTools::StandardDirectories::art = "ART";
-const char * const OplPcTools::StandardDirectories::cd = "CD";
-const char * const OplPcTools::StandardDirectories::dvd = "DVD";
-const char * const OplPcTools::StandardDirectories::cfg = "CFG";
-const char * const OplPcTools::StandardDirectories::vmc = "VMC";
-const char * const OplPcTools::StandardDirectories::cht = "CHT";
+#include "ui_GameCheatWidget.h"
+#include <OplPcTools/Game.h>
+#include <OplPcTools/GameCheat.h>
+
+namespace OplPcTools {
+namespace UI {
+
+class GameCheatWidget : public QWidget, private Ui::GameCheatWidget
+{
+    Q_OBJECT
+
+public:
+    explicit GameCheatWidget(const Game & _game, QWidget * _parent = nullptr);
+
+private:
+    void startSmartThread(std::function<void()> _action, std::function<void()> _finished);
+    bool loadCheat();
+    void saveCheat();
+    void deleteCheat();
+    void download();
+
+private:
+    const QString m_filename;
+    QSharedPointer<GameCheat> m_cheat_ptr;
+};
+
+} // namespace UI
+} // namespace OplPcTools

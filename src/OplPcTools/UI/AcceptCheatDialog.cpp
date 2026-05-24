@@ -16,11 +16,17 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/UI/AcceptCheatDialog.h>
+#include <QPushButton>
 
-const char * const OplPcTools::StandardDirectories::art = "ART";
-const char * const OplPcTools::StandardDirectories::cd = "CD";
-const char * const OplPcTools::StandardDirectories::dvd = "DVD";
-const char * const OplPcTools::StandardDirectories::cfg = "CFG";
-const char * const OplPcTools::StandardDirectories::vmc = "VMC";
-const char * const OplPcTools::StandardDirectories::cht = "CHT";
+using namespace OplPcTools::UI;
+
+AcceptCheatDialog::AcceptCheatDialog(const QString & _text, QWidget * _parent) :
+    QDialog(_parent)
+{
+    setupUi(this);
+    mp_text_edit_cheat->setText(_text);
+    connect(mp_button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(mp_button_box->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &QDialog::accept);
+    connect(mp_button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+}

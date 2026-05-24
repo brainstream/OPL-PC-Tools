@@ -19,5 +19,7 @@
         <file alias="download">images/download.svg</file>
         <file alias="copy">images/copy.svg</file>
         <file alias="upload">images/upload.svg</file>
+        <file alias="clear">images/clear.svg</file>
+        <file alias="save">images/save.svg</file>
     </qresource>
 </RCC>

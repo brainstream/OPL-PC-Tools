@@ -78,7 +78,7 @@
         </size>
        </property>
        <property name="focusPolicy">
-        <enum>Qt::TabFocus</enum>
+        <enum>Qt::FocusPolicy::TabFocus</enum>
        </property>
        <property name="toolTip">
         <string>Download All Pictures...</string>
@@ -101,7 +101,7 @@
         </size>
        </property>
        <property name="focusPolicy">
-        <enum>Qt::TabFocus</enum>
+        <enum>Qt::FocusPolicy::TabFocus</enum>
        </property>
        <property name="toolTip">
         <string>Rename...</string>
@@ -120,7 +120,7 @@
    <item>
     <widget class="QTabWidget" name="mp_tabs">
      <property name="tabPosition">
-      <enum>QTabWidget::South</enum>
+      <enum>QTabWidget::TabPosition::South</enum>
      </property>
      <property name="currentIndex">
       <number>0</number>
@@ -149,6 +149,12 @@
        <string>Configuration</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+     </widget>
+     <widget class="QWidget" name="mp_tab_cheats">
+      <attribute name="title">
+       <string>Cheats</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4"/>
      </widget>
     </widget>
    </item>

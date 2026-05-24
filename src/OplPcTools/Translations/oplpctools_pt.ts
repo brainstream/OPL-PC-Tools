@@ -73,6 +73,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../UI/AboutDialog.ui" line="230"/>
+        <source>&lt;a href=&quot;https://github.com/PS2-Widescreen/OPL-Widescreen-Cheats&quot;&gt;A large collection of widescreen cheats&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Tools for managing PS2 disc images used in OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
         <translation type="vanished">Ferramentas para o gerenciamento de imagens de discos de PS2 usados pelo OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Páginas Oficial do GitHub&lt;/a&gt;</translation>
     </message>
@@ -87,6 +92,14 @@
     <message>
         <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</source>
         <translation type="vanished">&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;Licença: Licença Pública Geral GNU Versão 3&lt;/a</translation>
+    </message>
+</context>
+<context>
+    <name>AcceptCheatDialog</name>
+    <message>
+        <location filename="../UI/AcceptCheatDialog.ui" line="14"/>
+        <source>Cheat</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -189,6 +202,29 @@
         <location filename="../UI/GameArtsWidget.ui" line="88"/>
         <source>Download Picture...</source>
         <translation>Baixar imagem...</translation>
+    </message>
+</context>
+<context>
+    <name>GameCheatWidget</name>
+    <message>
+        <location filename="../UI/GameCheatWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.ui" line="25"/>
+        <source>Download Widescreen Cheat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.ui" line="49"/>
+        <source>Delete Cheat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.ui" line="60"/>
+        <source>Save Cheat</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -351,6 +387,11 @@
         <location filename="../UI/GameDetailsActivity.ui" line="149"/>
         <source>Configuration</source>
         <translation>Configurações</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameDetailsActivity.ui" line="155"/>
+        <source>Cheats</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,61 +911,105 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::GameCheatWidget</name>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="73"/>
+        <source>Cheat saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="84"/>
+        <source>Cheat file does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="90"/>
+        <source>Confirmation</source>
+        <translation type="unfinished">Confirmação</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="91"/>
+        <source>Are you sure you want to delete the cheat file?
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="109"/>
+        <source>Downloading cheat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="147"/>
+        <source>Cheat for this game not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="150"/>
+        <source>Unable to download the cheat, a network error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="218"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="219"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation>Modo 4 - Modo 0 PSS</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="220"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="221"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation>Modo 7 - Armazenamento de módulos em alta memoria</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="222"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="223"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
         <translation>Modo 9 - Esconder módulos DEV9</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="229"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="230"/>
         <source>Mode 4 ― Skip Videos</source>
         <translation>Modo 4 - Pular vídeos</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="231"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="232"/>
         <source>Mode 7 ― Deprecated</source>
         <translation>Modo 7 ― Obsoleto</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="233"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="234"/>
         <source>Mode 8 ― Deprecated</source>
         <translation>Modo 8 ― Obsoleto</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="378"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="379"/>
         <source>Configuration cleared</source>
         <translation>Configurações resetadas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="408"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="439"/>
         <source>Configuration saved</source>
         <translation>Configurações salvas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="443"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="457"/>
         <source>Confirmation</source>
         <translation>Confirmação</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="444"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="458"/>
+        <source>Are you sure you want to delete the configuration file?
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Are you sure you want to delete file?
 %1</source>
-        <translation>Tem certeza que quer apagar este arquivo?
+        <translation type="vanished">Tem certeza que quer apagar este arquivo?
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="448"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
         <source>Configuration file does not exist</source>
         <translation>Arquivo de configurações não existe</translation>
     </message>
@@ -1428,6 +1513,11 @@
         <location filename="../File.h" line="67"/>
         <source>Unable to read the file: &quot;%1&quot;</source>
         <translation>Incapaz de ler o arquivo: &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../File.h" line="74"/>
+        <source>Unable to delete file: &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/VmcExporter.cpp" line="70"/>

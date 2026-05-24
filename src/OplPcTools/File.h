@@ -68,6 +68,18 @@ inline qint64 readFile(QFile & _file, char * _buffer, qint64 _length)
     return read_bytes;
 }
 
+inline void removeFile(QFile & _file)
+{
+    if(!_file.remove())
+        throw IOException(QObject::tr("Unable to delete file: \"%1\"").arg(_file.fileName()));
+}
+
+inline void removeFile(const QString & _filename)
+{
+    QFile file(_filename);
+    removeFile(file);
+}
+
 constexpr char g_filename_forbidden_characters[] = "<>:\"/\\|?*";
 
 bool isFilenameValid(const QString & _filename);

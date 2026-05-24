@@ -224,6 +224,16 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;a href=&quot;https://github.com/PS2-Widescreen/OPL-Widescreen-Cheats&quot;&gt;A large collection of widescreen cheats&lt;/a&gt;</string>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

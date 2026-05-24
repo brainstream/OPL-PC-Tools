@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECONFIGWIDGET__
-#define __OPLPCTOOLS_GAMECONFIGWIDGET__
+#pragma once
 
 #include <functional>
 #include <OplPcTools/Game.h>
@@ -59,7 +58,7 @@ private:
     void save();
     void saveAs(const QString & _filename);
     void remove();
-    void startSmartThread(std::function<void()> _lambda);
+    void startSmartThread(std::function<void()> _action, std::function<void()> _finished);
 
 private:
     VmcCollection & mr_vmcs;
@@ -71,5 +70,3 @@ private:
 
 } // namespace UI
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_GAMECONFIGWIDGET__

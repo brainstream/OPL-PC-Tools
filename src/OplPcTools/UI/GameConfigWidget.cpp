@@ -16,14 +16,15 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QMessageBox>
-#include <QToolTip>
-#include <OplPcTools/Exception.h>
-#include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/VmcCreateDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/UI/GameConfigWidget.h>
+#include <OplPcTools/Exception.h>
+#include <OplPcTools/Library.h>
+#include <OplPcTools/File.h>
+#include <QMessageBox>
+#include <QToolTip>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -404,61 +405,75 @@ void GameConfigWidget::clearForm()
 void GameConfigWidget::save()
 {
     saveAs(GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id()));
-    QToolTip::showText(mapToGlobal(mp_btn_save->pos() - QPoint(0, 50)),
-        tr("Configuration saved"), this, QRect(), 3000);
 }
 
 void GameConfigWidget::saveAs(const QString & _filename)
 {
-    startSmartThread([this, _filename]() {
-        m_config_ptr->custom_elf = mp_edit_elf->text();
-        m_config_ptr->game_id = mp_edit_game_id->text();
-        m_config_ptr->is_mode_1_enabled = mp_checkbox_mode_1->isChecked();
-        m_config_ptr->is_mode_2_enabled = mp_checkbox_mode_2->isChecked();
-        m_config_ptr->is_mode_3_enabled = mp_checkbox_mode_3->isChecked();
-        m_config_ptr->is_mode_4_enabled = mp_checkbox_mode_4->isChecked();
-        m_config_ptr->is_mode_5_enabled = mp_checkbox_mode_5->isChecked();
-        m_config_ptr->is_mode_6_enabled = mp_checkbox_mode_6->isChecked();
-        m_config_ptr->is_mode_7_enabled = mp_checkbox_mode_7->isChecked();
-        m_config_ptr->is_mode_8_enabled = mp_checkbox_mode_8->isChecked();
-        m_config_ptr->gsm_video_mode = mp_combo_video_mode->currentIndex();
-        m_config_ptr->vmc0 = mp_combo_vmc0->currentText();
-        m_config_ptr->vmc1 = mp_combo_vmc1->currentText();
-        bool is_gsm_enabled = mp_radio_enable_gsm->isChecked();
-        bool is_gsm_global_enabled = mp_radio_use_global_gsm->isChecked();
-        m_config_ptr->is_gsm_enabled = is_gsm_enabled || is_gsm_global_enabled;
-        m_config_ptr->is_global_gsm_enabled = is_gsm_global_enabled;
-        m_config_ptr->is_gsm_skip_fmv_enabled = mp_checkbox_skip_fmv->isChecked();
-        m_config_ptr->is_gsm_emulate_field_flipping_enabled = mp_checkbox_emulate_field_flipping->isChecked();
-        m_config_ptr->gsm_x_offset = mp_spinbox_hpos->value();
-        m_config_ptr->gsm_y_offset = mp_spinbox_vpos->value();
-        m_config_ptr->save(*m_config_ptr, _filename);
-    });
+    startSmartThread(
+        [this, _filename]() {
+            m_config_ptr->custom_elf = mp_edit_elf->text();
+            m_config_ptr->game_id = mp_edit_game_id->text();
+            m_config_ptr->is_mode_1_enabled = mp_checkbox_mode_1->isChecked();
+            m_config_ptr->is_mode_2_enabled = mp_checkbox_mode_2->isChecked();
+            m_config_ptr->is_mode_3_enabled = mp_checkbox_mode_3->isChecked();
+            m_config_ptr->is_mode_4_enabled = mp_checkbox_mode_4->isChecked();
+            m_config_ptr->is_mode_5_enabled = mp_checkbox_mode_5->isChecked();
+            m_config_ptr->is_mode_6_enabled = mp_checkbox_mode_6->isChecked();
+            m_config_ptr->is_mode_7_enabled = mp_checkbox_mode_7->isChecked();
+            m_config_ptr->is_mode_8_enabled = mp_checkbox_mode_8->isChecked();
+            m_config_ptr->gsm_video_mode = mp_combo_video_mode->currentIndex();
+            m_config_ptr->vmc0 = mp_combo_vmc0->currentText();
+            m_config_ptr->vmc1 = mp_combo_vmc1->currentText();
+            bool is_gsm_enabled = mp_radio_enable_gsm->isChecked();
+            bool is_gsm_global_enabled = mp_radio_use_global_gsm->isChecked();
+            m_config_ptr->is_gsm_enabled = is_gsm_enabled || is_gsm_global_enabled;
+            m_config_ptr->is_global_gsm_enabled = is_gsm_global_enabled;
+            m_config_ptr->is_gsm_skip_fmv_enabled = mp_checkbox_skip_fmv->isChecked();
+            m_config_ptr->is_gsm_emulate_field_flipping_enabled = mp_checkbox_emulate_field_flipping->isChecked();
+            m_config_ptr->gsm_x_offset = mp_spinbox_hpos->value();
+            m_config_ptr->gsm_y_offset = mp_spinbox_vpos->value();
+            m_config_ptr->save(*m_config_ptr, _filename);
+        },
+        [this]() {
+            QToolTip::showText(mapToGlobal(mp_btn_save->pos() - QPoint(0, 50)),
+                tr("Configuration saved"), this, QRect(), 3000);
+        });
 }
 
 void GameConfigWidget::remove()
 {
     QString filename = GameConfiguration::makeFilename(Library::instance().directory(), mr_game.id());
     QFile config(filename);
-    if(!config.exists() || QMessageBox::question(this, tr("Confirmation"),
-        tr("Are you sure you want to delete file?\n%1").arg(filename),
-        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+    if(!config.exists())
     {
-        QToolTip::showText(mapToGlobal(mp_btn_delete->pos() - QPoint(0, 50)),
-            tr("Configuration file does not exist"), this, QRect(), 3000);
+        QToolTip::showText(
+            mapToGlobal(mp_btn_delete->pos() - QPoint(0, 50)),
+            tr("Configuration file does not exist"),
+            this,
+            QRect(),
+            3000);
         return;
     }
-    startSmartThread([this, filename]() {
-        QFile::remove(filename);
-        clearForm();
-    });
+    if(QMessageBox::Yes == QMessageBox::question(this, tr("Confirmation"),
+        tr("Are you sure you want to delete the configuration file?\n%1").arg(filename),
+        QMessageBox::Yes | QMessageBox::No))
+    {
+        startSmartThread(
+            [filename]() {
+                removeFile(filename);
+            },
+            [this]() {
+                clearForm();
+            });
+    }
 }
 
-void GameConfigWidget::startSmartThread(std::function<void()> _lambda)
+void GameConfigWidget::startSmartThread(std::function<void()> _action, std::function<void()> _finished)
 {
-    BusySmartThread * thread = new BusySmartThread(_lambda, nullptr, this);
+    BusySmartThread * thread = new BusySmartThread(_action, nullptr, this);
+    connect(thread, &BusySmartThread::finished, this, _finished);
     connect(thread, &BusySmartThread::finished, thread, &BusySmartThread::deleteLater);
-    connect(thread, &BusySmartThread::exception, [](const QString & message) {
+    connect(thread, &BusySmartThread::exception, this, [](const QString & message) {
         Application::showErrorMessage(message);
     });
     thread->setSpinnerDisplayTimeout(300);

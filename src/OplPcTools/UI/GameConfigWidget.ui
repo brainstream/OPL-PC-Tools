@@ -50,7 +50,7 @@
        <item>
         <spacer name="mp_spacer_4">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -97,7 +97,7 @@
      <item row="1" column="0" colspan="3">
       <widget class="Line" name="mp_line">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -199,7 +199,7 @@
              <bool>true</bool>
             </property>
             <property name="insertPolicy">
-             <enum>QComboBox::InsertAlphabetically</enum>
+             <enum>QComboBox::InsertPolicy::InsertAlphabetically</enum>
             </property>
             <property name="duplicatesEnabled">
              <bool>true</bool>
@@ -247,7 +247,7 @@
              <bool>true</bool>
             </property>
             <property name="insertPolicy">
-             <enum>QComboBox::InsertAlphabetically</enum>
+             <enum>QComboBox::InsertPolicy::InsertAlphabetically</enum>
             </property>
             <property name="duplicatesEnabled">
              <bool>true</bool>
@@ -271,7 +271,7 @@
        <item>
         <spacer name="mp_spacer_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -317,7 +317,7 @@
         <item>
          <spacer name="mp_spacer_5">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -471,7 +471,7 @@
    <item>
     <spacer name="mp_spacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -486,7 +486,7 @@
      <item>
       <spacer name="mp_spacer_3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -514,7 +514,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Resources/Resources.qrc">
-         <normaloff>:/images/restore</normaloff>:/images/restore</iconset>
+         <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
        </property>
       </widget>
      </item>

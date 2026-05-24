@@ -16,11 +16,43 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/GameCheat.h>
 #include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/File.h>
+#include <QDir>
 
-const char * const OplPcTools::StandardDirectories::art = "ART";
-const char * const OplPcTools::StandardDirectories::cd = "CD";
-const char * const OplPcTools::StandardDirectories::dvd = "DVD";
-const char * const OplPcTools::StandardDirectories::cfg = "CFG";
-const char * const OplPcTools::StandardDirectories::vmc = "VMC";
-const char * const OplPcTools::StandardDirectories::cht = "CHT";
+using namespace OplPcTools;
+
+QString GameCheat::makeFilename(const QString & _library_path, const QString & _game_id)
+{
+    QDir dir((_library_path.endsWith(QDir::separator())
+        ? _library_path
+        : _library_path + QDir::separator()) + StandardDirectories::cht);
+    return dir.absoluteFilePath(_game_id + ".cht");
+}
+
+QSharedPointer<GameCheat> GameCheat::load(const QString & _filename)
+{
+    QSharedPointer<GameCheat> cheat(new GameCheat());
+    QFile file(_filename);
+    if(file.exists())
+    {
+        openFile(file, QFile::ReadOnly);
+        cheat->text = file.readAll();
+    }
+    return cheat;
+}
+
+void GameCheat::save(const GameCheat & _cheat, const QString & _filename)
+{
+    QFile file(_filename);
+    if(_cheat.text.trimmed().isEmpty())
+    {
+        if(file.exists())
+            removeFile(file);
+        return;
+    }
+    QFileInfo(file).absoluteDir().mkpath(".");
+    openFile(file, QFile::WriteOnly | QFile::Truncate);
+    file.write(_cheat.text.toLatin1());
+}

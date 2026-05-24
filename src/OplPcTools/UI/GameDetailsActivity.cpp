@@ -24,6 +24,7 @@
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameArtsWidget.h>
 #include <OplPcTools/UI/GameConfigWidget.h>
+#include <OplPcTools/UI/GameCheatWidget.h>
 #include <OplPcTools/UI/GameDetailsActivity.h>
 
 using namespace OplPcTools;
@@ -72,6 +73,7 @@ GameDetailsActivity::GameDetailsActivity(const Uuid _game_uuid, GameArtManager &
         GameArtsWidget * game_art_widget = new GameArtsWidget(mp_game->id(), _art_manager, this);
         mp_tab_arts->layout()->addWidget(game_art_widget);
         mp_tab_config->layout()->addWidget( new GameConfigWidget(*mp_game, this));
+        mp_tab_cheats->layout()->addWidget( new GameCheatWidget(*mp_game, this));
         mp_label_title->setText(mp_game->title());
         connect(mp_btn_download_all_art, &QPushButton::clicked, game_art_widget, &GameArtsWidget::downloadAllGameArts);
     }

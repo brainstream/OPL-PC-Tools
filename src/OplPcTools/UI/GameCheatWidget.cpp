@@ -107,24 +107,18 @@ void GameCheatWidget::download()
 {
     const QString cheat_name = QFileInfo(m_filename).fileName();
     const QString process_name = tr("Downloading cheat %1").arg(cheat_name);
+    ProgressDialog * progress_dialog = new ProgressDialog(this);
+    progress_dialog->setWindowTitle(process_name);
+    progress_dialog->setProgressLabelText(process_name + "...");
+    progress_dialog->show();
     QNetworkAccessManager * network = new QNetworkAccessManager(this);
     const QString url =
         QString("https://raw.githubusercontent.com/PS2-Widescreen/OPL-Widescreen-Cheats/refs/heads/main/CHT/%1")
         .arg(cheat_name);
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::UserAgentHeader, APPLICATION_DISPLAY_NAME);
+    request.setTransferTimeout(std::chrono::seconds(15));
     QNetworkReply * reply = network->get(request);
-    if(!reply)
-    {
-        network->deleteLater();
-        Application::showErrorMessage();
-        return;
-    }
-    ProgressDialog * progress_dialog = new ProgressDialog(this);
-    progress_dialog->setWindowTitle(process_name);
-    progress_dialog->setProgressLabelText(process_name + "...");
-    connect(progress_dialog, &ProgressDialog::canceled, reply, &QNetworkReply::abort);
-    progress_dialog->show();
     connect(reply, &QNetworkReply::finished, this, [this, progress_dialog, network, reply] {
         reply->deleteLater();
         network->deleteLater();
@@ -151,6 +145,7 @@ void GameCheatWidget::download()
             break;
         }
     });
+    connect(progress_dialog, &ProgressDialog::canceled, reply, &QNetworkReply::abort);
 }
 
 void GameCheatWidget::startSmartThread(std::function<void()> _action, std::function<void()> _finished)

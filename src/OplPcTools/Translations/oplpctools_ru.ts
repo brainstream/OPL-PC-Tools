@@ -910,38 +910,38 @@
 <context>
     <name>OplPcTools::UI::GameCheatWidget</name>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="73"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="75"/>
         <source>Cheat saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="84"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="86"/>
         <source>Cheat file does not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="90"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="92"/>
         <source>Confirmation</source>
         <translation type="unfinished">Подтверждение</translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="91"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="93"/>
         <source>Are you sure you want to delete the cheat file?
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="109"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="111"/>
         <source>Downloading cheat %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="147"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="143"/>
         <source>Cheat for this game not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="150"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="146"/>
         <source>Unable to download the cheat, a network error occurred</source>
         <translation type="unfinished"></translation>
     </message>

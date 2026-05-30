@@ -676,37 +676,36 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="216"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Ferramentas</translation>
+        <translation type="vanished">&amp;Ferramentas</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="222"/>
+        <location filename="../UI/MainWindow.ui" line="216"/>
         <source>&amp;Help</source>
         <translation>&amp;Ajuda</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="229"/>
+        <location filename="../UI/MainWindow.ui" line="223"/>
         <source>&amp;File</source>
         <translation>&amp;Arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="243"/>
+        <location filename="../UI/MainWindow.ui" line="237"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Configurações...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="251"/>
+        <location filename="../UI/MainWindow.ui" line="245"/>
         <source>&amp;About...</source>
         <translation>&amp;Sobre...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="259"/>
+        <location filename="../UI/MainWindow.ui" line="253"/>
         <source>About &amp;Qt...</source>
         <translation>Sobre o &amp;Qt...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="271"/>
+        <location filename="../UI/MainWindow.ui" line="265"/>
         <source>&amp;Open Library...</source>
         <translation>&amp;Abrir pasta do OPL...</translation>
     </message>

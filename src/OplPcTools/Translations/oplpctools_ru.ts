@@ -673,37 +673,36 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="216"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Инструменты</translation>
+        <translation type="vanished">&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="222"/>
+        <location filename="../UI/MainWindow.ui" line="216"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="229"/>
+        <location filename="../UI/MainWindow.ui" line="223"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="243"/>
+        <location filename="../UI/MainWindow.ui" line="237"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="251"/>
+        <location filename="../UI/MainWindow.ui" line="245"/>
         <source>&amp;About...</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="259"/>
+        <location filename="../UI/MainWindow.ui" line="253"/>
         <source>About &amp;Qt...</source>
         <translation>О &amp;Qt...</translation>
     </message>
     <message>
-        <location filename="../UI/MainWindow.ui" line="271"/>
+        <location filename="../UI/MainWindow.ui" line="265"/>
         <source>&amp;Open Library...</source>
         <translation>Открыть &amp;библиотеку...</translation>
     </message>

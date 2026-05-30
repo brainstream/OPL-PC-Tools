@@ -16,11 +16,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_ISORESTORER__
-#define __OPLPCTOOLS_ISORESTORER__
+#pragma once
 
 #include <QObject>
-#include <OplPcTools/Game.h>
+#include <OplPcTools/Device/DeviceReader.h>
 
 namespace OplPcTools {
 
@@ -29,7 +28,7 @@ class IsoRestorer final : public QObject
     Q_OBJECT
 
 public:
-    IsoRestorer(const Game & _game, const QString & _iso_filepath, QObject * _parent = nullptr);
+    IsoRestorer(QSharedPointer<DeviceReader> _reader, const QString & _iso_filepath, QObject * _parent = nullptr);
     bool restore();
 
 signals:
@@ -41,10 +40,8 @@ private:
     void rollback();
 
 private:
-    const Game & mr_game;
+    QSharedPointer<DeviceReader> m_reader_ptr;
     const QString m_iso_filepath;
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_ISORESTORER__

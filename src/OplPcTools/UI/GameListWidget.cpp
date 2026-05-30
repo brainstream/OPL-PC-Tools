@@ -309,7 +309,7 @@ void GameListWidget::activateItemControls(const Game * _selected_game)
     mp_action_delete->setEnabled(_selected_game);
     mp_action_edit->setEnabled(_selected_game);
     mp_action_rename->setEnabled(_selected_game);
-    mp_action_restore_iso->setEnabled(_selected_game && _selected_game->installationType() == GameInstallationType::UlConfig);
+    mp_action_restore_iso->setEnabled(_selected_game);
 }
 
 void GameListWidget::onLibraryLoaded()
@@ -416,8 +416,7 @@ void GameListWidget::renameGame()
 
 void GameListWidget::showGameDetails()
 {
-    const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
-    if(game)
+    if(const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex())))
     {
         QSharedPointer<Intent> intent = GameDetailsActivity::createIntent(*mp_game_art_manager, game->uuid());
         Application::pushActivity(*intent);
@@ -427,7 +426,7 @@ void GameListWidget::showGameDetails()
 void GameListWidget::showIsoRestorer()
 {
     const Game * game = mp_model->game(mp_proxy_model->mapToSource(mp_tree_games->currentIndex()));
-    if(game && game->installationType() == GameInstallationType::UlConfig)
+    if(game)
     {
         QSharedPointer<Intent> intent = IsoRestorerActivity::createIntent(game->uuid());
         Application::pushActivity(*intent);

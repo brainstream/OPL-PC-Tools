@@ -20,11 +20,11 @@
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Settings.h>
+#include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/UlConfigGameStorage.h>
 
 #define MT_CD  0x12
 #define MT_DVD 0x14
-#define UL_CONFIG_FILENAME "ul.cfg"
 
 using namespace OplPcTools;
 
@@ -115,7 +115,7 @@ bool validateGame(const Game & _game)
 
 inline void throwUlCorrupted()
 {
-    throw ValidationException(QObject::tr("%1 is corrupted").arg(UL_CONFIG_FILENAME));
+    throw ValidationException(QObject::tr("%1 is corrupted").arg(StandardFiles::ul_config));
 }
 
 } // namespace
@@ -133,7 +133,7 @@ GameInstallationType UlConfigGameStorage::installationType() const
 bool UlConfigGameStorage::performLoading(const QDir & _directory)
 {
     const Settings & settings = Settings::instance();
-    m_config_filepath = _directory.absoluteFilePath(UL_CONFIG_FILENAME);
+    m_config_filepath = _directory.absoluteFilePath(StandardFiles::ul_config);
     QFile file(m_config_filepath);
     if(!file.exists())
         return true;

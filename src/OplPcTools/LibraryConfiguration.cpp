@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/LibraryConfiguration.h>
-#include <OplPcTools/ApplicationInfo.h>
+#include <OplPcTools/StandardPaths.h>
 
 using namespace OplPcTools;
 
@@ -62,7 +62,7 @@ void LibraryConfiguration::load(const QDir & _library_dir)
 {
     delete mp_settings;
     mp_settings = new QSettings(
-        _library_dir.absoluteFilePath(QString(APPLICATION_NAME) + ".ini"),
+        _library_dir.absoluteFilePath(StandardFiles::config),
         QSettings::IniFormat);
 }
 

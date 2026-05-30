@@ -19,7 +19,7 @@
 #include <OplPcTools/GameConfiguration.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Maybe.h>
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/StandardPaths.h>
 #include <QSet>
 #include <QDir>
 #include <QFile>

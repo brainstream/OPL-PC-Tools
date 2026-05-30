@@ -16,20 +16,14 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <QFile>
-#include <QDir>
-#include <QThread>
-#include <OplPcTools/Library.h>
-#include <OplPcTools/UlConfigGameStorage.h>
-#include <OplPcTools/Exception.h>
 #include <OplPcTools/IsoRestorer.h>
 #include <OplPcTools/File.h>
 
 using namespace OplPcTools;
 
-IsoRestorer::IsoRestorer(const Game & _game, const QString & _iso_filepath, QObject * _parent /*= nullptr*/) :
+IsoRestorer::IsoRestorer(QSharedPointer<DeviceReader> _reader, const QString & _iso_filepath, QObject * _parent) :
     QObject(_parent),
-    mr_game(_game),
+    m_reader_ptr(_reader),
     m_iso_filepath(_iso_filepath)
 {
 }
@@ -38,69 +32,44 @@ bool IsoRestorer::restore()
 {
     QFile iso(m_iso_filepath);
     openFile(iso, QIODevice::WriteOnly | QIODevice::Truncate);
-    QStringList filenames;
-    filenames.reserve(mr_game.partCount());
-    QDir games_dir(Library::instance().directory());
-    quint64 all_files_total_size = 0;
-    for(quint8 part = 0; part < mr_game.partCount(); ++part)
-    {
-        QString filename = games_dir.absoluteFilePath(
-            UlConfigGameStorage::makePartFilename(mr_game.id(), mr_game.title(), part));
-        filenames.append(filename);
-        QFileInfo file_info(filename);
-        if(!file_info.exists())
-        {
-            rollback();
-            throw IOException(tr("File not found: \"%1\"").arg(filename));
-        }
-        all_files_total_size += file_info.size();
-    }
+
+    const quint64 target_iso_size = m_reader_ptr->size();
     quint64 total_write_bytes = 0;
     const qint64 batch_size = 2048 * 2048;
     QByteArray buffer(batch_size, Qt::Uninitialized);
-    for(const QString & filename : filenames)
+    m_reader_ptr->seek(0);
+    for(int i = 0; ; ++i)
     {
-        QFile file(filename);
-        openFile(file, QIODevice::ReadOnly);
-        for(int i = 0; ; ++i)
+        qint64 read_bytes = 0;
+        try
         {
-            if(QThread::currentThread()->isInterruptionRequested())
-            {
-                rollback();
-                return false;
-            }
-            qint64 read_bytes = 0;
+            read_bytes = m_reader_ptr->read(buffer);
+        }
+        catch(...)
+        {
+            rollback();
+            throw;
+        }
+        if(read_bytes > 0)
+        {
             try
             {
-                read_bytes = readFile(file, buffer.data(), batch_size);
+                total_write_bytes += writeFile(iso, buffer.constData(), read_bytes);
             }
             catch(...)
             {
                 rollback();
                 throw;
             }
-            if(read_bytes > 0)
+            if(i % 5 == 0 || total_write_bytes == target_iso_size)
             {
-                try
-                {
-                    qint64 write_bytes = writeFile(iso, buffer.constData(), read_bytes);
-                    total_write_bytes += write_bytes;
-                }
-                catch(...)
-                {
-                    rollback();
-                    throw;
-                }
-                if(i % 5 == 0 || total_write_bytes == all_files_total_size)
-                {
-                    iso.flush();
-                }
-                emit progress(all_files_total_size, total_write_bytes);
+                iso.flush();
             }
-            if(read_bytes == 0 || read_bytes < batch_size)
-            {
-                break;
-            }
+            emit progress(target_iso_size, total_write_bytes);
+        }
+        if(read_bytes == 0 || read_bytes < batch_size)
+        {
+            break;
         }
     }
     return true;

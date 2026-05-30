@@ -821,9 +821,8 @@
 <context>
     <name>OplPcTools::IsoRestorer</name>
     <message>
-        <location filename="../IsoRestorer.cpp" line="54"/>
         <source>File not found: &quot;%1&quot;</source>
-        <translation>Arquivo não encontrado: &quot;%1&quot;</translation>
+        <translation type="vanished">Arquivo não encontrado: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -913,38 +912,38 @@
 <context>
     <name>OplPcTools::UI::GameCheatWidget</name>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="75"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="73"/>
         <source>Cheat saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="86"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="84"/>
         <source>Cheat file does not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="92"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="90"/>
         <source>Confirmation</source>
         <translation type="unfinished">Confirmação</translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="93"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="91"/>
         <source>Are you sure you want to delete the cheat file?
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="111"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="109"/>
         <source>Downloading cheat %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="143"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="141"/>
         <source>Cheat for this game not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="146"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="144"/>
         <source>Unable to download the cheat, a network error occurred</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1097,27 +1096,27 @@
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="456"/>
+        <location filename="../UI/GameListWidget.cpp" line="455"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="457"/>
+        <location filename="../UI/GameListWidget.cpp" line="456"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="459"/>
+        <location filename="../UI/GameListWidget.cpp" line="458"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="512"/>
+        <location filename="../UI/GameListWidget.cpp" line="511"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="513"/>
+        <location filename="../UI/GameListWidget.cpp" line="512"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1125,37 +1124,42 @@
 <context>
     <name>OplPcTools::UI::IsoRestorerActivity</name>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="87"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="90"/>
         <source>Choose an ISO image filename to save</source>
         <translation>Escolha um nome para o arquivo ISO ser salvo</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="88"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="91"/>
         <source>ISO Image</source>
         <translation>Imagem ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="121"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="122"/>
+        <source>Unable to read the game source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="146"/>
         <source>Restoring &apos;%1&apos; to &apos;%2&apos;...</source>
         <translation>Restaurando &apos;%1&apos; para &apos;%2&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="129"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="154"/>
         <source>Synchronization of buffers. Please wait...</source>
         <translation>Sincronizando os buffers . Espera um pouquinho...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="130"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="155"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="146"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="171"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="147"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="172"/>
         <source>Canceled</source>
         <translation>Cancelado</translation>
     </message>

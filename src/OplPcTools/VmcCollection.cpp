@@ -18,7 +18,7 @@
 
 #include <OplPcTools/VmcCollection.h>
 #include <OplPcTools/File.h>
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/MemoryCard/VmcFormatter.h>
 #include <QVector>
 

@@ -28,6 +28,13 @@ class DirectoryGameStorage final : public GameStorage
     Q_OBJECT
 
 public:
+    struct FindIsoResult
+    {
+        QString path;
+        bool is_name_included_id;
+    };
+
+public:
     explicit DirectoryGameStorage(QObject * _parent = nullptr);
     GameInstallationType installationType() const override;
 
@@ -35,6 +42,7 @@ public:
     static QString makeIsoFilename(const QString & _title, const QString _ext);
     static QString makeGameIsoFilename(const QString & _title, const QString & _id, const QString _ext);
     static QString getFilenameExtension(const Game & _game);
+    static std::optional<FindIsoResult> findIsoFile(const QString & _storage_directory, const Game & _game);
 
 protected:
     bool performLoading(const QDir & _directory) override;

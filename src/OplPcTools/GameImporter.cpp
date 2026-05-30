@@ -22,7 +22,7 @@
 #include <OplPcTools/GameArtFileSource.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/File.h>
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/Constants.h>
 #include <QThread>
 #include <list>

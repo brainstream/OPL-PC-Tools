@@ -19,6 +19,9 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
+#include <OplPcTools/Device/UlDeviceSource.h>
+#include <OplPcTools/Device/ZsoDeviceSource.h>
+#include <OplPcTools/Device/Iso9660DeviceSource.h>
 #include <OplPcTools/IsoRestorer.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
@@ -97,7 +100,29 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
 {
     if(mp_working_thread) return;
     m_finish_status.clear();
-    IsoRestorer * restorer = new IsoRestorer(_game, _destination, this);
+    DeviceSource * device_source;
+    if(_game.installationType() == GameInstallationType::UlConfig)
+    {
+        device_source = new UlDeviceSource(_game);
+    }
+    else
+    {
+        std::optional<DirectoryGameStorage::FindIsoResult> result = DirectoryGameStorage::findIsoFile(
+            Library::instance().directory(), _game);
+        if(!result)
+            return;
+        if(_game.isCompressed())
+            device_source = new ZsoDeviceSource(result->path);
+        else
+            device_source = new Iso9660DeviceSource(result->path);
+    }
+    QSharedPointer<DeviceReader> reader(new DeviceReader(QSharedPointer<DeviceSource>(device_source)));
+    if(!reader->init())
+    {
+        Application::showErrorMessage(tr("Unable to read the game source"));
+        deleteLater();
+    }
+    IsoRestorer * restorer = new IsoRestorer(reader, _destination, this);
     LambdaThread * working_thread = new LambdaThread([restorer]() {
         restorer->restore();
     }, this);

@@ -20,7 +20,7 @@
 #include <OplPcTools/DirectoryGameInstaller.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Exception.h>
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/StandardPaths.h>
 #include <QStorageInfo>
 
 using namespace OplPcTools;

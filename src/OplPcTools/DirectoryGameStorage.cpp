@@ -21,7 +21,7 @@
 #include <OplPcTools/Device/ZsoDeviceSource.h>
 #include <OplPcTools/Device/DeviceReader.h>
 #include <OplPcTools/File.h>
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/StandardPaths.h>
 #include <QVector>
 
 using namespace OplPcTools;
@@ -77,22 +77,37 @@ bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _
 {
     if(_game.title() == _title)
         return true;
-    QDir directory(m_base_directory);
-    if(!directory.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
+    std::optional<FindIsoResult> find_result = findIsoFile(m_base_directory, _game);
+    if(!find_result)
         return false;
+    const QString ext = getFilenameExtension(_game);
+    const QString new_filename = QFileInfo(find_result->path).dir().absoluteFilePath(
+        find_result->is_name_included_id ? makeIsoFilename(_title, _game.id(), ext) : makeIsoFilename(_title, ext));
+    return QFile::rename(find_result->path, new_filename);
+}
+
+std::optional<DirectoryGameStorage::FindIsoResult> DirectoryGameStorage::findIsoFile(
+    const QString & _storage_directory,
+    const Game & _game)
+{
+    QDir directory(_storage_directory);
+    if(!directory.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
+        return std::nullopt;
     QString ext = getFilenameExtension(_game);
-    QString old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id(), ext));
+    QString filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id(), ext));
     bool is_name_included_id = true;
-    if(!QFile::exists(old_filename))
+    if(!QFile::exists(filename))
     {
         is_name_included_id = false;
-        old_filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), ext));
-        if(!QFile::exists(old_filename))
-            return false;
+        filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), ext));
+        if(!QFile::exists(filename))
+            return std::nullopt;
     }
-    QString new_filename = directory.absoluteFilePath(
-        is_name_included_id ? makeIsoFilename(_title, _game.id(), ext) : makeIsoFilename(_title, ext));
-    return QFile::rename(old_filename, new_filename);
+    return FindIsoResult
+    {
+        .path = filename,
+        .is_name_included_id = is_name_included_id
+    };
 }
 
 QString DirectoryGameStorage::getFilenameExtension(const Game & _game)
@@ -123,13 +138,6 @@ QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const 
 
 bool DirectoryGameStorage::performDeletion(const Game & _game)
 {
-    QDir dir(m_base_directory);
-    dir.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd);
-
-    QString ext = getFilenameExtension(_game);
-    QString path = dir.absoluteFilePath(_game.title()) + ext;
-    if(QFile::exists(path) && QFile::remove(path))
-        return true;
-    path = dir.absoluteFilePath(makeGameIsoFilename(_game.title(), _game.id(), ext));
-    return QFile::exists(path) && QFile::remove(path);
+    std::optional<FindIsoResult> find_result = findIsoFile(m_base_directory, _game);
+    return find_result && QFile::remove(find_result->path);
 }

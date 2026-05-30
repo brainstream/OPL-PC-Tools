@@ -18,56 +18,56 @@
 
 #pragma once
 
-#include <functional>
-#include <QSharedPointer>
-#include <QDir>
-#include <QPixmap>
-#include <QWidget>
-#include <QMenu>
-#include <QSortFilterProxyModel>
+#include <OplPcTools/Device/DeviceSource.h>
 #include <OplPcTools/Game.h>
-#include <OplPcTools/GameArtManager.h>
-#include "ui_GameListWidget.h"
+#include <QFile>
+#include <memory>
 
 namespace OplPcTools {
-namespace UI {
 
-class GameListWidget : public QWidget, private Ui::GameListWidget
+class UlDeviceSource : public DeviceSource
 {
-    class GameTreeModel;
+private:
+    struct Part final
+    {
+        Part(const QString & _path, qint64 _begin, qint64 _end) :
+            path(_path),
+            begin(_begin),
+            end(_end),
+            next(nullptr)
+        {
+        }
 
-    Q_OBJECT
+        ~Part()
+        {
+            delete next;
+        }
+
+        QString path;
+        qint64 begin;
+        qint64 end;
+        Part * next;
+    };
 
 public:
-    explicit GameListWidget(QWidget * _parent = nullptr);
+    explicit UlDeviceSource(const Game & _game);
+    QString filepath() const override;
+    bool open() override;
+    bool isOpen() const override;
+    void close() override;
+    qint64 isoSize() const override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
 
 private:
-    void setupShortcuts();
-    void setIconSize();
-    void activateCollectionControls(bool _activate);
-    void activateItemControls(const Game * _selected_game);
-    void showTreeContextMenu(const QPoint & _point);
-    void onLibraryLoaded();
-    void renameGame();
-    void showGameDetails();
-    void showGameImporter();
-    void showGameInstaller();
-    void deleteGame();
-    void startBusyThread(std::function<void()> _lambda);
-    void onGameAdded(const Uuid & _uuid);
-    void onGameRenamed(const Uuid & _uuid);
-    void onGameArtChanged(const QString & _game_id, GameArtType _type);
-    void onGameSelected();
-    void showIsoRestorer();
-    void downloadAllGameArts();
+    void openPart(const Part & _part);
 
 private:
-    GameArtManager * mp_game_art_manager;
-    GameTreeModel * mp_model;
-    QMenu * mp_context_menu;
-    QSortFilterProxyModel * mp_proxy_model;
-    QPixmap m_default_cover;
+    Game m_game;
+    qint64 m_size;
+    std::unique_ptr<Part> m_parts_ptr;
+    const Part * mp_open_part;
+    std::unique_ptr<QFile> m_file_ptr;
 };
 
-} // namespace UI
 } // namespace OplPcTools

@@ -16,18 +16,15 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#pragma once
+#include <OplPcTools/StandardPaths.h>
+#include <OplPcTools/ApplicationInfo.h>
 
-namespace OplPcTools {
+const char * const OplPcTools::StandardDirectories::art = "ART";
+const char * const OplPcTools::StandardDirectories::cd = "CD";
+const char * const OplPcTools::StandardDirectories::dvd = "DVD";
+const char * const OplPcTools::StandardDirectories::cfg = "CFG";
+const char * const OplPcTools::StandardDirectories::vmc = "VMC";
+const char * const OplPcTools::StandardDirectories::cht = "CHT";
 
-struct StandardDirectories
-{
-    static const char * const art;
-    static const char * const cd;
-    static const char * const dvd;
-    static const char * const cfg;
-    static const char * const vmc;
-    static const char * const cht;
-};
-
-} // namespace OplPcTools
+const char * const OplPcTools::StandardFiles::ul_config = "ul.cfg";
+const char * const OplPcTools::StandardFiles::config = APPLICATION_NAME ".ini";

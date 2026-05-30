@@ -17,7 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/GameArtManager.h>
-#include <OplPcTools/StandardDirectories.h>
+#include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/Exception.h>
 #include <QFile>
 

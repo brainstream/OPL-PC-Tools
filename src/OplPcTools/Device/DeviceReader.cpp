@@ -308,8 +308,10 @@ const QString DeviceReader::filepath() const
     return m_source_ptr->filepath();
 }
 
-bool DeviceReader::init()
+bool DeviceReader::open()
 {
+    if(isOpen())
+        return true;
     if(!m_source_ptr)
         return false;
     if(m_source_ptr->isOpen())
@@ -329,17 +331,6 @@ bool DeviceReader::init()
     return m_is_initialized;
 }
 
-bool DeviceReader::isInitialized() const
-{
-    return m_is_initialized;
-}
-
-bool DeviceReader::open()
-{
-    close();
-    return m_source_ptr->open();
-}
-
 void DeviceReader::close()
 {
     m_source_ptr->close();
@@ -347,7 +338,7 @@ void DeviceReader::close()
 
 bool DeviceReader::isOpen() const
 {
-    return m_source_ptr->isOpen();
+    return m_source_ptr->isOpen() && m_is_initialized;
 }
 
 bool DeviceReader::seek(quint64 _offset)

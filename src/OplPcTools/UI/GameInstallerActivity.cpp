@@ -484,7 +484,7 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
         return;
     }
     QSharedPointer<DeviceReader> device(new DeviceReader(source));
-    if(device->init())
+    if(device->open())
     {
         device->setTitle(file_info.completeBaseName());
         TaskListItem * item = new TaskListItem(device, format, mp_tree_tasks);

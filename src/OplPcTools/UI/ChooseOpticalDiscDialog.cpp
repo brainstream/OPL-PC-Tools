@@ -102,7 +102,7 @@ void InitializationThread::run()
             display_data.device = QSharedPointer<DeviceReader>(new DeviceReader(
                 QSharedPointer<DeviceSource>(new OpticalDriveDeviceSource(device_name.filename))));
             display_data.name = device_name.name;
-            if(display_data.device->init())
+            if(display_data.device->open())
                 m_devices.append(display_data);
         }
     }

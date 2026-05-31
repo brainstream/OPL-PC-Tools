@@ -58,7 +58,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
         else
             device_source = new Iso9660DeviceSource(base_directory.absoluteFilePath(iso));
         DeviceReader image{QSharedPointer<DeviceSource>(device_source)};
-        if(!image.init())
+        if(!image.open())
             continue;
         Game * game = createGame(image.gameId());
         game->setMediaType(_media_type);

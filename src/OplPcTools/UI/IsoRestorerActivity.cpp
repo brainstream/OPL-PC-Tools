@@ -117,7 +117,7 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
             device_source = new Iso9660DeviceSource(result->path);
     }
     QSharedPointer<DeviceReader> reader(new DeviceReader(QSharedPointer<DeviceSource>(device_source)));
-    if(!reader->init())
+    if(!reader->open())
     {
         Application::showErrorMessage(tr("Unable to read the game source"));
         deleteLater();

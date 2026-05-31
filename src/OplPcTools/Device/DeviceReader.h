@@ -41,17 +41,15 @@ class DeviceReader final
 public:
     explicit DeviceReader(QSharedPointer<DeviceSource> _source);
     const QString filepath() const;
-    bool init();
-    bool isInitialized() const;
+    bool open();
+    void close();
+    bool isOpen() const;
     inline QString title() const;
     inline void setTitle(const QString _title);
     inline quint64 size() const;
     inline MediaType mediaType() const;
     inline void setMediaType(MediaType _media_type);
     inline const QString & gameId() const;
-    bool open();
-    void close();
-    bool isOpen() const;
     bool seek(quint64 _offset);
     qint64 read(QByteArray & _buffer);
 

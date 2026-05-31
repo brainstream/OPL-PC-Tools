@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Choose Games</string>
+   <string>Select Games</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -23,6 +23,9 @@
    </item>
    <item>
     <widget class="QTreeWidget" name="mp_tree_games">
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
      </property>
@@ -53,10 +56,10 @@
    <item>
     <widget class="QDialogButtonBox" name="mp_button_box">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>

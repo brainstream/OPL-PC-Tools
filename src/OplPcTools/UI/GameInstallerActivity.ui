@@ -43,17 +43,11 @@
       </widget>
      </item>
      <item>
-      <spacer name="mp_spacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
+      <widget class="QProgressBar" name="mp_progressbar_overall">
+       <property name="value">
+        <number>0</number>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="mp_btn_install">
@@ -74,13 +68,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QProgressBar" name="mp_progressbar_overall">
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="mp_layout_4">

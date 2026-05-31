@@ -57,20 +57,7 @@ QVariant GameListItem::data(int _column, int _role) const
         if(_column == 0)
             return mr_game.title();
         else if(_column == 1)
-        {
-            if(mr_game.installationType() == GameInstallationType::UlConfig)
-            {
-                return QString("UL");
-            }
-            else if(mr_game.mediaType() == MediaType::CD)
-            {
-                return QString("CD");
-            }
-            else if(mr_game.mediaType() == MediaType::DVD)
-            {
-                return QString("DVD");
-            }
-        }
+            return mr_game.formatName();
         break;
     default:
         break;

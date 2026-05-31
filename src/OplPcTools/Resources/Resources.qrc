@@ -21,5 +21,6 @@
         <file alias="upload">images/upload.svg</file>
         <file alias="clear">images/clear.svg</file>
         <file alias="save">images/save.svg</file>
+        <file alias="menu">images/menu.svg</file>
     </qresource>
 </RCC>

@@ -46,12 +46,14 @@ private:
     void setIconSize();
     void activateCollectionControls(bool _activate);
     void activateItemControls(const Game * _selected_game);
+    void showActionMenu();
     void showTreeContextMenu(const QPoint & _point);
     void onLibraryLoaded();
     void renameGame();
     void showGameDetails();
     void showGameImporter();
     void showGameInstaller();
+    void showGameConverter();
     void deleteGame();
     void startBusyThread(std::function<void()> _lambda);
     void onGameAdded(const Uuid & _uuid);
@@ -64,7 +66,8 @@ private:
 private:
     GameArtManager * mp_game_art_manager;
     GameTreeModel * mp_model;
-    QMenu * mp_context_menu;
+    QMenu * mp_menu_action;
+    QMenu * mp_menu_context;
     QSortFilterProxyModel * mp_proxy_model;
     QPixmap m_default_cover;
 };

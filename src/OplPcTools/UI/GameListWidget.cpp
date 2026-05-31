@@ -22,6 +22,7 @@
 #include <OplPcTools/UI/GameImporterActivity.h>
 #include <OplPcTools/UI/GameInstallerActivity.h>
 #include <OplPcTools/UI/GameArtDownloaderActivity.h>
+#include <OplPcTools/UI/GameConverterActivity.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/BusySmartThread.h>
 #include <OplPcTools/UI/GameListWidget.h>
@@ -220,7 +221,8 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     QWidget(_parent),
     mp_game_art_manager(nullptr),
     mp_model(nullptr),
-    mp_context_menu(nullptr),
+    mp_menu_action(nullptr),
+    mp_menu_context(nullptr),
     mp_proxy_model(nullptr)
 {
     setupUi(this);
@@ -237,31 +239,32 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_btn_rename->setDefaultAction(mp_action_rename);
     mp_btn_edit->setDefaultAction(mp_action_edit);
     mp_btn_delete->setDefaultAction(mp_action_delete);
-    mp_btn_install->setDefaultAction(mp_action_install);
-    mp_btn_import->setDefaultAction(mp_action_import);
-    mp_btn_download_arts->setDefaultAction(mp_action_download_arts);
+    mp_btn_menu->setDefaultAction(mp_action_menu);
     mp_btn_resore_iso->setDefaultAction(mp_action_restore_iso);
-    mp_context_menu = new QMenu(this);
-    mp_context_menu->addAction(mp_action_rename);
-    mp_context_menu->addAction(mp_action_edit);
-    mp_context_menu->addAction(mp_action_restore_iso);
-    mp_context_menu->addAction(mp_action_delete);
-    mp_context_menu->addSeparator();
-    mp_context_menu->addAction(mp_action_download_arts);
-    mp_context_menu->addAction(mp_action_import);
-    mp_context_menu->addAction(mp_action_install);
+    mp_menu_action = new QMenu(this);
+    mp_menu_action->addAction(mp_action_install);
+    // mp_menu_action->addAction(mp_action_convert);
+    mp_menu_action->addAction(mp_action_import);
+    mp_menu_action->addAction(mp_action_download_arts);
+    mp_menu_context = new QMenu(this);
+    mp_menu_context->addAction(mp_action_rename);
+    mp_menu_context->addAction(mp_action_edit);
+    mp_menu_context->addAction(mp_action_restore_iso);
+    mp_menu_context->addAction(mp_action_delete);
     activateCollectionControls(false);
     activateItemControls(nullptr);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);
     connect(&Library::instance(), &Library::loaded, this, &GameListWidget::onLibraryLoaded);
     connect(&Library::instance().games(), &GameCollection::gameAdded, this, &GameListWidget::onGameAdded);
     connect(&Library::instance().games(), &GameCollection::gameRenamed, this, &GameListWidget::onGameRenamed);
+    connect(mp_action_menu, &QAction::triggered, this, &GameListWidget::showActionMenu);
     connect(mp_action_edit, &QAction::triggered, this, &GameListWidget::showGameDetails);
     connect(mp_action_rename, &QAction::triggered, this, &GameListWidget::renameGame);
     connect(mp_action_delete, &QAction::triggered, this, &GameListWidget::deleteGame);
     connect(mp_action_import, &QAction::triggered, this, &GameListWidget::showGameImporter);
     connect(mp_action_install, &QAction::triggered, this, &GameListWidget::showGameInstaller);
     connect(mp_action_restore_iso, &QAction::triggered, this, &GameListWidget::showIsoRestorer);
+    connect(mp_action_convert, &QAction::triggered, this, &GameListWidget::showGameConverter);
     connect(mp_action_download_arts, &QAction::triggered, this, &GameListWidget::downloadAllGameArts);
     connect(mp_tree_games, &QTreeView::activated, this, [this](const QModelIndex &) { showGameDetails(); });
     connect(mp_tree_games, &QTreeView::customContextMenuRequested, this, &GameListWidget::showTreeContextMenu);
@@ -292,10 +295,17 @@ void GameListWidget::setIconSize()
     mp_tree_games->setIconSize(size);
 }
 
+void GameListWidget::showActionMenu()
+{
+    QPoint pos = mp_btn_menu->pos();
+    pos.setX(pos.x() + mp_btn_menu->width() + 3);
+    mp_menu_action->exec(pos);
+}
+
 void GameListWidget::showTreeContextMenu(const QPoint & _point)
 {
     if(Library::instance().games().isLoaded())
-        mp_context_menu->exec(mp_tree_games->mapToGlobal(_point));
+        mp_menu_context->exec(mp_tree_games->mapToGlobal(_point));
 }
 
 void GameListWidget::activateCollectionControls(bool _activate)
@@ -377,10 +387,18 @@ void GameListWidget::onGameSelected()
         QPixmap pixmap = mp_game_art_manager->load(game->id(), GameArtType::Front);
         mp_label_cover->setPixmap(pixmap.isNull() ? m_default_cover : pixmap);
         mp_label_type->setText(game->mediaType() == MediaType::CD ? "CD" : "DVD");
-        mp_label_format->setText(game->isCompressed() ? "ZSO" : "ISO");
-        mp_label_parts->setText(QString("%1").arg(game->partCount()));
-        mp_label_source->setText(
-            game->installationType() == GameInstallationType::UlConfig ? "UL" : tr("Directory"));
+        mp_label_format->setText(game->formatName());
+        if(game->installationType() == GameInstallationType::UlConfig)
+        {
+            mp_label_parts->setText(QString("%1").arg(game->partCount()));
+            mp_label_parts->setVisible(true);
+            mp_label_title_parts->setVisible(true);
+        }
+        else
+        {
+            mp_label_parts->setVisible(false);
+            mp_label_title_parts->setVisible(false);
+        }
         mp_widget_details->show();
     }
     else
@@ -442,6 +460,12 @@ void GameListWidget::showGameImporter()
 void GameListWidget::showGameInstaller()
 {
     QSharedPointer<Intent> intent = GameInstallerActivity::createIntent();
+    Application::pushActivity(*intent);
+}
+
+void GameListWidget::showGameConverter()
+{
+    QSharedPointer<Intent> intent = GameConverterActivity::createIntent();
     Application::pushActivity(*intent);
 }
 

@@ -18,65 +18,28 @@
 
 #pragma once
 
-#include <QWidget>
-#include <QTreeWidgetItem>
-#include <OplPcTools/GameInstaller.h>
-#include <OplPcTools/UI/LambdaThread.h>
+#include "ui_GameConverterActivity.h"
+#include <OplPcTools/UI/Activity.h>
 #include <OplPcTools/UI/Intent.h>
-#include "ui_GameInstallerActivity.h"
 
 namespace OplPcTools {
 namespace UI {
 
-
-class GameInstallerActivity : public Activity, private Ui::GameInstallerActivity
+class GameConverterActivity : public Activity, private Ui::GameConverterActivity
 {
     Q_OBJECT
 
 public:
-    explicit GameInstallerActivity(QWidget * _parent = nullptr);
+    explicit GameConverterActivity(QWidget * _parent = nullptr);
     static QSharedPointer<Intent> createIntent();
 
-protected:
-    void dragEnterEvent(QDragEnterEvent * _event) override;
-    void dropEvent(QDropEvent * _event) override;
-
 private:
-    void setupShortcuts();
-    void close();
-    void taskSelectionChanged();
-    void addDiscImage();
-    void addDiscImage(const QString & _file_path);
-    static bool isSourceFileSupported(const QString & _file_path);
-    void addDisc();
-    QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
-    void renameGame();
+    void onGameSelectionChanged();
+    void onFormatChanged(bool _checked);
+    void addGames();
     void removeGame();
-    void mediaTypeChanged(bool _checked);
-    void targetOptionChanged(bool _checked);
-    void renameOptionChanged();
-    void moveOptionChanged();
-    void install();
-    bool startNextTask();
-    void installProgress(quint64 _total_bytes, quint64 _processed_bytes);
-    void rollbackStarted();
-    void rollbackFinished();
-    void registrationStarted();
-    void registrationFinished();
-    void threadFinished();
-    void installerError(QString _message);
-    void setTaskError(const QString & _message, int _index = -1);
-    QString canceledErrorMessage() const;
-    void setOverallProgressUnknownStatus(bool _unknown, int _value = 0);
-    void cancel();
-
-private:
-    LambdaThread * mp_working_thread;
-    GameInstaller * mp_installer;
-    quint32 m_processing_task_index;
-    bool m_is_canceled;
+    void convert();
 };
 
-
-} //namespace UI
+} // namespace UI
 } // namespace OplPcTools

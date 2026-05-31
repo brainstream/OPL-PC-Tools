@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAME__
-#define __OPLPCTOOLS_GAME__
+#pragma once
 
 #include <QString>
 #include <QObject>
@@ -26,6 +25,10 @@
 #include <OplPcTools/GameInstallationType.h>
 
 namespace OplPcTools {
+
+static constexpr char g_game_format_ul[] = "UL";
+static constexpr char g_game_format_iso[] = "ISO";
+static constexpr char g_game_format_zso[] = "ZSO";
 
 class Game final
 {
@@ -44,6 +47,7 @@ public:
     inline void setIsCompressed(bool _compressed);
     inline bool isCompressed() const;
     inline GameInstallationType installationType() const;
+    inline QString formatName() const;
 
 private:
     const Uuid m_uuid;
@@ -122,6 +126,13 @@ GameInstallationType Game::installationType() const
     return m_installation_type;
 }
 
-} // namespace OplPcTools
+QString Game::formatName() const
+{
+    if(m_installation_type == GameInstallationType::UlConfig)
+        return g_game_format_ul;
+    if(isCompressed())
+        return g_game_format_zso;
+    return g_game_format_iso;
+}
 
-#endif // __OPLPCTOOLS_GAME__
+} // namespace OplPcTools

@@ -148,6 +148,31 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QToolButton" name="mp_btn_menu">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -157,88 +182,14 @@
       <number>4</number>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="mp_edit_filter">
-         <property name="placeholderText">
-          <string>Filter</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QToolButton" name="mp_btn_download_arts">
-         <property name="text">
-          <string notr="true"/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="mp_btn_import">
-         <property name="text">
-          <string notr="true"/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="mp_btn_install">
-         <property name="text">
-          <string notr="true"/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLineEdit" name="mp_edit_filter">
+       <property name="placeholderText">
+        <string>Filter</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QTreeView" name="mp_tree_games">
@@ -430,7 +381,7 @@
              <number>0</number>
             </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="mp_label_2">
+             <widget class="QLabel" name="mp_label_title_id">
               <property name="text">
                <string>ID:</string>
               </property>
@@ -450,7 +401,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="mp_label_4">
+             <widget class="QLabel" name="mp_label_tote_type">
               <property name="text">
                <string>Type:</string>
               </property>
@@ -469,28 +420,22 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="mp_label_6">
+            <item row="2" column="0">
+             <widget class="QLabel" name="mp_label_title_format">
               <property name="text">
-               <string>Source:</string>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::TextInteractionFlag::NoTextInteraction</set>
+               <string>Format:</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
-             <widget class="QLabel" name="mp_label_source">
+            <item row="2" column="1">
+             <widget class="QLabel" name="mp_label_format">
               <property name="text">
                <string notr="true"/>
               </property>
-              <property name="textInteractionFlags">
-               <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
-              </property>
              </widget>
             </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="mp_label_8">
+            <item row="4" column="0">
+             <widget class="QLabel" name="mp_label_title_parts">
               <property name="text">
                <string>Parts:</string>
               </property>
@@ -499,27 +444,13 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
+            <item row="4" column="1">
              <widget class="QLabel" name="mp_label_parts">
               <property name="text">
                <string notr="true"/>
               </property>
               <property name="textInteractionFlags">
                <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="mp_label_3">
-              <property name="text">
-               <string>Format</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="mp_label_format">
-              <property name="text">
-               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -651,6 +582,36 @@
     <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
+  <action name="mp_action_menu">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/menu</normaloff>:/images/menu</iconset>
+   </property>
+   <property name="text">
+    <string>Tools</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="mp_action_convert">
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/images/reload</normaloff>:/images/reload</iconset>
+   </property>
+   <property name="text">
+    <string>Convert game formats</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>mp_tree_games</tabstop>
@@ -658,10 +619,8 @@
   <tabstop>mp_btn_edit</tabstop>
   <tabstop>mp_btn_resore_iso</tabstop>
   <tabstop>mp_btn_delete</tabstop>
+  <tabstop>mp_btn_menu</tabstop>
   <tabstop>mp_edit_filter</tabstop>
-  <tabstop>mp_btn_download_arts</tabstop>
-  <tabstop>mp_btn_import</tabstop>
-  <tabstop>mp_btn_install</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources/Resources.qrc"/>

@@ -126,7 +126,7 @@
     <name>ChooseImportGamesDialog</name>
     <message>
         <location filename="../UI/ChooseImportGamesDialog.ui" line="14"/>
-        <source>Choose Games</source>
+        <source>Select Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -135,7 +135,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/ChooseImportGamesDialog.ui" line="48"/>
+        <location filename="../UI/ChooseImportGamesDialog.ui" line="51"/>
         <source>Source</source>
         <translation>Fonte</translation>
     </message>
@@ -362,6 +362,74 @@
     </message>
 </context>
 <context>
+    <name>GameConverterActivity</name>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="17"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="37"/>
+        <source>Back</source>
+        <translation type="unfinished">Voltar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="102"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="131"/>
+        <source>Remove</source>
+        <translation type="unfinished">Remover</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="194"/>
+        <source>Source format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="199"/>
+        <location filename="../UI/GameConverterActivity.ui" line="292"/>
+        <source>Target format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="204"/>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="236"/>
+        <source>Select a game to change the target format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="276"/>
+        <source>Game Ttile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="298"/>
+        <source>UL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="312"/>
+        <source>ZSO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.ui" line="305"/>
+        <source>ISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameDetailsActivity</name>
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="40"/>
@@ -402,67 +470,67 @@
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="61"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="55"/>
         <source>&amp;Install</source>
         <translation>&amp;Instalar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="72"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="66"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="142"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="129"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="147"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="134"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="157"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="144"/>
         <source>&amp;Add Image</source>
         <translation>&amp;Adicionar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="168"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="155"/>
         <source>Add &amp;Disc</source>
         <translation>Adicionar &amp;Disco</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="192"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="179"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="203"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="190"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="287"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="274"/>
         <source>Media Type</source>
         <translation>Tipo de mídia</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="293"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="280"/>
         <source>Auto</source>
         <translation>Automático</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="303"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="290"/>
         <source>DVD</source>
         <translation>DVD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="310"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="297"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="320"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="307"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -471,27 +539,27 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Essa é a única forma de rodar jogos grandes (maiores que 4GB) pelo USB, já que o OPL aceita apenas o sistema de arquivos FAT32, que suporta apenas arquivos menores que 4GB. Por isso você deve dividir os arquivos em várias partes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="326"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="313"/>
         <source>Split the file into parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="333"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="320"/>
         <source>Install as ISO file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="350"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="337"/>
         <source>Move source file instead of copying it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="343"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="330"/>
         <source>Install as compressed ZSO file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="357"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="344"/>
         <source>Add game ID to file name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -519,75 +587,94 @@
 <context>
     <name>GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="164"/>
+        <location filename="../UI/GameListWidget.ui" line="187"/>
         <source>Filter</source>
         <translation>Filtrar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="435"/>
+        <location filename="../UI/GameListWidget.ui" line="386"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="455"/>
+        <location filename="../UI/GameListWidget.ui" line="406"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="475"/>
         <source>Source:</source>
-        <translation>Fonte:</translation>
+        <translation type="vanished">Fonte:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="495"/>
+        <location filename="../UI/GameListWidget.ui" line="440"/>
         <source>Parts:</source>
         <translation>Partes:</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="515"/>
-        <source>Format</source>
+        <location filename="../UI/GameListWidget.ui" line="426"/>
+        <source>Format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="555"/>
+        <location filename="../UI/GameListWidget.ui" line="486"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="558"/>
+        <location filename="../UI/GameListWidget.ui" line="489"/>
         <source>Edit game</source>
         <translation>Editar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="570"/>
+        <location filename="../UI/GameListWidget.ui" line="501"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="573"/>
+        <location filename="../UI/GameListWidget.ui" line="504"/>
         <source>Delete game</source>
         <translation>Apagar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="585"/>
-        <location filename="../UI/GameListWidget.ui" line="588"/>
+        <location filename="../UI/GameListWidget.ui" line="516"/>
+        <location filename="../UI/GameListWidget.ui" line="519"/>
         <source>Install games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="591"/>
+        <location filename="../UI/GameListWidget.ui" line="522"/>
         <source>Ins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="627"/>
-        <location filename="../UI/GameListWidget.ui" line="630"/>
+        <location filename="../UI/GameListWidget.ui" line="558"/>
+        <location filename="../UI/GameListWidget.ui" line="561"/>
         <source>Import games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="633"/>
+        <location filename="../UI/GameListWidget.ui" line="564"/>
         <source>Ctrl+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="591"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="594"/>
+        <source>Ctrl+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="606"/>
+        <source>Convert game formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameListWidget.ui" line="609"/>
+        <source>Ctrl+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -599,22 +686,22 @@
         <translation type="vanished">Instalar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="600"/>
+        <location filename="../UI/GameListWidget.ui" line="531"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="603"/>
+        <location filename="../UI/GameListWidget.ui" line="534"/>
         <source>Rename game</source>
         <translation>Renomear jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="615"/>
+        <location filename="../UI/GameListWidget.ui" line="546"/>
         <source>Restore ISO</source>
         <translation>Restaurar ISO</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="648"/>
+        <location filename="../UI/GameListWidget.ui" line="579"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
@@ -623,8 +710,8 @@
         <translation type="obsolete">Imagens</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.ui" line="642"/>
-        <location filename="../UI/GameListWidget.ui" line="645"/>
+        <location filename="../UI/GameListWidget.ui" line="573"/>
+        <location filename="../UI/GameListWidget.ui" line="576"/>
         <source>Download all pictures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,6 +1100,19 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::UI::GameConverterActivity</name>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="136"/>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="168"/>
+        <source>[Multiple games selected]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::UI::GameImporterActivity</name>
     <message>
         <location filename="../UI/GameImporterActivity.cpp" line="104"/>
@@ -1090,32 +1190,31 @@
 <context>
     <name>OplPcTools::UI::GameListWidget</name>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="383"/>
         <source>Directory</source>
-        <translation>Pasta</translation>
+        <translation type="vanished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="455"/>
+        <location filename="../UI/GameListWidget.cpp" line="479"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="456"/>
+        <location filename="../UI/GameListWidget.cpp" line="480"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="458"/>
+        <location filename="../UI/GameListWidget.cpp" line="482"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="511"/>
+        <location filename="../UI/GameListWidget.cpp" line="535"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="512"/>
+        <location filename="../UI/GameListWidget.cpp" line="536"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1493,7 +1592,7 @@
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>
     <message>
-        <location filename="../Game.h" line="66"/>
+        <location filename="../Game.h" line="70"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Sem título&gt;</translation>
     </message>

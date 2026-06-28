@@ -65,15 +65,17 @@ const QString GameRenameDialog::FilenameValidator::message() const
     return m_is_invalid ? m_message : QString();
 }
 
-GameRenameDialog::GameRenameDialog(const QString & _initial_name,
-                                   GameInstallationType _installation_type,
-                                   QWidget * _parent /*= nullptr*/) :
+GameRenameDialog::GameRenameDialog(
+        const QString & _initial_name,
+        GameInstallationType _installation_type,
+        QWidget * _parent /*= nullptr*/) :
     QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-    if(_installation_type == GameInstallationType::Directory)
-        mp_validator = new FilenameValidator();
-    else
+    if(_installation_type == GameInstallationType::UlConfig)
         mp_validator = new UlConfigNameValidator();
+    else
+        mp_validator = new FilenameValidator();
+
     setupUi(this);
     connect(mp_edit_name, &QLineEdit::textChanged, this, &GameRenameDialog::onNameChanged);
     connect(mp_button_box, &QDialogButtonBox::accepted, this, &GameRenameDialog::accept);

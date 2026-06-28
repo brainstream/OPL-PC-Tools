@@ -26,14 +26,9 @@
 
 using namespace OplPcTools;
 
-DirectoryGameStorage::DirectoryGameStorage(QObject * _parent /*= nullptr*/) :
+DirectoryGameStorage::DirectoryGameStorage(QObject * _parent) :
     GameStorage(_parent)
 {
-}
-
-GameInstallationType DirectoryGameStorage::installationType() const
-{
-    return GameInstallationType::Directory;
 }
 
 bool DirectoryGameStorage::performLoading(const QDir & _directory)
@@ -49,7 +44,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
     QDir base_directory(m_base_directory);
     if(!base_directory.cd(_media_type == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return;
-    foreach(const QString & iso, base_directory.entryList({ g_filename_pattern_iso, g_filename_pattern_zso }))
+    foreach(const QString & iso, base_directory.entryList({ filenamePattern() }))
     {
         DeviceSource * device_source = nullptr;
         bool is_compressed = QFileInfo(iso).suffix().compare("zso", Qt::CaseInsensitive) == 0;
@@ -63,7 +58,6 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
         Game * game = createGame(image.gameId());
         game->setMediaType(_media_type);
         game->setPartCount(1);
-        game->setIsCompressed(is_compressed);
         QString title = QFileInfo(image.filepath()).fileName();
         title = title.left(title.lastIndexOf('.'));
         if(title.startsWith(image.gameId()))
@@ -77,23 +71,29 @@ bool DirectoryGameStorage::performRenaming(const Game & _game, const QString & _
 {
     if(_game.title() == _title)
         return true;
-    std::optional<FindIsoResult> find_result = findIsoFile(m_base_directory, _game);
+    std::optional<FindIsoResult> find_result = findIsoFile(_game);
     if(!find_result)
         return false;
-    const QString ext = getFilenameExtension(_game);
+    const QString ext = filenameExtenstion();
     const QString new_filename = QFileInfo(find_result->path).dir().absoluteFilePath(
         find_result->is_name_included_id ? makeIsoFilename(_title, _game.id(), ext) : makeIsoFilename(_title, ext));
     return QFile::rename(find_result->path, new_filename);
 }
 
-std::optional<DirectoryGameStorage::FindIsoResult> DirectoryGameStorage::findIsoFile(
-    const QString & _storage_directory,
-    const Game & _game)
+std::optional<DirectoryGameStorage::FindIsoResult> DirectoryGameStorage::findIsoFile(const Game & _game) const
 {
-    QDir directory(_storage_directory);
+    return findIsoFile(_game, m_base_directory, filenameExtenstion());
+}
+
+std::optional<DirectoryGameStorage::FindIsoResult> DirectoryGameStorage::findIsoFile(
+    const Game & _game,
+    const QString & _base_directory,
+    const QString & _filename_extenstion)
+{
+    QDir directory(_base_directory);
     if(!directory.cd(_game.mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd))
         return std::nullopt;
-    QString ext = getFilenameExtension(_game);
+    QString ext = _filename_extenstion;
     QString filename = directory.absoluteFilePath(makeIsoFilename(_game.title(), _game.id(), ext));
     bool is_name_included_id = true;
     if(!QFile::exists(filename))
@@ -108,11 +108,6 @@ std::optional<DirectoryGameStorage::FindIsoResult> DirectoryGameStorage::findIso
         .path = filename,
         .is_name_included_id = is_name_included_id
     };
-}
-
-QString DirectoryGameStorage::getFilenameExtension(const Game & _game)
-{
-    return _game.isCompressed() ? g_file_ext_zso : g_file_ext_iso;
 }
 
 bool DirectoryGameStorage::performRegistration(const Game & _game)
@@ -138,6 +133,74 @@ QString DirectoryGameStorage::makeGameIsoFilename(const QString & _title, const 
 
 bool DirectoryGameStorage::performDeletion(const Game & _game)
 {
-    std::optional<FindIsoResult> find_result = findIsoFile(m_base_directory, _game);
+    std::optional<FindIsoResult> find_result = findIsoFile(_game);
     return find_result && QFile::remove(find_result->path);
+}
+
+const char * Iso9660GameStorage::s_filename_extenstion = g_file_ext_iso;
+
+Iso9660GameStorage::Iso9660GameStorage(QObject * _parent) :
+    DirectoryGameStorage(_parent)
+{
+}
+
+GameInstallationType Iso9660GameStorage::installationType() const
+{
+    return GameInstallationType::Iso9660;
+}
+
+const char * Iso9660GameStorage::filenameExtenstion() const
+{
+    return s_filename_extenstion;
+}
+
+const char * Iso9660GameStorage::filenamePattern() const
+{
+    return g_filename_pattern_iso;
+}
+
+DeviceSource * Iso9660GameStorage::newDeviceSource(const QString & _filepath) const
+{
+    return new Iso9660DeviceSource(_filepath);
+}
+
+std::optional<DirectoryGameStorage::FindIsoResult> Iso9660GameStorage::findIsoFile(
+    const Game & _game,
+    const QString & _base_directory)
+{
+    return DirectoryGameStorage::findIsoFile(_game, _base_directory, s_filename_extenstion);
+}
+
+const char * ZisoGameStorage::s_filename_extenstion = g_file_ext_zso;
+
+ZisoGameStorage::ZisoGameStorage(QObject * _parent) :
+    DirectoryGameStorage(_parent)
+{
+}
+
+GameInstallationType ZisoGameStorage::installationType() const
+{
+    return GameInstallationType::Ziso;
+}
+
+const char * ZisoGameStorage::filenameExtenstion() const
+{
+    return s_filename_extenstion;
+}
+
+const char * ZisoGameStorage::filenamePattern() const
+{
+    return g_filename_pattern_zso;
+}
+
+DeviceSource * ZisoGameStorage::newDeviceSource(const QString & _filepath) const
+{
+    return new ZsoDeviceSource(_filepath);
+}
+
+std::optional<DirectoryGameStorage::FindIsoResult> ZisoGameStorage::findIsoFile(
+    const Game & _game,
+    const QString & _base_directory)
+{
+    return DirectoryGameStorage::findIsoFile(_game, _base_directory, s_filename_extenstion);
 }

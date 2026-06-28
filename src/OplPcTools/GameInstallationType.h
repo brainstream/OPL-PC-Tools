@@ -19,13 +19,29 @@
 #ifndef __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 #define __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 
+#include <QString>
+
 namespace OplPcTools {
 
 enum class GameInstallationType
 {
     UlConfig,
-    Directory
+    Iso9660,
+    Ziso
 };
+
+inline QString gameInstallationTypeName(GameInstallationType _type)
+{
+    switch(_type)
+    {
+    case GameInstallationType::UlConfig:
+        return "UL";
+    case GameInstallationType::Ziso:
+        return "ZSO";
+    default:
+        return "ISO";
+    }
+}
 
 } // namespace OplPcTools
 

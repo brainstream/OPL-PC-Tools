@@ -20,10 +20,11 @@
 
 #include <OplPcTools/GameStorage.h>
 #include <OplPcTools/Constants.h>
+#include <OplPcTools/Device/DeviceSource.h>
 
 namespace OplPcTools {
 
-class DirectoryGameStorage final : public GameStorage
+class DirectoryGameStorage : public GameStorage
 {
     Q_OBJECT
 
@@ -36,25 +37,65 @@ public:
 
 public:
     explicit DirectoryGameStorage(QObject * _parent = nullptr);
-    GameInstallationType installationType() const override;
-
     static QString makeIsoFilename(const QString & _title, const QString & _id, const QString _ext);
     static QString makeIsoFilename(const QString & _title, const QString _ext);
     static QString makeGameIsoFilename(const QString & _title, const QString & _id, const QString _ext);
-    static QString getFilenameExtension(const Game & _game);
-    static std::optional<FindIsoResult> findIsoFile(const QString & _storage_directory, const Game & _game);
 
 protected:
+    virtual const char * filenameExtenstion() const = 0;
+    virtual const char * filenamePattern() const = 0;
+    virtual DeviceSource * newDeviceSource(const QString & _filepath) const = 0;
     bool performLoading(const QDir & _directory) override;
     bool performRenaming(const Game & _game, const QString & _title) override;
     bool performRegistration(const Game & _game) override;
     bool performDeletion(const Game & _game) override;
+    static std::optional<FindIsoResult> findIsoFile(
+        const Game & _game,
+        const QString & _base_directory,
+        const QString & _filename_extenstion);
 
 private:
+    std::optional<FindIsoResult> findIsoFile(const Game & _game) const;
     void loadDirectory(MediaType _media_type);
 
 private:
     QString m_base_directory;
+};
+
+class Iso9660GameStorage final : public DirectoryGameStorage
+{
+    Q_OBJECT
+
+public:
+    explicit Iso9660GameStorage(QObject * _parent = nullptr);
+    GameInstallationType installationType() const override;
+    static std::optional<FindIsoResult> findIsoFile(const Game & _game, const QString & _base_directory);
+
+protected:
+    const char * filenameExtenstion() const override;
+    const char * filenamePattern() const override;
+    DeviceSource * newDeviceSource(const QString & _filepath) const override;
+
+private:
+    static const char * s_filename_extenstion;
+};
+
+class ZisoGameStorage final : public DirectoryGameStorage
+{
+    Q_OBJECT
+
+public:
+    explicit ZisoGameStorage(QObject * _parent = nullptr);
+    GameInstallationType installationType() const override;
+    static std::optional<FindIsoResult> findIsoFile(const Game & _game, const QString & _base_directory);
+
+protected:
+    const char * filenameExtenstion() const override;
+    const char * filenamePattern() const override;
+    DeviceSource * newDeviceSource(const QString & _filepath) const override;
+
+private:
+    static const char * s_filename_extenstion;
 };
 
 } // namespace OplPcTools

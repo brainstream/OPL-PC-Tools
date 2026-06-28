@@ -88,13 +88,6 @@ enum class SourceFormat
     NeroImage
 };
 
-enum class TargetFormat
-{
-    UlConfig,
-    Iso,
-    CompressedIso
-};
-
 class TaskListItem : public QTreeWidgetItem
 {
 public:
@@ -102,8 +95,8 @@ public:
     QVariant data(int _column, int _role) const;
     inline DeviceReader & device();
     inline SourceFormat sourceFormat() const;
-    inline void setTargetFormat(TargetFormat _format);
-    inline TargetFormat targetFormat() const;
+    inline void setTargetInstallationType(GameInstallationType _installation_type);
+    inline GameInstallationType targetInstallationType() const;
     inline bool canFileBeMoved() const;
     inline bool canFileBeRenamed() const;
     void rename(const QString & _new_name);
@@ -122,7 +115,7 @@ public:
 private:
     QSharedPointer<DeviceReader> m_device_ptr;
     SourceFormat m_source_format;
-    TargetFormat m_target_format;
+    GameInstallationType m_target_installation_type;
     GameInstallationStatus m_status;
     int m_progress;
     QString m_error_message;
@@ -151,17 +144,17 @@ TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, SourceFormat _f
     QTreeWidgetItem(_widget, QTreeWidgetItem::UserType),
     m_device_ptr(_device),
     m_source_format(_format),
-    m_target_format(TargetFormat::Iso),
+    m_target_installation_type(GameInstallationType::Iso9660),
     m_status(GameInstallationStatus::Queued),
     m_progress(0)
 {
     const Settings & settings = Settings::instance();
     if(settings.splitUpIso())
-        m_target_format = TargetFormat::UlConfig;
+        m_target_installation_type = GameInstallationType::UlConfig;
     m_is_renaming_enabled = settings.renameIso();
     m_is_moving_enabled = settings.moveIso();
     if(settings.compressIso())
-        m_target_format = TargetFormat::CompressedIso;
+        m_target_installation_type = GameInstallationType::Ziso;
 }
 
 QVariant TaskListItem::data(int _column, int _role) const
@@ -197,26 +190,27 @@ SourceFormat TaskListItem::sourceFormat() const
     return m_source_format;
 }
 
-void TaskListItem::setTargetFormat(TargetFormat _format)
+void TaskListItem::setTargetInstallationType(GameInstallationType _installation_type)
 {
-    m_target_format = _format;
+    m_target_installation_type = _installation_type;
 }
 
-TargetFormat TaskListItem::targetFormat() const
+GameInstallationType TaskListItem::targetInstallationType() const
 {
-    return m_target_format;
+    return m_target_installation_type;
 }
 
 bool TaskListItem::canFileBeMoved() const
 {
     return
-        (m_source_format == SourceFormat::Iso && m_target_format == TargetFormat::Iso) ||
-        (m_source_format == SourceFormat::CompressedIso && m_target_format == TargetFormat::CompressedIso);
+        (m_source_format == SourceFormat::Iso && m_target_installation_type == GameInstallationType::Iso9660) ||
+        (m_source_format == SourceFormat::CompressedIso && m_target_installation_type == GameInstallationType::Ziso);
 }
 
 bool TaskListItem::canFileBeRenamed() const
 {
-    return m_target_format == TargetFormat::Iso || m_target_format == TargetFormat::CompressedIso;
+    return m_target_installation_type == GameInstallationType::Iso9660 ||
+           m_target_installation_type == GameInstallationType::Ziso;
 }
 
 void TaskListItem::rename(const QString & _new_name)
@@ -417,9 +411,9 @@ void GameInstallerActivity::taskSelectionChanged()
         mp_radio_mtauto->setChecked(true);
         break;
     }
-    mp_radio_target_ul->setChecked(item->targetFormat() == TargetFormat::UlConfig);
-    mp_radio_target_iso->setChecked(item->targetFormat() == TargetFormat::Iso);
-    mp_radio_target_zso->setChecked(item->targetFormat() == TargetFormat::CompressedIso);
+    mp_radio_target_ul->setChecked(item->targetInstallationType() == GameInstallationType::UlConfig);
+    mp_radio_target_iso->setChecked(item->targetInstallationType() == GameInstallationType::Iso9660);
+    mp_radio_target_zso->setChecked(item->targetInstallationType() == GameInstallationType::Ziso);
     mp_checkbox_move->setChecked(item->isMovingEnabled());
     mp_checkbox_rename->setChecked(item->isRenamingEnabled());
     mp_checkbox_move->setEnabled(item->canFileBeMoved());
@@ -573,10 +567,7 @@ void GameInstallerActivity::renameGame()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item || item->status() != GameInstallationStatus::Queued)
         return;
-    GameRenameDialog dlg(
-        item->device().title(),
-        item->targetFormat() == TargetFormat::UlConfig ? GameInstallationType::UlConfig : GameInstallationType::Directory,
-        this);
+    GameRenameDialog dlg(item->device().title(), item->targetInstallationType(), this);
     if(dlg.exec() == QDialog::Accepted)
     {
         item->rename(dlg.name());
@@ -615,11 +606,11 @@ void GameInstallerActivity::targetOptionChanged(bool _checked)
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
     if(!item) return;
     if(mp_radio_target_iso->isChecked())
-        item->setTargetFormat(TargetFormat::Iso);
+        item->setTargetInstallationType(GameInstallationType::Iso9660);
     else if(mp_radio_target_zso->isChecked())
-        item->setTargetFormat(TargetFormat::CompressedIso);
+        item->setTargetInstallationType(GameInstallationType::Ziso);
     else
-        item->setTargetFormat(TargetFormat::UlConfig);
+        item->setTargetInstallationType(GameInstallationType::UlConfig);
     mp_checkbox_move->setEnabled(item->canFileBeMoved());
     mp_checkbox_rename->setEnabled(item->canFileBeRenamed());
     item->enabelMoving(mp_checkbox_move->isEnabled() && mp_checkbox_move->isChecked());
@@ -746,13 +737,13 @@ bool GameInstallerActivity::startNextTask()
         item->setMediaType(MediaType::DVD);
     else
         item->setMediaType(MediaType::Unknown);
-    if(item->targetFormat() == TargetFormat::UlConfig)
+    if(item->targetInstallationType() == GameInstallationType::UlConfig)
     {
         mp_installer = new UlConfigGameInstaller(item->device(), this);
     }
     else
     {
-        DeviceWriter * writer = item->targetFormat() == TargetFormat::CompressedIso
+        DeviceWriter * writer = item->targetInstallationType() == GameInstallationType::Ziso
             ? static_cast<DeviceWriter *>(new CompressedDeviceWriter())
             : static_cast<DeviceWriter *>(new DefaultDeviceWriter());
         DirectoryGameInstaller * dir_installer = new DirectoryGameInstaller(
@@ -761,7 +752,7 @@ bool GameInstallerActivity::startNextTask()
             this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
-        dir_installer->setOptionCompressed(item->targetFormat() == TargetFormat::CompressedIso);
+        dir_installer->setOptionCompressed(item->targetInstallationType() == GameInstallationType::Ziso);
         mp_installer = dir_installer;
     }
     mp_working_thread = new LambdaThread([this]() {

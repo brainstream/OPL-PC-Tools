@@ -61,7 +61,8 @@ bool GameImporter::import()
         if(!emplaceUlTasks(tasks))
             return false;
         break;
-    case GameInstallationType::Directory:
+    case GameInstallationType::Iso9660:
+    case GameInstallationType::Ziso:
         if(!emplaceIsoTask(tasks))
             return false;
         break;

@@ -42,33 +42,10 @@ public:
     }
 };
 
-enum class TargetFormat
-{
-    None,
-    Ul,
-    Iso,
-    Zso
-};
-
-QString targetFormatToString(TargetFormat _format)
-{
-    switch(_format)
-    {
-    case TargetFormat::Ul:
-        return g_game_format_ul;
-    case TargetFormat::Iso:
-        return g_game_format_iso;
-    case TargetFormat::Zso:
-        return g_game_format_zso;
-    default:
-        return {};
-    }
-}
-
 struct ConvertingTask
 {
     Game game;
-    TargetFormat target_format;
+    GameInstallationType target_installation_type;
 };
 
 } // namespace
@@ -92,7 +69,7 @@ public:
     QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
     void addTasks(const QList<const Game *> & _games);
     const ConvertingTask * task(qsizetype _index) const;
-    void setTargetFormat(qsizetype _index, TargetFormat _format);
+    void setTargetInstallationType(qsizetype _index, GameInstallationType _format);
     void removeTask(qsizetype _index);
 
 private:
@@ -124,15 +101,15 @@ QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, 
         return {};
     if(_index.row() >= m_tasks.count())
         return {};
-    const auto & [game, target_format] = m_tasks[_index.row()];
+    const auto & [game, target_installation_type] = m_tasks[_index.row()];
     switch(_index.column())
     {
     case ColumnIndex_Title:
         return game.title();
     case ColumnIndex_SourceFormat:
-        return game.formatName();
+        return gameInstallationTypeName(game.installationType());
     case ColumnIndex_TargetFormat:
-        return targetFormatToString(target_format);
+        return gameInstallationTypeName(target_installation_type);
     default:
         return {};
     }
@@ -162,7 +139,7 @@ void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & 
     const int row = static_cast<int>(m_tasks.count());
     beginInsertRows({}, row, row + _games.count());
     foreach(const Game * game, _games)
-        m_tasks.append(ConvertingTask { .game = *game, .target_format = TargetFormat::Iso});
+        m_tasks.append(ConvertingTask { .game = *game, .target_installation_type = GameInstallationType::Iso9660 });
     endInsertRows();
 }
 
@@ -171,11 +148,11 @@ const ConvertingTask * GameConverterActivity::TaskListModel::task(qsizetype _ind
     return _index < m_tasks.count() ? &m_tasks[_index] : nullptr;
 }
 
-void GameConverterActivity::TaskListModel::setTargetFormat(qsizetype _index, TargetFormat _format)
+void GameConverterActivity::TaskListModel::setTargetInstallationType(qsizetype _index, GameInstallationType _format)
 {
     if(_index < m_tasks.count())
     {
-        m_tasks[_index].target_format = _format;
+        m_tasks[_index].target_installation_type = _format;
         QModelIndex idx = index(_index, ColumnIndex_TargetFormat);
         emit dataChanged(idx, idx);
     }
@@ -240,12 +217,13 @@ void GameConverterActivity::onTaskSelectionChanged()
     else
         mp_label_game_title->setText(tr("[Multiple games selected]"));
 
-    TargetFormat shared_target_format = mp_model->task(selected_rows[0].row())->target_format;
+    GameInstallationType shared_target_installation_type =
+            mp_model->task(selected_rows[0].row())->target_installation_type;
     bool have_shared_format = true;
     for(qsizetype i = 1; i < selected_rows.size(); ++i)
     {
         const ConvertingTask * task = mp_model->task(selected_rows[i].row());
-        if(shared_target_format != task->target_format)
+        if(shared_target_installation_type != task->target_installation_type)
         {
             have_shared_format = false;
             break;
@@ -260,15 +238,15 @@ void GameConverterActivity::onTaskSelectionChanged()
     }
     if(have_shared_format)
     {
-        switch(shared_target_format)
+        switch(shared_target_installation_type)
         {
-        case TargetFormat::Ul:
+        case GameInstallationType::UlConfig:
             mp_radio_target_ul->setChecked(true);
             break;
-        case TargetFormat::Iso:
+        case GameInstallationType::Iso9660:
             mp_radio_target_iso->setChecked(true);
             break;
-        case TargetFormat::Zso:
+        case GameInstallationType::Ziso:
             mp_radio_target_zso->setChecked(true);
             break;
         default:
@@ -305,18 +283,18 @@ void GameConverterActivity::onFormatChanged(bool _checked)
     if(selected_rows.empty())
         return;
 
-    TargetFormat format;
+    GameInstallationType installation_type;
     if(mp_radio_target_ul->isChecked())
-        format = TargetFormat::Ul;
+        installation_type = GameInstallationType::UlConfig;
     else if(mp_radio_target_iso->isChecked())
-        format = TargetFormat::Iso;
+        installation_type = GameInstallationType::Iso9660;
     else if(mp_radio_target_zso->isChecked())
-        format = TargetFormat::Zso;
+        installation_type = GameInstallationType::Ziso;
     else
         return;
 
     foreach(const QModelIndex & idx, selected_rows)
-        mp_model->setTargetFormat(idx.row(), format);
+        mp_model->setTargetInstallationType(idx.row(), installation_type);
 }
 
 void GameConverterActivity::removeSelectedTasks()
@@ -332,6 +310,11 @@ void GameConverterActivity::removeSelectedTasks()
 }
 
 void GameConverterActivity::convert()
+{
+    startNextTask();
+}
+
+void GameConverterActivity::startNextTask()
 {
 
 }

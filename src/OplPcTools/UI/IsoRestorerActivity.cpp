@@ -101,20 +101,31 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
     if(mp_working_thread) return;
     m_finish_status.clear();
     DeviceSource * device_source;
-    if(_game.installationType() == GameInstallationType::UlConfig)
+    switch(_game.installationType())
     {
+    case GameInstallationType::UlConfig:
         device_source = new UlDeviceSource(_game);
-    }
-    else
+        break;
+    case GameInstallationType::Iso9660:
     {
-        std::optional<DirectoryGameStorage::FindIsoResult> result = DirectoryGameStorage::findIsoFile(
-            Library::instance().directory(), _game);
+        std::optional<DirectoryGameStorage::FindIsoResult> result =
+            Iso9660GameStorage::findIsoFile(_game, Library::instance().directory());
         if(!result)
             return;
-        if(_game.isCompressed())
-            device_source = new ZsoDeviceSource(result->path);
-        else
-            device_source = new Iso9660DeviceSource(result->path);
+        device_source = new Iso9660DeviceSource(result->path);
+        break;
+    }
+    case GameInstallationType::Ziso:
+    {
+        std::optional<DirectoryGameStorage::FindIsoResult> result =
+            ZisoGameStorage::findIsoFile(_game, Library::instance().directory());
+        if(!result)
+            return;
+        device_source = new ZsoDeviceSource(result->path);
+        break;
+    }
+    default:
+        return;
     }
     QSharedPointer<DeviceReader> reader(new DeviceReader(QSharedPointer<DeviceSource>(device_source)));
     if(!reader->open())

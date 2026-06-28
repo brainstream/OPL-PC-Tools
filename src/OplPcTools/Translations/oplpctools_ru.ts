@@ -828,12 +828,12 @@
         <translation type="vanished">Невозможно переместить файл &quot;%1&quot;. Возможно, этот файл доступен только для чтения или не является образом ISO.</translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="68"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="67"/>
         <source>It is impossible to move the file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DirectoryGameInstaller.cpp" line="74"/>
+        <location filename="../DirectoryGameInstaller.cpp" line="73"/>
         <source>Unable to open device to read: &quot;%1&quot;</source>
         <translation>Не могу открыть устройство для чтения: &quot;%1&quot;</translation>
     </message>
@@ -861,12 +861,12 @@
 <context>
     <name>OplPcTools::GameCollection</name>
     <message>
-        <location filename="../GameCollection.cpp" line="110"/>
+        <location filename="../GameCollection.cpp" line="129"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать игру &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="116"/>
+        <location filename="../GameCollection.cpp" line="135"/>
         <source>Unable to delete game &quot;%1&quot;</source>
         <translation>Не могу удалить игру &quot;%1&quot;</translation>
     </message>
@@ -874,18 +874,18 @@
 <context>
     <name>OplPcTools::GameImporter</name>
     <message>
-        <location filename="../GameImporter.cpp" line="109"/>
+        <location filename="../GameImporter.cpp" line="110"/>
         <source>File not found: &quot;%1&quot;</source>
         <translation>Файл не найден: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../GameImporter.cpp" line="114"/>
-        <location filename="../GameImporter.cpp" line="139"/>
+        <location filename="../GameImporter.cpp" line="115"/>
+        <location filename="../GameImporter.cpp" line="140"/>
         <source>File already exists: &quot;%1&quot;</source>
         <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../GameImporter.cpp" line="147"/>
+        <location filename="../GameImporter.cpp" line="148"/>
         <source>ISO file for game &quot;%1&quot; not found</source>
         <translation>Файл ISO для игры &quot;%1&quot; не найден</translation>
     </message>
@@ -1096,27 +1096,27 @@
 <context>
     <name>OplPcTools::UI::GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="150"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="127"/>
         <source>Title</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="152"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="129"/>
         <source>Source format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="154"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="131"/>
         <source>Target format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="205"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="182"/>
         <source>Convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="241"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="218"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1161,37 +1161,37 @@
         <translation type="vanished">Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="432"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="426"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="440"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="434"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="483"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="477"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="497"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="491"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="688"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="679"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="731"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="722"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="731"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="722"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -1241,32 +1241,32 @@
         <translation>Образ ISO</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="122"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="133"/>
         <source>Unable to read the game source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="146"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="157"/>
         <source>Restoring &apos;%1&apos; to &apos;%2&apos;...</source>
         <translation>Восстановление &apos;%1&apos; в &apos;%2&apos;...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="154"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="165"/>
         <source>Synchronization of buffers. Please wait...</source>
         <translation>Синхронизация буферов. Пожалуйста, подождите...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="155"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="166"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="171"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="182"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
     <message>
-        <location filename="../UI/IsoRestorerActivity.cpp" line="172"/>
+        <location filename="../UI/IsoRestorerActivity.cpp" line="183"/>
         <source>Canceled</source>
         <translation>Отменено</translation>
     </message>
@@ -1525,27 +1525,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="176"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="169"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="178"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="171"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="180"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="173"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="182"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="175"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="184"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="177"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -1596,12 +1596,12 @@
         <translation>Максимальная длина имени образа – %1 байт</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="95"/>
+        <location filename="../GameCollection.cpp" line="109"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
     <message>
-        <location filename="../Game.h" line="70"/>
+        <location filename="../Game.h" line="61"/>
         <source>&lt;Untitled&gt;</source>
         <translation>&lt;Без названия&gt;</translation>
     </message>

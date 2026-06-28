@@ -39,28 +39,35 @@ auto findGameById(TCollection & _collection, const QString & _id) -> typename TC
 GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
     QObject(_parent),
     mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_dir_storage(new DirectoryGameStorage)
+    mp_iso_storage(new Iso9660GameStorage),
+    mp_zso_storage(new ZisoGameStorage)
 {
-    connect(mp_dir_storage, &DirectoryGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
+    connect(mp_iso_storage, &DirectoryGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
+    connect(mp_zso_storage, &DirectoryGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
     connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
-    connect(mp_dir_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
+    connect(mp_iso_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
+    connect(mp_zso_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
     connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRegistered, this, &GameCollection::gameAdded);
-    connect(mp_dir_storage, &DirectoryGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
+    connect(mp_iso_storage, &DirectoryGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
+    connect(mp_zso_storage, &DirectoryGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
     connect(mp_ul_conf_storage, &UlConfigGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
-    connect(mp_dir_storage, &DirectoryGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
+    connect(mp_iso_storage, &DirectoryGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
+    connect(mp_zso_storage, &DirectoryGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
     connect(mp_ul_conf_storage, &UlConfigGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
 }
 
 GameCollection::~GameCollection()
 {
     delete mp_ul_conf_storage;
-    delete mp_dir_storage;
+    delete mp_iso_storage;
+    delete mp_zso_storage;
 }
 
 void GameCollection::load(const QDir & _directory)
 {
     mp_ul_conf_storage->load(_directory);
-    mp_dir_storage->load(_directory);
+    mp_iso_storage->load(_directory);
+    mp_zso_storage->load(_directory);
     m_directory = _directory.absolutePath();
 }
 
@@ -71,21 +78,28 @@ bool GameCollection::isLoaded() const
 
 int GameCollection::count() const
 {
-    return mp_ul_conf_storage->count() + mp_dir_storage->count();
+    return mp_ul_conf_storage->count() + mp_iso_storage->count() + mp_zso_storage->count();
 }
 
 const Game * GameCollection::operator [](int _index) const
 {
-    int dir_index = _index - mp_ul_conf_storage->count();
-    const Game * game = dir_index < 0 ? mp_ul_conf_storage->operator [](_index) :
-        mp_dir_storage->operator [](dir_index);
-    return game;
+    int idx = _index;
+    if(idx < mp_ul_conf_storage->count())
+        return mp_ul_conf_storage->operator[](idx);
+    idx -= mp_ul_conf_storage->count();
+    if(idx < mp_iso_storage->count())
+        return mp_iso_storage->operator[](idx);
+    idx -= mp_iso_storage->count();
+    if(idx < mp_zso_storage->count())
+        return mp_zso_storage->operator[](idx);
+    return nullptr;
 }
 
 const Game * GameCollection::findGame(const Uuid & _uuid) const
 {
     const Game * game = mp_ul_conf_storage->findGame(_uuid);
-    if(!game) game = mp_dir_storage->findGame(_uuid);
+    if(!game) game = mp_iso_storage->findGame(_uuid);
+    if(!game) game = mp_zso_storage->findGame(_uuid);
     return game;
 }
 
@@ -98,10 +112,15 @@ void GameCollection::addGame(const Game & _game)
 
 GameStorage & GameCollection::storage(GameInstallationType _installation_type) const
 {
-    if(_installation_type == GameInstallationType::Directory)
-        return *mp_dir_storage;
-    else
+    switch(_installation_type)
+    {
+    case OplPcTools::GameInstallationType::Iso9660:
+        return *mp_iso_storage;
+    case OplPcTools::GameInstallationType::Ziso:
+        return *mp_zso_storage;
+    default:
         return *mp_ul_conf_storage;
+    }
 }
 
 void GameCollection::renameGame(const Game & _game, const QString & _title)

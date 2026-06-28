@@ -61,7 +61,10 @@ private:
     };
 
 public:
-    GameRenameDialog(const QString & _initial_name, OplPcTools::GameInstallationType _installation_type, QWidget *_parent = nullptr);
+    GameRenameDialog(
+            const QString & _initial_name,
+            OplPcTools::GameInstallationType _installation_type,
+            QWidget *_parent = nullptr);
     ~GameRenameDialog() override;
     QString name() const;
 

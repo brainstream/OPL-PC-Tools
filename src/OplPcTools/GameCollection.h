@@ -57,7 +57,8 @@ private:
 private:
     QString m_directory;
     UlConfigGameStorage * mp_ul_conf_storage;
-    DirectoryGameStorage * mp_dir_storage;
+    Iso9660GameStorage * mp_iso_storage;
+    ZisoGameStorage * mp_zso_storage;
 };
 
 } // namespace OplPcTools

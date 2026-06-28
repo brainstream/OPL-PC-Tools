@@ -387,7 +387,7 @@ void GameListWidget::onGameSelected()
         QPixmap pixmap = mp_game_art_manager->load(game->id(), GameArtType::Front);
         mp_label_cover->setPixmap(pixmap.isNull() ? m_default_cover : pixmap);
         mp_label_type->setText(game->mediaType() == MediaType::CD ? "CD" : "DVD");
-        mp_label_format->setText(game->formatName());
+        mp_label_format->setText(gameInstallationTypeName(game->installationType()));
         if(game->installationType() == GameInstallationType::UlConfig)
         {
             mp_label_parts->setText(QString("%1").arg(game->partCount()));

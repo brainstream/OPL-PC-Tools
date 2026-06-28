@@ -57,7 +57,7 @@ QVariant GameListItem::data(int _column, int _role) const
         if(_column == 0)
             return mr_game.title();
         else if(_column == 1)
-            return mr_game.formatName();
+            return gameInstallationTypeName(mr_game.installationType());
         break;
     default:
         break;

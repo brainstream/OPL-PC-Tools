@@ -48,10 +48,9 @@ DirectoryGameInstaller::~DirectoryGameInstaller()
 bool DirectoryGameInstaller::performInstallation()
 {
     delete mp_game;
-    mp_game = new Game(mr_device.gameId(), GameInstallationType::Directory);
+    mp_game = new Game(mr_device.gameId(), m_is_compressed ? GameInstallationType::Ziso : GameInstallationType::Iso9660);
     mp_game->setMediaType(deviceMediaType());
     mp_game->setTitle(mr_device.title());
-    mp_game->setIsCompressed(m_is_compressed);
     QDir dest_dir(Library::instance().directory());
     QString dest_subdir = mp_game->mediaType() == MediaType::CD ? StandardDirectories::cd : StandardDirectories::dvd;
     if(!dest_dir.cd(dest_subdir))

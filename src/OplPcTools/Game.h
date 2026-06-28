@@ -26,10 +26,6 @@
 
 namespace OplPcTools {
 
-static constexpr char g_game_format_ul[] = "UL";
-static constexpr char g_game_format_iso[] = "ISO";
-static constexpr char g_game_format_zso[] = "ZSO";
-
 class Game final
 {
 public:
@@ -44,10 +40,7 @@ public:
     inline MediaType mediaType() const;
     inline void setPartCount(quint8 _count);
     inline quint8 partCount() const;
-    inline void setIsCompressed(bool _compressed);
-    inline bool isCompressed() const;
     inline GameInstallationType installationType() const;
-    inline QString formatName() const;
 
 private:
     Uuid m_uuid;
@@ -55,7 +48,6 @@ private:
     QString m_title;
     MediaType m_media_type;
     quint8 m_part_count;
-    bool m_is_compressed;
     GameInstallationType m_installation_type;
 };
 
@@ -64,7 +56,6 @@ Game::Game(const QString & _id, GameInstallationType _type) :
     m_id(_id),
     m_media_type(MediaType::Unknown),
     m_part_count(1),
-    m_is_compressed(false),
     m_installation_type(_type)
 {
     m_title = QObject::tr("<Untitled>");
@@ -111,28 +102,9 @@ quint8 Game::partCount() const
     return m_part_count;
 }
 
-void Game::setIsCompressed(bool _compressed)
-{
-    m_is_compressed = _compressed;
-}
-
-bool Game::isCompressed() const
-{
-    return m_is_compressed;
-}
-
 GameInstallationType Game::installationType() const
 {
     return m_installation_type;
-}
-
-QString Game::formatName() const
-{
-    if(m_installation_type == GameInstallationType::UlConfig)
-        return g_game_format_ul;
-    if(isCompressed())
-        return g_game_format_zso;
-    return g_game_format_iso;
 }
 
 } // namespace OplPcTools

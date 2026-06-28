@@ -29,16 +29,22 @@ class GameConverterActivity : public Activity, private Ui::GameConverterActivity
 {
     Q_OBJECT
 
+private:
+    class TaskListModel;
+
 public:
     explicit GameConverterActivity(QWidget * _parent = nullptr);
     static QSharedPointer<Intent> createIntent();
 
 private:
-    void onGameSelectionChanged();
+    void onTaskSelectionChanged();
     void onFormatChanged(bool _checked);
     void addGames();
-    void removeGame();
+    void removeSelectedTasks();
     void convert();
+
+private:
+    TaskListModel * mp_model;
 };
 
 } // namespace UI

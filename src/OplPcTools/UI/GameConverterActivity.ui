@@ -43,11 +43,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QProgressBar" name="mp_progress_bar">
-       <property name="value">
-        <number>24</number>
-       </property>
-      </widget>
+      <widget class="QProgressBar" name="mp_progress_bar"/>
      </item>
      <item>
       <widget class="QDialogButtonBox" name="mp_button_box">
@@ -165,7 +161,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTreeWidget" name="mp_tree_games">
+      <widget class="QTreeView" name="mp_tree_tasks">
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
@@ -175,35 +171,9 @@
        <property name="rootIsDecorated">
         <bool>false</bool>
        </property>
-       <property name="columnCount">
-        <number>4</number>
-       </property>
-       <attribute name="headerMinimumSectionSize">
-        <number>180</number>
-       </attribute>
        <attribute name="headerStretchLastSection">
         <bool>false</bool>
        </attribute>
-       <column>
-        <property name="text">
-         <string notr="true">Title</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Source format</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Target format</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Status</string>
-        </property>
-       </column>
       </widget>
      </item>
      <item>
@@ -340,7 +310,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>mp_tree_games</tabstop>
+  <tabstop>mp_tree_tasks</tabstop>
   <tabstop>mp_btn_back</tabstop>
   <tabstop>mp_button_box</tabstop>
   <tabstop>mp_radio_target_ul</tabstop>

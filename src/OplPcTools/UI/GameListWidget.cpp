@@ -243,7 +243,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_btn_resore_iso->setDefaultAction(mp_action_restore_iso);
     mp_menu_action = new QMenu(this);
     mp_menu_action->addAction(mp_action_install);
-    // mp_menu_action->addAction(mp_action_convert);
+    mp_menu_action->addAction(mp_action_convert);
     mp_menu_action->addAction(mp_action_import);
     mp_menu_action->addAction(mp_action_download_arts);
     mp_menu_context = new QMenu(this);

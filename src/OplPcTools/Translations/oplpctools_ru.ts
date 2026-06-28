@@ -371,53 +371,46 @@
         <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="102"/>
+        <location filename="../UI/GameConverterActivity.ui" line="98"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="131"/>
+        <location filename="../UI/GameConverterActivity.ui" line="127"/>
         <source>Remove</source>
         <translation type="unfinished">Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="194"/>
-        <source>Source format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameConverterActivity.ui" line="199"/>
-        <location filename="../UI/GameConverterActivity.ui" line="292"/>
+        <location filename="../UI/GameConverterActivity.ui" line="262"/>
         <source>Target format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="204"/>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation type="obsolete">Статус</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="236"/>
+        <location filename="../UI/GameConverterActivity.ui" line="206"/>
         <source>Select a game to change the target format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="276"/>
+        <location filename="../UI/GameConverterActivity.ui" line="246"/>
         <source>Game Ttile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="298"/>
+        <location filename="../UI/GameConverterActivity.ui" line="268"/>
         <source>UL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="312"/>
+        <location filename="../UI/GameConverterActivity.ui" line="282"/>
         <source>ZSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="305"/>
+        <location filename="../UI/GameConverterActivity.ui" line="275"/>
         <source>ISO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1103,12 +1096,27 @@
 <context>
     <name>OplPcTools::UI::GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="136"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="150"/>
+        <source>Title</source>
+        <translation type="unfinished">Название</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="152"/>
+        <source>Source format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="154"/>
+        <source>Target format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="205"/>
         <source>Convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="168"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="241"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>

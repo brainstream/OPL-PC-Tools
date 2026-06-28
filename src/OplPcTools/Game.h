@@ -35,7 +35,7 @@ class Game final
 public:
     inline Game(const QString & _id, GameInstallationType _type);
     Game(const Game &) = default;
-    Game & operator = (const Game &) = delete;
+    Game & operator = (const Game &) = default;
     inline const Uuid & uuid() const;
     inline const QString & id() const;
     inline void setTitle(const QString & _title);
@@ -50,8 +50,8 @@ public:
     inline QString formatName() const;
 
 private:
-    const Uuid m_uuid;
-    const QString m_id;
+    Uuid m_uuid;
+    QString m_id;
     QString m_title;
     MediaType m_media_type;
     quint8 m_part_count;

@@ -18,84 +18,28 @@
 
 #pragma once
 
-#include <QString>
-#include <QList>
-#include <QSharedPointer>
-#include <OplPcTools/MediaType.h>
 #include <OplPcTools/Device/DeviceSource.h>
+#include <QFile>
 
 namespace OplPcTools {
 
-struct DeviceName
+class ZisoDeviceSource : public DeviceSource
 {
-    QString name;
-    QString filename;
-};
-
-QList<DeviceName> loadDriveList();
-
-class DeviceReader final
-{
-    Q_DISABLE_COPY(DeviceReader)
-
 public:
-    explicit DeviceReader(QSharedPointer<DeviceSource> _source);
-    const QString filepath() const;
-    bool open();
-    void close();
-    bool isOpen() const;
-    inline bool isCompressed() const;
-    inline QString title() const;
-    inline void setTitle(const QString _title);
-    inline quint64 size() const;
-    inline MediaType mediaType() const;
-    inline void setMediaType(MediaType _media_type);
-    inline const QString & gameId() const;
-    bool seek(quint64 _offset);
-    qint64 read(QByteArray & _buffer);
+    explicit ZisoDeviceSource(const QString & _zso_filepath);
+    ~ZisoDeviceSource() override;
+    QString filepath() const override;
+    bool open() override;
+    bool isOpen() const override;
+    bool isCompressed() const override { return true; }
+    qint64 isoSize() const override;
+    void close() override;
+    bool seek(qint64 _offset) override;
+    qint64 read(QByteArray & _buffer) override;
 
 private:
-    bool m_is_initialized;
-    QSharedPointer<DeviceSource> m_source_ptr;
-    MediaType m_media_type;
-    QString m_id;
-    QString m_title;
-    quint64 m_size;
+    class ZsoImage;
+    ZsoImage * mp_image;
 };
-
-bool DeviceReader::isCompressed() const
-{
-    return m_source_ptr && m_source_ptr->isCompressed();
-}
-
-QString DeviceReader::title() const
-{
-    return m_title;
-}
-
-void DeviceReader::setTitle(const QString _title)
-{
-    m_title = _title;
-}
-
-quint64 DeviceReader::size() const
-{
-    return m_size;
-}
-
-const QString & DeviceReader::gameId() const
-{
-    return m_id;
-}
-
-MediaType DeviceReader::mediaType() const
-{
-    return m_media_type;
-}
-
-void DeviceReader::setMediaType(MediaType _media_type)
-{
-    m_media_type = _media_type;
-}
 
 } // namespace OplPcTools

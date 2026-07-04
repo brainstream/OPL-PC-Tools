@@ -18,7 +18,7 @@
 
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/Device/Iso9660DeviceSource.h>
-#include <OplPcTools/Device/ZsoDeviceSource.h>
+#include <OplPcTools/Device/ZisoDeviceSource.h>
 #include <OplPcTools/Device/DeviceReader.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardPaths.h>
@@ -49,7 +49,7 @@ void DirectoryGameStorage::loadDirectory(MediaType _media_type)
         DeviceSource * device_source = nullptr;
         bool is_compressed = QFileInfo(iso).suffix().compare("zso", Qt::CaseInsensitive) == 0;
         if(is_compressed)
-            device_source = new ZsoDeviceSource(base_directory.absoluteFilePath(iso));
+            device_source = new ZisoDeviceSource(base_directory.absoluteFilePath(iso));
         else
             device_source = new Iso9660DeviceSource(base_directory.absoluteFilePath(iso));
         DeviceReader image{QSharedPointer<DeviceSource>(device_source)};
@@ -195,7 +195,7 @@ const char * ZisoGameStorage::filenamePattern() const
 
 DeviceSource * ZisoGameStorage::newDeviceSource(const QString & _filepath) const
 {
-    return new ZsoDeviceSource(_filepath);
+    return new ZisoDeviceSource(_filepath);
 }
 
 std::optional<DirectoryGameStorage::FindIsoResult> ZisoGameStorage::findIsoFile(

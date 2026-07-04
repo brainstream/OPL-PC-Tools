@@ -22,6 +22,7 @@
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
 
 using namespace OplPcTools;

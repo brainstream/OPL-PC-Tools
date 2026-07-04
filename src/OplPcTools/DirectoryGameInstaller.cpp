@@ -18,9 +18,11 @@
 
 #include <OplPcTools/Library.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
+#include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/StandardPaths.h>
+#include <OplPcTools/Constants.h>
 #include <QStorageInfo>
 
 using namespace OplPcTools;
@@ -33,7 +35,6 @@ DirectoryGameInstaller::DirectoryGameInstaller(
     GameInstaller(_reader, _parent),
     m_move_file(false),
     m_rename_file(false),
-    m_is_compressed(false),
     mp_game(nullptr),
     m_writer_ptr(std::move(_writer))
 {
@@ -48,7 +49,9 @@ DirectoryGameInstaller::~DirectoryGameInstaller()
 bool DirectoryGameInstaller::performInstallation()
 {
     delete mp_game;
-    mp_game = new Game(mr_device.gameId(), m_is_compressed ? GameInstallationType::Ziso : GameInstallationType::Iso9660);
+    mp_game = new Game(
+        mr_device.gameId(),
+        mr_device.isCompressed() ? GameInstallationType::Ziso : GameInstallationType::Iso9660);
     mp_game->setMediaType(deviceMediaType());
     mp_game->setTitle(mr_device.title());
     QDir dest_dir(Library::instance().directory());
@@ -56,10 +59,10 @@ bool DirectoryGameInstaller::performInstallation()
     if(!dest_dir.cd(dest_subdir))
         dest_dir.mkdir(dest_subdir);
     dest_dir.cd(dest_subdir);
-    const QString dest_file_ext(m_is_compressed ? g_file_ext_zso : g_file_ext_iso);
-    QString dest_filepath = m_rename_file ?
-        dest_dir.absoluteFilePath(DirectoryGameStorage::makeGameIsoFilename(mp_game->title(), mp_game->id(), dest_file_ext)) :
-        dest_dir.absoluteFilePath(mp_game->title() + dest_file_ext);
+    const QString dest_file_ext(mr_device.isCompressed() ? g_file_ext_zso : g_file_ext_iso);
+    QString dest_filepath = m_rename_file
+        ? dest_dir.absoluteFilePath(DirectoryGameStorage::makeGameIsoFilename(mp_game->title(), mp_game->id(), dest_file_ext))
+        : dest_dir.absoluteFilePath(mp_game->title() + dest_file_ext);
     if(m_move_file && QStorageInfo(mr_device.filepath()).device() == QStorageInfo(dest_dir).device())
     {
         quint64 iso_size = mr_device.size();

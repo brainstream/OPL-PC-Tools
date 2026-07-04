@@ -18,84 +18,67 @@
 
 #pragma once
 
-#include <QString>
-#include <QList>
-#include <QSharedPointer>
-#include <OplPcTools/MediaType.h>
 #include <OplPcTools/Device/DeviceSource.h>
+#include <OplPcTools/GameInstallationType.h>
+#include <OplPcTools/Game.h>
+#include <QSharedPointer>
 
 namespace OplPcTools {
 
-struct DeviceName
+inline QString gameInstallationTypeName(GameInstallationType _type)
 {
-    QString name;
-    QString filename;
+    switch(_type)
+    {
+    case GameInstallationType::UlConfig:
+        return "UL";
+    case GameInstallationType::Ziso:
+        return "ZSO";
+    case GameInstallationType::Iso9660:
+        return "ISO";
+    default:
+        throw std::runtime_error("Unknown GameInstallationType");
+    }
+}
+
+template<typename T>
+class GameInstallationTypeUtilityFactory
+{
+public:
+    virtual ~GameInstallationTypeUtilityFactory() { }
+
+    T produce(GameInstallationType _type)
+    {
+        switch(_type)
+        {
+        case GameInstallationType::UlConfig:
+            return produceForUlConfig();
+        case GameInstallationType::Iso9660:
+            return produceForIso9660();
+        case GameInstallationType::Ziso:
+            return produceForZiso();
+        default:
+            throw std::runtime_error("Unknown GameInstallationType");
+        }
+    }
+
+protected:
+    virtual T produceForUlConfig() const = 0;
+    virtual T produceForIso9660() const = 0;
+    virtual T produceForZiso() const = 0;
 };
 
-QList<DeviceName> loadDriveList();
-
-class DeviceReader final
+class GameDeviceSourceFactory final : public GameInstallationTypeUtilityFactory<QSharedPointer<DeviceSource>>
 {
-    Q_DISABLE_COPY(DeviceReader)
-
 public:
-    explicit DeviceReader(QSharedPointer<DeviceSource> _source);
-    const QString filepath() const;
-    bool open();
-    void close();
-    bool isOpen() const;
-    inline bool isCompressed() const;
-    inline QString title() const;
-    inline void setTitle(const QString _title);
-    inline quint64 size() const;
-    inline MediaType mediaType() const;
-    inline void setMediaType(MediaType _media_type);
-    inline const QString & gameId() const;
-    bool seek(quint64 _offset);
-    qint64 read(QByteArray & _buffer);
+    explicit GameDeviceSourceFactory(const Game & _game);
+
+protected:
+    QSharedPointer<DeviceSource> produceForUlConfig() const override;
+    QSharedPointer<DeviceSource> produceForIso9660() const override;
+    QSharedPointer<DeviceSource> produceForZiso() const override;
 
 private:
-    bool m_is_initialized;
-    QSharedPointer<DeviceSource> m_source_ptr;
-    MediaType m_media_type;
-    QString m_id;
-    QString m_title;
-    quint64 m_size;
+    const Game * mp_game;
 };
-
-bool DeviceReader::isCompressed() const
-{
-    return m_source_ptr && m_source_ptr->isCompressed();
-}
-
-QString DeviceReader::title() const
-{
-    return m_title;
-}
-
-void DeviceReader::setTitle(const QString _title)
-{
-    m_title = _title;
-}
-
-quint64 DeviceReader::size() const
-{
-    return m_size;
-}
-
-const QString & DeviceReader::gameId() const
-{
-    return m_id;
-}
-
-MediaType DeviceReader::mediaType() const
-{
-    return m_media_type;
-}
-
-void DeviceReader::setMediaType(MediaType _media_type)
-{
-    m_media_type = _media_type;
-}
 
 } // namespace OplPcTools

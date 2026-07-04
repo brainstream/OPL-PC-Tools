@@ -16,8 +16,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Exception.h>
 #include <OplPcTools/GameCollection.h>
+#include <OplPcTools/UlConfigGameStorage.h>
+#include <OplPcTools/DirectoryGameStorage.h>
+#include <OplPcTools/GameInstallationTypeUtils.h>
+#include <OplPcTools/Exception.h>
 
 using namespace OplPcTools;
 
@@ -36,38 +39,92 @@ auto findGameById(TCollection & _collection, const QString & _id) -> typename TC
 
 } // namespace
 
+class GameCollection::Storages final : public GameInstallationTypeUtilityFactory<GameStorage &>
+{
+public:
+    Storages() :
+        m_storages
+        {
+            { GameInstallationType::UlConfig, new UlConfigGameStorage },
+            { GameInstallationType::Ziso, new ZisoGameStorage },
+            { GameInstallationType::Iso9660, new Iso9660GameStorage }
+        }
+    {
+    }
+
+    ~Storages() override
+    {
+        for(auto & pair : m_storages)
+            delete pair.second;
+    }
+
+    void forEach(std::function<void(GameStorage &)> _cb)
+    {
+        for(auto & pair : m_storages)
+            _cb(*pair.second);
+    }
+
+    const Game * findGame(std::function<std::optional<const Game *>(const GameStorage &)> _cb) const
+    {
+        for(auto & pair : m_storages)
+        {
+            std::optional<const Game *> result = _cb(*pair.second);
+            if(result.has_value())
+                return *result;
+        }
+        return nullptr;
+    }
+
+    template<typename T>
+    T aggregate(T _seed, std::function<T(T, const GameStorage &)> _cb) const
+    {
+        T val = _seed;
+        for(auto & pair : m_storages)
+            val = _cb(val, *pair.second);
+        return val;
+    }
+
+protected:
+    GameStorage & produceForUlConfig() const override
+    {
+        return *m_storages.at(GameInstallationType::UlConfig);
+    }
+
+    GameStorage & produceForIso9660() const override
+    {
+        return *m_storages.at(GameInstallationType::Iso9660);
+    }
+
+    GameStorage & produceForZiso() const override
+    {
+        return *m_storages.at(GameInstallationType::Ziso);
+    }
+
+private:
+    std::map<GameInstallationType, GameStorage *> m_storages;
+};
+
 GameCollection::GameCollection(QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    mp_ul_conf_storage(new UlConfigGameStorage),
-    mp_iso_storage(new Iso9660GameStorage),
-    mp_zso_storage(new ZisoGameStorage)
+    mp_storages(new Storages)
 {
-    connect(mp_iso_storage, &DirectoryGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
-    connect(mp_zso_storage, &DirectoryGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
-    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRenamed, this, &GameCollection::gameRenamed);
-    connect(mp_iso_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
-    connect(mp_zso_storage, &DirectoryGameStorage::gameRegistered, this, &GameCollection::gameAdded);
-    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameRegistered, this, &GameCollection::gameAdded);
-    connect(mp_iso_storage, &DirectoryGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
-    connect(mp_zso_storage, &DirectoryGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
-    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
-    connect(mp_iso_storage, &DirectoryGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
-    connect(mp_zso_storage, &DirectoryGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
-    connect(mp_ul_conf_storage, &UlConfigGameStorage::gameDeleted, this, &GameCollection::gameDeleted);
+    mp_storages->forEach([this](GameStorage & __storage)
+    {
+        connect(&__storage, &GameStorage::gameRenamed, this, &GameCollection::gameRenamed);
+        connect(&__storage, &GameStorage::gameRegistered, this, &GameCollection::gameAdded);
+        connect(&__storage, &GameStorage::gameAboutToBeDeleted, this, &GameCollection::gameAboutToBeDeleted);
+        connect(&__storage, &GameStorage::gameDeleted, this, &GameCollection::gameDeleted);
+    });
 }
 
 GameCollection::~GameCollection()
 {
-    delete mp_ul_conf_storage;
-    delete mp_iso_storage;
-    delete mp_zso_storage;
+    delete mp_storages;
 }
 
 void GameCollection::load(const QDir & _directory)
 {
-    mp_ul_conf_storage->load(_directory);
-    mp_iso_storage->load(_directory);
-    mp_zso_storage->load(_directory);
+    mp_storages->forEach([_directory](GameStorage & __storage) { __storage.load(_directory); });
     m_directory = _directory.absolutePath();
 }
 
@@ -78,60 +135,52 @@ bool GameCollection::isLoaded() const
 
 int GameCollection::count() const
 {
-    return mp_ul_conf_storage->count() + mp_iso_storage->count() + mp_zso_storage->count();
+    return mp_storages->aggregate<int>(
+        0,
+        [](int __count, const GameStorage & __storage) { return __count + __storage.count(); });
 }
 
 const Game * GameCollection::operator [](int _index) const
 {
     int idx = _index;
-    if(idx < mp_ul_conf_storage->count())
-        return mp_ul_conf_storage->operator[](idx);
-    idx -= mp_ul_conf_storage->count();
-    if(idx < mp_iso_storage->count())
-        return mp_iso_storage->operator[](idx);
-    idx -= mp_iso_storage->count();
-    if(idx < mp_zso_storage->count())
-        return mp_zso_storage->operator[](idx);
-    return nullptr;
+    return mp_storages->findGame(
+        [&idx](const GameStorage & __storage)
+        {
+            if(idx < __storage.count())
+                return std::make_optional(__storage[idx]);
+            idx -= __storage.count();
+            return std::optional<const Game *>();
+        }
+    );
 }
 
 const Game * GameCollection::findGame(const Uuid & _uuid) const
 {
-    const Game * game = mp_ul_conf_storage->findGame(_uuid);
-    if(!game) game = mp_iso_storage->findGame(_uuid);
-    if(!game) game = mp_zso_storage->findGame(_uuid);
-    return game;
+    return mp_storages->findGame(
+        [_uuid](const GameStorage & __storage)
+        {
+            const Game * game = __storage.findGame(_uuid);
+            return game ? std::make_optional(game) : std::optional<const Game *>();
+        }
+    );
 }
 
 void GameCollection::addGame(const Game & _game)
 {
     if(findGame(_game.uuid()))
         throw ValidationException(QObject::tr("Game \"%1\" already registered").arg(_game.id()));
-    storage(_game.installationType()).registerGame(_game);
-}
-
-GameStorage & GameCollection::storage(GameInstallationType _installation_type) const
-{
-    switch(_installation_type)
-    {
-    case OplPcTools::GameInstallationType::Iso9660:
-        return *mp_iso_storage;
-    case OplPcTools::GameInstallationType::Ziso:
-        return *mp_zso_storage;
-    default:
-        return *mp_ul_conf_storage;
-    }
+    mp_storages->produce(_game.installationType()).registerGame(_game);
 }
 
 void GameCollection::renameGame(const Game & _game, const QString & _title)
 {
-    if(!storage(_game.installationType()).renameGame(_game.uuid(), _title))
+    if(!mp_storages->produce(_game.installationType()).renameGame(_game.uuid(), _title))
         throw Exception(tr("Unable to rename game \"%1\" to \"%2\"").arg(_game.title(), _title));
 }
 
 void GameCollection::deleteGame(const Game & _game)
 {
-    if(!storage(_game.installationType()).deleteGame(_game.uuid()))
+    if(!mp_storages->produce(_game.installationType()).deleteGame(_game.uuid()))
         throw Exception(tr("Unable to delete game \"%1\"").arg(_game.title()));
 }
 

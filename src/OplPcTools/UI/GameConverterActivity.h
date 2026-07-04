@@ -42,7 +42,7 @@ private:
     void addGames();
     void removeSelectedTasks();
     void convert();
-    void startNextTask();
+    bool startNextTask();
 
 private:
     TaskListModel * mp_model;

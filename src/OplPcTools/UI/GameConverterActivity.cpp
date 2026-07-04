@@ -19,6 +19,13 @@
 #include <OplPcTools/UI/GameConverterActivity.h>
 #include <OplPcTools/UI/ChooseImportGamesDialog.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/UI/Application.h>
+#include <OplPcTools/DirectoryGameInstaller.h>
+#include <OplPcTools/UlConfigGameInstaller.h>
+#include <OplPcTools/GameInstallationTypeUtils.h>
+#include <OplPcTools/Device/DefaultDeviceWriter.h>
+#include <OplPcTools/Device/CompressedDeviceWriter.h>
+#include <OplPcTools/Exception.h>
 #include <QDialog>
 #include <QAbstractListModel>
 #include <QList>
@@ -42,10 +49,22 @@ public:
     }
 };
 
+enum class ConvertingTaskStatus
+{
+    Queued,
+    Converting,
+    Registration,
+    Done,
+    Error,
+    RollingBack
+};
+
 struct ConvertingTask
 {
     Game game;
     GameInstallationType target_installation_type;
+    ConvertingTaskStatus status;
+    int progress;
 };
 
 } // namespace
@@ -58,6 +77,7 @@ private:
         ColumnIndex_Title,
         ColumnIndex_SourceFormat,
         ColumnIndex_TargetFormat,
+        ColumnIndex_Status,
         ColumnCount
     };
 
@@ -71,6 +91,8 @@ public:
     const ConvertingTask * task(qsizetype _index) const;
     void setTargetInstallationType(qsizetype _index, GameInstallationType _format);
     void removeTask(qsizetype _index);
+    qsizetype taskForNextStart() const;
+    void setTaskStatus(qsizetype _index, ConvertingTaskStatus _status, int _progress = -1);
 
 private:
     QList<ConvertingTask> m_tasks;
@@ -101,7 +123,7 @@ QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, 
         return {};
     if(_index.row() >= m_tasks.count())
         return {};
-    const auto & [game, target_installation_type] = m_tasks[_index.row()];
+    const auto & [game, target_installation_type, status, progress] = m_tasks[_index.row()];
     switch(_index.column())
     {
     case ColumnIndex_Title:
@@ -110,6 +132,22 @@ QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, 
         return gameInstallationTypeName(game.installationType());
     case ColumnIndex_TargetFormat:
         return gameInstallationTypeName(target_installation_type);
+    case ColumnIndex_Status:
+        switch(status)
+        {
+        case ConvertingTaskStatus::Done:
+            return QObject::tr("Done");
+        case ConvertingTaskStatus::Error:
+            return QObject::tr("Error");
+        case ConvertingTaskStatus::Queued:
+            return QObject::tr("Queued");
+        case ConvertingTaskStatus::Registration:
+            return QObject::tr("Registration...");
+        case ConvertingTaskStatus::RollingBack:
+            return QObject::tr("Rolling back...");
+        default:
+            return QVariant();
+        }
     default:
         return {};
     }
@@ -129,6 +167,8 @@ QVariant GameConverterActivity::TaskListModel::headerData(int _section, Qt::Orie
         return tr("Source format");
     case ColumnIndex_TargetFormat:
         return tr("Target format");
+    case ColumnIndex_Status:
+        return tr("Status");
     default:
         return {};
     }
@@ -139,13 +179,21 @@ void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & 
     const int row = static_cast<int>(m_tasks.count());
     beginInsertRows({}, row, row + _games.count());
     foreach(const Game * game, _games)
-        m_tasks.append(ConvertingTask { .game = *game, .target_installation_type = GameInstallationType::Iso9660 });
+    {
+        m_tasks.append(
+            ConvertingTask {
+                .game = *game,
+                .target_installation_type = GameInstallationType::Iso9660,
+                .status = ConvertingTaskStatus::Queued,
+                .progress = 0
+            });
+    }
     endInsertRows();
 }
 
 const ConvertingTask * GameConverterActivity::TaskListModel::task(qsizetype _index) const
 {
-    return _index < m_tasks.count() ? &m_tasks[_index] : nullptr;
+    return _index >= 0 && _index < m_tasks.count() ? &m_tasks[_index] : nullptr;
 }
 
 void GameConverterActivity::TaskListModel::setTargetInstallationType(qsizetype _index, GameInstallationType _format)
@@ -166,6 +214,27 @@ void GameConverterActivity::TaskListModel::removeTask(qsizetype _index)
         m_tasks.removeAt(_index);
         endRemoveRows();
     }
+}
+
+qsizetype GameConverterActivity::TaskListModel::taskForNextStart() const
+{
+    for(qsizetype i = 0; i < m_tasks.count(); ++i)
+    {
+        if(m_tasks[i].status == ConvertingTaskStatus::Queued)
+            return i;
+    }
+    return -1;
+}
+
+void GameConverterActivity::TaskListModel::setTaskStatus(qsizetype _index, ConvertingTaskStatus _status, int _progress)
+{
+    if(_index < 0 || _index >= m_tasks.count())
+        return;
+    m_tasks[_index].status = _status;
+    if(_progress >= 0)
+        m_tasks[_index].progress = _progress;
+    QModelIndex model_index = index(_index, ColumnIndex_Status);
+    emit dataChanged(model_index, model_index);
 }
 
 QSharedPointer<Intent> GameConverterActivity::createIntent()
@@ -311,10 +380,59 @@ void GameConverterActivity::removeSelectedTasks()
 
 void GameConverterActivity::convert()
 {
-    startNextTask();
+    while(startNextTask());
 }
 
-void GameConverterActivity::startNextTask()
+bool GameConverterActivity::startNextTask()
 {
+    qsizetype index = mp_model->taskForNextStart();
+    const ConvertingTask * task = mp_model->task(index);
+    if(!task) return false;
 
+    if(task->game.installationType() == task->target_installation_type)
+    {
+        mp_model->setTaskStatus(index, ConvertingTaskStatus::Done);
+        return true;
+    }
+
+    mp_model->setTaskStatus(index, ConvertingTaskStatus::Converting);
+
+    GameInstaller * installer = nullptr;
+    QSharedPointer<DeviceSource> source = GameDeviceSourceFactory(task->game).produce(task->game.installationType());
+    if(!source)
+    {
+        mp_model->setTaskStatus(index, ConvertingTaskStatus::Error);
+        // TODO: error message
+        return true;
+    }
+    DeviceReader reader(source);
+    reader.setMediaType(task->game.mediaType());
+    reader.setTitle(task->game.title());
+    if(task->target_installation_type == GameInstallationType::UlConfig)
+    {
+        installer = new UlConfigGameInstaller(reader);
+    }
+    else
+    {
+        DeviceWriter * writer = task->target_installation_type == GameInstallationType::Ziso
+            ? static_cast<DeviceWriter *>(new CompressedDeviceWriter())
+            : static_cast<DeviceWriter *>(new DefaultDeviceWriter());
+        installer =  new DirectoryGameInstaller(reader, std::unique_ptr<DeviceWriter>(writer));
+    }
+
+    try
+    {
+
+        // TODO: subscribe on events
+        // TODO: inject old game uninstall
+        // TODO: thread
+
+        installer->install();
+    }
+    catch(const Exception & exception)
+    {
+        Application::showErrorMessage(exception.message());
+    }
+
+    return true;
 }

@@ -30,6 +30,7 @@ public:
     virtual QString filepath() const = 0;
     virtual bool open() = 0;
     virtual bool isOpen() const = 0;
+    virtual bool isCompressed() const { return false; }
     virtual void close() = 0;
     virtual qint64 isoSize() const = 0;
     virtual bool seek(qint64 _offset) = 0;

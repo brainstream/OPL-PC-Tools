@@ -18,6 +18,7 @@
 
 #include <OplPcTools/Device/UlDeviceSource.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/File.h>
 

@@ -16,7 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/Device/ZsoDeviceSource.h>
+#include <OplPcTools/Device/ZisoDeviceSource.h>
 #include <OplPcTools/Device/Zso.h>
 #include <QFile>
 #include <QList>
@@ -57,7 +57,7 @@ struct CachedBlock
 
 } // namespace
 
-class ZsoDeviceSource::ZsoImage
+class ZisoDeviceSource::ZsoImage
 {
     Q_DISABLE_COPY_MOVE(ZsoImage)
 
@@ -83,14 +83,14 @@ private:
     CachedBlock m_cache;
 };
 
-ZsoDeviceSource::ZsoImage::ZsoImage(const QString & _filename) :
+ZisoDeviceSource::ZsoImage::ZsoImage(const QString & _filename) :
     m_file(_filename),
     m_header{},
     m_logical_offset(0)
 {
 }
 
-bool ZsoDeviceSource::ZsoImage::open()
+bool ZisoDeviceSource::ZsoImage::open()
 {
     if(!m_file.open(QIODevice::ReadOnly))
         return false;
@@ -106,7 +106,7 @@ bool ZsoDeviceSource::ZsoImage::open()
     return true;
 }
 
-bool ZsoDeviceSource::ZsoImage::initIndex()
+bool ZisoDeviceSource::ZsoImage::initIndex()
 {
     m_index.clear();
 
@@ -142,27 +142,27 @@ bool ZsoDeviceSource::ZsoImage::initIndex()
     }
 }
 
-inline void ZsoDeviceSource::ZsoImage::close()
+inline void ZisoDeviceSource::ZsoImage::close()
 {
     m_file.close();
 }
 
-inline bool ZsoDeviceSource::ZsoImage::isOpen() const
+inline bool ZisoDeviceSource::ZsoImage::isOpen() const
 {
     return m_file.isOpen() && !m_index.empty();
 }
 
-inline QString ZsoDeviceSource::ZsoImage::filepath() const
+inline QString ZisoDeviceSource::ZsoImage::filepath() const
 {
     return m_file.fileName();
 }
 
-inline quint64 ZsoDeviceSource::ZsoImage::isoSize() const
+inline quint64 ZisoDeviceSource::ZsoImage::isoSize() const
 {
     return isOpen() ? m_header.total_bytes : -1;
 }
 
-bool ZsoDeviceSource::ZsoImage::seek(quint64 _offset)
+bool ZisoDeviceSource::ZsoImage::seek(quint64 _offset)
 {
     if(_offset >= m_header.total_bytes)
         return false;
@@ -170,7 +170,7 @@ bool ZsoDeviceSource::ZsoImage::seek(quint64 _offset)
     return true;
 }
 
-qint64 ZsoDeviceSource::ZsoImage::read(QByteArray & _buffer)
+qint64 ZisoDeviceSource::ZsoImage::read(QByteArray & _buffer)
 {
     if(_buffer.isEmpty())
         return 0;
@@ -202,7 +202,7 @@ qint64 ZsoDeviceSource::ZsoImage::read(QByteArray & _buffer)
     return _buffer.size();
 }
 
-QByteArray ZsoDeviceSource::ZsoImage::readBlock(quint32 _index)
+QByteArray ZisoDeviceSource::ZsoImage::readBlock(quint32 _index)
 {
     if(m_index.empty() || _index >= m_index.size() - 1)
         return QByteArray();
@@ -252,47 +252,47 @@ QByteArray ZsoDeviceSource::ZsoImage::readBlock(quint32 _index)
     return m_cache.data;
 }
 
-ZsoDeviceSource::ZsoDeviceSource(const QString & _zso_filepath) :
-    mp_image(new ZsoDeviceSource::ZsoImage(_zso_filepath))
+ZisoDeviceSource::ZisoDeviceSource(const QString & _zso_filepath) :
+    mp_image(new ZisoDeviceSource::ZsoImage(_zso_filepath))
 {
 }
 
-ZsoDeviceSource::~ZsoDeviceSource()
+ZisoDeviceSource::~ZisoDeviceSource()
 {
     delete mp_image;
 }
 
-QString ZsoDeviceSource::filepath() const
+QString ZisoDeviceSource::filepath() const
 {
     return mp_image->filepath();
 }
 
-bool ZsoDeviceSource::open()
+bool ZisoDeviceSource::open()
 {
     return mp_image->open();
 }
 
-bool ZsoDeviceSource::isOpen() const
+bool ZisoDeviceSource::isOpen() const
 {
     return mp_image->isOpen();
 }
 
-qint64 ZsoDeviceSource::isoSize() const
+qint64 ZisoDeviceSource::isoSize() const
 {
     return mp_image->isoSize();
 }
 
-void ZsoDeviceSource::close()
+void ZisoDeviceSource::close()
 {
     mp_image->close();
 }
 
-bool ZsoDeviceSource::seek(qint64 _offset)
+bool ZisoDeviceSource::seek(qint64 _offset)
 {
     return mp_image->seek(_offset);
 }
 
-qint64 ZsoDeviceSource::read(QByteArray & _buffer)
+qint64 ZisoDeviceSource::read(QByteArray & _buffer)
 {
     return mp_image->read(_buffer);
 }

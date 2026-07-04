@@ -21,6 +21,7 @@
 #include <OplPcTools/GameArt.h>
 #include <OplPcTools/GameArtFileSource.h>
 #include <OplPcTools/Library.h>
+#include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/File.h>
 #include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/Constants.h>

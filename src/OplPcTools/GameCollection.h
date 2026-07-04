@@ -22,14 +22,15 @@
 #include <QObject>
 #include <QDir>
 #include <OplPcTools/Game.h>
-#include <OplPcTools/UlConfigGameStorage.h>
-#include <OplPcTools/DirectoryGameStorage.h>
 
 namespace OplPcTools {
 
 class GameCollection final : public QObject
 {
     Q_OBJECT
+
+private:
+    class Storages;
 
 public:
     explicit GameCollection(QObject * _parent = nullptr);
@@ -52,13 +53,8 @@ signals:
     void gameRenamed(const OplPcTools::Uuid & _uuid);
 
 private:
-    GameStorage & storage(GameInstallationType _installation_type) const;
-
-private:
     QString m_directory;
-    UlConfigGameStorage * mp_ul_conf_storage;
-    Iso9660GameStorage * mp_iso_storage;
-    ZisoGameStorage * mp_zso_storage;
+    Storages * mp_storages;
 };
 
 } // namespace OplPcTools

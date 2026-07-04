@@ -16,29 +16,39 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#pragma once
+#include <OplPcTools/GameInstallationTypeUtils.h>
+#include <OplPcTools/Device/UlDeviceSource.h>
+#include <OplPcTools/Device/ZisoDeviceSource.h>
+#include <OplPcTools/Device/Iso9660DeviceSource.h>
+#include <OplPcTools/DirectoryGameStorage.h>
+#include <OplPcTools/Library.h>
 
-#include <OplPcTools/Device/DeviceSource.h>
-#include <QFile>
+using namespace OplPcTools;
 
-namespace OplPcTools {
-
-class ZsoDeviceSource : public DeviceSource
+GameDeviceSourceFactory::GameDeviceSourceFactory(const Game & _game) :
+    mp_game(&_game)
 {
-public:
-    explicit ZsoDeviceSource(const QString & _zso_filepath);
-    ~ZsoDeviceSource() override;
-    QString filepath() const override;
-    bool open() override;
-    bool isOpen() const override;
-    qint64 isoSize() const override;
-    void close() override;
-    bool seek(qint64 _offset) override;
-    qint64 read(QByteArray & _buffer) override;
+}
 
-private:
-    class ZsoImage;
-    ZsoImage * mp_image;
-};
+QSharedPointer<DeviceSource> GameDeviceSourceFactory::produceForUlConfig() const
+{
+    return QSharedPointer<DeviceSource>(new UlDeviceSource(*mp_game));
+}
 
-} // namespace OplPcTools
+QSharedPointer<DeviceSource> GameDeviceSourceFactory::produceForIso9660() const
+{
+    std::optional<DirectoryGameStorage::FindIsoResult> result =
+        Iso9660GameStorage::findIsoFile(*mp_game, Library::instance().directory());
+    if(!result.has_value())
+        return nullptr;
+    return QSharedPointer<DeviceSource>(new Iso9660DeviceSource(result->path));
+}
+
+QSharedPointer<DeviceSource> GameDeviceSourceFactory::produceForZiso() const
+{
+    std::optional<DirectoryGameStorage::FindIsoResult> result =
+        ZisoGameStorage::findIsoFile(*mp_game, Library::instance().directory());
+    if(!result.has_value())
+        return nullptr;
+    return QSharedPointer<DeviceSource>(new Iso9660DeviceSource(result->path));
+}

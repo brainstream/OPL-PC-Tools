@@ -22,7 +22,7 @@
 #include <OplPcTools/UI/GameInstallerActivity.h>
 #include <OplPcTools/Device/DeviceReader.h>
 #include <OplPcTools/Device/Iso9660DeviceSource.h>
-#include <OplPcTools/Device/ZsoDeviceSource.h>
+#include <OplPcTools/Device/ZisoDeviceSource.h>
 #include <OplPcTools/Device/BinCueDeviceSource.h>
 #include <OplPcTools/Device/NrgDeviceSource.h>
 #include <OplPcTools/Device/OpticalDriveDeviceSource.h>
@@ -459,7 +459,7 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
     }
     else if(_file_path.endsWith(g_file_ext_zso, Qt::CaseInsensitive))
     {
-        source.reset(new ZsoDeviceSource(_file_path));
+        source.reset(new ZisoDeviceSource(_file_path));
         format = SourceFormat::CompressedIso;
     }
     else if(_file_path.endsWith(g_file_ext_bin, Qt::CaseInsensitive))
@@ -752,7 +752,6 @@ bool GameInstallerActivity::startNextTask()
             this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
         dir_installer->setOptionRenameFile(item->isRenamingEnabled());
-        dir_installer->setOptionCompressed(item->targetInstallationType() == GameInstallationType::Ziso);
         mp_installer = dir_installer;
     }
     mp_working_thread = new LambdaThread([this]() {

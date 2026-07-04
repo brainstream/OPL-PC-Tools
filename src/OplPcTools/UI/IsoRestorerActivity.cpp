@@ -19,9 +19,7 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
-#include <OplPcTools/Device/UlDeviceSource.h>
-#include <OplPcTools/Device/ZsoDeviceSource.h>
-#include <OplPcTools/Device/Iso9660DeviceSource.h>
+#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <OplPcTools/IsoRestorer.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
@@ -100,34 +98,10 @@ void IsoRestorerActivity::restore(const Game & _game, const QString & _destinati
 {
     if(mp_working_thread) return;
     m_finish_status.clear();
-    DeviceSource * device_source;
-    switch(_game.installationType())
-    {
-    case GameInstallationType::UlConfig:
-        device_source = new UlDeviceSource(_game);
-        break;
-    case GameInstallationType::Iso9660:
-    {
-        std::optional<DirectoryGameStorage::FindIsoResult> result =
-            Iso9660GameStorage::findIsoFile(_game, Library::instance().directory());
-        if(!result)
-            return;
-        device_source = new Iso9660DeviceSource(result->path);
-        break;
-    }
-    case GameInstallationType::Ziso:
-    {
-        std::optional<DirectoryGameStorage::FindIsoResult> result =
-            ZisoGameStorage::findIsoFile(_game, Library::instance().directory());
-        if(!result)
-            return;
-        device_source = new ZsoDeviceSource(result->path);
-        break;
-    }
-    default:
+    QSharedPointer<DeviceSource> device_source = GameDeviceSourceFactory(_game).produce(_game.installationType());
+    if(!device_source)
         return;
-    }
-    QSharedPointer<DeviceReader> reader(new DeviceReader(QSharedPointer<DeviceSource>(device_source)));
+    QSharedPointer<DeviceReader> reader(new DeviceReader(device_source));
     if(!reader->open())
     {
         Application::showErrorMessage(tr("Unable to read the game source"));

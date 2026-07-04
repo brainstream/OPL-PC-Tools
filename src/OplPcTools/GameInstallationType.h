@@ -30,19 +30,6 @@ enum class GameInstallationType
     Ziso
 };
 
-inline QString gameInstallationTypeName(GameInstallationType _type)
-{
-    switch(_type)
-    {
-    case GameInstallationType::UlConfig:
-        return "UL";
-    case GameInstallationType::Ziso:
-        return "ZSO";
-    default:
-        return "ISO";
-    }
-}
-
 } // namespace OplPcTools
 
 #endif // __OPLPCTOOLS_GAMEINSTALLATIONTYPE__

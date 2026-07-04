@@ -28,6 +28,7 @@
 #include <OplPcTools/UI/GameListWidget.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/GameConfiguration.h>
+#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <OplPcTools/Settings.h>
 #include <QShortcut>
 #include <QMessageBox>

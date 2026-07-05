@@ -165,6 +165,17 @@ const Game * GameCollection::findGame(const Uuid & _uuid) const
     );
 }
 
+const Game * GameCollection::findGame(const QString & _game_id) const
+{
+    for(int i = count() - 1; i >= 0; --i)
+    {
+        const Game * game = (*this)[i];
+        if(game->id() == _game_id)
+            return game;
+    }
+    return nullptr;
+}
+
 void GameCollection::addGame(const Game & _game)
 {
     if(findGame(_game.uuid()))
@@ -186,10 +197,5 @@ void GameCollection::deleteGame(const Game & _game)
 
 bool GameCollection::contains(const QString & _game_id) const
 {
-    for(int i = count() - 1; i >= 0; --i)
-    {
-        if((*this)[i]->id() == _game_id)
-            return true;
-    }
-    return false;
+    return findGame(_game_id) != nullptr;
 }

@@ -65,6 +65,7 @@ struct ConvertingTask
     GameInstallationType target_installation_type;
     ConvertingTaskStatus status;
     int progress;
+    QSharedPointer<DeviceReader> reader;
 };
 
 } // namespace
@@ -123,17 +124,17 @@ QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, 
         return {};
     if(_index.row() >= m_tasks.count())
         return {};
-    const auto & [game, target_installation_type, status, progress] = m_tasks[_index.row()];
+    const ConvertingTask & task = m_tasks[_index.row()];
     switch(_index.column())
     {
     case ColumnIndex_Title:
-        return game.title();
+        return task.game.title();
     case ColumnIndex_SourceFormat:
-        return gameInstallationTypeName(game.installationType());
+        return gameInstallationTypeName(task.game.installationType());
     case ColumnIndex_TargetFormat:
-        return gameInstallationTypeName(target_installation_type);
+        return gameInstallationTypeName(task.target_installation_type);
     case ColumnIndex_Status:
-        switch(status)
+        switch(task.status)
         {
         case ConvertingTaskStatus::Done:
             return QObject::tr("Done");
@@ -176,19 +177,35 @@ QVariant GameConverterActivity::TaskListModel::headerData(int _section, Qt::Orie
 
 void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & _games)
 {
+    QStringList errors;
     const int row = static_cast<int>(m_tasks.count());
     beginInsertRows({}, row, row + _games.count());
     foreach(const Game * game, _games)
     {
+        QSharedPointer<DeviceSource> source = GameDeviceSourceFactory(*game).produce(game->installationType());
+        QSharedPointer<DeviceReader> reader(new DeviceReader(source));
+        if(!reader->open())
+        {
+            errors << tr("Game data \"%1\" is corrupted").arg(game->title());
+            continue;
+        }
+        reader->setMediaType(game->mediaType());
+        reader->setTitle(game->title());
         m_tasks.append(
-            ConvertingTask {
+            ConvertingTask
+            {
                 .game = *game,
                 .target_installation_type = GameInstallationType::Iso9660,
                 .status = ConvertingTaskStatus::Queued,
-                .progress = 0
+                .progress = 0,
+                .reader = reader
             });
     }
     endInsertRows();
+    if(!errors.empty())
+    {
+        Application::showErrorMessage(errors.join("\n"));
+    }
 }
 
 const ConvertingTask * GameConverterActivity::TaskListModel::task(qsizetype _index) const
@@ -398,27 +415,19 @@ bool GameConverterActivity::startNextTask()
     mp_model->setTaskStatus(index, ConvertingTaskStatus::Converting);
 
     GameInstaller * installer = nullptr;
-    QSharedPointer<DeviceSource> source = GameDeviceSourceFactory(task->game).produce(task->game.installationType());
-    if(!source)
-    {
-        mp_model->setTaskStatus(index, ConvertingTaskStatus::Error);
-        // TODO: error message
-        return true;
-    }
-    DeviceReader reader(source);
-    reader.setMediaType(task->game.mediaType());
-    reader.setTitle(task->game.title());
+
     if(task->target_installation_type == GameInstallationType::UlConfig)
     {
-        installer = new UlConfigGameInstaller(reader);
+        installer = new UlConfigGameInstaller(*task->reader);
     }
     else
     {
         DeviceWriter * writer = task->target_installation_type == GameInstallationType::Ziso
-            ? static_cast<DeviceWriter *>(new CompressedDeviceWriter())
+            ? static_cast<DeviceWriter *>(new CompressedDeviceWriter()) // FIXME: .iso is creating
             : static_cast<DeviceWriter *>(new DefaultDeviceWriter());
-        installer =  new DirectoryGameInstaller(reader, std::unique_ptr<DeviceWriter>(writer));
+        installer =  new DirectoryGameInstaller(*task->reader, std::unique_ptr<DeviceWriter>(writer));
     }
+    installer->enableOverride();
 
     try
     {
@@ -431,6 +440,7 @@ bool GameConverterActivity::startNextTask()
     }
     catch(const Exception & exception)
     {
+        // FIXME: error dialog blocks installation of other games
         Application::showErrorMessage(exception.message());
     }
 

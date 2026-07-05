@@ -24,17 +24,33 @@ using namespace OplPcTools;
 
 GameInstaller::GameInstaller(DeviceReader & _device, QObject * _parent /*= nullptr*/) :
     QObject(_parent),
-    mr_device(_device)
+    mr_device(_device),
+    m_override(false)
 {
+}
+
+void GameInstaller::enableOverride()
+{
+    m_override = true;
 }
 
 bool GameInstaller::install()
 {
-    if(Library::instance().games().contains(mr_device.gameId()))
+    bool to_override = false;
+    const Game * game = Library::instance().games().findGame(mr_device.gameId());
+    if(game)
     {
-        throw ValidationException(tr("Game with ID %1 is already installed").arg(mr_device.gameId()));
+        if(m_override)
+            to_override = true;
+        else
+            throw ValidationException(tr("Game with ID %1 is already installed").arg(mr_device.gameId()));
     }
-    return performInstallation();
+    bool result = performInstallation();
+    if(result && to_override)
+    {
+        Library::instance().games().deleteGame(*game);
+    }
+    return result;
 }
 
 MediaType GameInstaller::deviceMediaType() const

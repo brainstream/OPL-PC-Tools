@@ -860,12 +860,12 @@
 <context>
     <name>OplPcTools::GameCollection</name>
     <message>
-        <location filename="../GameCollection.cpp" line="178"/>
+        <location filename="../GameCollection.cpp" line="189"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Incapaz de renomear o jogo de &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="184"/>
+        <location filename="../GameCollection.cpp" line="195"/>
         <source>Unable to delete game &quot;%1&quot;</source>
         <translation>Incapaz de deletar o jogo &quot;%1&quot;</translation>
     </message>
@@ -892,7 +892,7 @@
 <context>
     <name>OplPcTools::GameInstaller</name>
     <message>
-        <location filename="../GameInstaller.cpp" line="35"/>
+        <location filename="../GameInstaller.cpp" line="46"/>
         <source>Game with ID %1 is already installed</source>
         <translation>Jogo com o ID %1 já está instalado</translation>
     </message>
@@ -1095,32 +1095,37 @@
 <context>
     <name>OplPcTools::UI::GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="165"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="166"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="167"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="168"/>
         <source>Source format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="169"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="170"/>
         <source>Target format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="171"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="172"/>
         <source>Status</source>
         <translation type="unfinished">Status</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="251"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="189"/>
+        <source>Game data &quot;%1&quot; is corrupted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="268"/>
         <source>Convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="287"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="304"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1529,31 +1534,31 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="139"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="140"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="169"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="141"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="142"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="171"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="143"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="144"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="173"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="145"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="146"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="175"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="147"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="148"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="177"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
@@ -1605,7 +1610,7 @@
         <translation>O tamanho maximo da imagem é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="171"/>
+        <location filename="../GameCollection.cpp" line="182"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>O jogo &quot;%1&quot; já foi registrado</translation>
     </message>

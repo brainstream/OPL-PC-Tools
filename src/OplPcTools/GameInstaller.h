@@ -31,6 +31,7 @@ class GameInstaller : public QObject
 
 public:
     explicit GameInstaller(DeviceReader & _device, QObject * _parent = nullptr);
+    void enableOverride();
     bool install();
     virtual const Game * installedGame() const = 0;
 
@@ -47,6 +48,7 @@ protected:
 
 protected:
     DeviceReader & mr_device;
+    bool m_override;
 };
 
 } // namespace OplPcTools

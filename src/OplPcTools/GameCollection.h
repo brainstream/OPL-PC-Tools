@@ -39,6 +39,7 @@ public:
     bool isLoaded() const;
     const QString directory() const { return m_directory; }
     const Game * findGame(const Uuid & _uuid) const;
+    const Game * findGame(const QString & _game_id) const;
     int count() const;
     const Game * operator [](int _index) const;
     void addGame(const Game & _game);

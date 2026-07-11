@@ -21,6 +21,7 @@
 #include "ui_GameConverterActivity.h"
 #include <OplPcTools/UI/Activity.h>
 #include <OplPcTools/UI/Intent.h>
+#include <OplPcTools/UI/LambdaThread.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -43,9 +44,22 @@ private:
     void removeSelectedTasks();
     void convert();
     bool startNextTask();
+    void threadFinished();
+    void progress(quint64 _total_bytes, quint64 _processed_bytes);
+    void rollbackStarted();
+    void rollbackFinished();
+    void registrationStarted();
+    void registrationFinished();
+    void installerError(QString _message);
+    void cancel();
+    QString canceledErrorMessage() const;
+    void setTaskError(const QString & _message, qsizetype _index = -1);
 
 private:
     TaskListModel * mp_model;
+    LambdaThread * mp_working_thread;
+    qsizetype m_current_task_index;
+    bool m_is_canceled;
 };
 
 } // namespace UI

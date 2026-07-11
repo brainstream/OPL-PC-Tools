@@ -670,7 +670,7 @@ void GameInstallerActivity::rollbackStarted()
 
 void GameInstallerActivity::rollbackFinished()
 {
-    setTaskError(canceledErrorMessage());
+    setTaskError(canceledErrorMessage()); // FIXME: can be any message but the cancel
     setOverallProgressUnknownStatus(false, g_progressbar_max_value);
 }
 

@@ -35,6 +35,8 @@ using namespace OplPcTools::UI;
 
 namespace {
 
+constexpr int g_progressbar_max_value = 1000;
+
 class GameConverterActivityIntent : public Intent
 {
 public:
@@ -66,6 +68,7 @@ struct ConvertingTask
     ConvertingTaskStatus status;
     int progress;
     QSharedPointer<DeviceReader> reader;
+    QString error_message;
 };
 
 } // namespace
@@ -89,11 +92,13 @@ public:
     QVariant data(const QModelIndex & _index, int _role) const override;
     QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
     void addTasks(const QList<const Game *> & _games);
+    qsizetype taskCount() const;
     const ConvertingTask * task(qsizetype _index) const;
     void setTargetInstallationType(qsizetype _index, GameInstallationType _format);
     void removeTask(qsizetype _index);
     qsizetype taskForNextStart() const;
     void setTaskStatus(qsizetype _index, ConvertingTaskStatus _status, int _progress = -1);
+    void setTaskErrorMessage(qsizetype _index, const QString & _message);
 
 private:
     QList<ConvertingTask> m_tasks;
@@ -136,6 +141,8 @@ QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, 
     case ColumnIndex_Status:
         switch(task.status)
         {
+        case ConvertingTaskStatus::Converting:
+            return QString("%1%").arg(task.progress / (g_progressbar_max_value / 100));
         case ConvertingTaskStatus::Done:
             return QObject::tr("Done");
         case ConvertingTaskStatus::Error:
@@ -198,7 +205,8 @@ void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & 
                 .target_installation_type = GameInstallationType::Iso9660,
                 .status = ConvertingTaskStatus::Queued,
                 .progress = 0,
-                .reader = reader
+                .reader = reader,
+                .error_message = {}
             });
     }
     endInsertRows();
@@ -206,6 +214,11 @@ void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & 
     {
         Application::showErrorMessage(errors.join("\n"));
     }
+}
+
+inline qsizetype GameConverterActivity::TaskListModel::taskCount() const
+{
+    return m_tasks.count();
 }
 
 const ConvertingTask * GameConverterActivity::TaskListModel::task(qsizetype _index) const
@@ -254,17 +267,26 @@ void GameConverterActivity::TaskListModel::setTaskStatus(qsizetype _index, Conve
     emit dataChanged(model_index, model_index);
 }
 
+void GameConverterActivity::TaskListModel::setTaskErrorMessage(qsizetype _index, const QString & _message)
+{
+    if(_index >= 0 && m_tasks.count() > _index)
+        m_tasks[_index].error_message = _message;
+}
+
 QSharedPointer<Intent> GameConverterActivity::createIntent()
 {
     return QSharedPointer<Intent>(new GameConverterActivityIntent());
 }
 
 GameConverterActivity::GameConverterActivity(QWidget * _parent) :
-    Activity(_parent)
+    Activity(_parent),
+    m_current_task_index(-1),
+    m_is_canceled(false)
 {
     mp_model = new GameConverterActivity::TaskListModel(this);
     setupUi(this);
     QPushButton * btn_convert = mp_button_box->button(QDialogButtonBox::Apply);
+    QPushButton * btn_cancel = mp_button_box->button(QDialogButtonBox::Cancel);
     btn_convert->setText(tr("Convert"));
     btn_convert->setIcon(QIcon(":/images/start"));
     mp_tree_tasks->setModel(mp_model);
@@ -274,8 +296,11 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
     mp_tree_tasks->header()->setSectionResizeMode(3, QHeaderView::Fixed);
     mp_widget_details->setVisible(false);
     mp_label_details_placeholder->setVisible(true);
+    mp_progress_bar->setRange(0, g_progressbar_max_value);
+    mp_progress_bar->setValue(0);
     connect(mp_btn_back, &QPushButton::clicked, this, &QObject::deleteLater);
     connect(btn_convert, &QPushButton::clicked, this, &GameConverterActivity::convert);
+    connect(btn_cancel, &QPushButton::clicked, this, &GameConverterActivity::cancel);
     connect(mp_btn_remove, &QPushButton::clicked, this, &GameConverterActivity::removeSelectedTasks);
     connect(mp_btn_add, &QPushButton::clicked, this, &GameConverterActivity::addGames);
     connect(mp_tree_tasks->selectionModel(),
@@ -299,9 +324,16 @@ void GameConverterActivity::onTaskSelectionChanged()
     mp_widget_details->setVisible(true);
     mp_label_details_placeholder->setVisible(false);
     if(selected_rows.count() == 1)
-        mp_label_game_title->setText(mp_model->task(selected_rows[0].row())->game.title());
+    {
+        const ConvertingTask * task = mp_model->task(selected_rows[0].row());
+        mp_label_game_title->setText(task->game.title());
+        mp_label_error_message->setText(task->error_message);
+    }
     else
+    {
         mp_label_game_title->setText(tr("[Multiple games selected]"));
+        mp_label_error_message->setText({});
+    }
 
     GameInstallationType shared_target_installation_type =
             mp_model->task(selected_rows[0].row())->target_installation_type;
@@ -397,22 +429,28 @@ void GameConverterActivity::removeSelectedTasks()
 
 void GameConverterActivity::convert()
 {
-    while(startNextTask());
+    mp_btn_add->setEnabled(false);
+    mp_btn_remove->setEnabled(false);
+    mp_button_box->button(QDialogButtonBox::Apply)->setEnabled(false);
+    mp_button_box->button(QDialogButtonBox::Cancel)->setEnabled(true);
+    mp_btn_back->setEnabled(false);
+    mp_group_box_target->setEnabled(false);
+    startNextTask();
 }
 
 bool GameConverterActivity::startNextTask()
 {
-    qsizetype index = mp_model->taskForNextStart();
-    const ConvertingTask * task = mp_model->task(index);
+    m_current_task_index = mp_model->taskForNextStart();
+    const ConvertingTask * task = mp_model->task(m_current_task_index);
     if(!task) return false;
 
     if(task->game.installationType() == task->target_installation_type)
     {
-        mp_model->setTaskStatus(index, ConvertingTaskStatus::Done);
+        mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done);
         return true;
     }
 
-    mp_model->setTaskStatus(index, ConvertingTaskStatus::Converting);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Converting);
 
     GameInstaller * installer = nullptr;
 
@@ -429,20 +467,110 @@ bool GameConverterActivity::startNextTask()
     }
     installer->enableOverride();
 
-    try
-    {
+    // FIXME: Option: "Add game ID to filename" when converting to ISO or ZISO
 
-        // TODO: subscribe on events
-        // TODO: inject old game uninstall
-        // TODO: thread
-
+    mp_working_thread = new LambdaThread([installer]() {
         installer->install();
-    }
-    catch(const Exception & exception)
-    {
-        // FIXME: error dialog blocks installation of other games
-        Application::showErrorMessage(exception.message());
-    }
+    }, this);
+    connect(mp_working_thread, &QThread::finished, this, &GameConverterActivity::threadFinished);
+    connect(mp_working_thread, &QThread::finished, mp_working_thread, &QThread::deleteLater);
+    connect(mp_working_thread, &LambdaThread::exception, this, &GameConverterActivity::installerError);
+    connect(installer, &GameInstaller::progress, this, &GameConverterActivity::progress);
+    connect(installer, &GameInstaller::rollbackStarted, this, &GameConverterActivity::rollbackStarted);
+    connect(installer, &GameInstaller::rollbackFinished, this, &GameConverterActivity::rollbackFinished);
+    connect(installer, &GameInstaller::registrationStarted, this, &GameConverterActivity::registrationStarted);
+    connect(installer, &GameInstaller::registrationFinished, this, &GameConverterActivity::registrationFinished);
+    mp_working_thread->start(QThread::HighestPriority);
 
     return true;
+}
+
+void GameConverterActivity::threadFinished()
+{
+    if(!m_is_canceled)
+    {
+        if(startNextTask())
+            return;
+    }
+    mp_button_box->button(QDialogButtonBox::Cancel)->setEnabled(false);
+    mp_btn_back->setEnabled(true);
+    mp_progress_bar->setRange(g_progressbar_max_value, g_progressbar_max_value);
+    mp_progress_bar->setValue(g_progressbar_max_value);
+    Application::showMessage(tr("Done"), tr("Converting complete"));
+}
+
+void GameConverterActivity::progress(quint64 _total_bytes, quint64 _processed_bytes)
+{
+    const double current_progress = static_cast<double>(_processed_bytes) / _total_bytes;
+    const double single_task_in_overal_progress = 1.0 / mp_model->taskCount();
+    const double overall_progress = single_task_in_overal_progress * m_current_task_index +
+            single_task_in_overal_progress * current_progress;
+    mp_model->setTaskStatus(
+        m_current_task_index,
+        ConvertingTaskStatus::Converting,
+        current_progress * g_progressbar_max_value);
+    if(mp_progress_bar->maximum() == 0)
+        mp_progress_bar->setMaximum(g_progressbar_max_value);
+    mp_progress_bar->setValue(overall_progress * g_progressbar_max_value);
+}
+
+void GameConverterActivity::installerError(QString _message)
+{
+    setTaskError(_message);
+}
+
+void GameConverterActivity::cancel()
+{
+    if(mp_working_thread && !m_is_canceled)
+    {
+        m_is_canceled = true;
+        mp_button_box->button(QDialogButtonBox::Cancel)->setDisabled(true);
+        for(qsizetype i = m_current_task_index; i < mp_model->taskCount(); ++i)
+        {
+            mp_model->setTaskStatus(i, ConvertingTaskStatus::Error);
+            setTaskError(canceledErrorMessage(), i);
+        }
+        mp_working_thread->requestInterruption();
+    }
+}
+
+void GameConverterActivity::setTaskError(const QString & _message, qsizetype _index)
+{
+    if(_index < 0)
+        _index = m_current_task_index;
+    mp_model->setTaskStatus(_index, ConvertingTaskStatus::Error);
+    mp_model->setTaskErrorMessage(_index, _message);
+    if(_index == mp_tree_tasks->currentIndex().row())
+        mp_label_error_message->setText(_message);
+}
+
+QString GameConverterActivity::canceledErrorMessage() const
+{
+    static const QString message = tr("Canceled by user");
+    return message;
+}
+
+void GameConverterActivity::rollbackStarted()
+{
+    mp_button_box->button(QDialogButtonBox::Cancel)->setDisabled(true);
+    mp_progress_bar->setRange(0, 0);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::RollingBack);
+}
+
+void GameConverterActivity::rollbackFinished()
+{
+    mp_progress_bar->setRange(g_progressbar_max_value, g_progressbar_max_value);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Error);
+}
+
+void GameConverterActivity::registrationStarted()
+{
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Registration);
+    if(m_current_task_index + 1 == mp_model->taskCount())
+        mp_progress_bar->setRange(0, 0);
+}
+
+void GameConverterActivity::registrationFinished()
+{
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done);
 }

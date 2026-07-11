@@ -1096,39 +1096,54 @@
 <context>
     <name>OplPcTools::UI::GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="166"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="173"/>
         <source>Title</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="168"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="175"/>
         <source>Source format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="170"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="177"/>
         <source>Target format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="172"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="179"/>
         <source>Status</source>
         <translation type="unfinished">Статус</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="189"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="196"/>
         <source>Game data &quot;%1&quot; is corrupted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="268"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="290"/>
         <source>Convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="304"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="334"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="499"/>
+        <source>Done</source>
+        <translation type="unfinished">Готово</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="499"/>
+        <source>Converting complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="549"/>
+        <source>Canceled by user</source>
+        <translation type="unfinished">Отменено пользователем</translation>
     </message>
 </context>
 <context>
@@ -1535,31 +1550,35 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="140"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="147"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="169"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="142"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="149"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="171"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="144"/>
+        <source>Canceled</source>
+        <translation type="obsolete">Отменено</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="151"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="173"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="146"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="153"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="175"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="148"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="155"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="177"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>

@@ -105,7 +105,7 @@ bool UlDeviceSource::seek(qint64 _offset)
     }
     for(const Part * part = m_parts_ptr.get(); part != nullptr; part = part->next)
     {
-        if(part->begin >= _offset)
+        if(_offset >= part->begin && part->end > _offset)
         {
             try
             {

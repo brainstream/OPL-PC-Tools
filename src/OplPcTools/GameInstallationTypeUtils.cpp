@@ -50,5 +50,5 @@ QSharedPointer<DeviceSource> GameDeviceSourceFactory::produceForZiso() const
         ZisoGameStorage::findIsoFile(*mp_game, Library::instance().directory());
     if(!result.has_value())
         return nullptr;
-    return QSharedPointer<DeviceSource>(new Iso9660DeviceSource(result->path));
+    return QSharedPointer<DeviceSource>(new ZisoDeviceSource(result->path));
 }

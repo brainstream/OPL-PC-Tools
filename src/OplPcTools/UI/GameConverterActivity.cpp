@@ -469,6 +469,8 @@ void GameConverterActivity::convert()
 
 bool GameConverterActivity::startNextTask()
 {
+START_NEXT_TASK:
+
     m_current_task_index = mp_model->taskForNextStart();
     const ConvertingTask * task = mp_model->task(m_current_task_index);
     if(!task) return false;
@@ -476,7 +478,7 @@ bool GameConverterActivity::startNextTask()
     if(task->game.installationType() == task->target_installation_type)
     {
         mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done, g_progressbar_max_value);
-        return true;
+        goto START_NEXT_TASK;
     }
     mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Converting, 0);
     updateOverallProgress();
@@ -490,7 +492,7 @@ bool GameConverterActivity::startNextTask()
     else
     {
         DeviceWriter * writer = task->target_installation_type == GameInstallationType::Ziso
-            ? static_cast<DeviceWriter *>(new CompressedDeviceWriter()) // FIXME: .iso is creating
+            ? static_cast<DeviceWriter *>(new CompressedDeviceWriter())
             : static_cast<DeviceWriter *>(new DefaultDeviceWriter());
         installer =  new DirectoryGameInstaller(*task->reader, std::unique_ptr<DeviceWriter>(writer));
     }

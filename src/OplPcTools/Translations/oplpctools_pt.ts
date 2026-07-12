@@ -1131,17 +1131,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="526"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="528"/>
         <source>Done</source>
         <translation type="unfinished">Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="526"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="528"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="587"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="589"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Cancelado pelo usuário</translation>
     </message>

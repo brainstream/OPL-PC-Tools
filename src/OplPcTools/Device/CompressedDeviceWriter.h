@@ -29,6 +29,7 @@ class CompressedDeviceWriter : public DeviceWriter
 public:
     explicit CompressedDeviceWriter(QObject * _parent = nullptr);
     bool write(DeviceReader & _reader, const QString & _destination) override;
+    bool isCompressing() const override { return true; }
 };
 
 } // namespace OplPcTools

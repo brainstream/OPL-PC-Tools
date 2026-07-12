@@ -34,6 +34,7 @@ public:
     }
 
     virtual bool write(DeviceReader & _reader, const QString & _destination) = 0;
+    virtual bool isCompressing() const { return false; }
 
 signals:
     void progress(quint64 _total, quint64 _written);

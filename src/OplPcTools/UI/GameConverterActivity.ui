@@ -46,18 +46,24 @@
       <widget class="QProgressBar" name="mp_progress_bar"/>
      </item>
      <item>
-      <widget class="QDialogButtonBox" name="mp_button_box">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QPushButton" name="mp_btn_convert">
+       <property name="text">
+        <string>Convert</string>
        </property>
-       <property name="focusPolicy">
-        <enum>Qt::FocusPolicy::TabFocus</enum>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/start</normaloff>:/images/start</iconset>
        </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::StandardButton::Apply|QDialogButtonBox::StandardButton::Cancel</set>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mp_btn_cancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/stop</normaloff>:/images/stop</iconset>
        </property>
       </widget>
      </item>
@@ -329,11 +335,12 @@
  </widget>
  <tabstops>
   <tabstop>mp_tree_tasks</tabstop>
-  <tabstop>mp_btn_back</tabstop>
-  <tabstop>mp_button_box</tabstop>
   <tabstop>mp_radio_target_ul</tabstop>
   <tabstop>mp_radio_target_iso</tabstop>
   <tabstop>mp_radio_target_zso</tabstop>
+  <tabstop>mp_btn_back</tabstop>
+  <tabstop>mp_btn_convert</tabstop>
+  <tabstop>mp_btn_cancel</tabstop>
   <tabstop>mp_btn_add</tabstop>
   <tabstop>mp_btn_remove</tabstop>
  </tabstops>

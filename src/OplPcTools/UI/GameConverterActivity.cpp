@@ -309,10 +309,6 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
 {
     mp_model = new GameConverterActivity::TaskListModel(this);
     setupUi(this);
-    QPushButton * btn_convert = mp_button_box->button(QDialogButtonBox::Apply);
-    QPushButton * btn_cancel = mp_button_box->button(QDialogButtonBox::Cancel);
-    btn_convert->setText(tr("Convert"));
-    btn_convert->setIcon(QIcon(":/images/start"));
     mp_tree_tasks->setModel(mp_model);
     mp_tree_tasks->setItemDelegateForColumn(Column::Status, new ProgressBarItemDelegate(*mp_model, this));
     mp_tree_tasks->header()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -323,9 +319,11 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
     mp_label_details_placeholder->setVisible(true);
     mp_progress_bar->setRange(0, g_progressbar_max_value);
     mp_progress_bar->setValue(0);
+    mp_btn_cancel->setEnabled(false);
+    mp_btn_convert->setEnabled(false);
     connect(mp_btn_back, &QPushButton::clicked, this, &QObject::deleteLater);
-    connect(btn_convert, &QPushButton::clicked, this, &GameConverterActivity::convert);
-    connect(btn_cancel, &QPushButton::clicked, this, &GameConverterActivity::cancel);
+    connect(mp_btn_convert, &QPushButton::clicked, this, &GameConverterActivity::convert);
+    connect(mp_btn_cancel, &QPushButton::clicked, this, &GameConverterActivity::cancel);
     connect(mp_btn_remove, &QPushButton::clicked, this, &GameConverterActivity::removeSelectedTasks);
     connect(mp_btn_add, &QPushButton::clicked, this, &GameConverterActivity::addGames);
     connect(mp_tree_tasks->selectionModel(),
@@ -414,7 +412,10 @@ void GameConverterActivity::addGames()
         }
     }
     if(!games.empty())
+    {
         mp_model->addTasks(games);
+        mp_btn_convert->setEnabled(true);
+    }
 }
 
 void GameConverterActivity::onFormatChanged(bool _checked)
@@ -450,16 +451,19 @@ void GameConverterActivity::removeSelectedTasks()
     std::sort(idx_list.begin(), idx_list.end());
     for(auto it = idx_list.rbegin(); it != idx_list.rend(); ++it)
         mp_model->removeTask(*it);
+    if(mp_model->taskCount() == 0)
+        mp_btn_convert->setEnabled(false);
 }
 
 void GameConverterActivity::convert()
 {
     mp_btn_add->setEnabled(false);
     mp_btn_remove->setEnabled(false);
-    mp_button_box->button(QDialogButtonBox::Apply)->setEnabled(false);
-    mp_button_box->button(QDialogButtonBox::Cancel)->setEnabled(true);
+    mp_btn_convert->setEnabled(false);
+    mp_btn_cancel->setEnabled(true);
     mp_btn_back->setEnabled(false);
     mp_group_box_target->setEnabled(false);
+    mp_tree_tasks->setFocus();
     startNextTask();
 }
 
@@ -517,7 +521,7 @@ void GameConverterActivity::threadFinished()
         if(startNextTask())
             return;
     }
-    mp_button_box->button(QDialogButtonBox::Cancel)->setEnabled(false);
+    mp_btn_cancel->setEnabled(false);
     mp_btn_back->setEnabled(true);
     mp_progress_bar->setRange(g_progressbar_max_value, g_progressbar_max_value);
     mp_progress_bar->setValue(g_progressbar_max_value);
@@ -549,7 +553,7 @@ void GameConverterActivity::cancel()
     if(mp_working_thread && !m_is_canceled)
     {
         m_is_canceled = true;
-        mp_button_box->button(QDialogButtonBox::Cancel)->setDisabled(true);
+        mp_btn_cancel->setDisabled(true);
         for(qsizetype i = m_current_task_index; i < mp_model->taskCount(); ++i)
         {
             mp_model->setTaskStatus(i, ConvertingTaskStatus::Error);
@@ -577,7 +581,7 @@ QString GameConverterActivity::canceledErrorMessage() const
 
 void GameConverterActivity::rollbackStarted()
 {
-    mp_button_box->button(QDialogButtonBox::Cancel)->setDisabled(true);
+    mp_btn_cancel->setDisabled(true);
     mp_progress_bar->setRange(0, 0);
     mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::RollingBack);
 }

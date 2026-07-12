@@ -65,6 +65,10 @@
        <property name="text">
         <string>Cancel</string>
        </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/images/stop</normaloff>:/images/stop</iconset>
+       </property>
       </widget>
      </item>
     </layout>

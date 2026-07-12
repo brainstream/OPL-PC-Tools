@@ -273,39 +273,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QGroupBox" name="mp_groupbox_media_type">
-               <property name="title">
-                <string>Media Type</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
-                <item>
-                 <widget class="QRadioButton" name="mp_radio_mtauto">
-                  <property name="text">
-                   <string>Auto</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="mp_radio_mtdvd">
-                  <property name="text">
-                   <string>DVD</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="mp_radio_mtcd">
-                  <property name="text">
-                   <string>CD</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
               <widget class="QGroupBox" name="mp_groupbox_options">
                <property name="title">
                 <string>Target</string>
@@ -399,9 +366,6 @@
   <tabstop>mp_btn_add_disc</tabstop>
   <tabstop>mp_btn_remove</tabstop>
   <tabstop>mp_btn_rename</tabstop>
-  <tabstop>mp_radio_mtauto</tabstop>
-  <tabstop>mp_radio_mtdvd</tabstop>
-  <tabstop>mp_radio_mtcd</tabstop>
   <tabstop>mp_radio_target_ul</tabstop>
   <tabstop>mp_radio_target_iso</tabstop>
   <tabstop>mp_radio_target_zso</tabstop>

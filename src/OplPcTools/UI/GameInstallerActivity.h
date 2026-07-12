@@ -52,7 +52,6 @@ private:
     QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
     void renameGame();
     void removeGame();
-    void mediaTypeChanged(bool _checked);
     void targetOptionChanged(bool _checked);
     void moveOptionChanged();
     void install();

@@ -509,27 +509,23 @@
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="278"/>
         <source>Media Type</source>
-        <translation>Tipo de mídia</translation>
+        <translation type="vanished">Tipo de mídia</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="284"/>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation type="vanished">Automático</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="294"/>
         <source>DVD</source>
-        <translation>DVD</translation>
+        <translation type="vanished">DVD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="301"/>
         <source>CD</source>
-        <translation>CD</translation>
+        <translation type="vanished">CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="311"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="278"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,22 +534,22 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Essa é a única forma de rodar jogos grandes (maiores que 4GB) pelo USB, já que o OPL aceita apenas o sistema de arquivos FAT32, que suporta apenas arquivos menores que 4GB. Por isso você deve dividir os arquivos em várias partes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="317"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="284"/>
         <source>Split the file into parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="324"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="291"/>
         <source>Install as ISO file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="341"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="308"/>
         <source>Move source file instead of copying it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="334"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="301"/>
         <source>Install as compressed ZSO file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1121,22 +1117,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="357"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="356"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="528"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="527"/>
         <source>Done</source>
         <translation type="unfinished">Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="528"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="527"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="589"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="588"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Cancelado pelo usuário</translation>
     </message>
@@ -1181,37 +1177,37 @@
         <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="373"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="402"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="381"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="445"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="424"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="459"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="438"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="603"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="681"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="646"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="681"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="646"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -1521,7 +1517,7 @@
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="271"/>
+        <location filename="../UlConfigGameStorage.cpp" line="268"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Incapaz de localizar o jogo &quot;%1&quot; no arquivo de configuração</translation>
     </message>
@@ -1546,13 +1542,13 @@
     <name>QObject</name>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="153"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="187"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="186"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="155"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="189"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="188"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -1562,19 +1558,19 @@
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="157"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="191"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="190"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="159"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="193"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="192"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="161"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="195"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="194"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -1599,23 +1595,23 @@
         <translation>%1 está corrompido</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="186"/>
+        <location filename="../UlConfigGameStorage.cpp" line="183"/>
         <source>Config record was not found</source>
         <translation>A configuração salva não foi encontrada</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="196"/>
-        <location filename="../UlConfigGameStorage.cpp" line="242"/>
+        <location filename="../UlConfigGameStorage.cpp" line="193"/>
+        <location filename="../UlConfigGameStorage.cpp" line="239"/>
         <source>An error occurred while writing data to file</source>
         <translation>Um erro aconteceu enquanto escrevia dados no arquivo</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="255"/>
+        <location filename="../UlConfigGameStorage.cpp" line="252"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>O tamanho maximo do nome é %1 bytes</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="286"/>
+        <location filename="../UlConfigGameStorage.cpp" line="283"/>
         <source>Unable to backup config file</source>
         <translation>Incapaz de fazer backup do arquivo de configuração</translation>
     </message>

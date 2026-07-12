@@ -502,27 +502,23 @@
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="278"/>
         <source>Media Type</source>
-        <translation>Тип диска</translation>
+        <translation type="vanished">Тип диска</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="284"/>
         <source>Auto</source>
-        <translation>Автоматически</translation>
+        <translation type="vanished">Автоматически</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="294"/>
         <source>DVD</source>
-        <translation>DVD</translation>
+        <translation type="vanished">DVD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="301"/>
         <source>CD</source>
-        <translation>CD</translation>
+        <translation type="vanished">CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="311"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="278"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -531,22 +527,22 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Единственный способ запустать большие (более 4 ГиБ) игры с USB накопителя. Поскольку OPL поддерживает только файловую систему FAT32, вы должны разбивать большие файлы на части.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="317"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="284"/>
         <source>Split the file into parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="324"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="291"/>
         <source>Install as ISO file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="341"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="308"/>
         <source>Move source file instead of copying it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="334"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="301"/>
         <source>Install as compressed ZSO file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1122,22 +1118,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="357"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="356"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="528"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="527"/>
         <source>Done</source>
         <translation type="unfinished">Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="528"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="527"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="589"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="588"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Отменено пользователем</translation>
     </message>
@@ -1182,37 +1178,37 @@
         <translation type="vanished">Все поддерживаемые образы (*%1 *%2 *%3);;Образы диска ISO (*%1);;Файлы bin (*%2);; Образы Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="373"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="402"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="381"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="445"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="424"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="459"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="438"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="603"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="681"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="646"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="681"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="646"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>
@@ -1522,7 +1518,7 @@
 <context>
     <name>OplPcTools::UlConfigGameStorage</name>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="271"/>
+        <location filename="../UlConfigGameStorage.cpp" line="268"/>
         <source>Unable to locate Game &quot;%1&quot; in the config file</source>
         <translation>Не могу найти игру &quot;%1&quot; в файле конфигурации</translation>
     </message>
@@ -1547,13 +1543,13 @@
     <name>QObject</name>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="153"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="187"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="186"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="155"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="189"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="188"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
@@ -1563,19 +1559,19 @@
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="157"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="191"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="190"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="159"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="193"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="192"/>
         <source>Registration...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="161"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="195"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="194"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
     </message>
@@ -1600,23 +1596,23 @@
         <translation>%1 повреждён</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="186"/>
+        <location filename="../UlConfigGameStorage.cpp" line="183"/>
         <source>Config record was not found</source>
         <translation>Конфигурационная запись не найдена</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="196"/>
-        <location filename="../UlConfigGameStorage.cpp" line="242"/>
+        <location filename="../UlConfigGameStorage.cpp" line="193"/>
+        <location filename="../UlConfigGameStorage.cpp" line="239"/>
         <source>An error occurred while writing data to file</source>
         <translation>Во время записи данных в файл произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="255"/>
+        <location filename="../UlConfigGameStorage.cpp" line="252"/>
         <source>Maximum name length is %1 bytes</source>
         <translation>Максимальная длина имени – %1 байт</translation>
     </message>
     <message>
-        <location filename="../UlConfigGameStorage.cpp" line="286"/>
+        <location filename="../UlConfigGameStorage.cpp" line="283"/>
         <source>Unable to backup config file</source>
         <translation>Не могу сделать бекап файла конфигурации</translation>
     </message>

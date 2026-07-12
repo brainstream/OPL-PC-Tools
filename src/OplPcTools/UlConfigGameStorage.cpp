@@ -165,9 +165,6 @@ bool UlConfigGameStorage::performLoading(const QDir & _directory)
         case MT_DVD:
             game->setMediaType(MediaType::DVD);
             break;
-        default:
-            game->setMediaType(MediaType::Unknown);
-            break;
         }
         if(settings.validateUlCfg() && !validateGame(*game))
             throwUlCorrupted();

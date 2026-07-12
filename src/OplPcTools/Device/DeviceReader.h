@@ -21,7 +21,6 @@
 #include <QString>
 #include <QList>
 #include <QSharedPointer>
-#include <OplPcTools/MediaType.h>
 #include <OplPcTools/Device/DeviceSource.h>
 
 namespace OplPcTools {
@@ -48,8 +47,6 @@ public:
     inline QString title() const;
     inline void setTitle(const QString _title);
     inline quint64 size() const;
-    inline MediaType mediaType() const;
-    inline void setMediaType(MediaType _media_type);
     inline const QString & gameId() const;
     bool seek(quint64 _offset);
     qint64 read(QByteArray & _buffer);
@@ -57,7 +54,6 @@ public:
 private:
     bool m_is_initialized;
     QSharedPointer<DeviceSource> m_source_ptr;
-    MediaType m_media_type;
     QString m_id;
     QString m_title;
     quint64 m_size;
@@ -86,16 +82,6 @@ quint64 DeviceReader::size() const
 const QString & DeviceReader::gameId() const
 {
     return m_id;
-}
-
-MediaType DeviceReader::mediaType() const
-{
-    return m_media_type;
-}
-
-void DeviceReader::setMediaType(MediaType _media_type)
-{
-    m_media_type = _media_type;
 }
 
 } // namespace OplPcTools

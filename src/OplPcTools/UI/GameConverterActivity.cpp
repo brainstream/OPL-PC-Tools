@@ -202,7 +202,6 @@ void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & 
             errors << tr("Game data \"%1\" is corrupted").arg(game->title());
             continue;
         }
-        reader->setMediaType(game->mediaType());
         reader->setTitle(game->title());
         m_tasks.append(
             ConvertingTask

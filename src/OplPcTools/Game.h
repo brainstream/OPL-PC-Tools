@@ -54,7 +54,7 @@ private:
 Game::Game(const QString & _id, GameInstallationType _type) :
     m_uuid(Uuid::createUuid()),
     m_id(_id),
-    m_media_type(MediaType::Unknown),
+    m_media_type(MediaType::DVD),
     m_part_count(1),
     m_installation_type(_type)
 {

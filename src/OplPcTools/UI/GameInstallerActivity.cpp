@@ -106,7 +106,6 @@ public:
     inline const QString & errorMessage() const;
     inline void setProgress(int _progress);
     inline int progress() const;
-    inline void setMediaType(MediaType _media_type);
     inline bool isMovingEnabled() const;
     inline void enabelMoving(bool _enable);
 
@@ -276,11 +275,6 @@ int TaskListItem::progress() const
     return m_progress;
 }
 
-void TaskListItem::setMediaType(MediaType _media_type)
-{
-    m_device_ptr->setMediaType(_media_type);
-}
-
 bool TaskListItem::isMovingEnabled() const
 {
     return canFileBeMoved() && m_is_moving_enabled;
@@ -314,9 +308,6 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     connect(mp_btn_remove, &QPushButton::clicked, this, &GameInstallerActivity::removeGame);
     connect(mp_btn_rename, &QPushButton::clicked, this, &GameInstallerActivity::renameGame);
     connect(mp_tree_tasks, &QTreeWidget::doubleClicked, this, &GameInstallerActivity::renameGame);
-    connect(mp_radio_mtauto, &QRadioButton::clicked, this, &GameInstallerActivity::mediaTypeChanged);
-    connect(mp_radio_mtdvd, &QRadioButton::clicked, this, &GameInstallerActivity::mediaTypeChanged);
-    connect(mp_radio_mtcd, &QRadioButton::clicked, this, &GameInstallerActivity::mediaTypeChanged);
     connect(mp_checkbox_move, &QCheckBox::clicked, this, &GameInstallerActivity::moveOptionChanged);
     connect(mp_radio_target_ul, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
     connect(mp_radio_target_iso, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
@@ -369,18 +360,6 @@ void GameInstallerActivity::taskSelectionChanged()
     else
         mp_label_error_message->clear();
     mp_label_title->setText(item->device().title());
-    switch(item->device().mediaType())
-    {
-    case MediaType::CD:
-        mp_radio_mtcd->setChecked(true);
-        break;
-    case MediaType::DVD:
-        mp_radio_mtdvd->setChecked(true);
-        break;
-    default:
-        mp_radio_mtauto->setChecked(true);
-        break;
-    }
     mp_radio_target_ul->setChecked(item->targetInstallationType() == GameInstallationType::UlConfig);
     mp_radio_target_iso->setChecked(item->targetInstallationType() == GameInstallationType::Iso9660);
     mp_radio_target_zso->setChecked(item->targetInstallationType() == GameInstallationType::Ziso);
@@ -555,19 +534,6 @@ void GameInstallerActivity::removeGame()
     }
 }
 
-void GameInstallerActivity::mediaTypeChanged(bool _checked)
-{
-    if(!_checked) return;
-    TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
-    if(!item) return;
-    MediaType media_type = MediaType::Unknown;
-    if(mp_radio_mtcd->isChecked())
-        media_type = MediaType::CD;
-    else if(mp_radio_mtdvd->isChecked())
-        media_type = MediaType::DVD;
-    item->setMediaType(media_type);
-}
-
 void GameInstallerActivity::targetOptionChanged(bool _checked)
 {
     if(!_checked) return;
@@ -592,7 +558,6 @@ void GameInstallerActivity::moveOptionChanged()
 
 void GameInstallerActivity::install()
 {
-    mp_groupbox_media_type->setDisabled(true);
     mp_groupbox_options->setDisabled(true);
     mp_btn_add_image->setDisabled(true);
     mp_btn_add_disc->setDisabled(true);
@@ -690,12 +655,6 @@ bool GameInstallerActivity::startNextTask()
     TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->topLevelItem(m_processing_task_index));
     if(!item)
         return false;
-    if(mp_radio_mtcd->isChecked())
-        item->setMediaType(MediaType::CD);
-    else if(mp_radio_mtdvd->isChecked())
-        item->setMediaType(MediaType::DVD);
-    else
-        item->setMediaType(MediaType::Unknown);
     if(item->targetInstallationType() == GameInstallationType::UlConfig)
     {
         mp_installer = new UlConfigGameInstaller(item->device(), this);

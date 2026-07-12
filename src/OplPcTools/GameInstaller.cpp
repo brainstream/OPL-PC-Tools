@@ -55,9 +55,5 @@ bool GameInstaller::install()
 
 MediaType GameInstaller::deviceMediaType() const
 {
-    const quint64 iso_size = mr_device.size();
-    MediaType type = mr_device.mediaType();
-    if(type == MediaType::Unknown)
-        type = iso_size > 681984000 ? MediaType::DVD : MediaType::CD;
-    return type;
+    return mr_device.size() > 681984000 ? MediaType::DVD : MediaType::CD;
 }

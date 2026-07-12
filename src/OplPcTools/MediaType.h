@@ -24,7 +24,6 @@ namespace OplPcTools {
 
 enum class MediaType
 {
-    Unknown,
     CD,
     DVD
 };

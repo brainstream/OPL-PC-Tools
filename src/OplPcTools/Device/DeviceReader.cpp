@@ -298,8 +298,7 @@ QString Iso9660::title() const
 
 DeviceReader::DeviceReader(QSharedPointer<DeviceSource> _source) :
     m_is_initialized(false),
-    m_source_ptr(_source),
-    m_media_type(MediaType::Unknown)
+    m_source_ptr(_source)
 {
 }
 

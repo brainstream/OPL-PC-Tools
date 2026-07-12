@@ -18,6 +18,7 @@
 
 #include <OplPcTools/UI/ProgressBarItemDelegate.h>
 #include <QApplication>
+#include <QPainter>
 
 using namespace OplPcTools::UI;
 
@@ -32,6 +33,8 @@ void ProgressBarItemDelegate::paint(
     const QStyleOptionViewItem & _option,
     const QModelIndex & _index) const
 {
+    _painter->eraseRect(_option.rect);
+
     QStyledItemDelegate::paint(_painter, _option, _index);
     if(!mr_source.isProgressBarEnabled(_index))
         return;

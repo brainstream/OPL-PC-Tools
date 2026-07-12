@@ -105,7 +105,7 @@ public:
     void setTargetInstallationType(qsizetype _index, GameInstallationType _format);
     void removeTask(qsizetype _index);
     qsizetype taskForNextStart() const;
-    void setTaskStatus(qsizetype _index, ConvertingTaskStatus _status, int _progress = -1);
+    void setTaskStatus(qsizetype _index, ConvertingTaskStatus _status, int _progress);
     void setTaskErrorMessage(qsizetype _index, const QString & _message);
 
 private:
@@ -475,11 +475,11 @@ bool GameConverterActivity::startNextTask()
 
     if(task->game.installationType() == task->target_installation_type)
     {
-        mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done);
+        mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done, g_progressbar_max_value);
         return true;
     }
-
-    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Converting);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Converting, 0);
+    updateOverallProgress();
 
     GameInstaller * installer = nullptr;
 
@@ -523,29 +523,42 @@ void GameConverterActivity::threadFinished()
     }
     mp_btn_cancel->setEnabled(false);
     mp_btn_back->setEnabled(true);
-    mp_progress_bar->setRange(g_progressbar_max_value, g_progressbar_max_value);
-    mp_progress_bar->setValue(g_progressbar_max_value);
     Application::showMessage(tr("Done"), tr("Converting complete"));
 }
 
 void GameConverterActivity::progress(quint64 _total_bytes, quint64 _processed_bytes)
 {
-    const double current_progress = static_cast<double>(_processed_bytes) / _total_bytes;
-    const double single_task_in_overal_progress = 1.0 / mp_model->taskCount();
-    const double overall_progress = single_task_in_overal_progress * m_current_task_index +
-            single_task_in_overal_progress * current_progress;
+    const ConvertingTask * task = mp_model->task(m_current_task_index);
+    if(!task || task->status != ConvertingTaskStatus::Converting)
+        return;
+
+    const float current_progress = static_cast<float>(_processed_bytes) / _total_bytes;
     mp_model->setTaskStatus(
         m_current_task_index,
         ConvertingTaskStatus::Converting,
-        current_progress * g_progressbar_max_value);
+        static_cast<int>(current_progress * g_progressbar_max_value));
+    updateOverallProgress();
+}
+
+void GameConverterActivity::updateOverallProgress()
+{
     if(mp_progress_bar->maximum() == 0)
         mp_progress_bar->setMaximum(g_progressbar_max_value);
-    mp_progress_bar->setValue(overall_progress * g_progressbar_max_value);
+    int task_progress_sum = 0;
+    for(qsizetype i = 0; i < mp_model->taskCount(); ++i)
+        task_progress_sum += mp_model->task(i)->progress;
+    const float progress = static_cast<float>(task_progress_sum) / mp_model->taskCount();
+    mp_progress_bar->setValue(static_cast<int>(progress));
+}
+
+void GameConverterActivity::setOverallProgressUnknown()
+{
+    mp_progress_bar->setRange(0, 0);
 }
 
 void GameConverterActivity::installerError(QString _message)
 {
-    setTaskError(_message);
+    setTaskError(m_current_task_index, _message);
 }
 
 void GameConverterActivity::cancel()
@@ -555,19 +568,15 @@ void GameConverterActivity::cancel()
         m_is_canceled = true;
         mp_btn_cancel->setDisabled(true);
         for(qsizetype i = m_current_task_index; i < mp_model->taskCount(); ++i)
-        {
-            mp_model->setTaskStatus(i, ConvertingTaskStatus::Error);
-            setTaskError(canceledErrorMessage(), i);
-        }
+            setTaskError(i, canceledErrorMessage());
         mp_working_thread->requestInterruption();
     }
 }
 
-void GameConverterActivity::setTaskError(const QString & _message, qsizetype _index)
+void GameConverterActivity::setTaskError(qsizetype _index, const QString & _message)
 {
-    if(_index < 0)
-        _index = m_current_task_index;
-    mp_model->setTaskStatus(_index, ConvertingTaskStatus::Error);
+    mp_model->setTaskStatus(_index, ConvertingTaskStatus::Error, g_progressbar_max_value);
+    updateOverallProgress();
     mp_model->setTaskErrorMessage(_index, _message);
     if(_index == mp_tree_tasks->currentIndex().row())
         mp_label_error_message->setText(_message);
@@ -582,24 +591,24 @@ QString GameConverterActivity::canceledErrorMessage() const
 void GameConverterActivity::rollbackStarted()
 {
     mp_btn_cancel->setDisabled(true);
-    mp_progress_bar->setRange(0, 0);
-    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::RollingBack);
+    setOverallProgressUnknown();
 }
 
 void GameConverterActivity::rollbackFinished()
 {
-    mp_progress_bar->setRange(g_progressbar_max_value, g_progressbar_max_value);
-    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Error);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Error, g_progressbar_max_value);
+    updateOverallProgress();
 }
 
 void GameConverterActivity::registrationStarted()
 {
-    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Registration);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Registration, g_progressbar_max_value);
     if(m_current_task_index + 1 == mp_model->taskCount())
-        mp_progress_bar->setRange(0, 0);
+        setOverallProgressUnknown();
 }
 
 void GameConverterActivity::registrationFinished()
 {
-    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done);
+    mp_model->setTaskStatus(m_current_task_index, ConvertingTaskStatus::Done, g_progressbar_max_value);
+    updateOverallProgress();
 }

@@ -43,6 +43,8 @@ private:
     void addGames();
     void removeSelectedTasks();
     void convert();
+    void updateOverallProgress();
+    void setOverallProgressUnknown();
     bool startNextTask();
     void threadFinished();
     void progress(quint64 _total_bytes, quint64 _processed_bytes);
@@ -53,7 +55,7 @@ private:
     void installerError(QString _message);
     void cancel();
     QString canceledErrorMessage() const;
-    void setTaskError(const QString & _message, qsizetype _index = -1);
+    void setTaskError(qsizetype _index, const QString & _message);
 
 private:
     TaskListModel * mp_model;

@@ -20,6 +20,7 @@
 #include <OplPcTools/UI/ChooseOpticalDiscDialog.h>
 #include <OplPcTools/UI/GameRenameDialog.h>
 #include <OplPcTools/UI/GameInstallerActivity.h>
+#include <OplPcTools/UI/ProgressBarItemDelegate.h>
 #include <OplPcTools/Device/DeviceReader.h>
 #include <OplPcTools/Device/Iso9660DeviceSource.h>
 #include <OplPcTools/Device/ZisoDeviceSource.h>
@@ -32,7 +33,6 @@
 #include <OplPcTools/Device/DefaultDeviceWriter.h>
 #include <OplPcTools/Device/CompressedDeviceWriter.h>
 #include <OplPcTools/Constants.h>
-#include <QStyledItemDelegate>
 #include <QShortcut>
 #include <QFileInfo>
 #include <QFileDialog>
@@ -123,19 +123,41 @@ private:
     bool m_is_moving_enabled;
 };
 
-class TaskListViewDelegate : public QStyledItemDelegate
+class GameInstallationProgressBarItemDelegateSource : public QObject, public ProgressBarItemDelegateSource
 {
 public:
-    TaskListViewDelegate(QTreeWidget * _tree) :
-        QStyledItemDelegate(_tree),
-        mp_tree(_tree)
+    GameInstallationProgressBarItemDelegateSource(QTreeWidget & _widget, QObject * _parent) :
+        QObject(_parent),
+        mr_widget(_widget)
     {
     }
 
-    void paint(QPainter * _painter, const QStyleOptionViewItem & _option, const QModelIndex & _index ) const override;
+    bool isProgressBarEnabled(const QModelIndex & _index) const override
+    {
+        const TaskListItem * i = item(_index);
+        return i && i->status() == GameInstallationStatus::Installation;
+    }
+
+    int maxProgressValue(const QModelIndex & _index) const override
+    {
+        Q_UNUSED(_index)
+        return g_progressbar_max_value;
+    }
+
+    int currentProgressValue(const QModelIndex & _index) const override
+    {
+        const TaskListItem * i = item(_index);
+        return i ? i->progress() : -1;
+    }
 
 private:
-    QTreeWidget * mp_tree;
+    const TaskListItem * item(const QModelIndex & _index) const
+    {
+        return static_cast<TaskListItem *>(mr_widget.topLevelItem(_index.row()));
+    }
+
+private:
+    QTreeWidget & mr_widget;
 };
 
 } // namespace
@@ -251,7 +273,7 @@ void TaskListItem::setProgress(int _progress)
 #if QT_VERSION_MAJOR < 6
         emitDataChanged();
 #else
-        // For some unknown reason, emit DataChanged() does not trigger a paint event in Qt6.
+        // For some unknown reason, emit DataChanged() does not trigger the paint event in Qt6.
         // As a workaround, we redraw the entire widget.
         QTreeWidget * tree = treeWidget();
         if(tree) tree->viewport()->update();
@@ -289,40 +311,6 @@ void TaskListItem::enabelMoving(bool _enable)
     m_is_moving_enabled = _enable;
 }
 
-void TaskListViewDelegate::paint(
-    QPainter * _painter,
-    const QStyleOptionViewItem & _option,
-    const QModelIndex & _index ) const
-{
-    QStyledItemDelegate::paint(_painter, _option, _index);
-    const TaskListItem * item = static_cast<TaskListItem *>(mp_tree->topLevelItem(_index.row()));
-    if(_index.column() != Column::Status || item->status() != GameInstallationStatus::Installation)
-        return;
-    QStyleOptionProgressBar progress_bar_option = { };
-    progress_bar_option.state = QStyle::State_Enabled;
-    progress_bar_option.direction = _option.direction;
-    progress_bar_option.rect = _option.rect;
-    progress_bar_option.fontMetrics = _option.fontMetrics;
-    progress_bar_option.minimum = 0;
-    progress_bar_option.maximum = g_progressbar_max_value;
-    progress_bar_option.textAlignment = Qt::AlignCenter;
-    progress_bar_option.textVisible = true;
-    progress_bar_option.progress = item->progress();
-    progress_bar_option.text = QString::asprintf("%d%%", progress_bar_option.progress / (g_progressbar_max_value / 100));
-    QStyleOption progress_indicator_option = { };
-    progress_indicator_option.state = QStyle::State_Enabled;
-    progress_indicator_option.direction = _option.direction;
-    progress_indicator_option.rect = _option.rect;
-    progress_indicator_option.rect.setWidth(
-        progress_indicator_option.rect.width() * progress_bar_option.progress / g_progressbar_max_value);
-    progress_indicator_option.fontMetrics = _option.fontMetrics;
-    progress_indicator_option.palette.setColor(QPalette::Highlight,
-        progress_indicator_option.palette.color(QPalette::Highlight).darker(150));
-    QStyle * style = QApplication::style();
-    style->drawPrimitive(QStyle::PE_IndicatorProgressChunk, &progress_indicator_option, _painter);
-    style->drawControl(QStyle::CE_ProgressBarLabel, &progress_bar_option, _painter);
-}
-
 GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     Activity(_parent),
     mp_working_thread(nullptr),
@@ -333,7 +321,10 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     setupUi(this);
     setupShortcuts();
     mp_tree_tasks->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    mp_tree_tasks->setItemDelegate(new TaskListViewDelegate(mp_tree_tasks));
+    mp_tree_tasks->setItemDelegateForColumn(
+        Column::Status,
+        new ProgressBarItemDelegate(*new GameInstallationProgressBarItemDelegateSource(*mp_tree_tasks, this),
+        this));
     mp_btn_cancel->setDisabled(true);
     mp_btn_install->setDisabled(true);
     connect(mp_btn_back, &QPushButton::clicked, this, &GameInstallerActivity::close);

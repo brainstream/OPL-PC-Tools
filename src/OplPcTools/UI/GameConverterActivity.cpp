@@ -18,6 +18,7 @@
 
 #include <OplPcTools/UI/GameConverterActivity.h>
 #include <OplPcTools/UI/ChooseImportGamesDialog.h>
+#include <OplPcTools/UI/ProgressBarItemDelegate.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
@@ -71,20 +72,24 @@ struct ConvertingTask
     QString error_message;
 };
 
+namespace Column {
+
+enum
+{
+    Title,
+    SourceFormat,
+    TargetFormat,
+    Status,
+    __ColumnCount
+};
+
+} // namespace Column
+
 } // namespace
 
-class GameConverterActivity::TaskListModel : public QAbstractListModel
-{
-private:
-    enum
-    {
-        ColumnIndex_Title,
-        ColumnIndex_SourceFormat,
-        ColumnIndex_TargetFormat,
-        ColumnIndex_Status,
-        ColumnCount
-    };
 
+class GameConverterActivity::TaskListModel : public QAbstractListModel, public ProgressBarItemDelegateSource
+{
 public:
     explicit  TaskListModel(QObject * _parent);
     int rowCount(const QModelIndex & _parent) const override;
@@ -93,6 +98,9 @@ public:
     QVariant headerData(int _section, Qt::Orientation _orientation, int _role) const override;
     void addTasks(const QList<const Game *> & _games);
     qsizetype taskCount() const;
+    bool isProgressBarEnabled(const QModelIndex & _index) const override;
+    int maxProgressValue(const QModelIndex & _index) const override;
+    int currentProgressValue(const QModelIndex & _index) const override;
     const ConvertingTask * task(qsizetype _index) const;
     void setTargetInstallationType(qsizetype _index, GameInstallationType _format);
     void removeTask(qsizetype _index);
@@ -120,7 +128,7 @@ int GameConverterActivity::TaskListModel::columnCount(const QModelIndex & _paren
 {
     if(_parent.isValid())
         return 0;
-    return ColumnCount;
+    return Column::__ColumnCount;
 }
 
 QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, int _role) const
@@ -132,17 +140,15 @@ QVariant GameConverterActivity::TaskListModel::data(const QModelIndex & _index, 
     const ConvertingTask & task = m_tasks[_index.row()];
     switch(_index.column())
     {
-    case ColumnIndex_Title:
+    case Column::Title:
         return task.game.title();
-    case ColumnIndex_SourceFormat:
+    case Column::SourceFormat:
         return gameInstallationTypeName(task.game.installationType());
-    case ColumnIndex_TargetFormat:
+    case Column::TargetFormat:
         return gameInstallationTypeName(task.target_installation_type);
-    case ColumnIndex_Status:
+    case Column::Status:
         switch(task.status)
         {
-        case ConvertingTaskStatus::Converting:
-            return QString("%1%").arg(task.progress / (g_progressbar_max_value / 100));
         case ConvertingTaskStatus::Done:
             return QObject::tr("Done");
         case ConvertingTaskStatus::Error:
@@ -169,13 +175,13 @@ QVariant GameConverterActivity::TaskListModel::headerData(int _section, Qt::Orie
         return {};
     switch(_section)
     {
-    case ColumnIndex_Title:
+    case Column::Title:
         return tr("Title");
-    case ColumnIndex_SourceFormat:
+    case Column::SourceFormat:
         return tr("Source format");
-    case ColumnIndex_TargetFormat:
+    case Column::TargetFormat:
         return tr("Target format");
-    case ColumnIndex_Status:
+    case Column::Status:
         return tr("Status");
     default:
         return {};
@@ -221,6 +227,24 @@ inline qsizetype GameConverterActivity::TaskListModel::taskCount() const
     return m_tasks.count();
 }
 
+bool GameConverterActivity::TaskListModel::isProgressBarEnabled(const QModelIndex & _index) const
+{
+    const ConvertingTask * t = task(_index.row());
+    return t && t->status == ConvertingTaskStatus::Converting;
+}
+
+int GameConverterActivity::TaskListModel::maxProgressValue(const QModelIndex & _index) const
+{
+    Q_UNUSED(_index)
+    return g_progressbar_max_value;
+}
+
+int GameConverterActivity::TaskListModel::currentProgressValue(const QModelIndex & _index) const
+{
+    const ConvertingTask * t = task(_index.row());
+    return t ? t->progress : -1;
+}
+
 const ConvertingTask * GameConverterActivity::TaskListModel::task(qsizetype _index) const
 {
     return _index >= 0 && _index < m_tasks.count() ? &m_tasks[_index] : nullptr;
@@ -231,7 +255,7 @@ void GameConverterActivity::TaskListModel::setTargetInstallationType(qsizetype _
     if(_index < m_tasks.count())
     {
         m_tasks[_index].target_installation_type = _format;
-        QModelIndex idx = index(_index, ColumnIndex_TargetFormat);
+        QModelIndex idx = index(_index, Column::TargetFormat);
         emit dataChanged(idx, idx);
     }
 }
@@ -263,7 +287,7 @@ void GameConverterActivity::TaskListModel::setTaskStatus(qsizetype _index, Conve
     m_tasks[_index].status = _status;
     if(_progress >= 0)
         m_tasks[_index].progress = _progress;
-    QModelIndex model_index = index(_index, ColumnIndex_Status);
+    QModelIndex model_index = index(_index, Column::Status);
     emit dataChanged(model_index, model_index);
 }
 
@@ -290,6 +314,7 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
     btn_convert->setText(tr("Convert"));
     btn_convert->setIcon(QIcon(":/images/start"));
     mp_tree_tasks->setModel(mp_model);
+    mp_tree_tasks->setItemDelegateForColumn(Column::Status, new ProgressBarItemDelegate(*mp_model, this));
     mp_tree_tasks->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     mp_tree_tasks->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     mp_tree_tasks->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);

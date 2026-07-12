@@ -36,8 +36,6 @@ public:
     inline quint8 options() const;
     inline void setOptionMoveFile(bool _value);
     inline bool isOptionMoveFileSet() const;
-    inline void setOptionRenameFile(bool _value);
-    inline bool isOptionRenameFileSet() const;
     inline const Game * installedGame() const override;
 
 protected:
@@ -49,7 +47,6 @@ private:
 
 private:
     bool m_move_file;
-    bool m_rename_file;
     Game * mp_game;
     std::unique_ptr<DeviceWriter> m_writer_ptr;
 };
@@ -62,16 +59,6 @@ void DirectoryGameInstaller::setOptionMoveFile(bool _value)
 bool DirectoryGameInstaller::isOptionMoveFileSet() const
 {
     return m_move_file;
-}
-
-void DirectoryGameInstaller::setOptionRenameFile(bool _value)
-{
-    m_rename_file = _value;
-}
-
-bool DirectoryGameInstaller::isOptionRenameFileSet() const
-{
-    return m_rename_file;
 }
 
 const Game * DirectoryGameInstaller::installedGame() const

@@ -107,8 +107,6 @@ public:
     inline void setProgress(int _progress);
     inline int progress() const;
     inline void setMediaType(MediaType _media_type);
-    inline bool isRenamingEnabled() const;
-    inline void enabelRenaming(bool _enable);
     inline bool isMovingEnabled() const;
     inline void enabelMoving(bool _enable);
 
@@ -119,7 +117,6 @@ private:
     GameInstallationStatus m_status;
     int m_progress;
     QString m_error_message;
-    bool m_is_renaming_enabled;
     bool m_is_moving_enabled;
 };
 
@@ -173,7 +170,6 @@ TaskListItem::TaskListItem(QSharedPointer<DeviceReader> _device, SourceFormat _f
     const Settings & settings = Settings::instance();
     if(settings.splitUpIso())
         m_target_installation_type = GameInstallationType::UlConfig;
-    m_is_renaming_enabled = settings.renameIso();
     m_is_moving_enabled = settings.moveIso();
     if(settings.compressIso())
         m_target_installation_type = GameInstallationType::Ziso;
@@ -227,12 +223,6 @@ bool TaskListItem::canFileBeMoved() const
     return
         (m_source_format == SourceFormat::Iso && m_target_installation_type == GameInstallationType::Iso9660) ||
         (m_source_format == SourceFormat::CompressedIso && m_target_installation_type == GameInstallationType::Ziso);
-}
-
-bool TaskListItem::canFileBeRenamed() const
-{
-    return m_target_installation_type == GameInstallationType::Iso9660 ||
-           m_target_installation_type == GameInstallationType::Ziso;
 }
 
 void TaskListItem::rename(const QString & _new_name)
@@ -291,16 +281,6 @@ void TaskListItem::setMediaType(MediaType _media_type)
     m_device_ptr->setMediaType(_media_type);
 }
 
-bool TaskListItem::isRenamingEnabled() const
-{
-    return canFileBeRenamed() && m_is_renaming_enabled;
-}
-
-void TaskListItem::enabelRenaming(bool _enable)
-{
-    m_is_renaming_enabled = _enable;
-}
-
 bool TaskListItem::isMovingEnabled() const
 {
     return canFileBeMoved() && m_is_moving_enabled;
@@ -338,7 +318,6 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     connect(mp_radio_mtdvd, &QRadioButton::clicked, this, &GameInstallerActivity::mediaTypeChanged);
     connect(mp_radio_mtcd, &QRadioButton::clicked, this, &GameInstallerActivity::mediaTypeChanged);
     connect(mp_checkbox_move, &QCheckBox::clicked, this, &GameInstallerActivity::moveOptionChanged);
-    connect(mp_checkbox_rename, &QCheckBox::clicked, this, &GameInstallerActivity::renameOptionChanged);
     connect(mp_radio_target_ul, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
     connect(mp_radio_target_iso, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
     connect(mp_radio_target_zso, &QRadioButton::clicked, this, &GameInstallerActivity::targetOptionChanged);
@@ -406,9 +385,7 @@ void GameInstallerActivity::taskSelectionChanged()
     mp_radio_target_iso->setChecked(item->targetInstallationType() == GameInstallationType::Iso9660);
     mp_radio_target_zso->setChecked(item->targetInstallationType() == GameInstallationType::Ziso);
     mp_checkbox_move->setChecked(item->isMovingEnabled());
-    mp_checkbox_rename->setChecked(item->isRenamingEnabled());
     mp_checkbox_move->setEnabled(item->canFileBeMoved());
-    mp_checkbox_rename->setEnabled(item->canFileBeRenamed());
 }
 
 void GameInstallerActivity::addDiscImage()
@@ -603,16 +580,7 @@ void GameInstallerActivity::targetOptionChanged(bool _checked)
     else
         item->setTargetInstallationType(GameInstallationType::UlConfig);
     mp_checkbox_move->setEnabled(item->canFileBeMoved());
-    mp_checkbox_rename->setEnabled(item->canFileBeRenamed());
     item->enabelMoving(mp_checkbox_move->isEnabled() && mp_checkbox_move->isChecked());
-    item->enabelRenaming(mp_checkbox_rename->isEnabled() && mp_checkbox_move->isChecked());
-}
-
-void GameInstallerActivity::renameOptionChanged()
-{
-    TaskListItem * item = static_cast<TaskListItem *>(mp_tree_tasks->currentItem());
-    if(!item) return;
-    item->enabelRenaming(mp_checkbox_rename->isChecked());
 }
 
 void GameInstallerActivity::moveOptionChanged()
@@ -742,7 +710,6 @@ bool GameInstallerActivity::startNextTask()
             std::unique_ptr<DeviceWriter>(writer),
             this);
         dir_installer->setOptionMoveFile(item->isMovingEnabled());
-        dir_installer->setOptionRenameFile(item->isRenamingEnabled());
         mp_installer = dir_installer;
     }
     mp_working_thread = new LambdaThread([this]() {

@@ -558,11 +558,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="348"/>
-        <source>Add game ID to file name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Split up ISO file into parts</source>
         <translation type="vanished">Dividir o arquivo ISO em partes menores</translation>
     </message>
@@ -1186,37 +1181,37 @@
         <translation type="vanished">Todas as imagens suportadas (*%1 *%2 *%3);;Arquivos ISO (*%1);;Arquivos Bin (*%2);;Arquivos do Nero (*%3)</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="417"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="394"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="425"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="402"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="468"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="445"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="482"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="459"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="670"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="638"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="713"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="681"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="713"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="681"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -1551,13 +1546,13 @@
     <name>QObject</name>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="153"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="191"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="187"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="155"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="193"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="189"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
@@ -1567,19 +1562,19 @@
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="157"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="195"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="191"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="159"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="197"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="193"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="161"/>
-        <location filename="../UI/GameInstallerActivity.cpp" line="199"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="195"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>
     </message>
@@ -1909,18 +1904,26 @@ Want to skip it?</source>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="115"/>
-        <source>Compress ISO</source>
+        <source>Compress ISO to ZSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="122"/>
+        <source>Move ISO or ZSO images instead of copying them if possible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Move ISO instead of copy</source>
-        <translation>Mover o arquivo ISO ao invés de copiar</translation>
+        <translation type="vanished">Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="129"/>
+        <source>Add game ID to ISO or ZSO filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add a game ID to a filename</source>
-        <translation>Adicionar um ID de jogo ao um arquivo</translation>
+        <translation type="vanished">Adicionar um ID de jogo ao um arquivo</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="153"/>

@@ -112,21 +112,21 @@
           <item>
            <widget class="QCheckBox" name="mp_checkbox_compress_iso">
             <property name="text">
-             <string>Compress ISO</string>
+             <string>Compress ISO to ZSO</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="mp_checkobx_move_iso">
             <property name="text">
-             <string>Move ISO instead of copy</string>
+             <string>Move ISO or ZSO images instead of copying them if possible</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="mp_checkbox_add_id">
             <property name="text">
-             <string>Add a game ID to a filename</string>
+             <string>Add game ID to ISO or ZSO filename</string>
             </property>
            </widget>
           </item>

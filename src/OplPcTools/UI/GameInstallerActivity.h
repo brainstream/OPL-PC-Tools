@@ -54,7 +54,6 @@ private:
     void removeGame();
     void mediaTypeChanged(bool _checked);
     void targetOptionChanged(bool _checked);
-    void renameOptionChanged();
     void moveOptionChanged();
     void install();
     bool startNextTask();

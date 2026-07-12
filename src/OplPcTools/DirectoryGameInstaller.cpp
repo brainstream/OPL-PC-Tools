@@ -20,6 +20,7 @@
 #include <OplPcTools/DirectoryGameInstaller.h>
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/File.h>
+#include <OplPcTools/Settings.h>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/StandardPaths.h>
 #include <OplPcTools/Constants.h>
@@ -34,7 +35,6 @@ DirectoryGameInstaller::DirectoryGameInstaller(
 ) :
     GameInstaller(_reader, _parent),
     m_move_file(false),
-    m_rename_file(false),
     mp_game(nullptr),
     m_writer_ptr(std::move(_writer))
 {
@@ -60,7 +60,7 @@ bool DirectoryGameInstaller::performInstallation()
         dest_dir.mkdir(dest_subdir);
     dest_dir.cd(dest_subdir);
     const QString dest_file_ext(mp_game->installationType() == GameInstallationType::Ziso ? g_file_ext_zso : g_file_ext_iso);
-    QString dest_filepath = m_rename_file
+    QString dest_filepath = Settings::instance().renameIso()
         ? dest_dir.absoluteFilePath(DirectoryGameStorage::makeGameIsoFilename(mp_game->title(), mp_game->id(), dest_file_ext))
         : dest_dir.absoluteFilePath(mp_game->title() + dest_file_ext);
     if(m_move_file && QStorageInfo(mr_device.filepath()).device() == QStorageInfo(dest_dir).device())

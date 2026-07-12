@@ -342,13 +342,6 @@
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QCheckBox" name="mp_checkbox_rename">
-                  <property name="text">
-                   <string>Add game ID to file name</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -413,7 +406,6 @@
   <tabstop>mp_radio_target_iso</tabstop>
   <tabstop>mp_radio_target_zso</tabstop>
   <tabstop>mp_checkbox_move</tabstop>
-  <tabstop>mp_checkbox_rename</tabstop>
   <tabstop>mp_tree_tasks</tabstop>
   <tabstop>mp_btn_back</tabstop>
   <tabstop>mp_btn_install</tabstop>

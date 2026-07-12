@@ -494,7 +494,7 @@ START_NEXT_TASK:
         DeviceWriter * writer = task->target_installation_type == GameInstallationType::Ziso
             ? static_cast<DeviceWriter *>(new CompressedDeviceWriter())
             : static_cast<DeviceWriter *>(new DefaultDeviceWriter());
-        installer =  new DirectoryGameInstaller(*task->reader, std::unique_ptr<DeviceWriter>(writer));
+        installer = new DirectoryGameInstaller(*task->reader, std::unique_ptr<DeviceWriter>(writer));
     }
     installer->enableOverride();
 

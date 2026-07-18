@@ -16,7 +16,6 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <OplPcTools/Device/UlDeviceSource.h>
 #include <OplPcTools/Device/ZisoDeviceSource.h>
 #include <OplPcTools/Device/Iso9660DeviceSource.h>

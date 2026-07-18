@@ -23,7 +23,6 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/DirectoryGameInstaller.h>
 #include <OplPcTools/UlConfigGameInstaller.h>
-#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <OplPcTools/Device/DefaultDeviceWriter.h>
 #include <OplPcTools/Device/CompressedDeviceWriter.h>
 #include <OplPcTools/Exception.h>
@@ -91,7 +90,7 @@ enum
 class GameConverterActivity::TaskListModel : public QAbstractListModel, public ProgressBarItemDelegateSource
 {
 public:
-    explicit  TaskListModel(QObject * _parent);
+    explicit TaskListModel(QObject * _parent);
     int rowCount(const QModelIndex & _parent) const override;
     int columnCount(const QModelIndex & _parent) const override;
     QVariant data(const QModelIndex & _index, int _role) const override;
@@ -310,10 +309,10 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
     setupUi(this);
     mp_tree_tasks->setModel(mp_model);
     mp_tree_tasks->setItemDelegateForColumn(Column::Status, new ProgressBarItemDelegate(*mp_model, this));
-    mp_tree_tasks->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    mp_tree_tasks->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    mp_tree_tasks->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    mp_tree_tasks->header()->setSectionResizeMode(3, QHeaderView::Fixed);
+    mp_tree_tasks->header()->setSectionResizeMode(Column::Title, QHeaderView::Stretch);
+    mp_tree_tasks->header()->setSectionResizeMode(Column::SourceFormat, QHeaderView::ResizeToContents);
+    mp_tree_tasks->header()->setSectionResizeMode(Column::TargetFormat, QHeaderView::ResizeToContents);
+    mp_tree_tasks->header()->setSectionResizeMode(Column::Status, QHeaderView::Fixed);
     mp_widget_details->setVisible(false);
     mp_label_details_placeholder->setVisible(true);
     mp_progress_bar->setRange(0, g_progressbar_max_value);
@@ -354,7 +353,7 @@ void GameConverterActivity::onTaskSelectionChanged()
     else
     {
         mp_label_game_title->setText(tr("[Multiple games selected]"));
-        mp_label_error_message->setText({});
+        mp_label_error_message->clear();
     }
 
     GameInstallationType shared_target_installation_type =

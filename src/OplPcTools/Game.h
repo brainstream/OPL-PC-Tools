@@ -22,7 +22,7 @@
 #include <QObject>
 #include <OplPcTools/Uuid.h>
 #include <OplPcTools/MediaType.h>
-#include <OplPcTools/GameInstallationType.h>
+#include <OplPcTools/GameFormat.h>
 
 namespace OplPcTools {
 

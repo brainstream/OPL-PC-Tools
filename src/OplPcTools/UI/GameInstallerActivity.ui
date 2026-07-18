@@ -97,7 +97,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTreeWidget" name="mp_tree_tasks">
+         <widget class="QTreeView" name="mp_tree_tasks">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>7</horstretch>
@@ -113,6 +113,9 @@
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+          </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
           </property>
@@ -122,22 +125,6 @@
           <property name="allColumnsShowFocus">
            <bool>true</bool>
           </property>
-          <property name="columnCount">
-           <number>2</number>
-          </property>
-          <attribute name="headerDefaultSectionSize">
-           <number>300</number>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Title</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Status</string>
-           </property>
-          </column>
          </widget>
         </item>
         <item>
@@ -214,13 +201,13 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>400</width>
+         <width>300</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>400</width>
+         <width>300</width>
          <height>16777215</height>
         </size>
        </property>
@@ -239,119 +226,147 @@
         </property>
         <item>
          <widget class="QWidget" name="mp_widget_task_details" native="true">
-          <layout class="QGridLayout" name="gridLayout_2">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item row="0" column="0" colspan="2">
-            <layout class="QVBoxLayout" name="mp_layout_3">
-             <item>
-              <widget class="QLabel" name="mp_label_title">
-               <property name="font">
-                <font>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string notr="true">The title</string>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="textInteractionFlags">
-                <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="mp_groupbox_options">
-               <property name="title">
-                <string>Target</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
-                <item>
-                 <widget class="QRadioButton" name="mp_radio_target_ul">
-                  <property name="text">
-                   <string>Split the file into parts</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="mp_radio_target_iso">
-                  <property name="text">
-                   <string>Install as ISO file</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="mp_radio_target_zso">
-                  <property name="text">
-                   <string>Install as compressed ZSO file</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="mp_checkbox_move">
-                  <property name="text">
-                   <string>Move source file instead of copying it</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="mp_label_error_message">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLabel {
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QWidget" name="mp_widget_details" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="mp_label_title">
+                <property name="font">
+                 <font>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string notr="true">The title</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="mp_groupbox_options">
+                <property name="title">
+                 <string>Target</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QRadioButton" name="mp_radio_target_ul">
+                   <property name="text">
+                    <string>Split the file into parts</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="mp_radio_target_iso">
+                   <property name="text">
+                    <string>Install as ISO file</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="mp_radio_target_zso">
+                   <property name="text">
+                    <string>Install as ZSO file</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="mp_line">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="mp_checkbox_move">
+                   <property name="toolTip">
+                    <string>If the source file type is the same as the target file type, move the source file instead of copying it</string>
+                   </property>
+                   <property name="text">
+                    <string>Move the source file if possible</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="mp_label_error_message">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel {
 	color: rgb(255, 87, 90);
 }</string>
-               </property>
-               <property name="text">
-                <string notr="true">Error message</string>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="textInteractionFlags">
-                <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="mp_spacer_3">
-               <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
+                </property>
+                <property name="text">
+                 <string notr="true">Error message</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="mp_spacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>309</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
+         <widget class="QLabel" name="mp_label_details_placeholder">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Select a game to change options</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
        </layout>

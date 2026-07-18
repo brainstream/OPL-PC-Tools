@@ -33,6 +33,9 @@ class GameInstallerActivity : public Activity, private Ui::GameInstallerActivity
 {
     Q_OBJECT
 
+private:
+    class TaskListModel;
+
 public:
     explicit GameInstallerActivity(QWidget * _parent = nullptr);
     static QSharedPointer<Intent> createIntent();
@@ -49,7 +52,6 @@ private:
     void addDiscImage(const QString & _file_path);
     static bool isSourceFileSupported(const QString & _file_path);
     void addDisc();
-    QTreeWidgetItem * findTaskInList(const QString & _device_filepath) const;
     void renameGame();
     void removeGame();
     void targetOptionChanged(bool _checked);
@@ -69,9 +71,10 @@ private:
     void cancel();
 
 private:
+    TaskListModel * mp_model;
     LambdaThread * mp_working_thread;
     GameInstaller * mp_installer;
-    quint32 m_processing_task_index;
+    qsizetype m_processing_task_index;
     bool m_is_canceled;
 };
 

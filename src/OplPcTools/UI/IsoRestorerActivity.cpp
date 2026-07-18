@@ -19,7 +19,6 @@
 #include <OplPcTools/UI/Application.h>
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/IsoRestorerActivity.h>
-#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <OplPcTools/IsoRestorer.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>

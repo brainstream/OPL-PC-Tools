@@ -33,35 +33,25 @@ void ProgressBarItemDelegate::paint(
     const QStyleOptionViewItem & _option,
     const QModelIndex & _index) const
 {
-    _painter->eraseRect(_option.rect);
-
     QStyledItemDelegate::paint(_painter, _option, _index);
     if(!mr_source.isProgressBarEnabled(_index))
         return;
 
-    const int maximum = mr_source.maxProgressValue(_index);
-    const int current = mr_source.currentProgressValue(_index);
-    QStyleOptionProgressBar progress_bar_option = { };
-    progress_bar_option.state = QStyle::State_Enabled;
-    progress_bar_option.direction = _option.direction;
-    progress_bar_option.rect = _option.rect;
-    progress_bar_option.fontMetrics = _option.fontMetrics;
-    progress_bar_option.minimum = 0;
-    progress_bar_option.maximum = maximum;
-    progress_bar_option.textAlignment = Qt::AlignCenter;
+    QStyleOptionProgressBar progress_bar_option = {};
     progress_bar_option.textVisible = true;
-    progress_bar_option.progress = current;
-    progress_bar_option.text = QString::asprintf("%d%%", progress_bar_option.progress / (maximum / 100));
-    QStyleOption progress_indicator_option = { };
-    progress_indicator_option.state = QStyle::State_Enabled;
-    progress_indicator_option.direction = _option.direction;
-    progress_indicator_option.rect = _option.rect;
-    progress_indicator_option.rect.setWidth(
-        progress_indicator_option.rect.width() * progress_bar_option.progress / maximum);
-    progress_indicator_option.fontMetrics = _option.fontMetrics;
-    progress_indicator_option.palette.setColor(QPalette::Highlight,
-        progress_indicator_option.palette.color(QPalette::Highlight).darker(150));
-    QStyle * style = QApplication::style();
-    style->drawPrimitive(QStyle::PE_IndicatorProgressChunk, &progress_indicator_option, _painter);
-    style->drawControl(QStyle::CE_ProgressBarLabel, &progress_bar_option, _painter);
+    progress_bar_option.state = QStyle::State_Enabled;
+    progress_bar_option.direction = QApplication::layoutDirection();
+    progress_bar_option.state |= QStyle::State_Horizontal | QStyle::State_Enabled;
+    progress_bar_option.rect = _option.rect;
+    progress_bar_option.minimum = 0;
+    progress_bar_option.maximum = mr_source.maxProgressValue(_index);
+    progress_bar_option.progress = mr_source.currentProgressValue(_index);
+
+    int progress = progress_bar_option.progress;
+    if(progress_bar_option.maximum > 100)
+        progress = static_cast<int>(progress * (100.0f / progress_bar_option.maximum));
+
+    progress_bar_option.text = QString::number(progress) + "%";
+
+    QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progress_bar_option, _painter);
 }

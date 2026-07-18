@@ -16,14 +16,31 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#pragma once
+#ifndef __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
+#define __OPLPCTOOLS_GAMEINSTALLATIONTYPE__
 
 #include <OplPcTools/Device/DeviceSource.h>
-#include <OplPcTools/GameInstallationType.h>
-#include <OplPcTools/Game.h>
 #include <QSharedPointer>
 
 namespace OplPcTools {
+
+class Game;
+
+enum class GameInstallationType
+{
+    UlConfig,
+    Iso9660,
+    Ziso
+};
+
+enum class GameSourceFormat
+{
+    PhysicalDevice,
+    Iso9660,
+    Ziso,
+    Bin,
+    NeroImage
+};
 
 inline QString gameInstallationTypeName(GameInstallationType _type)
 {
@@ -37,6 +54,25 @@ inline QString gameInstallationTypeName(GameInstallationType _type)
         return "ISO";
     default:
         throw std::runtime_error("Unknown GameInstallationType");
+    }
+}
+
+inline QString gameSourceFormatName(GameSourceFormat _type)
+{
+    switch(_type)
+    {
+    case GameSourceFormat::PhysicalDevice:
+        return "Disc";
+    case GameSourceFormat::Ziso:
+        return "ZSO";
+    case GameSourceFormat::Iso9660:
+        return "ISO";
+    case GameSourceFormat::Bin:
+        return "BIN";
+    case GameSourceFormat::NeroImage:
+        return "Nero";
+    default:
+        throw std::runtime_error("Unknown GameSourceFormat");
     }
 }
 
@@ -82,3 +118,5 @@ private:
 };
 
 } // namespace OplPcTools
+
+#endif // __OPLPCTOOLS_GAMEINSTALLATIONTYPE__

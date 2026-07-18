@@ -19,7 +19,6 @@
 #include <OplPcTools/GameCollection.h>
 #include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/DirectoryGameStorage.h>
-#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <OplPcTools/Exception.h>
 
 using namespace OplPcTools;

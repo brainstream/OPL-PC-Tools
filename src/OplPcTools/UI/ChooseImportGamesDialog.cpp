@@ -17,7 +17,6 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/UI/ChooseImportGamesDialog.h>
-#include <OplPcTools/GameInstallationTypeUtils.h>
 #include <QPushButton>
 
 using namespace OplPcTools;

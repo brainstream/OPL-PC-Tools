@@ -68,8 +68,11 @@ void LibraryConfiguration::load(const QDir & _library_dir)
 
 void LibraryConfiguration::onVmcAboutToBeDeleted(const Uuid & _uuid)
 {
-    if(const Vmc * vmc = mr_vmc_collection[_uuid])
-        deleteConfigSection(makeVmcSectionName(vmc->title()));
+    if(mp_settings)
+    {
+        if(const Vmc * vmc = mr_vmc_collection[_uuid])
+            deleteConfigSection(makeVmcSectionName(vmc->title()));
+    }
 }
 
 void LibraryConfiguration::deleteConfigSection(const QString & _section)
@@ -89,8 +92,11 @@ void LibraryConfiguration::deleteConfigSection(const QString & _section)
 
 void LibraryConfiguration::onVmcRenamed(const QString & _old_title, const Uuid & _uuid)
 {
-    if(const Vmc * vmc = mr_vmc_collection[_uuid])
-        renameConfigSection(makeVmcSectionName(_old_title), makeVmcSectionName(vmc->title()));
+    if(mp_settings)
+    {
+        if(const Vmc * vmc = mr_vmc_collection[_uuid])
+            renameConfigSection(makeVmcSectionName(_old_title), makeVmcSectionName(vmc->title()));
+    }
 }
 
 void LibraryConfiguration::renameConfigSection(const QString & _old_section, const QString & _new_section)
@@ -115,15 +121,22 @@ void LibraryConfiguration::renameConfigSection(const QString & _old_section, con
 
 void LibraryConfiguration::setVmcFsCharset(const Vmc & _vmc, const QString & _charset)
 {
-    mp_settings->setValue(
-        QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset), _charset);
-    mp_settings->sync();
+    if(mp_settings)
+    {
+        mp_settings->setValue(
+            QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset), _charset);
+        mp_settings->sync();
+    }
 }
 
 QString LibraryConfiguration::vmcFsCharset(const Vmc & _vmc) const
 {
-    return mp_settings->value(
-        QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset)).toString();
+    if(mp_settings)
+    {
+        return mp_settings->value(
+            QString("%1/%2").arg(makeVmcSectionName(_vmc.title()), Key::vmc_fs_charset)).toString();
+    }
+    return {};
 }
 
 void LibraryConfiguration::setOplVersion(GameConfigurationVersion _version)

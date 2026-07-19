@@ -17,6 +17,7 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/Library.h>
+#include <OplPcTools/Settings.h>
 
 using namespace OplPcTools;
 
@@ -34,7 +35,8 @@ void Library::load(const QDir & _directory)
     emit loading();
     mp_games->load(_directory);
     mp_vmcs->load(_directory);
-    mp_config->load(_directory);
+    if(Settings::instance().libraryConfigEnabled())
+        mp_config->load(_directory);
     m_directory = _directory.absolutePath();
     emit loaded();
 }

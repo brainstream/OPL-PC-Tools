@@ -1911,62 +1911,67 @@ Want to skip it?</source>
         <translation>Abrir a pasta do OPL usada recentemente quando iniciar</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="54"/>
+        <location filename="../UI/SettingsDialog.ui" line="61"/>
         <source>Check for app updates</source>
         <translation>Verificar por atualizações</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="40"/>
+        <location filename="../UI/SettingsDialog.ui" line="47"/>
         <source>Validate ul.cfg</source>
         <translation>Validar ul.cfg</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="47"/>
+        <location filename="../UI/SettingsDialog.ui" line="40"/>
+        <source>Store library configuration in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="54"/>
         <source>I have backups of my VMCs, do not show warnings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="61"/>
+        <location filename="../UI/SettingsDialog.ui" line="68"/>
         <source>Confirm the removal of a game</source>
         <translation>Confirme a remoção de um jogo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="68"/>
+        <location filename="../UI/SettingsDialog.ui" line="75"/>
         <source>Confirm the removal of a picture</source>
         <translation>Confirme a remoção de uma imagem</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="75"/>
+        <location filename="../UI/SettingsDialog.ui" line="82"/>
         <source>Confirm the removal of a VMC</source>
         <translation>Confirme a remoção de um VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="82"/>
+        <location filename="../UI/SettingsDialog.ui" line="89"/>
         <source>Confirm the removal of a VMC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="103"/>
+        <location filename="../UI/SettingsDialog.ui" line="110"/>
         <source>Installation</source>
         <translation>Instalação</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="109"/>
+        <location filename="../UI/SettingsDialog.ui" line="116"/>
         <source>Default behaviour</source>
         <translation>Comportamento padrão</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="115"/>
+        <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Write ISO in a single file</source>
         <translation>Salvar ISO em um único arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="122"/>
+        <location filename="../UI/SettingsDialog.ui" line="129"/>
         <source>Compress ISO to ZSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="129"/>
+        <location filename="../UI/SettingsDialog.ui" line="136"/>
         <source>Move ISO or ZSO images instead of copying them if possible</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1975,7 +1980,7 @@ Want to skip it?</source>
         <translation type="vanished">Mover o arquivo ISO ao invés de copiar</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="136"/>
+        <location filename="../UI/SettingsDialog.ui" line="143"/>
         <source>Add game ID to ISO or ZSO filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1984,22 +1989,22 @@ Want to skip it?</source>
         <translation type="vanished">Adicionar um ID de jogo ao um arquivo</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="160"/>
+        <location filename="../UI/SettingsDialog.ui" line="167"/>
         <source>Appearance</source>
         <translation>Aparência</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="166"/>
+        <location filename="../UI/SettingsDialog.ui" line="173"/>
         <source>List Icon Size</source>
         <translation>Tamanho dos ícones na listagem</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="187"/>
+        <location filename="../UI/SettingsDialog.ui" line="194"/>
         <source>VMC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="193"/>
+        <location filename="../UI/SettingsDialog.ui" line="200"/>
         <source>Default file system charset</source>
         <translation type="unfinished"></translation>
     </message>

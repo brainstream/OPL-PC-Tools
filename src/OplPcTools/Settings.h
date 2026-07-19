@@ -76,6 +76,8 @@ public:
     void setIconSize(quint32 _size);
     void setDefaultVmcFsCharset(const QString & _encoding);
     QString defaultVmcFsCharset() const;
+    bool libraryConfigEnabled() const;
+    void setLibraryConfigEnabled(bool _value);
 
 signals:
     void iconSizeChanged();

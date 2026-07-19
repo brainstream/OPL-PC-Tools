@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>308</height>
+    <height>324</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,13 @@
         <widget class="QCheckBox" name="mp_checkbx_reopen_last_catalog">
          <property name="text">
           <string>Open the recently used library at startup</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="mp_checkbox_use_library_config">
+         <property name="text">
+          <string>Store library configuration in %1</string>
          </property>
         </widget>
        </item>
@@ -216,11 +223,12 @@
  <tabstops>
   <tabstop>mp_tabs</tabstop>
   <tabstop>mp_checkbx_reopen_last_catalog</tabstop>
+  <tabstop>mp_checkbox_use_library_config</tabstop>
   <tabstop>mp_checkbox_validate_ulcfg</tabstop>
   <tabstop>mp_checkbox_suppress_vmc_write_warning</tabstop>
   <tabstop>mp_checkbox_check_new_versions</tabstop>
-  <tabstop>mp_checkbox_confirm_game_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_picture_deletion</tabstop>
+  <tabstop>mp_checkbox_confirm_game_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_vmc_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_vmc_file_deletion</tabstop>
   <tabstop>mp_checkbox_donot_splitup</tabstop>

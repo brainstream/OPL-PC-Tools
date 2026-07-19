@@ -35,12 +35,12 @@ private:
     Library();
 
 public:
-    inline const QString & directory() const;
+    const QString & directory() const;
     void load(const QDir & _directory);
-    inline bool isLoaded() const;
-    inline GameCollection & games() const;
-    inline VmcCollection & vmcs() const;
-    inline LibraryConfiguration & config() const;
+    bool isLoaded() const;
+    GameCollection & games() const;
+    VmcCollection & vmcs() const;
+    LibraryConfiguration & config() const;
 
 public:
     static Library & instance();
@@ -57,7 +57,7 @@ private:
     LibraryConfiguration * mp_config;
 };
 
-const QString & Library::directory() const
+inline const QString & Library::directory() const
 {
     return m_directory;
 }
@@ -67,17 +67,17 @@ inline bool Library::isLoaded() const
     return !m_directory.isEmpty();
 }
 
-GameCollection & Library::games() const
+inline GameCollection & Library::games() const
 {
     return *mp_games;
 }
 
-VmcCollection & Library::vmcs() const
+inline VmcCollection & Library::vmcs() const
 {
     return *mp_vmcs;
 }
 
-LibraryConfiguration & Library::config() const
+inline LibraryConfiguration & Library::config() const
 {
     return *mp_config;
 }

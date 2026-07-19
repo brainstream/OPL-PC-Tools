@@ -39,6 +39,7 @@ const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
 const char icon_size[] = "Settings/IconSize";
 const char vmc_fs_charset[] = "Settings/VmcCharset";
 const char vmc_suppress_write_warning[] = "Settings/VmcNoWriteWarning";
+const char library_config_eabled[] = "Settings/LibraryConfigEnabled";
 
 const char ul_dir[] = "ULDirectory";
 const char game_cover_dir[] = "PixmapDirectory";
@@ -270,6 +271,16 @@ QString Settings::defaultVmcFsCharset() const
     if(encoding.isEmpty())
         encoding = TextEncoding::latin1();
     return encoding;
+}
+
+bool Settings::libraryConfigEnabled() const
+{
+    return mp_settings->value(Key::library_config_eabled, true).toBool();
+}
+
+void Settings::setLibraryConfigEnabled(bool _value)
+{
+    mp_settings->setValue(Key::library_config_eabled, _value);
 }
 
 Settings & Settings::instance()

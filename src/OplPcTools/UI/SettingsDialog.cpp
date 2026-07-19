@@ -16,10 +16,11 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/UI/SettingsDialog.h>
 #include <OplPcTools/Settings.h>
 #include <OplPcTools/Updater.h>
 #include <OplPcTools/StringConverter.h>
-#include <OplPcTools/UI/SettingsDialog.h>
+#include <OplPcTools/StandardPaths.h>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -40,6 +41,8 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_checkobx_move_iso->setChecked(settings.moveIso());
     mp_checkbox_validate_ulcfg->setChecked(settings.validateUlCfg());
     mp_checkbox_suppress_vmc_write_warning->setChecked(settings.suppressVmcWritingWarning());
+    mp_checkbox_use_library_config->setText(mp_checkbox_use_library_config->text().arg(StandardFiles::config));
+    mp_checkbox_use_library_config->setChecked(settings.libraryConfigEnabled());
     if(Updater::isSupported())
         mp_checkbox_check_new_versions->setChecked(settings.checkNewVersion());
     else
@@ -74,6 +77,7 @@ void SettingsDialog::accept()
     settings.setIconSize(mp_spinbox_icon_size->value());
     settings.setDefaultVmcFsCharset(mp_combobox_vmc_fs_charset->currentText());
     settings.setSuppressVmcWritingWarning(mp_checkbox_suppress_vmc_write_warning->isChecked());
+    settings.setLibraryConfigEnabled(mp_checkbox_use_library_config->isChecked());
     settings.flush();
     QDialog::accept();
 }

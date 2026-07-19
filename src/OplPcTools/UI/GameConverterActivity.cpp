@@ -532,8 +532,6 @@ START_NEXT_TASK:
     }
     installer->enableOverride();
 
-    // FIXME: Option: "Add game ID to filename" when converting to ISO or ZISO
-
     mp_working_thread = new LambdaThread([installer]() {
         installer->install();
     }, this);

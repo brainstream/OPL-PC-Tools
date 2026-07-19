@@ -742,7 +742,7 @@ void GameInstallerActivity::rollbackStarted()
 
 void GameInstallerActivity::rollbackFinished()
 {
-    setTaskError(canceledErrorMessage()); // FIXME: can be any message but the cancel
+    mp_model->setTaskStatus(m_processing_task_index, GameInstallationStatus::Error, g_progressbar_max_value);
     setOverallProgressUnknownStatus(false, g_progressbar_max_value);
 }
 

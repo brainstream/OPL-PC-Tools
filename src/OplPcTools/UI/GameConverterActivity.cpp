@@ -444,6 +444,9 @@ void GameConverterActivity::removeSelectedTasks()
 {
     std::vector<qsizetype> idx_list;
     QModelIndexList selected_rows = mp_tree_tasks->selectionModel()->selectedRows();
+    if(selected_rows.empty())
+        return;
+
     idx_list.reserve(selected_rows.count());
     foreach(const QModelIndex & idx, mp_tree_tasks->selectionModel()->selectedRows())
         idx_list.push_back(idx.row());

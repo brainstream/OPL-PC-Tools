@@ -633,9 +633,12 @@ void GameInstallerActivity::renameGame()
 
 void GameInstallerActivity::removeGame()
 {
-    if(mp_working_thread) return;
-
+    if(mp_working_thread)
+        return;
     QModelIndexList selected_indices = mp_tree_tasks->selectionModel()->selectedRows();
+    if(selected_indices.empty())
+        return;
+
     QList<int> rows;
     rows.reserve(selected_indices.count());
     foreach(const QModelIndex & idx, selected_indices)

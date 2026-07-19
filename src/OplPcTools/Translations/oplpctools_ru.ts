@@ -378,7 +378,7 @@
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="104"/>
-        <source>Add</source>
+        <source>Add Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -484,42 +484,50 @@
         <translation type="vanished">Статус</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="138"/>
         <source>&amp;Add Image</source>
-        <translation>&amp;Добавить образ</translation>
+        <translation type="vanished">&amp;Добавить образ</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="149"/>
         <source>Add &amp;Disc</source>
-        <translation>Добавить &amp;диск</translation>
+        <translation type="vanished">Добавить &amp;диск</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="173"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="195"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="184"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="166"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="292"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="137"/>
+        <source>Add Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.ui" line="108"/>
+        <source>Add Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.ui" line="360"/>
         <source>Install as ZSO file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="306"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="374"/>
         <source>If the source file type is the same as the target file type, move the source file instead of copying it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="309"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="377"/>
         <source>Move the source file if possible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="365"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="433"/>
         <source>Select a game to change options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -540,7 +548,7 @@
         <translation type="vanished">CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="269"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="337"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -549,12 +557,12 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Единственный способ запустать большие (более 4 ГиБ) игры с USB накопителя. Поскольку OPL поддерживает только файловую систему FAT32, вы должны разбивать большие файлы на части.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="275"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="343"/>
         <source>Split the file into parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="282"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="350"/>
         <source>Install as ISO file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1135,17 +1143,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="534"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="537"/>
         <source>Done</source>
         <translation type="unfinished">Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="534"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="537"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="595"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="598"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Отменено пользователем</translation>
     </message>
@@ -1240,17 +1248,17 @@
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="732"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="735"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="778"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="781"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="778"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="781"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>

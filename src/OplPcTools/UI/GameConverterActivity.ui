@@ -101,7 +101,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Add</string>
+           <string>Add Games</string>
           </property>
           <property name="icon">
            <iconset resource="../Resources/Resources.qrc">
@@ -342,7 +342,6 @@
   <tabstop>mp_btn_convert</tabstop>
   <tabstop>mp_btn_cancel</tabstop>
   <tabstop>mp_btn_add</tabstop>
-  <tabstop>mp_btn_remove</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources/Resources.qrc"/>

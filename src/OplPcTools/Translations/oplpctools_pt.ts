@@ -385,7 +385,7 @@
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="104"/>
-        <source>Add</source>
+        <source>Add Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -491,42 +491,50 @@
         <translation type="vanished">Status</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="138"/>
         <source>&amp;Add Image</source>
-        <translation>&amp;Adicionar imagem</translation>
+        <translation type="vanished">&amp;Adicionar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="149"/>
         <source>Add &amp;Disc</source>
-        <translation>Adicionar &amp;Disco</translation>
+        <translation type="vanished">Adicionar &amp;Disco</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="173"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="195"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="184"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="166"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="292"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="137"/>
+        <source>Add Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.ui" line="108"/>
+        <source>Add Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameInstallerActivity.ui" line="360"/>
         <source>Install as ZSO file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="306"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="374"/>
         <source>If the source file type is the same as the target file type, move the source file instead of copying it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="309"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="377"/>
         <source>Move the source file if possible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="365"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="433"/>
         <source>Select a game to change options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -547,7 +555,7 @@
         <translation type="vanished">CD</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="269"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="337"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -556,12 +564,12 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Essa é a única forma de rodar jogos grandes (maiores que 4GB) pelo USB, já que o OPL aceita apenas o sistema de arquivos FAT32, que suporta apenas arquivos menores que 4GB. Por isso você deve dividir os arquivos em várias partes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="275"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="343"/>
         <source>Split the file into parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.ui" line="282"/>
+        <location filename="../UI/GameInstallerActivity.ui" line="350"/>
         <source>Install as ISO file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1134,17 +1142,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="534"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="537"/>
         <source>Done</source>
         <translation type="unfinished">Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="534"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="537"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="595"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="598"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Cancelado pelo usuário</translation>
     </message>
@@ -1239,17 +1247,17 @@
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="732"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="735"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="778"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="781"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="778"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="781"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>

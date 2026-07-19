@@ -330,6 +330,7 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
     mp_progress_bar->setValue(0);
     mp_btn_cancel->setEnabled(false);
     mp_btn_convert->setEnabled(false);
+    mp_btn_remove->setEnabled(false);
     connect(mp_btn_back, &QPushButton::clicked, this, &QObject::deleteLater);
     connect(mp_btn_convert, &QPushButton::clicked, this, &GameConverterActivity::convert);
     connect(mp_btn_cancel, &QPushButton::clicked, this, &GameConverterActivity::cancel);
@@ -351,7 +352,14 @@ void GameConverterActivity::onTaskSelectionChanged()
     {
         mp_widget_details->setVisible(false);
         mp_label_details_placeholder->setVisible(true);
+        mp_btn_remove->setEnabled(false);
+        mp_btn_convert->setEnabled(false);
         return;
+    }
+    if(!isStarted())
+    {
+        mp_btn_remove->setEnabled(true);
+        mp_btn_convert->setEnabled(true);
     }
     mp_widget_details->setVisible(true);
     mp_label_details_placeholder->setVisible(false);
@@ -403,6 +411,11 @@ void GameConverterActivity::onTaskSelectionChanged()
             break;
         }
     }
+}
+
+bool GameConverterActivity::isStarted() const
+{
+    return m_current_task_index >= 0;
 }
 
 void GameConverterActivity::addGames()

@@ -354,7 +354,7 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     mp_model(nullptr),
     mp_working_thread(nullptr),
     mp_installer(nullptr),
-    m_processing_task_index(0),
+    m_processing_task_index(-1),
     m_is_canceled(false)
 {
     mp_model = new TaskListModel(this);
@@ -370,6 +370,8 @@ GameInstallerActivity::GameInstallerActivity(QWidget * _parent /*= nullptr*/) :
     mp_tree_tasks->header()->setSectionResizeMode(Column::Status, QHeaderView::Fixed);
     mp_btn_cancel->setDisabled(true);
     mp_btn_install->setDisabled(true);
+    mp_btn_remove->setDisabled(true);
+    mp_btn_rename->setDisabled(true);
     connect(mp_btn_back, &QPushButton::clicked, this, &GameInstallerActivity::close);
     connect(mp_tree_tasks->selectionModel(),
             &QItemSelectionModel::selectionChanged,
@@ -423,8 +425,17 @@ void GameInstallerActivity::taskSelectionChanged()
     {
         mp_widget_task_details->hide();
         mp_label_details_placeholder->show();
+        mp_btn_remove->setDisabled(true);
+        mp_btn_rename->setDisabled(true);
         return;
     }
+
+    if(!isStarted())
+    {
+        mp_btn_remove->setEnabled(true);
+        mp_btn_rename->setEnabled(true);
+    }
+
     mp_label_details_placeholder->hide();
     mp_widget_task_details->show();
     const InstallationTask * first_task = mp_model->task(selected_rows[0].row());
@@ -480,6 +491,11 @@ void GameInstallerActivity::taskSelectionChanged()
         mp_checkbox_move->setChecked(first_task->is_moving_requested);
     else
         mp_checkbox_move->setCheckState(Qt::PartiallyChecked);
+}
+
+bool GameInstallerActivity::isStarted() const
+{
+    return m_processing_task_index >= 0;
 }
 
 void GameInstallerActivity::addDiscImage()
@@ -555,7 +571,7 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
 
 void GameInstallerActivity::dragEnterEvent(QDragEnterEvent * _event)
 {
-    if(mp_working_thread)
+    if(isStarted())
     {
         _event->ignore();
         return;
@@ -612,7 +628,7 @@ void GameInstallerActivity::addDisc()
 
 void GameInstallerActivity::renameGame()
 {
-    if(mp_working_thread) return;
+    if(isStarted()) return;
 
 
     QModelIndex index = mp_tree_tasks->currentIndex();
@@ -633,7 +649,7 @@ void GameInstallerActivity::renameGame()
 
 void GameInstallerActivity::removeGame()
 {
-    if(mp_working_thread)
+    if(isStarted())
         return;
     QModelIndexList selected_indices = mp_tree_tasks->selectionModel()->selectedRows();
     if(selected_indices.empty())

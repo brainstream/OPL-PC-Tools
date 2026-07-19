@@ -48,6 +48,7 @@ private:
     void setupShortcuts();
     void close();
     void taskSelectionChanged();
+    bool isStarted() const;
     void addDiscImage();
     void addDiscImage(const QString & _file_path);
     static bool isSourceFileSupported(const QString & _file_path);

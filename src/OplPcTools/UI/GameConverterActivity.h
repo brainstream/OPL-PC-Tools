@@ -39,6 +39,7 @@ public:
 
 private:
     void onTaskSelectionChanged();
+    bool isStarted() const;
     void onFormatChanged(bool _checked);
     void addGames();
     void removeSelectedTasks();

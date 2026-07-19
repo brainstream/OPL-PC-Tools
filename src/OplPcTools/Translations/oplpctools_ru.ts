@@ -1138,22 +1138,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="366"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="374"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="549"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="562"/>
         <source>Done</source>
         <translation type="unfinished">Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="549"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="562"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="610"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="623"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Отменено пользователем</translation>
     </message>
@@ -1223,42 +1223,42 @@
         <translation type="unfinished">Статус</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="442"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="453"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="488"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="504"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="496"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="512"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Выбор образов дисков PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="539"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="555"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="552"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="568"/>
         <source>Invalid file format</source>
         <translation>Неверный формат файла</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="735"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="751"/>
         <source>Canceled by user</source>
         <translation>Отменено пользователем</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="781"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="797"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="781"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="797"/>
         <source>Installation complete</source>
         <translation>Установка завершена</translation>
     </message>

@@ -101,6 +101,7 @@ public:
     int maxProgressValue(const QModelIndex & _index) const override;
     int currentProgressValue(const QModelIndex & _index) const override;
     const ConvertingTask * task(qsizetype _index) const;
+    const ConvertingTask * task(const Uuid & _game_id) const;
     void setTargetInstallationType(qsizetype _index, GameInstallationType _format);
     void removeTask(qsizetype _index);
     qsizetype taskForNextStart() const;
@@ -246,6 +247,16 @@ int GameConverterActivity::TaskListModel::currentProgressValue(const QModelIndex
 const ConvertingTask * GameConverterActivity::TaskListModel::task(qsizetype _index) const
 {
     return _index >= 0 && _index < m_tasks.count() ? &m_tasks[_index] : nullptr;
+}
+
+const ConvertingTask * GameConverterActivity::TaskListModel::task(const Uuid & _game_id) const
+{
+    foreach(const ConvertingTask & task, m_tasks)
+    {
+        if(task.game.uuid() == _game_id)
+            return &task;
+    }
+    return nullptr;
 }
 
 void GameConverterActivity::TaskListModel::setTargetInstallationType(qsizetype _index, GameInstallationType _format)
@@ -406,7 +417,8 @@ void GameConverterActivity::addGames()
         const Game * game = game_collection.findGame(game_id);
         if(game)
         {
-            games.append(game);
+            if(mp_model->task(game->uuid()) == nullptr)
+                games.append(game);
         }
     }
     if(!games.empty())

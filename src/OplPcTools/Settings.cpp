@@ -38,6 +38,7 @@ const char check_new_version[] = "Settings/CheckNewVersion";
 const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
 const char icon_size[] = "Settings/IconSize";
 const char vmc_fs_charset[] = "Settings/VmcCharset";
+const char vmc_suppress_write_warning[] = "Settings/VmcNoWriteWarning";
 
 const char ul_dir[] = "ULDirectory";
 const char game_cover_dir[] = "PixmapDirectory";
@@ -174,6 +175,16 @@ void Settings::setConfirmVmcFileDeletion(bool _value)
     mp_settings->setValue(Key::confirm_vmc_file_deletion, _value);
 }
 
+void Settings::setSuppressVmcWritingWarning(bool _value)
+{
+    mp_settings->setValue(Key::vmc_suppress_write_warning, _value);
+}
+
+bool Settings::suppressVmcWritingWarning() const
+{
+    return mp_settings->value(Key::vmc_suppress_write_warning, false).toBool();
+}
+
 bool Settings::splitUpIso() const
 {
     return mp_settings->value(Key::split_up_iso, true).toBool();
@@ -183,7 +194,6 @@ void Settings::setSplitUpIso(bool _value)
 {
     mp_settings->setValue(Key::split_up_iso, _value);
 }
-
 
 bool Settings::compressIso() const
 {

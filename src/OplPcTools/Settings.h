@@ -58,6 +58,8 @@ public:
     void setConfirmVmcDeletion(bool _value);
     bool confirmVmcFileDeletion() const;
     void setConfirmVmcFileDeletion(bool _value);
+    void setSuppressVmcWritingWarning(bool _value);
+    bool suppressVmcWritingWarning() const;
     bool splitUpIso() const;
     void setSplitUpIso(bool _value);
     bool compressIso() const;

@@ -42,6 +42,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="mp_checkbox_suppress_vmc_write_warning">
+         <property name="text">
+          <string>I have backups of my VMCs, do not show warnings</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="mp_checkbox_check_new_versions">
          <property name="text">
           <string>Check for app updates</string>
@@ -210,6 +217,7 @@
   <tabstop>mp_tabs</tabstop>
   <tabstop>mp_checkbx_reopen_last_catalog</tabstop>
   <tabstop>mp_checkbox_validate_ulcfg</tabstop>
+  <tabstop>mp_checkbox_suppress_vmc_write_warning</tabstop>
   <tabstop>mp_checkbox_check_new_versions</tabstop>
   <tabstop>mp_checkbox_confirm_game_deletion</tabstop>
   <tabstop>mp_checkbox_confirm_picture_deletion</tabstop>

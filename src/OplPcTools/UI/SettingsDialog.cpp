@@ -39,6 +39,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_checkbox_add_id->setChecked(settings.renameIso());
     mp_checkobx_move_iso->setChecked(settings.moveIso());
     mp_checkbox_validate_ulcfg->setChecked(settings.validateUlCfg());
+    mp_checkbox_suppress_vmc_write_warning->setChecked(settings.suppressVmcWritingWarning());
     if(Updater::isSupported())
         mp_checkbox_check_new_versions->setChecked(settings.checkNewVersion());
     else
@@ -72,6 +73,7 @@ void SettingsDialog::accept()
     settings.setCheckNewVersion(mp_checkbox_check_new_versions->isEnabled() && mp_checkbox_check_new_versions->isChecked());
     settings.setIconSize(mp_spinbox_icon_size->value());
     settings.setDefaultVmcFsCharset(mp_combobox_vmc_fs_charset->currentText());
+    settings.setSuppressVmcWritingWarning(mp_checkbox_suppress_vmc_write_warning->isChecked());
     settings.flush();
     QDialog::accept();
 }

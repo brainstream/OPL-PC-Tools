@@ -446,6 +446,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     setupUi(this);
     setupShortcuts();
     hideErrorMessage();
+    mp_label_warning->setVisible(!Settings::instance().suppressVmcWritingWarning());
     mp_label_vmc_title->setText(mr_vmc.title());
     loadFileManager();
     QString encoding = getFsEncoding();
@@ -493,6 +494,13 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
         connect(mp_action_delete, &QAction::triggered, this, &VmcDetailsActivity::deleteEntry);
 
         setIconSize();
+    }
+    else
+    {
+        mp_progress_bar_free->setValue(0);
+        mp_progress_bar_free->setDisabled(true);
+        mp_combobox_charset->setDisabled(true);
+        mp_label_charset->setDisabled(true);
     }
 }
 

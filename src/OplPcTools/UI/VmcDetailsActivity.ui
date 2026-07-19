@@ -190,6 +190,21 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="mp_label_warning">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	color: rgb(216, 72, 74);
+}</string>
+        </property>
+        <property name="text">
+         <string>Writing to VMC is an experimental feature that may contain bugs. Be sure to back up your VMC before writing. This message can be disabled in the settings.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="mp_layout_3">
         <item>
          <widget class="QLabel" name="mp_label_charset">

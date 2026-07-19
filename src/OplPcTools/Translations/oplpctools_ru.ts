@@ -1404,57 +1404,57 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="519"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="527"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="466"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="467"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="466"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="467"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="590"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="598"/>
         <source>Free %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="653"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="661"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="674"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="682"/>
         <source>Unable to create directory &quot;%1&quot;, a file or directory with the same name already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="700"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="708"/>
         <source>Unable to rename &quot;%1&quot; to &quot;%2&quot;, a file or directory with the same name already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1029"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1037"/>
         <source>Are you sure you want to delete this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1030"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1038"/>
         <source>Are you sure you want to delete these files?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1031"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1039"/>
         <source>Do not ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1032"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1040"/>
         <source>Delete VMC files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1912,7 +1912,7 @@ Want to skip it?</source>
         <translation>Открывать недавно использованную библиотеку</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="47"/>
+        <location filename="../UI/SettingsDialog.ui" line="54"/>
         <source>Check for app updates</source>
         <translation>Проверять обновления приложения</translation>
     </message>
@@ -1922,47 +1922,52 @@ Want to skip it?</source>
         <translation>Валидировать ul.cfg</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="54"/>
+        <location filename="../UI/SettingsDialog.ui" line="47"/>
+        <source>I have backups of my VMCs, do not show warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="61"/>
         <source>Confirm the removal of a game</source>
         <translation>Подтверждать удаление игры</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="61"/>
+        <location filename="../UI/SettingsDialog.ui" line="68"/>
         <source>Confirm the removal of a picture</source>
         <translation>Подтверждать удаление изображения</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="68"/>
+        <location filename="../UI/SettingsDialog.ui" line="75"/>
         <source>Confirm the removal of a VMC</source>
         <translation>Подтверждать удаление VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="75"/>
+        <location filename="../UI/SettingsDialog.ui" line="82"/>
         <source>Confirm the removal of a VMC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="96"/>
+        <location filename="../UI/SettingsDialog.ui" line="103"/>
         <source>Installation</source>
         <translation>Инсталляция</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="102"/>
+        <location filename="../UI/SettingsDialog.ui" line="109"/>
         <source>Default behaviour</source>
         <translation>Поведение по умолчанию</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="108"/>
+        <location filename="../UI/SettingsDialog.ui" line="115"/>
         <source>Write ISO in a single file</source>
         <translation>Записывать ISO в один файл</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="115"/>
+        <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Compress ISO to ZSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="122"/>
+        <location filename="../UI/SettingsDialog.ui" line="129"/>
         <source>Move ISO or ZSO images instead of copying them if possible</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1971,7 +1976,7 @@ Want to skip it?</source>
         <translation type="vanished">Перемещать ISO вместо копирования</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="129"/>
+        <location filename="../UI/SettingsDialog.ui" line="136"/>
         <source>Add game ID to ISO or ZSO filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1980,22 +1985,22 @@ Want to skip it?</source>
         <translation type="vanished">Добавлять ID к имени игр</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="153"/>
+        <location filename="../UI/SettingsDialog.ui" line="160"/>
         <source>Appearance</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="159"/>
+        <location filename="../UI/SettingsDialog.ui" line="166"/>
         <source>List Icon Size</source>
         <translation>Размер иконок в списках</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="180"/>
+        <location filename="../UI/SettingsDialog.ui" line="187"/>
         <source>VMC</source>
         <translation>VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="186"/>
+        <location filename="../UI/SettingsDialog.ui" line="193"/>
         <source>Default file system charset</source>
         <translation>Кодировка файловой системы по умолчанию</translation>
     </message>
@@ -2037,52 +2042,52 @@ Want to skip it?</source>
         <translation>Переименовть...</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="197"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="212"/>
         <source>Charset</source>
         <translation>Кодировка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="248"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="263"/>
         <source>Create Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="251"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
         <source>F7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="263"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="278"/>
         <source>Delete</source>
         <translation type="unfinished">Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="308"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="323"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="311"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="326"/>
         <source>Upload Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="314"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="329"/>
         <source>Ctrl+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="326"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="341"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="329"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="344"/>
         <source>Upload Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2091,7 +2096,7 @@ Want to skip it?</source>
         <translation type="obsolete">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="332"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="347"/>
         <source>Ctrl+Shift+U</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2100,22 +2105,27 @@ Want to skip it?</source>
         <translation type="obsolete">Экспорт</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
         <source>Ctrl+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="278"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="293"/>
         <source>Download</source>
         <translation type="unfinished">Скачать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="293"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="200"/>
+        <source>Writing to VMC is an experimental feature that may contain bugs. Be sure to back up your VMC before writing. This message can be disabled in the settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/VmcDetailsActivity.ui" line="308"/>
         <source>Rename</source>
         <translation type="unfinished">Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="311"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>

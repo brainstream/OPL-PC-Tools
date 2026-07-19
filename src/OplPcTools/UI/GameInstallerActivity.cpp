@@ -544,7 +544,7 @@ void GameInstallerActivity::addDiscImage(const QString & _file_path)
     {
         device->setTitle(file_info.completeBaseName());
         mp_model->addTask(device, format);
-        mp_tree_tasks->setCurrentIndex(mp_model->index(mp_model->taskCount()));
+        mp_tree_tasks->setCurrentIndex(mp_model->index(mp_model->taskCount() - 1));
         mp_btn_install->setDisabled(false);
     }
     else
@@ -605,7 +605,7 @@ void GameInstallerActivity::addDisc()
             return;
         }
         mp_model->addTask(device, GameSourceFormat::PhysicalDevice);
-        mp_tree_tasks->setCurrentIndex(mp_model->index(mp_model->taskCount()));
+        mp_tree_tasks->setCurrentIndex(mp_model->index(mp_model->taskCount() - 1));
         mp_btn_install->setDisabled(false);
     }
 }
@@ -647,6 +647,12 @@ void GameInstallerActivity::removeGame()
     {
         mp_btn_install->setDisabled(true);
     }
+
+    int row_to_select = rows.last();
+    if(row_to_select >= mp_model->taskCount())
+        row_to_select = mp_model->taskCount() - 1;
+    if(row_to_select >= 0)
+        mp_tree_tasks->setCurrentIndex(mp_model->index(row_to_select));
 }
 
 void GameInstallerActivity::targetOptionChanged(bool _checked)
@@ -691,6 +697,10 @@ void GameInstallerActivity::install()
 
 void GameInstallerActivity::installProgress(quint64 _total_bytes, quint64 _processed_bytes)
 {
+    const InstallationTask * task = mp_model->task(m_processing_task_index);
+    if(!task || task->status != GameInstallationStatus::Installation)
+        return;
+
     double current_progress = static_cast<double>(_processed_bytes) / _total_bytes;
     double single_task_in_overal_progress = 1.0 / mp_model->taskCount();
     double overall_progress = single_task_in_overal_progress * m_processing_task_index +
@@ -826,7 +836,7 @@ void GameInstallerActivity::cancel()
         m_is_canceled = true;
         mp_btn_cancel->setDisabled(true);
         mp_working_thread->requestInterruption();
-        for(qsizetype i = mp_model->taskCount() - 1; i > m_processing_task_index; --i)
+        for(qsizetype i = m_processing_task_index; i < mp_model->taskCount(); ++i)
             setTaskError(canceledErrorMessage(), i);
     }
 }

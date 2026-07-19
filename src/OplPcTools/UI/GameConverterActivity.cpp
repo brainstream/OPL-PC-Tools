@@ -413,6 +413,7 @@ void GameConverterActivity::addGames()
     {
         mp_model->addTasks(games);
         mp_btn_convert->setEnabled(true);
+        mp_tree_tasks->setCurrentIndex(mp_model->index(mp_model->taskCount() - 1));
     }
 }
 
@@ -449,6 +450,13 @@ void GameConverterActivity::removeSelectedTasks()
     std::sort(idx_list.begin(), idx_list.end());
     for(auto it = idx_list.rbegin(); it != idx_list.rend(); ++it)
         mp_model->removeTask(*it);
+
+    qsizetype row_to_select = idx_list.front();
+    if(row_to_select >= mp_model->taskCount())
+        row_to_select = mp_model->taskCount() - 1;
+    if(row_to_select >= 0)
+        mp_tree_tasks->setCurrentIndex(mp_model->index(row_to_select));
+
     if(mp_model->taskCount() == 0)
         mp_btn_convert->setEnabled(false);
 }

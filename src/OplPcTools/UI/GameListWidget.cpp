@@ -252,6 +252,7 @@ GameListWidget::GameListWidget(QWidget * _parent /*= nullptr*/) :
     mp_menu_context->addAction(mp_action_edit);
     mp_menu_context->addAction(mp_action_restore_iso);
     mp_menu_context->addAction(mp_action_delete);
+    addActions(mp_menu_action->actions()); // Required for shortcuts to work
     activateCollectionControls(false);
     activateItemControls(nullptr);
     connect(&Settings::instance(), &Settings::iconSizeChanged, this, &GameListWidget::setIconSize);

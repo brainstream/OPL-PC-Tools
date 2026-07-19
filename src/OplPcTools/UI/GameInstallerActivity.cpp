@@ -397,13 +397,21 @@ void GameInstallerActivity::setupShortcuts()
     connect(shortcut, &QShortcut::activated, this, &GameInstallerActivity::close);
     shortcut = new QShortcut(QKeySequence("Esc"), this);
     connect(shortcut, &QShortcut::activated, this, &GameInstallerActivity::close);
+
     shortcut = new QShortcut(QKeySequence("F2"), this);
     connect(shortcut, &QShortcut::activated, this, &GameInstallerActivity::renameGame);
+    mp_btn_rename->setToolTip(QString("%1 (%2)").arg(mp_btn_rename->text(), shortcut->key().toString()));
+
     shortcut = new QShortcut(QKeySequence("Del"), this);
     connect(shortcut, &QShortcut::activated, this, &GameInstallerActivity::removeGame);
+    mp_btn_remove->setToolTip(QString("%1 (%2)").arg(mp_btn_remove->text(), shortcut->key().toString()));
+
     shortcut = new QShortcut(QKeySequence("Ins"), this);
     connect(shortcut, &QShortcut::activated, this, [this]() { addDiscImage(); });
+    mp_btn_add_image->setToolTip(QString("%1 (%2)").arg(mp_btn_add_image->text(), shortcut->key().toString()));
+
     shortcut = new QShortcut(QKeySequence("Shift+Ins"), this);
+    mp_btn_add_disc->setToolTip(QString("%1 (%2)").arg(mp_btn_add_disc->text(), shortcut->key().toString()));
     connect(shortcut, &QShortcut::activated, this, [this]() { addDisc(); });
 }
 

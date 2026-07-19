@@ -1114,47 +1114,47 @@
 <context>
     <name>OplPcTools::UI::GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="179"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="180"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="181"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="182"/>
         <source>Source format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="183"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="184"/>
         <source>Target format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="185"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="186"/>
         <source>Status</source>
         <translation type="unfinished">Status</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="202"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="203"/>
         <source>Game data &quot;%1&quot; is corrupted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="374"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="392"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="560"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="578"/>
         <source>Done</source>
         <translation type="unfinished">Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="560"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="578"/>
         <source>Converting complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="621"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="639"/>
         <source>Canceled by user</source>
         <translation type="unfinished">Cancelado pelo usuário</translation>
     </message>
@@ -1224,42 +1224,42 @@
         <translation type="unfinished">Status</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="453"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="461"/>
         <source>[Multiple games selected]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="504"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="512"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="512"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="520"/>
         <source>Select PS2 Disc Image Files</source>
         <translation>Selecione um arquivo de imagem de disco de PS2</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="555"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="563"/>
         <source>Unknown file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="568"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="576"/>
         <source>Invalid file format</source>
         <translation>Formato de aquivo inválido</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="751"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="759"/>
         <source>Canceled by user</source>
         <translation>Cancelado pelo usuário</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="797"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="805"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameInstallerActivity.cpp" line="797"/>
+        <location filename="../UI/GameInstallerActivity.cpp" line="805"/>
         <source>Installation complete</source>
         <translation>Instalação completa</translation>
     </message>
@@ -1271,27 +1271,27 @@
         <translation type="vanished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="480"/>
+        <location filename="../UI/GameListWidget.cpp" line="481"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="481"/>
+        <location filename="../UI/GameListWidget.cpp" line="482"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="483"/>
+        <location filename="../UI/GameListWidget.cpp" line="484"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="537"/>
+        <location filename="../UI/GameListWidget.cpp" line="538"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="538"/>
+        <location filename="../UI/GameListWidget.cpp" line="539"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1593,13 +1593,13 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="153"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="154"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="171"/>
         <source>Done</source>
         <translation>Prontinho</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="155"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="156"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="173"/>
         <source>Error</source>
         <translation>Erro</translation>
@@ -1609,19 +1609,19 @@
         <translation type="obsolete">Cancelado</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="157"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="158"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="175"/>
         <source>Queued</source>
         <translation>Enfileirado</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="159"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="160"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="177"/>
         <source>Registration...</source>
         <translation>Registro...</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="161"/>
+        <location filename="../UI/GameConverterActivity.cpp" line="162"/>
         <location filename="../UI/GameInstallerActivity.cpp" line="179"/>
         <source>Rolling back...</source>
         <translation>Desfazendo...</translation>

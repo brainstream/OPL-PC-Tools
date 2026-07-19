@@ -38,6 +38,7 @@ public:
     static QSharedPointer<Intent> createIntent();
 
 private:
+    void setupShortcuts();
     void onTaskSelectionChanged();
     bool isStarted() const;
     void onFormatChanged(bool _checked);

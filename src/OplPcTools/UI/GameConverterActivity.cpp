@@ -27,6 +27,7 @@
 #include <OplPcTools/Device/CompressedDeviceWriter.h>
 #include <OplPcTools/Exception.h>
 #include <QDialog>
+#include <QShortcut>
 #include <QAbstractListModel>
 #include <QList>
 
@@ -318,6 +319,7 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
 {
     mp_model = new GameConverterActivity::TaskListModel(this);
     setupUi(this);
+    setupShortcuts();
     mp_tree_tasks->setModel(mp_model);
     mp_tree_tasks->setItemDelegateForColumn(Column::Status, new ProgressBarItemDelegate(*mp_model, this));
     mp_tree_tasks->header()->setSectionResizeMode(Column::Title, QHeaderView::Stretch);
@@ -343,6 +345,22 @@ GameConverterActivity::GameConverterActivity(QWidget * _parent) :
     connect(mp_radio_target_ul, &QRadioButton::clicked, this, &GameConverterActivity::onFormatChanged);
     connect(mp_radio_target_iso, &QRadioButton::clicked, this, &GameConverterActivity::onFormatChanged);
     connect(mp_radio_target_zso, &QRadioButton::clicked, this, &GameConverterActivity::onFormatChanged);
+}
+
+void GameConverterActivity::setupShortcuts()
+{
+    QShortcut * shortcut = new QShortcut(QKeySequence("Back"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameConverterActivity::close);
+    shortcut = new QShortcut(QKeySequence("Esc"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameConverterActivity::close);
+
+    shortcut = new QShortcut(QKeySequence("Del"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameConverterActivity::removeSelectedTasks);
+    mp_btn_remove->setToolTip(QString("%1 (%2)").arg(mp_btn_remove->text(), shortcut->key().toString()));
+
+    shortcut = new QShortcut(QKeySequence("Ins"), this);
+    connect(shortcut, &QShortcut::activated, this, &GameConverterActivity::addGames);
+    mp_btn_add->setToolTip(QString("%1 (%2)").arg(mp_btn_add->text(), shortcut->key().toString()));
 }
 
 void GameConverterActivity::onTaskSelectionChanged()

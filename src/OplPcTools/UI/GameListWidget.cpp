@@ -28,6 +28,7 @@
 #include <OplPcTools/UI/GameListWidget.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/GameConfiguration.h>
+#include <OplPcTools/GameCheatManager.h>
 #include <OplPcTools/Settings.h>
 #include <QShortcut>
 #include <QMessageBox>
@@ -498,6 +499,7 @@ void GameListWidget::deleteGame()
             QFile config(GameConfiguration::makeFilename(Library::instance().directory(), game_id));
             if(config.exists())
                 config.remove();
+            GameCheatManager(Library::instance().directory()).remove(game_id);
         }
     });
 }

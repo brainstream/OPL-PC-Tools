@@ -18,18 +18,47 @@
 
 #pragma once
 
-#include <QString>
-#include <QSharedPointer>
+#include <QDir>
+#include <QNetworkReply>
+#include <optional>
 
 namespace OplPcTools {
 
-struct GameCheat
+class GameCheatManager
 {
-    static QString makeFilename(const QString & _library_path, const QString & _game_id);
-    static QSharedPointer<GameCheat> load(const QString & _filename);
-    static void save(const GameCheat & _cheat, const QString & _filename);
+    Q_DISABLE_COPY_MOVE(GameCheatManager)
 
-    QString text;
+public:
+    explicit GameCheatManager(const QDir & _library_path);
+    std::optional<QString> load(const QString & _game_id) const;
+    void save(const QString & _game_id, const QString & _cheat) const;
+    void remove(const QString & _game_id) const;
+
+private:
+    QString makeFilename(const QString & _game_id) const;
+
+private:
+    const QDir m_library_path;
+};
+
+class GameCheatDownloader : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit GameCheatDownloader(const QString & _game_id, QObject * _parent = nullptr);
+    void start();
+    void cancel();
+
+signals:
+    void downloaded(const QString _cheat);
+    void error(const QString _message);
+    void finished();
+
+private:
+    const QString m_game_id;
+    QNetworkReply * mp_network_replay;
+    bool m_is_canceled;
 };
 
 } // namespace OplPcTools

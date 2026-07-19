@@ -876,6 +876,24 @@
     </message>
 </context>
 <context>
+    <name>OplPcTools::GameCheatDownloader</name>
+    <message>
+        <location filename="../GameCheatManager.cpp" line="82"/>
+        <source>The cheat download has already started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../GameCheatManager.cpp" line="104"/>
+        <source>Cheat for this game not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../GameCheatManager.cpp" line="107"/>
+        <source>Unable to download the cheat, a network error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OplPcTools::GameCollection</name>
     <message>
         <location filename="../GameCollection.cpp" line="188"/>
@@ -1009,40 +1027,24 @@
 <context>
     <name>OplPcTools::UI::GameCheatWidget</name>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="73"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="75"/>
         <source>Cheat saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="84"/>
-        <source>Cheat file does not exist</source>
+        <location filename="../UI/GameCheatWidget.cpp" line="82"/>
+        <source>Are you sure you want to delete the cheat?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="90"/>
+        <location filename="../UI/GameCheatWidget.cpp" line="99"/>
+        <source>Downloading cheat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameCheatWidget.cpp" line="81"/>
         <source>Confirmation</source>
         <translation type="unfinished">Подтверждение</translation>
-    </message>
-    <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="91"/>
-        <source>Are you sure you want to delete the cheat file?
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="109"/>
-        <source>Downloading cheat %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="141"/>
-        <source>Cheat for this game not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/GameCheatWidget.cpp" line="144"/>
-        <source>Unable to download the cheat, a network error occurred</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1270,27 +1272,27 @@
         <translation type="vanished">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="479"/>
+        <location filename="../UI/GameListWidget.cpp" line="480"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="480"/>
+        <location filename="../UI/GameListWidget.cpp" line="481"/>
         <source>Delete Game</source>
         <translation>Удалить игру</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="482"/>
+        <location filename="../UI/GameListWidget.cpp" line="483"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Вы уверены, что хотите удалить эту игру?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="535"/>
+        <location filename="../UI/GameListWidget.cpp" line="537"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Скачать изображения</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="536"/>
+        <location filename="../UI/GameListWidget.cpp" line="538"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>

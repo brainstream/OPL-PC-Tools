@@ -24,32 +24,34 @@
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Exception.h>
 #include <OplPcTools/File.h>
-#include <OplPcTools/ApplicationInfo.h>
 #include <QToolTip>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
 
 GameCheatWidget::GameCheatWidget(const Game & _game, QWidget * _parent) :
     QWidget(_parent),
-    m_filename(GameCheat::makeFilename(Library::instance().directory(), _game.id()))
+    mp_cheat_manager(new GameCheatManager(Library::instance().directory())),
+    m_game_id(_game.id())
 {
-    loadCheat();
     setupUi(this);
-    mp_text_edit_cheat->setText(m_cheat_ptr->text);
+    if(std::optional<QString> cheat = loadCheat())
+        mp_text_edit_cheat->setText(cheat.value());
     connect(mp_btn_save, &QPushButton::clicked, this, &GameCheatWidget::saveCheat);
     connect(mp_btn_delete, &QPushButton::clicked, this, &GameCheatWidget::deleteCheat);
     connect(mp_btn_download, &QPushButton::clicked, this, &GameCheatWidget::download);
 }
 
-bool GameCheatWidget::loadCheat()
+GameCheatWidget::~GameCheatWidget()
+{
+    delete mp_cheat_manager;
+}
+
+std::optional<QString> GameCheatWidget::loadCheat()
 {
     try
     {
-        m_cheat_ptr = GameCheat::load(m_filename);
-        return true;
+        return mp_cheat_manager->load(m_game_id);
     }
     catch(const Exception & _exception)
     {
@@ -59,15 +61,15 @@ bool GameCheatWidget::loadCheat()
     {
         Application::showErrorMessage();
     }
-    return false;
+    return std::nullopt;
 }
 
 void GameCheatWidget::saveCheat()
 {
     startSmartThread(
         [this]() {
-            m_cheat_ptr->text = mp_text_edit_cheat->toPlainText();
-            GameCheat::save(*m_cheat_ptr, m_filename);
+            const QString text = mp_text_edit_cheat->toPlainText();
+            mp_cheat_manager->save(m_game_id, text);
         },
         [this]() {
             QToolTip::showText(mapToGlobal(mp_btn_save->pos() - QPoint(0, 50)), tr("Cheat saved"), this, QRect(), 3000);
@@ -76,24 +78,13 @@ void GameCheatWidget::saveCheat()
 
 void GameCheatWidget::deleteCheat()
 {
-    QFile cheat_file(m_filename);
-    if(!cheat_file.exists())
-    {
-        QToolTip::showText(
-            mapToGlobal(mp_btn_delete->pos() - QPoint(0, 50)),
-            tr("Cheat file does not exist"),
-            this,
-            QRect(),
-            3000);
-        return;
-    }
     if(QMessageBox::Yes == QMessageBox::question(this, tr("Confirmation"),
-        tr("Are you sure you want to delete the cheat file?\n%1").arg(m_filename),
+        tr("Are you sure you want to delete the cheat?"),
         QMessageBox::Yes | QMessageBox::No))
     {
         startSmartThread(
             [this]() {
-                removeFile(m_filename);
+                mp_cheat_manager->remove(m_game_id);
             },
             [this]() {
                 QTextCursor cursor = mp_text_edit_cheat->textCursor();
@@ -105,47 +96,27 @@ void GameCheatWidget::deleteCheat()
 
 void GameCheatWidget::download()
 {
-    const QString cheat_name = QFileInfo(m_filename).fileName();
-    const QString process_name = tr("Downloading cheat %1").arg(cheat_name);
+    const QString process_name = tr("Downloading cheat");
     ProgressDialog * progress_dialog = new ProgressDialog(this);
     progress_dialog->setWindowTitle(process_name);
     progress_dialog->setProgressLabelText(process_name + "...");
     progress_dialog->show();
-    QNetworkAccessManager * network = new QNetworkAccessManager(this);
-    const QString url =
-        QString("https://raw.githubusercontent.com/PS2-Widescreen/OPL-Widescreen-Cheats/refs/heads/main/CHT/%1")
-        .arg(cheat_name);
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::UserAgentHeader, APPLICATION_DISPLAY_NAME);
-    request.setTransferTimeout(std::chrono::seconds(15));
-    QNetworkReply * reply = network->get(request);
-    connect(reply, &QNetworkReply::finished, this, [this, progress_dialog, network, reply] {
-        reply->deleteLater();
-        network->deleteLater();
+    GameCheatDownloader * downloader = new GameCheatDownloader(m_game_id, this);
+
+    connect(downloader, &GameCheatDownloader::finished, this, [progress_dialog, downloader] {
+        downloader->deleteLater();
         progress_dialog->accept();
         progress_dialog->deleteLater();
-        switch(reply->error())
-        {
-        case QNetworkReply::NoError:
-        {
-            QString text = reply->readAll();
-            AcceptCheatDialog dlg(text, this);
-            if(dlg.exec() == QDialog::Accepted)
-            {
-                mp_text_edit_cheat->setText(text);
-                saveCheat();
-            }
-            break;
-        }
-        case QNetworkReply::ContentNotFoundError:
-            Application::showMessage(tr("Cheat for this game not found"));
-            break;
-        default:
-            Application::showErrorMessage(tr("Unable to download the cheat, a network error occurred"));
-            break;
-        }
     });
-    connect(progress_dialog, &ProgressDialog::canceled, reply, &QNetworkReply::abort);
+    connect(downloader, &GameCheatDownloader::downloaded, this, [this](const QString & __cheat) {
+        mp_cheat_manager->save(m_game_id, __cheat);
+        mp_text_edit_cheat->setText(__cheat);
+    });
+    connect(downloader, &GameCheatDownloader::error, this, [](const QString & __error) {
+        Application::showMessage(__error);
+    });
+    connect(progress_dialog, &ProgressDialog::canceled, downloader, &GameCheatDownloader::cancel);
+    downloader->start();
 }
 
 void GameCheatWidget::startSmartThread(std::function<void()> _action, std::function<void()> _finished)

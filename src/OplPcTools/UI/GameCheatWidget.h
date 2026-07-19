@@ -20,7 +20,7 @@
 
 #include "ui_GameCheatWidget.h"
 #include <OplPcTools/Game.h>
-#include <OplPcTools/GameCheat.h>
+#include <OplPcTools/GameCheatManager.h>
 
 namespace OplPcTools {
 namespace UI {
@@ -31,17 +31,18 @@ class GameCheatWidget : public QWidget, private Ui::GameCheatWidget
 
 public:
     explicit GameCheatWidget(const Game & _game, QWidget * _parent = nullptr);
+    ~GameCheatWidget() override;
 
 private:
     void startSmartThread(std::function<void()> _action, std::function<void()> _finished);
-    bool loadCheat();
+    std::optional<QString> loadCheat();
     void saveCheat();
     void deleteCheat();
     void download();
 
 private:
-    const QString m_filename;
-    QSharedPointer<GameCheat> m_cheat_ptr;
+    GameCheatManager * mp_cheat_manager;
+    const QString m_game_id;
 };
 
 } // namespace UI

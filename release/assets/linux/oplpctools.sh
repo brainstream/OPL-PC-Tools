@@ -1,5 +1,5 @@
 #!/bin/sh
 
-BINDIR="$(dirname $0)/bin"
+BINDIR="$(realpath "$(dirname -- "$0")")/bin"
 
 LD_LIBRARY_PATH="$BINDIR" "$BINDIR/oplpctools"

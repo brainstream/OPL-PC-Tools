@@ -1,15 +1,17 @@
 #!/bin/sh
 
 FILENAME="oplpctools.desktop"
-rm -f "${FILENAME}"
+SCRIPT_DIR="$(realpath "$(dirname -- "$0")")"
 
-echo "[Desktop Entry]" > "${FILENAME}"
-echo "Exec=`pwd`/oplpctools.sh" >> "${FILENAME}"
-echo "Icon=`pwd`/images/icon.png" >> "${FILENAME}"
-echo "Name=OPL PC Tools" >> "${FILENAME}"
-echo "StartupNotify=true" >> "${FILENAME}"
-echo "Terminal=false" >> "${FILENAME}"
-echo "Type=Application" >> "${FILENAME}"
-echo "Categories=Game;Utility;" >> "${FILENAME}"
+cat > "$FILENAME" <<EOF
+[Desktop Entry]
+Exec="$SCRIPT_DIR/oplpctools.sh"
+Icon=$SCRIPT_DIR/images/icon.png
+Name=OPL PC Tools
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Game;Utility;
+EOF
 
-chmod +x "${FILENAME}"
+chmod +x "$FILENAME"

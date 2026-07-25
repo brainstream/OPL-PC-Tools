@@ -128,6 +128,8 @@ GameConfigWidget::GameConfigWidget(const Game & _game, QWidget * _parent /*= nul
     connect(mp_btn_create_vmc0, &QPushButton::clicked, this, &GameConfigWidget::createVmc0);
     connect(mp_btn_create_vmc1, &QPushButton::clicked, this, &GameConfigWidget::createVmc1);
     connect(mp_btn_id_from_game, &QPushButton::clicked, this, &GameConfigWidget::fillGameIdFromGame);
+    connect(mp_btn_clear_game_release_date, &QPushButton::clicked, this, &GameConfigWidget::clearReleaseDate);
+    connect(mp_btn_game_title_from_game, &QPushButton::clicked, this, &GameConfigWidget::fillGameTitleFromGame);
     connect(mp_btn_clear, &QPushButton::clicked, this, &GameConfigWidget::clear);
     connect(mp_btn_save, &QPushButton::clicked, this, &GameConfigWidget::save);
     connect(mp_btn_delete, &QPushButton::clicked, this, &GameConfigWidget::remove);
@@ -204,6 +206,14 @@ void GameConfigWidget::initControls()
         mp_radio_disable_gsm->setChecked(true);
     }
     mp_combo_video_mode->setCurrentIndex(m_config_ptr->gsm_video_mode);
+    mp_game_edit_title->setText(m_config_ptr->game_title);
+    mp_edit_game_description->setText(m_config_ptr->game_description);
+    mp_edit_game_developer->setText(m_config_ptr->game_developer);
+    mp_edit_game_genre->setText(m_config_ptr->game_genre);
+    if(m_config_ptr->game_release_date)
+        mp_date_edit_game_release->setDate(*m_config_ptr->game_release_date);
+    else
+        mp_date_edit_game_release->setDateTime(mp_date_edit_game_release->minimumDateTime());
     onGsmStateChanged();
 }
 
@@ -364,6 +374,16 @@ const Vmc * GameConfigWidget::createVmc()
     return nullptr;
 }
 
+void GameConfigWidget::clearReleaseDate()
+{
+    mp_date_edit_game_release->setDate(mp_date_edit_game_release->minimumDate());
+}
+
+void GameConfigWidget::fillGameTitleFromGame()
+{
+    mp_game_edit_title->setText(mr_game.title());
+}
+
 void GameConfigWidget::fillGameIdFromGame()
 {
     mp_edit_game_id->setText(mr_game.id());
@@ -400,6 +420,11 @@ void GameConfigWidget::clearForm()
     mp_spinbox_hpos->clear();
     mp_spinbox_vpos->clear();
     mp_radio_disable_gsm->setChecked(true);
+    mp_game_edit_title->clear();
+    mp_edit_game_description->clear();
+    mp_edit_game_genre->clear();
+    mp_date_edit_game_release->setDate(mp_date_edit_game_release->minimumDate());
+    mp_edit_game_developer->clear();
 }
 
 void GameConfigWidget::save()
@@ -432,6 +457,14 @@ void GameConfigWidget::saveAs(const QString & _filename)
             m_config_ptr->is_gsm_emulate_field_flipping_enabled = mp_checkbox_emulate_field_flipping->isChecked();
             m_config_ptr->gsm_x_offset = mp_spinbox_hpos->value();
             m_config_ptr->gsm_y_offset = mp_spinbox_vpos->value();
+            m_config_ptr->game_title = mp_game_edit_title->text();
+            m_config_ptr->game_description = mp_edit_game_description->text();
+            m_config_ptr->game_developer = mp_edit_game_developer->text();
+            m_config_ptr->game_genre = mp_edit_game_genre->text();
+            if(mp_date_edit_game_release->date().isValid() && mp_date_edit_game_release->date() > mp_date_edit_game_release->minimumDate())
+                m_config_ptr->game_release_date = mp_date_edit_game_release->date();
+            else
+                m_config_ptr->game_release_date = std::nullopt;
             m_config_ptr->save(*m_config_ptr, _filename);
         },
         [this]() {

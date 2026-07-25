@@ -55,8 +55,15 @@ static const char custom_elf[] = "$AltStartup";
 static const char vmc_0[] = "$VMC_0";
 static const char vmc_1[] = "$VMC_1";
 static const char config_source[] = "$ConfigSource";
+static const char game_title[] = "Title";
+static const char game_description[] = "Description";
+static const char game_genre[] = "Genre";
+static const char game_developer[] = "Developer";
+static const char game_release_date[] = "Release";
 
 } // namespace Key
+
+static const char g_game_release_date_format[] = "MM-dd-yyyy";
 
 void parse(const QString & _key, const QString & _value, GameConfiguration & _config)
 {
@@ -94,6 +101,19 @@ void parse(const QString & _key, const QString & _value, GameConfiguration & _co
         _config.vmc0 = _value;
     else if(_key.compare(Key::vmc_1) == 0)
         _config.vmc1 = _value;
+    else if(_key.compare(Key::game_title) == 0)
+        _config.game_title = _value;
+    else if(_key.compare(Key::game_description) == 0)
+        _config.game_description = _value;
+    else if(_key.compare(Key::game_genre) == 0)
+        _config.game_genre = _value;
+    else if(_key.compare(Key::game_developer) == 0)
+        _config.game_developer = _value;
+    else if(_key.compare(Key::game_release_date) == 0)
+    {
+        QDate date = QDate::fromString(_value, g_game_release_date_format);
+        _config.game_release_date = date.isValid() ? std::optional<QDate>(date) : std::nullopt;
+    }
 }
 
 bool write(QFile & _file, const GameConfiguration & _config, const QString & _key)
@@ -154,6 +174,19 @@ bool write(QFile & _file, const GameConfiguration & _config, const QString & _ke
     {
         if(_config.is_gsm_enabled)
             value = _config.is_gsm_emulate_field_flipping_enabled ? "1" : "0";
+    }
+    else if(_key.compare(Key::game_title) == 0)
+        value = _config.game_title;
+    else if(_key.compare(Key::game_description) == 0)
+        value = _config.game_description;
+    else if(_key.compare(Key::game_genre) == 0)
+        value = _config.game_genre;
+    else if(_key.compare(Key::game_developer) == 0)
+        value = _config.game_developer;
+    else if(_key.compare(Key::game_release_date) == 0)
+    {
+        if(_config.game_release_date.has_value())
+            value = _config.game_release_date->toString(g_game_release_date_format);
     }
     else
         return false;
@@ -261,6 +294,12 @@ void GameConfiguration::save(const GameConfiguration & _config, const QString & 
     write_if_not_written(Key::vmc_0);
     write_if_not_written(Key::vmc_1);
     write_if_not_written(Key::config_source);
+    write_if_not_written(Key::game_title);
+    write_if_not_written(Key::game_description);
+    write_if_not_written(Key::game_genre);
+    write_if_not_written(Key::game_developer);
+    write_if_not_written(Key::game_release_date);
+
     tmp_file.close();
     src_file.remove();
     tmp_file.rename(src_file.fileName());

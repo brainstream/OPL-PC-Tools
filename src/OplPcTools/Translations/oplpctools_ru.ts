@@ -223,133 +223,179 @@
 <context>
     <name>GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="43"/>
+        <location filename="../UI/GameConfigWidget.ui" line="22"/>
         <source>OPL Version</source>
         <translation>Версия OPL</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="68"/>
+        <location filename="../UI/GameConfigWidget.ui" line="150"/>
+        <source>Game Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="97"/>
         <source>Game ID</source>
         <translation>ID игры</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="75"/>
+        <location filename="../UI/GameConfigWidget.ui" line="110"/>
+        <location filename="../UI/GameConfigWidget.ui" line="178"/>
         <source>Get from the Game</source>
         <translation>Получить из игры</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="93"/>
+        <location filename="../UI/GameConfigWidget.ui" line="124"/>
         <source>Custom ELF</source>
         <translation>Свой ELF</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="111"/>
+        <location filename="../UI/GameConfigWidget.ui" line="156"/>
+        <source>Title</source>
+        <translation type="unfinished">Название</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="250"/>
+        <source>Genre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="205"/>
+        <source>Release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="191"/>
+        <source>Developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="220"/>
+        <source>&lt;Not set&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="264"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="287"/>
         <source>Modes</source>
         <translation>Режимы</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="117"/>
+        <location filename="../UI/GameConfigWidget.ui" line="293"/>
         <source>Mode 1 ― Accurate Reads</source>
         <translation>Режим 1 ― Аккуратное чтение</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="124"/>
+        <location filename="../UI/GameConfigWidget.ui" line="300"/>
         <source>Mode 2 ― Synchronous Mode</source>
         <translation>Режим 2 ― Режим синхронизации</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="131"/>
+        <location filename="../UI/GameConfigWidget.ui" line="307"/>
         <source>Mode 3 ― Unhook Syscalls</source>
         <translation>Режим 3 ― Разблокировать системные вызовы</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="145"/>
+        <location filename="../UI/GameConfigWidget.ui" line="321"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
         <translation>Режим 5 ― Эмулировать DVD-DL</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="152"/>
+        <location filename="../UI/GameConfigWidget.ui" line="328"/>
         <source>Mode 6 ― Disable IGR</source>
         <translation>Режим 6 ― Отключить использование IGR</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="178"/>
+        <location filename="../UI/GameConfigWidget.ui" line="371"/>
         <source>Virtual Memory Card #1</source>
         <translation>Виртуальная карта памяти №1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="212"/>
-        <location filename="../UI/GameConfigWidget.ui" line="260"/>
+        <location filename="../UI/GameConfigWidget.ui" line="362"/>
+        <source>Virtual Memory Cards</source>
+        <translation type="unfinished">Виртуальные карты памяти (VMC)</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="237"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="405"/>
+        <location filename="../UI/GameConfigWidget.ui" line="452"/>
         <source>Create VMC</source>
         <translation>Создать VMC</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="226"/>
+        <location filename="../UI/GameConfigWidget.ui" line="418"/>
         <source>Virtual Memory Card #2</source>
         <translation>Виртуальная карта памяти №2</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="291"/>
+        <location filename="../UI/GameConfigWidget.ui" line="487"/>
         <source>Graphic Synthesiser Mode</source>
         <translation>Режим графического синтезатора</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="299"/>
+        <location filename="../UI/GameConfigWidget.ui" line="495"/>
         <source>Disable</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="306"/>
+        <location filename="../UI/GameConfigWidget.ui" line="502"/>
         <source>Enable</source>
         <translation>Включить</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="313"/>
+        <location filename="../UI/GameConfigWidget.ui" line="509"/>
         <source>Use Global Settings</source>
         <translation>Использовать глобальные настройки</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="341"/>
+        <location filename="../UI/GameConfigWidget.ui" line="537"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="361"/>
+        <location filename="../UI/GameConfigWidget.ui" line="557"/>
         <source>Video Mode</source>
         <translation>Режим видео</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="384"/>
+        <location filename="../UI/GameConfigWidget.ui" line="580"/>
         <source>Skip Full Motion Videos</source>
         <translation>Пропускать full motion видео</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="401"/>
+        <location filename="../UI/GameConfigWidget.ui" line="597"/>
         <source>Horizontal Position</source>
         <translation>Позиция по горизонтали</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="433"/>
+        <location filename="../UI/GameConfigWidget.ui" line="629"/>
         <source>Vertical Position</source>
         <translation>Позиция по вертикали</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="461"/>
+        <location filename="../UI/GameConfigWidget.ui" line="657"/>
         <source>Emulate FIELD Flipping</source>
         <translation>Эмулировать FIELD Flipping</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="502"/>
+        <location filename="../UI/GameConfigWidget.ui" line="45"/>
         <source>&amp;Delete Configuration</source>
         <translation>&amp;Удилить конфигурацию</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="513"/>
+        <location filename="../UI/GameConfigWidget.ui" line="56"/>
         <source>&amp;Clear Configuration</source>
         <translation>&amp;Очистить конфигурацию</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="524"/>
+        <location filename="../UI/GameConfigWidget.ui" line="67"/>
         <source>&amp;Save Configuration</source>
         <translation>&amp;Сохранить конфигурацию</translation>
     </message>
@@ -1050,52 +1096,52 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="219"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="229"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation>Режим 7 ― Режим 0 PPS</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="221"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="231"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation>Режим 7 ― Высокий модуль хранения</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="223"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="233"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
         <translation>Режим 8 ― Скрывать модули Dev9</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="230"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="240"/>
         <source>Mode 4 ― Skip Videos</source>
         <translation>Режим 4 ― Пропуск видео</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="232"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="242"/>
         <source>Mode 7 ― Deprecated</source>
         <translation>Режим 7 ― Устарело</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="234"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="244"/>
         <source>Mode 8 ― Deprecated</source>
         <translation>Режим 8 ― Устарело</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="379"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="399"/>
         <source>Configuration cleared</source>
         <translation>Конфигурация очищена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="439"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="472"/>
         <source>Configuration saved</source>
         <translation>Конфигурация сохранена</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="457"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="490"/>
         <source>Confirmation</source>
         <translation>Подтверждение</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="458"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="491"/>
         <source>Are you sure you want to delete the configuration file?
 %1</source>
         <translation type="unfinished"></translation>
@@ -1107,7 +1153,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="484"/>
         <source>Configuration file does not exist</source>
         <translation>Конфигурационный файл не существует</translation>
     </message>

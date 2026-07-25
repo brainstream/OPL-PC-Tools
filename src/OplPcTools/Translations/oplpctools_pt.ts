@@ -230,133 +230,179 @@
 <context>
     <name>GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="43"/>
+        <location filename="../UI/GameConfigWidget.ui" line="22"/>
         <source>OPL Version</source>
         <translation>Versão do OPL</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="68"/>
+        <location filename="../UI/GameConfigWidget.ui" line="150"/>
+        <source>Game Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="97"/>
         <source>Game ID</source>
         <translation>ID do jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="75"/>
+        <location filename="../UI/GameConfigWidget.ui" line="110"/>
+        <location filename="../UI/GameConfigWidget.ui" line="178"/>
         <source>Get from the Game</source>
         <translation>Identificar automaticamente</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="93"/>
+        <location filename="../UI/GameConfigWidget.ui" line="124"/>
         <source>Custom ELF</source>
         <translation>ELF personalizado</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="111"/>
+        <location filename="../UI/GameConfigWidget.ui" line="156"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="250"/>
+        <source>Genre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="205"/>
+        <source>Release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="191"/>
+        <source>Developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="220"/>
+        <source>&lt;Not set&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="264"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="287"/>
         <source>Modes</source>
         <translation>Modos</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="117"/>
+        <location filename="../UI/GameConfigWidget.ui" line="293"/>
         <source>Mode 1 ― Accurate Reads</source>
         <translation>Modo 1 - Leituras mais acuradas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="124"/>
+        <location filename="../UI/GameConfigWidget.ui" line="300"/>
         <source>Mode 2 ― Synchronous Mode</source>
         <translation>Modo 2 - Modo Síncrono</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="131"/>
+        <location filename="../UI/GameConfigWidget.ui" line="307"/>
         <source>Mode 3 ― Unhook Syscalls</source>
         <translation>Modo 3 - Desligar Syscalls</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="145"/>
+        <location filename="../UI/GameConfigWidget.ui" line="321"/>
         <source>Mode 5 ― Emulate DVD-DL</source>
         <translation>Modo 5 - Emular DVD-DL</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="152"/>
+        <location filename="../UI/GameConfigWidget.ui" line="328"/>
         <source>Mode 6 ― Disable IGR</source>
         <translation>Modo 6 - Desativar IGR</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="178"/>
+        <location filename="../UI/GameConfigWidget.ui" line="371"/>
         <source>Virtual Memory Card #1</source>
         <translation>Memory Card Virtual (VMC) #1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="212"/>
-        <location filename="../UI/GameConfigWidget.ui" line="260"/>
+        <location filename="../UI/GameConfigWidget.ui" line="362"/>
+        <source>Virtual Memory Cards</source>
+        <translation type="unfinished">Memory Cards Virtuais (VMCs)</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="237"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConfigWidget.ui" line="405"/>
+        <location filename="../UI/GameConfigWidget.ui" line="452"/>
         <source>Create VMC</source>
         <translation>Criar VMC</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="226"/>
+        <location filename="../UI/GameConfigWidget.ui" line="418"/>
         <source>Virtual Memory Card #2</source>
         <translation>Memory Card Virtual (VMC) #2</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="291"/>
+        <location filename="../UI/GameConfigWidget.ui" line="487"/>
         <source>Graphic Synthesiser Mode</source>
         <translation>Modo de sintetizador gráfico (GSM)</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="299"/>
+        <location filename="../UI/GameConfigWidget.ui" line="495"/>
         <source>Disable</source>
         <translation>Desativado</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="306"/>
+        <location filename="../UI/GameConfigWidget.ui" line="502"/>
         <source>Enable</source>
         <translation>Ativado</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="313"/>
+        <location filename="../UI/GameConfigWidget.ui" line="509"/>
         <source>Use Global Settings</source>
         <translation>Usando Configuração Globais</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="341"/>
+        <location filename="../UI/GameConfigWidget.ui" line="537"/>
         <source>Settings</source>
         <translation>Configurações</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="361"/>
+        <location filename="../UI/GameConfigWidget.ui" line="557"/>
         <source>Video Mode</source>
         <translation>Modo de Video</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="384"/>
+        <location filename="../UI/GameConfigWidget.ui" line="580"/>
         <source>Skip Full Motion Videos</source>
         <translation>Pular CGs</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="401"/>
+        <location filename="../UI/GameConfigWidget.ui" line="597"/>
         <source>Horizontal Position</source>
         <translation>Posição Horizontal</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="433"/>
+        <location filename="../UI/GameConfigWidget.ui" line="629"/>
         <source>Vertical Position</source>
         <translation>Posição Vertical</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="461"/>
+        <location filename="../UI/GameConfigWidget.ui" line="657"/>
         <source>Emulate FIELD Flipping</source>
         <translation>Emular inversão de FIELD</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="502"/>
+        <location filename="../UI/GameConfigWidget.ui" line="45"/>
         <source>&amp;Delete Configuration</source>
         <translation>&amp;Deletar Configurações</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="513"/>
+        <location filename="../UI/GameConfigWidget.ui" line="56"/>
         <source>&amp;Clear Configuration</source>
         <translation>&amp;Resetar Configurações</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.ui" line="524"/>
+        <location filename="../UI/GameConfigWidget.ui" line="67"/>
         <source>&amp;Save Configuration</source>
         <translation>&amp;Salvar Configurações</translation>
     </message>
@@ -1049,52 +1095,52 @@
 <context>
     <name>OplPcTools::UI::GameConfigWidget</name>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="219"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="229"/>
         <source>Mode 4 ― 0 PSS Mode</source>
         <translation>Modo 4 - Modo 0 PSS</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="221"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="231"/>
         <source>Mode 7 ― High Module Storage</source>
         <translation>Modo 7 - Armazenamento de módulos em alta memoria</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="223"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="233"/>
         <source>Mode 8 ― Hide DEV9 Module</source>
         <translation>Modo 9 - Esconder módulos DEV9</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="230"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="240"/>
         <source>Mode 4 ― Skip Videos</source>
         <translation>Modo 4 - Pular vídeos</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="232"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="242"/>
         <source>Mode 7 ― Deprecated</source>
         <translation>Modo 7 ― Obsoleto</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="234"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="244"/>
         <source>Mode 8 ― Deprecated</source>
         <translation>Modo 8 ― Obsoleto</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="379"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="399"/>
         <source>Configuration cleared</source>
         <translation>Configurações resetadas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="439"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="472"/>
         <source>Configuration saved</source>
         <translation>Configurações salvas</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="457"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="490"/>
         <source>Confirmation</source>
         <translation>Confirmação</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="458"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="491"/>
         <source>Are you sure you want to delete the configuration file?
 %1</source>
         <translation type="unfinished"></translation>
@@ -1106,7 +1152,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../UI/GameConfigWidget.cpp" line="451"/>
+        <location filename="../UI/GameConfigWidget.cpp" line="484"/>
         <source>Configuration file does not exist</source>
         <translation>Arquivo de configurações não existe</translation>
     </message>

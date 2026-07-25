@@ -16,12 +16,12 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_GAMECONFIGURATION__
-#define __OPLPCTOOLS_GAMECONFIGURATION__
+#pragma once
 
+#include <OplPcTools/VideoMode.h>
 #include <QSharedPointer>
 #include <QVector>
-#include <OplPcTools/VideoMode.h>
+#include <QDate>
 
 namespace OplPcTools {
 
@@ -60,8 +60,11 @@ struct GameConfiguration
     bool is_gsm_skip_fmv_enabled;
     bool is_gsm_emulate_field_flipping_enabled;
     bool is_global_gsm_enabled;
+    QString game_title;
+    QString game_description;
+    QString game_genre;
+    QString game_developer;
+    std::optional<QDate> game_release_date;
 };
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_GAMECONFIGURATION__

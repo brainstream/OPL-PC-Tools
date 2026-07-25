@@ -48,11 +48,13 @@ private:
     void deleteVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id);
     int getVmcComboBoxItemIndex(QComboBox * _combobox, const Uuid & _id) const;
     void onVmcRenamed(const QString & _old_title, const Uuid & _id);
+    void clearReleaseDate();
     void renameVmcComboBoxItem(QComboBox * _combobox, const Uuid & _id, const QString & _title);
     void createVmc0();
     void createVmc1();
     const OplPcTools::Vmc * createVmc();
     void fillGameIdFromGame();
+    void fillGameTitleFromGame();
     void clear();
     void clearForm();
     void save();

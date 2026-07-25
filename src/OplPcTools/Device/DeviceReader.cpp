@@ -16,9 +16,10 @@
  *                                                                                             *
  ***********************************************************************************************/
 
+#include <OplPcTools/Device/DeviceReader.h>
+#include <OplPcTools/Settings.h>
 #include <QRegularExpression>
 #include <QFileInfo>
-#include <OplPcTools/Device/DeviceReader.h>
 
 #define ISO9660_OFFSET 0x8000
 
@@ -317,8 +318,9 @@ bool DeviceReader::open()
         m_source_ptr->seek(0);
     else if(!m_source_ptr->open())
         return false;
+
     Iso9660 * iso = new Iso9660(*m_source_ptr);
-    if(iso->isInitialized() && iso->isPlayStationDisc())
+    if(iso->isInitialized() && (!Settings::instance().validateIsoTarget() || iso->isPlayStationDisc()))
     {
         m_title = iso->title();
         m_id = iso->gameId();

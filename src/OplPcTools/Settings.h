@@ -72,6 +72,8 @@ public:
     void setCheckNewVersion(bool _value);
     bool validateUlCfg() const;
     void setValidateUlCfg(bool _value);
+    bool validateIsoTarget() const;
+    void setValidateIsoTarget(bool _value);
     quint32 iconSize() const;
     void setIconSize(quint32 _size);
     void setDefaultVmcFsCharset(const QString & _encoding);

@@ -36,6 +36,7 @@ const char move_iso[] = "Settings/MoveISO";
 const char rename_iso[] = "Settings/RenameISO";
 const char check_new_version[] = "Settings/CheckNewVersion";
 const char validate_ul_cfg[] = "Settings/ValidateUlCfg";
+const char validate_iso_target[] = "Settings/ValidateIsoTarget";
 const char icon_size[] = "Settings/IconSize";
 const char vmc_fs_charset[] = "Settings/VmcCharset";
 const char vmc_suppress_write_warning[] = "Settings/VmcNoWriteWarning";
@@ -244,6 +245,16 @@ bool Settings::validateUlCfg() const
 void Settings::setValidateUlCfg(bool _value)
 {
     mp_settings->setValue(Key::validate_ul_cfg, _value);
+}
+
+bool Settings::validateIsoTarget() const
+{
+    return mp_settings->value(Key::validate_iso_target, true).toBool();
+}
+
+void Settings::setValidateIsoTarget(bool _value)
+{
+    mp_settings->setValue(Key::validate_iso_target, _value);
 }
 
 quint32 Settings::iconSize() const

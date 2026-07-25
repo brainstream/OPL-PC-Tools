@@ -1912,68 +1912,82 @@ Want to skip it?</source>
         <translation>Открывать недавно использованную библиотеку</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="61"/>
+        <location filename="../UI/SettingsDialog.ui" line="40"/>
         <source>Check for app updates</source>
         <translation>Проверять обновления приложения</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="47"/>
         <source>Validate ul.cfg</source>
-        <translation>Валидировать ul.cfg</translation>
+        <translation type="vanished">Валидировать ul.cfg</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="40"/>
+        <location filename="../UI/SettingsDialog.ui" line="217"/>
         <source>Store library configuration in %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="54"/>
+        <location filename="../UI/SettingsDialog.ui" line="189"/>
         <source>I have backups of my VMCs, do not show warnings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="68"/>
+        <location filename="../UI/SettingsDialog.ui" line="47"/>
         <source>Confirm the removal of a game</source>
         <translation>Подтверждать удаление игры</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="75"/>
+        <location filename="../UI/SettingsDialog.ui" line="54"/>
         <source>Confirm the removal of a picture</source>
         <translation>Подтверждать удаление изображения</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="82"/>
+        <location filename="../UI/SettingsDialog.ui" line="61"/>
         <source>Confirm the removal of a VMC</source>
         <translation>Подтверждать удаление VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="89"/>
+        <location filename="../UI/SettingsDialog.ui" line="68"/>
         <source>Confirm the removal of a VMC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="110"/>
+        <location filename="../UI/SettingsDialog.ui" line="89"/>
         <source>Installation</source>
         <translation>Инсталляция</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="116"/>
+        <location filename="../UI/SettingsDialog.ui" line="95"/>
         <source>Default behaviour</source>
         <translation>Поведение по умолчанию</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="122"/>
+        <location filename="../UI/SettingsDialog.ui" line="101"/>
         <source>Write ISO in a single file</source>
         <translation>Записывать ISO в один файл</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="129"/>
+        <location filename="../UI/SettingsDialog.ui" line="108"/>
         <source>Compress ISO to ZSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="136"/>
+        <location filename="../UI/SettingsDialog.ui" line="115"/>
         <source>Move ISO or ZSO images instead of copying them if possible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="197"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="203"/>
+        <source>Validate ul.cfg (recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/SettingsDialog.ui" line="210"/>
+        <source>Validate PLAYSTATION ISO target (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1981,7 +1995,7 @@ Want to skip it?</source>
         <translation type="vanished">Перемещать ISO вместо копирования</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="143"/>
+        <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Add game ID to ISO or ZSO filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1990,22 +2004,22 @@ Want to skip it?</source>
         <translation type="vanished">Добавлять ID к имени игр</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="167"/>
+        <location filename="../UI/SettingsDialog.ui" line="146"/>
         <source>Appearance</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="173"/>
+        <location filename="../UI/SettingsDialog.ui" line="152"/>
         <source>List Icon Size</source>
         <translation>Размер иконок в списках</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="194"/>
+        <location filename="../UI/SettingsDialog.ui" line="173"/>
         <source>VMC</source>
         <translation>VMC</translation>
     </message>
     <message>
-        <location filename="../UI/SettingsDialog.ui" line="200"/>
+        <location filename="../UI/SettingsDialog.ui" line="179"/>
         <source>Default file system charset</source>
         <translation>Кодировка файловой системы по умолчанию</translation>
     </message>

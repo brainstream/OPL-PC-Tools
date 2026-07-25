@@ -40,6 +40,7 @@ SettingsDialog::SettingsDialog(QWidget * _parent /*= nullptr*/) :
     mp_checkbox_add_id->setChecked(settings.renameIso());
     mp_checkobx_move_iso->setChecked(settings.moveIso());
     mp_checkbox_validate_ulcfg->setChecked(settings.validateUlCfg());
+    mp_checkbox_validate_iso_target->setChecked(settings.validateIsoTarget());
     mp_checkbox_suppress_vmc_write_warning->setChecked(settings.suppressVmcWritingWarning());
     mp_checkbox_use_library_config->setText(mp_checkbox_use_library_config->text().arg(StandardFiles::config));
     mp_checkbox_use_library_config->setChecked(settings.libraryConfigEnabled());
@@ -73,6 +74,7 @@ void SettingsDialog::accept()
     settings.setRenameIso(mp_checkbox_add_id->isChecked());
     settings.setMoveIso(mp_checkobx_move_iso->isChecked());
     settings.setValidateUlCfg(mp_checkbox_validate_ulcfg->isChecked());
+    settings.setValidateIsoTarget(mp_checkbox_validate_iso_target->isChecked());
     settings.setCheckNewVersion(mp_checkbox_check_new_versions->isEnabled() && mp_checkbox_check_new_versions->isChecked());
     settings.setIconSize(mp_spinbox_icon_size->value());
     settings.setDefaultVmcFsCharset(mp_combobox_vmc_fs_charset->currentText());

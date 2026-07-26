@@ -1031,8 +1031,8 @@ void VmcDetailsActivity::deleteEntry()
             }
             QString message =
                 display_items_count == 1 ?
-                tr("Are you sure you want to delete this file?") :
-                tr("Are you sure you want to delete these files?");
+                tr("Are you sure you want to delete this item?") :
+                tr("Are you sure you want to delete these items?");
             QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
             QMessageBox message_box(QMessageBox::Question, tr("Delete VMC files"),
                                     QString("%1\n%2\n").arg(message, items),

@@ -1495,13 +1495,21 @@
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1034"/>
-        <source>Are you sure you want to delete this file?</source>
-        <translation>Вы уверены, что хотите удалить этот файл?</translation>
+        <source>Are you sure you want to delete this item?</source>
+        <translation>Вы уверены, что хотите удалить этот элемент?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1035"/>
+        <source>Are you sure you want to delete these items?</source>
+        <translation>Вы уверены, что хотите удалить эти элементы?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this file?</source>
+        <translation type="vanished">Вы уверены, что хотите удалить этот файл?</translation>
+    </message>
+    <message>
         <source>Are you sure you want to delete these files?</source>
-        <translation>Вы уверены, что хотите удалить эти файлы?</translation>
+        <translation type="vanished">Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1036"/>

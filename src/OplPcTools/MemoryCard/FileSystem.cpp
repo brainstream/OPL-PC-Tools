@@ -533,7 +533,7 @@ void FileSystem::validateEntryName(const QByteArray & _name)
     {
         throw MemoryCardFileSystemException(
             tr("The entry name \"%1\" is too long, the maximum length is %2 bytes")
-                .arg(_name)
+                .arg(QString::fromLatin1(_name))
                 .arg(g_max_entry_name_length));
     }
     if(!isEntryNameValid(_name))

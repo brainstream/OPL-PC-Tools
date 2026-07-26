@@ -188,7 +188,7 @@ qint64 ZisoDeviceSource::ZsoImage::read(QByteArray & _buffer)
             return output_position;
 
         qsizetype bytes_to_copy = qMin(need_to_read, can_read_bytes);
-        std::memcpy(&_buffer.data()[output_position], &block.constData()[position_in_block], bytes_to_copy);
+        memcpy(&_buffer.data()[output_position], &block.constData()[position_in_block], bytes_to_copy);
 
         need_to_read -= bytes_to_copy;
         output_position += bytes_to_copy;
@@ -204,7 +204,7 @@ qint64 ZisoDeviceSource::ZsoImage::read(QByteArray & _buffer)
 
 QByteArray ZisoDeviceSource::ZsoImage::readBlock(quint32 _index)
 {
-    if(m_index.empty() || _index >= m_index.size() - 1)
+    if(m_index.empty() || static_cast<int>(_index) >= m_index.size() - 1)
         return QByteArray();
 
     if(m_cache.isValide() && m_cache.index == _index)
@@ -213,7 +213,7 @@ QByteArray ZisoDeviceSource::ZsoImage::readBlock(quint32 _index)
     if(!m_file.seek(m_index[_index].address))
         return QByteArray();
 
-    if(m_cache.data.size() < m_header.block_size)
+    if(m_cache.data.size() < static_cast<int>(m_header.block_size))
         m_cache.data.resize(m_header.block_size);
 
     m_cache.index = _index;

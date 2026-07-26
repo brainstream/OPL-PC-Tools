@@ -102,7 +102,7 @@ bool CompressedDeviceWriter::write(DeviceReader & _reader, const QString & _dest
             if(compressed_size % 2)
             {
                 // alignement
-                cache_buffer[cache_buffer_position] = 0;
+                cache_buffer[static_cast<int>(cache_buffer_position)] = 0;
                 ++cache_buffer_position;
             }
         }

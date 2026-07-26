@@ -88,7 +88,7 @@ void GameCheatDownloader::start()
         .arg(m_game_id + ".cht");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::UserAgentHeader, APPLICATION_DISPLAY_NAME);
-    request.setTransferTimeout(std::chrono::seconds(15));
+    request.setTransferTimeout(15000);
     mp_network_replay = network->get(request);
     connect(mp_network_replay, &QNetworkReply::finished, this, [this, network] {
         mp_network_replay->deleteLater();

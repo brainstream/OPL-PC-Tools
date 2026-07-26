@@ -22,6 +22,7 @@
 #include <OplPcTools/MemoryCard/FSEntry.h>
 #include <OplPcTools/MemoryCard/Superblock.h>
 #include <OplPcTools/MemoryCard/Path.h>
+#include <QSharedPointer>
 #include <QFile>
 #include <QMutex>
 #include <cstring>

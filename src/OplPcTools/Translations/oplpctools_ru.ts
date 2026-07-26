@@ -1459,7 +1459,7 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="527"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="526"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
@@ -1474,42 +1474,42 @@
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="598"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="594"/>
         <source>Free %1 of %2</source>
         <translation>Свободно %1 из %2</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="661"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="657"/>
         <source>Upload</source>
         <translation>Записать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="682"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="678"/>
         <source>Unable to create directory &quot;%1&quot;, a file or directory with the same name already exists</source>
         <translation>Не могу создать каталог &quot;%1&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="708"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="704"/>
         <source>Unable to rename &quot;%1&quot; to &quot;%2&quot;, a file or directory with the same name already exists</source>
         <translation>Не могу переименовать &quot;%1&quot; в &quot;%2&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1037"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1033"/>
         <source>Are you sure you want to delete this file?</source>
         <translation>Вы уверены, что хотите удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1038"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1034"/>
         <source>Are you sure you want to delete these files?</source>
         <translation>Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1039"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1035"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1040"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1036"/>
         <source>Delete VMC files</source>
         <translation>Удадить файлы VMC</translation>
     </message>
@@ -2148,47 +2148,47 @@ Want to skip it?</source>
         <translation>Кодировка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="263"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="251"/>
         <source>Create Folder</source>
         <translation>Создать папку</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="254"/>
         <source>F7</source>
         <translation>F7</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="278"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="269"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="323"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="311"/>
         <source>Files</source>
         <translation>Файлы</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="326"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="314"/>
         <source>Upload Files</source>
         <translation>Записать файлы</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="329"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="317"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="341"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="329"/>
         <source>Folder</source>
         <translation>Папку</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="344"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="332"/>
         <source>Upload Folder</source>
         <translation>Записать папку</translation>
     </message>
@@ -2197,7 +2197,7 @@ Want to skip it?</source>
         <translation type="obsolete">Каталог</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="347"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="335"/>
         <source>Ctrl+Shift+U</source>
         <translation>Ctrl+Shift+U</translation>
     </message>
@@ -2206,12 +2206,12 @@ Want to skip it?</source>
         <translation type="obsolete">Экспорт</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="284"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="293"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
         <source>Download</source>
         <translation>Скачать</translation>
     </message>
@@ -2221,12 +2221,12 @@ Want to skip it?</source>
         <translation>Возможность записи в VMC является эксперементальной и может содержать ошибки. Сделайте резервные копии ваших виртуальных карт памяти перед записью. Это сообщение можно выключить в настройках.</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="308"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.ui" line="311"/>
+        <location filename="../UI/VmcDetailsActivity.ui" line="299"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>

@@ -229,22 +229,10 @@
           </property>
          </spacer>
         </item>
-        <item>
-         <widget class="QProgressBar" name="mp_progress_bar_free">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>240</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="value">
-           <number>24</number>
+        <item alignment="Qt::AlignmentFlag::AlignVCenter">
+         <widget class="QLabel" name="mp_label_free">
+          <property name="text">
+           <string notr="true"/>
           </property>
          </widget>
         </item>

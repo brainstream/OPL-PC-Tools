@@ -497,8 +497,7 @@ VmcDetailsActivity::VmcDetailsActivity(const Vmc & _vmc, QWidget * _parent /*= n
     }
     else
     {
-        mp_progress_bar_free->setValue(0);
-        mp_progress_bar_free->setDisabled(true);
+        mp_label_free->setDisabled(true);
         mp_combobox_charset->setDisabled(true);
         mp_label_charset->setDisabled(true);
     }
@@ -592,10 +591,7 @@ void VmcDetailsActivity::updateSpaceInfo()
     const uint32_t total_free_bytes = mp_vmc_fs->totalFreeBytes();
     const uint32_t total_used_bytes = mp_vmc_fs->totalUsedBytes();
     const uint32_t total_bytes = total_used_bytes + total_free_bytes;
-    mp_progress_bar_free->setMinimum(0);
-    mp_progress_bar_free->setMaximum(total_bytes);
-    mp_progress_bar_free->setValue(total_used_bytes);
-    mp_progress_bar_free->setFormat(tr("Free %1 of %2").arg(
+    mp_label_free->setText(tr("Free %1 of %2").arg(
         makeBytesDisplayString(total_free_bytes),
         makeBytesDisplayString(total_bytes)));
 }

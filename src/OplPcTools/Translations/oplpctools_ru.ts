@@ -1512,7 +1512,7 @@
         <translation type="vanished">Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1036"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1041"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>

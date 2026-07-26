@@ -646,7 +646,7 @@ void VmcDetailsActivity::renameVmc()
 void VmcDetailsActivity::showTreeContextMenu(const QPoint & _point)
 {
     QMenu menu;
-    if(mp_tree_fs->currentIndex().isValid())
+    if(!mp_tree_fs->selectionModel()->selectedRows().empty())
     {
         menu.addAction(mp_action_rename_entry);
         menu.addAction(mp_action_download);
@@ -1033,13 +1033,16 @@ void VmcDetailsActivity::deleteEntry()
                 display_items_count == 1 ?
                 tr("Are you sure you want to delete this item?") :
                 tr("Are you sure you want to delete these items?");
-            QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"));
-            QMessageBox message_box(QMessageBox::Question, tr("Delete VMC files"),
-                                    QString("%1\n%2\n").arg(message, items),
-                                    QMessageBox::Yes | QMessageBox::No);
-            message_box.setDefaultButton(QMessageBox::Yes);
-            message_box.setCheckBox(checkbox);
-            if(message_box.exec() != QMessageBox::Yes)
+            QMessageBox * message_box = new QMessageBox(
+                QMessageBox::Question, tr("Delete VMC files"),
+                QString("%1\n%2\n").arg(message, items),
+                QMessageBox::Yes | QMessageBox::No,
+                this);
+            QCheckBox * checkbox = new QCheckBox(tr("Do not ask again"), message_box);
+            connect(message_box, &QDialog::finished, message_box, &QObject::deleteLater);
+            message_box->setDefaultButton(QMessageBox::Yes);
+            message_box->setCheckBox(checkbox);
+            if(message_box->exec() != QMessageBox::Yes)
                 return;
             if(checkbox->isChecked())
                 settings.setConfirmVmcFileDeletion(false);

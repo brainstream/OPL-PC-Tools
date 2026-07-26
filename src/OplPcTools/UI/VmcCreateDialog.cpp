@@ -28,7 +28,7 @@
 using namespace OplPcTools::UI;
 
 VmcCreateDialog::VmcCreateDialog(QWidget * _parent /*= nullptr*/) :
-    QDialog(_parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
+    QDialog(_parent, Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint),
     m_is_in_progress(false)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))

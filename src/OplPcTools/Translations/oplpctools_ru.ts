@@ -560,7 +560,7 @@
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="377"/>
         <source>Move the source file if possible</source>
-        <translation>Переместить исходный файл, если возможно</translation>
+        <translation>Переместить, если возможно</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="433"/>

@@ -1001,8 +1001,9 @@ void VmcDetailsActivity::deleteEntry()
 {
     QList<QByteArray> entries;
     const MemoryCard::Path vmc_current_dir(encodePath(mp_edit_fs_path->text()));
+    bool confirmed = false;
 
-    handleErrors([this, &entries]
+    handleErrors([this, &entries, &confirmed]
     {
         const QModelIndexList selection = mp_tree_fs->selectionModel()->selectedRows();
 
@@ -1042,9 +1043,12 @@ void VmcDetailsActivity::deleteEntry()
                 return;
             if(checkbox->isChecked())
                 settings.setConfirmVmcFileDeletion(false);
+            confirmed = true;
         }
-
     });
+
+    if(!confirmed)
+        return;
 
     VmcProgressDialog * progress_dialog = new VmcProgressDialog(VmcProgressDialog::Delete, this);
     progress_dialog->setProgressRange(0, entries.count());

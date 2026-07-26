@@ -1494,22 +1494,22 @@
         <translation>Не могу переименовать &quot;%1&quot; в &quot;%2&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1033"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1034"/>
         <source>Are you sure you want to delete this file?</source>
         <translation>Вы уверены, что хотите удалить этот файл?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1034"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1035"/>
         <source>Are you sure you want to delete these files?</source>
         <translation>Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1035"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1036"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1036"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1037"/>
         <source>Delete VMC files</source>
         <translation>Удадить файлы VMC</translation>
     </message>

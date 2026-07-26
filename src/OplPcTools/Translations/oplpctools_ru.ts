@@ -1474,32 +1474,32 @@
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="594"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="598"/>
         <source>Free %1 of %2</source>
         <translation>Свободно %1 из %2</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="657"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="661"/>
         <source>Upload</source>
         <translation>Записать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="678"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="682"/>
         <source>Unable to create directory &quot;%1&quot;, a file or directory with the same name already exists</source>
         <translation>Не могу создать каталог &quot;%1&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="704"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="708"/>
         <source>Unable to rename &quot;%1&quot; to &quot;%2&quot;, a file or directory with the same name already exists</source>
         <translation>Не могу переименовать &quot;%1&quot; в &quot;%2&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1034"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1038"/>
         <source>Are you sure you want to delete this item?</source>
         <translation>Вы уверены, что хотите удалить этот элемент?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1035"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1039"/>
         <source>Are you sure you want to delete these items?</source>
         <translation>Вы уверены, что хотите удалить эти элементы?</translation>
     </message>
@@ -1512,12 +1512,12 @@
         <translation type="vanished">Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1041"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1045"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1037"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1041"/>
         <source>Delete VMC files</source>
         <translation>Удадить файлы VMC</translation>
     </message>

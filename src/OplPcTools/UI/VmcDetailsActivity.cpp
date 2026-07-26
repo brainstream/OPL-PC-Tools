@@ -538,14 +538,18 @@ void VmcDetailsActivity::hideErrorMessage()
 
 void VmcDetailsActivity::loadFileManager()
 {
-    handleErrors([this]
+    bool ok = false;
+    handleErrors([this, &ok]
     {
         std::unique_ptr<MemoryCard::FileSystem> fs(new MemoryCard::FileSystem(mr_vmc.filepath(), this));
         fs->load();
         if(mp_vmc_fs)
             delete mp_vmc_fs;
         mp_vmc_fs = fs.release();
+        ok = true;
     });
+
+    if(!ok) deleteLater();
 }
 
 QString VmcDetailsActivity::getFsEncoding() const

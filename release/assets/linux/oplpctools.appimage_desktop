@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=OPL PC Tools
+Comment=Graphical PC tools for Open PS2 Loader
+Exec=oplpctools
+Icon=oplpctools
+Categories=Game;Utility;
+StartupNotify=true
+Terminal=false
+MimeType=application/x-cd-image;

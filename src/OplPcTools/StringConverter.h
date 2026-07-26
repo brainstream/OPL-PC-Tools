@@ -29,7 +29,7 @@ private:
 
 public:
     static QStringList availableCodecs();
-    static constexpr QString latin1() { return "ISO-8859-1"; }
+    static QString latin1() { return "ISO-8859-1"; }
 };
 
 class StringConverter final

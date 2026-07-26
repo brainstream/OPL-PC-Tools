@@ -190,6 +190,7 @@ add_custom_target(misc SOURCES
     .dockerignore
     make-release-linux.sh
     release/assets/linux/make-desktop-file.sh
+    release/assets/linux/oplpctools.desktop
     release/assets/linux/oplpctools.sh
 )
 

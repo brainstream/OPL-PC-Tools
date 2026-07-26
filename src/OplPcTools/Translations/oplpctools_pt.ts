@@ -1317,27 +1317,27 @@
         <translation type="vanished">Pasta</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="481"/>
+        <location filename="../UI/GameListWidget.cpp" line="480"/>
         <source>Do not ask again</source>
         <translation>Não pedir de novo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="482"/>
+        <location filename="../UI/GameListWidget.cpp" line="481"/>
         <source>Delete Game</source>
         <translation>Deletar jogo</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="484"/>
+        <location filename="../UI/GameListWidget.cpp" line="483"/>
         <source>Are you sure you want to delete this game?</source>
         <translation>Tem certeza que quer apagar este jogo?</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="538"/>
+        <location filename="../UI/GameListWidget.cpp" line="537"/>
         <source>Download Pictures</source>
         <translation type="unfinished">Baixar imagem</translation>
     </message>
     <message>
-        <location filename="../UI/GameListWidget.cpp" line="539"/>
+        <location filename="../UI/GameListWidget.cpp" line="538"/>
         <source>There are already some pictures. Do you want to replace them?</source>
         <translation type="unfinished"></translation>
     </message>

@@ -8,6 +8,7 @@ cat > "$FILENAME" <<EOF
 Exec="$SCRIPT_DIR/oplpctools.sh"
 Icon=$SCRIPT_DIR/images/icon.png
 Name=OPL PC Tools
+Comment=Graphical PC tools for Open PS2 Loader
 StartupNotify=true
 Terminal=false
 Type=Application

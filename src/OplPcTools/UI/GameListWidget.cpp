@@ -299,8 +299,7 @@ void GameListWidget::setIconSize()
 
 void GameListWidget::showActionMenu()
 {
-    QPoint pos = mp_btn_menu->pos();
-    pos.setX(pos.x() + mp_btn_menu->width() + 3);
+    QPoint pos = mp_btn_menu->mapToGlobal(QPoint(mp_btn_menu->width() - 20, -10));
     mp_menu_action->exec(pos);
 }
 

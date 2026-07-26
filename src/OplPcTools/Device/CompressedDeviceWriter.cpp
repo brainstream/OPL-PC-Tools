@@ -78,7 +78,7 @@ bool CompressedDeviceWriter::write(DeviceReader & _reader, const QString & _dest
         {
             dest->close();
             QFile::remove(_destination);
-            throw IOException(tr("An error occurred during reading the source medium"));
+            throw IOException(tr("An error occurred during reading the source media"));
         }
 
         const int compressed_size = compressZsoBlock(src_buffer, compress_buffer);

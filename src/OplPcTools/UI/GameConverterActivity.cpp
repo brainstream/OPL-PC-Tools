@@ -177,13 +177,13 @@ QVariant GameConverterActivity::TaskListModel::headerData(int _section, Qt::Orie
     switch(_section)
     {
     case Column::Title:
-        return tr("Title");
+        return QObject::tr("Title");
     case Column::SourceFormat:
-        return tr("Source format");
+        return QObject::tr("Source format");
     case Column::TargetFormat:
-        return tr("Target format");
+        return QObject::tr("Target format");
     case Column::Status:
-        return tr("Status");
+        return QObject::tr("Status");
     default:
         return {};
     }
@@ -200,7 +200,7 @@ void GameConverterActivity::TaskListModel::addTasks(const QList<const Game *> & 
         QSharedPointer<DeviceReader> reader(new DeviceReader(source));
         if(!reader->open())
         {
-            errors << tr("Game data \"%1\" is corrupted").arg(game->title());
+            errors << QObject::tr("Game data \"%1\" is corrupted").arg(game->title());
             continue;
         }
         reader->setTitle(game->title());

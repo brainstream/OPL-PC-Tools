@@ -30,52 +30,52 @@
     <message>
         <location filename="../UI/AboutDialog.ui" line="140"/>
         <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License версия 3&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="127"/>
         <source>&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Официальная страница на GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="20"/>
         <source>About OPL PC Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Об OPL PC Tools</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="101"/>
         <source>Tools for managing PS2 disc images used in &lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Open Playstation 2 Loader&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструменты для управления образами дисков PS2, для использования в &lt;a href=&quot;https://github.com/ifcaro/Open-PS2-Loader&quot;&gt;Open Playstation 2 Loader&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyleft %1 🄯 Sergey Smolyannikov aka brainstream&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyleft %1 🄯 Сергей Смольянников aka brainstream&lt;br/&gt;&lt;a href=&quot;mailto:brainstream@yandex.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;brainstream@yandex.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="182"/>
         <source>This project uses</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот проект использует</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="188"/>
         <source>&lt;a href=&quot;https://www.qt.io&quot;&gt;Qt – a cross-platform application development framework&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://www.qt.io&quot;&gt;Qt – кроссплатформенная среда разработки приложений&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="201"/>
         <source>&lt;a href=&quot;https://github.com/lz4/lz4&quot;&gt;LZ4 – extremely fast compression algorithm&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/lz4/lz4&quot;&gt;LZ4 – экстримально быстрый алгоритм сжатия&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="214"/>
         <source>&lt;a href=&quot;https://ia903209.us.archive.org/view_archive.php?archive=/34/items/ps2-opl-cover-art-set/PS2_OPL_ART_kira.7z&quot;&gt;A large collection of game art at archive.org&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://ia903209.us.archive.org/view_archive.php?archive=/34/items/ps2-opl-cover-art-set/PS2_OPL_ART_kira.7z&quot;&gt;Огромная коллекция игровых изображений на archive.org&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../UI/AboutDialog.ui" line="230"/>
         <source>&lt;a href=&quot;https://github.com/PS2-Widescreen/OPL-Widescreen-Cheats&quot;&gt;A large collection of widescreen cheats&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/PS2-Widescreen/OPL-Widescreen-Cheats&quot;&gt;Огромная коллекция читов для широкого экрана&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Tools for managing PS2 disc images used in OPL&lt;br&gt;&lt;a href=&quot;https://github.com/brainstream/OPL-PC-Tools&quot;&gt;Official GitHub page&lt;/a&gt;</source>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../UI/AcceptCheatDialog.ui" line="14"/>
         <source>Cheat</source>
-        <translation type="unfinished"></translation>
+        <translation>Читы</translation>
     </message>
 </context>
 <context>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../UI/ChooseImportGamesDialog.ui" line="14"/>
         <source>Select Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор игр</translation>
     </message>
     <message>
         <location filename="../UI/ChooseImportGamesDialog.ui" line="20"/>
@@ -200,24 +200,19 @@
 <context>
     <name>GameCheatWidget</name>
     <message>
-        <location filename="../UI/GameCheatWidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameCheatWidget.ui" line="25"/>
         <source>Download Widescreen Cheat</source>
-        <translation type="unfinished"></translation>
+        <translation>Скачать чит для широкого экрана</translation>
     </message>
     <message>
         <location filename="../UI/GameCheatWidget.ui" line="49"/>
         <source>Delete Cheat</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить чит</translation>
     </message>
     <message>
         <location filename="../UI/GameCheatWidget.ui" line="60"/>
         <source>Save Cheat</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить чит</translation>
     </message>
 </context>
 <context>
@@ -230,7 +225,7 @@
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="150"/>
         <source>Game Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация об игре</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="97"/>
@@ -251,32 +246,32 @@
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="156"/>
         <source>Title</source>
-        <translation type="unfinished">Название</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="250"/>
         <source>Genre</source>
-        <translation type="unfinished"></translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="205"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата выпуска</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="191"/>
         <source>Developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработчик</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="220"/>
         <source>&lt;Not set&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Не установлено&gt;</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="264"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="287"/>
@@ -316,12 +311,12 @@
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="362"/>
         <source>Virtual Memory Cards</source>
-        <translation type="unfinished">Виртуальные карты памяти (VMC)</translation>
+        <translation>Виртуальные карты памяти (VMC)</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="237"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <location filename="../UI/GameConfigWidget.ui" line="405"/>
@@ -403,39 +398,34 @@
 <context>
     <name>GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.ui" line="17"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../UI/GameConverterActivity.ui" line="37"/>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="51"/>
         <source>Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертировать</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="62"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="104"/>
         <source>Add Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить игры</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="133"/>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="268"/>
         <source>Target format</source>
-        <translation type="unfinished"></translation>
+        <translation>Целевой формат</translation>
     </message>
     <message>
         <source>Status</source>
@@ -444,27 +434,27 @@
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="212"/>
         <source>Select a game to change the target format</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите игру, чтобы указать целевой формат</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="252"/>
         <source>Game Ttile</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок игры</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="274"/>
         <source>UL</source>
-        <translation type="unfinished"></translation>
+        <translation>UL</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="288"/>
         <source>ZSO</source>
-        <translation type="unfinished"></translation>
+        <translation>ZSO</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.ui" line="281"/>
         <source>ISO</source>
-        <translation type="unfinished"></translation>
+        <translation>ISO</translation>
     </message>
 </context>
 <context>
@@ -497,7 +487,7 @@
     <message>
         <location filename="../UI/GameDetailsActivity.ui" line="155"/>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation>Читы</translation>
     </message>
 </context>
 <context>
@@ -550,32 +540,32 @@
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="137"/>
         <source>Add Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить диск</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="108"/>
         <source>Add Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить образ</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="360"/>
         <source>Install as ZSO file</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить как файл ZSO</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="374"/>
         <source>If the source file type is the same as the target file type, move the source file instead of copying it</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить файл вместо копирования, если исходный формат файла совпадает с целевым</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="377"/>
         <source>Move the source file if possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить исходный файл, если возможно</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="433"/>
         <source>Select a game to change options</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите игру, чтобы указать опции</translation>
     </message>
     <message>
         <source>Media Type</source>
@@ -596,7 +586,7 @@
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="337"/>
         <source>Target</source>
-        <translation type="unfinished"></translation>
+        <translation>Целевой формат</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is the only way to run large games (larger than 4 GiB) from a USB stick. Since the OPL supports only the FAT32 file system, you should split up large files into parts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -605,12 +595,12 @@
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="343"/>
         <source>Split the file into parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Разделить файл на части</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.ui" line="350"/>
         <source>Install as ISO file</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить как файл ISO</translation>
     </message>
     <message>
         <source>Split up ISO file into parts</source>
@@ -662,7 +652,7 @@
     <message>
         <location filename="../UI/GameListWidget.ui" line="426"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат:</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="486"/>
@@ -688,43 +678,43 @@
         <location filename="../UI/GameListWidget.ui" line="516"/>
         <location filename="../UI/GameListWidget.ui" line="519"/>
         <source>Install games</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить игры</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="522"/>
         <source>Ins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ins</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="558"/>
         <location filename="../UI/GameListWidget.ui" line="561"/>
         <source>Import games</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать игры</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="564"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="591"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструменты</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="594"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="606"/>
         <source>Convert game formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертировать формат игр</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.ui" line="609"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>Install</source>
@@ -760,7 +750,7 @@
     <message>
         <location filename="../UI/GameListWidget.ui" line="579"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Pictures</source>
@@ -770,7 +760,7 @@
         <location filename="../UI/GameListWidget.ui" line="573"/>
         <location filename="../UI/GameListWidget.ui" line="576"/>
         <source>Download all pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Скачать все изображения</translation>
     </message>
 </context>
 <context>
@@ -858,13 +848,13 @@
     <name>OplPcTools::CompressedDeviceWriter</name>
     <message>
         <location filename="../Device/CompressedDeviceWriter.cpp" line="81"/>
-        <source>An error occurred during reading the source medium</source>
-        <translation type="unfinished"></translation>
+        <source>An error occurred during reading the source media</source>
+        <translation>Во время чтения исходного носителя данных произошла ошибка</translation>
     </message>
     <message>
         <location filename="../Device/CompressedDeviceWriter.cpp" line="89"/>
         <source>An error occurred during compressing the source data</source>
-        <translation type="unfinished"></translation>
+        <translation>Во время сжатия исходных данных произошла ошибка</translation>
     </message>
 </context>
 <context>
@@ -875,13 +865,13 @@
     </message>
     <message>
         <location filename="../Device/DefaultDeviceWriter.cpp" line="46"/>
-        <source>An error occurred during reading the source medium</source>
-        <translation type="unfinished"></translation>
+        <source>An error occurred during reading the source media</source>
+        <translation>Во время чтения исходного носителя данных произошла ошибка</translation>
     </message>
     <message>
         <location filename="../Device/DefaultDeviceWriter.cpp" line="56"/>
         <source>Unable to write a data into the file: &quot;%1&quot;</source>
-        <translation type="unfinished">Не могу записать данные в файл: &quot;%1&quot;</translation>
+        <translation>Не могу записать данные в файл: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -893,7 +883,7 @@
     <message>
         <location filename="../DirectoryGameInstaller.cpp" line="70"/>
         <source>It is impossible to move the file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно переместить файл &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../DirectoryGameInstaller.cpp" line="76"/>
@@ -905,7 +895,7 @@
         <translation type="vanished">Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>An error occurred during reading the source medium</source>
+        <source>An error occurred during reading the source media</source>
         <translation type="vanished">Во время чтения источника данных возникла ошибка</translation>
     </message>
     <message>
@@ -926,17 +916,17 @@
     <message>
         <location filename="../GameCheatManager.cpp" line="82"/>
         <source>The cheat download has already started</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка чита уже начата</translation>
     </message>
     <message>
         <location filename="../GameCheatManager.cpp" line="104"/>
         <source>Cheat for this game not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Чит для этог игры не найден</translation>
     </message>
     <message>
         <location filename="../GameCheatManager.cpp" line="107"/>
         <source>Unable to download the cheat, a network error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу скачать чит, ошибка сети</translation>
     </message>
 </context>
 <context>
@@ -991,17 +981,17 @@
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="530"/>
         <source>The entry name must not be empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя записи не может быть пустым</translation>
     </message>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="535"/>
         <source>The entry name &quot;%1&quot; is too long, the maximum length is %2 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя записи &quot;%1&quot; слишком длинное, максимальная длина: %2 байт</translation>
     </message>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="542"/>
         <source>The entry name must not contain following symbols: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя записи не должно содержать следующих символов: %1</translation>
     </message>
 </context>
 <context>
@@ -1075,22 +1065,22 @@
     <message>
         <location filename="../UI/GameCheatWidget.cpp" line="75"/>
         <source>Cheat saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Чит сохранён</translation>
     </message>
     <message>
         <location filename="../UI/GameCheatWidget.cpp" line="82"/>
         <source>Are you sure you want to delete the cheat?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить чит?</translation>
     </message>
     <message>
         <location filename="../UI/GameCheatWidget.cpp" line="99"/>
         <source>Downloading cheat</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка чита</translation>
     </message>
     <message>
         <location filename="../UI/GameCheatWidget.cpp" line="81"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Подтверждение</translation>
+        <translation>Подтверждение</translation>
     </message>
 </context>
 <context>
@@ -1144,7 +1134,8 @@
         <location filename="../UI/GameConfigWidget.cpp" line="491"/>
         <source>Are you sure you want to delete the configuration file?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить файл конфигурации?
+%1</translation>
     </message>
     <message>
         <source>Are you sure you want to delete file?
@@ -1161,49 +1152,67 @@
 <context>
     <name>OplPcTools::UI::GameConverterActivity</name>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="180"/>
         <source>Title</source>
-        <translation type="unfinished">Название</translation>
+        <translation type="vanished">Название</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="182"/>
         <source>Source format</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Исходный формат</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="184"/>
         <source>Target format</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Целевой формат</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="186"/>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation type="vanished">Статус</translation>
     </message>
     <message>
-        <location filename="../UI/GameConverterActivity.cpp" line="203"/>
         <source>Game data &quot;%1&quot; is corrupted</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Данные игры &quot;%1&quot; повреждены</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="392"/>
         <source>[Multiple games selected]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Несколько игр выбрано]</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="578"/>
         <source>Done</source>
-        <translation type="unfinished">Готово</translation>
+        <translation>Готово</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="578"/>
         <source>Converting complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертирование завершено</translation>
     </message>
     <message>
         <location filename="../UI/GameConverterActivity.cpp" line="639"/>
         <source>Canceled by user</source>
-        <translation type="unfinished">Отменено пользователем</translation>
+        <translation>Отменено пользователем</translation>
+    </message>
+</context>
+<context>
+    <name>OplPcTools::UI::GameConverterActivity::TaskListModel</name>
+    <message>
+        <source>Title</source>
+        <translation type="obsolete">Название</translation>
+    </message>
+    <message>
+        <source>Source format</source>
+        <translation type="obsolete">Исходный формат</translation>
+    </message>
+    <message>
+        <source>Target format</source>
+        <translation type="obsolete">Целевой формат</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="obsolete">Статус</translation>
+    </message>
+    <message>
+        <source>Game data &quot;%1&quot; is corrupted</source>
+        <translation type="obsolete">Данные игры &quot;%1&quot; повреждены</translation>
     </message>
 </context>
 <context>
@@ -1248,37 +1257,37 @@
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="207"/>
         <source>Title</source>
-        <translation type="unfinished">Название</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="209"/>
         <source>Source</source>
-        <translation type="unfinished">Источник</translation>
+        <translation>Источник</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="211"/>
         <source>Target</source>
-        <translation type="unfinished"></translation>
+        <translation>Целевой формат</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="213"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="215"/>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="461"/>
         <source>[Multiple games selected]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Несколько игры выбрано]</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="512"/>
         <source>All Supported Images (%1 %2 %3 %4);;ISO Images (%1);;Compressed ISO Images (%2);;Bin Files (%3);;Nero Images (%4)</source>
-        <translation type="unfinished"></translation>
+        <translation>Все поддерживаемые форматы образов (%1 %2 %3 %4);;Образы ISO (%1);;Сжатые ISO образы (%2);;Файлы bin (%3);;Образы Nero (%4)</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="520"/>
@@ -1288,7 +1297,7 @@
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="563"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестный формат файла</translation>
     </message>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="576"/>
@@ -1335,12 +1344,12 @@
     <message>
         <location filename="../UI/GameListWidget.cpp" line="537"/>
         <source>Download Pictures</source>
-        <translation type="unfinished">Скачать изображения</translation>
+        <translation>Скачать изображения</translation>
     </message>
     <message>
         <location filename="../UI/GameListWidget.cpp" line="538"/>
         <source>There are already some pictures. Do you want to replace them?</source>
-        <translation type="unfinished"></translation>
+        <translation>Уже имеются некоторые изображения. Вы хотите заменить их?</translation>
     </message>
 </context>
 <context>
@@ -1358,7 +1367,7 @@
     <message>
         <location filename="../UI/IsoRestorerActivity.cpp" line="106"/>
         <source>Unable to read the game source</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу прочитать исходные данные игры</translation>
     </message>
     <message>
         <location filename="../UI/IsoRestorerActivity.cpp" line="130"/>
@@ -1467,42 +1476,42 @@
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="598"/>
         <source>Free %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Свободно %1 из %2</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="661"/>
         <source>Upload</source>
-        <translation type="unfinished"></translation>
+        <translation>Записать</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="682"/>
         <source>Unable to create directory &quot;%1&quot;, a file or directory with the same name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу создать каталог &quot;%1&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="708"/>
         <source>Unable to rename &quot;%1&quot; to &quot;%2&quot;, a file or directory with the same name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу переименовать &quot;%1&quot; в &quot;%2&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1037"/>
         <source>Are you sure you want to delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить этот файл?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1038"/>
         <source>Are you sure you want to delete these files?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1039"/>
         <source>Do not ask again</source>
-        <translation type="unfinished">Больше не спрашивать</translation>
+        <translation>Больше не спрашивать</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="1040"/>
         <source>Delete VMC files</source>
-        <translation type="unfinished"></translation>
+        <translation>Удадить файлы VMC</translation>
     </message>
     <message>
         <source>Delete VMC</source>
@@ -1547,12 +1556,12 @@
     <message>
         <location filename="../UI/VmcFileNameDialog.cpp" line="54"/>
         <source>Directory Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя каталога</translation>
     </message>
     <message>
         <location filename="../UI/VmcFileNameDialog.cpp" line="54"/>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя файла</translation>
     </message>
 </context>
 <context>
@@ -1604,7 +1613,7 @@
     </message>
     <message>
         <location filename="../UlConfigGameInstaller.cpp" line="89"/>
-        <source>An error occurred during reading the source medium</source>
+        <source>An error occurred during reading the source media</source>
         <translation>Во время чтения источника данных произошла ошибка</translation>
     </message>
     <message>
@@ -1672,6 +1681,31 @@
         <location filename="../UI/GameInstallerActivity.cpp" line="179"/>
         <source>Rolling back...</source>
         <translation>Откат изменений...</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="180"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="182"/>
+        <source>Source format</source>
+        <translation>Исходный формат</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="184"/>
+        <source>Target format</source>
+        <translation>Целевой формат</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="186"/>
+        <source>Status</source>
+        <translation>Статус</translation>
+    </message>
+    <message>
+        <location filename="../UI/GameConverterActivity.cpp" line="203"/>
+        <source>Game data &quot;%1&quot; is corrupted</source>
+        <translation>Данные игры &quot;%1&quot; повреждены</translation>
     </message>
     <message>
         <location filename="../UI/GameRenameDialog.cpp" line="32"/>
@@ -1752,12 +1786,12 @@
     <message>
         <location filename="../File.h" line="74"/>
         <source>Unable to delete file: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу удалить файл: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../UI/VmcExporter.cpp" line="70"/>
         <source>Source path not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь источника не найден</translation>
     </message>
     <message>
         <location filename="../UI/VmcExporter.cpp" line="83"/>
@@ -1767,17 +1801,17 @@
     <message>
         <location filename="../UI/VmcExporter.cpp" line="111"/>
         <source>Unable to open VMC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу открыть файл VMC</translation>
     </message>
     <message>
         <location filename="../UI/VmcExporter.cpp" line="116"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
-        <translation type="unfinished">Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
+        <translation>Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
     <message>
         <location filename="../UI/VmcExporter.cpp" line="145"/>
         <source>Overwrite confirmation</source>
-        <translation type="unfinished">Подтверждение перезаписи</translation>
+        <translation>Подтверждение перезаписи</translation>
     </message>
     <message>
         <source>Unable to open VMC file &quot;%1&quot;</source>
@@ -1806,24 +1840,26 @@
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="237"/>
         <source>Target exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Цель существует</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="247"/>
         <source>Unable to overwrite the target directory with file &quot;%1&quot;
 Want to skip it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу перезаписать целевой каталог файлом &quot;%1&quot;
+Пропустить?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="248"/>
         <source>Unable to overwrite the target file with directory &quot;%1&quot;
 Want to skip it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу перезаписать целевой файл каталогом &quot;%1&quot;
+Пропустить?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
         <source>The target file &quot;%1&quot; already exists. Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Целевой файл &quot;%1&quot; уже существует. Перезаписать?</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="379"/>
@@ -1848,22 +1884,22 @@ Want to skip it?</source>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="44"/>
         <source>Not enough free space</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно свободного места</translation>
     </message>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="346"/>
         <source>The entry is not a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись не является файлом</translation>
     </message>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="430"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись %1 в кластере %2 не является каталогом</translation>
     </message>
     <message>
         <location filename="../MemoryCard/FATable.h" line="119"/>
         <source>FAT cluster index %1 is out of range</source>
-        <translation type="unfinished"></translation>
+        <translation>Индекс кластера FAT %1 выходит за пределы допустимого диапазона</translation>
     </message>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="344"/>
@@ -1877,7 +1913,7 @@ Want to skip it?</source>
     <message>
         <location filename="../File.cpp" line="84"/>
         <source>File already exists: &quot;%1&quot;</source>
-        <translation type="unfinished">Файл уже существует: &quot;%1&quot;</translation>
+        <translation>Файл уже существует: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../File.cpp" line="99"/>
@@ -1937,7 +1973,7 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/GameInstallerActivity.cpp" line="191"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
 </context>
 <context>
@@ -1969,12 +2005,12 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="217"/>
         <source>Store library configuration in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять конфигурацию библиотеки в %1</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="189"/>
         <source>I have backups of my VMCs, do not show warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>У меня есть резервные копии виртуальных карт памяти, не показывать предупреждение</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="47"/>
@@ -1994,7 +2030,7 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="68"/>
         <source>Confirm the removal of a VMC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтверждать удаление файлов с виртуальных карт памяти</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="89"/>
@@ -2014,27 +2050,27 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="108"/>
         <source>Compress ISO to ZSO</source>
-        <translation type="unfinished"></translation>
+        <translation>Сжимать ISO в ZSO</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="115"/>
         <source>Move ISO or ZSO images instead of copying them if possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемещать ISO или ZSO образы вместо копирования, если возможно</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="197"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Продвинутые</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="203"/>
         <source>Validate ul.cfg (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Валидировать ul.cfg (рекомендуется)</translation>
     </message>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="210"/>
         <source>Validate PLAYSTATION ISO target (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Валидировать назначение ISO PLAYSTATION (рекомендуется)</translation>
     </message>
     <message>
         <source>Move ISO instead of copy</source>
@@ -2043,7 +2079,7 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/SettingsDialog.ui" line="122"/>
         <source>Add game ID to ISO or ZSO filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавлять ID игры к именам файлов ISO или ZSO</translation>
     </message>
     <message>
         <source>Add a game ID to a filename</source>
@@ -2114,47 +2150,47 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="263"/>
         <source>Create Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать папку</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="266"/>
         <source>F7</source>
-        <translation type="unfinished"></translation>
+        <translation>F7</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="278"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="281"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="323"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="326"/>
         <source>Upload Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Записать файлы</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="329"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="341"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Папку</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="344"/>
         <source>Upload Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Записать папку</translation>
     </message>
     <message>
         <source>Directory</source>
@@ -2163,7 +2199,7 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="347"/>
         <source>Ctrl+Shift+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+U</translation>
     </message>
     <message>
         <source>Export</source>
@@ -2172,27 +2208,27 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="296"/>
         <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="293"/>
         <source>Download</source>
-        <translation type="unfinished">Скачать</translation>
+        <translation>Скачать</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="200"/>
         <source>Writing to VMC is an experimental feature that may contain bugs. Be sure to back up your VMC before writing. This message can be disabled in the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Возможность записи в VMC является эксперементальной и может содержать ошибки. Сделайте резервные копии ваших виртуальных карт памяти перед записью. Это сообщение можно выключить в настройках.</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="308"/>
         <source>Rename</source>
-        <translation type="unfinished">Переименовать</translation>
+        <translation>Переименовать</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.ui" line="311"/>
         <source>F2</source>
-        <translation type="unfinished"></translation>
+        <translation>F2</translation>
     </message>
     <message>
         <source>Encoding</source>
@@ -2202,49 +2238,49 @@ Want to skip it?</source>
 <context>
     <name>VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="147"/>
+        <location filename="../UI/VmcListWidget.ui" line="153"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="191"/>
+        <location filename="../UI/VmcListWidget.ui" line="197"/>
         <source>Create</source>
         <translation>Создать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="194"/>
+        <location filename="../UI/VmcListWidget.ui" line="200"/>
         <source>Create VMC</source>
         <translation>Создать VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="206"/>
+        <location filename="../UI/VmcListWidget.ui" line="212"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="209"/>
+        <location filename="../UI/VmcListWidget.ui" line="215"/>
         <source>Delete VMC</source>
         <translation>Удалить VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="221"/>
+        <location filename="../UI/VmcListWidget.ui" line="227"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="224"/>
+        <location filename="../UI/VmcListWidget.ui" line="230"/>
         <source>Rename VMC</source>
         <translation>Переименовать VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="236"/>
+        <location filename="../UI/VmcListWidget.ui" line="242"/>
         <source>Properties</source>
         <translation>Свойства</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.ui" line="239"/>
+        <location filename="../UI/VmcListWidget.ui" line="245"/>
         <source>Alt+Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Return</translation>
     </message>
     <message>
         <source>Export</source>
@@ -2256,12 +2292,12 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="142"/>
         <source>Uploading</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись</translation>
     </message>
     <message>
         <location filename="../UI/VmcDetailsActivity.cpp" line="145"/>
         <source>Deleting</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаление</translation>
     </message>
 </context>
 <context>
@@ -2299,12 +2335,12 @@ Want to skip it?</source>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="177"/>
         <source>Used</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовано</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="202"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Свободно</translation>
     </message>
     <message>
         <location filename="../UI/VmcPropertiesDialog.ui" line="227"/>

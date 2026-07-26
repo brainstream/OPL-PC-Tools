@@ -68,7 +68,8 @@ fi
 
 BASE_IMAGE="debian:bookworm"
 QT_VERSION="6.9.1"
-LOCALES="ru pt_BR"
+# White space separated locales
+LOCALES="ru"
 
 echo ""
 echo "======= Build configuration ======="
@@ -102,36 +103,36 @@ mkdir -p ./release
 if [[ "$TARGET" == "all" || "$TARGET" == "tarball" ]]; then
     echo ""
     echo "=== Building tarball ==="
-    $CRI_CTL build \
+    "$CRI_CTL" build \
         "${BUILD_ARGS[@]}" \
         --target tarball \
         --tag oplpctools-tarball \
         -f Dockerfile \
         .
-    $CRI_CTL create --name oplpctools-tarball oplpctools-tarball:latest
-    $CRI_CTL cp oplpctools-tarball:/oplpctools/oplpctools_linux_${VERSION}_amd64.tar.gz ./release/
-    $CRI_CTL rm oplpctools-tarball
-    $CRI_CTL image rm -f oplpctools-tarball:latest 2>/dev/null || true
+    "$CRI_CTL" create --name oplpctools-tarball oplpctools-tarball:latest
+    "$CRI_CTL" cp "oplpctools-tarball:/oplpctools/oplpctools_linux_${VERSION}_amd64.tar.gz" "./release/"
+    "$CRI_CTL" rm oplpctools-tarball
+    "$CRI_CTL" image rm -f oplpctools-tarball:latest 2>/dev/null || true
     echo "Tarball: ./release/oplpctools_linux_${VERSION}_amd64.tar.gz"
 fi
 
 if [[ "$TARGET" == "all" || "$TARGET" == "appimage" ]]; then
     echo ""
     echo "=== Building AppImage ==="
-    $CRI_CTL build \
+    "$CRI_CTL" build \
         "${BUILD_ARGS[@]}" \
         --target appimage \
         --tag oplpctools-appimage \
         -f Dockerfile \
         .
-    $CRI_CTL create --name oplpctools-appimage oplpctools-appimage:latest
-    $CRI_CTL cp oplpctools-appimage:/oplpctools/oplpctools_${VERSION}_x86_64.AppImage ./release/
-    $CRI_CTL rm oplpctools-appimage
-    $CRI_CTL image rm -f oplpctools-appimage:latest 2>/dev/null || true
+    "$CRI_CTL" create --name oplpctools-appimage oplpctools-appimage:latest
+    "$CRI_CTL" cp "oplpctools-appimage:/oplpctools/oplpctools_${VERSION}_x86_64.AppImage" "./release/"
+    "$CRI_CTL" rm oplpctools-appimage
+    "$CRI_CTL" image rm -f oplpctools-appimage:latest 2>/dev/null || true
     echo "AppImage: ./release/oplpctools_${VERSION}_x86_64.AppImage"
 fi
 
 echo ""
 echo "=== Done ==="
 echo "Artifacts in ./release/:"
-ls -lh ./release/oplpctools_linux_${VERSION}_amd64.tar.gz ./release/oplpctools_${VERSION}_x86_64.AppImage 2>/dev/null
+ls -lh "./release/oplpctools_linux_${VERSION}_amd64.tar.gz" "./release/oplpctools_${VERSION}_x86_64.AppImage" 2>/dev/null

@@ -86,7 +86,7 @@ bool UlConfigGameInstaller::performInstallation()
             {
                 part->close();
                 rollback();
-                throw IOException(tr("An error occurred during reading the source medium"));
+                throw IOException(tr("An error occurred during reading the source media"));
             }
             else if(read_bytes > 0)
             {

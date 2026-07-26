@@ -84,6 +84,12 @@
       </item>
       <item>
        <widget class="QToolButton" name="mp_btn_properties">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string notr="true"/>
         </property>

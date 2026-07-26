@@ -43,7 +43,7 @@ bool DefaultDeviceWriter::write(DeviceReader & _reader, const QString & _destina
         {
             dest->close();
             QFile::remove(_destination);
-            throw IOException(tr("An error occurred during reading the source medium"));
+            throw IOException(tr("An error occurred during reading the source media"));
         }
         else if(read_bytes > 0)
         {

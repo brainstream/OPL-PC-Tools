@@ -331,6 +331,33 @@ RUN ls -la /opt/qt6/bin/qmake && \
     export PKG_CONFIG_PATH="/opt/qt6/lib/pkgconfig:${PKG_CONFIG_PATH:-}" && \
     linuxdeploy --appdir AppDir \
         --plugin qt \
+    && \
+    cp -Lv /opt/qt6/plugins/platforms/libqwayland-generic.so AppDir/usr/plugins/platforms/ && \
+    cp -Lv /opt/qt6/plugins/platforms/libqwayland-egl.so AppDir/usr/plugins/platforms/ 2>/dev/null || true && \
+    mkdir -p AppDir/usr/plugins/wayland-decoration-client && \
+    cp -Lv /opt/qt6/plugins/wayland-decoration-client/* AppDir/usr/plugins/wayland-decoration-client/ 2>/dev/null || true && \
+    mkdir -p AppDir/usr/plugins/wayland-shell-integration && \
+    cp -Lv /opt/qt6/plugins/wayland-shell-integration/* AppDir/usr/plugins/wayland-shell-integration/ 2>/dev/null || true && \
+    mkdir -p AppDir/usr/plugins/wayland-graphics-integration-client && \
+    cp -Lv /opt/qt6/plugins/wayland-graphics-integration-client/* AppDir/usr/plugins/wayland-graphics-integration-client/ 2>/dev/null || true && \
+    for lib in \
+        libQt6WaylandClient.so.6 \
+        libQt6WaylandEglClientHwIntegration.so.6 \
+        libQt6WaylandCompositor.so.6; do \
+        cp -Lv "/opt/qt6/lib/$lib" AppDir/usr/lib/ 2>/dev/null || true; \
+    done && \
+    for search_dir in /opt/qt6/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu; do \
+        for pattern in \
+            "libwayland-client.so.*" \
+            "libwayland-egl.so.*" \
+            "libwayland-cursor.so.*" \
+            "libxkbcommon.so.*"; do \
+            for f in "$search_dir"/$pattern; do \
+                [ -f "$f" ] && cp -Lv "$f" AppDir/usr/lib/ || true; \
+            done; \
+        done; \
+    done && \
+    linuxdeploy --appdir AppDir \
         --output appimage \
         --exclude-library "libssh*" \
         --exclude-library "libnss*" \

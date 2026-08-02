@@ -91,7 +91,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;License: GNU General Public License Version 3&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, верисия 3&lt;/a</translation>
+        <translation type="vanished">&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.ru.html&quot;&gt;Стандартная общественная лицензия GNU, версия 3&lt;/a</translation>
     </message>
 </context>
 <context>

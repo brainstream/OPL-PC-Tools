@@ -133,8 +133,8 @@ void FileSystem::readSuperblock()
     read(0, reinterpret_cast<char *>(sb.data()), sizeof(Superblock));
     validateSuperblock(*sb);
     mp_info = new FSInfo;
-    mp_info->magic = QString::fromLatin1(sb->magic, sizeof(sb->magic));
-    mp_info->version= QString::fromLatin1(sb->version, sizeof(sb->version));
+    mp_info->magic = QString::fromLatin1(sb->magic, std::min(sizeof(sb->magic), std::strlen(sb->magic)));
+    mp_info->version= QString::fromLatin1(sb->version, std::min(sizeof(sb->version), std::strlen(sb->version)));
     mp_info->pagesize = sb->pagesize;
     mp_info->pages_per_cluster = sb->pages_per_cluster;
     mp_info->pages_per_block = sb->pages_per_block;

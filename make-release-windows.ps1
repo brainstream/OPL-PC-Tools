@@ -11,15 +11,27 @@ $ErrorActionPreference = 'Stop'
 $MSYS2Dir = 'C:\msys64'
 $QtVersion = '6.10.0'
 $Qt6Dir = "C:\Qt6\$QtVersion\mingw_64"
+$Locales = @('ru')
 $BuildDir = Join-Path $PSScriptRoot 'build/windows-amd64'
 $ReleaseDir = Join-Path $PSScriptRoot 'release'
 $OutputDir = Join-Path $ReleaseDir 'oplpctools'
 $ZipPath = Join-Path $ReleaseDir "oplpctools_windows_${Version}_amd64.zip"
 
-Write-Host "============================================================"
-Write-Host " OPL PC Tools - Windows Build & Package (amd64)"
-Write-Host " Version: $Version"
-Write-Host "============================================================"
+Write-Host ""
+Write-Host "======= Build configuration ======="
+Write-Host "  Version:           $Version"
+Write-Host "  Qt version:        $QtVersion"
+Write-Host "  Qt dir:            $Qt6Dir"
+Write-Host "  Locales:           $($Locales -join ' ')"
+Write-Host "  MSYS2 dir:         $MSYS2Dir"
+Write-Host "==================================="
+Write-Host ""
+
+$answer = Read-Host "Continue? [Y/n] "
+if ($answer -match '^(n|no)$') {
+    Write-Host "Aborted."
+    exit 0
+}
 
 $env:PATH = "$MSYS2Dir\mingw64\bin;$Qt6Dir\bin;$env:PATH"
 
@@ -96,10 +108,24 @@ Write-Host "Copying exe..."
 Copy-Item -LiteralPath $ExePath -Destination $DestExe -Force
 
 Write-Host "Running windeployqt..."
-& windeployqt --release --qmldir (Join-Path $PSScriptRoot 'src/OplPcTools') $DestExe
+& windeployqt --release --no-translations --qmldir (Join-Path $PSScriptRoot 'src/OplPcTools') $DestExe
 if ($LASTEXITCODE -ne 0) {
     Write-Host "windeployqt error"
     exit 1
+}
+
+Write-Host "Copying translations..."
+$QtTranslationsDir = Join-Path $Qt6Dir 'translations'
+foreach ($locale in $Locales) {
+    foreach ($qm in @("qt_${locale}.qm", "qtbase_${locale}.qm")) {
+        $src = Join-Path $QtTranslationsDir $qm
+        if (Test-Path -LiteralPath $src) {
+            Copy-Item -LiteralPath $src -Destination (Join-Path $OutputDir $qm)
+        }
+    }
+}
+foreach ($qmFile in Get-ChildItem -Path $BuildDir -Filter 'oplpctools_*.qm' -File) {
+    Copy-Item -LiteralPath $qmFile.FullName -Destination (Join-Path $OutputDir $qmFile.Name)
 }
 
 Write-Host "Copying MinGW runtime DLLs..."

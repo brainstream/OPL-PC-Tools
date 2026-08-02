@@ -11,18 +11,16 @@ set -e
 
 function print_usage () {
     echo Usage:
-    echo "  $(basename "$0") -v <version> [-t <target>] [-y]"
+    echo "  $(basename "$0") -v <version> [-t <target>]"
     echo ""
     echo "  Options:"
     echo "    -v    OPL PC Tools version (required)"
     echo "    -t    Build target: all, tarball, appimage (default: all)"
-    echo "    -y    Skip confirmation prompt"
 }
 
 TARGET=all
-AUTO_YES=false
 
-while getopts ":v:t:y" name; do
+while getopts ":v:t:" name; do
     case $name in
         v)
             VERSION=$OPTARG
@@ -34,9 +32,6 @@ while getopts ":v:t:y" name; do
                 print_usage
                 exit 1
             fi
-        ;;
-        y)
-            AUTO_YES=true
         ;;
         \?)
             echo "Invalid option $OPTARG" >&2
@@ -81,15 +76,13 @@ echo "  Qt version:        $QT_VERSION"
 echo "  Container engine:  $CRI_CTL"
 echo "==================================="
 
-if ! $AUTO_YES; then
-    read -rp "Continue? [Y/n] " answer
-    case "$answer" in
-        [nN]|[nN][oO])
-            echo "Aborted."
-            exit 0
-        ;;
-    esac
-fi
+read -rp "Continue? [Y/n] " answer
+case "$answer" in
+    [nN]|[nN][oO])
+        echo "Aborted."
+        exit 0
+    ;;
+esac
 
 BUILD_ARGS=(
     --build-arg "VERSION=$VERSION"
@@ -126,13 +119,13 @@ if [[ "$TARGET" == "all" || "$TARGET" == "appimage" ]]; then
         -f Dockerfile \
         .
     "$CRI_CTL" create --name oplpctools-appimage oplpctools-appimage:latest
-    "$CRI_CTL" cp "oplpctools-appimage:/oplpctools/oplpctools_${VERSION}_x86_64.AppImage" "./release/"
+    "$CRI_CTL" cp "oplpctools-appimage:/oplpctools/oplpctools_${VERSION}_amd64.AppImage" "./release/"
     "$CRI_CTL" rm oplpctools-appimage
     "$CRI_CTL" image rm -f oplpctools-appimage:latest 2>/dev/null || true
-    echo "AppImage: ./release/oplpctools_${VERSION}_x86_64.AppImage"
+    echo "AppImage: ./release/oplpctools_${VERSION}_amd64.AppImage"
 fi
 
 echo ""
 echo "=== Done ==="
 echo "Artifacts in ./release/:"
-ls -lh "./release/oplpctools_linux_${VERSION}_amd64.tar.gz" "./release/oplpctools_${VERSION}_x86_64.AppImage" 2>/dev/null
+ls -lh "./release/oplpctools_linux_${VERSION}_amd64.tar.gz" "./release/oplpctools_${VERSION}_amd64.AppImage" 2>/dev/null

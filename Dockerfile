@@ -364,4 +364,4 @@ RUN ls -la /opt/qt6/bin/qmake && \
         --exclude-library "libldap*" \
         --exclude-library "libqpdf*" \
     && \
-    mv *.AppImage oplpctools_${VERSION}_x86_64.AppImage
+    mv *.AppImage oplpctools_${VERSION}_amd64.AppImage

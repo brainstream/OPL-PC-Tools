@@ -5,22 +5,24 @@
 # ./make-release-linux.sh -v 4.0
 # ./make-release-linux.sh -v 4.0 -t tarball
 # ./make-release-linux.sh -v 4.0 -t appimage
+# ./make-release-linux.sh -v 4.0 -s "(debian)"
 #
 
 set -e
 
 function print_usage () {
     echo Usage:
-    echo "  $(basename "$0") -v <version> [-t <target>]"
+    echo "  $(basename "$0") -v <version> [-t <target>] [-s <suffix>]"
     echo ""
     echo "  Options:"
     echo "    -v    OPL PC Tools version (required)"
     echo "    -t    Build target: all, tarball, appimage (default: all)"
+    echo "    -s    Version suffix, e.g. \"(debian)\" (optional; empty means no suffix)"
 }
 
 TARGET=all
 
-while getopts ":v:t:" name; do
+while getopts ":v:t:s:" name; do
     case $name in
         v)
             VERSION=$OPTARG
@@ -32,6 +34,9 @@ while getopts ":v:t:" name; do
                 print_usage
                 exit 1
             fi
+        ;;
+        s)
+            SUFFIX=$OPTARG
         ;;
         \?)
             echo "Invalid option $OPTARG" >&2
@@ -70,6 +75,7 @@ echo ""
 echo "======= Build configuration ======="
 echo "  Version:           $VERSION"
 echo "  Target:            $TARGET"
+echo "  Suffix:            ${SUFFIX:-<none>}"
 echo "  Locales:           $LOCALES"
 echo "  Base image:        $BASE_IMAGE"
 echo "  Qt version:        $QT_VERSION"
@@ -86,6 +92,7 @@ esac
 
 BUILD_ARGS=(
     --build-arg "VERSION=$VERSION"
+    --build-arg "VERSION_SUFFIX=$SUFFIX"
     --build-arg "BASE_IMAGE=$BASE_IMAGE"
     --build-arg "QT_VERSION=$QT_VERSION"
     --build-arg "LOCALES=$LOCALES"

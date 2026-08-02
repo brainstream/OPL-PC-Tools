@@ -105,6 +105,7 @@ FROM $BASE_IMAGE AS app-builder
 
 ARG VERSION
 ARG LOCALES
+ARG VERSION_SUFFIX
 
 COPY --from=qt-builder /opt/qt6 /opt/qt6
 
@@ -167,7 +168,7 @@ WORKDIR /oplpctools/src
 
 RUN mkdir build && \
     cd build && \
-    cmake -G Ninja -DQT6_DIR=/opt/qt6 .. && \
+    cmake -G Ninja -DQT6_DIR=/opt/qt6 -DOPT_VERSION_SUFFIX="$VERSION_SUFFIX" .. && \
     ninja && \
     patchelf --remove-rpath oplpctools && \
     strip -s --strip-unneeded oplpctools

@@ -35,7 +35,7 @@ endif()
 set(OPT_EXE_NAME "oplpctools")
 set(OPT_VERSION_MAJOR  4)
 set(OPT_VERSION_MINOR  0)
-set(OPT_VERSION_SUFFIX "(development)")
+set(OPT_VERSION_SUFFIX "(development)" CACHE STRING "Version suffix (leave empty to omit)")
 set(OPT_MIN_QT6_VERSION "6.8.0")
 set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 
@@ -166,9 +166,13 @@ target_compile_definitions(${OPT_EXE_NAME} PRIVATE
     -DQT_DEPRECATED_WARNINGS
     -D_OPLPCTOOLS_VERSION_MAJOR=${OPT_VERSION_MAJOR}
     -D_OPLPCTOOLS_VERSION_MINOR=${OPT_VERSION_MINOR}
-    -D_OPLPCTOOLS_VERSION_SUFFIX=${OPT_VERSION_SUFFIX}
     -D_OPLPCTOOLS_EXE=${OPT_EXE_NAME}
 )
+if(NOT "${OPT_VERSION_SUFFIX}" STREQUAL "")
+    target_compile_definitions(${OPT_EXE_NAME} PRIVATE
+        -D_OPLPCTOOLS_VERSION_SUFFIX=${OPT_VERSION_SUFFIX}
+    )
+endif()
 
 #######################
 # Localization

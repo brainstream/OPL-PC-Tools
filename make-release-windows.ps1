@@ -3,7 +3,11 @@
 param(
     [Parameter(Mandatory = $true)]
     [Alias('v')]
-    [string]$Version
+    [string]$Version,
+
+    [Parameter()]
+    [Alias('s')]
+    [string]$VersionSuffix
 )
 
 $ErrorActionPreference = 'Stop'
@@ -20,6 +24,7 @@ $ZipPath = Join-Path $ReleaseDir "oplpctools_windows_${Version}_amd64.zip"
 Write-Host ""
 Write-Host "======= Build configuration ======="
 Write-Host "  Version:           $Version"
+Write-Host "  Version suffix:    $VersionSuffix"
 Write-Host "  Qt version:        $QtVersion"
 Write-Host "  Qt dir:            $Qt6Dir"
 Write-Host "  Locales:           $($Locales -join ' ')"
@@ -68,7 +73,7 @@ New-Item -ItemType Directory -Force -Path $BuildDir | Out-Null
 Push-Location $BuildDir
 try {
     Write-Host "Configuring CMake..."
-    & cmake $PSScriptRoot -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_PREFIX_PATH=$Qt6Dir"
+    & cmake $PSScriptRoot -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_PREFIX_PATH=$Qt6Dir" "-DOPT_VERSION_SUFFIX=$VersionSuffix"
     if ($LASTEXITCODE -ne 0) {
         Write-Host "CMake configuration error"
         exit 1

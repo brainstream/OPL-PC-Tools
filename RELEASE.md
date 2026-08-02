@@ -30,13 +30,21 @@ built from source, so the first run takes a long time.
 ./make-release-linux.sh -v <version>
 ./make-release-linux.sh -v <version> -t tarball
 ./make-release-linux.sh -v <version> -t appimage
-./make-release-linux.sh -v <version> -y
+./make-release-linux.sh -v <version> -s "(debian)"
 ```
 
-| Option         | Description                                    |
-|----------------|------------------------------------------------|
-| `-v <version>` | OPL PC Tools version (required)                |
-| `-t <target>`  | Target: `all` (default), `tarball`, `appimage` |
+| Option           | Description                                    |
+|------------------|------------------------------------------------|
+| `-v <version>`   | OPL PC Tools version (required)                |
+| `-t <target>`    | Target: `all` (default), `tarball`, `appimage` |
+| `-s <suffix>`    | Version suffix, e.g. `"(debian)"` (optional)  |
+
+If `-s` is omitted, the version suffix is not applied (the version is
+displayed as `4.0`). A regular CMake build (without the release scripts)
+keeps the default suffix `(development)`.
+
+The suffix does not affect the name of the resulting artifact; it is
+only shown in the **About** dialog.
 
 The build is performed in several stages (`Dockerfile`, multi-stage
 build):
@@ -123,7 +131,20 @@ Run the script from **PowerShell 7**, specifying the version with the `-v` param
 
 ```powershell
 ./make-release-windows.ps1 -v 4.0
+./make-release-windows.ps1 -v 4.0 -s "(my-build)"
 ```
+
+| Option                     | Description                                       |
+|----------------------------|---------------------------------------------------|
+| `-Version` (`-v`)          | OPL PC Tools version (required)                   |
+| `-VersionSuffix` (`-s`)    | Version suffix, e.g. `"(my-build)"` (optional)   |
+
+The `-s` parameter is optional and sets the version suffix; if it is
+omitted, no suffix is applied. A regular CMake build (without the release
+scripts) keeps the default suffix `(development)`.
+
+The suffix does not affect the name of the resulting archive; it is
+only shown in the **About** dialog.
 
 The script performs three steps:
 

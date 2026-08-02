@@ -65,6 +65,7 @@ void VmcFormatter::format()
     initSuperblock();
     writeSuperblock();
     writeFAT();
+    m_file.flush();
 }
 
 void VmcFormatter::clearFile()

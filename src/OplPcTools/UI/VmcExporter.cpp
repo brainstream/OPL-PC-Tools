@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QThread>
 #include <QDir>
+#include <memory>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;

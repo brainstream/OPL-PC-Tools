@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_LAMBDATHREAD__
-#define __OPLPCTOOLS_LAMBDATHREAD__
+#pragma once
 
 #include <OplPcTools/Exception.h>
 #include <QThread>
@@ -32,45 +31,12 @@ class LambdaThread : public QThread
     Q_OBJECT
 
 public:
-    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr) :
-        LambdaThread(QRunnable::create(_lambda), _parent)
-    {
-    }
-
-    explicit LambdaThread(QRunnable * _runnable, QObject * _parent = nullptr) :
-        QThread(_parent),
-        mp_runnable(_runnable)
-    {
-        setObjectName("LambdaThread");
-    }
-
-    ~LambdaThread() override
-    {
-        if(mp_runnable && mp_runnable->autoDelete())
-            delete mp_runnable;
-    }
+    explicit LambdaThread(std::function<void()> _lambda, QObject * _parent = nullptr);
+    explicit LambdaThread(QRunnable * _runnable, QObject * _parent = nullptr);
+    ~LambdaThread() override;
 
 protected:
-    void run() override
-    {
-        try
-        {
-            if(mp_runnable)
-                mp_runnable->run();
-        }
-        catch(const OplPcTools::Exception & ex)
-        {
-            emit exception(ex.message());
-        }
-        catch(const std::exception & err)
-        {
-            emit exception(QString::fromStdString(err.what()));
-        }
-        catch(...)
-        {
-            emit exception(tr("An unknown error has occurred"));
-        }
-    }
+    void run() override;
 
 signals:
     void exception(QString _message);
@@ -81,5 +47,3 @@ private:
 
 } // namespace UI
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_LAMBDATHREAD__

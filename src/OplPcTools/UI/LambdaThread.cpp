@@ -16,16 +16,46 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifdef __MACH__
+#include <OplPcTools/UI/LambdaThread.h>
 
-#include <OplPcTools/Device/DeviceReader.h>
+using namespace OplPcTools::UI;
 
-QList<DeviceName> OplPcTools::loadDriveList()
+LambdaThread::LambdaThread(std::function<void()> _lambda, QObject * _parent) :
+    LambdaThread(QRunnable::create(_lambda), _parent)
 {
-    // Stub
-
-    QList<DeviceName> result;
-    return result;
 }
 
-#endif // __MACH__
+LambdaThread::LambdaThread(QRunnable * _runnable, QObject * _parent) :
+    QThread(_parent),
+    mp_runnable(_runnable)
+{
+    setObjectName("LambdaThread");
+}
+
+void LambdaThread::run()
+{
+    try
+    {
+        if(mp_runnable)
+            mp_runnable->run();
+    }
+    catch(const OplPcTools::Exception & ex)
+    {
+        emit exception(ex.message());
+    }
+    catch(const std::exception & err)
+    {
+        emit exception(QString::fromStdString(err.what()));
+    }
+    catch(...)
+    {
+        emit exception(tr("An unknown error has occurred"));
+    }
+}
+
+LambdaThread::~LambdaThread()
+{
+    if(mp_runnable && mp_runnable->autoDelete())
+        delete mp_runnable;
+}
+

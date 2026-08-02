@@ -906,7 +906,7 @@
 <context>
     <name>OplPcTools::GameArtNetworkSource</name>
     <message>
-        <location filename="../GameArtNetworkSource.cpp" line="86"/>
+        <location filename="../GameArtNetworkSource.cpp" line="82"/>
         <source>Unable to download picture: %1%2%3</source>
         <translation>Не могу скачать изображение: %1%2%3</translation>
     </message>
@@ -932,12 +932,12 @@
 <context>
     <name>OplPcTools::GameCollection</name>
     <message>
-        <location filename="../GameCollection.cpp" line="188"/>
+        <location filename="../GameCollection.cpp" line="189"/>
         <source>Unable to rename game &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Не могу переименовать игру &quot;%1&quot; в &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="194"/>
+        <location filename="../GameCollection.cpp" line="195"/>
         <source>Unable to delete game &quot;%1&quot;</source>
         <translation>Не могу удалить игру &quot;%1&quot;</translation>
     </message>
@@ -1398,7 +1398,7 @@
 <context>
     <name>OplPcTools::UI::LambdaThread</name>
     <message>
-        <location filename="../UI/LambdaThread.h" line="71"/>
+        <location filename="../UI/LambdaThread.cpp" line="52"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
@@ -1421,37 +1421,37 @@
 <context>
     <name>OplPcTools::UI::VmcCreateDialog</name>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="37"/>
         <source>8 MiB</source>
         <translation>8 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="38"/>
         <source>16 MiB</source>
         <translation>16 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="39"/>
         <source>32 MiB</source>
         <translation>32 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="40"/>
         <source>64 MiB</source>
         <translation>64 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="41"/>
         <source>128 MiB</source>
         <translation>128 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="44"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="42"/>
         <source>256 MiB</source>
         <translation>256 МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcCreateDialog.cpp" line="45"/>
+        <location filename="../UI/VmcCreateDialog.cpp" line="43"/>
         <source>512 MiB</source>
         <translation>512 МиБ</translation>
     </message>
@@ -1459,47 +1459,47 @@
 <context>
     <name>OplPcTools::UI::VmcDetailsActivity</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="526"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="529"/>
         <source>An unknown error has occurred</source>
         <translation>Произошла неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="467"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="470"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="467"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="470"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="598"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="601"/>
         <source>Free %1 of %2</source>
         <translation>Свободно %1 из %2</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="661"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="664"/>
         <source>Upload</source>
         <translation>Записать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="682"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="685"/>
         <source>Unable to create directory &quot;%1&quot;, a file or directory with the same name already exists</source>
         <translation>Не могу создать каталог &quot;%1&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="708"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="711"/>
         <source>Unable to rename &quot;%1&quot; to &quot;%2&quot;, a file or directory with the same name already exists</source>
         <translation>Не могу переименовать &quot;%1&quot; в &quot;%2&quot;, файл или каталог с таким именем уже существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1038"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1041"/>
         <source>Are you sure you want to delete this item?</source>
         <translation>Вы уверены, что хотите удалить этот элемент?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1039"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1042"/>
         <source>Are you sure you want to delete these items?</source>
         <translation>Вы уверены, что хотите удалить эти элементы?</translation>
     </message>
@@ -1512,12 +1512,12 @@
         <translation type="vanished">Вы уверены, что хотите удалить эти файлы?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1045"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1048"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="1041"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="1044"/>
         <source>Delete VMC files</source>
         <translation>Удадить файлы VMC</translation>
     </message>
@@ -1597,12 +1597,12 @@
 <context>
     <name>OplPcTools::UI::VmcPropertiesDialog</name>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="67"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="68"/>
         <source>MiB</source>
         <translation>МиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcPropertiesDialog.cpp" line="96"/>
+        <location filename="../UI/VmcPropertiesDialog.cpp" line="97"/>
         <source>Unable to read VMC</source>
         <translation>Не могу прочитать VMC</translation>
     </message>
@@ -1762,7 +1762,7 @@
         <translation>Максимальная длина имени образа – %1 байт</translation>
     </message>
     <message>
-        <location filename="../GameCollection.cpp" line="181"/>
+        <location filename="../GameCollection.cpp" line="182"/>
         <source>Game &quot;%1&quot; already registered</source>
         <translation>Игра &quot;%1&quot; уже зарегистрирована</translation>
     </message>
@@ -1797,27 +1797,27 @@
         <translation>Не могу удалить файл: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="70"/>
+        <location filename="../UI/VmcExporter.cpp" line="71"/>
         <source>Source path not found</source>
         <translation>Путь источника не найден</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="83"/>
+        <location filename="../UI/VmcExporter.cpp" line="84"/>
         <source>Unable to create directory &quot;%1&quot;</source>
         <translation>Не могу создать каталог &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="111"/>
+        <location filename="../UI/VmcExporter.cpp" line="112"/>
         <source>Unable to open VMC file</source>
         <translation>Не могу открыть файл VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="116"/>
+        <location filename="../UI/VmcExporter.cpp" line="117"/>
         <source>The file &quot;%1&quot; exists. Do you want to overwrite it?</source>
         <translation>Файл &quot;%1&quot; существует. Хотите перезаписать его?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcExporter.cpp" line="145"/>
+        <location filename="../UI/VmcExporter.cpp" line="146"/>
         <source>Overwrite confirmation</source>
         <translation>Подтверждение перезаписи</translation>
     </message>
@@ -1846,36 +1846,36 @@
         <translation>ГиБ</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="237"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="238"/>
         <source>Target exists</source>
         <translation>Цель существует</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="247"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="248"/>
         <source>Unable to overwrite the target directory with file &quot;%1&quot;
 Want to skip it?</source>
         <translation>Не могу перезаписать целевой каталог файлом &quot;%1&quot;
 Пропустить?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="248"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="249"/>
         <source>Unable to overwrite the target file with directory &quot;%1&quot;
 Want to skip it?</source>
         <translation>Не могу перезаписать целевой файл каталогом &quot;%1&quot;
 Пропустить?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="267"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="268"/>
         <source>The target file &quot;%1&quot; already exists. Do you want to overwrite it?</source>
         <translation>Целевой файл &quot;%1&quot; уже существует. Перезаписать?</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="379"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="380"/>
         <source>&lt;directory&gt;</source>
         <translation>&lt;каталог&gt;</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/VmcFormatter.cpp" line="52"/>
+        <location filename="../MemoryCard/VmcFormatter.cpp" line="53"/>
         <source>VMC size must be greater than or equal to %1 Mib and less than or equal to %2 Mib</source>
         <translation>Размер VMC не может быть больше или равным %1 МиБ и не может быть меньше или равным %2 МиБ</translation>
     </message>
@@ -2298,12 +2298,12 @@ Want to skip it?</source>
 <context>
     <name>VmcProgressDialog</name>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="142"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="143"/>
         <source>Uploading</source>
         <translation>Запись</translation>
     </message>
     <message>
-        <location filename="../UI/VmcDetailsActivity.cpp" line="145"/>
+        <location filename="../UI/VmcDetailsActivity.cpp" line="146"/>
         <source>Deleting</source>
         <translation>Удаление</translation>
     </message>

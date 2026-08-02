@@ -239,7 +239,7 @@ QList<EntryInfo> FileSystem::enumerateEntries(const Path & _path)
     if(entry_path.has_value())
     {
         forEachEntry(entry_path->entry, [&](const EntryPath & next_entry_path) -> bool {
-            if(next_entry_path.entry.name().compare(".") != 0  && next_entry_path.entry.name().compare("..") != 0)
+            if(next_entry_path.entry.name() != "." && next_entry_path.entry.name() != "..")
                 result << next_entry_path.entry;
             return true;
         });
@@ -265,7 +265,7 @@ std::optional<EntryPath> FileSystem::resolvePath(const Path & _path)
     {
         bool matched = false;
         forEachEntry(entry_path.entry, [&](const EntryPath & __next_entry_path) -> bool {
-            if(path_part.compare(__next_entry_path.entry.name(), Qt::CaseInsensitive) == 0)
+            if(path_part == __next_entry_path.entry.name())
             {
                 matched = true;
                 entry_path = __next_entry_path;

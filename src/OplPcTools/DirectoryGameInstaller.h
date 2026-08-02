@@ -20,6 +20,7 @@
 
 #include <OplPcTools/GameInstaller.h>
 #include <OplPcTools/Device/DeviceWriter.h>
+#include <memory>
 
 namespace OplPcTools {
 

@@ -113,9 +113,7 @@ private:
     static QList<QByteArray> split(const QByteArray & _path)
     {
         auto parts = _path.split(s_path_separator);
-        // parts.removeAll(QByteArray()); // Cannot be used, Qt 5.14+
-        for(qsizetype i = parts.count() - 1; i >=0; --i)
-            if(parts.at(i).isEmpty()) parts.removeAt(i);
+        parts.removeAll({});
         return parts;
     }
 

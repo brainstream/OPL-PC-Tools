@@ -20,6 +20,7 @@
 #include <OplPcTools/UlConfigGameStorage.h>
 #include <OplPcTools/DirectoryGameStorage.h>
 #include <OplPcTools/Exception.h>
+#include <functional>
 
 using namespace OplPcTools;
 

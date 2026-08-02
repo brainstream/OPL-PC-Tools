@@ -16,8 +16,7 @@
  *                                                                                             *
  ***********************************************************************************************/
 
-#ifndef __OPLPCTOOLS_EXCEPTION__
-#define __OPLPCTOOLS_EXCEPTION__
+#pragma once
 
 #include <QObject>
 #include <QException>
@@ -62,8 +61,3 @@ DECLARE_EXCEPTION(ValidationException)
 DECLARE_EXCEPTION(IOException)
 
 } // namespace OplPcTools
-
-#endif // __OPLPCTOOLS_EXCEPTION__
-
-
-

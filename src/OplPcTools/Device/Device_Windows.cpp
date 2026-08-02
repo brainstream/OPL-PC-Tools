@@ -19,7 +19,7 @@
 #ifdef _WIN32
 
 #include <windows.h>
-#include <OplPcTools/DeviceReader.h>
+#include <OplPcTools/Device/DeviceReader.h>
 
 using namespace OplPcTools;
 

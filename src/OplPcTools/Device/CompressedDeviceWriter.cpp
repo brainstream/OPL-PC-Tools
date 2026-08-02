@@ -65,7 +65,7 @@ bool CompressedDeviceWriter::write(DeviceReader & _reader, const QString & _dest
     quint64 processed_bytes = 0;
     for(size_t i = 0; ; ++i)
     {
-        if(cache_buffer.size() - cache_buffer_position < header.block_size)
+        if(cache_buffer.size() - cache_buffer_position < static_cast<qsizetype>(header.block_size))
         {
             dest->write(cache_buffer.constData(), cache_buffer_position);
             dest->flush();

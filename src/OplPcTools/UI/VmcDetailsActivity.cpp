@@ -36,6 +36,7 @@
 #include <QMimeData>
 #include <QThreadPool>
 #include <QDirIterator>
+#include <memory>
 
 using namespace OplPcTools;
 using namespace OplPcTools::UI;
@@ -406,7 +407,9 @@ void VmcFileSystemViewModel::unsafeSort()
         {
         case COL_TTITLE:
         {
-            int result = left.name().compare(right.name(), Qt::CaseInsensitive);
+            int result = stringConverter().decode(
+                left.name()).compare(stringConverter().decode(right.name()),
+                Qt::CaseInsensitive);
             return m_sort_order == Qt::AscendingOrder ? result < 0 : result > 0;
         }
         case COL_SIZE:

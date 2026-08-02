@@ -24,8 +24,10 @@
 #include <OplPcTools/MemoryCard/Path.h>
 #include <QSharedPointer>
 #include <QFile>
+#include <QVector>
 #include <QMutex>
 #include <cstring>
+#include <functional>
 
 namespace OplPcTools {
 namespace MemoryCard {

@@ -22,6 +22,7 @@
 #include <OplPcTools/File.h>
 #include <cstring>
 #include <cmath>
+#include <memory>
 
 using namespace OplPcTools::MemoryCard;
 

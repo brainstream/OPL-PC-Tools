@@ -17,26 +17,13 @@
  ***********************************************************************************************/
 
 #include <OplPcTools/StringConverter.h>
-#if QT_VERSION_MAJOR < 6
-#   include <QTextCodec>
-#else
-#   include <QStringConverter>
-#endif
+#include <QStringConverter>
 
 using namespace OplPcTools;
 
 QStringList TextEncoding::availableCodecs()
 {
-#if QT_VERSION_MAJOR < 6
-    QStringList result;
-    const QList<QByteArray> codecs = QTextCodec::availableCodecs();
-    result.reserve(codecs.count());
-    foreach(const QByteArray & codec, codecs)
-        result.append(QString::fromLatin1(codec));
-    return result;
-#else
     return QStringConverter::availableCodecs();
-#endif
 }
 
 class StringConverter::Private final
@@ -47,33 +34,6 @@ public:
     Private(Private && _private) = default;
     Private & operator = (Private && _private) = default;
 
-#if QT_VERSION_MAJOR < 6
-public:
-    explicit Private(const QString & _codec) :
-        m_codec_name(_codec),
-        mp_codec(QTextCodec::codecForName(_codec.toLatin1()))
-    {
-    }
-
-    QString codecName() const
-    {
-        return m_codec_name;
-    }
-
-    QString decode(const QByteArray & _bytes) const
-    {
-        return mp_codec ? mp_codec->toUnicode(_bytes) : QString::fromLatin1(_bytes);
-    }
-
-    QByteArray encode(const QString & _string) const
-    {
-        return mp_codec ? mp_codec->fromUnicode(_string) : _string.toLatin1();
-    }
-
-private:
-    QString m_codec_name;
-    const QTextCodec * mp_codec;
-#else
 public:
     explicit Private(const QString & _codec) :
         m_decoder(_codec),
@@ -99,7 +59,6 @@ public:
 private:
     mutable QStringDecoder m_decoder; // For some unknown reason, QStringDecoder::decode is not const
     mutable QStringEncoder m_endcoder; // For some unknown reason, QStringEncoder::encode is not const
-#endif
 };
 
 StringConverter::StringConverter(const QString & _codec) :

@@ -27,9 +27,7 @@ ProgressDialog::ProgressDialog(QWidget * _parent) :
     m_is_cancelation_disabled(false),
     m_is_one_shot_close_allowed(false)
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))
     setWindowFlag(Qt::WindowCloseButtonHint, false);
-#endif
     setupUi(this);
     setWindowTitle(mp_lable_progress->text());
     mp_progress_bar->setRange(0, 0);

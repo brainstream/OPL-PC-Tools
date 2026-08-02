@@ -21,6 +21,7 @@
 #include "ui_GameCheatWidget.h"
 #include <OplPcTools/Game.h>
 #include <OplPcTools/GameCheatManager.h>
+#include <functional>
 
 namespace OplPcTools {
 namespace UI {

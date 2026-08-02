@@ -19,8 +19,6 @@
 cmake_minimum_required(VERSION 3.16)
 project("OPL PC Tools" LANGUAGES CXX)
 
-include(ExternalProject)
-
 message("CMake version: " ${CMAKE_VERSION})
 if(CMAKE_COMPILER_IS_GNUCXX)
     message("GNU g++ version: " ${CMAKE_CXX_COMPILER_VERSION})
@@ -29,8 +27,7 @@ else()
 endif()
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    # Static linking for easy debugging
+if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
     message("Static linking with GCC is enabled")
 endif()
@@ -39,6 +36,7 @@ set(OPT_EXE_NAME "oplpctools")
 set(OPT_VERSION_MAJOR  4)
 set(OPT_VERSION_MINOR  0)
 set(OPT_VERSION_SUFFIX "(development)")
+set(OPT_MIN_QT6_VERSION "6.8.0")
 set(OPT_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/OplPcTools)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -55,51 +53,25 @@ set_property(CACHE OPT_SANITYZER PROPERTY STRINGS "" "ASAN" "UBSAN" "TSAN")
 # Libraries
 #######################
 
-option(FORCE_QT5 "Force Qt5 even if Qt6 is available" OFF)
 set(QT6_DIR "" CACHE PATH "Path to Qt6 installation")
-set(QT5_DIR "" CACHE PATH "Path to Qt5 installation")
 
 set(QT_REQUIRED_COMPONENTS Widgets Network LinguistTools)
 
-if(FORCE_QT5)
-    message(STATUS "Qt5 forced")
-    set(QT_FIND_VERSION 5)
+
+if(QT6_DIR)
+    list(INSERT CMAKE_PREFIX_PATH 0 "${QT6_DIR}")
+endif()
+
+find_package(Qt6 COMPONENTS ${QT_REQUIRED_COMPONENTS})
+if(Qt6_FOUND)
+    if(Qt6_VERSION VERSION_LESS OPT_MIN_QT6_VERSION)
+        message(FATAL_ERROR
+            "Error: Found Qt6 version ${Qt6_VERSION}, but at least "
+            "version ${OPT_MIN_QT6_VERSION} is required"
+        )
+    endif()
 else()
-    set(QT_FIND_VERSION 6)
-endif()
-
-if(QT_FIND_VERSION EQUAL 6)
-    if(QT6_DIR)
-        list(INSERT CMAKE_PREFIX_PATH 0 "${QT6_DIR}")
-    endif()
-
-    find_package(Qt6 QUIET COMPONENTS ${QT_REQUIRED_COMPONENTS})
-    if(Qt6_FOUND)
-        message(STATUS "Qt6 found: ${Qt6_VERSION}")
-        set(QT_VERSION_MAJOR 6)
-        set(QT_PREFIX Qt6)
-    else()
-        foreach(COMPONENT ${QT_REQUIRED_COMPONENTS})
-            if(NOT TARGET Qt6::${COMPONENT})
-                message(WARNING "Qt6 component '${COMPONENT}' NOT found!")
-            else()
-                message(STATUS "Qt6 component '${COMPONENT}' found")
-            endif()
-        endforeach()
-        message(STATUS "Qt6 not found, trying to use Qt5")
-        set(QT_FIND_VERSION 5)
-    endif()
-endif()
-
-if(QT_FIND_VERSION EQUAL 5)
-    if(QT5_DIR)
-        list(INSERT CMAKE_PREFIX_PATH 0 "${QT5_DIR}")
-    endif()
-
-    find_package(Qt5 REQUIRED COMPONENTS ${QT_REQUIRED_COMPONENTS})
-    message(STATUS "Qt5 found: ${Qt5_VERSION})")
-    set(QT_VERSION_MAJOR 5)
-    set(QT_PREFIX Qt5)
+    message(FATAL_ERROR "Qt6 not found")
 endif()
 
 #######################
@@ -132,17 +104,12 @@ endif()
 # lz4
 #######################
 
-ExternalProject_Add(ext_lz4
-    SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/lib"
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND "make"
-    INSTALL_COMMAND ""
-    BUILD_IN_SOURCE 1
-)
-add_library(lz4 STATIC IMPORTED GLOBAL)
-set_target_properties(lz4 PROPERTIES
-    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/lib/liblz4.a"
-    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/lib"
+set(LZ4_BUILD_CLI OFF CACHE BOOL "Build lz4 program" FORCE)
+set(LZ4_BUILD_LEGACY_LZ4C OFF CACHE BOOL "Build lz4c program" FORCE)
+add_subdirectory(
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/lz4/build/cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/lz4
+    EXCLUDE_FROM_ALL
 )
 
 #######################
@@ -154,9 +121,6 @@ if(WIN32)
 else()
     add_executable(${OPT_EXE_NAME} ${OPT_SRC} ${QM_FILES})
 endif()
-
-
-add_dependencies(${OPT_EXE_NAME} lz4)
 
 target_compile_options(${OPT_EXE_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
@@ -174,10 +138,10 @@ elseif(DEFINED OPT_SANITYZER AND NOT OPT_SANITYZER STREQUAL "")
 endif()
 
 target_link_libraries(${OPT_EXE_NAME}
-    ${QT_PREFIX}::Core
-    ${QT_PREFIX}::Gui
-    ${QT_PREFIX}::Widgets
-    ${QT_PREFIX}::Network
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::Network
     lz4
 )
 
@@ -206,14 +170,6 @@ target_compile_definitions(${OPT_EXE_NAME} PRIVATE
     -D_OPLPCTOOLS_EXE=${OPT_EXE_NAME}
 )
 
-if(QT_VERSION_MAJOR EQUAL 5)
-    target_compile_definitions(${OPT_EXE_NAME} PRIVATE
-        ${Qt5Core_DEFINITIONS}
-        ${Qt5Widgets_DEFINITIONS}
-        ${Qt5Network_DEFINITIONS}
-    )
-endif()
-
 #######################
 # Localization
 #######################
@@ -222,15 +178,9 @@ file(GLOB_RECURSE TRANSLATIONS
     "${OPT_SRC_DIR}/Translations/*.ts"
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_add_translations(${OPT_EXE_NAME}
-        LUPDATE_TARGET "translation_update"
-        LRELEASE_TARGET "translation_release"
-        TS_FILES ${TRANSLATIONS}
-    )
-    add_dependencies(${OPT_EXE_NAME} translation_update)
-else()
-    qt5_create_translation(QM_FILES ${OPT_SRC} ${TRANSLATIONS}
-        OPTIONS "-no-obsolete"
-    )
-endif()
+qt_add_translations(${OPT_EXE_NAME}
+    LUPDATE_TARGET "translation_update"
+    LRELEASE_TARGET "translation_release"
+    TS_FILES ${TRANSLATIONS}
+)
+add_dependencies(${OPT_EXE_NAME} translation_update)

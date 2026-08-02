@@ -18,12 +18,13 @@
 
 #pragma once
 
-#include <QWidget>
-#include <QTreeWidgetItem>
-#include <OplPcTools/GameInstaller.h>
+#include "ui_GameInstallerActivity.h"
 #include <OplPcTools/UI/LambdaThread.h>
 #include <OplPcTools/UI/Intent.h>
-#include "ui_GameInstallerActivity.h"
+#include <OplPcTools/GameInstaller.h>
+#include <QWidget>
+#include <QTreeWidgetItem>
+
 
 namespace OplPcTools {
 namespace UI {

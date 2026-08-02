@@ -52,11 +52,7 @@ GameArtNetworkSource::GameArtNetworkSource(
     mp_reply(_reply)
 {
     connect(_reply, &QNetworkReply::finished, this, &GameArtNetworkSource::onReplyFinished);
-#if QT_VERSION_MAJOR < 6
-    connect(_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onReplyError(QNetworkReply::NetworkError)));
-#else
     connect(_reply, &QNetworkReply::errorOccurred, this, &GameArtNetworkSource::onReplyError);
-#endif
 }
 
 void GameArtNetworkSource::onReplyFinished()

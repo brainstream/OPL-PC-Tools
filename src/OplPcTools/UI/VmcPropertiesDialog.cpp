@@ -21,6 +21,7 @@
 #include <OplPcTools/MemoryCard/FileSystem.h>
 #include <OplPcTools/Library.h>
 #include <OplPcTools/Settings.h>
+#include <memory>
 
 using namespace OplPcTools::UI;
 
